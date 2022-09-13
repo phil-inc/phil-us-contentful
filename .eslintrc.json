@@ -1,0 +1,41 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"node": true
+	},
+	"extends": ["xo-typescript", "xo"],
+	"overrides": [
+		{
+			"files": ["*.ts", "*.tsx"],
+			"extends": ["xo-typescript"],
+			"parserOptions": {
+				"project": ["./tsconfig.json"]
+			}
+		}
+	],
+	"parserOptions": {
+		"project": ["./tsconfig.json"]
+	},
+	"plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+	"rules": {
+		"no-use-before-define": "off",
+		"@typescript-eslint/no-unused-vars": "off",
+		"@typescript-eslint/no-use-before-define": ["off"],
+		"@typescript-eslint/object-curly-spacing": ["off", "always"],
+		"@typescript-eslint/interface-name-prefix": "off",
+		"no-unused-vars": "off",
+		"no-alert": "off",
+		"no-console": "error",
+		"react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
+		"react/prop-types": "off",
+		"react/display-name": 0,
+		"eol-last": "error",
+		"react-hooks/exhaustive-deps": "warn",
+		"linebreak-style": ["error", "unix"],
+		"quotes": ["error", "single", { "avoidEscape": true }],
+		"semi": ["error", "always"],
+		"@typescript-eslint/no-empty-function": "warn",
+		"require-jsdoc": "off"
+	}
+}
