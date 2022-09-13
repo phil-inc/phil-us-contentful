@@ -1,22 +1,32 @@
-import {createStyles, Menu, Center, Header, Container, Group, Button, Burger, Grid} from '@mantine/core';
+import {
+	createStyles,
+	Menu,
+	Center,
+	Header,
+	Container,
+	Group,
+	Button,
+	Burger,
+	Grid,
+	Collapse,
+	Paper,
+	Card,
+	Text,
+	SimpleGrid,
+} from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
 import {IconChevronDown} from '@tabler/icons';
 import React from 'react';
 
-const HEADER_HEIGHT = 60;
+const HEADER_HEIGHT = 90;
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((theme, _params, getRef) => ({
 	inner: {
+		padding: '0 100px',
 		height: HEADER_HEIGHT,
 		display: 'flex',
-		justifyContent: 'center',
+		justifyContent: 'space-between',
 		alignItems: 'center',
-	},
-
-	links: {
-		[theme.fn.smallerThan('sm')]: {
-			display: 'none',
-		},
 	},
 
 	burger: {
@@ -25,27 +35,39 @@ const useStyles = createStyles(theme => ({
 		},
 	},
 
-	link: {
-		display: 'block',
-		lineHeight: 1,
-		padding: '8px 12px',
-		borderRadius: theme.radius.sm,
-		textDecoration: 'none',
-		color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-		fontSize: theme.fontSizes.sm,
-		fontWeight: 500,
+	dropdown: {
+		position: 'absolute',
+		top: 90,
+		left: 0,
+		zIndex: 300,
+	},
+	container: {
+		width: '100vw',
+		background: '#00827E',
+	},
 
-		'&:hover': {
-			backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+	navLinks: {
+		// Dynamic media queries, define breakpoints in theme, use anywhere
+		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+			// Type safe child reference in nested selectors via ref
+			[`& .${getRef('child')}`]: {
+				marginRight: '0px',
+			},
+		},
+		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+			// Type safe child reference in nested selectors via ref
+			[`& .${getRef('child')}`]: {
+				display: 'none',
+			},
 		},
 	},
+	navLink: {
+		ref: getRef('child'),
+		marginRight: '85px',
 
-	linkLabel: {
-		marginRight: 5,
-	},
-
-	dropdown: {
-		width: '100%',
+		'&:last-child': {
+			marginRight: '0px',
+		},
 	},
 }));
 
@@ -58,60 +80,49 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 
 	const [opened, {toggle}] = useDisclosure(false);
 
-	const items = links.map(link => {
-		const menuItems = link.links?.map(item => <Menu.Item key={item.link}>{item.label}</Menu.Item>);
-
-		if (menuItems) {
-			return (
-				<Menu withArrow={true} key={link.label} trigger='click' exitTransitionDuration={0}>
-					<Menu.Target>
-						<a
-							href={link.link}
-							className={classes.link}
-							onClick={event => {
-								event.preventDefault();
-							}}
-						>
-							<Center>
-								<span className={classes.linkLabel}>{link.label}</span>
-								<IconChevronDown size={12} stroke={1.5} />
-							</Center>
-						</a>
-					</Menu.Target>
-					<Menu.Dropdown className={classes.dropdown}>
-						<Grid>
-							<Grid.Col span={4}>{menuItems}</Grid.Col>
-							<Grid.Col span={4}>{menuItems}</Grid.Col>
-							<Grid.Col span={4}>{menuItems}</Grid.Col>
-						</Grid>
-					</Menu.Dropdown>
-				</Menu>
-			);
-		}
-
-		return (
-			<a
-				key={link.label}
-				href={link.link}
-				className={classes.link}
-				onClick={event => {
-					event.preventDefault();
-				}}
-			>
-				{link.label}
-			</a>
-		);
-	});
-
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={120}>
 			<Container className={classes.inner} fluid>
+				<div>logo here</div>
 				<Group>
 					<Burger opened={opened} onClick={toggle} className={classes.burger} size='sm' />
 				</Group>
-				<Group spacing={5} className={classes.links}>
-					{items}
+				<Group position='apart' noWrap align='center' className={classes.navLinks}>
+					<Text className={classes.navLink} onClick={toggle}>
+						Life sciences
+					</Text>
+					<Text onClick={toggle} className={classes.navLink}>
+						Healthcare providers
+					</Text>
+					<Text onClick={toggle} className={classes.navLink}>
+						Patients
+					</Text>
+					<Text onClick={toggle} className={classes.navLink}>
+						Resources
+					</Text>
+					<Text onClick={toggle} className={classes.navLink}>
+						Company
+					</Text>
+					<Text onClick={toggle} className={classes.navLink}>
+						Contact
+					</Text>
 				</Group>
+				<Collapse in={opened} className={classes.dropdown}>
+					<Container className={classes.container} fluid>
+						<Text>Life sciences</Text>
+						<Text>Healthcare providers</Text>
+						<Text>Patients</Text>
+						<Text>Resources</Text>
+						<Text>Company</Text>
+						<Text>Contact</Text>
+						<Text>Life sciences</Text>
+						<Text>Healthcare providers</Text>
+						<Text>Patients</Text>
+						<Text>Resources</Text>
+						<Text>Company</Text>
+						<Text>Contact</Text>
+					</Container>
+				</Collapse>
 			</Container>
 		</Header>
 	);

@@ -25,9 +25,12 @@ export function Layout({children}: LayoutProps) {
 	]);
 
 	const links = [
-		{label: 'Features', link: '#'},
+		{label: 'Life sciences', link: '#'},
+
+		{label: 'Healthcare providers', link: '#'},
+		{label: 'Patients', link: '#'},
 		{
-			label: 'Learn',
+			label: 'Resources',
 			link: '#',
 			links: [
 				{label: 'Terms of Use', link: '#'},
@@ -35,10 +38,17 @@ export function Layout({children}: LayoutProps) {
 				{label: 'HIPAA Notice', link: '#'},
 			],
 		},
-		{label: 'About', link: '#'},
-		{label: 'Pricing', link: '#'},
 		{
-			label: 'Support',
+			label: 'Company',
+			link: '#',
+			links: [
+				{label: 'Terms of Use', link: '#'},
+				{label: 'Privacy Policy', link: '#'},
+				{label: 'HIPAA Notice', link: '#'},
+			],
+		},
+		{
+			label: 'Contact',
 			link: '#',
 			links: [
 				{label: 'Terms of Use', link: '#'},
