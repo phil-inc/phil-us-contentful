@@ -13,6 +13,8 @@ import {
 	Card,
 	Text,
 	SimpleGrid,
+	Divider,
+	List,
 } from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
 import {IconChevronDown} from '@tabler/icons';
@@ -74,6 +76,24 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		'&:last-child': {
 			marginRight: '0px',
 		},
+	},
+	listHeading: {
+		color: 'white',
+		fontSize: '16px',
+		letterSpacing: '0.4px',
+		lineHeight: '27px',
+		marginBottom: '11px',
+		fontFamily: 'Lato',
+		fontWeight: 700,
+	},
+	listItems: {
+		color: 'white',
+		fontSize: '12px',
+		letterSpacing: 0,
+		lineHeight: '35px',
+		margin: '8px 0',
+		fontFamily: 'Lato',
+		fontWeight: 400,
 	},
 }));
 
@@ -154,18 +174,100 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 					animateOpacity={false}
 				>
 					<Container className={classes.container} fluid>
-						<Text>Life sciences</Text>
-						<Text>Healthcare providers</Text>
-						<Text>Patients</Text>
-						<Text>Resources</Text>
-						<Text>Company</Text>
-						<Text>Contact</Text>
-						<Text>Life sciences</Text>
-						<Text>Healthcare providers</Text>
-						<Text>Patients</Text>
-						<Text>Resources</Text>
-						<Text>Company</Text>
-						<Text>Contact</Text>
+						<List listStyleType='none' size='xl'>
+							<SimpleGrid cols={5} px={98} py={78} spacing={32}>
+								<List.Item>
+									<Text className={classes.listHeading}>Patient outcomes</Text>
+									<Divider />
+									<List listStyleType='none'>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 1</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 2</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 3</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 4</Text>
+										</List.Item>
+									</List>
+								</List.Item>
+								<List.Item>
+									<Text className={classes.listHeading}>Flight of the script</Text>
+									<Divider />
+									<List listStyleType='none'>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 1</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 2</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 3</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 4</Text>
+										</List.Item>
+									</List>
+								</List.Item>
+								<List.Item>
+									<Text className={classes.listHeading}>Prescribing to Phil</Text>
+									<Divider />
+									<List listStyleType='none'>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 1</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 2</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 3</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 4</Text>
+										</List.Item>
+									</List>
+								</List.Item>
+								<List.Item>
+									<Text className={classes.listHeading}>HCP outcomes</Text>
+									<Divider />
+									<List listStyleType='none'>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 1</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 2</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 3</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 4</Text>
+										</List.Item>
+									</List>
+								</List.Item>
+								<List.Item>
+									<Text className={classes.listHeading}>Testimonials</Text>
+									<Divider />
+									<List listStyleType='none'>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 1</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 2</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 3</Text>
+										</List.Item>
+										<List.Item>
+											<Text className={classes.listItems}>New page/section 4</Text>
+										</List.Item>
+									</List>
+								</List.Item>
+							</SimpleGrid>
+						</List>
 					</Container>
 				</Collapse>
 			</Container>

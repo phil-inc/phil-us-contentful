@@ -15,10 +15,13 @@
 		"lint:fix": "eslint . --fix",
 		"format": "prettier . --write",
 		"prettify": "prettier --write \"src/**/*.{ts,tsx}\"",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"preload-fonts": "gatsby-preload-fonts"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.9.3",
+		"@fontsource/lato": "^4.5.9",
+		"@fontsource/raleway": "^4.5.10",
 		"@mantine/core": "5.1.0",
 		"@mantine/hooks": "5.1.0",
 		"@tabler/icons": "^1.95.1",
