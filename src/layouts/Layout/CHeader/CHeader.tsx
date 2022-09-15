@@ -16,7 +16,10 @@ import {
 } from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
 import {IconChevronDown} from '@tabler/icons';
-import React from 'react';
+import classNames from 'classnames';
+import React, {useState} from 'react';
+
+import './header.css';
 
 const HEADER_HEIGHT = 90;
 
@@ -40,7 +43,9 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		top: 90,
 		left: 0,
 		zIndex: 300,
+		opacity: 1,
 	},
+
 	container: {
 		width: '100vw',
 		background: '#00827E',
@@ -62,6 +67,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		},
 	},
 	navLink: {
+		position: 'relative',
 		ref: getRef('child'),
 		marginRight: '85px',
 
@@ -78,7 +84,22 @@ type CHeaderProps = {
 export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 	const {classes} = useStyles();
 
-	const [opened, {toggle}] = useDisclosure(false);
+	const [opened, {toggle, open}] = useDisclosure(false, {
+		onClose() {
+			setTarget('');
+		},
+	});
+	const [target, setTarget] = useState<string>('');
+
+	const onNavLinkClick = event => {
+		if (event.target.textContent === target) {
+			setTarget('');
+			toggle();
+		} else {
+			setTarget(event.target.textContent);
+			open();
+		}
+	};
 
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={120}>
@@ -88,26 +109,50 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 					<Burger opened={opened} onClick={toggle} className={classes.burger} size='sm' />
 				</Group>
 				<Group position='apart' noWrap align='center' className={classes.navLinks}>
-					<Text className={classes.navLink} onClick={toggle}>
+					<Text
+						className={classNames(classes.navLink, 'nav-link', {active: target === 'Life sciences'})}
+						onClick={onNavLinkClick}
+					>
 						Life sciences
 					</Text>
-					<Text onClick={toggle} className={classes.navLink}>
+					<Text
+						onClick={onNavLinkClick}
+						className={classNames(classes.navLink, 'nav-link', {active: target === 'Healthcare providers'})}
+					>
 						Healthcare providers
 					</Text>
-					<Text onClick={toggle} className={classes.navLink}>
+					<Text
+						onClick={onNavLinkClick}
+						className={classNames(classes.navLink, 'nav-link', {active: target === 'Patients'})}
+					>
 						Patients
 					</Text>
-					<Text onClick={toggle} className={classes.navLink}>
+					<Text
+						onClick={onNavLinkClick}
+						className={classNames(classes.navLink, 'nav-link', {active: target === 'Resources'})}
+					>
 						Resources
 					</Text>
-					<Text onClick={toggle} className={classes.navLink}>
+					<Text
+						onClick={onNavLinkClick}
+						className={classNames(classes.navLink, 'nav-link', {active: target === 'Company'})}
+					>
 						Company
 					</Text>
-					<Text onClick={toggle} className={classes.navLink}>
+					<Text
+						onClick={onNavLinkClick}
+						className={classNames(classes.navLink, 'nav-link', {active: target === 'Contact'})}
+					>
 						Contact
 					</Text>
 				</Group>
-				<Collapse in={opened} className={classes.dropdown}>
+				<Collapse
+					in={opened}
+					className={classes.dropdown}
+					transitionDuration={150}
+					transitionTimingFunction='ease-out'
+					animateOpacity={false}
+				>
 					<Container className={classes.container} fluid>
 						<Text>Life sciences</Text>
 						<Text>Healthcare providers</Text>
