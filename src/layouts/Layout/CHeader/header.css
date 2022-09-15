@@ -17,12 +17,25 @@
 	animation-timing-function: ease-out;
 }
 
-.active::before {
+.nav-links-wrapper > .active::before {
 	top: 57px;
+	left: 0;
+	right: 0;
 	z-index: 1;
 	visibility: visible;
 
 	animation: slideIn 0.2s forwards;
+	animation-timing-function: ease-out;
+}
+
+.nav-links-wrapper .nav-link:first-child.active::before {
+	top: 57px;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	visibility: visible;
+
+	animation: slideInFirstChild 0.2s forwards;
 	animation-timing-function: ease-out;
 }
 
@@ -35,6 +48,22 @@
 	}
 	0% {
 		visibility: visible;
+		left: calc(-251px);
+		border-left: 0px solid transparent;
+		border-right: 0px solid transparent;
+		border-bottom: 0px solid #00827e;
+	}
+}
+@keyframes slideInFirstChild {
+	100% {
+		top: 41px;
+		border-left: 20px solid transparent;
+		border-right: 20px solid transparent;
+		border-bottom: 16px solid #00827e;
+	}
+	0% {
+		visibility: visible;
+		left: 0;
 		border-left: 0px solid transparent;
 		border-right: 0px solid transparent;
 		border-bottom: 0px solid #00827e;

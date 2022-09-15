@@ -108,7 +108,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 				<Group>
 					<Burger opened={opened} onClick={toggle} className={classes.burger} size='sm' />
 				</Group>
-				<Group position='apart' noWrap align='center' className={classes.navLinks}>
+				<Group position='apart' noWrap align='center' className={classNames(classes.navLinks, 'nav-links-wrapper')}>
 					<Text
 						className={classNames(classes.navLink, 'nav-link', {active: target === 'Life sciences'})}
 						onClick={onNavLinkClick}
