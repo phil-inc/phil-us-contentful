@@ -1,87 +1,43 @@
-.nav-link::before {
+
+.navbar{
+	position: relative;
+	height: 90px;
+	width: 100vw;
+	background: #fff;
+	border-radius: 20px;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+  }
+  
+  .navbar ul{
+	position: relative;
+	display: flex;
+  }
+  
+  .navbar ul li{
+	position: relative;
+	list-style-type: none;
+  }
+  
+  .navbar ul li {
+	position: relative;
+	height: 120px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+  }
+  
+  .navbar ul .indicator{
 	position: absolute;
-	content: '';
+	bottom: -5px;
+	left: 30px;
 	width: 0px;
-	height: 0px;
-	border-left: 0px solid transparent;
-	border-right: 0px solid transparent;
-	border-bottom: 0px solid #00827e;
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	top: 41px;
-	z-index: 1;
-	visibility: hidden;
-
-	animation: slideOut 0.2s forwards;
-	animation-timing-function: ease-out;
-}
-
-.nav-links-wrapper > .active::before {
-	top: 57px;
-	left: 0;
-	right: 0;
-	z-index: 1;
-	visibility: visible;
-
-	animation: slideIn 0.2s forwards;
-	animation-timing-function: ease-out;
-}
-
-.nav-links-wrapper .nav-link:first-child.active::before {
-	top: 57px;
-	left: 0;
-	right: 0;
-	z-index: 1;
-	visibility: visible;
-
-	animation: slideInFirstChild 0.2s forwards;
-	animation-timing-function: ease-out;
-}
-
-@keyframes slideIn {
-	100% {
-		top: 41px;
-		border-left: 20px solid transparent;
-		border-right: 20px solid transparent;
-		border-bottom: 16px solid #00827e;
-	}
-	0% {
-		visibility: visible;
-		left: calc(-251px);
-		border-left: 0px solid transparent;
-		border-right: 0px solid transparent;
-		border-bottom: 0px solid #00827e;
-	}
-}
-@keyframes slideInFirstChild {
-	100% {
-		top: 41px;
-		border-left: 20px solid transparent;
-		border-right: 20px solid transparent;
-		border-bottom: 16px solid #00827e;
-	}
-	0% {
-		visibility: visible;
-		left: 0;
-		border-left: 0px solid transparent;
-		border-right: 0px solid transparent;
-		border-bottom: 0px solid #00827e;
-	}
-}
-
-@keyframes slideOut {
-	100% {
-		top: 57px;
-		visibility: collapse;
-		border-left: 0px solid transparent;
-		border-right: 0px solid transparent;
-		border-bottom: 0px solid #00827e;
-	}
-	0% {
-		visibility: visible;
-		border-left: 20px solid transparent;
-		border-right: 20px solid transparent;
-		border-bottom: 16px solid #00827e;
-	}
-}
+	  height: 0px;
+	  border-left: 20px solid transparent;
+	  border-right: 20px solid transparent;
+	  border-bottom: 20px solid #00827e;
+	transition: transform 0.5s;
+  }
+  

@@ -30,7 +30,6 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		padding: '0 100px',
 		height: HEADER_HEIGHT,
 		display: 'flex',
-		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
 
@@ -53,24 +52,8 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		background: '#00827E',
 	},
 
-	navLinks: {
-		// Dynamic media queries, define breakpoints in theme, use anywhere
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			// Type safe child reference in nested selectors via ref
-			[`& .${getRef('child')}`]: {
-				marginRight: '0px',
-			},
-		},
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-			// Type safe child reference in nested selectors via ref
-			[`& .${getRef('child')}`]: {
-				display: 'none',
-			},
-		},
-	},
 	navLink: {
 		position: 'relative',
-		ref: getRef('child'),
 		marginRight: '85px',
 
 		'&:last-child': {
@@ -113,58 +96,66 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 
 	const onNavLinkClick = event => {
 		if (event.target.textContent === target) {
-			setTarget('');
 			toggle();
 		} else {
-			setTarget(event.target.textContent);
 			open();
+			setTarget(event.target.textContent);
 		}
 	};
+
+	React.useEffect(() => {
+		const navBar = document.querySelector('.navbar');
+		const allLi = navBar.querySelectorAll('li');
+
+		let previousEl;
+
+		allLi.forEach((li, index) => {
+			li.addEventListener('click', e => {
+				e.preventDefault(); // Preventing from submitting
+				const indicator: HTMLElement = document.querySelector('.indicator');
+				if (previousEl === li && navBar.querySelector('.active')) {
+					navBar.querySelector('.active').classList.remove('active');
+					indicator.style.transform = '';
+				} else {
+					previousEl = li;
+					if (navBar.querySelector('.active')) {
+						navBar.querySelector('.active').classList.remove('active');
+					}
+
+					li.classList.add('active');
+
+					indicator.style.transform = `translate(calc(${index * 190}px), calc(${-20}px))`;
+				}
+			});
+		});
+	}, []);
 
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={120}>
 			<Container className={classes.inner} fluid>
-				<div>logo here</div>
-				<Group>
-					<Burger opened={opened} onClick={toggle} className={classes.burger} size='sm' />
-				</Group>
-				<Group position='apart' noWrap align='center' className={classNames(classes.navLinks, 'nav-links-wrapper')}>
-					<Text
-						className={classNames(classes.navLink, 'nav-link', {active: target === 'Life sciences'})}
-						onClick={onNavLinkClick}
-					>
-						Life sciences
-					</Text>
-					<Text
-						onClick={onNavLinkClick}
-						className={classNames(classes.navLink, 'nav-link', {active: target === 'Healthcare providers'})}
-					>
-						Healthcare providers
-					</Text>
-					<Text
-						onClick={onNavLinkClick}
-						className={classNames(classes.navLink, 'nav-link', {active: target === 'Patients'})}
-					>
-						Patients
-					</Text>
-					<Text
-						onClick={onNavLinkClick}
-						className={classNames(classes.navLink, 'nav-link', {active: target === 'Resources'})}
-					>
-						Resources
-					</Text>
-					<Text
-						onClick={onNavLinkClick}
-						className={classNames(classes.navLink, 'nav-link', {active: target === 'Company'})}
-					>
-						Company
-					</Text>
-					<Text
-						onClick={onNavLinkClick}
-						className={classNames(classes.navLink, 'nav-link', {active: target === 'Contact'})}
-					>
-						Contact
-					</Text>
+				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
+					<div>logo here</div>
+					<List listStyleType={'none'}>
+						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
+							<Text>Life sciences</Text>
+						</List.Item>
+						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
+							<Text>Healthcare providers</Text>
+						</List.Item>
+						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
+							<Text>Patients</Text>
+						</List.Item>
+						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
+							<Text>Resources</Text>
+						</List.Item>
+						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
+							<Text>Company</Text>
+						</List.Item>
+						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
+							<Text>Contact</Text>
+						</List.Item>
+						<div className='indicator'></div>
+					</List>
 				</Group>
 				<Collapse
 					in={opened}
@@ -178,6 +169,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 							<SimpleGrid cols={5} px={98} py={78} spacing={32}>
 								<List.Item>
 									<Text className={classes.listHeading}>Patient outcomes</Text>
+
 									<Divider />
 									<List listStyleType='none'>
 										<List.Item>
