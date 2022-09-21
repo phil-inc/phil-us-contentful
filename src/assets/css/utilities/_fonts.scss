@@ -1,0 +1,14 @@
+// $typefaces
+// Configuration of webfonts imports.
+// $typefaces - {map}
+// @family - {string}
+// @weight - {integer} or {keyword} i.e. 800, bold
+// @style - {keyword} i.e. normal, italic
+
+@font-face {
+  font-family: "MarkOTBook";
+  src: 
+    url("fonts/FontFontMarkOTBook.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

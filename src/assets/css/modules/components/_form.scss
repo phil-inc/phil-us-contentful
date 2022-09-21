@@ -1,0 +1,118 @@
+.form {
+  @include e(group) {
+    margin-bottom: 20px;
+
+    @include for-size(small) {
+      margin-bottom: 30px;
+    }
+  }
+
+  @include e(input) {
+    @include e(input) {
+      width: 100%;
+      outline: none;
+      color: $black;
+      padding: 12px 10px;
+      border-radius: 4px;
+      border: 2px solid $mischka;
+      background-color: transparent;
+      font: normal 500 18px $font-family--secondary;
+
+      &::-moz-placeholder {
+        color: $rolling-stone;
+      }
+
+      &::-webkit-input-placeholder {
+        color: $rolling-stone;
+      }
+
+      &:-ms-input-placeholder {
+        color: $rolling-stone;
+      }
+
+      &::placeholder {
+        color: $rolling-stone;
+      }
+
+      &:focus {
+        border-color: $primary-color;
+      }
+    }
+
+    @include e(error-text) {
+      color: $monza;
+      margin-top: 8px;
+      display: inline-block;
+      font: normal normal 18px $font-family--secondary;
+    }
+
+    @include e(error) {
+      .form__input__input {
+        border-color: $monza;
+      }
+    }
+  }
+
+  @include e(label) {
+    margin-bottom: 10px;
+    display: inline-block;
+    color: $rolling-stone;
+    font: normal normal 18px/1.33 $font-family--secondary;
+
+    @include for-size(small) {
+      line-height: 1.44;
+    }
+  }
+
+  @include e(textarea) {
+    @include e(input) {
+      width: 100%;
+      height: 94px;
+      resize: none;
+      outline: none;
+      color: $black;
+      padding: 12px 10px;
+      border-radius: 4px;
+      border: 2px solid $mischka;
+      background-color: transparent;
+      font: normal 500 18px $font-family--secondary;
+
+      &::-moz-placeholder {
+        color: $rolling-stone;
+      }
+
+      &::-webkit-input-placeholder {
+        color: $rolling-stone;
+      }
+
+      &:-ms-input-placeholder {
+        color: $rolling-stone;
+      }
+
+      &::placeholder {
+        color: $rolling-stone;
+      }
+
+      &:focus {
+        border-color: $primary-color;
+      }
+
+      @include for-size(small) {
+        line-height: 1.44;
+      }
+    }
+
+    @include e(error-text) {
+      color: $monza;
+      margin-top: 8px;
+      display: inline-block;
+      font: normal normal 18px $font-family--secondary;
+    }
+
+    @include e(error) {
+      .form__textarea__input {
+        border-color: $monza;
+      }
+    }
+  }
+}

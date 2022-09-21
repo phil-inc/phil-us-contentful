@@ -1,0 +1,72 @@
+.button {
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  border-radius: 2px;
+  text-align: center;
+  background: transparent;
+
+  &[disabled] {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+
+  @include e(loading-icon) {
+    width: 19px;
+    margin-left: 8px;
+    vertical-align: sub;
+  }
+}
+
+.primary-button {
+  color: $white;
+  border-radius: 2px;
+  background-color: $primary-color;
+  border: 1px solid $primary-color;
+
+  &:hover,
+  &:focus {
+    border-color: $egg-blue;
+    background-color: $egg-blue;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    border-color: $primary-color;
+    background-color: $primary-color;
+  }
+}
+
+.flat-button {
+  color: $primary-color;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &[disabled] {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+.secondary-button {
+  border-radius: 4px;
+  color: $primary-color;
+  background-color: $white;
+  border: 1px solid $primary-color;
+
+  &:hover,
+  &:focus {
+    color: $egg-blue;
+    border-color: $egg-blue;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    border-color: $primary-color;
+  }
+}

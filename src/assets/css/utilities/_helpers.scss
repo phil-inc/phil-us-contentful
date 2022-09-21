@@ -1,0 +1,83 @@
+//Screen reader text-align:
+.srt {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+%clearfix-none {
+  display: inline;
+}
+
+%pseudos {
+  display: block;
+  content: '';
+  position: absolute;
+}
+
+%ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.primary-color {
+  color: $primary-color;
+}
+
+.clearfix {
+  &::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+}
+
+.left {
+  float: left !important;
+}
+
+.right {
+  float: right !important;
+}
+
+.no-display {
+  display: none;
+}
+
+.desktop-view {
+  display: none;
+
+  @include for-size(small) {
+    display: block;
+  }
+}
+
+.mobile-view {
+  display: block;
+
+  @include for-size(small) {
+    display: none;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.cursor--pointer {
+  cursor: pointer;
+}

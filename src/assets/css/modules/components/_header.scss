@@ -1,0 +1,139 @@
+.header {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  position: relative;
+  padding: 16px 0;
+  background-color: $white;
+  transition: background-color 0.3s ease;
+  -moz-box-shadow: 0 1px 2px 0 rgba(141, 141, 148, 0.22);
+  -webkit-box-shadow: 0 1px 2px 0 rgba(141, 141, 148, 0.22);
+  box-shadow: 0 1px 2px 0 rgba(141, 141, 148, 0.22);
+  
+
+  .button__image-close {
+    display: none;
+  }
+
+  &.header--open {
+    background-color: $pale-blue;
+
+    .button__image-hamburger {
+      display: none;
+    }
+
+    .button__image-close {
+      display: inline-block;
+    }
+  }
+
+  @include for-size(small) {
+    position: relative;
+    padding: 28px 0;
+  }
+
+  @include m(fixed-top) {
+    position: fixed;
+    -moz-box-shadow: 0 1px 2px 0 rgba(141, 141, 148, 0.22);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(141, 141, 148, 0.22);
+    box-shadow: 0 1px 2px 0 rgba(141, 141, 148, 0.22);
+
+    @include for-size(small) {
+      box-shadow: none;
+      position: static;
+    }
+  }
+
+  @include e(logo) {
+    display: inline-block;
+    width: 57px;
+    float: left;
+
+    @include for-size(small) {
+      width: 80px;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  @include e(navbar-switch) {
+    float: right;
+    margin-top: 10px;
+  }
+
+  @include e(dropdown) {
+    position: absolute;
+    background: $pale-blue;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 100vh;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+
+    &.header__dropdown--visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @include e(nav) {
+      padding-top: 14px;
+    }
+
+    @include e(item) {
+      padding: 16px 0;
+      border-bottom: 1px solid $mischka;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    @include e(link) {
+      color: $rolling-stone;
+      font-size: 18px;
+      font-family: $font-family--secondary;
+      display: block;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  @include e(nav) {
+    float: right;
+    margin-top: 15px;
+
+    @include e(item) {
+      display: inline-block;
+      margin-right: 16px;
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @include for-size(medium) {
+        margin-right: 48px;
+      }
+    }
+
+    @include e(link) {
+      font-size: 16px;
+      color: $rolling-stone;
+      font-family: $font-family--secondary;
+    }
+  }
+
+  .active {
+    color: $caribbean-green;
+  }
+
+  a {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: $caribbean-green;
+    }
+  }
+}
