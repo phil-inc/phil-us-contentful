@@ -1,12 +1,23 @@
 import React, {useState} from 'react';
 import {useHotkeys} from '@mantine/hooks';
-import type {ColorScheme} from '@mantine/core';
+import type {ColorScheme, MantineThemeOverride} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
 import {CHeader} from './CHeader/CHeader';
 import {CFooter} from './CFooter/CFooter';
 
 type LayoutProps = {
 	children: React.ReactNode;
+};
+
+const theme: MantineThemeOverride = {
+	headings: {
+		fontWeight: 700,
+		sizes: {
+			h1: {
+				fontSize: 82,
+			},
+		},
+	},
 };
 
 export function Layout({children}: LayoutProps) {
@@ -66,9 +77,9 @@ export function Layout({children}: LayoutProps) {
 
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-			<MantineProvider theme={{colorScheme}} withGlobalStyles withNormalizeCSS>
+			<MantineProvider theme={{...theme, colorScheme}} withGlobalStyles withNormalizeCSS>
 				<CHeader links={links} />
-				<Container>{children}</Container>
+				<Container size={'xl'}>{children}</Container>
 				<CFooter links={footerLinks} />
 			</MantineProvider>
 		</ColorSchemeProvider>
