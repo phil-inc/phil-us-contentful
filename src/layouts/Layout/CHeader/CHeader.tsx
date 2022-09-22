@@ -106,6 +106,8 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 	React.useEffect(() => {
 		const navBar = document.querySelector('.navbar');
 		const allLi = navBar.querySelectorAll('li');
+		const INDICATOR_SIZE = 20;
+		const INITIAL_OFFSET = 25;
 
 		let previousEl;
 
@@ -124,10 +126,19 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 
 					li.classList.add('active');
 
-					indicator.style.transform = `translate(calc(${index * 190}px), calc(${-20}px))`;
+					indicator.style.transform = `translate(calc(${
+						li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
+					}px), calc(${-20}px))`;
 				}
 			});
 		});
+
+		// TODO: cleanup for dev purpose only, to be removed on prod
+		return () => {
+			allLi.forEach(li => {
+				li.removeEventListener('click');
+			});
+		};
 	}, []);
 
 	return (
