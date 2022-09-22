@@ -20,6 +20,8 @@ module.exports = {
 	plugins: [
 		'gatsby-plugin-mantine',
 		`gatsby-plugin-image`,
+		`gatsby-plugin-sharp`,
+		`gatsby-transformer-sharp`,
 		{
 			resolve: 'gatsby-plugin-root-import',
 			options: rootDirsConfig,
@@ -35,6 +37,13 @@ module.exports = {
 			resolve: `gatsby-plugin-sass`,
 			options: {
 				implementation: require('node-sass'),
+			},
+		},
+		{
+			resolve: `gatsby-source-filesystem`,
+			options: {
+				name: `images`,
+				path: `${__dirname}/src/assets/images`,
 			},
 		},
 	],

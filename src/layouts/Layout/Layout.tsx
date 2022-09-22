@@ -10,14 +10,22 @@ type LayoutProps = {
 };
 
 const theme: MantineThemeOverride = {
+	colors: {
+		brand: ['#00201F'],
+	},
 	headings: {
 		fontWeight: 700,
 		sizes: {
 			h1: {
 				fontSize: 82,
 			},
+			h2: {
+				fontSize: 52,
+			},
 		},
+		fontFamily: 'Raleway',
 	},
+	fontFamily: 'Lato',
 };
 
 export function Layout({children}: LayoutProps) {
@@ -78,9 +86,13 @@ export function Layout({children}: LayoutProps) {
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
 			<MantineProvider theme={{...theme, colorScheme}} withGlobalStyles withNormalizeCSS>
-				<CHeader links={links} />
-				<Container size={'xl'}>{children}</Container>
-				<CFooter links={footerLinks} />
+				<Container size={1920}>
+					<CHeader links={links} />
+					<Container fluid px={100}>
+						{children}
+					</Container>
+					<CFooter links={footerLinks} />
+				</Container>
 			</MantineProvider>
 		</ColorSchemeProvider>
 	);
