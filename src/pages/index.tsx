@@ -17,6 +17,7 @@ import {
 } from '@mantine/core';
 import {StaticImage} from 'gatsby-plugin-image';
 import {Article} from 'components/common/Article';
+import {Testimonial} from 'components/common/Testimonial';
 
 const useStyles = createStyles(theme => ({
 	inner: {
@@ -117,7 +118,7 @@ export default function HomePage() {
 			</Grid>
 
 			{/* Third Section */}
-			<Container fluid ml={-116} px={100} style={{background: '#f4f4f4', minHeight: 1080, minWidth: 1920}}>
+			<Container fluid mb={108} ml={-116} px={100} style={{background: '#f4f4f4', minHeight: 1080, minWidth: 1920}}>
 				<Center mb={62}>
 					<Title order={2} mt={112}>
 						How it Works
@@ -132,6 +133,64 @@ export default function HomePage() {
 					</Grid.Col>
 					<Grid.Col span={4}>
 						<Article title='Patients' color='yellow' />
+					</Grid.Col>
+				</Grid>
+			</Container>
+
+			{/* Fourth Section */}
+			<Grid gutter={'xl'} align='center' mb={160}>
+				<Grid.Col lg={6} md={6} sm={12}>
+					<Title order={2} style={{maxWidth: 601}}>
+						Trusted by Innovative Pharma Manufacturers
+					</Title>
+					<Text mb={16}>companies logos go here</Text>
+				</Grid.Col>
+				<Grid.Col lg={6} md={6} sm={12}>
+					<Container style={{background: '#f4f4f4'}}>
+						<Center>
+							<StaticImage
+								src='../assets/images/index_hero.png'
+								alt='circles inside circles'
+								className='hero-img'
+								placeholder='blurred'
+								layout='constrained'
+							></StaticImage>
+						</Center>
+					</Container>
+				</Grid.Col>
+			</Grid>
+
+			{/* Fifth Section */}
+			<Container fluid mb={108} ml={-116} px={100} style={{background: '#29a5b4', minHeight: 1080, minWidth: 1920}}>
+				<Center mb={62}>
+					<Title order={2} mt={112} color='white'>
+						Testimonials
+					</Title>
+				</Center>
+				<Grid>
+					<Grid.Col span={6}>
+						<Testimonial
+							icon='oyster point'
+							author='Lorem ipsum dolor sit amet'
+							designation='Consectetur adipiscing elit.'
+						>
+							“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim orci, pellentesque eu
+							tortor at, vestibulum faucibus nisi. Nulla vel lacus ac elit elementum maximus malesuada ut arcu.
+							Duis vitae convallis purus. Sed dui metus, egestas pharetra ante ut, imperdiet sollicitudin lacus.
+							Mauris iaculis risus at lectus cursus euismod eu vitae libero.”
+						</Testimonial>
+					</Grid.Col>
+					<Grid.Col span={6}>
+						<Testimonial
+							icon='impel'
+							author='Lorem ipsum dolor sit amet'
+							designation='Consectetur adipiscing elit.'
+						>
+							“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim orci, pellentesque eu
+							tortor at, vestibulum faucibus nisi. Nulla vel lacus ac elit elementum maximus malesuada ut arcu.
+							Duis vitae convallis purus. Sed dui metus, egestas pharetra ante ut, imperdiet sollicitudin lacus.
+							Mauris iaculis risus at lectus cursus euismod eu vitae libero.”
+						</Testimonial>
 					</Grid.Col>
 				</Grid>
 			</Container>
