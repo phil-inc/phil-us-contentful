@@ -22,6 +22,9 @@ const theme: MantineThemeOverride = {
 			h2: {
 				fontSize: 52,
 			},
+			h3: {
+				fontSize: 35,
+			},
 		},
 		fontFamily: 'Raleway',
 	},

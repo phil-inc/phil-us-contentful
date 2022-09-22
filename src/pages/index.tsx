@@ -1,8 +1,22 @@
 import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 // Import {ColorSchemeToggle} from 'components/ColorSchemeToggle/ColorSchemeToggle';
-import {Button, Center, Container, createStyles, Grid, Image, List, Text, Title} from '@mantine/core';
+import {
+	Button,
+	Center,
+	Container,
+	createStyles,
+	Divider,
+	Grid,
+	Group,
+	Image,
+	List,
+	Paper,
+	Text,
+	Title,
+} from '@mantine/core';
 import {StaticImage} from 'gatsby-plugin-image';
+import {Article} from 'components/common/Article';
 
 const useStyles = createStyles(theme => ({
 	inner: {
@@ -46,7 +60,7 @@ export default function HomePage() {
 			</Grid>
 
 			{/* Second Section */}
-			<Grid gutter={'xl'} justify='space-between' align={'flex-end'}>
+			<Grid mb={134} gutter={'xl'} justify='space-between' align={'flex-end'}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
@@ -101,6 +115,26 @@ export default function HomePage() {
 					<Button color={'dark'}>Lean More</Button>
 				</Grid.Col>
 			</Grid>
+
+			{/* Third Section */}
+			<Container fluid ml={-116} px={100} style={{background: '#f4f4f4', minHeight: 1080, minWidth: 1920}}>
+				<Center mb={62}>
+					<Title order={2} mt={112}>
+						How it Works
+					</Title>
+				</Center>
+				<Grid>
+					<Grid.Col span={4}>
+						<Article title='Life Sciences' />
+					</Grid.Col>
+					<Grid.Col span={4}>
+						<Article title='Healthcare Providers' color='blue' />
+					</Grid.Col>
+					<Grid.Col span={4}>
+						<Article title='Patients' color='yellow' />
+					</Grid.Col>
+				</Grid>
+			</Container>
 		</Layout>
 	);
 }
