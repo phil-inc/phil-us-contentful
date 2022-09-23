@@ -39,7 +39,7 @@ export const Testimonial: FC<TestimonialProps> = ({icon, children, author, desig
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Text>{icon}</Text>
 			{children}
-			<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
+			<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
 			<Text color={'#00827E'} weight={700} className={classes.author}>
 				{author}
 			</Text>
