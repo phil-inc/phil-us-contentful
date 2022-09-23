@@ -236,7 +236,7 @@ export default function HomePage() {
 			</Container>
 
 			{/* Seventh Section */}
-			<Container fluid mb={108} ml={-116} px={116} style={{background: '#f4f4f4', minHeight: 256, minWidth: 1920}}>
+			<Container fluid ml={-116} px={116} style={{background: '#f4f4f4', minHeight: 256, minWidth: 1920}}>
 				<Center>
 					<Schedule title='Schedule a Demo'>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
