@@ -96,7 +96,6 @@ export default function Patients() {
 			</Grid>
 
 			{/* Second Section */}
-			{/* <Container fluid m={0} p={0} mb={50}> */}
 			<Expanded>
 				<Center>
 					<Title mb={64} order={2}>

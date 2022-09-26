@@ -8,8 +8,7 @@ const useStyles = createStyles(theme => ({
 		position: 'relative',
 		overflow: 'hidden',
 		padding: '32px',
-		maxWidth: 1366,
-		width: '100vw',
+		width: '90%',
 		margin: '0 auto',
 		marginTop: 53,
 
@@ -43,7 +42,7 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-type ScheduleProps = {
+type InfoBoxProps = {
 	title?: string;
 	children?: React.ReactNode;
 	icon?: string;
@@ -52,13 +51,13 @@ type ScheduleProps = {
 	color?: 'yellow';
 };
 
-export const Schedule: FC<ScheduleProps> = ({title, icon, children, buttonText, noButton, color}) => {
+export const InfoBox: FC<InfoBoxProps> = ({title, icon, children, buttonText, noButton, color}) => {
 	const {classes} = useStyles();
 
 	return (
 		<Paper radius={0} className={classNames(classes.card, color === 'yellow' ? classes.yellow : null)}>
 			<Grid align={'center'}>
-				<Grid.Col lg={10} sm={12}>
+				<Grid.Col lg={12} sm={12}>
 					<Container m={0}>
 						<Title order={3} mt='md'>
 							{title}
