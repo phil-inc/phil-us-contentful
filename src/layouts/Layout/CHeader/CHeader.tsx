@@ -142,7 +142,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 	}, []);
 
 	return (
-		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={120}>
+		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
 					<div>logo here</div>
