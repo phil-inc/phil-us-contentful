@@ -121,7 +121,13 @@ export default function HomePage() {
 			</Grid>
 
 			{/* Third Section */}
-			<Container fluid mb={108} ml={-116} px={100} style={{background: '#f4f4f4', minHeight: 1080, minWidth: 1920}}>
+			<Container
+				fluid
+				mb={108}
+				ml={-116}
+				px={100}
+				style={{background: '#f4f4f4', minHeight: 1080, minWidth: '100vw'}}
+			>
 				<Center mb={62}>
 					<Title order={2} mt={112}>
 						How it Works
@@ -173,9 +179,9 @@ export default function HomePage() {
 			</Grid>
 
 			{/* Fifth Section */}
-			<Container fluid mb={108} ml={-116} px={100} style={{background: '#29a5b4', minHeight: 813, minWidth: 1920}}>
+			<Container fluid mb={108} ml={-116} p={100} style={{background: '#29a5b4', minHeight: 813, minWidth: '100vw'}}>
 				<Center mb={62}>
-					<Title order={2} mt={112} color='white'>
+					<Title order={2} mt={12} color='white'>
 						Testimonials
 					</Title>
 				</Center>
@@ -238,7 +244,7 @@ export default function HomePage() {
 			{/* Seventh Section */}
 			<Container fluid ml={-116} px={116} style={{background: '#f4f4f4', minHeight: 256, minWidth: 1920}}>
 				<Center>
-					<Schedule title='Schedule a Demo'>
+					<Schedule title='Schedule a Demo' buttonText='Schedule demo'>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 						molestie.
 					</Schedule>

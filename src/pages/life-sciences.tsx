@@ -36,6 +36,9 @@ const useStyles = createStyles(theme => ({
 	percentage: {
 		fontFamily: 'Lato',
 	},
+	description: {
+		fontSize: '35px',
+	},
 }));
 
 export default function LifeSciences() {
@@ -67,8 +70,16 @@ export default function LifeSciences() {
 				</Grid.Col>
 			</Grid>
 
+			{/* TODO: Finalize Expanded component */}
 			{/* Second Section */}
-			<Container fluid mb={108} ml={-116} px={100} py={128} style={{background: '#f4f4f4', minWidth: 1920}}>
+			<Container
+				fluid
+				mb={108}
+				ml={-116}
+				px={100}
+				py={128}
+				style={{background: '#f4f4f4', maxWidth: 1920, width: '100vw'}}
+			>
 				<SimpleGrid
 					cols={5}
 					spacing='lg'
@@ -91,7 +102,7 @@ export default function LifeSciences() {
 							90%
 						</Title>
 
-						<Text color='dark' size={32}>
+						<Text color='dark' className={classes.description}>
 							patient enrollment
 						</Text>
 					</Card>
@@ -108,7 +119,7 @@ export default function LifeSciences() {
 							5x
 						</Title>
 
-						<Text color='dark' size={32}>
+						<Text color='dark' className={classes.description}>
 							RX refill adherence improvement
 						</Text>
 					</Card>
@@ -125,7 +136,7 @@ export default function LifeSciences() {
 							2x
 						</Title>
 
-						<Text color='dark' size={32}>
+						<Text color='dark' className={classes.description}>
 							increase in covered dispenses
 						</Text>
 					</Card>
@@ -142,7 +153,7 @@ export default function LifeSciences() {
 							6x
 						</Title>
 
-						<Text color='dark' size={32}>
+						<Text color='dark' className={classes.description}>
 							net sales growth
 						</Text>
 					</Card>
@@ -159,7 +170,7 @@ export default function LifeSciences() {
 							40x
 						</Title>
 
-						<Text color='dark' size={32}>
+						<Text color='dark' className={classes.description}>
 							return on investment
 						</Text>
 					</Card>
@@ -167,41 +178,45 @@ export default function LifeSciences() {
 			</Container>
 
 			{/* Third Section */}
-			<Container fluid mb={108} ml={-116} px={100} style={{background: '#f4f4f4', minHeight: 1080, minWidth: 1920}}>
-				<Center mb={62}>
-					<Title order={2} mt={112}>
-						How it Works
-					</Title>
-				</Center>
-				<Grid>
-					<Grid.Col span={4}>
-						<Article title='Life Sciences'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-							et dolore magna aliqua.
-						</Article>
-					</Grid.Col>
-					<Grid.Col span={4}>
-						<Article title='Healthcare Providers' color='blue'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-							et dolore magna aliqua.
-						</Article>
-					</Grid.Col>
-					<Grid.Col span={4}>
-						<Article title='Patients' color='yellow'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-							et dolore magna aliqua.
-						</Article>
-					</Grid.Col>
-				</Grid>
-			</Container>
-
-			{/* Fourth Section */}
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={60} align='center' mb={160}>
+				<Grid.Col lg={6} md={6} sm={12}>
+					<Container style={{background: '#f4f4f4'}}>
+						<Center>
+							<StaticImage
+								src='../assets/images/index_hero.png'
+								alt='circles inside circles'
+								className='hero-img'
+								placeholder='blurred'
+								layout='constrained'
+							></StaticImage>
+						</Center>
+					</Container>
+				</Grid.Col>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Title order={2} style={{maxWidth: 601}}>
-						Trusted by Innovative Pharma Manufacturers
+						Launch
 					</Title>
-					<Text mb={16}>companies logos go here</Text>
+					<Text mb={25}>
+						Manufacturers navigate complex challenges when launching a new drug and getting market access in
+						place. Phil’s expertise can guide you through this process and help drive as many covered scripts as
+						possible. Our end-to-end solution offers pre-launch strategy support, wholesaling options to save you
+						money, and the data visibility to optimize your program.
+					</Text>
+					<Button color='dark'>Learn more</Button>
+				</Grid.Col>
+			</Grid>
+
+			{/* Fourth Section */}
+			<Grid gutter={60} align='center' mb={160}>
+				<Grid.Col lg={6} md={6} sm={12}>
+					<Title order={2} style={{maxWidth: 601}}>
+						Mid-cycle
+					</Title>
+					<Text mb={25}>
+						If your brand is struggling to convert market access to coverage, turn to Phil. Phil’s platform can
+						improve overall coverage, refill adherence and combat against upside down economics
+					</Text>
+					<Button color='dark'>Learn more</Button>
 				</Grid.Col>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Container style={{background: '#f4f4f4'}}>
@@ -219,74 +234,39 @@ export default function LifeSciences() {
 			</Grid>
 
 			{/* Fifth Section */}
-			<Container fluid mb={108} ml={-116} px={100} style={{background: '#29a5b4', minHeight: 813, minWidth: 1920}}>
-				<Center mb={62}>
-					<Title order={2} mt={112} color='white'>
-						Testimonials
+			<Grid gutter={60} align='center' mb={160}>
+				<Grid.Col lg={6} md={6} sm={12}>
+					<Container style={{background: '#f4f4f4'}}>
+						<Center>
+							<StaticImage
+								src='../assets/images/index_hero.png'
+								alt='circles inside circles'
+								className='hero-img'
+								placeholder='blurred'
+								layout='constrained'
+							></StaticImage>
+						</Center>
+					</Container>
+				</Grid.Col>
+				<Grid.Col lg={6} md={6} sm={12}>
+					<Title order={2} style={{maxWidth: 601}}>
+						Loss of exclusivity
 					</Title>
-				</Center>
-				<Grid>
-					<Grid.Col span={6}>
-						<Testimonial
-							icon='oyster point'
-							author='Lorem ipsum dolor sit amet'
-							designation='Consectetur adipiscing elit.'
-						>
-							“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim orci, pellentesque eu
-							tortor at, vestibulum faucibus nisi. Nulla vel lacus ac elit elementum maximus malesuada ut arcu.
-							Duis vitae convallis purus. Sed dui metus, egestas pharetra ante ut, imperdiet sollicitudin lacus.
-							Mauris iaculis risus at lectus cursus euismod eu vitae libero.”
-						</Testimonial>
-					</Grid.Col>
-					<Grid.Col span={6}>
-						<Testimonial
-							icon='impel'
-							author='Lorem ipsum dolor sit amet'
-							designation='Consectetur adipiscing elit.'
-						>
-							“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim orci, pellentesque eu
-							tortor at, vestibulum faucibus nisi. Nulla vel lacus ac elit elementum maximus malesuada ut arcu.
-							Duis vitae convallis purus. Sed dui metus, egestas pharetra ante ut, imperdiet sollicitudin lacus.
-							Mauris iaculis risus at lectus cursus euismod eu vitae libero.”
-						</Testimonial>
-					</Grid.Col>
-				</Grid>
-			</Container>
+					<Text mb={25}>
+						If your brand-name drug has experienced a loss of exclusivity or is approaching the time it will no
+						longer be protected from generic drug competition, Phil can help you navigate this uncertainty. Learn
+						how Phil’s technology puts you back in control of your brand economics
+					</Text>
+					<Button color='dark'>Learn more</Button>
+				</Grid.Col>
+			</Grid>
 
 			{/* Sixth Section */}
-
-			<Container fluid m={0} p={0} mb={50}>
+			<Container fluid ml={-116} p={116} style={{background: '#f4f4f4', maxWidth: 1920, width: '100vw'}}>
 				<Center>
-					<Title mb={64} order={2}>
-						Featured Resources
-					</Title>
-				</Center>
-
-				<Grid mb={52}>
-					<Grid.Col span={6}>
-						<Featured title='Lorem Ipsum Dolor'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
-							molestie.
-						</Featured>
-					</Grid.Col>
-					<Grid.Col span={6}>
-						<Featured title='Lorem Ipsum Dolor'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
-							molestie.
-						</Featured>
-					</Grid.Col>
-				</Grid>
-				<Center>
-					<Button color={'dark'}>Resources</Button>
-				</Center>
-			</Container>
-
-			{/* Seventh Section */}
-			<Container fluid ml={-116} px={116} style={{background: '#f4f4f4', minHeight: 256, minWidth: 1920}}>
-				<Center>
-					<Schedule title='Schedule a Demo'>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
-						molestie.
+					<Schedule title='Lorem Ipsum Dolor' buttonText='Contact us'>
+						For better financials on a per script basis, unprecedented transparency into the prescription life
+						cycle and real-time visibility and control over your channels, contact us.
 					</Schedule>
 				</Center>
 			</Container>

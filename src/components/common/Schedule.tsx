@@ -7,10 +7,9 @@ const useStyles = createStyles(theme => ({
 	card: {
 		position: 'relative',
 		overflow: 'hidden',
-		padding: '0 32px',
+		padding: '32px',
 		maxWidth: 1366,
-		maxHeight: 150,
-		width: '100%',
+		width: '100vw',
 		margin: '0 auto',
 		marginTop: 53,
 
@@ -48,15 +47,16 @@ type ScheduleProps = {
 	title?: string;
 	children?: React.ReactNode;
 	icon?: string;
+	buttonText?: string;
 };
 
-export const Schedule: FC<ScheduleProps> = ({title, icon, children}) => {
+export const Schedule: FC<ScheduleProps> = ({title, icon, children, buttonText}) => {
 	const {classes} = useStyles();
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid align={'center'}>
-				<Grid.Col span={10}>
+				<Grid.Col lg={10} sm={12}>
 					<Container m={0}>
 						<Title order={3} mt='md'>
 							{title}
@@ -67,9 +67,9 @@ export const Schedule: FC<ScheduleProps> = ({title, icon, children}) => {
 						</Text>
 					</Container>
 				</Grid.Col>
-				<Grid.Col span={2}>
+				<Grid.Col lg={2} sm={12}>
 					<Center>
-						<Button color={'dark'}>Schedule demo</Button>
+						<Button color={'dark'}>{buttonText}</Button>
 					</Center>
 				</Grid.Col>
 			</Grid>
