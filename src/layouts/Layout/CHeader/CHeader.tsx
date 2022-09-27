@@ -15,10 +15,12 @@ import {
 	SimpleGrid,
 	Divider,
 	List,
+	AspectRatio,
 } from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
 import {IconChevronDown} from '@tabler/icons';
 import classNames from 'classnames';
+import {StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
 
 import './header.css';
@@ -145,7 +147,17 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
-					<div>logo here</div>
+					<Container m={0} p={0}>
+						<StaticImage
+							width={124}
+							height={39}
+							src='../../../assets/images/logo.png'
+							alt='logo'
+							className='logo'
+							placeholder='blurred'
+							layout='constrained'
+						></StaticImage>
+					</Container>
 					<List listStyleType={'none'}>
 						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
 							<Text>Life sciences</Text>
