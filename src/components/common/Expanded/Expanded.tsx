@@ -6,9 +6,15 @@ type ExpandedProps = {
 	children: React.ReactNode;
 	background?: string;
 	minHeight?: number | string;
+	noMargin?: boolean;
 };
 
-const Expanded: React.FC<ExpandedProps> = ({children, background = '#F4F4F4', minHeight = '100%'}) => {
+const Expanded: React.FC<ExpandedProps> = ({
+	children,
+	background = '#F4F4F4',
+	minHeight = '100%',
+	noMargin = false,
+}) => {
 	const useStyles = createStyles(theme => ({
 		container: {
 			background,
@@ -17,7 +23,7 @@ const Expanded: React.FC<ExpandedProps> = ({children, background = '#F4F4F4', mi
 			width: '100vw',
 			padding: 116,
 			marginLeft: -116,
-			marginBottom: 100,
+			marginBottom: noMargin ? 0 : 100,
 		},
 	}));
 

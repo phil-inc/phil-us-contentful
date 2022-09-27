@@ -8,7 +8,7 @@ const useStyles = createStyles(theme => ({
 		position: 'relative',
 		overflow: 'hidden',
 		padding: '32px',
-		width: '90%',
+		width: '80%',
 		margin: '0 auto',
 		marginTop: 53,
 
