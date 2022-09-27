@@ -89,7 +89,7 @@ export default function HomePage() {
 	return (
 		<Layout>
 			{/* Hero Section */}
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={'xl'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Title>{firstTwoColumnSection.title}</Title>
 					<Text mb={16}>{firstTwoColumnSection.description.description}</Text>
@@ -99,11 +99,11 @@ export default function HomePage() {
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
@@ -111,16 +111,16 @@ export default function HomePage() {
 			</Grid>
 
 			{/* Second Section */}
-			<Grid mb={134} gutter={'xl'} justify='space-between' align={'flex-end'}>
+			<Grid mb={134} gutter={'xl'} justify="space-between" align={'flex-end'}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
@@ -168,7 +168,7 @@ export default function HomePage() {
 			</Container>
 
 			{/* Fourth Section */}
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={'xl'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Title order={2} style={{maxWidth: 601}}>
 						Trusted by Innovative Pharma Manufacturers
@@ -179,11 +179,11 @@ export default function HomePage() {
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
@@ -193,13 +193,13 @@ export default function HomePage() {
 			{/* Fifth Section */}
 			<Container fluid mb={108} ml={-116} p={100} style={{background: '#29a5b4', minHeight: 813, minWidth: '100vw'}}>
 				<Center mb={62}>
-					<Title order={2} mt={12} color='white'>
+					<Title order={2} mt={12} color="white">
 						Testimonials
 					</Title>
 				</Center>
 				<Grid>
 					{testimonialsSection.map(testimonial => (
-						<Testimonial icon='oyster point' author={testimonial.author} designation={testimonial.designation}>
+						<Testimonial icon="oyster point" author={testimonial.author} designation={testimonial.designation}>
 							{testimonial.description.description}
 						</Testimonial>
 					))}
@@ -217,13 +217,13 @@ export default function HomePage() {
 
 				<Grid mb={52}>
 					<Grid.Col span={6}>
-						<Featured title='Lorem Ipsum Dolor'>
+						<Featured title="Lorem Ipsum Dolor">
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 							molestie.
 						</Featured>
 					</Grid.Col>
 					<Grid.Col span={6}>
-						<Featured title='Lorem Ipsum Dolor'>
+						<Featured title="Lorem Ipsum Dolor">
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 							molestie.
 						</Featured>
@@ -237,7 +237,7 @@ export default function HomePage() {
 			{/* Seventh Section */}
 			<Container fluid ml={-116} px={116} style={{background: '#f4f4f4', minHeight: 256, minWidth: 1920}}>
 				<Center>
-					<Schedule title='Schedule a Demo' buttonText='Schedule demo'>
+					<Schedule title="Schedule a Demo" buttonText="Schedule demo">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 						molestie.
 					</Schedule>
