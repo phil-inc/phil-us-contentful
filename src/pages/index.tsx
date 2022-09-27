@@ -75,16 +75,20 @@ export default function HomePage() {
 						description
 					}
 				}
+				featuredSection {
+					description {
+						description
+					}
+					title
+				}
 			}
 		}
 	`);
 
-	const {firstTwoColumnSection} = data.contentfulHomePage;
-	const {secondTwoColumnSection} = data.contentfulHomePage;
-	const {articleSection} = data.contentfulHomePage;
-	const {testimonialsSection} = data.contentfulHomePage;
+	const {firstTwoColumnSection, secondTwoColumnSection, articleSection, testimonialsSection, featuredSection} =
+		data.contentfulHomePage;
 
-	console.log(testimonialsSection);
+	console.log(featuredSection);
 
 	return (
 		<Layout>
@@ -216,18 +220,11 @@ export default function HomePage() {
 				</Center>
 
 				<Grid mb={52}>
-					<Grid.Col span={6}>
-						<Featured title="Lorem Ipsum Dolor">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
-							molestie.
-						</Featured>
-					</Grid.Col>
-					<Grid.Col span={6}>
-						<Featured title="Lorem Ipsum Dolor">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
-							molestie.
-						</Featured>
-					</Grid.Col>
+					{featuredSection.map(featured => (
+						<Grid.Col span={6}>
+							<Featured title={featured.title}>{featured.description.description}</Featured>
+						</Grid.Col>
+					))}
 				</Grid>
 				<Center>
 					<Button color={'dark'}>Resources</Button>

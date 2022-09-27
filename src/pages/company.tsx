@@ -53,7 +53,7 @@ const Company = () => {
 	return (
 		<Layout>
 			{/* Hero Section */}
-			<Grid gutter={'xs'} align='center' mb={160}>
+			<Grid gutter={'xs'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12} orderSm={2} orderLg={1}>
 					<Box sx={{maxWidth: 680}}>
 						<Title order={2} mb={8}>
@@ -62,7 +62,7 @@ const Company = () => {
 						<Box sx={{maxWidth: 550}}>
 							<Title order={3}>Enter your email for this account to reset your password:</Title>
 						</Box>
-						<Divider variant='dashed' size={2} my={25} mb={40} />
+						<Divider variant="dashed" size={2} my={25} mb={40} />
 						<form
 							onSubmit={form.onSubmit(values => {
 								console.log(values);
@@ -73,22 +73,22 @@ const Company = () => {
 								radius={0}
 								withAsterisk
 								required
-								label='Email'
-								placeholder='your@email.com'
+								label="Email"
+								placeholder="your@email.com"
 								{...form.getInputProps('email')}
 							/>
-							<Group position='left' mt='md'>
-								<Button type='submit' color={'dark'}>
+							<Group position="left" mt="md">
+								<Button type="submit" color={'dark'}>
 									Reset password
 								</Button>
 							</Group>
-							<Group position='left' mt='md' mb={110}>
-								<Text size={'lg'} color='#5ABEA4' italic weight={'bold'}>
+							<Group position="left" mt="md" mb={110}>
+								<Text size={'lg'} color="#5ABEA4" italic weight={'bold'}>
 									Return to Login
 								</Text>
 							</Group>
 							<Box sx={{maxWidth: 613}}>
-								<Text size={'lg'} color='dimmed'>
+								<Text size={'lg'} color="dimmed">
 									By proceeding, you agree to our terms of use, privacy policy and HIPAA policy.. Version
 									5.80.0
 								</Text>
@@ -100,11 +100,11 @@ const Company = () => {
 					<Container className={classes.imageWrapper}>
 						<Container className={classes.placeholderImage}>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Container>
 					</Container>

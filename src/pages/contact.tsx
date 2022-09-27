@@ -74,7 +74,7 @@ const Contact = () => {
 	return (
 		<Layout>
 			{/* Hero Section */}
-			<Grid gutter={'xs'} align='center' mb={160} mt={-70}>
+			<Grid gutter={'xs'} align="center" mb={160} mt={-70}>
 				<Grid.Col lg={6} md={6} sm={12} orderSm={2} orderLg={1}>
 					<Box sx={{maxWidth: 680}}>
 						<Title order={2} mb={8}>
@@ -83,37 +83,37 @@ const Contact = () => {
 						<Box sx={{maxWidth: 550}}>
 							<Title order={3}>Start a conversation</Title>
 						</Box>
-						<Divider variant='dashed' size={2} my={25} mb={40} />
+						<Divider variant="dashed" size={2} my={25} mb={40} />
 						<form
 							onSubmit={form.onSubmit(values => {
 								console.log(values);
 							})}
 						>
 							<SimpleGrid cols={2} breakpoints={[{maxWidth: 'sm', cols: 1}]}>
-								<TextInput label='Your name' placeholder='Your name' />
-								<TextInput label='Your email' placeholder='hello@mantine.dev' required />
+								<TextInput label="Your name" placeholder="Your name" />
+								<TextInput label="Your email" placeholder="hello@mantine.dev" required />
 							</SimpleGrid>
 
-							<TextInput mt='md' label='Subject' placeholder='Subject' required />
+							<TextInput mt="md" label="Subject" placeholder="Subject" required />
 
 							<Textarea
-								mt='md'
-								label='Your message'
-								placeholder='Please include all relevant information'
+								mt="md"
+								label="Your message"
+								placeholder="Please include all relevant information"
 								minRows={3}
 							/>
-							<Group position='left' mt='md'>
-								<Button type='submit' color={'dark'}>
+							<Group position="left" mt="md">
+								<Button type="submit" color={'dark'}>
 									Submit
 								</Button>
 							</Group>
-							<Group position='left' mt='md' mb={110}>
-								<Text size={'lg'} color='#5ABEA4' italic weight={'bold'}>
+							<Group position="left" mt="md" mb={110}>
+								<Text size={'lg'} color="#5ABEA4" italic weight={'bold'}>
 									Return to Login
 								</Text>
 							</Group>
 							<Box sx={{maxWidth: 613}}>
-								<Text size={'lg'} color='dimmed'>
+								<Text size={'lg'} color="dimmed">
 									By proceeding, you agree to our terms of use, privacy policy and HIPAA policy.. Version
 									5.80.0
 								</Text>
@@ -125,16 +125,16 @@ const Contact = () => {
 					<Container className={classes.imageWrapper}>
 						<Container className={classes.placeholderImage}>
 							<StaticImage
-								src='../assets/images/map.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/map.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Container>
 					</Container>
 					<Box className={classes.infoBox}>
-						<InfoBox title='Phil, Inc.' noButton>
+						<InfoBox title="Phil, Inc." noButton>
 							234 Front Street, FL 4, San Francisco, California 94111
 						</InfoBox>
 					</Box>
@@ -144,7 +144,7 @@ const Contact = () => {
 			{/* Second Section */}
 			<Expanded noMargin>
 				<Center>
-					<Schedule title='Schedule a Demo' buttonText='Schedule demo'>
+					<Schedule title="Schedule a Demo" buttonText="Schedule demo">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 						molestie.
 					</Schedule>
@@ -152,9 +152,9 @@ const Contact = () => {
 			</Expanded>
 
 			{/* Third Section */}
-			<Expanded background='#00827E' noMargin>
+			<Expanded background="#00827E" noMargin>
 				<Center mb={62}>
-					<Title order={2} mt={12} color='white'>
+					<Title order={2} mt={12} color="white">
 						Locations
 					</Title>
 				</Center>
@@ -163,16 +163,16 @@ const Contact = () => {
 						<CardWithImage
 							image={
 								<StaticImage
-									src='../assets/images/newYork.png'
-									alt='person'
+									src="../assets/images/newYork.png"
+									alt="person"
 									className={classes.testimonialImage}
-									placeholder='blurred'
-									layout='fullWidth'
+									placeholder="blurred"
+									layout="fullWidth"
 								></StaticImage>
 							}
 						>
 							<Text className={classes.title}>New York - Phil</Text>
-							<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+							<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
 							<Text className={classes.description}>234 Front Street, FL 4</Text>
 							<Text className={classes.description}>San Francisco, California 94111</Text>
 						</CardWithImage>
@@ -181,16 +181,16 @@ const Contact = () => {
 						<CardWithImage
 							image={
 								<StaticImage
-									src='../assets/images/philadelphia.png'
-									alt='person'
+									src="../assets/images/philadelphia.png"
+									alt="person"
 									className={classes.testimonialImage}
-									placeholder='blurred'
-									layout='fullWidth'
+									placeholder="blurred"
+									layout="fullWidth"
 								></StaticImage>
 							}
 						>
 							<Text className={classes.title}>Philadelphia - Phil</Text>
-							<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+							<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
 							<Text className={classes.description}>234 Front Street, FL 4</Text>
 							<Text className={classes.description}>San Francisco, California 94111</Text>
 						</CardWithImage>
