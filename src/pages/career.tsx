@@ -17,9 +17,11 @@ import {Icon2fa} from '@tabler/icons';
 import CareerBlock from 'components/career/CareerBlock';
 import {InfoBox} from 'components/common/InfoBox';
 import {Schedule} from 'components/common/Schedule';
+import {graphql} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import {Layout} from 'layouts/Layout/Layout';
 import React from 'react';
+import type {ContentfulCareerPageType} from 'types/careerPage';
 
 const useStyles = createStyles(theme => ({
 	imageWrapper: {
@@ -39,8 +41,16 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-const Career = () => {
+type CareerProps = {
+	data: {allContentfulCareerPage: {nodes: ContentfulCareerPageType[]}};
+};
+
+const Career: React.FC<CareerProps> = ({data}) => {
 	const {classes} = useStyles();
+	const {
+		allContentfulCareerPage: {nodes},
+	} = data;
+
 	const form = useForm({
 		initialValues: {
 			email: '',
@@ -59,8 +69,9 @@ const Career = () => {
 					<Title order={2} mb={8}>
 						Careers at Phil
 					</Title>
-					<CareerBlock title={'Operations'} />
-					<CareerBlock title={'Technical'} />
+					{nodes.map(
+						({field, listings}) => Boolean(listings) && <CareerBlock title={field} listings={listings} />,
+					)}
 				</Grid.Col>
 				<Grid.Col lg={6} md={6} sm={12} orderSm={1} orderLg={2}>
 					<Container className={classes.imageWrapper}>
@@ -79,5 +90,22 @@ const Career = () => {
 		</Layout>
 	);
 };
+
+export const careerPageQuery = graphql`
+	query {
+		allContentfulCareerPage(filter: {node_locale: {eq: "en-US"}}) {
+			nodes {
+				field
+				id
+				listings {
+					id
+					location
+					link
+					title
+				}
+			}
+		}
+	}
+`;
 
 export default Career;

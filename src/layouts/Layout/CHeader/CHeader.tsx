@@ -20,6 +20,7 @@ import {
 import {useDisclosure} from '@mantine/hooks';
 import {IconChevronDown} from '@tabler/icons';
 import classNames from 'classnames';
+import {Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
 
@@ -53,14 +54,15 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		width: '100vw',
 		background: '#00827E',
 	},
-
-	navLink: {
-		position: 'relative',
-		marginRight: '85px',
-
+	navLinksWrapper: {
 		'&:last-child': {
 			marginRight: '0px',
 		},
+	},
+	navLink: {
+		position: 'relative',
+		marginRight: '85px',
+		cursor: 'pointer',
 	},
 	listHeading: {
 		color: 'white',
@@ -135,30 +137,32 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 			});
 		});
 
-		// TODO: cleanup for dev purpose only, to be removed on prod
-		return () => {
-			allLi.forEach(li => {
-				li.removeEventListener('click');
-			});
-		};
+		// // TODO: cleanup for dev purpose only, to be removed on prod
+		// return () => {
+		// 	allLi.forEach(li => {
+		// 		li.removeEventListener('click');
+		// 	});
+		// };
 	}, []);
 
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
-					<Container m={0} p={0}>
-						<StaticImage
-							width={124}
-							height={39}
-							src='../../../assets/images/logo.png'
-							alt='logo'
-							className='logo'
-							placeholder='blurred'
-							layout='constrained'
-						></StaticImage>
-					</Container>
-					<List listStyleType={'none'}>
+					<Link to='/'>
+						<Container m={0} p={0}>
+							<StaticImage
+								width={124}
+								height={39}
+								src='../../../assets/images/logo.png'
+								alt='logo'
+								className='logo'
+								placeholder='blurred'
+								layout='constrained'
+							></StaticImage>
+						</Container>
+					</Link>
+					<List listStyleType={'none'} className={classes.navLinksWrapper}>
 						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
 							<Text>Life sciences</Text>
 						</List.Item>

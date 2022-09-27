@@ -16,8 +16,7 @@ import {
 	Text,
 	Title,
 } from '@mantine/core';
-import {useStaticQuery, graphql} from 'gatsby';
-import {renderRichText} from 'gatsby-source-contentful/rich-text';
+import {graphql} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import {Article} from 'components/common/Article';
 import {Testimonial} from 'components/common/Testimonial';
@@ -42,8 +41,6 @@ export default function HomePage({data}) {
 
 	const {firstTwoColumnSection, secondTwoColumnSection, articleSection, testimonialsSection, featuredSection}
 		= data.contentfulHomePage as ContentfulHomePageType;
-
-	console.log(featuredSection);
 
 	return (
 		<Layout>
@@ -114,7 +111,9 @@ export default function HomePage({data}) {
 				<Grid>
 					{articleSection.map(article => (
 						<Grid.Col lg={4} sm={12} md={12}>
-							<Article title={article.title}>{article.description}</Article>
+							<Article title={article.title} link={'/patients'}>
+								{article.description}
+							</Article>
 						</Grid.Col>
 					))}
 				</Grid>

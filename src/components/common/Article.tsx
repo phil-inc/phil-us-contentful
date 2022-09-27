@@ -1,5 +1,6 @@
 import {Paper, Container, Center, Title, Divider, Button, Text, createStyles} from '@mantine/core';
 import classNames from 'classnames';
+import {Link} from 'gatsby';
 import type {FC} from 'react';
 import React from 'react';
 
@@ -47,9 +48,10 @@ type ArticleProps = {
 	title?: string;
 	children?: React.ReactNode;
 	icon?: string;
+	link?: string;
 };
 
-export const Article: FC<ArticleProps> = ({color, title, icon, children}) => {
+export const Article: FC<ArticleProps> = ({color, title, icon, children, link}) => {
 	const {classes} = useStyles();
 
 	const getColorStyle = () => {
@@ -77,7 +79,9 @@ export const Article: FC<ArticleProps> = ({color, title, icon, children}) => {
 			<Text size='sm' mt='sm' mb={11}>
 				{children}
 			</Text>
-			<Button color={'dark'}>Lean More</Button>
+			<Link to={link}>
+				<Button color={'dark'}>Lean More</Button>
+			</Link>
 		</Paper>
 	);
 };
