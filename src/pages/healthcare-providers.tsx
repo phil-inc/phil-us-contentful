@@ -42,7 +42,7 @@ export default function HealthCareProviders() {
 
 	return (
 		<Layout>
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={'xl'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Title order={2}>Patient Outcomes</Title>
 					<Text mb={32}>
@@ -71,11 +71,11 @@ export default function HealthCareProviders() {
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
@@ -97,16 +97,16 @@ export default function HealthCareProviders() {
 			</Container>
 
 			{/* Third Section */}
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={'xl'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
@@ -122,10 +122,10 @@ export default function HealthCareProviders() {
 			</Grid>
 
 			{/* Fourth Section */}
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={'xl'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Title order={2}>HCP Outcomes</Title>
-					<Text weight='bold'>Script writing simplified - get time back to care for your patients</Text>
+					<Text weight="bold">Script writing simplified - get time back to care for your patients</Text>
 					<Text mb={32}>
 						Submitting prior authorization electronically is on the rise. Without changing your workflow, Phil can
 						help you quickly determine and then electronically pre-fills requests, with only one-click required to
@@ -136,11 +136,11 @@ export default function HealthCareProviders() {
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
@@ -151,10 +151,10 @@ export default function HealthCareProviders() {
 			<Container fluid m={0} p={0} mb={50}>
 				<Grid mb={60}>
 					<Grid.Col span={6}>
-						<Featured title='Simple to prescribe'>As simple as prescribing generic medications.</Featured>
+						<Featured title="Simple to prescribe">As simple as prescribing generic medications.</Featured>
 					</Grid.Col>
 					<Grid.Col span={6}>
-						<Featured title='Simple to use'>
+						<Featured title="Simple to use">
 							Use Phil without implementing any new technology. There is no new software to learn or install to
 							prescribe via Phil.
 						</Featured>
@@ -162,7 +162,7 @@ export default function HealthCareProviders() {
 				</Grid>
 				<Grid mb={60}>
 					<Grid.Col span={6}>
-						<Featured title='Simple to submit prior authorizations'>
+						<Featured title="Simple to submit prior authorizations">
 							Submit with just one-click. Forms are pre-populated and we contact you via your preferred
 							communication method that the PA has been filled and is ready to submit.
 						</Featured>
@@ -178,16 +178,16 @@ export default function HealthCareProviders() {
 			{/* Sixth Section */}
 			<Container fluid mb={108} ml={-116} px={100} style={{background: '#29a5b4', minHeight: 813, minWidth: 1920}}>
 				<Center mb={62}>
-					<Title order={2} mt={112} color='white'>
+					<Title order={2} mt={112} color="white">
 						Testimonials
 					</Title>
 				</Center>
 				<Grid>
 					<Grid.Col span={6}>
 						<Testimonial
-							icon='oyster point'
-							author='Lorem ipsum dolor sit amet'
-							designation='Consectetur adipiscing elit.'
+							icon="oyster point"
+							author="Lorem ipsum dolor sit amet"
+							designation="Consectetur adipiscing elit."
 						>
 							“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim orci, pellentesque eu
 							tortor at, vestibulum faucibus nisi. Nulla vel lacus ac elit elementum maximus malesuada ut arcu.
@@ -197,9 +197,9 @@ export default function HealthCareProviders() {
 					</Grid.Col>
 					<Grid.Col span={6}>
 						<Testimonial
-							icon='impel'
-							author='Lorem ipsum dolor sit amet'
-							designation='Consectetur adipiscing elit.'
+							icon="impel"
+							author="Lorem ipsum dolor sit amet"
+							designation="Consectetur adipiscing elit."
 						>
 							“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim orci, pellentesque eu
 							tortor at, vestibulum faucibus nisi. Nulla vel lacus ac elit elementum maximus malesuada ut arcu.
@@ -213,7 +213,7 @@ export default function HealthCareProviders() {
 			{/* Seventh Section */}
 			<Container fluid ml={-116} px={116} style={{background: '#f4f4f4', minHeight: 256, minWidth: 1920}}>
 				<Center>
-					<Schedule title='Prescribe via Phil'>
+					<Schedule title="Prescribe via Phil">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 						molestie.
 					</Schedule>

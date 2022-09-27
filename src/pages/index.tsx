@@ -16,6 +16,8 @@ import {
 	Text,
 	Title,
 } from '@mantine/core';
+import {useStaticQuery, graphql} from 'gatsby';
+import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {StaticImage} from 'gatsby-plugin-image';
 import {Article} from 'components/common/Article';
 import {Testimonial} from 'components/common/Testimonial';
@@ -36,27 +38,72 @@ const useStyles = createStyles(theme => ({
 export default function HomePage() {
 	const {classes} = useStyles();
 
+	const data = useStaticQuery(graphql`
+		query {
+			contentfulHomePage {
+				firstTwoColumnSection {
+					title
+					button
+					description {
+						description
+					}
+					mediaContent {
+						url
+					}
+				}
+				secondTwoColumnSection {
+					title
+					button
+					description {
+						description
+					}
+					list
+					mediaContent {
+						url
+					}
+				}
+				articleSection {
+					title
+					description
+					button
+				}
+				testimonialsSection {
+					isPerson
+					author
+					designation
+					description {
+						description
+					}
+				}
+			}
+		}
+	`);
+
+	const {firstTwoColumnSection} = data.contentfulHomePage;
+	const {secondTwoColumnSection} = data.contentfulHomePage;
+	const {articleSection} = data.contentfulHomePage;
+	const {testimonialsSection} = data.contentfulHomePage;
+
+	console.log(testimonialsSection);
+
 	return (
 		<Layout>
 			{/* Hero Section */}
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={'xl'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
-					<Title>Patient Access, Simplified</Title>
-					<Text mb={16}>
-						Phil built a comprehensive patient access platform that unlocks brand value and improves health
-						outcomes, by ensuring patients can get mediation quickly and affordably.
-					</Text>
-					<Button color={'dark'}>Lean More</Button>
+					<Title>{firstTwoColumnSection.title}</Title>
+					<Text mb={16}>{firstTwoColumnSection.description.description}</Text>
+					<Button color={'dark'}>{firstTwoColumnSection.button}</Button>
 				</Grid.Col>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
@@ -64,59 +111,37 @@ export default function HomePage() {
 			</Grid>
 
 			{/* Second Section */}
-			<Grid mb={134} gutter={'xl'} justify='space-between' align={'flex-end'}>
+			<Grid mb={134} gutter={'xl'} justify="space-between" align={'flex-end'}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
 				</Grid.Col>
 				<Grid.Col lg={6} md={6} sm={12} style={{minHeight: 475}}>
 					<Title order={2} pb={16}>
-						The Phil Patient Access Platform
+						{secondTwoColumnSection.title}
 					</Title>
 					<Container p={0} m={0} size={650}>
-						<Text mb={32}>
-							Designed to transform Rx commercialization, Phil unlocks the highest rates of pull through,
-							adherence and most importantly, the number of covered dispenses, enabling life sciences companies
-							to double down on growth.
-						</Text>
+						<Text mb={32}>{secondTwoColumnSection.description.description}</Text>
 					</Container>
 					<List mb={32} spacing={'md'}>
-						<List.Item>
-							<Text span weight={'bold'}>
-								Seamless HCP and Patient Experience
-							</Text>
-						</List.Item>
-						<List.Item>
-							<Text span weight={'bold'}>
-								Software Driven Prior Authorization
-							</Text>
-						</List.Item>
-						<List.Item>
-							<Text span weight={'bold'}>
-								Optimized Routing via National Dispense Network
-							</Text>
-						</List.Item>
-						<List.Item>
-							<Text span weight={'bold'}>
-								Wholesale Distribution
-							</Text>
-						</List.Item>
-						<List.Item>
-							<Text span weight={'bold'}>
-								Real-time Data and Actionable Insights
-							</Text>
-						</List.Item>
+						{secondTwoColumnSection.list.map(item => (
+							<List.Item>
+								<Text span weight={'bold'}>
+									{item}
+								</Text>
+							</List.Item>
+						))}
 					</List>
-					<Button color={'dark'}>Lean More</Button>
+					<Button color={'dark'}>{secondTwoColumnSection.button}</Button>
 				</Grid.Col>
 			</Grid>
 
@@ -134,29 +159,16 @@ export default function HomePage() {
 					</Title>
 				</Center>
 				<Grid>
-					<Grid.Col span={4}>
-						<Article title='Life Sciences'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-							et dolore magna aliqua.
-						</Article>
-					</Grid.Col>
-					<Grid.Col span={4}>
-						<Article title='Healthcare Providers' color='blue'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-							et dolore magna aliqua.
-						</Article>
-					</Grid.Col>
-					<Grid.Col span={4}>
-						<Article title='Patients' color='yellow'>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-							et dolore magna aliqua.
-						</Article>
-					</Grid.Col>
+					{articleSection.map(article => (
+						<Grid.Col span={4}>
+							<Article title={article.title}>{article.description}</Article>
+						</Grid.Col>
+					))}
 				</Grid>
 			</Container>
 
 			{/* Fourth Section */}
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={'xl'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Title order={2} style={{maxWidth: 601}}>
 						Trusted by Innovative Pharma Manufacturers
@@ -167,11 +179,11 @@ export default function HomePage() {
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Center>
 					</Container>
@@ -181,35 +193,16 @@ export default function HomePage() {
 			{/* Fifth Section */}
 			<Container fluid mb={108} ml={-116} p={100} style={{background: '#29a5b4', minHeight: 813, minWidth: '100vw'}}>
 				<Center mb={62}>
-					<Title order={2} mt={12} color='white'>
+					<Title order={2} mt={12} color="white">
 						Testimonials
 					</Title>
 				</Center>
 				<Grid>
-					<Grid.Col span={6}>
-						<Testimonial
-							icon='oyster point'
-							author='Lorem ipsum dolor sit amet'
-							designation='Consectetur adipiscing elit.'
-						>
-							“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim orci, pellentesque eu
-							tortor at, vestibulum faucibus nisi. Nulla vel lacus ac elit elementum maximus malesuada ut arcu.
-							Duis vitae convallis purus. Sed dui metus, egestas pharetra ante ut, imperdiet sollicitudin lacus.
-							Mauris iaculis risus at lectus cursus euismod eu vitae libero.”
+					{testimonialsSection.map(testimonial => (
+						<Testimonial icon="oyster point" author={testimonial.author} designation={testimonial.designation}>
+							{testimonial.description.description}
 						</Testimonial>
-					</Grid.Col>
-					<Grid.Col span={6}>
-						<Testimonial
-							icon='impel'
-							author='Lorem ipsum dolor sit amet'
-							designation='Consectetur adipiscing elit.'
-						>
-							“Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim orci, pellentesque eu
-							tortor at, vestibulum faucibus nisi. Nulla vel lacus ac elit elementum maximus malesuada ut arcu.
-							Duis vitae convallis purus. Sed dui metus, egestas pharetra ante ut, imperdiet sollicitudin lacus.
-							Mauris iaculis risus at lectus cursus euismod eu vitae libero.”
-						</Testimonial>
-					</Grid.Col>
+					))}
 				</Grid>
 			</Container>
 
@@ -224,13 +217,13 @@ export default function HomePage() {
 
 				<Grid mb={52}>
 					<Grid.Col span={6}>
-						<Featured title='Lorem Ipsum Dolor'>
+						<Featured title="Lorem Ipsum Dolor">
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 							molestie.
 						</Featured>
 					</Grid.Col>
 					<Grid.Col span={6}>
-						<Featured title='Lorem Ipsum Dolor'>
+						<Featured title="Lorem Ipsum Dolor">
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 							molestie.
 						</Featured>
@@ -244,7 +237,7 @@ export default function HomePage() {
 			{/* Seventh Section */}
 			<Container fluid ml={-116} px={116} style={{background: '#f4f4f4', minHeight: 256, minWidth: 1920}}>
 				<Center>
-					<Schedule title='Schedule a Demo' buttonText='Schedule demo'>
+					<Schedule title="Schedule a Demo" buttonText="Schedule demo">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
 						molestie.
 					</Schedule>
