@@ -51,12 +51,12 @@ export const Featured: FC<FeaturedProps> = ({title, icon, children}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
-			<Grid>
+			<Grid align={'center'}>
 				<Grid.Col lg={6} sm={12} md={12}>
-					<Container style={{background: '#00827e', minHeight: 300}} size={300}></Container>
+					<Container style={{background: '#00827e', minHeight: 300}}></Container>
 				</Grid.Col>
 				<Grid.Col lg={6} sm={12} md={12}>
-					<Container px={50}>
+					<Container pr={50}>
 						<Title order={3} mt='md'>
 							{title}
 						</Title>
