@@ -68,21 +68,13 @@ export const Article: FC<ArticleProps> = ({color, title, icon, children}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.card, getColorStyle())}>
-			{!icon && (
-				<Container style={{background: '#00827e', minHeight: 427}} size={427}>
-					<Center>
-						<Paper mt={20} radius={300} style={{minHeight: 389, minWidth: 389, background: '#5abea4'}}>
-							{/* PLACEHOLDER */}
-						</Paper>
-					</Center>
-				</Container>
-			)}
+			{!icon && <Container style={{background: '#00827e', minHeight: 427}} size={427}></Container>}
 
-			<Title order={3} mt="md">
+			<Title order={3} mt='md'>
 				{title}
 			</Title>
-			<Divider variant="dashed" size={1} style={{maxWidth: 404}} my={13} />
-			<Text size="sm" mt="sm" mb={11}>
+			<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
+			<Text size='sm' mt='sm' mb={11}>
 				{children}
 			</Text>
 			<Button color={'dark'}>Lean More</Button>

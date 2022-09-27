@@ -1,6 +1,6 @@
 import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
-// Import {ColorSchemeToggle} from 'components/ColorSchemeToggle/ColorSchemeToggle';
+
 import {
 	ActionIcon,
 	Button,
@@ -30,6 +30,7 @@ import Expanded from 'components/common/Expanded/Expanded';
 import {IconSearch, IconArrowRight, IconArrowLeft} from '@tabler/icons';
 import {FAQ} from 'components/common/FAQ';
 import {useStaticQuery, graphql} from 'gatsby';
+import type {PatientPageType} from 'types/patientsPage';
 
 const useStyles = createStyles(theme => ({
 	inner: {
@@ -63,72 +64,37 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-export default function Patients() {
+export default function Patients({data}) {
 	const {classes} = useStyles();
 
-	const data = useStaticQuery(graphql`
-		query {
-			contentfulPatientPage {
-				firstTwoColumnSection {
-					title
-					list
-					description {
-						description
-					}
-					button
-				}
-				benefitSection {
-					divider
-					description {
-						description
-					}
-					title
-				}
-				testimonialsSection {
-					author
-					description {
-						description
-					}
-					designation
-					isPerson
-				}
-				faqSection {
-					answers {
-						answers
-					}
-					question
-				}
-			}
-		}
-	`);
-
-	const {firstTwoColumnSection, benefitSection, testimonialsSection, faqSection} = data.contentfulPatientPage;
+	const {firstTwoColumnSection, benefitSection, testimonialsSection, faqSection}
+		= data.contentfulPatientPage as PatientPageType;
 
 	console.log('data', faqSection);
 
 	return (
 		<Layout>
 			{/* Hero Section */}
-			<Grid gutter={'xs'} align="center" mb={160}>
+			<Grid gutter={'xs'} align='center' mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Title order={2} mb={16}>
 						{firstTwoColumnSection.title[0]}
 					</Title>
-					<Text weight="bold">{firstTwoColumnSection.title[1]}</Text>
+					<Text weight='bold'>{firstTwoColumnSection.title[1]}</Text>
 					<Text size={'lg'} mb={40}>
 						{firstTwoColumnSection.description.description}
 					</Text>
-					<Button color="dark">{firstTwoColumnSection.button}</Button>
+					<Button color='dark'>{firstTwoColumnSection.button}</Button>
 				</Grid.Col>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Container className={classes.imageWrapper}>
 						<Container className={classes.placeholderImage}>
 							<StaticImage
-								src="../assets/images/index_hero.png"
-								alt="circles inside circles"
-								className="hero-img"
-								placeholder="blurred"
-								layout="constrained"
+								src='../assets/images/index_hero.png'
+								alt='circles inside circles'
+								className='hero-img'
+								placeholder='blurred'
+								layout='constrained'
 							></StaticImage>
 						</Container>
 					</Container>
@@ -154,16 +120,16 @@ export default function Patients() {
 			</Expanded>
 
 			{/* Third Section */}
-			<Grid gutter={60} align="end" mb={160}>
+			<Grid gutter={60} align='end' mb={160}>
 				<Grid.Col lg={6} md={6} sm={12}>
 					<Container style={{background: '#f4f4f4'}}>
 						<Center>
 							<StaticImage
-								src="../assets/images/index_hero.png"
-								alt="circles inside circles"
-								className="hero-img"
-								placeholder="blurred"
-								layout="constrained"
+								src='../assets/images/index_hero.png'
+								alt='circles inside circles'
+								className='hero-img'
+								placeholder='blurred'
+								layout='constrained'
 							></StaticImage>
 						</Center>
 					</Container>
@@ -178,15 +144,15 @@ export default function Patients() {
 						<Title order={3} style={{maxWidth: 601}}>
 							Login to your Phil account
 						</Title>
-						<Divider variant="dashed" size="lg" mb={25} />
-						<Button color="dark">Patient log in</Button>
+						<Divider variant='dashed' size='lg' mb={25} />
+						<Button color='dark'>Patient log in</Button>
 					</Container>
 
 					<Container p={0}>
-						<Text size="lg" weight="bold">
+						<Text size='lg' weight='bold'>
 							Don’t Have a Phil Login?
 						</Text>
-						<Text size="lg" mb={25}>
+						<Text size='lg' mb={25}>
 							*If your doctor sent your prescription to Phil, we’ll text you to confirm your order within one
 							business day. If you haven’t received a message from us, please{' '}
 							<Text span italic size={'lg'} style={{color: '#5ABEA4'}}>
@@ -199,9 +165,9 @@ export default function Patients() {
 			</Grid>
 
 			{/* Fourth Section */}
-			<Expanded background="#00827E" minHeight={813}>
+			<Expanded background='#00827E' minHeight={813}>
 				<Center mb={62}>
-					<Title order={2} mt={12} color="white">
+					<Title order={2} mt={12} color='white'>
 						Testimonials
 					</Title>
 				</Center>
@@ -209,8 +175,8 @@ export default function Patients() {
 					{testimonialsSection.map(testimonial => (
 						<Grid.Col lg={6} sm={12}>
 							<Testimonial
-								type="person"
-								icon="oyster point"
+								type='person'
+								icon='oyster point'
 								author={testimonial.author}
 								designation={testimonial.designation}
 							>
@@ -232,13 +198,13 @@ export default function Patients() {
 							<Grid.Col span={10}>
 								<TextInput
 									icon={<IconSearch size={18} stroke={1.5} />}
-									size="md"
-									placeholder="Search questions"
+									size='md'
+									placeholder='Search questions'
 									rightSectionWidth={42}
 								/>
 							</Grid.Col>
 							<Grid.Col span={2}>
-								<Button color="dark" size="md">
+								<Button color='dark' size='md'>
 									Search
 								</Button>
 							</Grid.Col>
@@ -256,3 +222,39 @@ export default function Patients() {
 		</Layout>
 	);
 }
+
+export const patientPageQuery = graphql`
+	query {
+		contentfulPatientPage {
+			firstTwoColumnSection {
+				title
+				list
+				description {
+					description
+				}
+				button
+			}
+			benefitSection {
+				divider
+				description {
+					description
+				}
+				title
+			}
+			testimonialsSection {
+				author
+				description {
+					description
+				}
+				designation
+				isPerson
+			}
+			faqSection {
+				answers {
+					answers
+				}
+				question
+			}
+		}
+	}
+`;

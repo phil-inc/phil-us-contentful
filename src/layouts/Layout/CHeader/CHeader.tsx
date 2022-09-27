@@ -144,7 +144,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
 			<Container className={classes.inner} fluid>
-				<Group position="apart" noWrap align="start" className={classNames('navbar')}>
+				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
 					<div>logo here</div>
 					<List listStyleType={'none'}>
 						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
@@ -165,24 +165,24 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
 							<Text>Contact</Text>
 						</List.Item>
-						<div className="indicator"></div>
+						<div className='indicator'></div>
 					</List>
 				</Group>
 				<Collapse
 					in={opened}
 					className={classes.dropdown}
 					transitionDuration={150}
-					transitionTimingFunction="ease-out"
+					transitionTimingFunction='ease-out'
 					animateOpacity={false}
 				>
 					<Container className={classes.container} fluid>
-						<List listStyleType="none" size="xl">
+						<List listStyleType='none' size='xl'>
 							<SimpleGrid cols={5} px={98} py={78} spacing={32}>
 								<List.Item>
 									<Text className={classes.listHeading}>Patient outcomes</Text>
 
 									<Divider />
-									<List listStyleType="none">
+									<List listStyleType='none'>
 										<List.Item>
 											<Text className={classes.listItems}>New page/section 1</Text>
 										</List.Item>
@@ -200,7 +200,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 								<List.Item>
 									<Text className={classes.listHeading}>Flight of the script</Text>
 									<Divider />
-									<List listStyleType="none">
+									<List listStyleType='none'>
 										<List.Item>
 											<Text className={classes.listItems}>New page/section 1</Text>
 										</List.Item>
@@ -218,7 +218,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 								<List.Item>
 									<Text className={classes.listHeading}>Prescribing to Phil</Text>
 									<Divider />
-									<List listStyleType="none">
+									<List listStyleType='none'>
 										<List.Item>
 											<Text className={classes.listItems}>New page/section 1</Text>
 										</List.Item>
@@ -236,7 +236,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 								<List.Item>
 									<Text className={classes.listHeading}>HCP outcomes</Text>
 									<Divider />
-									<List listStyleType="none">
+									<List listStyleType='none'>
 										<List.Item>
 											<Text className={classes.listItems}>New page/section 1</Text>
 										</List.Item>
@@ -254,7 +254,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 								<List.Item>
 									<Text className={classes.listHeading}>Testimonials</Text>
 									<Divider />
-									<List listStyleType="none">
+									<List listStyleType='none'>
 										<List.Item>
 											<Text className={classes.listItems}>New page/section 1</Text>
 										</List.Item>

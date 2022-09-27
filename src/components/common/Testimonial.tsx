@@ -43,18 +43,18 @@ export const Testimonial: FC<TestimonialProps> = ({icon, children, author, desig
 				{isPerson && (
 					<Grid.Col lg={4} sm={12}>
 						<StaticImage
-							src="../../assets/images/person.png"
-							alt="person"
+							src='../../assets/images/person.png'
+							alt='person'
 							className={classes.testimonialImage}
-							placeholder="blurred"
-							layout="fullWidth"
+							placeholder='blurred'
+							layout='fullWidth'
 						></StaticImage>
 					</Grid.Col>
 				)}
 				<Grid.Col lg={isPerson ? 8 : 12} sm={12} px={38} py={34}>
 					{!isPerson && <Text>{icon}</Text>}
 					{children}
-					<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
+					<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
 					<Text color={'#00827E'} weight={700} className={classes.author}>
 						{author}
 					</Text>

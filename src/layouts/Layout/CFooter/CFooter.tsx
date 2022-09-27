@@ -57,7 +57,7 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 			onClick={event => {
 				event.preventDefault();
 			}}
-			size="sm"
+			size='sm'
 		>
 			{link.label}
 		</Anchor>
@@ -72,8 +72,8 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 							Home
 						</Text>
 
-						<Divider my={10} mr={80} color="dark" />
-						<List listStyleType="none">
+						<Divider my={10} mr={80} color='dark' />
+						<List listStyleType='none'>
 							<List.Item>
 								<Text className={classes.footerLink}>Phil platform</Text>
 							</List.Item>
@@ -96,8 +96,8 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 							Life sciences
 						</Text>
 
-						<Divider my={10} mr={80} color="dark" />
-						<List listStyleType="none">
+						<Divider my={10} mr={80} color='dark' />
+						<List listStyleType='none'>
 							<List.Item>
 								<Text className={classes.footerLink}>Access and commercialization solutions</Text>
 							</List.Item>
@@ -120,8 +120,8 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 							Healthcare providers
 						</Text>
 
-						<Divider my={10} mr={80} color="dark" />
-						<List listStyleType="none">
+						<Divider my={10} mr={80} color='dark' />
+						<List listStyleType='none'>
 							<List.Item>
 								<Text className={classes.footerLink}>Patient outcomes</Text>
 							</List.Item>
@@ -144,8 +144,8 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 							Patients
 						</Text>
 
-						<Divider my={10} mr={80} color="dark" />
-						<List listStyleType="none">
+						<Divider my={10} mr={80} color='dark' />
+						<List listStyleType='none'>
 							<List.Item>
 								<Text className={classes.footerLink}>Smarter prescriptions</Text>
 							</List.Item>
@@ -168,8 +168,8 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 							Resources
 						</Text>
 
-						<Divider my={10} mr={80} color="dark" />
-						<List listStyleType="none">
+						<Divider my={10} mr={80} color='dark' />
+						<List listStyleType='none'>
 							<List.Item>
 								<Text className={classes.footerLink}>Phil blog</Text>
 							</List.Item>
@@ -192,8 +192,8 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 							Company
 						</Text>
 
-						<Divider my={10} mr={80} color="dark" />
-						<List listStyleType="none">
+						<Divider my={10} mr={80} color='dark' />
+						<List listStyleType='none'>
 							<List.Item>
 								<Text className={classes.footerLink}>Who we are</Text>
 							</List.Item>
@@ -219,8 +219,8 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 							Contact us
 						</Text>
 
-						<Divider my={10} mr={80} color="dark" />
-						<List listStyleType="none">
+						<Divider my={10} mr={80} color='dark' />
+						<List listStyleType='none'>
 							<List.Item>
 								<Text className={classes.footerLink}>Location</Text>
 							</List.Item>
@@ -233,7 +233,7 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 						<Text size={'lg'} className={classes.footLinkHeader}>
 							Newsletter
 						</Text>
-						<Divider my={10} mr={80} color="dark" />
+						<Divider my={10} mr={80} color='dark' />
 						email goes here
 					</Grid.Col>
 				</Grid>

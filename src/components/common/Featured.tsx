@@ -1,4 +1,4 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid} from '@mantine/core';
 import classNames from 'classnames';
 import type {FC} from 'react';
 import React from 'react';
@@ -51,25 +51,22 @@ export const Featured: FC<FeaturedProps> = ({title, icon, children}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
-			<Center>
-				<Container style={{background: '#00827e', minHeight: 300}} size={300}>
-					<Center>
-						<Paper mt={25} radius={300} style={{minHeight: 250, minWidth: 250, background: '#5abea4'}}>
-							{/* PLACEHOLDER */}
-						</Paper>
-					</Center>
-				</Container>
-
-				<Container px={50}>
-					<Title order={3} mt="md">
-						{title}
-					</Title>
-					<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
-					<Text size="md" mt="sm" mb={11}>
-						{children}
-					</Text>
-				</Container>
-			</Center>
+			<Grid>
+				<Grid.Col lg={6} sm={12} md={12}>
+					<Container style={{background: '#00827e', minHeight: 300}} size={300}></Container>
+				</Grid.Col>
+				<Grid.Col lg={6} sm={12} md={12}>
+					<Container px={50}>
+						<Title order={3} mt='md'>
+							{title}
+						</Title>
+						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+						<Text size='md' mt='sm' mb={11}>
+							{children}
+						</Text>
+					</Container>
+				</Grid.Col>
+			</Grid>
 		</Paper>
 	);
 };
