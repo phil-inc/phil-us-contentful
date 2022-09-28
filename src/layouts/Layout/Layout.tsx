@@ -1,12 +1,34 @@
 import React, {useState} from 'react';
 import {useHotkeys} from '@mantine/hooks';
-import type {ColorScheme} from '@mantine/core';
+import type {ColorScheme, MantineThemeOverride} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
 import {CHeader} from './CHeader/CHeader';
 import {CFooter} from './CFooter/CFooter';
 
 type LayoutProps = {
 	children: React.ReactNode;
+};
+
+const theme: MantineThemeOverride = {
+	colors: {
+		brand: ['#00201F'],
+	},
+	headings: {
+		fontWeight: 700,
+		sizes: {
+			h1: {
+				fontSize: 82,
+			},
+			h2: {
+				fontSize: 52,
+			},
+			h3: {
+				fontSize: 35,
+			},
+		},
+		fontFamily: 'Raleway',
+	},
+	fontFamily: 'Lato',
 };
 
 export function Layout({children}: LayoutProps) {
@@ -25,9 +47,12 @@ export function Layout({children}: LayoutProps) {
 	]);
 
 	const links = [
-		{label: 'Features', link: '#'},
+		{label: 'Life sciences', link: '#'},
+
+		{label: 'Healthcare providers', link: '#'},
+		{label: 'Patients', link: '#'},
 		{
-			label: 'Learn',
+			label: 'Resources',
 			link: '#',
 			links: [
 				{label: 'Terms of Use', link: '#'},
@@ -35,10 +60,17 @@ export function Layout({children}: LayoutProps) {
 				{label: 'HIPAA Notice', link: '#'},
 			],
 		},
-		{label: 'About', link: '#'},
-		{label: 'Pricing', link: '#'},
 		{
-			label: 'Support',
+			label: 'Company',
+			link: '#',
+			links: [
+				{label: 'Terms of Use', link: '#'},
+				{label: 'Privacy Policy', link: '#'},
+				{label: 'HIPAA Notice', link: '#'},
+			],
+		},
+		{
+			label: 'Contact',
 			link: '#',
 			links: [
 				{label: 'Terms of Use', link: '#'},
@@ -56,10 +88,14 @@ export function Layout({children}: LayoutProps) {
 
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-			<MantineProvider theme={{colorScheme}} withGlobalStyles withNormalizeCSS>
-				<CHeader links={links} />
-				<Container>{children}</Container>
-				<CFooter links={footerLinks} />
+			<MantineProvider theme={{...theme, colorScheme}} withGlobalStyles withNormalizeCSS>
+				<Container size={1920}>
+					<CHeader links={links} />
+					<Container fluid px={100}>
+						{children}
+					</Container>
+					<CFooter links={footerLinks} />
+				</Container>
 			</MantineProvider>
 		</ColorSchemeProvider>
 	);

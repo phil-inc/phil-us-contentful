@@ -1,0 +1,185 @@
+.footer {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  padding: 32px 0;
+  background-color: $pale-blue;
+
+  @include for-size(small) {
+    padding-bottom: 64px;
+  }
+
+  @include for-size(large) {
+    padding: 64px 0;
+  }
+
+  @include e(container) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+
+    @include for-size(320) {
+      padding: 0 30px;
+    }
+
+    @include for-size(large) {
+      flex-direction: row;
+    }
+  }
+
+  @include e(nav) {
+    display: inline-block;
+
+    @include for-size(320) {
+      max-width: 308px;
+    }
+
+    @include for-size(425) {
+      max-width: none;
+    }
+
+    @include for-size(small) {
+      max-width: none;
+    }
+
+    @include for-size(large) {
+      display: flex;
+    }
+  }
+
+  @include e(nav-links) {
+    @include for-size(320) {
+      display: inline;
+    }
+
+    @include for-size(small) {
+      display: inline-block;
+    }
+
+    @include for-size(large) {
+      float: left;
+      min-width: 100px;
+      margin-right: 64px;
+    }
+
+    li {
+      margin-right: 6px;
+      display: inline-block;
+
+      @include for-size(small) {
+        margin-right: 25px !important;
+      }
+
+      @include for-size(large) {
+        display: block;
+      }
+
+      a {
+        display: inline-block;
+        color: $rolling-stone;
+        letter-spacing: normal;
+        font: normal 500 14px/2.71 $font-family--secondary;
+
+        @include for-size(small) {
+          font: normal 500 14px/38px $font-family--secondary;
+        }
+
+        @include for-size(large) {
+          display: block;
+          font: normal 500 16px/28px $font-family--secondary;
+        }
+
+        &:hover,
+        &:focus {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    &::after {
+      @include for-size(320) {
+        display: inline;
+      }
+    }
+  }
+
+  @include e(description) {
+    margin-top: 20px;
+    color: $rolling-stone;
+    font: normal 300 14px/2 $font-family--secondary;
+    margin-left: 0;
+
+    @include for-size(small) {
+      font-size: 16px;
+      margin-top: 16px;
+      line-height: 1.75;
+    }
+
+    @include for-size(large) {
+      float: right;
+      width: 362px;
+      margin-top: 0;
+      margin-left: auto;
+    }
+  }
+
+  @include e(address) {
+    & + & {
+      margin-top: 8px;
+
+      @include for-size(large) {
+        margin-top: 12px;
+      }
+    }
+  }
+
+  @include e(email-address) {
+    color: $navy-blue;
+    line-height: 1;
+    margin-top: 8px;
+
+    img {
+      vertical-align: middle;
+      margin: 10px 0px 1px 2px;
+      height: 13px;
+
+      @include for-size(small) {
+        height: auto;
+      }
+
+      @include for-size(370) {
+        margin-top: 0px;
+      }
+    }
+  }
+
+  @include e(version) {
+    margin-top: 14px;
+
+    @include for-size(small) {
+      font-size: 14px;
+      margin-top: 16px;
+    }
+
+    @include for-size(large) {
+      font-size: 14px;
+    }
+  }
+
+  @include e(certification-section) {
+    margin : 16px 0 0;
+
+    @include for-size(large) {
+      margin : 0 auto;
+    }
+
+    img {
+      max-width: 72px;
+    }
+
+    .img-soc {
+        margin-right: 16px;
+    }
+  }
+}

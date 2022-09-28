@@ -1,0 +1,75 @@
+//Web Address
+$domain-name: 'www.phil.us';
+
+//Text
+$base__font-size: 16px;
+$base__line: 24px;
+
+//Font Stacks
+$font-family--primary: 'Lato', arial, sans-serif;
+$font-family--primary-medium: 'Lato', arial, sans-serif;
+$font-family--primary-bold: 'Lato', arial, sans-serif;
+$font-family--secondary: 'Lato', arial, sans-serif;
+
+//Colors
+$white: #fff;
+$black: #292a2e;
+$shark: #2f3035;
+$monza: #d0021b;
+$caribbean-green: #00ccae;
+$rolling-stone: #797c80;
+$egg-blue: #00e0ba;
+$dandelion: #fed65a;
+$mustard: #ffe05f;
+$alabaster: #f9f9f9;
+$pale-blue: #f4f9fe;
+$mischka: #d1d6dc;
+$silver-sand: #bbbdbf;
+$blue: #1f1fff;
+$navy-blue: #000072;
+$dark-blue: #0000ac;
+$strong-blue: #00009e;
+$havelock-blue: #4a90e2;
+$athens-gray: #e7eaf0;
+$oslo-gray: #84878b;
+$cloudy-nightsky: #36373d;
+$dark-navy-blue: #00008f;
+
+//Bootstrap Breakpoints
+$xs-device: 480px;
+$sm-device: 768px;
+$md-device: 992px;
+$lg-device: 1200px;
+
+// Phil breakpoints -- please use these instead of "Bootstrap Breakpoints"
+// Because we're working with these standards:
+// SMALL (phone): 600px > browser width
+// MEDIUM (tablet): 800px > browser width >= 600px (for old Android tablets with a 912-960x600 screen)
+// LARGE (desktop): Browser width >= 800px (for old laptops with a 800x600 screen)
+$small: 600px;
+$medium: 800px;
+$large: 992px;
+$extra-large: 1200px;
+
+// Container max-widths
+$container-max-widths-map: (
+  small: 584px,
+  medium: 772px,
+  large: 964px,
+  extra-large: 1112px
+) !default;
+
+//Heading Vairables
+$heading-line-height: 28px !default;
+$head1-font-size: 26px !default;
+$head2-font-size: $head1-font-size - 4px !default;
+$head3-font-size: $head1-font-size - 8px !default;
+
+//Color Usage
+$primary-color: $caribbean-green;
+$color-text: $black;
+$color-link: $caribbean-green;
+
+//Path to Assets
+$path--rel: '../img';
+$path-font: '../fonts';

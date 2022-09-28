@@ -1,0 +1,28 @@
+.primary-bordered-heading {
+  margin-bottom: 20px;
+  text-align: center;
+  color: $primary-color;
+  letter-spacing: -0.29px;
+  font: normal 500 24px $font-family--primary-medium;
+
+  @include for-size(medium) {
+    letter-spacing: -0.42px;
+    font: normal bold 36px $font-family--primary-bold;
+  }
+
+  @include for-size(large) {
+    text-align: left;
+  }
+
+  &::after {
+    content: "";
+    width: 42px;
+    height: 2px;
+    margin: 10px auto 0;
+    background-color: $mustard;
+
+    @include for-size(large) {
+      margin: 12px 0 0;
+    }
+  }
+}

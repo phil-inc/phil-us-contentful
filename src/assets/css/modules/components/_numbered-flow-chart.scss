@@ -1,0 +1,118 @@
+.numbered-flow-chart {
+  @include e(heading) {
+    color: $white;
+    font-size: 28px;
+    margin-bottom: 40px;
+
+    @include for-size(small) {
+      font-size: 42px;
+      letter-spacing: -0.5px;
+    }
+
+    @include for-size(large) {
+      margin-bottom: 60px;
+    }
+
+    &::after {
+      background-color: $blue;
+    }
+  }
+
+  @include e(row) {
+    @include for-size(large) {
+      margin: 0 -48px;
+    }
+  }
+
+  @include e(column) {
+    text-align: center;
+
+    @include for-size(small) {
+      margin: 0 auto;
+      max-width: 415px;
+    }
+
+    @include for-size(large) {
+      float: left;
+      width: 33.3333%;
+      padding: 0 48px;
+      text-align: left;
+      position: relative;
+    }
+
+    &::after {
+      content: "";
+      width: 90px;
+      height: 1px;
+      display: block;
+      margin: 40px auto;
+      background-color: $white;
+
+      @include for-size(large) {
+        width: 79px;
+        height: 52px;
+        top: 21px;
+        right: 48px;
+        margin: 0;
+        position: absolute;
+        // background: url("../../img/icons/arrow.svg") no-repeat center;
+        background-size: contain;
+      }
+    }
+
+    &:last-child {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  @include e(number) {
+    width: 58px;
+    height: 58px;
+    color: $white;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    margin: 0 auto 24px;
+    justify-content: center;
+    background-color: $primary-color;
+    font: normal normal 28px $font-family--primary;
+
+    @include for-size(small) {
+      width: 76px;
+      height: 76px;
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    @include for-size(large) {
+      margin: 0 0 28px;
+    }
+
+    span {
+      display: block;
+      padding: 1px 1px 0 0;
+    }
+  }
+
+  @include e(column-title) {
+    color: $navy-blue;
+    margin-bottom: 10px;
+    font: normal bold 28px $font-family--primary-bold;
+
+    @include for-size(small) {
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+  }
+
+  @include e(column-text) {
+    color: $navy-blue;
+    font: normal 300 16px/1.38 $font-family--secondary;
+
+    @include for-size(small) {
+      font: normal 300 22px/1.36 $font-family--secondary;
+    }
+  }
+}
