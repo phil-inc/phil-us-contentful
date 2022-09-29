@@ -1,4 +1,5 @@
 {
 	"prettier.eslintIntegration": true,
-	"editor.formatOnSave": false
+	"editor.formatOnSave": false,
+	"files.eol": "\n"
 }
