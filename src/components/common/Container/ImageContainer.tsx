@@ -15,7 +15,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({children}) => {
 	const {classes} = useStyles();
 
 	return (
-		<Container fluid style={{background: '#f4f4f4', width: '100%'}}>
+		<Container fluid className={classes.iamgeContainer}>
 			<Group position='center' py={50}>
 				{children}
 			</Group>
