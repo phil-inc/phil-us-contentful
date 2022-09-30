@@ -48,7 +48,7 @@ type HomePageProps = {
 const HomePage: React.FC<HomePageProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 
-	console.log(data);
+	console.log(sections);
 
 	return (
 		<Layout>
@@ -82,6 +82,8 @@ export const homePageQuery = graphql`
 						body {
 							raw
 						}
+						author
+						designation
 					}
 					referenceType
 				}

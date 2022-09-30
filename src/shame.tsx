@@ -104,7 +104,7 @@
 // <Grid mb={52}>
 //     {featuredSection.map(featured => (
 //         <Grid.Col lg={6} sm={12} md={12}>
-//             <Featured title={featured.title}>{featured.description.description}</Featured>
+// <Featured title={featured.title}>{featured.description.description}</Featured>
 //         </Grid.Col>
 //     ))}
 // </Grid>

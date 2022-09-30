@@ -1,7 +1,9 @@
 import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid} from '@mantine/core';
 import classNames from 'classnames';
+import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
+import type {Asset} from 'types/asset';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -43,17 +45,19 @@ const useStyles = createStyles(theme => ({
 type FeaturedProps = {
 	title?: string;
 	children?: React.ReactNode;
-	icon?: string;
+	asset?: Asset;
 };
 
-export const Featured: FC<FeaturedProps> = ({title, icon, children}) => {
+export const Featured: FC<FeaturedProps> = ({title, asset, children}) => {
 	const {classes} = useStyles();
+
+	const pathToImage = getImage(asset);
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid align={'center'}>
 				<Grid.Col lg={6} sm={12} md={12}>
-					<Container style={{background: '#00827e', minHeight: 300}}></Container>
+					<GatsbyImage image={pathToImage} alt={title} />
 				</Grid.Col>
 				<Grid.Col lg={6} sm={12} md={12}>
 					<Container pr={50}>

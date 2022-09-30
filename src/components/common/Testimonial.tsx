@@ -1,8 +1,9 @@
 import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid} from '@mantine/core';
 import classNames from 'classnames';
-import {StaticImage} from 'gatsby-plugin-image';
+import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
+import type {Asset} from 'types/asset';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -27,15 +28,17 @@ const useStyles = createStyles(theme => ({
 
 type TestimonialProps = {
 	type?: 'person' | 'company';
-	icon?: string;
+	image?: Asset;
 	children?: React.ReactNode;
 	author: string;
 	designation: string;
 };
 
-export const Testimonial: FC<TestimonialProps> = ({icon, children, author, designation, type = 'company'}) => {
+export const Testimonial: FC<TestimonialProps> = ({image, children, author, designation, type = 'company'}) => {
 	const {classes} = useStyles();
 	const isPerson = type === 'person';
+
+	const pathToImage = getImage(image);
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
@@ -52,7 +55,7 @@ export const Testimonial: FC<TestimonialProps> = ({icon, children, author, desig
 					</Grid.Col>
 				)}
 				<Grid.Col lg={isPerson ? 8 : 12} sm={12} px={38} py={34}>
-					{!isPerson && <Text>{icon}</Text>}
+					{!isPerson && <GatsbyImage image={pathToImage} alt='' />}
 					{children}
 					<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
 					<Text color={'#00827E'} weight={700} className={classes.author}>

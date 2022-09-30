@@ -33,7 +33,7 @@ type ReferenceType =
 export type IReferencedSection = {
 	id: string;
 	referenceType: ReferenceType;
-	heading: string;
+	header: string;
 	references: TResource[];
 	buttonText?: string;
 	linkTo?: string;
