@@ -1,8 +1,10 @@
 import {Paper, Container, Center, Title, Divider, Button, Text, createStyles} from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
+import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
+import type {Asset} from 'types/asset';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -47,11 +49,12 @@ type ArticleProps = {
 	color?: 'blue' | 'yellow' | 'none';
 	title?: string;
 	children?: React.ReactNode;
-	icon?: string;
+	image?: Asset;
 	link?: string;
+	buttonText?: string;
 };
 
-export const Article: FC<ArticleProps> = ({color, title, icon, children, link}) => {
+export const Article: FC<ArticleProps> = ({color, title, image, children, link, buttonText}) => {
 	const {classes} = useStyles();
 
 	const getColorStyle = () => {
@@ -68,9 +71,11 @@ export const Article: FC<ArticleProps> = ({color, title, icon, children, link}) 
 		}
 	};
 
+	const pathToImage = getImage(image);
+
 	return (
 		<Paper radius={0} className={classNames(classes.card, getColorStyle())}>
-			{!icon && <Container style={{background: '#00827e', minHeight: 427}} size={427}></Container>}
+			<GatsbyImage image={pathToImage} alt={title} />
 
 			<Title order={3} mt='md'>
 				{title}
@@ -79,9 +84,11 @@ export const Article: FC<ArticleProps> = ({color, title, icon, children, link}) 
 			<Text size='sm' mt='sm' mb={11}>
 				{children}
 			</Text>
-			<Link to={link}>
-				<Button color={'dark'}>Lean More</Button>
-			</Link>
+			{Boolean(buttonText?.length) && (
+				<Link to={link}>
+					<Button color={'dark'}>{buttonText}</Button>
+				</Link>
+			)}
 		</Paper>
 	);
 };

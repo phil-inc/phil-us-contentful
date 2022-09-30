@@ -1,15 +1,20 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid, Group} from '@mantine/core';
 import classNames from 'classnames';
 import type {FC} from 'react';
 import React from 'react';
 
 const useStyles = createStyles(theme => ({
-	card: {
+	FAQWrapper: {
 		position: 'relative',
 		overflow: 'hidden',
-		padding: '30px 34px',
+		padding: '30px 60px',
 		background: '#F4F4F4',
-		fontFamily: 'Lato',
+		fontFamily: 'Raleway',
+		fontWeight: 700,
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		height: '100%',
 
 		'&::before': {
 			content: '""',
@@ -31,10 +36,12 @@ export const FAQ: FC<FAQProps> = ({title}) => {
 	const {classes} = useStyles();
 
 	return (
-		<Paper radius={0} className={classNames(classes.card)}>
-			<Title order={4} style={{fontFamily: 'Lato'}}>
-				{title}
-			</Title>
+		<Paper radius={0} className={classNames(classes.FAQWrapper)}>
+			<Group align='center'>
+				<Title order={4} size={30}>
+					{title}
+				</Title>
+			</Group>
 		</Paper>
 	);
 };
