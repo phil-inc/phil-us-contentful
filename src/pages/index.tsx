@@ -48,6 +48,8 @@ type HomePageProps = {
 const HomePage: React.FC<HomePageProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 
+	console.log(data);
+
 	return (
 		<Layout>
 			{sections.map(section => (
@@ -65,17 +67,50 @@ export const homePageQuery = graphql`
 			id
 			title
 			sections {
-				id
-				header
-				buttonText
-				linkTo
-				body {
-					raw
+				... on ContentfulReferencedSection {
+					id
+					header
+					sectionType
+					references {
+						linkTo
+						heading
+						buttonText
+						asset {
+							gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
+							id
+						}
+						body {
+							raw
+						}
+					}
+					referenceType
 				}
-				asset {
-					publicUrl
-					title
-					gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+				... on ContentfulSection {
+					id
+					body {
+						raw
+						references {
+							contentful_id
+							__typename
+							description
+							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+						}
+					}
+					asset {
+						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+						title
+					}
+					buttonText
+					header
+					sectionType
+					linkTo
+					sys {
+						contentType {
+							sys {
+								id
+							}
+						}
+					}
 				}
 			}
 		}
