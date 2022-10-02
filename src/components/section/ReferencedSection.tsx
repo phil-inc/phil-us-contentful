@@ -1,10 +1,10 @@
-import {Grid, Title, Button, Text, Center, Group} from '@mantine/core';
+import {Grid, Title, Button, Group} from '@mantine/core';
 import {Article} from 'components/common/Article';
-import ImageContainer from 'components/common/Container/ImageContainer';
+import {Banner} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
 import {Featured} from 'components/common/Featured';
 import {Testimonial} from 'components/common/Testimonial';
-import {getImage, GatsbyImage} from 'gatsby-plugin-image';
+import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import type {TResource} from 'types/resource';
@@ -14,6 +14,11 @@ type ReferencedSectionProps = {
 	section: IReferencedSection;
 };
 
+/**
+ * ReferencedSection is a Section Component that renders referenced resources.
+ * @param props - {section} Section to be reference rendered
+ * @returns Referenced Resources
+ */
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	console.log(section);
 
@@ -59,6 +64,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					</Featured>
 				);
 
+			case 'Banner':
+				return <Banner resource={resource} />;
+
 			default:
 				break;
 		}
@@ -84,37 +92,48 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		return 3;
 	};
 
-	const isGreenBackground = section.referenceType === 'Customer Story';
+	const getSectionColors = () => {
+		switch (section.referenceType) {
+			case 'Customer Story':
+				return ['#29A5B4', 'white']; // Green Background
+
+			case 'Banner':
+				return ['#F4F4F4', 'black']; // Gray Background
+
+			case 'Article':
+				return ['#F4F4F4', 'black']; // Gray Background
+
+			default:
+				return ['#FFFFFF', 'black']; // White Background
+		}
+	};
+
+	const [background, textColor] = getSectionColors();
 
 	return (
-		<Expanded background={isGreenBackground ? '#29A5B4' : null}>
-			<Group position='center' mb={60}>
-				<Title order={2} mt={112} color={isGreenBackground ? 'white' : null}>
-					{section.header}
-				</Title>
-			</Group>
+		<Expanded background={background} py={section.referenceType === 'Banner' ? 0 : 116}>
+			{Boolean(section.header?.length) && (
+				<Group position='center' mb={60}>
+					<Title order={2} color={textColor}>
+						{section.header}
+					</Title>
+				</Group>
+			)}
 			<Grid>
-				{section.references.map((article, index) => (
-					<Grid.Col key={index} lg={getSpan(section.references.length)} sm={12} md={12}>
-						{renderResource(article, index)}
+				{section.references.map((resource, index) => (
+					<Grid.Col py={60} key={index} lg={getSpan(section.references.length)} sm={12} md={12}>
+						{renderResource(resource, index)}
 					</Grid.Col>
 				))}
 			</Grid>
+			{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
+				<Group position='center'>
+					<Link to={section.linkTo}>
+						<Button color={'dark'}>{section.buttonText}</Button>
+					</Link>
+				</Group>
+			)}
 		</Expanded>
-
-	// <Expanded background='#29a5b4'>
-	// <Center mb={62}>
-	//     <Title order={2} mt={12} color='white'>
-	//         Testimonials
-	//     </Title>
-	// </Center>
-	// <Grid>
-	//     {testimonialsSection.map(testimonial => (
-	//         <Grid.Col lg={6} sm={12} md={12}>
-	//         </Grid.Col>
-	//     ))}
-	// </Grid>
-	// </Expanded>
 	);
 };
 

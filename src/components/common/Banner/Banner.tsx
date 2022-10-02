@@ -1,17 +1,19 @@
 import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Group, Grid} from '@mantine/core';
 import classNames from 'classnames';
+import {Link} from 'gatsby';
+import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
 import React from 'react';
+import type {TResource} from 'types/resource';
 
 const useStyles = createStyles(theme => ({
 	card: {
 		position: 'relative',
 		overflow: 'hidden',
-		padding: '32px',
+		padding: 32,
 		maxWidth: 1366,
-		width: '100vw',
+		width: '100%',
 		margin: '0 auto',
-		marginTop: 53,
 
 		'&::before': {
 			content: '""',
@@ -23,58 +25,39 @@ const useStyles = createStyles(theme => ({
 			background: '#5ABEA4 0% 0% no-repeat padding-box',
 		},
 	},
-
-	blue: {
-		'&::before': {
-			background: '#29A5B4 0% 0% no-repeat padding-box',
-		},
-	},
-
-	yellow: {
-		'&::before': {
-			background: '#EDBE3D 0% 0% no-repeat padding-box',
-		},
-	},
-
-	none: {
-		'&::before': {
-			width: 0,
-		},
-	},
 }));
 
-type ScheduleProps = {
-	title?: string;
-	children?: React.ReactNode;
-	icon?: string;
-	buttonText?: string;
-	noButton?: boolean;
-	color?: 'yellow';
+type BannerProps = {
+	resource: TResource;
 };
 
-// TODO: Deprecate
-export const Schedule: FC<ScheduleProps> = ({title, icon, children, buttonText, noButton, color}) => {
+/**
+ * Banner is a Component to render a banner
+ * @param props - {resource} Banner Resource with heading, body, buttonText, linkTo
+ * @returns Banner Component
+ */
+export const Banner: FC<BannerProps> = ({resource: {heading, body, buttonText, linkTo}}) => {
 	const {classes} = useStyles();
 
 	return (
-		<Paper radius={0} className={classNames(classes.card, color === 'yellow' ? classes.yellow : null)}>
+		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid align={'center'}>
 				<Grid.Col lg={10} sm={12}>
 					<Container m={0}>
 						<Title order={3} mt='md'>
-							{title}
+							{heading}
 						</Title>
 						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
 						<Text size='md' mt='sm' mb={11}>
-							{children}
+							{renderRichText(body)}
 						</Text>
 					</Container>
 				</Grid.Col>
-				{!noButton && (
+				{Boolean(buttonText?.length) && Boolean(linkTo?.length) && (
 					<Grid.Col lg={2} sm={12}>
-						<Center>
+						<Link to={linkTo}>
 							<Button color={'dark'}>{buttonText}</Button>
-						</Center>
+						</Link>
 					</Grid.Col>
 				)}
 			</Grid>

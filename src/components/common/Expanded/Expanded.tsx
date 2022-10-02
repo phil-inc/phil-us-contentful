@@ -4,33 +4,28 @@ import classNames from 'classnames';
 
 type ExpandedProps = {
 	children: React.ReactNode;
-	background?: string;
+	background: string;
 	minHeight?: number | string;
 	noMargin?: boolean;
+	py?: number;
 };
 
-const Expanded: React.FC<ExpandedProps> = ({
-	children,
-	background = '#F4F4F4',
-	minHeight = '100%',
-	noMargin = false,
-}) => {
+const Expanded: React.FC<ExpandedProps> = ({children, background, minHeight = '100%', noMargin = false, py = 0}) => {
 	const useStyles = createStyles(theme => ({
 		container: {
 			background,
 			minHeight,
 			maxWidth: 1920,
 			width: '100vw',
-			padding: 116,
+			padding: '116px 116px',
 			marginLeft: -116,
-			marginBottom: noMargin ? 0 : 100,
 		},
 	}));
 
 	const {classes} = useStyles();
 
 	return (
-		<Container fluid className={classes.container}>
+		<Container fluid className={classes.container} py={py}>
 			{children}
 		</Container>
 	);
