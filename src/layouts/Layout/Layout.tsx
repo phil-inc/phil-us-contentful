@@ -4,31 +4,10 @@ import type {ColorScheme, MantineThemeOverride} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
 import {CHeader} from './CHeader/CHeader';
 import {CFooter} from './CFooter/CFooter';
+import {isIndex} from 'hooks/isIndex';
 
 type LayoutProps = {
 	children: React.ReactNode;
-};
-
-const theme: MantineThemeOverride = {
-	colors: {
-		brand: ['#00201F'],
-	},
-	headings: {
-		fontWeight: 700,
-		sizes: {
-			h1: {
-				fontSize: 82,
-			},
-			h2: {
-				fontSize: 52,
-			},
-			h3: {
-				fontSize: 35,
-			},
-		},
-		fontFamily: 'Raleway',
-	},
-	fontFamily: 'Lato',
 };
 
 export function Layout({children}: LayoutProps) {
@@ -85,6 +64,28 @@ export function Layout({children}: LayoutProps) {
 		{label: 'Privacy Policy', link: '#'},
 		{label: 'HIPAA Notice', link: '#'},
 	];
+
+	const theme: MantineThemeOverride = {
+		colors: {
+			brand: ['#00201F'],
+		},
+		headings: {
+			fontWeight: 700,
+			sizes: {
+				h1: {
+					fontSize: isIndex() ? 82 : 55,
+				},
+				h2: {
+					fontSize: 52,
+				},
+				h3: {
+					fontSize: 35,
+				},
+			},
+			fontFamily: 'Raleway',
+		},
+		fontFamily: 'Lato',
+	};
 
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>

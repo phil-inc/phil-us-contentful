@@ -1,11 +1,18 @@
-import {Grid, Title, Button, Text} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles} from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import type {ISection} from 'types/section';
-import {BLOCKS, MARKS} from '@contentful/rich-text-types';
-import type {Asset} from 'types/asset';
+import {BLOCKS} from '@contentful/rich-text-types';
+
+const useStyles = createStyles(theme => ({
+	body: {
+		p: {
+			marginTop: 0,
+		},
+	},
+}));
 
 type BasicSectionProps = {
 	section: ISection;
@@ -24,6 +31,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const ORDER_SECOND = 2;
 	const HEADING_FIRST = 1;
 	const HEADING_SECOND = 2;
+
+	const {classes} = useStyles();
 
 	const pathToImage = getImage(section.asset);
 
@@ -56,8 +65,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		<Grid gutter='xl' align='center' pb={130} pt={isHeroSection ? 0 : 100}>
 			<Grid.Col order={textColumnOrder} lg={6} md={6} sm={12}>
 				<Title order={titleOrdering}>{section.header}</Title>
-				{Boolean(section.subHeader?.length) && <Text weight='bold'>{section.subHeader}</Text>}
-				<Text size={'lg'}>{renderRichText(section.body, options)}</Text>
+				{Boolean(section.subHeader?.subHeader.length) && (
+					<Text size={18} weight='bold' mt={20}>
+						{section.subHeader.subHeader}
+					</Text>
+				)}
+				<Text size={18} className={classes.body}>
+					{renderRichText(section.body, options)}
+				</Text>
 				{Boolean(section.buttonText?.length) && <Button color={'dark'}>{section.buttonText}</Button>}
 			</Grid.Col>
 			<Grid.Col order={imageColumnOrder} lg={6} md={6} sm={12}>

@@ -163,7 +163,7 @@ const Contact = () => {
 						<CardWithImage
 							image={
 								<StaticImage
-									src='../assets/images/newYork.png'
+									src='../assets/images/newyork.png'
 									alt='person'
 									className={classes.testimonialImage}
 									placeholder='blurred'
