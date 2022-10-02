@@ -10,7 +10,7 @@ export type ISection = {
 	id: string;
 	sectionType: SectionType;
 	header: string;
-	subHeader?: string;
+	subHeader?: {subHeader: string};
 	body: BodyType;
 	buttonText: string;
 	linkTo: string;
@@ -29,7 +29,8 @@ type ReferenceType =
 	| 'Phil Blog'
 	| 'Case Study'
 	| 'White Paper'
-	| 'Banner';
+	| 'Banner'
+	| 'Stats Card';
 
 export type IReferencedSection = {
 	id: string;

@@ -4,6 +4,9 @@ import React from 'react';
 const useStyles = createStyles(() => ({
 	iamgeContainer: {
 		background: '#F4F4F4',
+		maxWidth: 816,
+		maxHeight: 816,
+		padding: 50,
 	},
 }));
 
@@ -16,9 +19,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({children}) => {
 
 	return (
 		<Container fluid className={classes.iamgeContainer}>
-			<Group position='center' py={50}>
-				{children}
-			</Group>
+			<Group position='center'>{children}</Group>
 		</Container>
 	);
 };

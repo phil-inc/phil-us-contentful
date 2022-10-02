@@ -3,6 +3,7 @@ import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
 import {Featured} from 'components/common/Featured';
+import {StatsCard} from 'components/common/statsCard/StatsCard';
 import {Testimonial} from 'components/common/Testimonial';
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -21,6 +22,8 @@ type ReferencedSectionProps = {
  */
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	console.log(section);
+	const GRID_COLUMNS = 100;
+	const SPAN_LG = GRID_COLUMNS / section.references.length;
 
 	const getColor = (index: number) => {
 		if (index % 3 === 0) {
@@ -67,29 +70,12 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Banner':
 				return <Banner resource={resource} />;
 
+			case 'Stats Card':
+				return <StatsCard resource={resource} />;
+
 			default:
 				break;
 		}
-	};
-
-	const getSpan = (length: number) => {
-		if (length <= 0) {
-			return 0;
-		}
-
-		if (length === 1) {
-			return 12;
-		}
-
-		if (length === 2) {
-			return 6;
-		}
-
-		if (length === 3) {
-			return 4;
-		}
-
-		return 3;
 	};
 
 	const getSectionColors = () => {
@@ -98,9 +84,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				return ['#29A5B4', 'white']; // Green Background
 
 			case 'Banner':
-				return ['#F4F4F4', 'black']; // Gray Background
-
 			case 'Article':
+			case 'Stats Card':
 				return ['#F4F4F4', 'black']; // Gray Background
 
 			default:
@@ -119,9 +104,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					</Title>
 				</Group>
 			)}
-			<Grid>
+			<Grid columns={GRID_COLUMNS}>
 				{section.references.map((resource, index) => (
-					<Grid.Col py={60} key={index} lg={getSpan(section.references.length)} sm={12} md={12}>
+					<Grid.Col py={60} key={index} lg={SPAN_LG} sm={GRID_COLUMNS} md={50}>
 						{renderResource(resource, index)}
 					</Grid.Col>
 				))}

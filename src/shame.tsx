@@ -1,124 +1,228 @@
-// {/* Second Section */}
-// <Grid mb={134} gutter={'xl'} justify='space-between' align={'flex-end'}>
-// <Grid.Col lg={6} md={6} sm={12}>
-//     <Container style={{background: '#f4f4f4'}}>
-//         <Center>
-//             <StaticImage
-//                 src='../assets/images/index_hero.png'
-//                 alt='circles inside circles'
-//                 className='hero-img'
-//                 placeholder='blurred'
-//                 layout='constrained'
-//             ></StaticImage>
-//         </Center>
-//     </Container>
-// </Grid.Col>
-// <Grid.Col lg={6} md={6} sm={12} style={{minHeight: 475}}>
-//     <Title order={2} pb={16}>
-//         {secondTwoColumnSection.title}
-//     </Title>
-//     <Container p={0} m={0} size={650}>
-//         <Text mb={32}>{secondTwoColumnSection.description.description}</Text>
-//     </Container>
-//     <List mb={32} spacing={'md'}>
-//         {secondTwoColumnSection.list.map(item => (
-//             <List.Item>
-//                 <Text span weight={'bold'}>
-//                     {item}
+// Return (
+//     <Layout>
+//         {/* Hero Section */}
+//         <Grid gutter={'xl'} align='center' mb={160}>
+//             <Grid.Col lg={6} md={6} sm={12}>
+//                 <Title order={2}>Access & Commercialization Solutions</Title>
+//                 <Text weight='bold'>Is your brand reaching its commercial potential?</Text>
+//                 <Text size={'lg'}>
+//                     Our end-to-end platform converts market access to covered dispenses, transforming outcomes for brands.
 //                 </Text>
-//             </List.Item>
-//         ))}
-//     </List>
-//     <Button color={'dark'}>{secondTwoColumnSection.button}</Button>
-// </Grid.Col>
-// </Grid>
+//             </Grid.Col>
+//             <Grid.Col lg={6} md={6} sm={12}>
+//                 <Container style={{background: '#f4f4f4'}}>
+//                     <Center>
+//                         <StaticImage
+//                             src='../assets/images/index_hero.png'
+//                             alt='circles inside circles'
+//                             className='hero-img'
+//                             placeholder='blurred'
+//                             layout='constrained'
+//                         ></StaticImage>
+//                     </Center>
+//                 </Container>
+//             </Grid.Col>
+//         </Grid>
 
-// {/* Third Section */}
-// <Expanded>
-// <Center mb={62}>
-//     <Title order={2} mt={112}>
-//         How it Works
+//         {/* TODO: Finalize Expanded component */}
+//         {/* Second Section */}
+//         <Container
+//             fluid
+//             mb={108}
+//             ml={-116}
+//             px={100}
+//             py={128}
+//             style={{background: '#f4f4f4', maxWidth: 1920, width: '100vw'}}
+//         >
+//             <SimpleGrid
+//                 cols={5}
+//                 spacing='lg'
+//                 breakpoints={[
+//                     {maxWidth: 980, cols: 5, spacing: 'md'},
+//                     {maxWidth: 755, cols: 2, spacing: 'sm'},
+//                     {maxWidth: 600, cols: 1, spacing: 'sm'},
+//                 ]}
+//             >
+// <Card shadow='none' p='xl' radius={0}>
+//     <Card.Section>
+//         <Image
+//             src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+//             height={265}
+//             alt='No way!'
+//         />
+//     </Card.Section>
+
+//     <Title mt='md' className={classes.percentage}>
+//         90%
 //     </Title>
-// </Center>
-// <Grid>
-//     {articleSection.map(article => (
-//         <Grid.Col lg={4} sm={12} md={12}>
-//             <Article title={article.title} link={'/patients'}>
-//                 {article.description}
-//             </Article>
-//         </Grid.Col>
-//     ))}
-// </Grid>
-// </Expanded>
 
-// {/* Fourth Section */}
-// <Grid gutter={'xl'} align='center' mb={160}>
-// <Grid.Col lg={6} md={6} sm={12}>
-//     <Title order={2} style={{maxWidth: 601}}>
-//         Trusted by Innovative Pharma Manufacturers
-//     </Title>
-//     <Text mb={16}>companies logos go here</Text>
-// </Grid.Col>
-// <Grid.Col lg={6} md={6} sm={12}>
-//     <Container style={{background: '#f4f4f4'}}>
-//         <Center>
-//             <StaticImage
-//                 src='../assets/images/index_hero.png'
-//                 alt='circles inside circles'
-//                 className='hero-img'
-//                 placeholder='blurred'
-//                 layout='constrained'
-//             ></StaticImage>
-//         </Center>
-//     </Container>
-// </Grid.Col>
-// </Grid>
+//     <Text color='dark' className={classes.description}>
+//         patient enrollment
+//     </Text>
+// </Card>
+//                 <Card shadow='none' p='xl' radius={0}>
+//                     <Card.Section>
+//                         <Image
+//                             src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+//                             height={265}
+//                             alt='No way!'
+//                         />
+//                     </Card.Section>
 
-// {/* Fifth Section */}
-// <Expanded background='#29a5b4'>
-// <Center mb={62}>
-//     <Title order={2} mt={12} color='white'>
-//         Testimonials
-//     </Title>
-// </Center>
-// <Grid>
-//     {testimonialsSection.map(testimonial => (
-//         <Grid.Col lg={6} sm={12} md={12}>
-//             <Testimonial icon='oyster point' author={testimonial.author} designation={testimonial.designation}>
-//                 {testimonial.description.description}
-//             </Testimonial>
-//         </Grid.Col>
-//     ))}
-// </Grid>
-// </Expanded>
+//                     <Title mt='md' className={classes.percentage}>
+//                         5x
+//                     </Title>
 
-// {/* Sixth Section */}
+//                     <Text color='dark' className={classes.description}>
+//                         RX refill adherence improvement
+//                     </Text>
+//                 </Card>
+//                 <Card shadow='none' p='xl' radius={0}>
+//                     <Card.Section>
+//                         <Image
+//                             src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+//                             height={265}
+//                             alt='No way!'
+//                         />
+//                     </Card.Section>
 
-// <Container fluid m={0} p={0} mb={50}>
-// <Center>
-//     <Title mb={64} order={2}>
-//         Featured Resources
-//     </Title>
-// </Center>
+//                     <Title mt='md' className={classes.percentage}>
+//                         2x
+//                     </Title>
 
-// <Grid mb={52}>
-//     {featuredSection.map(featured => (
-//         <Grid.Col lg={6} sm={12} md={12}>
-// <Featured title={featured.title}>{featured.description.description}</Featured>
-//         </Grid.Col>
-//     ))}
-// </Grid>
-// <Group position='center'>
-//     <Button color={'dark'}>Resources</Button>
-// </Group>
-// </Container>
+//                     <Text color='dark' className={classes.description}>
+//                         increase in covered dispenses
+//                     </Text>
+//                 </Card>
+//                 <Card shadow='none' p='xl' radius={0}>
+//                     <Card.Section>
+//                         <Image
+//                             src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+//                             height={265}
+//                             alt='No way!'
+//                         />
+//                     </Card.Section>
 
-// {/* Seventh Section */}
-// <Container fluid ml={-116} px={116} style={{background: '#f4f4f4', minHeight: 256, minWidth: 1920}}>
-// <Center>
-// <Schedule title='Schedule a Demo' buttonText='Schedule demo'>
-//     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse at turpis at velit tincidunt
-//     molestie.
-// </Schedule>
-// </Center>
-// </Container>
+//                     <Title mt='md' className={classes.percentage}>
+//                         6x
+//                     </Title>
+
+//                     <Text color='dark' className={classes.description}>
+//                         net sales growth
+//                     </Text>
+//                 </Card>
+//                 <Card shadow='none' p='xl' radius={0}>
+//                     <Card.Section>
+//                         <Image
+//                             src='https://images.unsplash.com/photo-1579227114347-15d08fc37cae?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80'
+//                             height={265}
+//                             alt='No way!'
+//                         />
+//                     </Card.Section>
+
+//                     <Title mt='md' className={classes.percentage}>
+//                         40x
+//                     </Title>
+
+//                     <Text color='dark' className={classes.description}>
+//                         return on investment
+//                     </Text>
+//                 </Card>
+//             </SimpleGrid>
+//         </Container>
+
+//         {/* Third Section */}
+//         <Grid gutter={60} align='center' mb={160}>
+//             <Grid.Col lg={6} md={6} sm={12}>
+//                 <Container style={{background: '#f4f4f4'}}>
+//                     <Center>
+//                         <StaticImage
+//                             src='../assets/images/index_hero.png'
+//                             alt='circles inside circles'
+//                             className='hero-img'
+//                             placeholder='blurred'
+//                             layout='constrained'
+//                         ></StaticImage>
+//                     </Center>
+//                 </Container>
+//             </Grid.Col>
+//             <Grid.Col lg={6} md={6} sm={12}>
+//                 <Title order={2} style={{maxWidth: 601}}>
+//                     Launch
+//                 </Title>
+//                 <Text mb={25}>
+//                     Manufacturers navigate complex challenges when launching a new drug and getting market access in
+//                     place. Phil’s expertise can guide you through this process and help drive as many covered scripts as
+//                     possible. Our end-to-end solution offers pre-launch strategy support, wholesaling options to save you
+//                     money, and the data visibility to optimize your program.
+//                 </Text>
+//                 <Button color='dark'>Learn more</Button>
+//             </Grid.Col>
+//         </Grid>
+
+//         {/* Fourth Section */}
+//         <Grid gutter={60} align='center' mb={160}>
+//             <Grid.Col lg={6} md={6} sm={12}>
+//                 <Title order={2} style={{maxWidth: 601}}>
+//                     Mid-cycle
+//                 </Title>
+//                 <Text mb={25}>
+//                     If your brand is struggling to convert market access to coverage, turn to Phil. Phil’s platform can
+//                     improve overall coverage, refill adherence and combat against upside down economics
+//                 </Text>
+//                 <Button color='dark'>Learn more</Button>
+//             </Grid.Col>
+//             <Grid.Col lg={6} md={6} sm={12}>
+//                 <Container style={{background: '#f4f4f4'}}>
+//                     <Center>
+//                         <StaticImage
+//                             src='../assets/images/index_hero.png'
+//                             alt='circles inside circles'
+//                             className='hero-img'
+//                             placeholder='blurred'
+//                             layout='constrained'
+//                         ></StaticImage>
+//                     </Center>
+//                 </Container>
+//             </Grid.Col>
+//         </Grid>
+
+//         {/* Fifth Section */}
+//         <Grid gutter={60} align='center' mb={160}>
+//             <Grid.Col lg={6} md={6} sm={12}>
+//                 <Container style={{background: '#f4f4f4'}}>
+//                     <Center>
+//                         <StaticImage
+//                             src='../assets/images/index_hero.png'
+//                             alt='circles inside circles'
+//                             className='hero-img'
+//                             placeholder='blurred'
+//                             layout='constrained'
+//                         ></StaticImage>
+//                     </Center>
+//                 </Container>
+//             </Grid.Col>
+//             <Grid.Col lg={6} md={6} sm={12}>
+//                 <Title order={2} style={{maxWidth: 601}}>
+//                     Loss of exclusivity
+//                 </Title>
+//                 <Text mb={25}>
+//                     If your brand-name drug has experienced a loss of exclusivity or is approaching the time it will no
+//                     longer be protected from generic drug competition, Phil can help you navigate this uncertainty. Learn
+//                     how Phil’s technology puts you back in control of your brand economics
+//                 </Text>
+//                 <Button color='dark'>Learn more</Button>
+//             </Grid.Col>
+//         </Grid>
+
+//         {/* Sixth Section */}
+//         <Container fluid ml={-116} p={116} style={{background: '#f4f4f4', maxWidth: 1920, width: '100vw'}}>
+//             <Center>
+//                 <Schedule title='Lorem Ipsum Dolor' buttonText='Contact us'>
+//                     For better financials on a per script basis, unprecedented transparency into the prescription life
+//                     cycle and real-time visibility and control over your channels, contact us.
+//                 </Schedule>
+//             </Center>
+//         </Container>
+//     </Layout>
+// );
