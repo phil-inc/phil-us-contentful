@@ -45,13 +45,7 @@ export const Testimonial: FC<TestimonialProps> = ({image, children, author, desi
 			<Grid>
 				{isPerson && (
 					<Grid.Col lg={4} sm={12}>
-						<StaticImage
-							src='../../assets/images/person.png'
-							alt='person'
-							className={classes.testimonialImage}
-							placeholder='blurred'
-							layout='fullWidth'
-						></StaticImage>
+						<GatsbyImage className={classes.testimonialImage} image={pathToImage} alt='' />
 					</Grid.Col>
 				)}
 				<Grid.Col lg={isPerson ? 8 : 12} sm={12} px={38} py={34}>

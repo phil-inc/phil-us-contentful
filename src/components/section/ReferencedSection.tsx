@@ -3,6 +3,7 @@ import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
 import {Featured} from 'components/common/Featured';
+import {PrescriberJourney} from 'components/common/prescriberJourney/PrescriberJourney';
 import {StatsCard} from 'components/common/statsCard/StatsCard';
 import {Testimonial} from 'components/common/Testimonial';
 import {Link} from 'gatsby';
@@ -37,6 +38,26 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		return 'yellow';
 	};
 
+	const getSectionColors = () => {
+		switch (section.referenceType) {
+			case 'Customer Story':
+			case 'Testimonial':
+				return ['#29A5B4', 'white']; // Green Background
+
+			case 'Banner':
+			case 'Article':
+			case 'Stats Card':
+			case 'Prescriber Journey':
+			case 'Info Card':
+				return ['#F4F4F4', 'black', '#FFFFFF']; // Gray Background
+
+			default:
+				return ['#FFFFFF', 'black']; // White Background
+		}
+	};
+
+	const [background, textColor, resourceBackground] = getSectionColors();
+
 	const renderResource = (resource: TResource, index: number) => {
 		switch (section.referenceType) {
 			case 'Article':
@@ -54,15 +75,28 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				);
 
 			case 'Customer Story':
+			case 'Testimonial':
 				return (
-					<Testimonial image={resource.asset} author={resource.author} designation={resource.designation}>
+					<Testimonial
+						type={section.referenceType === 'Testimonial' ? 'person' : 'company'}
+						image={resource.asset}
+						author={resource.author}
+						designation={resource.designation}
+					>
 						{renderRichText(resource.body)}
 					</Testimonial>
 				);
 
 			case 'Featured Resource':
+			case 'Info Card':
 				return (
-					<Featured title={resource.heading} asset={resource.asset}>
+					<Featured
+						noDivider={section.referenceType === 'Info Card'}
+						pr={section.referenceType === 'Featured Resource' ? 50 : 0}
+						resourceBackground={resourceBackground}
+						title={resource.heading}
+						asset={resource.asset}
+					>
 						{renderRichText(resource.body)}
 					</Featured>
 				);
@@ -73,27 +107,13 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Stats Card':
 				return <StatsCard resource={resource} />;
 
+			case 'Prescriber Journey':
+				return <PrescriberJourney resource={resource} />;
+
 			default:
 				break;
 		}
 	};
-
-	const getSectionColors = () => {
-		switch (section.referenceType) {
-			case 'Customer Story':
-				return ['#29A5B4', 'white']; // Green Background
-
-			case 'Banner':
-			case 'Article':
-			case 'Stats Card':
-				return ['#F4F4F4', 'black']; // Gray Background
-
-			default:
-				return ['#FFFFFF', 'black']; // White Background
-		}
-	};
-
-	const [background, textColor] = getSectionColors();
 
 	return (
 		<Expanded background={background} py={section.referenceType === 'Banner' ? 0 : 116}>
@@ -106,7 +126,13 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			)}
 			<Grid columns={GRID_COLUMNS}>
 				{section.references.map((resource, index) => (
-					<Grid.Col py={60} key={index} lg={SPAN_LG} sm={GRID_COLUMNS} md={50}>
+					<Grid.Col
+						py={30}
+						key={index}
+						lg={section.referenceType === 'Info Card' || section.referenceType === 'Testimonial' ? 50 : SPAN_LG}
+						sm={GRID_COLUMNS}
+						md={50}
+					>
 						{renderResource(resource, index)}
 					</Grid.Col>
 				))}

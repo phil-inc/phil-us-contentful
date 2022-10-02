@@ -4,13 +4,19 @@ import classNames from 'classnames';
 
 type ExpandedProps = {
 	children: React.ReactNode;
-	background: string;
+	background?: string;
 	minHeight?: number | string;
 	noMargin?: boolean;
 	py?: number;
 };
 
-const Expanded: React.FC<ExpandedProps> = ({children, background, minHeight = '100%', noMargin = false, py = 0}) => {
+const Expanded: React.FC<ExpandedProps> = ({
+	children,
+	background = '#FFFFFF',
+	minHeight = '100%',
+	noMargin = false,
+	py = 0,
+}) => {
 	const useStyles = createStyles(theme => ({
 		container: {
 			background,

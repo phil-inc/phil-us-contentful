@@ -30,7 +30,9 @@ type ReferenceType =
 	| 'Case Study'
 	| 'White Paper'
 	| 'Banner'
-	| 'Stats Card';
+	| 'Stats Card'
+	| 'Prescriber Journey'
+	| 'Info Card';
 
 export type IReferencedSection = {
 	id: string;
