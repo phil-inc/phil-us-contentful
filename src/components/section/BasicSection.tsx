@@ -53,7 +53,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
 	return (
-		<Grid gutter='xl' align='center' mb={160}>
+		<Grid gutter='xl' align='center' pb={130} pt={isHeroSection ? 0 : 100}>
 			<Grid.Col order={textColumnOrder} lg={6} md={6} sm={12}>
 				<Title order={titleOrdering}>{section.header}</Title>
 				{Boolean(section.subHeader?.length) && <Text weight='bold'>{section.subHeader}</Text>}

@@ -100,6 +100,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Banner':
 				return ['#F4F4F4', 'black']; // Gray Background
 
+			case 'Article':
+				return ['#F4F4F4', 'black']; // Gray Background
+
 			default:
 				return ['#FFFFFF', 'black']; // White Background
 		}
