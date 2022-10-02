@@ -24,10 +24,10 @@ type ReferencedSectionProps = {
  * @returns Referenced Resources
  */
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
-	console.log(section);
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
 
+	// Get colors for resources based on index
 	const getColor = (index: number) => {
 		if (index % 3 === 0) {
 			return null;
@@ -40,6 +40,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		return 'yellow';
 	};
 
+	// Get colors for resources based on resource type
 	const getSectionColors = () => {
 		switch (section.referenceType) {
 			case 'Customer Story':
@@ -58,8 +59,22 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		}
 	};
 
+	// Get grid span based on resource type
+	const getSpan = () => {
+		switch (section.referenceType) {
+			case 'Info Card':
+			case 'Testimonial':
+			case 'FAQs':
+				return GRID_COLUMNS / 2;
+
+			default:
+				return SPAN_LG;
+		}
+	};
+
 	const [background, textColor, resourceBackground] = getSectionColors();
 
+	// Render resource based on resource type
 	const renderResource = (resource: TResource, index: number) => {
 		switch (section.referenceType) {
 			case 'Article':
@@ -151,13 +166,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			)}
 			<Grid columns={GRID_COLUMNS}>
 				{section.references.map((resource, index) => (
-					<Grid.Col
-						py={30}
-						key={index}
-						lg={section.referenceType === 'Stats Card' ? SPAN_LG : 50}
-						sm={GRID_COLUMNS}
-						md={50}
-					>
+					<Grid.Col py={30} key={index} lg={getSpan()} sm={GRID_COLUMNS} md={50}>
 						{renderResource(resource, index)}
 					</Grid.Col>
 				))}

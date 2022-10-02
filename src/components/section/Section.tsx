@@ -12,6 +12,11 @@ type SectionProps = {
 	index?: number;
 };
 
+/**
+ * Section is a section on a page.
+ * @param props - {section, index}
+ * @returns Section based on reference type.
+ */
 const Section: React.FC<SectionProps> = ({section, index}) => {
 	switch (section.sectionType) {
 		case 'Basic Section':

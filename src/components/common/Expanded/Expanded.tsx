@@ -10,6 +10,11 @@ type ExpandedProps = {
 	py?: number;
 };
 
+/**
+ * Expanded is a full width section component wrapper
+ * @param props - Expanded props
+ * @returns A section component with a expanded container
+ */
 const Expanded: React.FC<ExpandedProps> = ({
 	children,
 	background = '#FFFFFF',
