@@ -23,6 +23,7 @@ const useStyles = createStyles(theme => ({
 	},
 	testimonialImage: {
 		height: '100%',
+		width: '100%',
 	},
 }));
 

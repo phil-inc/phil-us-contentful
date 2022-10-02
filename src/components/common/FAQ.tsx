@@ -22,8 +22,8 @@ const useStyles = createStyles(theme => ({
 			top: 0,
 			bottom: 0,
 			left: 0,
-			width: 6,
-			background: '#EDBE3D 0% 0% no-repeat padding-box',
+			width: 12,
+			background: 'linear-gradient(to left, #FFF 50%, #EDBE3D 0%)',
 		},
 	},
 }));

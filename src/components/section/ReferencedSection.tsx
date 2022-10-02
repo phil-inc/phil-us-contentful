@@ -1,7 +1,9 @@
-import {Grid, Title, Button, Group} from '@mantine/core';
+import {Grid, Title, Button, Group, TextInput, Container} from '@mantine/core';
+import {IconSearch} from '@tabler/icons';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
+import {FAQ} from 'components/common/FAQ';
 import {Featured} from 'components/common/Featured';
 import {PrescriberJourney} from 'components/common/prescriberJourney/PrescriberJourney';
 import {StatsCard} from 'components/common/statsCard/StatsCard';
@@ -110,6 +112,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Prescriber Journey':
 				return <PrescriberJourney resource={resource} />;
 
+			case 'FAQs':
+				return <FAQ title={resource.heading} />;
+
 			default:
 				break;
 		}
@@ -124,12 +129,32 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					</Title>
 				</Group>
 			)}
+			{section.referenceType === 'FAQs' && (
+				<Container>
+					<Grid>
+						<Grid.Col span={10}>
+							<TextInput
+								icon={<IconSearch size={18} stroke={1.5} />}
+								size='md'
+								placeholder='Search questions'
+								rightSectionWidth={42}
+								radius={0}
+							/>
+						</Grid.Col>
+						<Grid.Col span={2}>
+							<Button color='dark' size='md'>
+								Search
+							</Button>
+						</Grid.Col>
+					</Grid>
+				</Container>
+			)}
 			<Grid columns={GRID_COLUMNS}>
 				{section.references.map((resource, index) => (
 					<Grid.Col
 						py={30}
 						key={index}
-						lg={section.referenceType === 'Info Card' || section.referenceType === 'Testimonial' ? 50 : SPAN_LG}
+						lg={section.referenceType === 'Stats Card' ? SPAN_LG : 50}
 						sm={GRID_COLUMNS}
 						md={50}
 					>

@@ -66,11 +66,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 			<Grid.Col order={textColumnOrder} lg={6} md={6} sm={12}>
 				<Title order={titleOrdering}>{section.header}</Title>
 				{Boolean(section.subHeader?.subHeader.length) && (
-					<Text weight='bold' mt={40}>
+					<Text size={18} weight='bold' mt={20}>
 						{section.subHeader.subHeader}
 					</Text>
 				)}
-				<Text size={'lg'} className={classes.body}>
+				<Text size={18} className={classes.body}>
 					{renderRichText(section.body, options)}
 				</Text>
 				{Boolean(section.buttonText?.length) && <Button color={'dark'}>{section.buttonText}</Button>}
