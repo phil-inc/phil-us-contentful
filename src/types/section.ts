@@ -28,7 +28,8 @@ type ReferenceType =
 	| 'Upcoming Events'
 	| 'Phil Blog'
 	| 'Case Study'
-	| 'White Paper';
+	| 'White Paper'
+	| 'Banner';
 
 export type IReferencedSection = {
 	id: string;

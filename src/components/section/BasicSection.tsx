@@ -9,9 +9,22 @@ import type {Asset} from 'types/asset';
 
 type BasicSectionProps = {
 	section: ISection;
+	index: number;
 };
 
-const BasicSection: React.FC<BasicSectionProps> = ({section}) => {
+/**
+ * BasicSection is a Component which has 2 columns; A RichText column and a ImageContainer column
+ * @param props : {section, index}
+ * @returns BasicSection Component which contains a text column and a image container column
+ */
+const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
+	const HERO_SECTION_INDEX = 0; // Hero section index is always 0
+	const NUMBER_OF_COLUMNS = 2; // Basic section will always have 2 columns
+	const ORDER_FIRST = 1;
+	const ORDER_SECOND = 2;
+	const HEADING_FIRST = 1;
+	const HEADING_SECOND = 2;
+
 	const pathToImage = getImage(section.asset);
 
 	const richTextImages = {};
@@ -33,15 +46,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({section}) => {
 		},
 	};
 
+	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
+	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
+
+	const isHeroSection = index === HERO_SECTION_INDEX;
+	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
+
 	return (
 		<Grid gutter='xl' align='center' mb={160}>
-			<Grid.Col lg={6} md={6} sm={12}>
-				<Title>{section.header}</Title>
+			<Grid.Col order={textColumnOrder} lg={6} md={6} sm={12}>
+				<Title order={titleOrdering}>{section.header}</Title>
 				{Boolean(section.subHeader?.length) && <Text weight='bold'>{section.subHeader}</Text>}
 				<Text size={'lg'}>{renderRichText(section.body, options)}</Text>
 				{Boolean(section.buttonText?.length) && <Button color={'dark'}>{section.buttonText}</Button>}
 			</Grid.Col>
-			<Grid.Col lg={6} md={6} sm={12}>
+			<Grid.Col order={imageColumnOrder} lg={6} md={6} sm={12}>
 				<ImageContainer>
 					<GatsbyImage image={pathToImage} alt={section.asset.title} />
 				</ImageContainer>

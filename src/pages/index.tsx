@@ -30,17 +30,6 @@ import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {ContentfulRichTextGatsbyReference, RenderRichTextData} from 'gatsby-source-contentful/rich-text';
 import Section from 'components/section/Section';
 
-const useStyles = createStyles(theme => ({
-	inner: {
-		display: 'flex',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-	content: {
-		width: '50%',
-	},
-}));
-
 type HomePageProps = {
 	data: {contentfulPage: ContentfulPage};
 };
@@ -49,12 +38,17 @@ const HomePage: React.FC<HomePageProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 
 	console.log(sections);
+	let basicSectionCount = 0;
 
 	return (
 		<Layout>
-			{sections.map(section => (
-				<Section key={section.id} section={section} />
-			))}
+			{sections.map((section, index) => {
+				if (section.sectionType === 'Basic Section') {
+					return <Section key={section.id} section={section} index={basicSectionCount++} />;
+				}
+
+				return <Section key={section.id} section={section} />;
+			})}
 		</Layout>
 	);
 };
@@ -86,6 +80,8 @@ export const homePageQuery = graphql`
 						designation
 					}
 					referenceType
+					linkTo
+					buttonText
 				}
 				... on ContentfulSection {
 					id
