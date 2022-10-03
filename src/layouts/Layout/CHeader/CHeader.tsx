@@ -141,7 +141,7 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
 					<Link to='/'>
-						<Container m={0} p={0}>
+						<Container m={0} p={0} size={200}>
 							<GatsbyImage image={pathToImage} alt='logo' />
 						</Container>
 					</Link>
