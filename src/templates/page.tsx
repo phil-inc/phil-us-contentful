@@ -43,7 +43,13 @@ export const pageQuery = graphql`
 						heading
 						buttonText
 						asset {
-							gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
+							gatsbyImageData(
+								placeholder: BLURRED
+								layout: CONSTRAINED
+								resizingBehavior: SCALE
+								width: 1000
+								height: 1000
+							)
 							id
 						}
 						body {
@@ -68,7 +74,13 @@ export const pageQuery = graphql`
 						}
 					}
 					asset {
-						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+						gatsbyImageData(
+							resizingBehavior: SCALE
+							placeholder: BLURRED
+							layout: CONSTRAINED
+							width: 1000
+							height: 1000
+						)
 						title
 					}
 					buttonText

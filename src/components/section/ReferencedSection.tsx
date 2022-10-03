@@ -1,14 +1,18 @@
-import {Grid, Title, Button, Group, TextInput, Container} from '@mantine/core';
+import {Grid, Title, Button, Group, TextInput, Container, Box} from '@mantine/core';
 import {IconSearch} from '@tabler/icons';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
+import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
 import Expanded from 'components/common/Expanded/Expanded';
 import {FAQ} from 'components/common/FAQ';
 import {Featured} from 'components/common/Featured';
 import {PrescriberJourney} from 'components/common/prescriberJourney/PrescriberJourney';
+import {PressRelease} from 'components/common/Press/PressRelease';
 import {StatsCard} from 'components/common/statsCard/StatsCard';
+import Profile from 'components/common/Team/Profile';
 import {Testimonial} from 'components/common/Testimonial';
 import {Link} from 'gatsby';
+import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import type {TResource} from 'types/resource';
@@ -66,6 +70,12 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Testimonial':
 			case 'FAQs':
 				return GRID_COLUMNS / 2;
+
+			case 'Team Member':
+				return GRID_COLUMNS / 4;
+
+			case 'Investors':
+				return GRID_COLUMNS / 5;
 
 			default:
 				return SPAN_LG;
@@ -130,6 +140,21 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'FAQs':
 				return <FAQ title={resource.heading} />;
 
+			case 'Image Carousel':
+				break;
+			case 'Team Member':
+				return <Profile resource={resource} />;
+
+			case 'Investors':
+				return (
+					<Container size={300}>
+						<GatsbyImage image={getImage(resource.asset)} alt='' />
+					</Container>
+				);
+
+			case 'Press Release':
+				return <PressRelease resource={resource} />;
+
 			default:
 				break;
 		}
@@ -164,13 +189,17 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					</Grid>
 				</Container>
 			)}
-			<Grid columns={GRID_COLUMNS}>
-				{section.references.map((resource, index) => (
-					<Grid.Col py={30} key={index} lg={getSpan()} sm={GRID_COLUMNS} md={50}>
-						{renderResource(resource, index)}
-					</Grid.Col>
-				))}
-			</Grid>
+			{section.referenceType === 'Image Carousel' ? (
+				<ResourceCarousel />
+			) : (
+				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
+					{section.references.map((resource, index) => (
+						<Grid.Col py={30} key={index} lg={getSpan()} sm={GRID_COLUMNS} md={50}>
+							{renderResource(resource, index)}
+						</Grid.Col>
+					))}
+				</Grid>
+			)}
 			{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
 				<Group position='center'>
 					<Link to={section.linkTo}>

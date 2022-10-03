@@ -20,9 +20,10 @@ import {
 import {useDisclosure} from '@mantine/hooks';
 import {IconChevronDown} from '@tabler/icons';
 import classNames from 'classnames';
-import {Link} from 'gatsby';
+import {graphql, Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
+import {StaticQuery} from 'gatsby';
 
 import './header.css';
 
@@ -88,7 +89,9 @@ type CHeaderProps = {
 	links: Array<{link: string; label: string; links?: Array<{link: string; label: string}>}>;
 };
 
-export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
+const Navbar: React.FC = (data: any) => {
+	console.log(data);
+
 	const {classes} = useStyles();
 
 	const [opened, {toggle, open}] = useDisclosure(false, {
@@ -293,3 +296,72 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 		</Header>
 	);
 };
+
+const query = graphql`
+	query {
+		allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
+			edges {
+				node {
+					id
+					title
+					sections {
+						... on ContentfulReferencedSection {
+							id
+							header
+							sectionType
+							references {
+								linkTo
+								heading
+								buttonText
+								asset {
+									gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
+									id
+								}
+								body {
+									raw
+								}
+								author
+								designation
+							}
+							referenceType
+							linkTo
+							buttonText
+						}
+						... on ContentfulSection {
+							id
+							body {
+								raw
+								references {
+									contentful_id
+									__typename
+									description
+									gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+								}
+							}
+							asset {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+								title
+							}
+							buttonText
+							header
+							sectionType
+							linkTo
+							sys {
+								contentType {
+									sys {
+										id
+									}
+								}
+							}
+							subHeader {
+								subHeader
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+`;
+
+export const CHeader: React.FC = () => <StaticQuery query={query} render={Navbar} />;

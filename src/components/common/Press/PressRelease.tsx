@@ -1,7 +1,22 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid, Stack, Box} from '@mantine/core';
+import {
+	Paper,
+	Container,
+	Center,
+	Title,
+	Divider,
+	Button,
+	Text,
+	createStyles,
+	Grid,
+	Stack,
+	Box,
+	Group,
+} from '@mantine/core';
 import classNames from 'classnames';
+import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
+import type {TResource} from 'types/resource';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -23,32 +38,31 @@ const useStyles = createStyles(theme => ({
 }));
 
 type PressReleaseProps = {
-	title: string;
-	link: string;
-	timestamp: string;
+	resource: Pick<TResource, 'asset' | 'buttonText' | 'linkTo' | 'heading' | 'createdAt'>;
 };
 
-export const PressRelease: FC<PressReleaseProps> = ({title, timestamp, link}) => {
+export const PressRelease: FC<PressReleaseProps> = ({resource}) => {
 	const {classes} = useStyles();
+	const pathToImage = getImage(resource.asset);
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid align={'center'}>
 				<Grid.Col lg={6} sm={12} md={12}>
-					<Container style={{background: '#00827e', height: 420}}></Container>
+					<GatsbyImage image={pathToImage} alt='' />
 				</Grid.Col>
 				<Grid.Col lg={6} sm={12} md={12}>
 					<Stack p={35}>
 						<Text size={18} color='dimmed' mb={10}>
-							{timestamp}
+							Feb 28, 2022
 						</Text>
 						<Title order={1} size={30}>
-							{title}
+							{resource.heading}
 						</Title>
 						<Divider variant='dashed' size={3} my={13} />
-						<Box>
-							<Button color='dark'>Read more</Button>
-						</Box>
+						<Group>
+							<Button color='dark'>{resource.buttonText}</Button>
+						</Group>
 					</Stack>
 				</Grid.Col>
 			</Grid>

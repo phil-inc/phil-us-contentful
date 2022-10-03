@@ -3,6 +3,7 @@ import type {BodyType} from './section';
 
 export type TResource = {
 	id: string;
+	createdAt: string;
 	heading: string;
 	subHeading?: string;
 	body: BodyType;
