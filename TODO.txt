@@ -1,0 +1,11 @@
+1. handle resources page in template
+2. Mobile Designs
+    - Container padding breakpoints
+    - navbar mobile designs
+3. Handle dynamic indicator in navbar
+4. Handle dynamic footer links
+
+
+## General idea is new/page section in the navbar will be blogs inside the individual sections, need templates for that blog 
+
+## Blog template is Section with image on right and the text flows to full width after the image
