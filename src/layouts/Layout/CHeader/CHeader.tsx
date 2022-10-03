@@ -2,7 +2,7 @@ import {createStyles, Header, Container, Group, Collapse, Text, SimpleGrid, Divi
 import {useDisclosure} from '@mantine/hooks';
 import classNames from 'classnames';
 import {graphql, Link} from 'gatsby';
-import {StaticImage} from 'gatsby-plugin-image';
+import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
 import {StaticQuery} from 'gatsby';
 
@@ -10,6 +10,7 @@ import './header.css';
 import type {ContentfulPage} from 'types/page';
 import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
+import type {Asset} from 'types/asset';
 
 const HEADER_HEIGHT = 90;
 
@@ -72,12 +73,12 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }));
 
 type CHeaderProps = {
-	allContentfulPage: {edges: Array<{node: ContentfulPage}>};
+	contentfulHeader: {logo: Asset; navavigationLinks: ContentfulPage[]};
 };
 
-const Navbar: React.FC<CHeaderProps> = ({allContentfulPage}) => {
-	const pages = allContentfulPage.edges;
-
+const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
+	const pages = contentfulHeader.navavigationLinks;
+	const pathToImage = getImage(contentfulHeader.logo);
 	const {classes} = useStyles();
 
 	const [opened, {toggle, open}] = useDisclosure(false, {
@@ -141,22 +142,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulPage}) => {
 				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
 					<Link to='/'>
 						<Container m={0} p={0}>
-							<StaticImage
-								width={124}
-								height={39}
-								src='../../../assets/images/logo.png'
-								alt='logo'
-								className='logo'
-								placeholder='blurred'
-								layout='constrained'
-							></StaticImage>
+							<GatsbyImage image={pathToImage} alt='logo' />
 						</Container>
 					</Link>
 					<List listStyleType={'none'} className={classes.navLinksWrapper}>
 						{pages
-							.filter(({node: page}) => page.title !== 'Home')
-							.reverse()
-							.map(({node: page}) => (
+							.filter(page => page.title !== 'Home')
+							.map(page => (
 								<List.Item key={page.id} className={classes.navLink} onClick={onNavLinkClick}>
 									<Text>{page.title}</Text>
 								</List.Item>
@@ -178,8 +170,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulPage}) => {
 						<List listStyleType='none' size='xl'>
 							<SimpleGrid cols={5} px={98} py={78} spacing={32}>
 								{pages
-									.filter(({node: page}) => page.title === target)
-									.map(({node: page}) =>
+									.filter(page => page.title === target)
+									.map(page =>
 										page.sections
 											.filter(section => Boolean(section.header?.length))
 											.map(section => (
@@ -219,65 +211,31 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulPage}) => {
 };
 
 const query = graphql`
-	query {
-		allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
-			edges {
-				node {
-					id
-					title
-					sections {
-						... on ContentfulReferencedSection {
+	query getDefaultHeader {
+		contentfulHeader {
+			logo {
+				gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+			}
+			id
+			title
+			navavigationLinks {
+				title
+				sys {
+					contentType {
+						sys {
 							id
-							header
-							sectionType
-							references {
-								linkTo
-								heading
-								buttonText
-								asset {
-									gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
-									id
-								}
-								body {
-									raw
-								}
-								author
-								designation
-							}
-							referenceType
-							linkTo
-							buttonText
+							type
 						}
-						... on ContentfulSection {
-							id
-							body {
-								raw
-								references {
-									contentful_id
-									__typename
-									description
-									gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-								}
-							}
-							asset {
-								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-								title
-							}
-							buttonText
-							header
-							sectionType
-							linkTo
-							sys {
-								contentType {
-									sys {
-										id
-									}
-								}
-							}
-							subHeader {
-								subHeader
-							}
-						}
+					}
+				}
+				sections {
+					... on ContentfulReferencedSection {
+						id
+						header
+					}
+					... on ContentfulSection {
+						id
+						header
 					}
 				}
 			}
