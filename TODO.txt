@@ -1,0 +1,2 @@
+1. handle resources page in template
+2. Mobile Designs
