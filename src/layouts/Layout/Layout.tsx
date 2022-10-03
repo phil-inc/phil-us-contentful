@@ -91,7 +91,7 @@ export function Layout({children}: LayoutProps) {
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
 			<MantineProvider theme={{...theme, colorScheme}} withGlobalStyles withNormalizeCSS>
 				<Container size={1920}>
-					<CHeader links={links} />
+					<CHeader />
 					<Container fluid px={100}>
 						{children}
 					</Container>

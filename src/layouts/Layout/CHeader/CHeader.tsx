@@ -1,30 +1,15 @@
-import {
-	createStyles,
-	Menu,
-	Center,
-	Header,
-	Container,
-	Group,
-	Button,
-	Burger,
-	Grid,
-	Collapse,
-	Paper,
-	Card,
-	Text,
-	SimpleGrid,
-	Divider,
-	List,
-	AspectRatio,
-} from '@mantine/core';
+import {createStyles, Header, Container, Group, Collapse, Text, SimpleGrid, Divider, List} from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
-import {IconChevronDown} from '@tabler/icons';
 import classNames from 'classnames';
-import {Link} from 'gatsby';
+import {graphql, Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
+import {StaticQuery} from 'gatsby';
 
 import './header.css';
+import type {ContentfulPage} from 'types/page';
+import slugify from 'slugify';
+import {navigateToPage} from 'utils/navigateToPage';
 
 const HEADER_HEIGHT = 90;
 
@@ -63,6 +48,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		position: 'relative',
 		marginRight: '85px',
 		cursor: 'pointer',
+		textDecoration: 'none',
 	},
 	listHeading: {
 		color: 'white',
@@ -72,6 +58,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		marginBottom: '11px',
 		fontFamily: 'Lato',
 		fontWeight: 700,
+		textDecoration: 'none',
 	},
 	listItems: {
 		color: 'white',
@@ -85,10 +72,12 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }));
 
 type CHeaderProps = {
-	links: Array<{link: string; label: string; links?: Array<{link: string; label: string}>}>;
+	allContentfulPage: {edges: Array<{node: ContentfulPage}>};
 };
 
-export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
+const Navbar: React.FC<CHeaderProps> = ({allContentfulPage}) => {
+	const pages = allContentfulPage.edges;
+
 	const {classes} = useStyles();
 
 	const [opened, {toggle, open}] = useDisclosure(false, {
@@ -96,6 +85,7 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 			setTarget('');
 		},
 	});
+
 	const [target, setTarget] = useState<string>('');
 
 	const onNavLinkClick = event => {
@@ -163,21 +153,14 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 						</Container>
 					</Link>
 					<List listStyleType={'none'} className={classes.navLinksWrapper}>
-						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
-							<Text>Life sciences</Text>
-						</List.Item>
-						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
-							<Text>Healthcare providers</Text>
-						</List.Item>
-						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
-							<Text>Patients</Text>
-						</List.Item>
-						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
-							<Text>Resources</Text>
-						</List.Item>
-						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
-							<Text>Company</Text>
-						</List.Item>
+						{pages
+							.filter(({node: page}) => page.title !== 'Home')
+							.reverse()
+							.map(({node: page}) => (
+								<List.Item key={page.id} className={classes.navLink} onClick={onNavLinkClick}>
+									<Text>{page.title}</Text>
+								</List.Item>
+							))}
 						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
 							<Text>Contact</Text>
 						</List.Item>
@@ -194,97 +177,38 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 					<Container className={classes.container} fluid>
 						<List listStyleType='none' size='xl'>
 							<SimpleGrid cols={5} px={98} py={78} spacing={32}>
-								<List.Item>
-									<Text className={classes.listHeading}>Patient outcomes</Text>
+								{pages
+									.filter(({node: page}) => page.title === target)
+									.map(({node: page}) =>
+										page.sections
+											.filter(section => Boolean(section.header?.length))
+											.map(section => (
+												<List.Item>
+													<Link
+														to={navigateToPage(slugify(page.title, {lower: true}))}
+														style={{textDecoration: 'none'}}
+													>
+														<Text className={classes.listHeading}>{section.header}</Text>
+													</Link>
 
-									<Divider />
-									<List listStyleType='none'>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 1</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 2</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 3</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 4</Text>
-										</List.Item>
-									</List>
-								</List.Item>
-								<List.Item>
-									<Text className={classes.listHeading}>Flight of the script</Text>
-									<Divider />
-									<List listStyleType='none'>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 1</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 2</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 3</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 4</Text>
-										</List.Item>
-									</List>
-								</List.Item>
-								<List.Item>
-									<Text className={classes.listHeading}>Prescribing to Phil</Text>
-									<Divider />
-									<List listStyleType='none'>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 1</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 2</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 3</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 4</Text>
-										</List.Item>
-									</List>
-								</List.Item>
-								<List.Item>
-									<Text className={classes.listHeading}>HCP outcomes</Text>
-									<Divider />
-									<List listStyleType='none'>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 1</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 2</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 3</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 4</Text>
-										</List.Item>
-									</List>
-								</List.Item>
-								<List.Item>
-									<Text className={classes.listHeading}>Testimonials</Text>
-									<Divider />
-									<List listStyleType='none'>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 1</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 2</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 3</Text>
-										</List.Item>
-										<List.Item>
-											<Text className={classes.listItems}>New page/section 4</Text>
-										</List.Item>
-									</List>
-								</List.Item>
+													<Divider />
+													<List listStyleType='none'>
+														<List.Item>
+															<Text className={classes.listItems}>New page/section 1</Text>
+														</List.Item>
+														<List.Item>
+															<Text className={classes.listItems}>New page/section 2</Text>
+														</List.Item>
+														<List.Item>
+															<Text className={classes.listItems}>New page/section 3</Text>
+														</List.Item>
+														<List.Item>
+															<Text className={classes.listItems}>New page/section 4</Text>
+														</List.Item>
+													</List>
+												</List.Item>
+											)),
+									)}
 							</SimpleGrid>
 						</List>
 					</Container>
@@ -293,3 +217,72 @@ export const CHeader: React.FC<CHeaderProps> = ({links}: CHeaderProps) => {
 		</Header>
 	);
 };
+
+const query = graphql`
+	query {
+		allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
+			edges {
+				node {
+					id
+					title
+					sections {
+						... on ContentfulReferencedSection {
+							id
+							header
+							sectionType
+							references {
+								linkTo
+								heading
+								buttonText
+								asset {
+									gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
+									id
+								}
+								body {
+									raw
+								}
+								author
+								designation
+							}
+							referenceType
+							linkTo
+							buttonText
+						}
+						... on ContentfulSection {
+							id
+							body {
+								raw
+								references {
+									contentful_id
+									__typename
+									description
+									gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+								}
+							}
+							asset {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+								title
+							}
+							buttonText
+							header
+							sectionType
+							linkTo
+							sys {
+								contentType {
+									sys {
+										id
+									}
+								}
+							}
+							subHeader {
+								subHeader
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+`;
+
+export const CHeader: React.FC = () => <StaticQuery query={query} render={Navbar} />;

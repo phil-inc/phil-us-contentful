@@ -1,7 +1,3 @@
-import {Grid, Title, Button, Text} from '@mantine/core';
-import ImageContainer from 'components/common/Container/ImageContainer';
-import {getImage, GatsbyImage} from 'gatsby-plugin-image';
-import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import type {IReferencedSection, ISection} from 'types/section';
 import BasicSection from './BasicSection';

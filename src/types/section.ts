@@ -33,7 +33,9 @@ type ReferenceType =
 	| 'Stats Card'
 	| 'Prescriber Journey'
 	| 'Info Card'
-	| 'FAQs';
+	| 'FAQs'
+	| 'Image Carousel'
+	| 'Investors';
 
 export type IReferencedSection = {
 	id: string;
