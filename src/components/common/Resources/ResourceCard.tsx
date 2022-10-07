@@ -1,5 +1,6 @@
 import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid, Box} from '@mantine/core';
 import classNames from 'classnames';
+import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import type {Asset} from 'types/asset';
 import {graphql, Link} from 'gatsby';
@@ -7,35 +8,11 @@ import React from 'react';
 import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
 
-const useStyles = createStyles(theme => ({
-	card: {
-		position: 'relative',
-		overflow: 'hidden',
-		paddingLeft: 10,
-		background: '#f4f4f4',
-
-		'&::before': {
-			content: '""',
-			position: 'absolute',
-			top: 0,
-			bottom: 0,
-			left: 0,
-			width: 6,
-			background: '#5ABEA4 0% 0% no-repeat padding-box',
-		},
-	},
-	image: {
-		height: '100%',
-		width: '100%',
-		background: '#00827E',
-	},
-}));
-
 type ResourceCardProps = {
 	sectionHeader?: string;
 	title?: string;
 	children?: React.ReactNode;
-	icon?: string;
+	asset?: Asset;
 };
 
 export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset, children}) => {
@@ -64,6 +41,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset
 	}));
 
 	const {classes} = useStyles();
+	const pathToImage = getImage(asset);
 
 	console.log('pathtoI', asset);
 	const pathToBlog = `${slugify(sectionHeader, {lower: true})}/${slugify(title, {lower: true})}`;
@@ -72,7 +50,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid>
 				<Grid.Col lg={5} sm={12} md={12}>
-					<Container className={classes.image}></Container>
+					<GatsbyImage image={pathToImage} alt={title} />
 				</Grid.Col>
 				<Grid.Col lg={7} sm={12} md={12}>
 					<Box pl={40} pr={36} py={50}>
@@ -92,5 +70,3 @@ export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset
 		</Paper>
 	);
 };
-
-export default ResourceCard;

@@ -11,6 +11,7 @@ import {PressRelease} from 'components/common/Press/PressRelease';
 import {StatsCard} from 'components/common/statsCard/StatsCard';
 import Profile from 'components/common/Team/Profile';
 import {Testimonial} from 'components/common/Testimonial';
+import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import {Link} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -49,6 +50,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		switch (section.referenceType) {
 			case 'Customer Story':
 			case 'Testimonial':
+			case 'Image Carousel':
 				return ['#29A5B4', 'white']; // Green Background
 
 			case 'Banner':
@@ -69,6 +71,10 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Info Card':
 			case 'Testimonial':
 			case 'FAQs':
+			case 'Phil Blog':
+			case 'Upcoming Events':
+			case 'White Paper':
+			case 'Case Study':
 				return GRID_COLUMNS / 2;
 
 			case 'Team Member':
@@ -119,12 +125,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'White Paper':
 			case 'Case Study':
 				return (
-					
-					<ResourceCard sectionHeader={sectionHeader} title={resource.heading} asset={resource.asset} >
-						<>
-						{console.log("resource",resource)}
-						{!!resource.subHeading ? resource.subHeading.subHeading : 'subheading'}
-						</>
+					<ResourceCard title={resource.heading} asset={resource.asset}>
+						{resource.subHeading != null ? resource.subHeading.subHeading : ''}
 					</ResourceCard>
 				);
 
@@ -162,7 +164,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Investors':
 				return (
 					<Container size={300}>
-						<GatsbyImage image={getImage(resource.asset)} alt='' />
+						<GatsbyImage image={getImage(resource.asset)} alt="" />
 					</Container>
 				);
 
@@ -177,7 +179,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	return (
 		<Expanded background={background} py={section.referenceType === 'Banner' ? 0 : 116}>
 			{Boolean(section.header?.length) && (
-				<Group position='center' mb={60}>
+				<Group position="center" mb={60}>
 					<Title order={2} color={textColor}>
 						{section.header}
 					</Title>
@@ -189,14 +191,14 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						<Grid.Col span={10}>
 							<TextInput
 								icon={<IconSearch size={18} stroke={1.5} />}
-								size='md'
-								placeholder='Search questions'
+								size="md"
+								placeholder="Search questions"
 								rightSectionWidth={42}
 								radius={0}
 							/>
 						</Grid.Col>
 						<Grid.Col span={2}>
-							<Button color='dark' size='md'>
+							<Button color="dark" size="md">
 								Search
 							</Button>
 						</Grid.Col>
@@ -204,7 +206,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				</Container>
 			)}
 			{section.referenceType === 'Image Carousel' ? (
-				<ResourceCarousel />
+				<ResourceCarousel imageCaraouselSection={section} />
 			) : (
 				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
 					{section.references.map((resource, index) => (
@@ -215,7 +217,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				</Grid>
 			)}
 			{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
-				<Group position='center'>
+				<Group position="center">
 					<Link to={section.linkTo}>
 						<Button color={'dark'}>{section.buttonText}</Button>
 					</Link>

@@ -139,10 +139,10 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
 			<Container className={classes.inner} fluid>
-				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
-					<Link to='/'>
+				<Group position="apart" noWrap align="start" className={classNames('navbar')}>
+					<Link to="/">
 						<Container m={0} p={0} size={125}>
-							<GatsbyImage image={pathToImage} alt='logo' />
+							<GatsbyImage image={pathToImage} alt="logo" />
 						</Container>
 					</Link>
 					<List listStyleType={'none'} className={classes.navLinksWrapper}>
@@ -156,32 +156,43 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
 							<Text>Contact</Text>
 						</List.Item>
-						<div className='indicator'></div>
+						<div className="indicator"></div>
 					</List>
 				</Group>
 				<Collapse
 					in={opened}
 					className={classes.dropdown}
 					transitionDuration={150}
-					transitionTimingFunction='ease-out'
+					transitionTimingFunction="ease-out"
 					animateOpacity={false}
 				>
 					<Container className={classes.container} fluid>
-						<List listStyleType='none' size='xl'>
+						<List listStyleType="none" size="xl">
 							<SimpleGrid cols={5} px={98} py={78} spacing={32}>
 								{pages
 									.filter(page => page.title === target)
 									.map(page =>
 										page.sections
 											.filter(section => Boolean(section.header?.length))
-											.map(section => (
+											.map((section, index) => (
 												<List.Item>
-													<Link
-														to={navigateToPage(slugify(page.title, {lower: true}))}
-														style={{textDecoration: 'none'}}
-													>
-														<Text className={classes.listHeading}>{section.header}</Text>
-													</Link>
+													{index > 0 ? (
+														<a
+															href={`/${slugify(page.title, {lower: true})}/#${slugify(section.header, {
+																lower: true,
+															})}`}
+															style={{textDecoration: 'none'}}
+														>
+															<Text className={classes.listHeading}>{section.header}</Text>
+														</a>
+													) : (
+														<Link
+															to={navigateToPage(slugify(page.title, {lower: true}))}
+															style={{textDecoration: 'none'}}
+														>
+															<Text className={classes.listHeading}>{section.header}</Text>
+														</Link>
+													)}
 
 													{section.subNavigationSection?.length > 0 && <Divider />}
 													<List listStyleType="none">
@@ -204,7 +215,7 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 														})}
 													</List>
 												</List.Item>
-											)),
+											))
 									)}
 							</SimpleGrid>
 						</List>

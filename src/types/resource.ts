@@ -5,7 +5,9 @@ export type TResource = {
 	id: string;
 	createdAt: string;
 	heading: string;
-	subHeading?: string;
+	subHeading?: {
+		subHeading: string;
+	};
 	body: BodyType;
 	asset?: Asset;
 	buttonText?: string;

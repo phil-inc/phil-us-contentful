@@ -1,6 +1,6 @@
 import {Box, Title, Divider, Grid, createStyles} from '@mantine/core';
 import React from 'react';
-import ResourceCard from './ResourceCard';
+import {ResourceCard} from './ResourceCard';
 
 const useStyles = createStyles(theme => ({
 	divider: {
@@ -14,7 +14,7 @@ type ResourceBlockProps = {
 	title: string;
 };
 
-const ResourceBlock: React.FC<ResourceBlockProps> = ({title}) => {
+export const ResourceBlock: React.FC<ResourceBlockProps> = ({title}) => {
 	const {classes} = useStyles();
 
 	return (
@@ -54,5 +54,3 @@ const ResourceBlock: React.FC<ResourceBlockProps> = ({title}) => {
 		</Box>
 	);
 };
-
-export default ResourceBlock;
