@@ -126,7 +126,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Case Study':
 				return (
 					<ResourceCard title={resource.heading} asset={resource.asset}>
-						{!!resource.subHeading ? resource.subHeading.subHeading : 'subheading'}
+						{resource.subHeading != null ? resource.subHeading.subHeading : ''}
 					</ResourceCard>
 				);
 
