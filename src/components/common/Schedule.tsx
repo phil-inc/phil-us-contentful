@@ -61,11 +61,11 @@ export const Schedule: FC<ScheduleProps> = ({title, icon, children, buttonText, 
 			<Grid align={'center'}>
 				<Grid.Col lg={10} sm={12}>
 					<Container m={0}>
-						<Title order={3} mt='md'>
+						<Title order={3} mt="md">
 							{title}
 						</Title>
-						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
-						<Text size='md' mt='sm' mb={11}>
+						<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
+						<Text size="md" mt="sm" mb={11}>
 							{children}
 						</Text>
 					</Container>
