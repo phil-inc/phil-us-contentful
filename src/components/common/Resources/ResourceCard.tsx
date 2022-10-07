@@ -54,15 +54,15 @@ export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset
 				</Grid.Col>
 				<Grid.Col lg={7} sm={12} md={12}>
 					<Box pl={40} pr={36} py={50}>
-						<Title order={3} mt="md">
+						<Title order={3} mt='md'>
 							{title}
 						</Title>
-						<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
-						<Text size={18} mt="sm" mb={20}>
+						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+						<Text size={18} mt='sm' mb={20}>
 							{children}
 						</Text>
 						<Link to={navigateToPage(pathToBlog)}>
-							<Button color="dark">Read Now</Button>
+							<Button color='dark'>Read Now</Button>
 						</Link>
 					</Box>
 				</Grid.Col>

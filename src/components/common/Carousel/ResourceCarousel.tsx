@@ -6,7 +6,7 @@ import type {FC} from 'react';
 import classNames from 'classnames';
 import type {Asset} from 'types/asset';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
-import {IReferencedSection} from 'types/section';
+import type {IReferencedSection} from 'types/section';
 
 type ResourceCarousel = {
 	imageCaraouselSection: IReferencedSection;
@@ -45,7 +45,7 @@ export const ResourceCarousel: FC<ResourceCarousel> = ({imageCaraouselSection}) 
 			<Paper radius={0} className={classNames(classes.card)}>
 				<Grid>
 					<Grid.Col lg={12} sm={12} md={12}>
-						<GatsbyImage objectFit="cover" image={getImage(item.asset)} alt={item.heading} />
+						<GatsbyImage objectFit='cover' image={getImage(item.asset)} alt={item.heading} />
 					</Grid.Col>
 				</Grid>
 			</Paper>
@@ -53,10 +53,10 @@ export const ResourceCarousel: FC<ResourceCarousel> = ({imageCaraouselSection}) 
 	));
 	return (
 		<Carousel
-			slideSize="35%"
+			slideSize='35%'
 			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 3}]}
-			slideGap="sm"
-			align="start"
+			slideGap='sm'
+			align='start'
 			slidesToScroll={mobile ? 1 : 2}
 			withIndicators
 		>

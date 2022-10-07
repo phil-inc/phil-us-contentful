@@ -8,13 +8,13 @@ type CareerArticleProps = {
 };
 
 const CareerArticle: React.FC<CareerArticleProps> = ({title, location, link}) => (
-	<Group position="apart">
+	<Group position='apart'>
 		<Box>
 			<Text>{title}</Text>
 			<Text>{location}</Text>
 		</Box>
 
-		<Button color="dark">View Details</Button>
+		<Button color='dark'>View Details</Button>
 	</Group>
 );
 

@@ -46,13 +46,13 @@ export const Testimonial: FC<TestimonialProps> = ({image, children, author, desi
 			<Grid>
 				{isPerson && (
 					<Grid.Col lg={4} sm={12}>
-						<GatsbyImage className={classes.testimonialImage} image={pathToImage} alt="" />
+						<GatsbyImage className={classes.testimonialImage} image={pathToImage} alt='' />
 					</Grid.Col>
 				)}
 				<Grid.Col lg={isPerson ? 8 : 12} sm={12} px={38} py={34}>
-					{!isPerson && <GatsbyImage image={pathToImage} alt="" />}
+					{!isPerson && <GatsbyImage image={pathToImage} alt='' />}
 					{children}
-					<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
+					<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
 					<Text color={'#00827E'} weight={700} className={classes.author}>
 						{author}
 					</Text>

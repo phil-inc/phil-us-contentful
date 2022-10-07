@@ -19,7 +19,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({children}) => {
 
 	return (
 		<Container fluid className={classes.iamgeContainer}>
-			<Group position="center">{children}</Group>
+			<Group position='center'>{children}</Group>
 		</Container>
 	);
 };

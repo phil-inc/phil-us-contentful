@@ -19,11 +19,11 @@ export const PrescriberJourney: FC<PrescriberJourneyProps> = ({resource: {asset,
 
 	return (
 		<Box>
-			<Group position="center">
+			<Group position='center'>
 				<Title>{heading}</Title>
 			</Group>
-			<Container size="sm" mb={25}>
-				<Group position="center">
+			<Container size='sm' mb={25}>
+				<Group position='center'>
 					<Text size={18}>{renderRichText(body)}</Text>
 				</Group>
 			</Container>

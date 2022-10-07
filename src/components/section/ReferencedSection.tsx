@@ -91,7 +91,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const [background, textColor, resourceBackground] = getSectionColors();
 
 	// Render resource based on resource type
-	const renderResource = (sectionHeader : string, resource: TResource, index: number) => {
+	const renderResource = (sectionHeader: string, resource: TResource, index: number) => {
 		switch (section.referenceType) {
 			case 'Article':
 				return (
@@ -164,7 +164,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Investors':
 				return (
 					<Container size={300}>
-						<GatsbyImage image={getImage(resource.asset)} alt="" />
+						<GatsbyImage image={getImage(resource.asset)} alt='' />
 					</Container>
 				);
 
@@ -179,7 +179,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	return (
 		<Expanded background={background} py={section.referenceType === 'Banner' ? 0 : 116}>
 			{Boolean(section.header?.length) && (
-				<Group position="center" mb={60}>
+				<Group position='center' mb={60}>
 					<Title order={2} color={textColor}>
 						{section.header}
 					</Title>
@@ -191,14 +191,14 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						<Grid.Col span={10}>
 							<TextInput
 								icon={<IconSearch size={18} stroke={1.5} />}
-								size="md"
-								placeholder="Search questions"
+								size='md'
+								placeholder='Search questions'
 								rightSectionWidth={42}
 								radius={0}
 							/>
 						</Grid.Col>
 						<Grid.Col span={2}>
-							<Button color="dark" size="md">
+							<Button color='dark' size='md'>
 								Search
 							</Button>
 						</Grid.Col>
@@ -217,7 +217,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				</Grid>
 			)}
 			{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
-				<Group position="center">
+				<Group position='center'>
 					<Link to={section.linkTo}>
 						<Button color={'dark'}>{section.buttonText}</Button>
 					</Link>

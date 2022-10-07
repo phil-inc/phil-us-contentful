@@ -19,11 +19,7 @@ exports.createPages = async function ({actions, graphql}) {
 								heading
 								buttonText
 								asset {
-                    gatsbyImageData(
-                      placeholder: BLURRED
-                      layout: CONSTRAINED
-                      resizingBehavior: SCALE
-                    )
+									gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
 									id
 								}
 								body {
@@ -49,11 +45,7 @@ exports.createPages = async function ({actions, graphql}) {
 								}
 							}
 							asset {
-                  gatsbyImageData(
-                    resizingBehavior: SCALE
-                    placeholder: BLURRED
-                    layout: CONSTRAINED
-                  )
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
 								title
 							}
 							buttonText
