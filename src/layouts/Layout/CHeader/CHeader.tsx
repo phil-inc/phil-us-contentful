@@ -183,20 +183,25 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 														<Text className={classes.listHeading}>{section.header}</Text>
 													</Link>
 
-													<Divider />
-													<List listStyleType='none'>
-														<List.Item>
-															<Text className={classes.listItems}>New page/section 1</Text>
-														</List.Item>
-														<List.Item>
-															<Text className={classes.listItems}>New page/section 2</Text>
-														</List.Item>
-														<List.Item>
-															<Text className={classes.listItems}>New page/section 3</Text>
-														</List.Item>
-														<List.Item>
-															<Text className={classes.listItems}>New page/section 4</Text>
-														</List.Item>
+													{section.subNavigationSection?.length > 0 && <Divider />}
+													<List listStyleType="none">
+														{section.subNavigationSection?.map(subNav => {
+															return (
+																<List.Item>
+																	<Link
+																		to={navigateToPage(
+																			`${slugify(page.title, {lower: true})}/${slugify(
+																				section.header,
+																				{lower: true}
+																			)}/${slugify(subNav.heading, {lower: true})}`
+																		)}
+																		style={{textDecoration: 'none'}}
+																	>
+																		<Text className={classes.listItems}>{subNav.heading}</Text>
+																	</Link>
+																</List.Item>
+															);
+														})}
 													</List>
 												</List.Item>
 											)),
@@ -232,10 +237,16 @@ const query = graphql`
 					... on ContentfulReferencedSection {
 						id
 						header
+						subNavigationSection {
+							heading
+						}
 					}
 					... on ContentfulSection {
 						id
 						header
+						subNavigationSection {
+							heading
+						}
 					}
 				}
 			}

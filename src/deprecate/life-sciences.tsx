@@ -12,8 +12,6 @@ type LifeSciencesPageProps = {
 const LifeSciencesPage: React.FC<LifeSciencesPageProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 
-	console.log({id, sections, title});
-
 	let basicSectionCount = 0;
 
 	return (

@@ -41,16 +41,16 @@ function Card({image, title, category}: CardProps) {
 	const {classes} = useStyles();
 
 	return (
-		<Paper shadow='md' p='xl' radius='md' sx={{backgroundImage: `url(${image})`}} className={classes.card}>
+		<Paper shadow="md" p="xl" radius="md" sx={{backgroundImage: `url(${image})`}} className={classes.card}>
 			<div>
-				<Text className={classes.category} size='xs'>
+				<Text className={classes.category} size="xs">
 					{category}
 				</Text>
 				<Title order={3} className={classes.title}>
 					{title}
 				</Title>
 			</div>
-			<Button variant='white' color='dark'>
+			<Button variant="white" color="dark">
 				Read article
 			</Button>
 		</Paper>
@@ -101,10 +101,10 @@ export function ResourceCarousel() {
 
 	return (
 		<Carousel
-			slideSize='50%'
+			slideSize="50%"
 			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 2}]}
-			slideGap='xl'
-			align='start'
+			slideGap="xl"
+			align="start"
 			slidesToScroll={mobile ? 1 : 2}
 			withIndicators
 		>

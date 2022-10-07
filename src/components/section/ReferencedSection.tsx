@@ -85,7 +85,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const [background, textColor, resourceBackground] = getSectionColors();
 
 	// Render resource based on resource type
-	const renderResource = (resource: TResource, index: number) => {
+	const renderResource = (sectionHeader : string, resource: TResource, index: number) => {
 		switch (section.referenceType) {
 			case 'Article':
 				return (
@@ -112,6 +112,20 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					>
 						{renderRichText(resource.body)}
 					</Testimonial>
+				);
+
+			case 'Phil Blog':
+			case 'Upcoming Events':
+			case 'White Paper':
+			case 'Case Study':
+				return (
+					
+					<ResourceCard sectionHeader={sectionHeader} title={resource.heading} asset={resource.asset} >
+						<>
+						{console.log("resource",resource)}
+						{!!resource.subHeading ? resource.subHeading.subHeading : 'subheading'}
+						</>
+					</ResourceCard>
 				);
 
 			case 'Featured Resource':
@@ -195,7 +209,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
 					{section.references.map((resource, index) => (
 						<Grid.Col py={30} key={index} lg={getSpan()} sm={GRID_COLUMNS} md={50}>
-							{renderResource(resource, index)}
+							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}
 				</Grid>

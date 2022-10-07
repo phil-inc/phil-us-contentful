@@ -11,8 +11,6 @@ type PageTemplateProps = {
 const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 
-	console.log({id, sections, title});
-
 	let basicSectionCount = 0;
 
 	return (
