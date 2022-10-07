@@ -3,6 +3,7 @@ import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {graphql} from 'gatsby';
+import slugify from 'slugify';
 
 type PageTemplateProps = {
 	data: {contentfulPage: ContentfulPage};
@@ -19,7 +20,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 		<Layout>
 			{sections.map((section, index) => {
 				if (section.sectionType === 'Basic Section') {
-					return <Section key={section.id} section={section} index={basicSectionCount++} />;
+					return (
+						<div id={slugify(section.header, {lower: true})}>
+							<Section key={section.id} section={section} index={basicSectionCount++} />
+						</div>
+					);
 				}
 
 				return <Section key={section.id} section={section} />;
@@ -41,6 +46,9 @@ export const pageQuery = graphql`
 					references {
 						linkTo
 						heading
+						subHeading {
+							subHeading
+						}
 						buttonText
 						asset {
 							gatsbyImageData(

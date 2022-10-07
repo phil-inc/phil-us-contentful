@@ -44,11 +44,11 @@ export const Banner: FC<BannerProps> = ({resource: {heading, body, buttonText, l
 			<Grid align={'center'}>
 				<Grid.Col lg={10} sm={12}>
 					<Container m={0}>
-						<Title order={3} mt='md'>
+						<Title order={3} mt="md">
 							{heading}
 						</Title>
-						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
-						<Text size='md' mt='sm' mb={11}>
+						<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
+						<Text size="md" mt="sm" mb={11}>
 							{renderRichText(body)}
 						</Text>
 					</Container>

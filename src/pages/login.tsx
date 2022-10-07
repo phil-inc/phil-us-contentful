@@ -58,14 +58,14 @@ const Login = () => {
 	return (
 		<Layout>
 			{/* Hero Section */}
-			<Grid gutter={'xs'} align='center' mb={160}>
+			<Grid gutter={'xs'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12} orderSm={2} orderLg={1}>
 					<Box sx={{maxWidth: 680}}>
 						<Title order={2} mb={40}>
 							Patient Login
 						</Title>
 						<Title order={3}>Login to your Phil account</Title>
-						<Divider variant='dashed' size={2} my={10} mb={40} />
+						<Divider variant="dashed" size={2} my={10} mb={40} />
 						<form
 							onSubmit={form.onSubmit(values => {
 								console.log(values);
@@ -76,8 +76,8 @@ const Login = () => {
 								radius={0}
 								withAsterisk
 								required
-								label='Email'
-								placeholder='your@email.com'
+								label="Email"
+								placeholder="your@email.com"
 								{...form.getInputProps('email')}
 							/>
 							<PasswordInput
@@ -85,30 +85,30 @@ const Login = () => {
 								radius={0}
 								required
 								withAsterisk
-								label='Password'
-								placeholder='Password'
+								label="Password"
+								placeholder="Password"
 								{...form.getInputProps('password')}
 							/>
 
 							<Checkbox
 								mb={30}
-								color='teal'
-								label='Show Password'
+								color="teal"
+								label="Show Password"
 								{...form.getInputProps('showPassword', {type: 'checkbox'})}
 							/>
 
-							<Group position='left' mt='md'>
-								<Button type='submit' color={'dark'}>
+							<Group position="left" mt="md">
+								<Button type="submit" color={'dark'}>
 									Log in
 								</Button>
 							</Group>
-							<Group position='left' mt='md' mb={110}>
-								<Text size={'lg'} color='#5ABEA4' italic weight={'bold'}>
+							<Group position="left" mt="md" mb={110}>
+								<Text size={'lg'} color="#5ABEA4" italic weight={'bold'}>
 									Forgot password?
 								</Text>
 							</Group>
 							<Box sx={{maxWidth: 613}}>
-								<Text size={'lg'} color='dimmed'>
+								<Text size={'lg'} color="dimmed">
 									By proceeding, you agree to our terms of use, privacy policy and HIPAA policy.. Version
 									5.80.0
 								</Text>
@@ -120,16 +120,16 @@ const Login = () => {
 					<Container className={classes.imageWrapper}>
 						<Container className={classes.placeholderImage}>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Container>
 					</Container>
 					<Box className={classes.infoBox}>
-						<InfoBox title='Don’t Have a Phil Login?' noButton color='yellow'>
+						<InfoBox title="Don’t Have a Phil Login?" noButton color="yellow">
 							*If your doctor sent your prescription to Phil, we’ll text you to confirm your order within one
 							business day. If you haven’t received a message from us, please complete this [form].
 						</InfoBox>
