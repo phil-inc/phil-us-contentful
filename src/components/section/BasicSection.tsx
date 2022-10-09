@@ -3,6 +3,7 @@ import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
+import {Link} from 'gatsby';
 import type {ISection} from 'types/section';
 import {BLOCKS} from '@contentful/rich-text-types';
 
@@ -62,18 +63,22 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
 	return (
-		<Grid gutter="xl" align="center" pb={130} pt={isHeroSection ? 0 : 100}>
+		<Grid gutter='xl' align='center' pb={130} pt={isHeroSection ? 0 : 100}>
 			<Grid.Col order={textColumnOrder} lg={6} md={6} sm={12}>
 				<Title order={titleOrdering}>{section.header}</Title>
 				{Boolean(section.subHeader?.subHeader.length) && (
-					<Text size={18} weight="bold" mt={20}>
+					<Text size={18} weight='bold' mt={20}>
 						{section.subHeader.subHeader}
 					</Text>
 				)}
 				<Text size={18} className={classes.body}>
 					{renderRichText(section.body, options)}
 				</Text>
-				{Boolean(section.buttonText?.length) && <Button color={'dark'}>{section.buttonText}</Button>}
+				{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
+					<Link to={section.linkTo}>
+						<Button color={'dark'}>{section.buttonText}</Button>
+					</Link>
+				)}
 			</Grid.Col>
 			<Grid.Col order={imageColumnOrder} lg={6} md={6} sm={12}>
 				<ImageContainer>

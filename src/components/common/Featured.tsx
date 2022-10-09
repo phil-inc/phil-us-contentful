@@ -53,11 +53,11 @@ export const Featured: FC<FeaturedProps> = ({
 				</Grid.Col>
 				<Grid.Col lg={6} sm={12} md={12}>
 					<Container pr={pr}>
-						<Title order={3} mt="md">
+						<Title order={3} mt='md' lineClamp={3}>
 							{title}
 						</Title>
-						{!noDivider && <Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />}
-						<Text size={18} mt="sm" mb={11}>
+						{!noDivider && <Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />}
+						<Text size={18} mt='sm' mb={11}>
 							{children}
 						</Text>
 					</Container>

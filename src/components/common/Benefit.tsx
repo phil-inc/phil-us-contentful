@@ -67,11 +67,11 @@ export const Benefit: FC<BenefitProps> = ({title, icon, children, divider}) => {
 				</Grid.Col>
 				<Grid.Col span={6} className={classes.description}>
 					<Container m={0}>
-						<Title order={1} mt="md" style={{fontFamily: 'Lato'}}>
+						<Title order={1} mt='md' style={{fontFamily: 'Lato'}}>
 							{title}
 						</Title>
-						{divider && <Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />}
-						<Text size={25} mt="sm" mb={11}>
+						{divider && <Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />}
+						<Text size={25} mt='sm' mb={11}>
 							{children}
 						</Text>
 					</Container>
