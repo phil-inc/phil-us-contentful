@@ -12,7 +12,6 @@ const HomePage: React.FC<HomePageProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 
 	let basicSectionCount = 0;
-	console.log(data.contentfulPage);
 	return (
 		<Layout>
 			{sections.map((section, index) => {

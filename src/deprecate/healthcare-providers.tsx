@@ -12,8 +12,6 @@ type HealthcareProviderPageProps = {
 const HealthcareProviderPage: React.FC<HealthcareProviderPageProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 
-	console.log({id, sections, title});
-
 	let basicSectionCount = 0;
 
 	return (

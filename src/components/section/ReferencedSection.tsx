@@ -91,7 +91,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const [background, textColor, resourceBackground] = getSectionColors();
 
 	// Render resource based on resource type
-	const renderResource = (resource: TResource, index: number) => {
+	const renderResource = (sectionHeader: string, resource: TResource, index: number) => {
 		switch (section.referenceType) {
 			case 'Article':
 				return (
@@ -125,8 +125,13 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'White Paper':
 			case 'Case Study':
 				return (
-					<ResourceCard title={resource.heading} asset={resource.asset}>
-						{resource.subHeading != null ? resource.subHeading.subHeading : ''}
+					<ResourceCard
+						sectionHeader={sectionHeader}
+						title={resource.heading}
+						asset={resource.asset}
+						linkTo={resource.linkTo}
+					>
+						{resource.subHeading != null ? resource.subHeading.subHeading : 'subheading here'}
 					</ResourceCard>
 				);
 
@@ -211,7 +216,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
 					{section.references.map((resource, index) => (
 						<Grid.Col py={30} key={index} lg={getSpan()} sm={GRID_COLUMNS} md={50}>
-							{renderResource(resource, index)}
+							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}
 				</Grid>

@@ -15,6 +15,7 @@ export type ISection = {
 	buttonText: string;
 	linkTo: string;
 	asset: Asset;
+	subNavigationSection?: TResource[];
 };
 
 type ReferenceType =

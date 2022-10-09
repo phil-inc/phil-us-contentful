@@ -3,15 +3,20 @@ import classNames from 'classnames';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import type {Asset} from 'types/asset';
+import {graphql, Link} from 'gatsby';
 import React from 'react';
+import slugify from 'slugify';
+import {navigateToPage} from 'utils/navigateToPage';
 
 type ResourceCardProps = {
+	sectionHeader?: string;
 	title?: string;
 	children?: React.ReactNode;
 	asset?: Asset;
+	linkTo?: string;
 };
 
-export const ResourceCard: FC<ResourceCardProps> = ({title, asset, children}) => {
+export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset, children, linkTo}) => {
 	const useStyles = createStyles(theme => ({
 		card: {
 			position: 'relative',
@@ -38,6 +43,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({title, asset, children}) =>
 
 	const {classes} = useStyles();
 	const pathToImage = getImage(asset);
+	const pathToBlog = `${slugify(sectionHeader, {lower: true})}/${slugify(title, {lower: true})}`;
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
@@ -47,14 +53,22 @@ export const ResourceCard: FC<ResourceCardProps> = ({title, asset, children}) =>
 				</Grid.Col>
 				<Grid.Col lg={7} sm={12} md={12}>
 					<Box pl={40} pr={36} py={50}>
-						<Title order={3} mt="md">
+						<Title order={3} mt="md" lineClamp={2}>
 							{title}
 						</Title>
 						<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
-						<Text size={18} mt="sm" mb={20}>
+						<Text size={18} mt="sm" mb={20} lineClamp={2}>
 							{children}
 						</Text>
-						<Button color="dark">Read Now</Button>
+						{linkTo != '#' && linkTo != '' ? (
+							<a href={linkTo} style={{textDecoration: 'none'}}>
+								<Button color="dark">Read Now</Button>
+							</a>
+						) : (
+							<Link to={navigateToPage(pathToBlog)}>
+								<Button color="dark">Read Now</Button>
+							</Link>
+						)}
 					</Box>
 				</Grid.Col>
 			</Grid>

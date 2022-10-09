@@ -6,7 +6,7 @@ import type {FC} from 'react';
 import classNames from 'classnames';
 import type {Asset} from 'types/asset';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
-import {IReferencedSection} from 'types/section';
+import type {IReferencedSection} from 'types/section';
 
 type ResourceCarousel = {
 	imageCaraouselSection: IReferencedSection;
