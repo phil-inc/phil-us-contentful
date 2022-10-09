@@ -13,9 +13,10 @@ type ResourceCardProps = {
 	title?: string;
 	children?: React.ReactNode;
 	asset?: Asset;
+	linkTo?: string;
 };
 
-export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset, children}) => {
+export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset, children, linkTo}) => {
 	const useStyles = createStyles(theme => ({
 		card: {
 			position: 'relative',
@@ -42,8 +43,6 @@ export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset
 
 	const {classes} = useStyles();
 	const pathToImage = getImage(asset);
-
-	console.log('pathtoI', asset);
 	const pathToBlog = `${slugify(sectionHeader, {lower: true})}/${slugify(title, {lower: true})}`;
 
 	return (
@@ -54,16 +53,22 @@ export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset
 				</Grid.Col>
 				<Grid.Col lg={7} sm={12} md={12}>
 					<Box pl={40} pr={36} py={50}>
-						<Title order={3} mt='md'>
+						<Title order={3} mt="md" lineClamp={2}>
 							{title}
 						</Title>
-						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
-						<Text size={18} mt='sm' mb={20}>
+						<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
+						<Text size={18} mt="sm" mb={20} lineClamp={2}>
 							{children}
 						</Text>
-						<Link to={navigateToPage(pathToBlog)}>
-							<Button color='dark'>Read Now</Button>
-						</Link>
+						{linkTo != '#' && linkTo != '' ? (
+							<a href={linkTo} style={{textDecoration: 'none'}}>
+								<Button color="dark">Read Now</Button>
+							</a>
+						) : (
+							<Link to={navigateToPage(pathToBlog)}>
+								<Button color="dark">Read Now</Button>
+							</Link>
+						)}
 					</Box>
 				</Grid.Col>
 			</Grid>

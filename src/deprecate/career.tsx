@@ -64,24 +64,24 @@ const Career: React.FC<CareerProps> = ({data}) => {
 	return (
 		<Layout>
 			{/* Hero Section */}
-			<Grid gutter={'xl'} align='center' mb={160}>
+			<Grid gutter={'xl'} align="center" mb={160}>
 				<Grid.Col lg={6} md={6} sm={12} orderSm={2} orderLg={1}>
 					<Title order={2} mb={8}>
 						Careers at Phil
 					</Title>
 					{nodes.map(
-						({field, listings}) => Boolean(listings) && <CareerBlock title={field} listings={listings} />,
+						({field, listings}) => Boolean(listings) && <CareerBlock title={field} listings={listings} />
 					)}
 				</Grid.Col>
 				<Grid.Col lg={6} md={6} sm={12} orderSm={1} orderLg={2}>
 					<Container className={classes.imageWrapper}>
 						<Container className={classes.placeholderImage}>
 							<StaticImage
-								src='../assets/images/index_hero.png'
-								alt='circles inside circles'
-								className='hero-img'
-								placeholder='blurred'
-								layout='constrained'
+								src="../assets/images/index_hero.png"
+								alt="circles inside circles"
+								className="hero-img"
+								placeholder="blurred"
+								layout="constrained"
 							></StaticImage>
 						</Container>
 					</Container>

@@ -24,8 +24,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 						</div>
 					);
 				}
-
-				return <Section key={section.id} section={section} />;
+				return (
+					<div id={section.header ? slugify(section.header, {lower: true}) : '#'}>
+						<Section key={section.id} section={section} />;
+					</div>
+				);
 			})}
 		</Layout>
 	);

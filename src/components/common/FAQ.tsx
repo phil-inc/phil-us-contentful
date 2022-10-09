@@ -37,7 +37,7 @@ export const FAQ: FC<FAQProps> = ({title}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.FAQWrapper)}>
-			<Group align='center'>
+			<Group align="center">
 				<Title order={4} size={30}>
 					{title}
 				</Title>
