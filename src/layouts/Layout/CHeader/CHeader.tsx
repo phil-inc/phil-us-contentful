@@ -175,7 +175,7 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 										page.sections
 											.filter(section => Boolean(section.header?.length))
 											.map((section, index) => (
-												<List.Item>
+												<List.Item key={index}>
 													{index > 0 ? (
 														<a
 															href={`/${slugify(page.title, {lower: true})}/#${slugify(section.header, {
@@ -196,8 +196,8 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 
 													<Divider />
 													<List listStyleType='none'>
-														{section.subNavigationSection?.map(subNav => (
-															<List.Item>
+														{section.subNavigationSection?.map((subNav, index) => (
+															<List.Item key={index}>
 																<Link
 																	to={navigateToPage(
 																		`${slugify(page.title, {lower: true})}/${slugify(section.header, {
