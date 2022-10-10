@@ -1,4 +1,4 @@
-import {Grid, Title, Button, Text, createStyles} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles, AspectRatio} from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';

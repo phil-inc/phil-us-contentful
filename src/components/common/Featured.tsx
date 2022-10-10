@@ -1,9 +1,10 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid, AspectRatio} from '@mantine/core';
 import classNames from 'classnames';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
 import type {Asset} from 'types/asset';
+import ImageContainer from './Container/ImageContainer';
 
 type FeaturedProps = {
 	title?: string;
@@ -48,8 +49,10 @@ export const Featured: FC<FeaturedProps> = ({
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid align={'center'} gutter={'sm'}>
-				<Grid.Col lg={6} sm={12} md={12}>
-					<GatsbyImage image={pathToImage} alt={title} />
+				<Grid.Col lg={6} sm={12} md={12} py={0}>
+					<ImageContainer>
+						<GatsbyImage style={{width: '100%', height: '100%'}} image={pathToImage} alt={title} />
+					</ImageContainer>
 				</Grid.Col>
 				<Grid.Col lg={6} sm={12} md={12}>
 					<Container pr={pr}>

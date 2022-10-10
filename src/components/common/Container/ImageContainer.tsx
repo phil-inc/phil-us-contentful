@@ -1,12 +1,13 @@
-import {Container, createStyles, Group} from '@mantine/core';
+import {AspectRatio, Container, createStyles, Group} from '@mantine/core';
 import React from 'react';
 
 type ImageContainerProps = {
 	fluid?: boolean;
+	ratio?: number;
 	children: React.ReactNode;
 };
 
-const ImageContainer: React.FC<ImageContainerProps> = ({fluid = false, children}) => {
+const ImageContainer: React.FC<ImageContainerProps> = ({ratio = 1, fluid = false, children}) => {
 	const useStyles = createStyles(() => ({
 		imageContainer: {
 			background: '#F4F4F4',
@@ -20,7 +21,9 @@ const ImageContainer: React.FC<ImageContainerProps> = ({fluid = false, children}
 
 	return (
 		<Container fluid className={classes.imageContainer}>
-			<Group position='center'>{children}</Group>
+			<AspectRatio ratio={ratio} sx={{maxWidth: '100%'}} mx='auto'>
+				{children}
+			</AspectRatio>
 		</Container>
 	);
 };
