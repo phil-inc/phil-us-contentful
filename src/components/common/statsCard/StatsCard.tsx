@@ -37,17 +37,17 @@ export const StatsCard: FC<StatsCardProps> = ({resource: {asset, heading, body}}
 	const pathToImage = getImage(asset);
 
 	return (
-		<Card shadow="none" p="xl" radius={0} className={classes.card}>
+		<Card shadow='none' p='xl' radius={0} className={classes.card}>
 			<Card.Section>
 				<GatsbyImage image={pathToImage} alt={heading} />
 			</Card.Section>
 
-			<Title mt="md" className={classes.percentage}>
+			<Title mt='md' className={classes.percentage}>
 				{heading}
 			</Title>
 
-			<Text color="dark" className={classes.description}>
-				{renderRichText(body)}
+			<Text color='dark' className={classes.description}>
+				{body ? renderRichText(body) : ''}
 			</Text>
 		</Card>
 	);

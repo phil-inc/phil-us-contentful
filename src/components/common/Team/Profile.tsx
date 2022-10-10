@@ -27,18 +27,18 @@ const Profile: React.FC<ProfileProps> = ({resource}) => {
 	const pathToImage = getImage(resource.asset);
 
 	return (
-		<Card shadow="none" p="lg" radius={0} className={classes.card}>
+		<Card shadow='none' p='lg' radius={0} className={classes.card}>
 			<Card.Section>
 				<GatsbyImage image={pathToImage} alt={resource.heading} />
 			</Card.Section>
 
-			<Group mt="md" mb="xs">
+			<Group mt='md' mb='xs'>
 				<Text size={35} weight={'bold'}>
 					{resource.heading}
 				</Text>
 			</Group>
 
-			<Divider size={3} variant="dashed" my={12} />
+			<Divider size={3} variant='dashed' my={12} />
 
 			<Text size={18} mb={12} italic>
 				{renderRichText(resource.body)}
