@@ -25,40 +25,6 @@ export function Layout({children}: LayoutProps) {
 		],
 	]);
 
-	const links = [
-		{label: 'Life sciences', link: '#'},
-
-		{label: 'Healthcare providers', link: '#'},
-		{label: 'Patients', link: '#'},
-		{
-			label: 'Resources',
-			link: '#',
-			links: [
-				{label: 'Terms of Use', link: '#'},
-				{label: 'Privacy Policy', link: '#'},
-				{label: 'HIPAA Notice', link: '#'},
-			],
-		},
-		{
-			label: 'Company',
-			link: '#',
-			links: [
-				{label: 'Terms of Use', link: '#'},
-				{label: 'Privacy Policy', link: '#'},
-				{label: 'HIPAA Notice', link: '#'},
-			],
-		},
-		{
-			label: 'Contact',
-			link: '#',
-			links: [
-				{label: 'Terms of Use', link: '#'},
-				{label: 'Privacy Policy', link: '#'},
-				{label: 'HIPAA Notice', link: '#'},
-			],
-		},
-	];
-
 	const footerLinks = [
 		{label: 'Terms of Use', link: '#'},
 		{label: 'Privacy Policy', link: '#'},

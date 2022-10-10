@@ -4,6 +4,7 @@ import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {graphql} from 'gatsby';
 import slugify from 'slugify';
+import {Head} from 'layouts/SEO/SEO';
 
 type PageTemplateProps = {
 	data: {contentfulPage: ContentfulPage};
@@ -16,6 +17,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
+			<Head title={title} />
 			{sections.map((section, index) => {
 				if (section.sectionType === 'Basic Section') {
 					return (
