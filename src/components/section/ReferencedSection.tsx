@@ -131,7 +131,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						asset={resource.asset}
 						linkTo={resource.linkTo}
 					>
-						{resource?.subHeading ? resource.subHeading.subHeading : 'subheading here'}
+						{renderRichText(resource.body)}
 					</ResourceCard>
 				);
 
@@ -145,7 +145,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						title={resource.heading}
 						asset={resource.asset}
 					>
-						{resource?.body ? renderRichText(resource.body) : ''}
+						{renderRichText(resource.body)}
 					</Featured>
 				);
 
@@ -161,8 +161,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'FAQs':
 				return <FAQ title={resource.heading} />;
 
-			case 'Image Carousel':
-				break;
 			case 'Team Member':
 				return <Profile resource={resource} />;
 
