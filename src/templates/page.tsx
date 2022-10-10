@@ -4,6 +4,7 @@ import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {graphql} from 'gatsby';
 import slugify from 'slugify';
+import {Head} from 'layouts/SEO/SEO';
 
 type PageTemplateProps = {
 	data: {contentfulPage: ContentfulPage};
@@ -16,7 +17,10 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
-			{sections.map((section, index) => {
+			<Head title={title}>
+				<meta name='description' content='content description goes here' />
+			</Head>
+			{sections.map(section => {
 				if (section.sectionType === 'Basic Section') {
 					return (
 						<div id={slugify(section.header, {lower: true})}>
@@ -27,7 +31,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 				return (
 					<div id={section.header ? slugify(section.header, {lower: true}) : '#'}>
-						<Section key={section.id} section={section} />;
+						<Section key={section.id} section={section} />
 					</div>
 				);
 			})}
@@ -53,13 +57,7 @@ export const pageQuery = graphql`
 						}
 						buttonText
 						asset {
-							gatsbyImageData(
-								placeholder: BLURRED
-								layout: CONSTRAINED
-								resizingBehavior: SCALE
-								width: 1000
-								height: 1000
-							)
+							gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
 							id
 						}
 						body {
@@ -84,13 +82,7 @@ export const pageQuery = graphql`
 						}
 					}
 					asset {
-						gatsbyImageData(
-							resizingBehavior: SCALE
-							placeholder: BLURRED
-							layout: CONSTRAINED
-							width: 1000
-							height: 1000
-						)
+						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
 						title
 					}
 					buttonText

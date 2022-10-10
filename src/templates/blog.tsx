@@ -4,6 +4,7 @@ import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {graphql} from 'gatsby';
 import type {TResource} from 'types/resource';
+import {Head} from 'layouts/SEO/SEO';
 
 type PageTemplateProps = {
 	data: {contentfulResource: TResource};
@@ -23,6 +24,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
+			<Head title={heading} />
 			<Grid gutter='xl' align='center' pb={130} pt={0}>
 				<Grid.Col lg={12} md={12} sm={12}>
 					<Title order={1}>{heading}</Title>

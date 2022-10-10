@@ -1,20 +1,40 @@
 import React, {useState} from 'react';
-import {useHotkeys} from '@mantine/hooks';
+import {useHotkeys, useMediaQuery} from '@mantine/hooks';
 import type {ColorScheme, MantineThemeOverride} from '@mantine/core';
+import {createStyles} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
 import {CHeader} from './CHeader/CHeader';
 import {CFooter} from './CFooter/CFooter';
 import {isIndex} from 'hooks/isIndex';
+
+const useStyles = createStyles(theme => ({
+	wrapper: {
+		width: '100vw',
+	},
+
+	innerWrapper: {
+		width: '100vw',
+		padding: '0 100px',
+
+		// Dynamic media queries, define breakpoints in theme, use anywhere
+		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+			padding: '0 16px',
+		},
+	},
+}));
 
 type LayoutProps = {
 	children: React.ReactNode;
 };
 
 export function Layout({children}: LayoutProps) {
+	const {classes} = useStyles();
 	const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
 	const toggleColorScheme = (value?: ColorScheme) => {
 		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 	};
+
+	const isMobile = useMediaQuery('(max-width: 576px)');
 
 	useHotkeys([
 		[
@@ -24,40 +44,6 @@ export function Layout({children}: LayoutProps) {
 			},
 		],
 	]);
-
-	const links = [
-		{label: 'Life sciences', link: '#'},
-
-		{label: 'Healthcare providers', link: '#'},
-		{label: 'Patients', link: '#'},
-		{
-			label: 'Resources',
-			link: '#',
-			links: [
-				{label: 'Terms of Use', link: '#'},
-				{label: 'Privacy Policy', link: '#'},
-				{label: 'HIPAA Notice', link: '#'},
-			],
-		},
-		{
-			label: 'Company',
-			link: '#',
-			links: [
-				{label: 'Terms of Use', link: '#'},
-				{label: 'Privacy Policy', link: '#'},
-				{label: 'HIPAA Notice', link: '#'},
-			],
-		},
-		{
-			label: 'Contact',
-			link: '#',
-			links: [
-				{label: 'Terms of Use', link: '#'},
-				{label: 'Privacy Policy', link: '#'},
-				{label: 'HIPAA Notice', link: '#'},
-			],
-		},
-	];
 
 	const footerLinks = [
 		{label: 'Terms of Use', link: '#'},
@@ -73,13 +59,13 @@ export function Layout({children}: LayoutProps) {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: isIndex() ? 82 : 55,
+					fontSize: isIndex() ? (isMobile ? 42 : 85) : 24,
 				},
 				h2: {
-					fontSize: 52,
+					fontSize: isMobile ? 32 : 55,
 				},
 				h3: {
-					fontSize: 35,
+					fontSize: isMobile ? 25 : 18,
 				},
 			},
 			fontFamily: 'Raleway',
@@ -90,9 +76,9 @@ export function Layout({children}: LayoutProps) {
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
 			<MantineProvider theme={{...theme, colorScheme}} withGlobalStyles withNormalizeCSS>
-				<Container size={1920}>
+				<Container fluid className={classes.wrapper}>
 					<CHeader />
-					<Container fluid px={100}>
+					<Container fluid className={classes.innerWrapper}>
 						{children}
 					</Container>
 					<CFooter links={footerLinks} />
