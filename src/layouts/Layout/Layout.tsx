@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useHotkeys} from '@mantine/hooks';
+import {useHotkeys, useMediaQuery} from '@mantine/hooks';
 import type {ColorScheme, MantineThemeOverride} from '@mantine/core';
 import {createStyles} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
@@ -34,6 +34,8 @@ export function Layout({children}: LayoutProps) {
 		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 	};
 
+	const isMobile = useMediaQuery('(max-width: 576px)');
+
 	useHotkeys([
 		[
 			'mod+J',
@@ -57,13 +59,13 @@ export function Layout({children}: LayoutProps) {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: isIndex() ? 82 : 55,
+					fontSize: isIndex() ? (isMobile ? 42 : 85) : 24,
 				},
 				h2: {
-					fontSize: 52,
+					fontSize: isMobile ? 32 : 55,
 				},
 				h3: {
-					fontSize: 35,
+					fontSize: isMobile ? 25 : 18,
 				},
 			},
 			fontFamily: 'Raleway',

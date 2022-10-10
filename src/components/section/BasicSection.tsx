@@ -6,6 +6,7 @@ import React from 'react';
 import {Link} from 'gatsby';
 import type {ISection} from 'types/section';
 import {BLOCKS} from '@contentful/rich-text-types';
+import {useMediaQuery} from '@mantine/hooks';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -34,6 +35,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const HEADING_SECOND = 2;
 
 	const {classes} = useStyles();
+	const isMobile = useMediaQuery('(max-width: 576px)');
 
 	const pathToImage = getImage(section.asset);
 
@@ -63,8 +65,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
 	return (
-		<Grid gutter='xl' align='center' pb={130} pt={isHeroSection ? 0 : 100}>
-			<Grid.Col order={textColumnOrder} lg={6} md={6} sm={12}>
+		<Grid gutter='xl' align='center' pb={130} pt={isHeroSection || isMobile ? 0 : 100}>
+			<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
 				<Title style={{wordBreak: 'break-word'}} order={titleOrdering}>
 					{section.header}
 				</Title>
@@ -82,7 +84,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 					</Link>
 				)}
 			</Grid.Col>
-			<Grid.Col order={imageColumnOrder} lg={6} md={6} sm={12}>
+			<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
 				<ImageContainer>
 					<GatsbyImage image={pathToImage} alt={section.asset.title} />
 				</ImageContainer>

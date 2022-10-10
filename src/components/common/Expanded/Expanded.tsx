@@ -33,7 +33,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 
 			// Dynamic media queries, define breakpoints in theme, use anywhere
 			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-				padding: '0 16px',
+				padding: '116px 16px',
 				marginLeft: -33,
 			},
 		},
