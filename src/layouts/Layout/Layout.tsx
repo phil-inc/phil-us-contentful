@@ -9,11 +9,11 @@ import {isIndex} from 'hooks/isIndex';
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
-		width: '100vw',
+		width: 1920,
 	},
 
 	innerWrapper: {
-		width: '100vw',
+		width: '100%',
 		padding: '0 100px',
 
 		// Dynamic media queries, define breakpoints in theme, use anywhere
@@ -65,7 +65,7 @@ export function Layout({children}: LayoutProps) {
 					fontSize: isMobile ? 32 : 55,
 				},
 				h3: {
-					fontSize: isMobile ? 25 : 18,
+					fontSize: isMobile ? 18 : 35,
 				},
 			},
 			fontFamily: 'Raleway',
