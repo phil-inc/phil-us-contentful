@@ -65,7 +65,7 @@ export function Layout({children}: LayoutProps) {
 					fontSize: isMobile ? 32 : 55,
 				},
 				h3: {
-					fontSize: isMobile ? 25 : 18,
+					fontSize: isMobile ? 18 : 35,
 				},
 			},
 			fontFamily: 'Raleway',
