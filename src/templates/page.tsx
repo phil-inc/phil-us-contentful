@@ -17,8 +17,10 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
-			<Head title={title} />
-			{sections.map((section, index) => {
+			<Head title={title}>
+				<meta name='description' content='content description goes here' />
+			</Head>
+			{sections.map(section => {
 				if (section.sectionType === 'Basic Section') {
 					return (
 						<div id={slugify(section.header, {lower: true})}>
