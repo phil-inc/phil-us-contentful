@@ -65,7 +65,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	return (
 		<Grid gutter='xl' align='center' pb={130} pt={isHeroSection ? 0 : 100}>
 			<Grid.Col order={textColumnOrder} lg={6} md={6} sm={12}>
-				<Title order={titleOrdering}>{section.header}</Title>
+				<Title style={{wordBreak: 'break-word'}} order={titleOrdering}>
+					{section.header}
+				</Title>
 				{Boolean(section.subHeader?.subHeader.length) && (
 					<Text size={18} weight='bold' mt={20}>
 						{section.subHeader.subHeader}
