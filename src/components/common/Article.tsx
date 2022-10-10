@@ -1,10 +1,11 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Box, Stack} from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
 import type {Asset} from 'types/asset';
+import ImageContainer from './Container/ImageContainer';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -14,6 +15,10 @@ const useStyles = createStyles(theme => ({
 		paddingLeft: 32,
 		paddingBottom: 38,
 		paddingTop: 52,
+		width: '100%',
+		height: '100%',
+		minWidth: '100%',
+		minHeight: '100%',
 
 		'&::before': {
 			content: '""',
@@ -75,20 +80,26 @@ export const Article: FC<ArticleProps> = ({color, title, image, children, link, 
 
 	return (
 		<Paper radius={0} className={classNames(classes.card, getColorStyle())}>
-			<GatsbyImage image={pathToImage} alt={title} />
+			<Stack align='flex-start' justify='space-between'>
+				<Box>
+					<ImageContainer fluid>
+						<GatsbyImage style={{width: '100%', height: '100%'}} image={pathToImage} alt={title} />
+					</ImageContainer>
 
-			<Title order={3} mt='md'>
-				{title}
-			</Title>
-			<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
-			<Text size='sm' mt='sm' mb={11}>
-				{children}
-			</Text>
-			{Boolean(buttonText?.length) && (
-				<Link to={link}>
-					<Button color={'dark'}>{buttonText}</Button>
-				</Link>
-			)}
+					<Title order={3} mt='md'>
+						{title}
+					</Title>
+					<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
+					<Text size='sm' mt='sm' mb={11}>
+						{children}
+					</Text>
+				</Box>
+				{Boolean(buttonText?.length) && (
+					<Link to={link}>
+						<Button color={'dark'}>{buttonText}</Button>
+					</Link>
+				)}
+			</Stack>
 		</Paper>
 	);
 };

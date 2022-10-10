@@ -28,7 +28,9 @@ export const PrescriberJourney: FC<PrescriberJourneyProps> = ({resource: {asset,
 				</Group>
 			</Container>
 
-			<GatsbyImage image={pathToImage} alt={heading} />
+			<Container fluid>
+				<GatsbyImage image={pathToImage} alt={heading} />
+			</Container>
 		</Box>
 	);
 };
