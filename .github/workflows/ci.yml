@@ -19,16 +19,15 @@ jobs:
       # Checkout the project source files to the Github Action runner.
       # This is roughly equivalent to running `git checkout`.
       - name: Checkout source
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       # Install the version of Node.js used by project.
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "16"
-          cache: "npm"
+          node-version: "16.17.1"
       # Install package dependencies as defined in package.json file in root of project.
       - name: install
-        run: npm install
+        run: yarn install
       # Run `gatsby build`.
       - name: build
-        run: npm run build
+        run: yarn build
