@@ -27,7 +27,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				<Grid.Col lg={12} md={12} sm={12}>
 					<Title order={1}>{heading}</Title>
 					<Text size={18} className={classes.body}>
-						{renderRichText(body)}
+						{body && renderRichText(body)}
 					</Text>
 					{Boolean(buttonText?.length) && <Button color={'dark'}>{buttonText}</Button>}
 				</Grid.Col>

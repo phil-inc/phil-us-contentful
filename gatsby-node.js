@@ -70,7 +70,7 @@ exports.createPages = async function ({actions, graphql}) {
 	`);
 
 	data.allContentfulPage.nodes.forEach(({title}) => {
-		const slug = slugify(title, {lower: true});
+		const slug = slugify(title, {lower: true, strict: true});
 
 		actions.createPage({
 			path: title === 'Home' ? '/' : slug,
@@ -121,7 +121,7 @@ exports.createPages = async function ({actions, graphql}) {
 	blogPosts.data.contentfulPage.sections.forEach(nav => {
 		nav.references.forEach(subNav => {
 			if (nav.header != null) {
-				const path = `${slugify(nav.header, {lower: true})}/${slugify(subNav.heading, {lower: true})}`;
+				const path = `${slugify(nav.header, {lower: true, strict: true})}/${slugify(subNav.heading, {lower: true, strict: true})}`;
 
 				actions.createPage({
 					path: path,
@@ -135,11 +135,12 @@ exports.createPages = async function ({actions, graphql}) {
 	blogPosts.data.allContentfulHeader.nodes.forEach(item => {
 		item.navavigationLinks.forEach(navigationLink => {
 			navigationLink.sections.forEach(nav => {
-				if (nav.header != null && nav.subNavigationSection != null) {
+				if (nav.header !== null && nav.subNavigationSection !== null) {
 					nav.subNavigationSection.forEach(subNav => {
-						const path = `${slugify(navigationLink.title, {lower: true})}/${slugify(nav.header, {
+						const path = `${slugify(navigationLink.title, {lower: true, strict: true})}/${slugify(nav.header, {
 							lower: true,
-						})}/${slugify(subNav.heading, {lower: true})}`;
+							strict: true,
+						})}/${slugify(subNav.heading, {lower: true, strict: true})}`;
 
 						actions.createPage({
 							path: path,
