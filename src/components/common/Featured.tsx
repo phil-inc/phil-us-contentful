@@ -50,8 +50,8 @@ export const Featured: FC<FeaturedProps> = ({
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid align={'center'} gutter={'sm'}>
 				<Grid.Col lg={6} sm={12} md={12} py={0}>
-					<ImageContainer>
-						<GatsbyImage style={{width: '100%', height: '100%'}} image={pathToImage} alt={title} />
+					<ImageContainer fluid>
+						<GatsbyImage image={pathToImage} alt={title} />
 					</ImageContainer>
 				</Grid.Col>
 				<Grid.Col lg={6} sm={12} md={12}>
