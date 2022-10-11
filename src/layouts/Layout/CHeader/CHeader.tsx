@@ -141,7 +141,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
 			<Container className={classes.inner} fluid>
-				<Group position='apart' noWrap align='start' className={classNames('navbar')}>
+				<Group position='apart' noWrap align='center' className={classNames('navbar')}>
 					<Link to='/'>
 						<Container m={0} p={0} size={125}>
 							<GatsbyImage image={pathToImage} alt='logo' />
