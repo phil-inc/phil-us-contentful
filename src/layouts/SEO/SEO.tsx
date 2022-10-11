@@ -7,11 +7,4 @@ type SEOProps = {
 
 type HeadProps = SEOProps;
 
-const SEO: React.FC<SEOProps> = ({title, children}) => (
-	<>
-		<title>{title}</title>
-		{children}
-	</>
-);
-
-export const Head: React.FC<HeadProps> = ({title, children}) => <SEO title={title}>{children}</SEO>;
+export const SEO: React.FC<SEOProps> = ({title, children}) => <title>{title}</title>;

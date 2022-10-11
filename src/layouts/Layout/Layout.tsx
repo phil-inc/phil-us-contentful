@@ -10,11 +10,12 @@ import {isIndex} from 'hooks/isIndex';
 const useStyles = createStyles(theme => ({
 	wrapper: {
 		width: 1920,
+		padding: 0,
 	},
 
 	innerWrapper: {
 		width: '100%',
-		padding: '0 100px',
+		padding: 100,
 
 		// Dynamic media queries, define breakpoints in theme, use anywhere
 		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
@@ -59,7 +60,7 @@ export function Layout({children}: LayoutProps) {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: isIndex() ? (isMobile ? 42 : 85) : 24,
+					fontSize: isIndex() ? (isMobile ? 42 : 85) : isMobile ? 24 : 55,
 				},
 				h2: {
 					fontSize: isMobile ? 32 : 55,
