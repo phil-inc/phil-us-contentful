@@ -1,9 +1,9 @@
 const slugify = require('slugify');
 
-exports.createPages = async function ({actions, graphql}) {
+const generateMainPages = async ({actions, graphql})=>{
 	const {data} = await graphql(`
 		query getPages {
-			allContentfulPage {
+			allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
 				nodes {
 					id
 					title
@@ -79,77 +79,65 @@ exports.createPages = async function ({actions, graphql}) {
 		});
 	});
 
-	const blogPosts = await graphql(`
-		query getBlogsPosts {
-			contentfulPage(title: {eq: "Resources"}) {
-				id
-				sections {
-					... on ContentfulReferencedSection {
-						header
-						references {
-							heading
+}
+
+const generateBlogPages = async ({actions, graphql}) => {
+	const {data} = await graphql(`
+		query allBlogPages {
+			allContentfulResource(filter: {relatesTo: {id: {ne: null}}, node_locale: {eq: "en-US"}}) {
+				nodes {
+					body {
+						raw
+					}
+					author
+					buttonText
+					designation
+					heading
+					hubspotForm
+					id
+					isHubSpotForm
+					linkTo
+					subHeading {
+						subHeading
+					}
+					sys {
+						contentType {
+							sys {
+								id
+								type
+							}
 						}
 					}
-				}
-			}
-			allContentfulHeader {
-				nodes {
-					navavigationLinks {
-						title
-						sections {
-							... on ContentfulSection {
-								id
-								header
-								subNavigationSection {
-									heading
-								}
-							}
-							... on ContentfulReferencedSection {
-								id
-								header
-								subNavigationSection {
-									heading
-								}
-							}
-						}
+					relatesTo {
+						id
+						header
+						page {
+							id
+							title
+						  }
 					}
 				}
 			}
 		}
 	`);
 
-	blogPosts.data.contentfulPage.sections.forEach(nav => {
-		nav.references.forEach(subNav => {
-			if (nav.header != null) {
-				const path = `${slugify(nav.header, {lower: true, strict: true})}/${slugify(subNav.heading, {lower: true, strict: true})}`;
+	data.allContentfulResource.nodes.forEach(resource => {
+		if (resource.heading !== null) {
+			const path = `${slugify(resource.relatesTo?.page[0]?.title, {lower: true, strict: true})}/${slugify(resource.relatesTo?.header, {lower: true, strict: true})}/${slugify(resource.heading, {
+				lower: true,
+				strict: true,
+			})}`;
 
-				actions.createPage({
-					path: path,
-					component: require.resolve(`./src/templates/blog.tsx`),
-					context: {title: subNav.heading},
-				});
-			}
-		});
-	});
-
-	blogPosts.data.allContentfulHeader.nodes.forEach(item => {
-		item.navavigationLinks.forEach(navigationLink => {
-			navigationLink.sections.forEach(nav => {
-				if (nav.header !== null && nav.subNavigationSection !== null) {
-					nav.subNavigationSection.forEach(subNav => {
-						const path = `${slugify(navigationLink.title, {lower: true, strict: true})}/${slugify(nav.header, {
-							lower: true,
-							strict: true,
-						})}/${slugify(subNav.heading, {lower: true, strict: true})}`;
-
-						actions.createPage({
-							path: path,
-							component: require.resolve(`./src/templates/blog.tsx`),
-							context: {title: subNav.heading},
-						});
-					});
-				}
+			actions.createPage({
+				path: path,
+				component: require.resolve(`./src/templates/blog.tsx`),
+				context: {title: resource.heading},
 			});
-		});
+		}
 	});
+}
+
+exports.createPages = async function (props) {
+	await generateMainPages(props)
+	await generateBlogPages(props)
 };

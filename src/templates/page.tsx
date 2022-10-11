@@ -18,6 +18,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	return (
 		<Layout>
 			<Head title={title}>
+				<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 				<meta name='description' content='content description goes here' />
 			</Head>
 			{sections.map(section => {

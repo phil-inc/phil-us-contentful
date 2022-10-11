@@ -59,7 +59,7 @@ export function Layout({children}: LayoutProps) {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: isIndex() ? (isMobile ? 42 : 85) : 24,
+					fontSize: isIndex() ? (isMobile ? 42 : 85) : isMobile ? 24 : 55,
 				},
 				h2: {
 					fontSize: isMobile ? 32 : 55,

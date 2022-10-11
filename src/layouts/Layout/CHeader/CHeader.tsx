@@ -73,12 +73,14 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }));
 
 type CHeaderProps = {
-	contentfulHeader: {logo: Asset; navavigationLinks: ContentfulPage[]};
+	allContentfulHeader: {nodes: Array<{logo: Asset; navigationLinks: ContentfulPage[]}>};
+	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
 };
 
-const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
-	const pages = contentfulHeader.navavigationLinks;
-	const pathToImage = getImage(contentfulHeader.logo);
+const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource}) => {
+	const [header] = allContentfulHeader.nodes;
+	const pages = header.navigationLinks;
+	const pathToImage = getImage(header.logo);
 	const {classes} = useStyles();
 
 	const [opened, {toggle, open}] = useDisclosure(false, {
@@ -177,14 +179,14 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 											.map((section, index) => (
 												<List.Item key={index}>
 													{index > 0 ? (
-														<a
-															href={`/${slugify(page.title, {lower: true})}/#${slugify(section.header, {
+														<Link
+															to={`/${slugify(page.title, {lower: true})}/#${slugify(section.header, {
 																lower: true,
 															})}`}
 															style={{textDecoration: 'none'}}
 														>
 															<Text className={classes.listHeading}>{section.header}</Text>
-														</a>
+														</Link>
 													) : (
 														<Link
 															to={navigateToPage(slugify(page.title, {lower: true}))}
@@ -196,20 +198,26 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 
 													<Divider />
 													<List listStyleType='none'>
-														{section.subNavigationSection?.map((subNav, index) => (
-															<List.Item key={index}>
-																<Link
-																	to={navigateToPage(
-																		`${slugify(page.title, {lower: true})}/${slugify(section.header, {
-																			lower: true,
-																		})}/${slugify(subNav.heading, {lower: true})}`,
-																	)}
-																	style={{textDecoration: 'none'}}
-																>
-																	<Text className={classes.listItems}>{subNav.heading}</Text>
-																</Link>
-															</List.Item>
-														))}
+														{allContentfulResource.nodes.map(
+															({id, heading, relatesTo}) =>
+																section.id === relatesTo.id && (
+																	<List.Item key={id}>
+																		<Link
+																			to={navigateToPage(
+																				`${slugify(page.title, {lower: true})}/${slugify(
+																					relatesTo.header,
+																					{
+																						lower: true,
+																					},
+																				)}/${slugify(heading, {lower: true})}`,
+																			)}
+																			style={{textDecoration: 'none'}}
+																		>
+																			<Text className={classes.listItems}>{heading}</Text>
+																		</Link>
+																	</List.Item>
+																),
+														)}
 													</List>
 												</List.Item>
 											)),
@@ -224,38 +232,44 @@ const Navbar: React.FC<CHeaderProps> = ({contentfulHeader}) => {
 };
 
 const query = graphql`
-	query getDefaultHeader {
-		contentfulHeader {
-			logo {
-				gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-			}
-			id
-			title
-			navavigationLinks {
+	query MyQuery {
+		allContentfulHeader(filter: {node_locale: {eq: "en-US"}}) {
+			nodes {
+				id
 				title
-				sys {
-					contentType {
-						sys {
+				navigationLinks {
+					title
+					sys {
+						contentType {
+							sys {
+								id
+								type
+							}
+						}
+					}
+					sections {
+						... on ContentfulReferencedSection {
 							id
-							type
+							header
+						}
+						... on ContentfulSection {
+							id
+							header
 						}
 					}
 				}
-				sections {
-					... on ContentfulReferencedSection {
-						id
-						header
-						subNavigationSection {
-							heading
-						}
-					}
-					... on ContentfulSection {
-						id
-						header
-						subNavigationSection {
-							heading
-						}
-					}
+				logo {
+					gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+				}
+			}
+		}
+		allContentfulResource(filter: {relatesTo: {id: {ne: null}}, node_locale: {eq: "en-US"}}) {
+			nodes {
+				id
+				heading
+				relatesTo {
+					id
+					header
 				}
 			}
 		}
