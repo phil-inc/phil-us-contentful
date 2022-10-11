@@ -5,16 +5,15 @@ import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {graphql} from 'gatsby';
 import type {TResource} from 'types/resource';
 import {SEO} from 'layouts/SEO/SEO';
-import type {ContentfulPage} from 'types/page';
 
 type HelmetProps = {
 	pageContext: {title: string};
-	data: ContentfulPage;
+	data: {contentfulResource: TResource};
 };
 
 export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	<SEO title={pageContext.title}>
-		<meta name='description' content={data.title} />
+		<meta name='description' content={data.contentfulResource.description} />
 	</SEO>
 );
 
@@ -53,6 +52,7 @@ export const pageQuery = graphql`
 	query getBlogsPost($title: String) {
 		contentfulResource(heading: {eq: $title}) {
 			id
+			description
 			heading
 			designation
 			buttonText

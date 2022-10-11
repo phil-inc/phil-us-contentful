@@ -8,12 +8,12 @@ import {SEO} from 'layouts/SEO/SEO';
 
 type HelmetProps = {
 	pageContext: {title: string};
-	data: ContentfulPage;
+	data: {contentfulPage: ContentfulPage};
 };
 
 export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	<SEO title={pageContext.title}>
-		<meta name='description' content={data.title} />
+		<meta name='description' content={data.contentfulPage.description} />
 	</SEO>
 );
 
@@ -52,6 +52,7 @@ export const pageQuery = graphql`
 		contentfulPage(title: {eq: $title}) {
 			id
 			title
+			description
 			sections {
 				... on ContentfulReferencedSection {
 					id

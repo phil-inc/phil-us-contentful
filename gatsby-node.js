@@ -7,6 +7,7 @@ const generateMainPages = async ({actions, graphql})=>{
 				nodes {
 					id
 					title
+					description
 					sections {
 						... on ContentfulReferencedSection {
 							id
@@ -95,6 +96,7 @@ const generateBlogPages = async ({actions, graphql}) => {
 					heading
 					hubspotForm
 					id
+					description
 					isHubSpotForm
 					linkTo
 					subHeading {
