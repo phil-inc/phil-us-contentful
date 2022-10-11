@@ -4,7 +4,18 @@ import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {graphql} from 'gatsby';
 import slugify from 'slugify';
-import {Head} from 'layouts/SEO/SEO';
+import {SEO} from 'layouts/SEO/SEO';
+
+type HelmetProps = {
+	pageContext: {title: string};
+	data: ContentfulPage;
+};
+
+export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
+	<SEO title={pageContext.title}>
+		<meta name='description' content={data.title} />
+	</SEO>
+);
 
 type PageTemplateProps = {
 	data: {contentfulPage: ContentfulPage};
@@ -17,10 +28,6 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
-			<Head title={title}>
-				<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-				<meta name='description' content='content description goes here' />
-			</Head>
 			{sections.map(section => {
 				if (section.sectionType === 'Basic Section') {
 					return (
