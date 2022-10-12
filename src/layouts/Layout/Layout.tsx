@@ -46,6 +46,9 @@ export function Layout({children}: LayoutProps) {
 	]);
 
 	const theme: MantineThemeOverride = {
+		breakpoints: {
+			md: 1160,
+		},
 		colors: {
 			brand: ['#00201F'],
 		},

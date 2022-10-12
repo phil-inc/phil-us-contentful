@@ -30,139 +30,143 @@ import {IconChevronDown} from '@tabler/icons';
 
 const HEADER_HEIGHT = 90;
 
-const useStyles = createStyles((theme, _params, getRef) => ({
-	inner: {
-		padding: '0 16px',
-		height: HEADER_HEIGHT,
-		display: 'flex',
-		alignItems: 'center',
-
-		[theme.fn.largerThan('md')]: {
-			padding: '0 100px',
-		},
-	},
-
-	burger: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none !important',
-		},
-	},
-
-	dropdown: {
-		position: 'absolute',
-		top: 90,
-		left: 0,
-		zIndex: 300,
-		opacity: 1,
-	},
-
-	container: {
-		width: '100vw',
-		background: '#00827E',
-	},
-
-	navbar: {
-		position: 'relative',
-		height: '90px',
-		width: '100vw',
-		background: '#fff',
-		display: 'flex',
-		alignItems: 'center',
-		overflow: 'hidden',
-
-		ul: {
-			position: 'relative',
-			display: 'flex',
-
-			li: {
-				position: 'relative',
-				listStyleType: 'none',
-				height: '120px',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				textDecoration: 'none',
-			},
-		},
-	},
-
-	indicator: {
-		position: 'absolute',
-		bottom: '-5px',
-		left: '25px',
-		width: '0px',
-		height: '0px',
-		borderLeft: '20px solid transparent',
-		borderRight: '20px solid transparent',
-		borderBottom: '20px solid #00827e',
-		transition: 'transform 0.5s',
-	},
-
-	navLinksWrapper: {
-		'&:last-child': {
-			marginRight: '0px',
-		},
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'none !important',
-		},
-	},
-	navLink: {
-		position: 'relative',
-		marginRight: '85px',
-		cursor: 'pointer',
-		textDecoration: 'none',
-	},
-	listHeading: {
-		color: 'white',
-		fontSize: '16px',
-		letterSpacing: '0.4px',
-		lineHeight: '27px',
-		marginBottom: '11px',
-		fontFamily: 'Lato',
-		fontWeight: 700,
-		textDecoration: 'none',
-	},
-	listItems: {
-		color: 'white',
-		fontSize: '12px',
-		letterSpacing: 0,
-		lineHeight: '35px',
-		margin: '8px 0',
-		fontFamily: 'Lato',
-		fontWeight: 400,
-	},
-
-	drawer: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	drawerTitle: {
-		width: '100%',
-		margin: 0,
-	},
-
-	accordionItem: {},
-
-	accordionControl: {
-		paddingLeft: 0,
-		paddingRight: 0,
-	},
-
-	accordionContent: {
-		paddingLeft: 0,
-		paddingRight: 0,
-	},
-}));
-
 type CHeaderProps = {
 	allContentfulHeader: {nodes: Array<{logo: Asset; navigationLinks: ContentfulPage[]}>};
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
 };
 
 const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource}) => {
+	const useStyles = createStyles((theme, _params, getRef) => ({
+		inner: {
+			padding: '0 16px',
+			height: HEADER_HEIGHT,
+			display: 'flex',
+			alignItems: 'center',
+
+			[theme.fn.largerThan('md')]: {
+				padding: '0 100px',
+			},
+		},
+
+		burger: {
+			[theme.fn.largerThan('md')]: {
+				display: 'none !important',
+			},
+		},
+
+		dropdown: {
+			position: 'absolute',
+			top: 90,
+			left: 0,
+			zIndex: 300,
+			opacity: 1,
+		},
+
+		container: {
+			width: '100vw',
+			background: '#00827E',
+		},
+
+		navbar: {
+			position: 'relative',
+			height: '90px',
+			width: '100vw',
+			background: '#fff',
+			display: 'flex',
+			alignItems: 'center',
+			overflow: 'hidden',
+
+			[theme.fn.largerThan('sm') && theme.fn.smallerThan('md')]: {
+				padding: '0 100px',
+			},
+
+			ul: {
+				position: 'relative',
+				display: 'flex',
+
+				li: {
+					position: 'relative',
+					listStyleType: 'none',
+					height: '120px',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					textDecoration: 'none',
+				},
+			},
+		},
+
+		indicator: {
+			position: 'absolute',
+			bottom: '-5px',
+			left: '25px',
+			width: '0px',
+			height: '0px',
+			borderLeft: '20px solid transparent',
+			borderRight: '20px solid transparent',
+			borderBottom: '20px solid #00827e',
+			transition: 'transform 0.5s',
+		},
+
+		navLinksWrapper: {
+			'&:last-child': {
+				marginRight: '0px',
+			},
+
+			[theme.fn.smallerThan('md')]: {
+				display: 'none !important',
+			},
+		},
+		navLink: {
+			position: 'relative',
+			marginRight: '85px',
+			cursor: 'pointer',
+			textDecoration: 'none',
+		},
+		listHeading: {
+			color: 'white',
+			fontSize: '16px',
+			letterSpacing: '0.4px',
+			lineHeight: '27px',
+			marginBottom: '11px',
+			fontFamily: 'Lato',
+			fontWeight: 700,
+			textDecoration: 'none',
+		},
+		listItems: {
+			color: 'white',
+			fontSize: '12px',
+			letterSpacing: 0,
+			lineHeight: '35px',
+			margin: '8px 0',
+			fontFamily: 'Lato',
+			fontWeight: 400,
+		},
+
+		drawer: {
+			[theme.fn.largerThan('md')]: {
+				display: 'none',
+			},
+		},
+
+		drawerTitle: {
+			width: '100%',
+			margin: 0,
+		},
+
+		accordionItem: {},
+
+		accordionControl: {
+			paddingLeft: 0,
+			paddingRight: 0,
+		},
+
+		accordionContent: {
+			paddingLeft: 0,
+			paddingRight: 0,
+		},
+	}));
+
 	const [header] = allContentfulHeader.nodes;
 	const pages = header.navigationLinks;
 	const pathToImage = getImage(header.logo);
@@ -192,6 +196,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	React.useEffect(() => {
 		const navBar = document.querySelector('.navbar');
+		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
 		const allLi = navBar.querySelectorAll('li');
 		const INDICATOR_SIZE = 20;
 		const INITIAL_OFFSET = 25;
@@ -251,7 +256,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								.filter(page => page.title !== 'Home')
 								.map(page => (
 									<List.Item key={page.id} className={classes.navLink} onClick={onNavLinkClick}>
-										<Text>{page.title}</Text>
+										<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 									</List.Item>
 								))}
 							<List.Item className={classes.navLink} onClick={onNavLinkClick}>
@@ -470,7 +475,7 @@ const query = graphql`
 					}
 				}
 				logo {
-					gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+					gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
 				}
 			}
 		}
