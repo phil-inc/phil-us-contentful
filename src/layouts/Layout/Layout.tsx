@@ -56,7 +56,7 @@ export function Layout({children}: LayoutProps) {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: '5.313rem',
+					fontSize: isIndex() ? '5.313rem' : '3.438rem',
 				},
 				h2: {
 					fontSize: '3.438rem',
