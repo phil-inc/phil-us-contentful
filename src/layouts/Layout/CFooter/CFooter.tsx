@@ -42,26 +42,23 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-type FooterCenteredProps = {
-	links: Array<{link: string; label: string}>;
-};
-
-export const CFooter = ({links}: FooterCenteredProps) => {
+export const CFooter: React.FC = () => {
 	const {classes} = useStyles();
-	const items = links.map(link => (
-		<Anchor<'a'>
-			className={classes.links}
-			key={link.label}
-			href={link.link}
-			sx={{lineHeight: 1}}
-			onClick={event => {
-				event.preventDefault();
-			}}
-			size='sm'
-		>
-			{link.label}
-		</Anchor>
-	));
+	// Deprecate
+	// const items = links.map(link => (
+	// 	<Anchor<'a'>
+	// 		className={classes.links}
+	// 		key={link.label}
+	// 		href={link.link}
+	// 		sx={{lineHeight: 1}}
+	// 		onClick={event => {
+	// 			event.preventDefault();
+	// 		}}
+	// 		size='sm'
+	// 	>
+	// 		{link.label}
+	// 	</Anchor>
+	// ));
 
 	return (
 		<>
@@ -239,9 +236,7 @@ export const CFooter = ({links}: FooterCenteredProps) => {
 				</Grid>
 			</Container>
 			<div className={classes.footer}>
-				<div className={classes.inner}>
-					<Group className={classes.links}>{items}</Group>
-				</div>
+				<div className={classes.inner}>{/* <Group className={classes.links}>{items}</Group> */}</div>
 			</div>
 		</>
 	);

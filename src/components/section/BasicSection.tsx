@@ -1,4 +1,4 @@
-import {Grid, Title, Button, Text, createStyles, AspectRatio} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles, AspectRatio, Container} from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -12,6 +12,13 @@ const useStyles = createStyles(theme => ({
 	body: {
 		p: {
 			marginTop: 0,
+		},
+	},
+
+	container: {
+		padding: '0 100px',
+		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+			padding: '0 16px',
 		},
 	},
 }));
@@ -65,31 +72,31 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
 	return (
-		<Grid gutter='xl' align='center' pb={130} pt={isHeroSection || isMobile ? 0 : 100}>
-			<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
-				<Title style={{wordBreak: 'break-word'}} order={titleOrdering}>
-					{section.header}
-				</Title>
-				{Boolean(section.subHeader?.subHeader.length) && (
-					<Text size={18} weight='bold' mt={20}>
-						{section.subHeader.subHeader}
+		<Container fluid className={classes.container}>
+			<Grid gutter='xl' align='center' pb={130} pt={isHeroSection || isMobile ? 0 : 100}>
+				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
+					<Title order={titleOrdering}>{section.header}</Title>
+					{Boolean(section.subHeader?.subHeader.length) && (
+						<Text size={18} weight='bold' mt={20}>
+							{section.subHeader.subHeader}
+						</Text>
+					)}
+					<Text size={18} className={classes.body}>
+						{renderRichText(section.body, options)}
 					</Text>
-				)}
-				<Text size={18} className={classes.body}>
-					{renderRichText(section.body, options)}
-				</Text>
-				{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
-					<Link to={section.linkTo}>
-						<Button color={'dark'}>{section.buttonText}</Button>
-					</Link>
-				)}
-			</Grid.Col>
-			<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
-				<ImageContainer>
-					<GatsbyImage image={pathToImage} alt={section.asset.title} />
-				</ImageContainer>
-			</Grid.Col>
-		</Grid>
+					{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
+						<Link to={section.linkTo}>
+							<Button color={'dark'}>{section.buttonText}</Button>
+						</Link>
+					)}
+				</Grid.Col>
+				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
+					<ImageContainer>
+						<GatsbyImage image={pathToImage} alt={section.asset.title} />
+					</ImageContainer>
+				</Grid.Col>
+			</Grid>
+		</Container>
 	);
 };
 

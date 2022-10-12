@@ -66,7 +66,6 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		height: '90px',
 		width: '100vw',
 		background: '#fff',
-		borderRadius: '20px',
 		display: 'flex',
 		alignItems: 'center',
 		overflow: 'hidden',

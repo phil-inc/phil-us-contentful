@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {useHotkeys, useMediaQuery} from '@mantine/hooks';
+import {useHotkeys, useMediaQuery, useViewportSize} from '@mantine/hooks';
 import type {ColorScheme, MantineThemeOverride} from '@mantine/core';
+import {Box} from '@mantine/core';
 import {createStyles} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
 import {CHeader} from './CHeader/CHeader';
@@ -35,8 +36,6 @@ export function Layout({children}: LayoutProps) {
 		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 	};
 
-	const isMobile = useMediaQuery('(max-width: 576px)');
-
 	useHotkeys([
 		[
 			'mod+J',
@@ -46,12 +45,6 @@ export function Layout({children}: LayoutProps) {
 		],
 	]);
 
-	const footerLinks = [
-		{label: 'Terms of Use', link: '#'},
-		{label: 'Privacy Policy', link: '#'},
-		{label: 'HIPAA Notice', link: '#'},
-	];
-
 	const theme: MantineThemeOverride = {
 		colors: {
 			brand: ['#00201F'],
@@ -60,13 +53,13 @@ export function Layout({children}: LayoutProps) {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: isIndex() ? (isMobile ? 42 : 85) : isMobile ? 24 : 55,
+					fontSize: '5.313rem',
 				},
 				h2: {
-					fontSize: isMobile ? 32 : 55,
+					fontSize: '3.438rem',
 				},
 				h3: {
-					fontSize: isMobile ? 18 : 35,
+					fontSize: '2.188rem',
 				},
 			},
 			fontFamily: 'Raleway',
@@ -79,10 +72,8 @@ export function Layout({children}: LayoutProps) {
 			<MantineProvider theme={{...theme, colorScheme}} withGlobalStyles withNormalizeCSS>
 				<Container fluid className={classes.wrapper}>
 					<CHeader />
-					<Container fluid className={classes.innerWrapper}>
-						{children}
-					</Container>
-					<CFooter links={footerLinks} />
+					<Box>{children}</Box>
+					{/* <CFooter /> */}
 				</Container>
 			</MantineProvider>
 		</ColorSchemeProvider>
