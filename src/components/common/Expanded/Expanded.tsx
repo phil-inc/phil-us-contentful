@@ -26,15 +26,12 @@ const Expanded: React.FC<ExpandedProps> = ({
 		container: {
 			background,
 			minHeight,
-			maxWidth: 1920,
+			maxWidth: '100%',
 			width: '100vw',
-			marginLeft: -100,
 			padding: '0 116px',
 
-			// Dynamic media queries, define breakpoints in theme, use anywhere
 			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
 				padding: '116px 16px',
-				marginLeft: -33,
 			},
 		},
 	}));
