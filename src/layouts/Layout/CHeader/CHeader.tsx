@@ -252,7 +252,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 							{pages
 								.filter(page => page.title !== 'Home')
 								.map(page => (
-									<List.Item key={page.id} className={classes.navLink} onClick={onNavLinkClick}>
+									<List.Item key={page.id + page.title} className={classes.navLink} onClick={onNavLinkClick}>
 										<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 									</List.Item>
 								))}
@@ -299,7 +299,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 							{pages
 								.filter(page => page.title !== 'Home')
 								.map(page => (
-									<Accordion.Item value={page.title}>
+									<Accordion.Item key={page.id + page.title} value={page.title}>
 										<Accordion.Control>
 											<Text weight='bold' size={18}>
 												{page.title}
@@ -309,7 +309,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 											{page.sections
 												.filter(section => Boolean(section.header?.length))
 												.map((section, index) => (
-													<Table mb={16}>
+													<Table key={section.id} mb={16}>
 														<thead>
 															<tr>
 																{index > 0 ? (

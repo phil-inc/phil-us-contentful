@@ -39,7 +39,7 @@ export const StatsCard: FC<StatsCardProps> = ({resource: {asset, heading, body}}
 	return (
 		<Card shadow='none' p='xl' radius={0} className={classes.card}>
 			<Card.Section>
-				<GatsbyImage image={pathToImage} alt={heading} />
+				<GatsbyImage image={pathToImage} alt={heading || ''} />
 			</Card.Section>
 
 			<Title mt='md' className={classes.percentage}>

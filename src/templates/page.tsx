@@ -31,15 +31,15 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 			{sections.map(section => {
 				if (section.sectionType === 'Basic Section') {
 					return (
-						<div id={slugify(section.header, {lower: true})}>
-							<Section key={section.id} section={section} index={basicSectionCount++} />
+						<div key={section.id} id={slugify(section.header, {lower: true})}>
+							<Section section={section} index={basicSectionCount++} />
 						</div>
 					);
 				}
 
 				return (
-					<div id={section.header ? slugify(section.header, {lower: true}) : '#'}>
-						<Section key={section.id} section={section} />
+					<div key={section.id} id={section.header ? slugify(section.header, {lower: true}) : '#'}>
+						<Section section={section} />
 					</div>
 				);
 			})}
