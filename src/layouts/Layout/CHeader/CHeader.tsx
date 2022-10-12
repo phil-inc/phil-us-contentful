@@ -1,30 +1,50 @@
-import {createStyles, Header, Container, Group, Collapse, Text, SimpleGrid, Divider, List} from '@mantine/core';
-import {useDisclosure} from '@mantine/hooks';
+import {
+	createStyles,
+	Header,
+	Container,
+	Group,
+	Collapse,
+	Text,
+	SimpleGrid,
+	Divider,
+	List,
+	Burger,
+	useMantineTheme,
+	Drawer,
+	Box,
+	Accordion,
+	Table,
+} from '@mantine/core';
+import {useDisclosure, useMediaQuery, useToggle} from '@mantine/hooks';
 import classNames from 'classnames';
 import {graphql, Link} from 'gatsby';
 import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
 import {StaticQuery} from 'gatsby';
 
-import './header.css';
 import type {ContentfulPage} from 'types/page';
 import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
 import type {Asset} from 'types/asset';
+import {IconChevronDown} from '@tabler/icons';
 
 const HEADER_HEIGHT = 90;
 
 const useStyles = createStyles((theme, _params, getRef) => ({
 	inner: {
-		padding: '0 100px',
+		padding: '0 16px',
 		height: HEADER_HEIGHT,
 		display: 'flex',
 		alignItems: 'center',
+
+		[theme.fn.largerThan('md')]: {
+			padding: '0 100px',
+		},
 	},
 
 	burger: {
-		[theme.fn.largerThan('sm')]: {
-			display: 'none',
+		[theme.fn.largerThan('md')]: {
+			display: 'none !important',
 		},
 	},
 
@@ -40,9 +60,52 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		width: '100vw',
 		background: '#00827E',
 	},
+
+	navbar: {
+		position: 'relative',
+		height: '90px',
+		width: '100vw',
+		background: '#fff',
+		borderRadius: '20px',
+		display: 'flex',
+		alignItems: 'center',
+		overflow: 'hidden',
+
+		ul: {
+			position: 'relative',
+			display: 'flex',
+
+			li: {
+				position: 'relative',
+				listStyleType: 'none',
+				height: '120px',
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				textDecoration: 'none',
+			},
+		},
+	},
+
+	indicator: {
+		position: 'absolute',
+		bottom: '-5px',
+		left: '25px',
+		width: '0px',
+		height: '0px',
+		borderLeft: '20px solid transparent',
+		borderRight: '20px solid transparent',
+		borderBottom: '20px solid #00827e',
+		transition: 'transform 0.5s',
+	},
+
 	navLinksWrapper: {
 		'&:last-child': {
 			marginRight: '0px',
+		},
+
+		[theme.fn.smallerThan('md')]: {
+			display: 'none !important',
 		},
 	},
 	navLink: {
@@ -70,6 +133,29 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 		fontFamily: 'Lato',
 		fontWeight: 400,
 	},
+
+	drawer: {
+		[theme.fn.largerThan('md')]: {
+			display: 'none',
+		},
+	},
+
+	drawerTitle: {
+		width: '100%',
+		margin: 0,
+	},
+
+	accordionItem: {},
+
+	accordionControl: {
+		paddingLeft: 0,
+		paddingRight: 0,
+	},
+
+	accordionContent: {
+		paddingLeft: 0,
+		paddingRight: 0,
+	},
 }));
 
 type CHeaderProps = {
@@ -81,6 +167,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	const [header] = allContentfulHeader.nodes;
 	const pages = header.navigationLinks;
 	const pathToImage = getImage(header.logo);
+
 	const {classes} = useStyles();
 
 	const [opened, {toggle, open}] = useDisclosure(false, {
@@ -88,6 +175,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			setTarget('');
 		},
 	});
+
+	const [isDrawer, toggleDrawer] = useToggle();
+	const theme = useMantineTheme();
+	const isBreak = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
 
 	const [target, setTarget] = useState<string>('');
 
@@ -111,7 +202,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		allLi.forEach((li, index) => {
 			li.addEventListener('click', e => {
 				e.preventDefault(); // Preventing from submitting
-				const indicator: HTMLElement = document.querySelector('.indicator');
+				const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
 				if (previousEl === li && navBar.querySelector('.active')) {
 					navBar.querySelector('.active').classList.remove('active');
 					indicator.style.transform = '';
@@ -141,67 +232,120 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
 			<Container className={classes.inner} fluid>
-				<Group position='apart' noWrap align='center' className={classNames('navbar')}>
+				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
 					<Link to='/'>
 						<Container m={0} p={0} size={125}>
 							<GatsbyImage image={pathToImage} alt='logo' />
 						</Container>
 					</Link>
-					<List listStyleType={'none'} className={classes.navLinksWrapper}>
-						{pages
-							.filter(page => page.title !== 'Home')
-							.map(page => (
-								<List.Item key={page.id} className={classes.navLink} onClick={onNavLinkClick}>
-									<Text>{page.title}</Text>
-								</List.Item>
-							))}
-						<List.Item className={classNames(classes.navLink)} onClick={onNavLinkClick}>
-							<Text>Contact</Text>
-						</List.Item>
-						<div className='indicator'></div>
-					</List>
+					{isBreak ? (
+						<Burger
+							opened={isDrawer}
+							onClick={() => {
+								toggleDrawer();
+							}}
+							className={classes.burger}
+						/>
+					) : (
+						<List className={classes.navLinksWrapper}>
+							{pages
+								.filter(page => page.title !== 'Home')
+								.map(page => (
+									<List.Item key={page.id} className={classes.navLink} onClick={onNavLinkClick}>
+										<Text>{page.title}</Text>
+									</List.Item>
+								))}
+							<List.Item className={classes.navLink} onClick={onNavLinkClick}>
+								<Text>Contact</Text>
+							</List.Item>
+							<div className={classes.indicator}></div>
+						</List>
+					)}
 				</Group>
-				<Collapse
-					in={opened}
-					className={classes.dropdown}
-					transitionDuration={150}
-					transitionTimingFunction='ease-out'
-					animateOpacity={false}
-				>
-					<Container className={classes.container} fluid>
-						<List listStyleType='none' size='xl'>
-							<SimpleGrid cols={5} px={98} py={78} spacing={32}>
-								{pages
-									.filter(page => page.title === target)
-									.map(page =>
-										page.sections
-											.filter(section => Boolean(section.header?.length))
-											.map((section, index) => (
-												<List.Item key={index}>
-													{index > 0 ? (
-														<Link
-															to={`/${slugify(page.title, {lower: true})}/#${slugify(section.header, {
-																lower: true,
-															})}`}
-															style={{textDecoration: 'none'}}
-														>
-															<Text className={classes.listHeading}>{section.header}</Text>
-														</Link>
-													) : (
-														<Link
-															to={navigateToPage(slugify(page.title, {lower: true}))}
-															style={{textDecoration: 'none'}}
-														>
-															<Text className={classes.listHeading}>{section.header}</Text>
-														</Link>
-													)}
-
-													<Divider />
-													<List listStyleType='none'>
-														{allContentfulResource.nodes.map(
-															({id, heading, relatesTo}) =>
-																section.id === relatesTo.id && (
-																	<List.Item key={id}>
+				{isBreak ? (
+					<Drawer
+						classNames={{title: classes.drawerTitle}}
+						opened={isDrawer}
+						onClose={() => {
+							toggleDrawer(false);
+						}}
+						withCloseButton={false}
+						title={
+							<Group position='apart' noWrap align='center'>
+								<Box>
+									<Link to='/'>
+										<Container m={0} p={0} size={125}>
+											<GatsbyImage image={pathToImage} alt='logo' />
+										</Container>
+									</Link>
+								</Box>
+								<Burger
+									opened={true}
+									onClick={() => {
+										toggleDrawer();
+									}}
+									className={classes.burger}
+								/>
+							</Group>
+						}
+						padding='xl'
+						size='full'
+						transition='fade'
+					>
+						<Accordion
+							classNames={{control: classes.accordionControl, content: classes.accordionContent}}
+							chevron={<IconChevronDown size={24} />}
+						>
+							{pages
+								.filter(page => page.title !== 'Home')
+								.map(page => (
+									<Accordion.Item value={page.title}>
+										<Accordion.Control>
+											<Text weight='bold' size={18}>
+												{page.title}
+											</Text>
+										</Accordion.Control>
+										<Accordion.Panel>
+											{page.sections
+												.filter(section => Boolean(section.header?.length))
+												.map((section, index) => (
+													<Table mb={16}>
+														<thead>
+															<tr>
+																{index > 0 ? (
+																	<th style={{paddingLeft: 0, paddingRight: 0}}>
+																		<Link
+																			to={`/${slugify(page.title, {lower: true})}/#${slugify(
+																				section.header,
+																				{
+																					lower: true,
+																				},
+																			)}`}
+																			style={{textDecoration: 'none'}}
+																		>
+																			<Text size={16} color='dark'>
+																				{section.header}
+																			</Text>
+																		</Link>
+																	</th>
+																) : (
+																	<th style={{paddingLeft: 0, paddingRight: 0}}>
+																		<Link
+																			to={navigateToPage(slugify(page.title, {lower: true}))}
+																			style={{textDecoration: 'none'}}
+																		>
+																			<Text size={16} color='dark'>
+																				{section.header}
+																			</Text>
+																		</Link>
+																	</th>
+																)}
+															</tr>
+														</thead>
+														<tbody>
+															{allContentfulResource.nodes.map(
+																({id, heading, relatesTo}) =>
+																	section.id === relatesTo.id && (
 																		<Link
 																			to={navigateToPage(
 																				`${slugify(page.title, {lower: true})}/${slugify(
@@ -213,19 +357,87 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																			)}
 																			style={{textDecoration: 'none'}}
 																		>
-																			<Text className={classes.listItems}>{heading}</Text>
+																			<Text my={16} color='dark'>
+																				{heading}
+																			</Text>
 																		</Link>
-																	</List.Item>
-																),
+																	),
+															)}
+														</tbody>
+													</Table>
+												))}
+										</Accordion.Panel>
+									</Accordion.Item>
+								))}
+						</Accordion>
+					</Drawer>
+				) : (
+					<Collapse
+						in={opened}
+						className={classes.dropdown}
+						transitionDuration={150}
+						transitionTimingFunction='ease-out'
+						animateOpacity={false}
+					>
+						<Container className={classes.container} fluid>
+							<List listStyleType='none' size='xl'>
+								<SimpleGrid cols={5} px={98} py={78} spacing={32}>
+									{pages
+										.filter(page => page.title === target)
+										.map(page =>
+											page.sections
+												.filter(section => Boolean(section.header?.length))
+												.map((section, index) => (
+													<List.Item key={index}>
+														{index > 0 ? (
+															<Link
+																to={`/${slugify(page.title, {lower: true})}/#${slugify(section.header, {
+																	lower: true,
+																})}`}
+																style={{textDecoration: 'none'}}
+															>
+																<Text className={classes.listHeading}>{section.header}</Text>
+															</Link>
+														) : (
+															<Link
+																to={navigateToPage(slugify(page.title, {lower: true}))}
+																style={{textDecoration: 'none'}}
+															>
+																<Text className={classes.listHeading}>{section.header}</Text>
+															</Link>
 														)}
-													</List>
-												</List.Item>
-											)),
-									)}
-							</SimpleGrid>
-						</List>
-					</Container>
-				</Collapse>
+
+														<Divider />
+														<List listStyleType='none'>
+															{allContentfulResource.nodes.map(
+																({id, heading, relatesTo}) =>
+																	section.id === relatesTo.id && (
+																		<List.Item key={id}>
+																			<Link
+																				to={navigateToPage(
+																					`${slugify(page.title, {lower: true})}/${slugify(
+																						relatesTo.header,
+																						{
+																							lower: true,
+																						},
+																					)}/${slugify(heading, {lower: true})}`,
+																				)}
+																				style={{textDecoration: 'none'}}
+																			>
+																				<Text className={classes.listItems}>{heading}</Text>
+																			</Link>
+																		</List.Item>
+																	),
+															)}
+														</List>
+													</List.Item>
+												)),
+										)}
+								</SimpleGrid>
+							</List>
+						</Container>
+					</Collapse>
+				)}
 			</Container>
 		</Header>
 	);

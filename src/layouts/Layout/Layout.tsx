@@ -18,7 +18,7 @@ const useStyles = createStyles(theme => ({
 		padding: 100,
 
 		// Dynamic media queries, define breakpoints in theme, use anywhere
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
 			padding: '0 16px',
 		},
 	},
