@@ -38,13 +38,13 @@ type CHeaderProps = {
 const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource}) => {
 	const useStyles = createStyles((theme, _params, getRef) => ({
 		inner: {
-			padding: '0 16px',
+			padding: '0 100px',
 			height: HEADER_HEIGHT,
 			display: 'flex',
 			alignItems: 'center',
 
-			[theme.fn.largerThan('md')]: {
-				padding: '0 100px',
+			[theme.fn.smallerThan('sm')]: {
+				padding: '0 16px',
 			},
 		},
 
@@ -76,10 +76,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			alignItems: 'center',
 			overflow: 'hidden',
 
-			[theme.fn.largerThan('sm') && theme.fn.smallerThan('md')]: {
-				padding: '0 100px',
-			},
-
 			ul: {
 				position: 'relative',
 				display: 'flex',
@@ -109,20 +105,22 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		},
 
 		navLinksWrapper: {
-			'&:last-child': {
-				marginRight: '0px',
-			},
-
 			[theme.fn.smallerThan('md')]: {
 				display: 'none !important',
 			},
 		},
+
 		navLink: {
 			position: 'relative',
-			marginRight: '85px',
+			marginRight: '5.313rem',
 			cursor: 'pointer',
 			textDecoration: 'none',
+
+			'&:last-child': {
+				marginRight: '0px',
+			},
 		},
+
 		listHeading: {
 			color: 'white',
 			fontSize: '16px',
@@ -153,8 +151,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			width: '100%',
 			margin: 0,
 		},
-
-		accordionItem: {},
 
 		accordionControl: {
 			paddingLeft: 0,
@@ -238,7 +234,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
 					<Link to='/'>
-						<Container m={0} p={0} size={125}>
+						<Container m={0} p={0} size={125} style={{minWidth: 125}}>
 							<GatsbyImage image={pathToImage} alt='logo' />
 						</Container>
 					</Link>
@@ -252,6 +248,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						/>
 					) : (
 						<List className={classes.navLinksWrapper}>
+							<div className={classes.indicator}></div>
 							{pages
 								.filter(page => page.title !== 'Home')
 								.map(page => (
@@ -262,7 +259,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 							<List.Item className={classes.navLink} onClick={onNavLinkClick}>
 								<Text>Contact</Text>
 							</List.Item>
-							<div className={classes.indicator}></div>
 						</List>
 					)}
 				</Group>
