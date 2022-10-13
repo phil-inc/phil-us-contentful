@@ -23,12 +23,14 @@ export const Featured: FC<FeaturedProps> = ({
 	resourceBackground = '#F4F4F4',
 	pr = 0,
 }) => {
-	const useStyles = createStyles(theme => ({
+	const useStyles = createStyles(() => ({
 		card: {
 			position: 'relative',
 			overflow: 'hidden',
 			paddingLeft: 10,
 			background: resourceBackground,
+			height: '100%',
+			display: 'flex',
 
 			'&::before': {
 				content: '""',
@@ -48,24 +50,26 @@ export const Featured: FC<FeaturedProps> = ({
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
-			<Grid align={'center'} gutter={'sm'}>
-				<Grid.Col lg={6} sm={12} md={12} py={0}>
-					<ImageContainer fluid>
-						<GatsbyImage image={pathToImage} alt={title} />
-					</ImageContainer>
-				</Grid.Col>
-				<Grid.Col lg={6} sm={12} md={12}>
-					<Container pr={pr}>
-						<Title order={3} mt='md' lineClamp={3}>
-							{title}
-						</Title>
-						{!noDivider && <Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />}
-						<Text size={18} mt='sm' mb={11}>
-							{children}
-						</Text>
-					</Container>
-				</Grid.Col>
-			</Grid>
+			<Center>
+				<Grid align={'center'} gutter={'sm'}>
+					<Grid.Col lg={6} sm={12} md={12} py={0}>
+						<ImageContainer fluid>
+							<GatsbyImage image={pathToImage} alt={title} />
+						</ImageContainer>
+					</Grid.Col>
+					<Grid.Col lg={6} sm={12} md={12}>
+						<Container pr={pr}>
+							<Title order={3} mt='md'>
+								{title}
+							</Title>
+							{!noDivider && <Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />}
+							<Text size={18} mt='sm' mb={12}>
+								{children}
+							</Text>
+						</Container>
+					</Grid.Col>
+				</Grid>
+			</Center>
 		</Paper>
 	);
 };
