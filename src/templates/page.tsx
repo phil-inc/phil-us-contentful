@@ -56,6 +56,7 @@ export const pageQuery = graphql`
 			sections {
 				... on ContentfulReferencedSection {
 					id
+					isHidden
 					header
 					sectionType
 					references {
@@ -81,6 +82,7 @@ export const pageQuery = graphql`
 				}
 				... on ContentfulSection {
 					id
+					isHidden
 					body {
 						raw
 						references {

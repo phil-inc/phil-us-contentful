@@ -16,6 +16,7 @@ export type ISection = {
 	linkTo: string;
 	asset: Asset;
 	subNavigationSection?: TResource[];
+	isHidden: boolean;
 };
 
 type ReferenceType =
@@ -40,10 +41,12 @@ type ReferenceType =
 
 export type IReferencedSection = {
 	id: string;
+	showHeader: boolean;
 	referenceType: ReferenceType;
 	header: string;
 	references: TResource[];
 	buttonText?: string;
 	linkTo?: string;
 	sectionType: SectionType;
+	isHidden: boolean;
 };
