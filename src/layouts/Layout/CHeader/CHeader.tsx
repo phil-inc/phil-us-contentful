@@ -14,6 +14,7 @@ import {
 	Box,
 	Accordion,
 	Table,
+	Grid,
 } from '@mantine/core';
 import {useDisclosure, useMediaQuery, useToggle} from '@mantine/hooks';
 import classNames from 'classnames';
@@ -54,7 +55,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			},
 		},
 
-		dropdown: {
+		collapse: {
 			position: 'absolute',
 			top: 90,
 			left: 0,
@@ -65,6 +66,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		container: {
 			width: '100vw',
 			background: '#00827E',
+			marginTop: 8,
 		},
 
 		navbar: {
@@ -192,7 +194,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	React.useEffect(() => {
 		const navBar = document.querySelector('.navbar');
-		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
 		const allLi = navBar.querySelectorAll('li');
 		const INDICATOR_SIZE = 20;
 		const INITIAL_OFFSET = 25;
@@ -238,32 +239,27 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 							<GatsbyImage image={pathToImage} alt='logo' />
 						</Container>
 					</Link>
-					{isBreak ? (
-						<Burger
-							opened={isDrawer}
-							onClick={() => {
-								toggleDrawer();
-							}}
-							className={classes.burger}
-						/>
-					) : (
-						<List className={classes.navLinksWrapper}>
-							<div className={classes.indicator}></div>
-							{pages
-								.filter(page => page.title !== 'Home')
-								.map(page => (
-									<List.Item key={page.id + page.title} className={classes.navLink} onClick={onNavLinkClick}>
-										<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
-									</List.Item>
-								))}
-							<List.Item className={classes.navLink} onClick={onNavLinkClick}>
-								<Text>Contact</Text>
-							</List.Item>
-						</List>
-					)}
+					<Burger
+						opened={isDrawer}
+						onClick={() => {
+							toggleDrawer();
+						}}
+						className={classes.burger}
+					/>
+					<List className={classes.navLinksWrapper}>
+						<div className={classes.indicator}></div>
+						{pages
+							.filter(page => page.title !== 'Home')
+							.map(page => (
+								<List.Item key={page.id + page.title} className={classes.navLink} onClick={onNavLinkClick}>
+									<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
+								</List.Item>
+							))}
+					</List>
 				</Group>
 				{isBreak ? (
 					<Drawer
+						className={classes.drawer}
 						classNames={{title: classes.drawerTitle}}
 						opened={isDrawer}
 						onClose={() => {
@@ -374,66 +370,71 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 				) : (
 					<Collapse
 						in={opened}
-						className={classes.dropdown}
+						className={classes.collapse}
 						transitionDuration={150}
 						transitionTimingFunction='ease-out'
 						animateOpacity={false}
 					>
 						<Container className={classes.container} fluid>
-							<List listStyleType='none' size='xl'>
-								<SimpleGrid cols={5} px={98} py={78} spacing={32}>
+							<List listStyleType='none' size='xl' styles={{itemWrapper: {width: '100%'}}}>
+								<Grid px={98} py={78} columns={100}>
 									{pages
 										.filter(page => page.title === target)
 										.map(page =>
 											page.sections
 												.filter(section => Boolean(section.header?.length))
-												.map((section, index) => (
-													<List.Item key={index}>
-														{index > 0 ? (
-															<Link
-																to={`/${slugify(page.title, {lower: true})}/#${slugify(section.header, {
-																	lower: true,
-																})}`}
-																style={{textDecoration: 'none'}}
-															>
-																<Text className={classes.listHeading}>{section.header}</Text>
-															</Link>
-														) : (
-															<Link
-																to={navigateToPage(slugify(page.title, {lower: true}))}
-																style={{textDecoration: 'none'}}
-															>
-																<Text className={classes.listHeading}>{section.header}</Text>
-															</Link>
-														)}
-
-														<Divider />
-														<List listStyleType='none'>
-															{allContentfulResource.nodes.map(
-																({id, heading, relatesTo}) =>
-																	section.id === relatesTo.id && (
-																		<List.Item key={id}>
-																			<Link
-																				to={navigateToPage(
-																					`${slugify(page.title, {lower: true})}/${slugify(
-																						relatesTo.header,
-																						{
-																							lower: true,
-																						},
-																					)}/${slugify(heading, {lower: true})}`,
-																				)}
-																				style={{textDecoration: 'none'}}
-																			>
-																				<Text className={classes.listItems}>{heading}</Text>
-																			</Link>
-																		</List.Item>
-																	),
+												.map((section, index, array) => (
+													<Grid.Col span={Math.floor(100 / array.length)}>
+														<List.Item key={index}>
+															{index > 0 ? (
+																<Link
+																	to={`/${slugify(page.title, {lower: true})}/#${slugify(
+																		section.header,
+																		{
+																			lower: true,
+																		},
+																	)}`}
+																	style={{textDecoration: 'none'}}
+																>
+																	<Text className={classes.listHeading}>{section.header}</Text>
+																</Link>
+															) : (
+																<Link
+																	to={navigateToPage(slugify(page.title, {lower: true}))}
+																	style={{textDecoration: 'none'}}
+																>
+																	<Text className={classes.listHeading}>{section.header}</Text>
+																</Link>
 															)}
-														</List>
-													</List.Item>
+
+															<Divider />
+															<List listStyleType='none'>
+																{allContentfulResource.nodes.map(
+																	({id, heading, relatesTo}) =>
+																		section.id === relatesTo.id && (
+																			<List.Item key={id}>
+																				<Link
+																					to={navigateToPage(
+																						`${slugify(page.title, {lower: true})}/${slugify(
+																							relatesTo.header,
+																							{
+																								lower: true,
+																							},
+																						)}/${slugify(heading, {lower: true})}`,
+																					)}
+																					style={{textDecoration: 'none'}}
+																				>
+																					<Text className={classes.listItems}>{heading}</Text>
+																				</Link>
+																			</List.Item>
+																		),
+																)}
+															</List>
+														</List.Item>
+													</Grid.Col>
 												)),
 										)}
-								</SimpleGrid>
+								</Grid>
 							</List>
 						</Container>
 					</Collapse>

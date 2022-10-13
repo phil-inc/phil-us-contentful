@@ -65,7 +65,7 @@ export function Layout({children}: LayoutProps) {
 						transition: 'outline 0.2s ease-out',
 
 						'&:hover': {
-							backgroundColor: params.variant === 'filled' ? theme.white : undefined,
+							backgroundColor: params.variant === 'filled' ? 'transparent' : undefined,
 							color: theme.colors.primary[0],
 							fontWeight: 900,
 							outline: `3px solid ${theme.colors.primary[0]}`,
