@@ -179,9 +179,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		}
 	};
 
+	console.log(section);
+
 	return (
 		<Expanded background={background} py={section.referenceType === 'Banner' ? 0 : 116}>
-			{Boolean(section.header?.length) && (
+			{Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
 				<Group position='center' mb={60}>
 					<Title order={2} color={textColor}>
 						{section.header}

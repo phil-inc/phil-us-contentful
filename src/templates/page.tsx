@@ -28,21 +28,23 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
-			{sections.map(section => {
-				if (section.sectionType === 'Basic Section') {
+			{sections
+				.filter(section => !section.isHidden)
+				.map(section => {
+					if (section.sectionType === 'Basic Section') {
+						return (
+							<div key={section.id} id={slugify(section.header, {lower: true})}>
+								<Section section={section} index={basicSectionCount++} />
+							</div>
+						);
+					}
+
 					return (
-						<div key={section.id} id={slugify(section.header, {lower: true})}>
-							<Section section={section} index={basicSectionCount++} />
+						<div key={section.id} id={section.header ? slugify(section.header, {lower: true}) : '#'}>
+							<Section section={section} />
 						</div>
 					);
-				}
-
-				return (
-					<div key={section.id} id={section.header ? slugify(section.header, {lower: true}) : '#'}>
-						<Section section={section} />
-					</div>
-				);
-			})}
+				})}
 		</Layout>
 	);
 };
@@ -57,6 +59,7 @@ export const pageQuery = graphql`
 				... on ContentfulReferencedSection {
 					id
 					isHidden
+					hideHeader
 					header
 					sectionType
 					references {

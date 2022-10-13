@@ -41,7 +41,7 @@ type ReferenceType =
 
 export type IReferencedSection = {
 	id: string;
-	showHeader: boolean;
+	hideHeader: boolean;
 	referenceType: ReferenceType;
 	header: string;
 	references: TResource[];
