@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {useHotkeys, useMediaQuery} from '@mantine/hooks';
-import type {ColorScheme, MantineTheme, MantineThemeOverride} from '@mantine/core';
+import type {ButtonStylesParams, ColorScheme, MantineTheme, MantineThemeOverride} from '@mantine/core';
 import {Box} from '@mantine/core';
 import {createStyles} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
 import {CHeader} from './CHeader/CHeader';
+import {isIndex} from 'hooks/isIndex';
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
@@ -29,20 +30,6 @@ type LayoutProps = {
 
 export function Layout({children}: LayoutProps) {
 	const {classes, theme} = useStyles();
-	const isMobile = useMediaQuery(`(min-width: ${theme.breakpoints.sm}px)`);
-	const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
-	const toggleColorScheme = (value?: ColorScheme) => {
-		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
-	};
-
-	useHotkeys([
-		[
-			'mod+J',
-			() => {
-				toggleColorScheme();
-			},
-		],
-	]);
 
 	const themeOverride: MantineThemeOverride = {
 		breakpoints: {
@@ -55,7 +42,7 @@ export function Layout({children}: LayoutProps) {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: 'calc(3rem + 1.927vw)',
+					fontSize: isIndex() ? 'calc(3rem + 1.927vw)' : 'calc(2rem + 1.197vw)',
 				},
 				h2: {
 					fontSize: 'calc(2rem + 1.197vw)',
@@ -68,36 +55,45 @@ export function Layout({children}: LayoutProps) {
 		},
 		fontFamily: 'Lato',
 
-		other: {
-			globalStyles: {
-				body: {
-					color: theme.colors.primary,
-				},
+		components: {
+			Button: {
+				styles: (theme, params: ButtonStylesParams) => ({
+					root: {
+						borderRadius: '0',
+						padding: '10px 20px',
+						backgroundColor: params.variant === 'filled' ? theme.colors.primary[0] : undefined,
+						transition: 'outline 0.2s ease-out',
+
+						'&:hover': {
+							backgroundColor: params.variant === 'filled' ? theme.white : undefined,
+							color: theme.colors.primary[0],
+							fontWeight: 900,
+							outline: `3px solid ${theme.colors.primary[0]}`,
+						},
+					},
+				}),
 			},
 		},
 	};
 
 	return (
-		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-			<MantineProvider
-				theme={{
-					globalStyles: (theme: MantineTheme) => ({
-						body: {
-							color: theme.colors.primary[0],
-						},
-					}),
-					...themeOverride,
-					colorScheme,
-				}}
-				withGlobalStyles
-				withNormalizeCSS
-			>
-				<Container fluid className={classes.wrapper}>
-					<CHeader />
-					<Box>{children}</Box>
-					{/* <CFooter /> */}
-				</Container>
-			</MantineProvider>
-		</ColorSchemeProvider>
+		<MantineProvider
+			theme={{
+				globalStyles: (theme: MantineTheme) => ({
+					body: {
+						color: theme.colors.primary[0],
+					},
+				}),
+				...themeOverride,
+			}}
+			withGlobalStyles
+			withNormalizeCSS
+		>
+			<Container fluid className={classes.wrapper}>
+				<CHeader />
+				<Box>{children}</Box>
+				{/* <CFooter /> */}
+			</Container>
+		</MantineProvider>
 	);
 }
