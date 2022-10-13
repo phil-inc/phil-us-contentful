@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
-import {useHotkeys, useMediaQuery, useViewportSize} from '@mantine/hooks';
-import type {ColorScheme, MantineThemeOverride} from '@mantine/core';
+import {useHotkeys, useMediaQuery} from '@mantine/hooks';
+import type {ColorScheme, MantineTheme, MantineThemeOverride} from '@mantine/core';
 import {Box} from '@mantine/core';
 import {createStyles} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
 import {CHeader} from './CHeader/CHeader';
-import {CFooter} from './CFooter/CFooter';
-import {isIndex} from 'hooks/isIndex';
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
@@ -30,7 +28,8 @@ type LayoutProps = {
 };
 
 export function Layout({children}: LayoutProps) {
-	const {classes} = useStyles();
+	const {classes, theme} = useStyles();
+	const isMobile = useMediaQuery(`(min-width: ${theme.breakpoints.sm}px)`);
 	const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
 	const toggleColorScheme = (value?: ColorScheme) => {
 		setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
@@ -45,34 +44,54 @@ export function Layout({children}: LayoutProps) {
 		],
 	]);
 
-	const theme: MantineThemeOverride = {
+	const themeOverride: MantineThemeOverride = {
 		breakpoints: {
 			md: 1275,
 		},
 		colors: {
-			brand: ['#00201F'],
+			primary: ['#00201F', '#031A19', '#051515', '#061211', '#060F0F', '#060D0C', '#060B0B'],
 		},
 		headings: {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: isIndex() ? '5.313rem' : '3.438rem',
+					fontSize: 'calc(3rem + 1.927vw)',
 				},
 				h2: {
-					fontSize: '3.438rem',
+					fontSize: 'calc(2rem + 1.197vw)',
 				},
 				h3: {
-					fontSize: '2.188rem',
+					fontSize: 'calc(1rem + 0.989vw)',
 				},
 			},
 			fontFamily: 'Raleway',
 		},
 		fontFamily: 'Lato',
+
+		other: {
+			globalStyles: {
+				body: {
+					color: theme.colors.primary,
+				},
+			},
+		},
 	};
 
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-			<MantineProvider theme={{...theme, colorScheme}} withGlobalStyles withNormalizeCSS>
+			<MantineProvider
+				theme={{
+					globalStyles: (theme: MantineTheme) => ({
+						body: {
+							color: theme.colors.primary[0],
+						},
+					}),
+					...themeOverride,
+					colorScheme,
+				}}
+				withGlobalStyles
+				withNormalizeCSS
+			>
 				<Container fluid className={classes.wrapper}>
 					<CHeader />
 					<Box>{children}</Box>
