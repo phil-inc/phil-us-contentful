@@ -1,10 +1,11 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Group, Grid} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Group, Grid, Anchor} from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
 import React from 'react';
 import type {TResource} from 'types/resource';
+import {getLink} from 'utils/getLink';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -33,11 +34,13 @@ type BannerProps = {
 
 /**
  * Banner is a Component to render a banner
- * @param props - {resource} Banner Resource with heading, body, buttonText, linkTo
+ * @param props - {resource} Banner Resource with heading, body, buttonText, externalLink
  * @returns Banner Component
  */
-export const Banner: FC<BannerProps> = ({resource: {heading, body, buttonText, linkTo}}) => {
+export const Banner: FC<BannerProps> = ({resource}) => {
 	const {classes} = useStyles();
+	const {heading, body, buttonText, externalLink} = resource;
+	const {link, isExternal} = getLink(resource);
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
@@ -53,11 +56,19 @@ export const Banner: FC<BannerProps> = ({resource: {heading, body, buttonText, l
 						</Text>
 					</Container>
 				</Grid.Col>
-				{Boolean(buttonText?.length) && Boolean(linkTo?.length) && (
+				{Boolean(buttonText?.length) && Boolean(externalLink?.length) && (
 					<Grid.Col lg={2} sm={12}>
-						<Link to={linkTo}>
-							<Button color={'dark'}>{buttonText}</Button>
-						</Link>
+						<Group>
+							{isExternal ? (
+								<Anchor href={link} target='_blank'>
+									<Button color={'dark'}>{buttonText}</Button>
+								</Anchor>
+							) : (
+								<Link to={link}>
+									<Button color={'dark'}>{buttonText}</Button>
+								</Link>
+							)}
+						</Group>
 					</Grid.Col>
 				)}
 			</Grid>

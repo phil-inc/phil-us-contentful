@@ -5,6 +5,7 @@ import Section from 'components/section/Section';
 import {graphql} from 'gatsby';
 import slugify from 'slugify';
 import {SEO} from 'layouts/SEO/SEO';
+import {useInternalPaths} from 'hooks/useInternalPaths';
 
 type HelmetProps = {
 	pageContext: {title: string};
@@ -30,21 +31,13 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 		<Layout>
 			{sections
 				.filter(section => !section.isHidden)
-				.map(section => {
-					if (section.sectionType === 'Basic Section') {
-						return (
-							<div key={section.id} id={slugify(section.header, {lower: true})}>
-								<Section section={section} index={basicSectionCount++} />
-							</div>
-						);
-					}
-
-					return (
-						<div key={section.id} id={section.header ? slugify(section.header, {lower: true}) : '#'}>
-							<Section section={section} />
-						</div>
-					);
-				})}
+				.map(section => (
+					<Section
+						key={section.id}
+						section={section}
+						index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
+					/>
+				))}
 		</Layout>
 	);
 };
@@ -63,25 +56,137 @@ export const pageQuery = graphql`
 					header
 					sectionType
 					references {
-						linkTo
+						externalLink
+						internalLink {
+							... on ContentfulPage {
+								id
+								title
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulReferencedSection {
+								id
+								page {
+									title
+								}
+								header
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulSection {
+								id
+								page {
+									title
+								}
+								header
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulResource {
+								id
+								heading
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+						}
 						heading
 						subHeading {
 							subHeading
 						}
 						buttonText
-						asset {
-							gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
-							id
-						}
 						body {
 							raw
 						}
 						author
 						designation
+						asset {
+							gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
+							id
+						}
 					}
 					referenceType
-					linkTo
+					externalLink
 					buttonText
+					internalLink {
+						... on ContentfulPage {
+							id
+							title
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulReferencedSection {
+							id
+							page {
+								title
+							}
+							header
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulSection {
+							id
+							page {
+								title
+							}
+							header
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulResource {
+							id
+							heading
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+					}
 				}
 				... on ContentfulSection {
 					id
@@ -102,7 +207,7 @@ export const pageQuery = graphql`
 					buttonText
 					header
 					sectionType
-					linkTo
+					externalLink
 					sys {
 						contentType {
 							sys {
@@ -112,6 +217,62 @@ export const pageQuery = graphql`
 					}
 					subHeader {
 						subHeader
+					}
+					internalLink {
+						... on ContentfulPage {
+							id
+							title
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulReferencedSection {
+							id
+							page {
+								title
+							}
+							header
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulSection {
+							id
+							page {
+								title
+							}
+							header
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulResource {
+							id
+							heading
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
 					}
 				}
 			}

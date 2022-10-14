@@ -1,4 +1,4 @@
-import {Grid, Title, Button, Group, TextInput, Container, Box} from '@mantine/core';
+import {Grid, Title, Button, Group, TextInput, Container, Box, Anchor} from '@mantine/core';
 import {IconSearch} from '@tabler/icons';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
@@ -18,6 +18,8 @@ import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React, {useState} from 'react';
 import type {TResource} from 'types/resource';
 import type {IReferencedSection} from 'types/section';
+import {getLink} from 'utils/getLink';
+import slugify from 'slugify';
 
 type ReferencedSectionProps = {
 	section: IReferencedSection;
@@ -31,6 +33,7 @@ type ReferencedSectionProps = {
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
+	const {link, isExternal} = getLink(section);
 
 	// Get colors for resources based on index
 	const getColor = (index: number) => {
@@ -99,7 +102,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						key={resource.id}
 						color={getColor(index)}
 						title={resource.heading}
-						link={resource.linkTo}
+						link={getLink(resource)}
 						buttonText={resource.buttonText}
 						image={resource.asset}
 					>
@@ -124,16 +127,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Upcoming Events':
 			case 'White Paper':
 			case 'Case Study':
-				return (
-					<ResourceCard
-						sectionHeader={sectionHeader}
-						title={resource.heading}
-						asset={resource.asset}
-						linkTo={resource.linkTo}
-					>
-						{renderRichText(resource.body)}
-					</ResourceCard>
-				);
+				return <ResourceCard sectionHeader={sectionHeader} resource={resource} />;
 
 			case 'Featured Resource':
 			case 'Info Card':
@@ -179,10 +173,12 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		}
 	};
 
-	console.log(section);
-
 	return (
-		<Expanded background={background} py={section.referenceType === 'Banner' ? 0 : 116}>
+		<Expanded
+			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
+			background={background}
+			py={section.referenceType === 'Banner' ? 0 : 116}
+		>
 			{Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
 				<Group position='center' mb={60}>
 					<Title order={2} color={textColor}>
@@ -227,11 +223,17 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					))}
 				</Grid>
 			)}
-			{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
+			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
 				<Group position='center'>
-					<Link to={section.linkTo}>
-						<Button color={'dark'}>{section.buttonText}</Button>
-					</Link>
+					{isExternal ? (
+						<Anchor href={link} target='_blank'>
+							<Button color={'dark'}>{section.buttonText}</Button>
+						</Anchor>
+					) : (
+						<Link to={link}>
+							<Button color={'dark'}>{section.buttonText}</Button>
+						</Link>
+					)}
 				</Group>
 			)}
 		</Expanded>

@@ -1,9 +1,10 @@
-import {Card, Group, Divider, Button, Text, Image, createStyles, Stack, Box} from '@mantine/core';
+import {Card, Group, Divider, Button, Text, Image, createStyles, Stack, Box, Anchor} from '@mantine/core';
 import {Link} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import type {TResource} from 'types/resource';
+import {getLink} from 'utils/getLink';
 
 const useStyles = createStyles((theme, _params, getRef) => ({
 	card: {
@@ -19,13 +20,13 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }));
 
 type ProfileProps = {
-	resource: Pick<TResource, 'heading' | 'id' | 'body' | 'buttonText' | 'linkTo' | 'asset'>;
+	resource: Pick<TResource, 'heading' | 'id' | 'body' | 'buttonText' | 'internalLink' | 'externalLink' | 'asset'>;
 };
 
 const Profile: React.FC<ProfileProps> = ({resource}) => {
 	const {classes} = useStyles();
 	const pathToImage = getImage(resource.asset);
-
+	const {link, isExternal} = getLink(resource as TResource);
 	return (
 		<Card shadow='none' p='lg' radius={0} className={classes.card}>
 			<Card.Section>
@@ -45,9 +46,17 @@ const Profile: React.FC<ProfileProps> = ({resource}) => {
 			</Text>
 
 			{Boolean(resource.buttonText?.length) && (
-				<Link to={resource.linkTo}>
-					<Button color={'dark'}>{resource.buttonText}</Button>
-				</Link>
+				<Group>
+					{isExternal ? (
+						<Anchor href={link} target='_blank'>
+							<Button color={'dark'}>{resource.buttonText}</Button>
+						</Anchor>
+					) : (
+						<Link to={link}>
+							<Button color={'dark'}>{resource.buttonText}</Button>
+						</Link>
+					)}
+				</Group>
 			)}
 		</Card>
 	);

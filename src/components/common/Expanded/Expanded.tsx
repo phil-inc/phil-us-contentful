@@ -3,6 +3,7 @@ import {Container, createStyles} from '@mantine/core';
 import classNames from 'classnames';
 
 type ExpandedProps = {
+	id: string;
 	children: React.ReactNode;
 	background?: string;
 	minHeight?: number | string;
@@ -16,6 +17,7 @@ type ExpandedProps = {
  * @returns A section component with a expanded container
  */
 const Expanded: React.FC<ExpandedProps> = ({
+	id,
 	children,
 	background = '#FFFFFF',
 	minHeight = '100%',
@@ -39,7 +41,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container fluid className={classes.container} py={py}>
+		<Container id={id} fluid className={classes.container} py={py}>
 			{children}
 		</Container>
 	);

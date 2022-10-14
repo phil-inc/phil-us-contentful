@@ -1,10 +1,24 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Box, Stack} from '@mantine/core';
+import {
+	Paper,
+	Container,
+	Center,
+	Title,
+	Divider,
+	Button,
+	Text,
+	createStyles,
+	Box,
+	Stack,
+	Anchor,
+	Group,
+} from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
 import type {Asset} from 'types/asset';
+import type {TLink} from 'types/resource';
 import ImageContainer from './Container/ImageContainer';
 
 const useStyles = createStyles(theme => ({
@@ -55,12 +69,13 @@ type ArticleProps = {
 	title?: string;
 	children?: React.ReactNode;
 	image?: Asset;
-	link?: string;
+	link?: TLink;
 	buttonText?: string;
 };
 
 export const Article: FC<ArticleProps> = ({color, title, image, children, link, buttonText}) => {
 	const {classes} = useStyles();
+	const {link: href, isExternal} = link;
 
 	const getColorStyle = () => {
 		if (color === 'blue') {
@@ -94,11 +109,17 @@ export const Article: FC<ArticleProps> = ({color, title, image, children, link, 
 						{children}
 					</Text>
 				</Box>
-				{Boolean(buttonText?.length) && (
-					<Link to={link}>
-						<Button color={'dark'}>{buttonText}</Button>
-					</Link>
-				)}
+				<Group position='center'>
+					{isExternal ? (
+						<Anchor href={href} target='_blank'>
+							<Button color={'dark'}>{buttonText}</Button>
+						</Anchor>
+					) : (
+						<Link to={href}>
+							<Button color={'dark'}>{buttonText}</Button>
+						</Link>
+					)}
+				</Group>
 			</Stack>
 		</Paper>
 	);

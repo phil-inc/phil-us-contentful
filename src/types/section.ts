@@ -13,7 +13,21 @@ export type ISection = {
 	subHeader?: {subHeader: string};
 	body: BodyType;
 	buttonText: string;
-	linkTo: string;
+	internalLink: {
+		id: string;
+		page?: Array<{title: string}>;
+		header?: string;
+		heading?: string;
+		title?: string;
+		sys: {
+			contentType: {
+				sys: {
+					id: string;
+				};
+			};
+		};
+	};
+	externalLink: string;
 	asset: Asset;
 	subNavigationSection?: TResource[];
 	isHidden: boolean;
@@ -46,7 +60,21 @@ export type IReferencedSection = {
 	header: string;
 	references: TResource[];
 	buttonText?: string;
-	linkTo?: string;
+	internalLink: {
+		id: string;
+		page?: Array<{title: string}>;
+		header?: string;
+		heading?: string;
+		title?: string;
+		sys: {
+			contentType: {
+				sys: {
+					id: string;
+				};
+			};
+		};
+	};
+	externalLink?: string;
 	sectionType: SectionType;
 	isHidden: boolean;
 };

@@ -1,4 +1,4 @@
-import {Grid, Title, Button, Text, createStyles, AspectRatio, Container} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles, AspectRatio, Container, Anchor, Group} from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -7,6 +7,9 @@ import {Link} from 'gatsby';
 import type {ISection} from 'types/section';
 import {BLOCKS} from '@contentful/rich-text-types';
 import {useMediaQuery} from '@mantine/hooks';
+import slugify from 'slugify';
+import {useInternalPaths} from 'hooks/useInternalPaths';
+import {getLink} from 'utils/getLink';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -43,7 +46,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	const {classes} = useStyles();
 	const isMobile = useMediaQuery('(max-width: 576px)');
-
+	const {link, isExternal} = getLink(section);
 	const pathToImage = getImage(section.asset);
 
 	const richTextImages = {};
@@ -72,7 +75,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
 	return (
-		<Container fluid className={classes.container}>
+		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container}>
 			<Grid gutter='xl' align='center' pb={130} pt={isHeroSection || isMobile ? 0 : 100}>
 				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
 					<Title order={titleOrdering}>{section.header}</Title>
@@ -84,10 +87,18 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 					<Text size={18} className={classes.body}>
 						{renderRichText(section.body, options)}
 					</Text>
-					{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
-						<Link to={section.linkTo}>
-							<Button color={'dark'}>{section.buttonText}</Button>
-						</Link>
+					{Boolean(section.buttonText?.length) && (
+						<Group>
+							{isExternal ? (
+								<Anchor href={link} target='_blank'>
+									<Button>{section.buttonText}</Button>
+								</Anchor>
+							) : (
+								<Link to={link}>
+									<Button>{section.buttonText}</Button>
+								</Link>
+							)}
+						</Group>
 					)}
 				</Grid.Col>
 				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>

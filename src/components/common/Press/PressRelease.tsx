@@ -38,7 +38,7 @@ const useStyles = createStyles(theme => ({
 }));
 
 type PressReleaseProps = {
-	resource: Pick<TResource, 'asset' | 'buttonText' | 'linkTo' | 'heading' | 'createdAt'>;
+	resource: Pick<TResource, 'asset' | 'buttonText' | 'externalLink' | 'heading' | 'createdAt'>;
 };
 
 export const PressRelease: FC<PressReleaseProps> = ({resource}) => {
