@@ -1,4 +1,4 @@
-import {Grid, Title, Button, Text, createStyles, AspectRatio, Container} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles, AspectRatio, Container, Anchor, Group} from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -46,7 +46,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	const {classes} = useStyles();
 	const isMobile = useMediaQuery('(max-width: 576px)');
-
+	const {link, isExternal} = getLink(section);
 	const pathToImage = getImage(section.asset);
 
 	const richTextImages = {};
@@ -88,9 +88,17 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 						{renderRichText(section.body, options)}
 					</Text>
 					{Boolean(section.buttonText?.length) && (
-						<Link to={getLink(section)}>
-							<Button color={'dark'}>{section.buttonText}</Button>
-						</Link>
+						<Group>
+							{isExternal ? (
+								<Anchor href={link} target='_blank'>
+									<Button>{section.buttonText}</Button>
+								</Anchor>
+							) : (
+								<Link to={link}>
+									<Button>{section.buttonText}</Button>
+								</Link>
+							)}
+						</Group>
 					)}
 				</Grid.Col>
 				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>

@@ -1,4 +1,4 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Group, Grid} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Group, Grid, Anchor} from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -40,6 +40,7 @@ type BannerProps = {
 export const Banner: FC<BannerProps> = ({resource}) => {
 	const {classes} = useStyles();
 	const {heading, body, buttonText, externalLink} = resource;
+	const {link, isExternal} = getLink(resource);
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
@@ -57,9 +58,17 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 				</Grid.Col>
 				{Boolean(buttonText?.length) && Boolean(externalLink?.length) && (
 					<Grid.Col lg={2} sm={12}>
-						<Link to={getLink(resource)}>
-							<Button color={'dark'}>{buttonText}</Button>
-						</Link>
+						<Group>
+							{isExternal ? (
+								<Anchor href={link} target='_blank'>
+									<Button color={'dark'}>{buttonText}</Button>
+								</Anchor>
+							) : (
+								<Link to={link}>
+									<Button color={'dark'}>{buttonText}</Button>
+								</Link>
+							)}
+						</Group>
 					</Grid.Col>
 				)}
 			</Grid>

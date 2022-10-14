@@ -1,6 +1,11 @@
 import type {Asset} from './asset';
 import type {BodyType} from './section';
 
+export type TLink = {
+	link: string;
+	isExternal: boolean;
+};
+
 export type TResource = {
 	id: string;
 	createdAt: string;

@@ -1,4 +1,4 @@
-import {Grid, Title, Button, Group, TextInput, Container, Box} from '@mantine/core';
+import {Grid, Title, Button, Group, TextInput, Container, Box, Anchor} from '@mantine/core';
 import {IconSearch} from '@tabler/icons';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
@@ -33,6 +33,7 @@ type ReferencedSectionProps = {
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
+	const {link, isExternal} = getLink(section);
 
 	// Get colors for resources based on index
 	const getColor = (index: number) => {
@@ -126,16 +127,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Upcoming Events':
 			case 'White Paper':
 			case 'Case Study':
-				return (
-					<ResourceCard
-						sectionHeader={sectionHeader}
-						title={resource.heading}
-						asset={resource.asset}
-						externalLink={getLink(resource)}
-					>
-						{renderRichText(resource.body)}
-					</ResourceCard>
-				);
+				return <ResourceCard sectionHeader={sectionHeader} resource={resource} />;
 
 			case 'Featured Resource':
 			case 'Info Card':
@@ -233,9 +225,15 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			)}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
 				<Group position='center'>
-					<Link to={getLink(section)}>
-						<Button color={'dark'}>{section.buttonText}</Button>
-					</Link>
+					{isExternal ? (
+						<Anchor href={link} target='_blank'>
+							<Button color={'dark'}>{section.buttonText}</Button>
+						</Anchor>
+					) : (
+						<Link to={link}>
+							<Button color={'dark'}>{section.buttonText}</Button>
+						</Link>
+					)}
 				</Group>
 			)}
 		</Expanded>
