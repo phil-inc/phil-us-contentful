@@ -15,9 +15,10 @@ export type ISection = {
 	buttonText: string;
 	internalLink: {
 		id: string;
-		page: Array<{title: string}>;
-		header: string;
-		title: string;
+		page?: Array<{title: string}>;
+		header?: string;
+		heading?: string;
+		title?: string;
 		sys: {
 			contentType: {
 				sys: {
@@ -59,6 +60,20 @@ export type IReferencedSection = {
 	header: string;
 	references: TResource[];
 	buttonText?: string;
+	internalLink: {
+		id: string;
+		page?: Array<{title: string}>;
+		header?: string;
+		heading?: string;
+		title?: string;
+		sys: {
+			contentType: {
+				sys: {
+					id: string;
+				};
+			};
+		};
+	};
 	externalLink?: string;
 	sectionType: SectionType;
 	isHidden: boolean;

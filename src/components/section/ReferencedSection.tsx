@@ -18,6 +18,8 @@ import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React, {useState} from 'react';
 import type {TResource} from 'types/resource';
 import type {IReferencedSection} from 'types/section';
+import {getLink} from 'utils/getLink';
+import slugify from 'slugify';
 
 type ReferencedSectionProps = {
 	section: IReferencedSection;
@@ -99,7 +101,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						key={resource.id}
 						color={getColor(index)}
 						title={resource.heading}
-						link={resource.externalLink}
+						link={getLink(resource)}
 						buttonText={resource.buttonText}
 						image={resource.asset}
 					>
@@ -129,7 +131,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						sectionHeader={sectionHeader}
 						title={resource.heading}
 						asset={resource.asset}
-						externalLink={resource.externalLink}
+						externalLink={getLink(resource)}
 					>
 						{renderRichText(resource.body)}
 					</ResourceCard>
@@ -180,7 +182,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	};
 
 	return (
-		<Expanded background={background} py={section.referenceType === 'Banner' ? 0 : 116}>
+		<Expanded
+			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
+			background={background}
+			py={section.referenceType === 'Banner' ? 0 : 116}
+		>
 			{Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
 				<Group position='center' mb={60}>
 					<Title order={2} color={textColor}>
@@ -225,9 +231,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					))}
 				</Grid>
 			)}
-			{Boolean(section.buttonText?.length) && Boolean(section.externalLink?.length) && (
+			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
 				<Group position='center'>
-					<Link to={section.externalLink}>
+					<Link to={getLink(section)}>
 						<Button color={'dark'}>{section.buttonText}</Button>
 					</Link>
 				</Group>

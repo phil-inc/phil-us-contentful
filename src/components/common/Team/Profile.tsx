@@ -4,6 +4,7 @@ import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import type {TResource} from 'types/resource';
+import {getLink} from 'utils/getLink';
 
 const useStyles = createStyles((theme, _params, getRef) => ({
 	card: {
@@ -19,7 +20,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }));
 
 type ProfileProps = {
-	resource: Pick<TResource, 'heading' | 'id' | 'body' | 'buttonText' | 'externalLink' | 'asset'>;
+	resource: Pick<TResource, 'heading' | 'id' | 'body' | 'buttonText' | 'internalLink' | 'externalLink' | 'asset'>;
 };
 
 const Profile: React.FC<ProfileProps> = ({resource}) => {
@@ -45,7 +46,7 @@ const Profile: React.FC<ProfileProps> = ({resource}) => {
 			</Text>
 
 			{Boolean(resource.buttonText?.length) && (
-				<Link to={resource.externalLink}>
+				<Link to={getLink(resource as TResource)}>
 					<Button color={'dark'}>{resource.buttonText}</Button>
 				</Link>
 			)}

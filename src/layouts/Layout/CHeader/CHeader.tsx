@@ -311,12 +311,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																{index > 0 ? (
 																	<th style={{paddingLeft: 0, paddingRight: 0}}>
 																		<Link
-																			to={`/${slugify(page.title, {lower: true})}/#${slugify(
-																				section.header,
-																				{
-																					lower: true,
-																				},
-																			)}`}
+																			to={`/${slugify(page.title, {
+																				lower: true,
+																				strict: true,
+																			})}/#${slugify(section.header, {
+																				lower: true,
+																				strict: true,
+																			})}`}
 																			style={{textDecoration: 'none'}}
 																		>
 																			<Text size={16} color='dark'>
@@ -327,7 +328,9 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																) : (
 																	<th style={{paddingLeft: 0, paddingRight: 0}}>
 																		<Link
-																			to={navigateToPage(slugify(page.title, {lower: true}))}
+																			to={navigateToPage(
+																				slugify(page.title, {lower: true, strict: true}),
+																			)}
 																			style={{textDecoration: 'none'}}
 																		>
 																			<Text size={16} color='dark'>
@@ -388,10 +391,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 														<List.Item key={index}>
 															{index > 0 ? (
 																<Link
-																	to={`/${slugify(page.title, {lower: true})}/#${slugify(
+																	to={`/${slugify(page.title, {lower: true, strict: true})}/#${slugify(
 																		section.header,
 																		{
 																			lower: true,
+																			strict: true,
 																		},
 																	)}`}
 																	style={{textDecoration: 'none'}}
@@ -400,7 +404,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																</Link>
 															) : (
 																<Link
-																	to={navigateToPage(slugify(page.title, {lower: true}))}
+																	to={navigateToPage(slugify(page.title, {lower: true, strict: true}))}
 																	style={{textDecoration: 'none'}}
 																>
 																	<Text className={classes.listHeading}>{section.header}</Text>
@@ -415,12 +419,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																			<List.Item key={id}>
 																				<Link
 																					to={navigateToPage(
-																						`${slugify(page.title, {lower: true})}/${slugify(
-																							relatesTo.header,
-																							{
-																								lower: true,
-																							},
-																						)}/${slugify(heading, {lower: true})}`,
+																						`${slugify(page.title, {
+																							lower: true,
+																							strict: true,
+																						})}/${slugify(relatesTo.header, {
+																							lower: true,
+																							strict: true,
+																						})}/${slugify(heading, {lower: true, strict: true})}`,
 																					)}
 																					style={{textDecoration: 'none'}}
 																				>

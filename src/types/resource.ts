@@ -13,6 +13,20 @@ export type TResource = {
 	asset?: Asset;
 	buttonText?: string;
 	externalLink?: string;
+	internalLink: {
+		id: string;
+		page: Array<{title: string}>;
+		header?: string;
+		heading?: string;
+		title?: string;
+		sys: {
+			contentType: {
+				sys: {
+					id: string;
+				};
+			};
+		};
+	};
 	author?: string;
 	designation?: string;
 };
