@@ -12,7 +12,7 @@ export type TResource = {
 	body: BodyType;
 	asset?: Asset;
 	buttonText?: string;
-	linkTo?: string;
+	externalLink?: string;
 	author?: string;
 	designation?: string;
 };

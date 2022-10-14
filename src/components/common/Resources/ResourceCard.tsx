@@ -13,10 +13,10 @@ type ResourceCardProps = {
 	title?: string;
 	children?: React.ReactNode;
 	asset?: Asset;
-	linkTo?: string;
+	externalLink?: string;
 };
 
-export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset, children, linkTo}) => {
+export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset, children, externalLink}) => {
 	const useStyles = createStyles(theme => ({
 		card: {
 			position: 'relative',
@@ -60,8 +60,8 @@ export const ResourceCard: FC<ResourceCardProps> = ({sectionHeader, title, asset
 						<Text size={18} mt='sm' mb={20} lineClamp={2}>
 							{children}
 						</Text>
-						{linkTo !== '#' && linkTo !== '' ? (
-							<a href={linkTo} style={{textDecoration: 'none'}}>
+						{externalLink !== '#' && externalLink !== '' ? (
+							<a href={externalLink} style={{textDecoration: 'none'}}>
 								<Button color='dark'>Read Now</Button>
 							</a>
 						) : (

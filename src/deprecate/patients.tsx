@@ -39,7 +39,7 @@ export const patientsPageQuery = graphql`
 					header
 					sectionType
 					references {
-						linkTo
+						externalLink
 						heading
 						buttonText
 						asset {
@@ -53,7 +53,7 @@ export const patientsPageQuery = graphql`
 						designation
 					}
 					referenceType
-					linkTo
+					externalLink
 					buttonText
 				}
 				... on ContentfulSection {
@@ -74,7 +74,7 @@ export const patientsPageQuery = graphql`
 					buttonText
 					header
 					sectionType
-					linkTo
+					externalLink
 					sys {
 						contentType {
 							sys {

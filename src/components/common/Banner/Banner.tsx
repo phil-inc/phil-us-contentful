@@ -33,10 +33,10 @@ type BannerProps = {
 
 /**
  * Banner is a Component to render a banner
- * @param props - {resource} Banner Resource with heading, body, buttonText, linkTo
+ * @param props - {resource} Banner Resource with heading, body, buttonText, externalLink
  * @returns Banner Component
  */
-export const Banner: FC<BannerProps> = ({resource: {heading, body, buttonText, linkTo}}) => {
+export const Banner: FC<BannerProps> = ({resource: {heading, body, buttonText, externalLink}}) => {
 	const {classes} = useStyles();
 
 	return (
@@ -53,9 +53,9 @@ export const Banner: FC<BannerProps> = ({resource: {heading, body, buttonText, l
 						</Text>
 					</Container>
 				</Grid.Col>
-				{Boolean(buttonText?.length) && Boolean(linkTo?.length) && (
+				{Boolean(buttonText?.length) && Boolean(externalLink?.length) && (
 					<Grid.Col lg={2} sm={12}>
-						<Link to={linkTo}>
+						<Link to={externalLink}>
 							<Button color={'dark'}>{buttonText}</Button>
 						</Link>
 					</Grid.Col>

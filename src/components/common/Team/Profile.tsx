@@ -19,7 +19,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }));
 
 type ProfileProps = {
-	resource: Pick<TResource, 'heading' | 'id' | 'body' | 'buttonText' | 'linkTo' | 'asset'>;
+	resource: Pick<TResource, 'heading' | 'id' | 'body' | 'buttonText' | 'externalLink' | 'asset'>;
 };
 
 const Profile: React.FC<ProfileProps> = ({resource}) => {
@@ -45,7 +45,7 @@ const Profile: React.FC<ProfileProps> = ({resource}) => {
 			</Text>
 
 			{Boolean(resource.buttonText?.length) && (
-				<Link to={resource.linkTo}>
+				<Link to={resource.externalLink}>
 					<Button color={'dark'}>{resource.buttonText}</Button>
 				</Link>
 			)}

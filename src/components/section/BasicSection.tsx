@@ -7,6 +7,8 @@ import {Link} from 'gatsby';
 import type {ISection} from 'types/section';
 import {BLOCKS} from '@contentful/rich-text-types';
 import {useMediaQuery} from '@mantine/hooks';
+import slugify from 'slugify';
+import {useInternalPaths} from 'hooks/useInternalPaths';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -22,6 +24,30 @@ const useStyles = createStyles(theme => ({
 		},
 	},
 }));
+
+const getLink = (section: ISection) => {
+	const link: string[] = [];
+	const sanitizeLink = (link: string[]) =>
+		`/${link.filter((piece, index) => !(index === 0 && piece === 'home')).join('/')}`;
+
+	if (section.internalLink) {
+		if (
+			section.internalLink.sys.contentType.sys.id === 'section'
+			|| section.internalLink.sys.contentType.sys.id === 'referencedSection'
+		) {
+			link.push(slugify(section.internalLink.page[0].title, {lower: true, strict: true}));
+			link.push(`#${slugify(section.internalLink.header, {lower: true, strict: true})}`);
+		}
+
+		if (section.internalLink.sys.contentType.sys.id === 'page') {
+			link.push(slugify(section.internalLink.title, {lower: true, strict: true}));
+		}
+
+		console.log({section, link: sanitizeLink(link)});
+
+		return sanitizeLink(link);
+	}
+};
 
 type BasicSectionProps = {
 	section: ISection;
@@ -72,7 +98,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
 	return (
-		<Container fluid className={classes.container}>
+		<Container id={section.header} fluid className={classes.container}>
 			<Grid gutter='xl' align='center' pb={130} pt={isHeroSection || isMobile ? 0 : 100}>
 				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
 					<Title order={titleOrdering}>{section.header}</Title>
@@ -84,8 +110,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 					<Text size={18} className={classes.body}>
 						{renderRichText(section.body, options)}
 					</Text>
-					{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
-						<Link to={section.linkTo}>
+					{Boolean(section.buttonText?.length) && (
+						<Link to={getLink(section)}>
 							<Button color={'dark'}>{section.buttonText}</Button>
 						</Link>
 					)}

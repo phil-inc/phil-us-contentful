@@ -16,7 +16,7 @@ const generateMainPages = async ({actions, graphql})=>{
 							references {
 								id
 								createdAt
-								linkTo
+								externalLink
 								heading
 								buttonText
 								asset {
@@ -30,7 +30,7 @@ const generateMainPages = async ({actions, graphql})=>{
 								designation
 							}
 							referenceType
-							linkTo
+							externalLink
 							buttonText
 							createdAt(locale: "en-US")
 						}
@@ -52,7 +52,7 @@ const generateMainPages = async ({actions, graphql})=>{
 							buttonText
 							header
 							sectionType
-							linkTo
+							externalLink
 							sys {
 								contentType {
 									sys {
@@ -98,7 +98,7 @@ const generateBlogPages = async ({actions, graphql}) => {
 					id
 					description
 					isHubSpotForm
-					linkTo
+					externalLink
 					subHeading {
 						subHeading
 					}

@@ -99,7 +99,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						key={resource.id}
 						color={getColor(index)}
 						title={resource.heading}
-						link={resource.linkTo}
+						link={resource.externalLink}
 						buttonText={resource.buttonText}
 						image={resource.asset}
 					>
@@ -129,7 +129,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						sectionHeader={sectionHeader}
 						title={resource.heading}
 						asset={resource.asset}
-						linkTo={resource.linkTo}
+						externalLink={resource.externalLink}
 					>
 						{renderRichText(resource.body)}
 					</ResourceCard>
@@ -179,8 +179,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		}
 	};
 
-	console.log(section);
-
 	return (
 		<Expanded background={background} py={section.referenceType === 'Banner' ? 0 : 116}>
 			{Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
@@ -227,9 +225,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					))}
 				</Grid>
 			)}
-			{Boolean(section.buttonText?.length) && Boolean(section.linkTo?.length) && (
+			{Boolean(section.buttonText?.length) && Boolean(section.externalLink?.length) && (
 				<Group position='center'>
-					<Link to={section.linkTo}>
+					<Link to={section.externalLink}>
 						<Button color={'dark'}>{section.buttonText}</Button>
 					</Link>
 				</Group>

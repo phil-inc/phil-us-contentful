@@ -1,3 +1,4 @@
+import {useInternalPaths} from 'hooks/useInternalPaths';
 import React from 'react';
 import type {IReferencedSection, ISection} from 'types/section';
 import BasicSection from './BasicSection';
