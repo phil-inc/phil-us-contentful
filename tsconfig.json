@@ -11,6 +11,10 @@
 		"skipLibCheck": true,
 		"noEmitOnError": true,
 		"allowJs": true,
-		"baseUrl": "./src"
+		"baseUrl": "./src",
+		"typeRoots": [
+			"./node_modules/@types",
+			"./src/@types"
+		  ]
 	}
 }

@@ -1,4 +1,16 @@
-import {Grid, Title, Button, Text, createStyles, Container, Anchor, Group} from '@mantine/core';
+import {
+	Grid,
+	Title,
+	Button,
+	Text,
+	createStyles,
+	Container,
+	Anchor,
+	Group,
+	Loader,
+	Center,
+	Divider,
+} from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -11,16 +23,9 @@ import slugify from 'slugify';
 import {getLink} from 'utils/getLink';
 import Asset from 'components/common/Asset/Asset';
 
-import * as jsonFromText from 'json-from-text';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
-
-type TParsedString = {
-	jsonResults: Array<{
-		formId: string;
-		portalId: string;
-		region: string;
-	}>;
-};
+import {parseScript} from 'utils/parseScript';
+import type {TParsedString} from 'types/resource';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -55,10 +60,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const HEADING_FIRST = 1;
 	const HEADING_SECOND = 2;
 
+	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	const {classes} = useStyles();
 	const isMobile = useMediaQuery('(max-width: 576px)');
 	const {link, isExternal} = getLink(section);
-	const pathToImage = getImage(section.asset);
 
 	const richTextImages = {};
 
@@ -67,8 +72,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		richTextImages[reference.contentful_id] = {image: reference.gatsbyImageData, alt: reference.title};
 	});
-
-	let formString: TParsedString;
 
 	const options = {
 		renderNode: {
@@ -79,17 +82,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				return <GatsbyImage image={image} alt={''} />;
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
-				if (section.isHubspotEmbed) {
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-					formString = children[0];
-				}
-
 				return <Text>{children}</Text>;
 			},
 		},
 	};
-
-	renderRichText(section.body, options);
 
 	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
 	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
@@ -97,25 +93,52 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
+	// Create form if section has hubspot form
 	if (section.isHubspotEmbed) {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-		const {jsonResults}: TParsedString = jsonFromText(formString);
+		const {jsonResults}: TParsedString = parseScript(section.body);
 
-		const {loaded, error, formCreated} = useHubspotForm({
+		const [formProps] = jsonResults;
+
+		// Create form
+		const {loaded, formCreated} = useHubspotForm({
 			target: '#hubspotForm',
-			...jsonResults[0],
+			...formProps,
 		});
+
+		// Handle loader
+		if (loaded && formCreated && !hasRendered) {
+			setHasRendered(true);
+		}
 	}
 
 	return (
 		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container}>
-			<Grid gutter='xl' align='center' pb={130} pt={isHeroSection || isMobile ? 0 : 100}>
+			<Grid
+				gutter='xl'
+				align={section.isHubspotEmbed ? 'flex-start' : 'center'}
+				pb={130}
+				pt={isHeroSection || isMobile ? 0 : 100}
+			>
 				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
 					{section.isHubspotEmbed ? (
-						<div id='hubspotForm'></div>
+						<>
+							<Title order={titleOrdering}>{section.header}</Title>
+							{Boolean(section.subHeader?.subHeader.length) && (
+								<Title order={3} mt={40}>
+									{section.subHeader.subHeader}
+								</Title>
+							)}
+							<Divider size={3} variant='dashed' my={20} />
+							{hasRendered ? (
+								<div id='hubspotForm'></div>
+							) : (
+								<Center>
+									<Loader mt={120} size='lg' />
+								</Center>
+							)}
+						</>
 					) : (
 						<>
-							{' '}
 							<Title order={titleOrdering}>{section.header}</Title>
 							{Boolean(section.subHeader?.subHeader.length) && (
 								<Text size={18} weight='bold' mt={20}>
