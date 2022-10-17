@@ -3,13 +3,13 @@ import classNames from 'classnames';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
-import type {Asset} from 'types/asset';
+import type {TAsset} from 'types/asset';
 import ImageContainer from './Container/ImageContainer';
 
 type FeaturedProps = {
 	title?: string;
 	children?: React.ReactNode;
-	asset?: Asset;
+	asset?: TAsset;
 	noDivider?: boolean;
 	resourceBackground?: string;
 	pr?: number;

@@ -10,6 +10,7 @@ import {useMediaQuery} from '@mantine/hooks';
 import slugify from 'slugify';
 import {useInternalPaths} from 'hooks/useInternalPaths';
 import {getLink} from 'utils/getLink';
+import Asset from 'components/common/Asset/Asset';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -103,7 +104,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				</Grid.Col>
 				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
 					<ImageContainer>
-						<GatsbyImage image={pathToImage} alt={section.asset.title} />
+						<Asset asset={section.asset} />
 					</ImageContainer>
 				</Grid.Col>
 			</Grid>

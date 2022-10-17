@@ -2,7 +2,7 @@ import {Paper, Title, Divider, Button, Text, createStyles, Grid, Box, Anchor, Gr
 import classNames from 'classnames';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
-import type {Asset} from 'types/asset';
+import type {TAsset} from 'types/asset';
 import {Link} from 'gatsby';
 import React from 'react';
 import type {TLink, TResource} from 'types/resource';
@@ -49,19 +49,25 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid justify='center' align='center'>
 				<Grid.Col lg={5} sm={12} md={12}>
-					<ImageContainer fluid>
-						<GatsbyImage image={pathToImage} alt={resource.asset.title} />
-					</ImageContainer>
+					{pathToImage && (
+						<ImageContainer fluid>
+							<GatsbyImage image={pathToImage} alt={resource.asset.title || ''} />
+						</ImageContainer>
+					)}
 				</Grid.Col>
 				<Grid.Col lg={7} sm={12} md={12}>
 					<Box pl={40} pr={36} py={50}>
-						<Title order={3} mt='md' lineClamp={2}>
-							{resource.heading}
-						</Title>
+						{resource.heading && (
+							<Title order={3} mt='md' lineClamp={2}>
+								{resource.heading}
+							</Title>
+						)}
 						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
-						<Text size={18} mt='sm' mb={20} lineClamp={2}>
-							{renderRichText(resource.body)}
-						</Text>
+						{resource.body && (
+							<Text size={18} mt='sm' mb={20} lineClamp={2}>
+								{renderRichText(resource.body)}
+							</Text>
+						)}
 						{resource.buttonText && (
 							<Group>
 								{isExternal ? (

@@ -49,6 +49,100 @@ export const pageQuery = graphql`
 			title
 			description
 			sections {
+				... on ContentfulSection {
+					id
+					isHidden
+					body {
+						raw
+						references {
+							contentful_id
+							__typename
+							description
+							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+						}
+					}
+					asset {
+						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+						title
+						file {
+							contentType
+							details {
+								size
+							}
+							url
+						}
+					}
+					buttonText
+					header
+					sectionType
+					externalLink
+					sys {
+						contentType {
+							sys {
+								id
+							}
+						}
+					}
+					subHeader {
+						subHeader
+					}
+					internalLink {
+						... on ContentfulPage {
+							id
+							title
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulReferencedSection {
+							id
+							page {
+								title
+							}
+							header
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulSection {
+							id
+							page {
+								title
+							}
+							header
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulResource {
+							id
+							heading
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+					}
+				}
 				... on ContentfulReferencedSection {
 					id
 					isHidden
@@ -131,93 +225,6 @@ export const pageQuery = graphql`
 					referenceType
 					externalLink
 					buttonText
-					internalLink {
-						... on ContentfulPage {
-							id
-							title
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulReferencedSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulResource {
-							id
-							heading
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-					}
-				}
-				... on ContentfulSection {
-					id
-					isHidden
-					body {
-						raw
-						references {
-							contentful_id
-							__typename
-							description
-							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-						}
-					}
-					asset {
-						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-						title
-					}
-					buttonText
-					header
-					sectionType
-					externalLink
-					sys {
-						contentType {
-							sys {
-								id
-							}
-						}
-					}
-					subHeader {
-						subHeader
-					}
 					internalLink {
 						... on ContentfulPage {
 							id

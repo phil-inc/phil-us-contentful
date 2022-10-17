@@ -1,4 +1,4 @@
-import type {Asset} from './asset';
+import type {TAsset} from './asset';
 import type {BodyType} from './section';
 
 export type TLink = {
@@ -15,7 +15,7 @@ export type TResource = {
 		subHeading: string;
 	};
 	body: BodyType;
-	asset?: Asset;
+	asset?: TAsset;
 	buttonText?: string;
 	externalLink?: string;
 	internalLink: {

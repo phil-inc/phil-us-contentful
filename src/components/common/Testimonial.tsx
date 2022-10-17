@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
-import type {Asset} from 'types/asset';
+import type {TAsset} from 'types/asset';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -29,7 +29,7 @@ const useStyles = createStyles(theme => ({
 
 type TestimonialProps = {
 	type?: 'person' | 'company';
-	image?: Asset;
+	image?: TAsset;
 	children?: React.ReactNode;
 	author: string;
 	designation: string;
