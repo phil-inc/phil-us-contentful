@@ -12,6 +12,7 @@ export type ISection = {
 	header: string;
 	subHeader?: {subHeader: string};
 	body: BodyType;
+	isHubspotEmbed: boolean;
 	buttonText: string;
 	internalLink: {
 		id: string;

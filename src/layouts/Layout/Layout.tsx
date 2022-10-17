@@ -6,6 +6,7 @@ import {createStyles} from '@mantine/core';
 import {MantineProvider, ColorSchemeProvider, Container} from '@mantine/core';
 import {CHeader} from './CHeader/CHeader';
 import {isIndex} from 'hooks/isIndex';
+import {HubspotProvider} from '@aaronhayes/react-use-hubspot-form';
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
@@ -89,11 +90,13 @@ export function Layout({children}: LayoutProps) {
 			withGlobalStyles
 			withNormalizeCSS
 		>
-			<Container fluid className={classes.wrapper}>
-				<CHeader />
-				<Box>{children}</Box>
-				{/* <CFooter /> */}
-			</Container>
+			<HubspotProvider>
+				<Container fluid className={classes.wrapper}>
+					<CHeader />
+					<Box>{children}</Box>
+					{/* <CFooter /> */}
+				</Container>
+			</HubspotProvider>
 		</MantineProvider>
 	);
 }

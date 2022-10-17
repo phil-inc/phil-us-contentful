@@ -1,4 +1,4 @@
-import {Grid, Title, Button, Text, createStyles, AspectRatio, Container, Anchor, Group} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles, Container, Anchor, Group} from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -8,9 +8,19 @@ import type {ISection} from 'types/section';
 import {BLOCKS} from '@contentful/rich-text-types';
 import {useMediaQuery} from '@mantine/hooks';
 import slugify from 'slugify';
-import {useInternalPaths} from 'hooks/useInternalPaths';
 import {getLink} from 'utils/getLink';
 import Asset from 'components/common/Asset/Asset';
+
+import * as jsonFromText from 'json-from-text';
+import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
+
+type TParsedString = {
+	jsonResults: Array<{
+		formId: string;
+		portalId: string;
+		region: string;
+	}>;
+};
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -58,6 +68,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		richTextImages[reference.contentful_id] = {image: reference.gatsbyImageData, alt: reference.title};
 	});
 
+	let formString: TParsedString;
+
 	const options = {
 		renderNode: {
 			[BLOCKS.EMBEDDED_ASSET](node) {
@@ -66,8 +78,18 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				const image = getImage(imageData.image);
 				return <GatsbyImage image={image} alt={''} />;
 			},
+			[BLOCKS.PARAGRAPH](node, children) {
+				if (section.isHubspotEmbed) {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+					formString = children[0];
+				}
+
+				return <Text>{children}</Text>;
+			},
 		},
 	};
+
+	renderRichText(section.body, options);
 
 	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
 	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
@@ -75,31 +97,50 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
+	if (section.isHubspotEmbed) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+		const {jsonResults}: TParsedString = jsonFromText(formString);
+
+		const {loaded, error, formCreated} = useHubspotForm({
+			target: '#hubspotForm',
+			...jsonResults[0],
+		});
+	}
+
 	return (
 		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container}>
 			<Grid gutter='xl' align='center' pb={130} pt={isHeroSection || isMobile ? 0 : 100}>
 				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
-					<Title order={titleOrdering}>{section.header}</Title>
-					{Boolean(section.subHeader?.subHeader.length) && (
-						<Text size={18} weight='bold' mt={20}>
-							{section.subHeader.subHeader}
-						</Text>
-					)}
-					<Text size={18} className={classes.body}>
-						{renderRichText(section.body, options)}
-					</Text>
-					{Boolean(section.buttonText?.length) && (
-						<Group>
-							{isExternal ? (
-								<Anchor href={link} target='_blank'>
-									<Button>{section.buttonText}</Button>
-								</Anchor>
-							) : (
-								<Link to={link}>
-									<Button>{section.buttonText}</Button>
-								</Link>
+					{section.isHubspotEmbed ? (
+						<div id='hubspotForm'></div>
+					) : (
+						<>
+							{' '}
+							<Title order={titleOrdering}>{section.header}</Title>
+							{Boolean(section.subHeader?.subHeader.length) && (
+								<Text size={18} weight='bold' mt={20}>
+									{section.subHeader.subHeader}
+								</Text>
 							)}
-						</Group>
+							{Boolean(section.body) && (
+								<Text size={18} className={classes.body}>
+									{renderRichText(section.body, options)}
+								</Text>
+							)}
+							{Boolean(section.buttonText?.length) && (
+								<Group>
+									{isExternal ? (
+										<Anchor href={link} target='_blank'>
+											<Button>{section.buttonText}</Button>
+										</Anchor>
+									) : (
+										<Link to={link}>
+											<Button>{section.buttonText}</Button>
+										</Link>
+									)}
+								</Group>
+							)}
+						</>
 					)}
 				</Grid.Col>
 				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
