@@ -1,27 +1,18 @@
-import {renderRichText} from 'gatsby-source-contentful/rich-text';
-import type {Options} from '@contentful/rich-text-react-renderer';
-import {BLOCKS} from '@contentful/rich-text-types';
 import type {BodyType} from 'types/section';
-import jsonFromText from 'json-from-text';
+// Import jsonFromText from 'json-from-text';
+import {documentToPlainTextString} from '@contentful/rich-text-plain-text-renderer';
+import type {TResponse} from 'extract-json-from-string';
+import extractJson from 'extract-json-from-string';
 
 /**
  * Parse a rich text field for json from mixed string.
  * @param richScript Rich text body
  * @returns parsed json from rich text
  */
-export const parseScript = (richScript: BodyType) => {
-	let formString: string;
+export const parseScript = (richScript: {raw: string}): TResponse[] => {
+	const doc: unknown = JSON.parse(richScript.raw);
 
-	const options: Options = {
-		renderNode: {
-			[BLOCKS.PARAGRAPH](node, children) {
-				formString = children[0] as string;
-				return children;
-			},
-		},
-	};
+	const formString = documentToPlainTextString(doc as any);
 
-	renderRichText(richScript, options);
-
-	return jsonFromText(formString);
+	return extractJson(formString);
 };

@@ -26,6 +26,8 @@ import Asset from 'components/common/Asset/Asset';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {parseScript} from 'utils/parseScript';
 import type {TParsedString} from 'types/resource';
+import {documentToPlainTextString} from '@contentful/rich-text-plain-text-renderer';
+import jsonFromText from 'json-from-text';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -95,9 +97,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	// Create form if section has hubspot form
 	if (section.isHubspotEmbed) {
-		const {jsonResults}: TParsedString = parseScript(section.body);
+		const object: any = parseScript(section.body);
 
-		const [formProps] = jsonResults;
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		const [formProps] = object;
 
 		// Create form
 		const {loaded, formCreated} = useHubspotForm({

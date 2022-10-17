@@ -4,9 +4,9 @@ import type {TResource} from 'types/resource';
 import type {IReferencedSection, ISection} from 'types/section';
 
 /**
- * GetLink is a utility function to get a hyperlink.
- * @param section A section or resource
- * @returns a link string
+ * Get internal and external hyperlinks from contentful data models.
+ * @param section A section or resource.
+ * @returns a link string.
  */
 export const getLink = (section: ISection | IReferencedSection | TResource): {link: string; isExternal: boolean} => {
 	const link: string[] = [];
@@ -18,7 +18,7 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 			section.internalLink.sys.contentType.sys.id === 'section'
 			|| section.internalLink.sys.contentType.sys.id === 'referencedSection'
 		) {
-			if (section.internalLink.page[0]) {
+			if (section.internalLink?.page[0]) {
 				link.push(slugify(section.internalLink.page[0].title, {lower: true, strict: true}));
 				link.push(
 					`#${slugify(section.internalLink.header ?? section.internalLink.id, {lower: true, strict: true})}`,
