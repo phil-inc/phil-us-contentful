@@ -1,4 +1,4 @@
-import type {Asset} from './asset';
+import type {TAsset} from './asset';
 import type {RenderRichTextData, ContentfulRichTextGatsbyReference} from 'gatsby-source-contentful/rich-text';
 import type {TResource} from './resource';
 
@@ -28,7 +28,7 @@ export type ISection = {
 		};
 	};
 	externalLink: string;
-	asset: Asset;
+	asset: TAsset;
 	subNavigationSection?: TResource[];
 	isHidden: boolean;
 };

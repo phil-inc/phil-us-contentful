@@ -4,7 +4,7 @@ import {createStyles, Paper, Text, Title, Button, useMantineTheme, Grid} from '@
 import React from 'react';
 import type {FC} from 'react';
 import classNames from 'classnames';
-import type {Asset} from 'types/asset';
+import type {TAsset} from 'types/asset';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {IReferencedSection} from 'types/section';
 

@@ -17,7 +17,7 @@ import {Link} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
 import React from 'react';
-import type {Asset} from 'types/asset';
+import type {TAsset} from 'types/asset';
 import type {TLink} from 'types/resource';
 import ImageContainer from './Container/ImageContainer';
 
@@ -68,7 +68,7 @@ type ArticleProps = {
 	color?: 'blue' | 'yellow' | 'none';
 	title?: string;
 	children?: React.ReactNode;
-	image?: Asset;
+	image?: TAsset;
 	link?: TLink;
 	buttonText?: string;
 };

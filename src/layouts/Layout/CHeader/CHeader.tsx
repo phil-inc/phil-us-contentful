@@ -26,13 +26,13 @@ import {StaticQuery} from 'gatsby';
 import type {ContentfulPage} from 'types/page';
 import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
-import type {Asset} from 'types/asset';
+import type {TAsset} from 'types/asset';
 import {IconChevronDown} from '@tabler/icons';
 
 const HEADER_HEIGHT = 90;
 
 type CHeaderProps = {
-	allContentfulHeader: {nodes: Array<{logo: Asset; navigationLinks: ContentfulPage[]}>};
+	allContentfulHeader: {nodes: Array<{logo: TAsset; navigationLinks: ContentfulPage[]}>};
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
 };
 
