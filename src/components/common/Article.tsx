@@ -98,7 +98,7 @@ export const Article: FC<ArticleProps> = ({color, title, image, children, link, 
 			<Stack align='flex-start' justify='space-between'>
 				<Box>
 					<ImageContainer fluid>
-						<GatsbyImage style={{width: '100%', height: '100%'}} image={pathToImage} alt={title} />
+						<GatsbyImage style={{width: '100%', height: '100%', maxWidth: 427}} image={pathToImage} alt={title} />
 					</ImageContainer>
 
 					<Title order={3} mt='md'>

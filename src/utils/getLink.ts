@@ -30,7 +30,9 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 			const paths = useInternalPaths();
 			const [blog] = paths.filter(path => path.title === section.internalLink.heading);
 
-			return {link: blog.path, isExternal: false};
+			// Referencing a internal link but not relating it to a section
+			// can cause issues which is mitigated by # link
+			return {link: blog?.path ?? '#', isExternal: false};
 		}
 
 		if (link.length <= 0) {
