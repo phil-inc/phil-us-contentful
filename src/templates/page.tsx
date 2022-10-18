@@ -223,6 +223,10 @@ export const pageQuery = graphql`
 						asset {
 							gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
 							id
+							file {
+								contentType
+								url
+							}
 						}
 					}
 					referenceType

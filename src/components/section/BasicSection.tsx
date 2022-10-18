@@ -10,6 +10,7 @@ import {
 	Loader,
 	Center,
 	Divider,
+	Box,
 } from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
@@ -28,6 +29,7 @@ import {parseScript} from 'utils/parseScript';
 import type {TParsedString} from 'types/resource';
 import {documentToPlainTextString} from '@contentful/rich-text-plain-text-renderer';
 import jsonFromText from 'json-from-text';
+import Expanded from 'components/common/Expanded/Expanded';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -40,6 +42,18 @@ const useStyles = createStyles(theme => ({
 		padding: '0 100px',
 		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
 			padding: '0 16px',
+		},
+	},
+
+	section: {
+		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+			display: 'none',
+		},
+	},
+
+	largeSection: {
+		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+			display: 'none',
 		},
 	},
 }));
@@ -115,7 +129,27 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	}
 
 	return (
+		// TODO: play around with padding for contact page style
 		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container}>
+			{/* <Group position='apart' align='flex-start' p={0} m={0} className={classes.section}>
+				<Box sx={{width: '40%'}}>
+					<Title order={titleOrdering}>{section.header}</Title>
+					{Boolean(section.subHeader?.subHeader.length) && (
+						<Title order={3} mt={40}>
+							{section.subHeader.subHeader}
+						</Title>
+					)}
+					<Divider size={3} variant='dashed' my={20} />
+					{hasRendered ? (
+						<div id='hubspotForm'></div>
+					) : (
+						<Center>
+							<Loader mt={120} size='lg' />
+						</Center>
+					)}
+				</Box>
+				<Asset asset={section.asset} />
+			</Group> */}
 			<Grid
 				gutter='xl'
 				align={section.isHubspotEmbed ? 'flex-start' : 'center'}
@@ -170,7 +204,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 					)}
 				</Grid.Col>
 				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
-					<ImageContainer>
+					<ImageContainer fluid>
 						<Asset asset={section.asset} />
 					</ImageContainer>
 				</Grid.Col>
