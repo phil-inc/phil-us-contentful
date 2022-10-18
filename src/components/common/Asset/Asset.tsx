@@ -8,10 +8,15 @@ type AssetProps = {
 	asset: TAsset;
 };
 
+/**
+ * Handle image/video asset.
+ * @param param Asset prop
+ * @returns Image/Video asset handler.
+ */
 const Asset: React.FC<AssetProps> = ({asset}) => {
 	if (isVideoContent(asset.file.contentType)) {
 		const {url} = asset.file;
-		return <ReactPlayer url={url} width={'100%'} height={'100%'} playing controls />;
+		return <ReactPlayer url={url} width={'100%'} height={'100%'} controls />;
 	}
 
 	const pathToImage = getImage(asset);

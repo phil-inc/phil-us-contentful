@@ -20,6 +20,7 @@ import type {TResource} from 'types/resource';
 import type {IReferencedSection} from 'types/section';
 import {getLink} from 'utils/getLink';
 import slugify from 'slugify';
+import {CardWithImage} from 'components/common/CardWithImage';
 
 type ReferencedSectionProps = {
 	section: IReferencedSection;
@@ -54,6 +55,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Customer Story':
 			case 'Testimonial':
 			case 'Image Carousel':
+			case 'Location':
 				return ['#29A5B4', 'white']; // Green Background
 
 			case 'Banner':
@@ -167,6 +169,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 
 			case 'Press Release':
 				return <PressRelease resource={resource} />;
+
+			case 'Location':
+				return <CardWithImage resource={resource} />;
 
 			default:
 				break;

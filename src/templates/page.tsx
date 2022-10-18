@@ -2,7 +2,7 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
-import {graphql} from 'gatsby';
+import {graphql, Script} from 'gatsby';
 import slugify from 'slugify';
 import {SEO} from 'layouts/SEO/SEO';
 import {useInternalPaths} from 'hooks/useInternalPaths';
@@ -15,6 +15,8 @@ type HelmetProps = {
 export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	<SEO title={pageContext.title}>
 		<meta name='description' content={data.contentfulPage.description} />
+		<title>Contact</title>
+		<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 	</SEO>
 );
 
@@ -61,6 +63,7 @@ export const pageQuery = graphql`
 							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
 						}
 					}
+					isHubspotEmbed
 					asset {
 						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
 						title
@@ -220,6 +223,10 @@ export const pageQuery = graphql`
 						asset {
 							gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
 							id
+							file {
+								contentType
+								url
+							}
 						}
 					}
 					referenceType

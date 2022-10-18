@@ -35,3 +35,11 @@ export type TResource = {
 	author?: string;
 	designation?: string;
 };
+
+export type TParsedString = {
+	jsonResults: Array<{
+		formId: string;
+		portalId: string;
+		region: string;
+	}>;
+};
