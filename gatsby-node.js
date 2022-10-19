@@ -85,7 +85,7 @@ const generateMainPages = async ({actions, graphql})=>{
 const generateBlogPages = async ({actions, graphql}) => {
 	const {data} = await graphql(`
 		query allBlogPages {
-			allContentfulResource(filter: {relatesTo: {id: {ne: null}}, node_locale: {eq: "en-US"}}) {
+			allContentfulResource(filter: {node_locale: {eq: "en-US"}}) {
 				nodes {
 					body {
 						raw
@@ -111,21 +111,31 @@ const generateBlogPages = async ({actions, graphql}) => {
 						}
 					}
 					relatesTo {
-						id
-						header
-						page {
+						... on ContentfulReferencedSection {
 							id
-							title
-						  }
+							header
+							page {
+								id
+								title
+							  }
+						}
+						... on ContentfulSection {
+							id
+							header
+							page {
+								id
+								title
+							  }
+						}
 					}
 				}
 			}
 		}
 	`);
 
-	data.allContentfulResource.nodes.forEach(resource => {
-		if (resource.heading !== null) {
-			const path = `${slugify(resource.relatesTo?.page[0]?.title, {lower: true, strict: true})}/${slugify(resource.relatesTo?.header, {lower: true, strict: true})}/${slugify(resource.heading, {
+	data.allContentfulResource.nodes.filter((resource) => resource.relatesTo).forEach(resource => {
+		if (Boolean(resource.relatesTo.page && resource.heading && resource.relatesTo.header)) {
+			const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(resource.relatesTo?.header, {lower: true, strict: true})}/${slugify(resource.heading, {
 				lower: true,
 				strict: true,
 			})}`;
