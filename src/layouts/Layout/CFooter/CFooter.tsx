@@ -1,5 +1,8 @@
-import {createStyles, Anchor, Group, Grid, Text, Divider, List, Container} from '@mantine/core';
+import {createStyles, Anchor, Group, Grid, Text, Divider, List, Container, Navbar} from '@mantine/core';
+import {graphql, StaticQuery} from 'gatsby';
 import React from 'react';
+import type {TAsset} from 'types/asset';
+import type {ContentfulPage} from 'types/page';
 
 const useStyles = createStyles(theme => ({
 	footer: {
@@ -42,7 +45,12 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-export const CFooter: React.FC = () => {
+type FooterProps = {
+	allContentfulFooter: {nodes: Array<{badge: TAsset[]; navigationLinks: ContentfulPage[]}>};
+	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
+};
+
+const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResource}) => {
 	const {classes} = useStyles();
 	// Deprecate
 	// const items = links.map(link => (
@@ -60,184 +68,82 @@ export const CFooter: React.FC = () => {
 	// 	</Anchor>
 	// ));
 
+	console.log({allContentfulFooter, allContentfulResource});
+	const [footer] = allContentfulFooter.nodes;
+	const pages = footer.navigationLinks;
+
 	return (
 		<>
 			<Container size={'xl'} className={classes.footerWrapper}>
 				<Grid gutter={'xl'}>
-					<Grid.Col span={3}>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Home
-						</Text>
-
-						<Divider my={10} mr={80} color='dark' />
-						<List listStyleType='none'>
-							<List.Item>
-								<Text className={classes.footerLink}>Phil platform</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Who we serve</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Client testimonials</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Featured resources</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Schedule demo</Text>
-							</List.Item>
-						</List>
-					</Grid.Col>
-					<Grid.Col span={3}>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Life sciences
-						</Text>
-
-						<Divider my={10} mr={80} color='dark' />
-						<List listStyleType='none'>
-							<List.Item>
-								<Text className={classes.footerLink}>Access and commercialization solutions</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Launch</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Mid-cycle</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Loss of exclusivity</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>FAQs</Text>
-							</List.Item>
-						</List>
-					</Grid.Col>
-					<Grid.Col span={3}>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Healthcare providers
-						</Text>
-
-						<Divider my={10} mr={80} color='dark' />
-						<List listStyleType='none'>
-							<List.Item>
-								<Text className={classes.footerLink}>Patient outcomes</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Flight of the script</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Prescribing to Phil</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>HCP outcomes</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Testimonials</Text>
-							</List.Item>
-						</List>
-					</Grid.Col>
-					<Grid.Col span={3}>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Patients
-						</Text>
-
-						<Divider my={10} mr={80} color='dark' />
-						<List listStyleType='none'>
-							<List.Item>
-								<Text className={classes.footerLink}>Smarter prescriptions</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Benefits</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Fill a prescription</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Testimonials</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>FAQs</Text>
-							</List.Item>
-						</List>
-					</Grid.Col>
-					<Grid.Col span={3}>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Resources
-						</Text>
-
-						<Divider my={10} mr={80} color='dark' />
-						<List listStyleType='none'>
-							<List.Item>
-								<Text className={classes.footerLink}>Phil blog</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Upcoming events</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Case studies</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>White papers</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Solutions briefs</Text>
-							</List.Item>
-						</List>
-					</Grid.Col>
-					<Grid.Col span={3}>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Company
-						</Text>
-
-						<Divider my={10} mr={80} color='dark' />
-						<List listStyleType='none'>
-							<List.Item>
-								<Text className={classes.footerLink}>Who we are</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Philosophy</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Team</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Investors</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Press</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Careers</Text>
-							</List.Item>
-						</List>
-					</Grid.Col>
-					<Grid.Col span={3}>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Contact us
-						</Text>
-
-						<Divider my={10} mr={80} color='dark' />
-						<List listStyleType='none'>
-							<List.Item>
-								<Text className={classes.footerLink}>Location</Text>
-							</List.Item>
-							<List.Item>
-								<Text className={classes.footerLink}>Reach out</Text>
-							</List.Item>
-						</List>
-					</Grid.Col>
-					<Grid.Col span={3}>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Newsletter
-						</Text>
-						<Divider my={10} mr={80} color='dark' />
-						email goes here
-					</Grid.Col>
+					{pages.map(page => (
+						<Grid.Col span={3}>
+							<Text key={page.id} size={'lg'} className={classes.footLinkHeader}>
+								{page.title}
+							</Text>
+							<Divider my={10} mr={80} color='dark' />
+							{page.sections
+								.filter(section => section.header?.length)
+								.map(section => (
+									<>
+										<List listStyleType='none'>
+											<List.Item>
+												<Text className={classes.footerLink}>{section.header}</Text>
+											</List.Item>
+										</List>
+									</>
+								))}
+						</Grid.Col>
+					))}
 				</Grid>
 			</Container>
-			<div className={classes.footer}>
-				<div className={classes.inner}>{/* <Group className={classes.links}>{items}</Group> */}</div>
-			</div>
 		</>
 	);
 };
+
+const query = graphql`
+	{
+		allContentfulFooter(filter: {node_locale: {eq: "en-US"}}) {
+			nodes {
+				id
+				title
+				navigationLinks {
+					title
+					sys {
+						contentType {
+							sys {
+								id
+								type
+							}
+						}
+					}
+					sections {
+						... on ContentfulReferencedSection {
+							id
+							header
+						}
+						... on ContentfulSection {
+							id
+							header
+						}
+					}
+				}
+				badge {
+					gatsbyImageData(resizingBehavior: FILL, placeholder: BLURRED, layout: CONSTRAINED)
+				}
+			}
+		}
+		allContentfulResource(filter: {relatesTo: {id: {ne: null}}, node_locale: {eq: "en-US"}}) {
+			nodes {
+				id
+				heading
+				relatesTo {
+					id
+					header
+				}
+			}
+		}
+	}
+`;
+
+export const CFooter: React.FC = () => <StaticQuery query={query} render={Footer} />;
