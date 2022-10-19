@@ -4,6 +4,7 @@ import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
 import React from 'react';
 import type {TResource} from 'types/resource';
+import Asset from '../Asset/Asset';
 import ImageContainer from '../Container/ImageContainer';
 
 type PrescriberJourneyProps = {
@@ -15,22 +16,22 @@ type PrescriberJourneyProps = {
  * @param props - {resource} PrescriberJourney Resource with asset, heading, body
  * @returns PrescriberJourney Component
  */
-export const PrescriberJourney: FC<PrescriberJourneyProps> = ({resource: {asset, body, heading}}) => {
-	const pathToImage = getImage(asset);
-
-	return (
-		<Box>
+export const PrescriberJourney: FC<PrescriberJourneyProps> = ({resource: {asset, body, heading}}) => (
+	<Box>
+		{heading && (
 			<Group position='center'>
 				<Title>{heading}</Title>
 			</Group>
+		)}
+		{body && (
 			<Container size='sm' mb={25}>
 				<Group position='center'>
 					<Text size={18}>{renderRichText(body)}</Text>
 				</Group>
 			</Container>
-			<Box>
-				<GatsbyImage image={pathToImage} alt={heading} />
-			</Box>
+		)}
+		<Box>
+			<Asset asset={asset} />
 		</Box>
-	);
-};
+	</Box>
+);

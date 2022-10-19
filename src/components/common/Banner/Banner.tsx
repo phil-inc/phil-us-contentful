@@ -51,9 +51,11 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 							{heading}
 						</Title>
 						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
-						<Text size='md' mt='sm' mb={11}>
-							{renderRichText(body)}
-						</Text>
+						{body && (
+							<Text size='md' mt='sm' mb={11}>
+								{renderRichText(body)}
+							</Text>
+						)}
 					</Container>
 				</Grid.Col>
 				{Boolean(buttonText?.length) && Boolean(externalLink?.length) && (
