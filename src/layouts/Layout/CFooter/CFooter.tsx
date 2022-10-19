@@ -1,6 +1,7 @@
 import {createStyles, Anchor, Group, Grid, Text, Divider, List, Container, Navbar} from '@mantine/core';
-import {graphql, StaticQuery} from 'gatsby';
+import {graphql, Link, StaticQuery} from 'gatsby';
 import React from 'react';
+import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
 
@@ -34,9 +35,13 @@ const useStyles = createStyles(theme => ({
 		fontFamily: 'Lato',
 		fontWeight: 700,
 		margin: '10px 0',
+		textDecoration: 'none',
+		color: '#00201F',
 	},
 
 	footerLink: {
+		textDecoration: 'none',
+		color: '#00201F',
 		margin: '14px 0',
 	},
 
@@ -78,9 +83,14 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 				<Grid gutter={'xl'}>
 					{pages.map(page => (
 						<Grid.Col span={3}>
-							<Text key={page.id} size={'lg'} className={classes.footLinkHeader}>
-								{page.title}
-							</Text>
+							<Link
+								to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
+								style={{textDecoration: 'none'}}
+							>
+								<Text key={page.id} size={'lg'} className={classes.footLinkHeader}>
+									{page.title}
+								</Text>
+							</Link>
 							<Divider my={10} mr={80} color='dark' />
 							{page.sections
 								.filter(section => section.header?.length)
@@ -88,7 +98,20 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 									<>
 										<List listStyleType='none'>
 											<List.Item>
-												<Text className={classes.footerLink}>{section.header}</Text>
+												<Link
+													to={
+														(page.title === 'Home'
+															? ''
+															: `/${slugify(page.title, {lower: true, strict: true})}`)
+														+ `/#${slugify(section.header, {
+															lower: true,
+															strict: true,
+														})}`
+													}
+													style={{textDecoration: 'none'}}
+												>
+													<Text className={classes.footerLink}>{section.header}</Text>
+												</Link>
 											</List.Item>
 										</List>
 									</>
