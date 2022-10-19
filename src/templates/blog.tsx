@@ -1,8 +1,9 @@
 import React from 'react';
-import {Grid, Title, Button, Text, createStyles, Container} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles, Container, Image} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {graphql} from 'gatsby';
+import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {TResource} from 'types/resource';
 import {SEO} from 'layouts/SEO/SEO';
 import ImageContainer from 'components/common/Container/ImageContainer';
@@ -25,6 +26,7 @@ type PageTemplateProps = {
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {heading, body, buttonText, asset} = data.contentfulResource;
+	console.log(asset);
 	const useStyles = createStyles(theme => ({
 		body: {
 			p: {
@@ -34,6 +36,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	}));
 
 	const {classes} = useStyles();
+	const pathToImage = getImage(asset);
 
 	return (
 		<Layout>
@@ -41,16 +44,12 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				<Grid gutter='xl' align='center' pb={130} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
 						<Title order={2}>{heading}</Title>
-						<Grid.Col lg={6} md={6} sm={12}>
-							<ImageContainer fluid>
-								<Asset asset={asset} />
-							</ImageContainer>
-						</Grid.Col>
-
+						<Container size='sm' style={{float: 'right', padding: '30px'}}>
+							<GatsbyImage image={pathToImage} alt='' />
+						</Container>
 						<Text size={18} className={classes.body}>
 							{body && renderRichText(body)}
 						</Text>
-						{Boolean(buttonText?.length) && <Button color={'dark'}>{buttonText}</Button>}
 					</Grid.Col>
 				</Grid>
 			</Container>
