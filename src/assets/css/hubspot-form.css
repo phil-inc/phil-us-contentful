@@ -50,3 +50,15 @@ input[type=submit] {
     padding: 10px 40px;
 }
 
+.hs-error-msgs{
+    margin: 0 !important;
+    padding: 6px 0;
+    list-style: none;
+}
+
+.hs-error-msg {
+    color: #d0021b;
+    font-size: 14px;
+    font-weight: normal;
+}
+
