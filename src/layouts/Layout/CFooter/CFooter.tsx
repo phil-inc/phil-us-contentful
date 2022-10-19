@@ -203,7 +203,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 				</Grid>
 
 				<Box className={classes.drawer}>
-					<Accordion chevron={<IconChevronDown size={24} />} mb={40}>
+					<Accordion styles={{content: {padding: '0'}}} chevron={<IconChevronDown size={24} />} mb={40}>
 						{pages.map(page => (
 							<Accordion.Item
 								key={page.id + page.title}
