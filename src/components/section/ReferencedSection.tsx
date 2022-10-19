@@ -96,6 +96,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const [background, textColor, resourceBackground] = getSectionColors();
 
 	// Render resource based on resource type
+	// eslint-disable-next-line complexity
 	const renderResource = (sectionHeader: string, resource: TResource, index: number) => {
 		switch (section.referenceType) {
 			case 'Article':
@@ -108,7 +109,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						buttonText={resource.buttonText}
 						image={resource.asset}
 					>
-						{renderRichText(resource.body)}
+						{resource.body && renderRichText(resource.body)}
 					</Article>
 				);
 
@@ -121,7 +122,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						author={resource.author}
 						designation={resource.designation}
 					>
-						{renderRichText(resource.body)}
+						{resource.body && renderRichText(resource.body)}
 					</Testimonial>
 				);
 
@@ -141,7 +142,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						title={resource.heading}
 						asset={resource.asset}
 					>
-						{renderRichText(resource.body)}
+						{resource.body && renderRichText(resource.body)}
 					</Featured>
 				);
 

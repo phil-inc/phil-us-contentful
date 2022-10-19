@@ -19,6 +19,7 @@ import type {FC} from 'react';
 import React from 'react';
 import type {TAsset} from 'types/asset';
 import type {TLink} from 'types/resource';
+import Asset from './Asset/Asset';
 import ImageContainer from './Container/ImageContainer';
 
 const useStyles = createStyles(theme => ({
@@ -91,14 +92,12 @@ export const Article: FC<ArticleProps> = ({color, title, image, children, link, 
 		}
 	};
 
-	const pathToImage = getImage(image);
-
 	return (
 		<Paper radius={0} className={classNames(classes.card, getColorStyle())}>
 			<Stack align='flex-start' justify='space-between'>
 				<Box>
 					<ImageContainer fluid>
-						<GatsbyImage style={{width: '100%', height: '100%', maxWidth: 427}} image={pathToImage} alt={title} />
+						<Asset asset={image} />
 					</ImageContainer>
 
 					<Title order={3} mt='md'>

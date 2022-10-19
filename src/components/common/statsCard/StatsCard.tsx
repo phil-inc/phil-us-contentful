@@ -4,6 +4,7 @@ import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
 import React from 'react';
 import type {TResource} from 'types/resource';
+import Asset from '../Asset/Asset';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -34,21 +35,24 @@ type StatsCardProps = {
  */
 export const StatsCard: FC<StatsCardProps> = ({resource: {asset, heading, body}}) => {
 	const {classes} = useStyles();
-	const pathToImage = getImage(asset);
 
 	return (
 		<Card shadow='none' p='xl' radius={0} className={classes.card}>
 			<Card.Section>
-				<GatsbyImage image={pathToImage} alt={heading || ''} />
+				<Asset asset={asset} />
 			</Card.Section>
 
-			<Title mt='md' className={classes.percentage}>
-				{heading}
-			</Title>
+			{heading && (
+				<Title mt='md' className={classes.percentage}>
+					{heading}
+				</Title>
+			)}
 
-			<Text color='dark' className={classes.description}>
-				{body ? renderRichText(body) : ''}
-			</Text>
+			{body && (
+				<Text color='dark' className={classes.description}>
+					{renderRichText(body)}
+				</Text>
+			)}
 		</Card>
 	);
 };

@@ -9,6 +9,7 @@ import type {TLink, TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import ImageContainer from '../Container/ImageContainer';
+import Asset from '../Asset/Asset';
 
 type ResourceCardProps = {
 	sectionHeader: string;
@@ -42,16 +43,15 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 	}));
 
 	const {classes} = useStyles();
-	const pathToImage = getImage(resource.asset);
 	const {link, isExternal} = getLink(resource);
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid justify='center' align='center'>
 				<Grid.Col lg={5} sm={12} md={12}>
-					{pathToImage && (
+					{resource.asset && (
 						<ImageContainer fluid>
-							<GatsbyImage image={pathToImage} alt={resource.asset.title || ''} />
+							<Asset asset={resource.asset} />
 						</ImageContainer>
 					)}
 				</Grid.Col>
