@@ -5,6 +5,8 @@ import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {graphql} from 'gatsby';
 import type {TResource} from 'types/resource';
 import {SEO} from 'layouts/SEO/SEO';
+import ImageContainer from 'components/common/Container/ImageContainer';
+import Asset from 'components/common/Asset/Asset';
 
 type HelmetProps = {
 	pageContext: {title: string};
@@ -22,7 +24,7 @@ type PageTemplateProps = {
 };
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
-	const {heading, body, buttonText} = data.contentfulResource;
+	const {heading, body, buttonText, asset} = data.contentfulResource;
 	const useStyles = createStyles(theme => ({
 		body: {
 			p: {
@@ -39,6 +41,12 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				<Grid gutter='xl' align='center' pb={130} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
 						<Title order={2}>{heading}</Title>
+						<Grid.Col lg={6} md={6} sm={12}>
+							<ImageContainer fluid>
+								<Asset asset={asset} />
+							</ImageContainer>
+						</Grid.Col>
+
 						<Text size={18} className={classes.body}>
 							{body && renderRichText(body)}
 						</Text>
@@ -58,6 +66,17 @@ export const pageQuery = graphql`
 			heading
 			designation
 			buttonText
+			asset {
+				gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+				title
+				file {
+					contentType
+					details {
+						size
+					}
+					url
+				}
+			}
 			body {
 				raw
 			}
