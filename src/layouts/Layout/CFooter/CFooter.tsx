@@ -319,13 +319,19 @@ const query = graphql`
 				}
 			}
 		}
-		allContentfulResource(filter: {relatesTo: {id: {ne: null}}, node_locale: {eq: "en-US"}}) {
+		allContentfulResource(filter: {node_locale: {eq: "en-US"}}) {
 			nodes {
 				id
 				heading
 				relatesTo {
-					id
-					header
+					... on ContentfulReferencedSection {
+						id
+						header
+					}
+					... on ContentfulSection {
+						id
+						header
+					}
 				}
 			}
 		}

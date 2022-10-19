@@ -95,7 +95,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				const imageData = richTextImages[node.data.target.sys.id];
 				const image = getImage(imageData.image);
-				return <GatsbyImage image={image} alt={''} />;
+				return <GatsbyImage style={{marginBottom: '32px'}} image={image} alt={''} />;
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return <Text>{children}</Text>;

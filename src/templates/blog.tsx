@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Title, Button, Text, createStyles, Container, Image} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles, Container, Image, Box} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {graphql} from 'gatsby';
@@ -8,6 +8,7 @@ import type {TResource} from 'types/resource';
 import {SEO} from 'layouts/SEO/SEO';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import Asset from 'components/common/Asset/Asset';
+import {BLOCKS} from '@contentful/rich-text-types';
 
 type HelmetProps = {
 	pageContext: {title: string};
@@ -26,7 +27,6 @@ type PageTemplateProps = {
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {heading, body, buttonText, asset} = data.contentfulResource;
-	console.log(asset);
 	const useStyles = createStyles(theme => ({
 		body: {
 			p: {
@@ -38,6 +38,32 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {classes} = useStyles();
 	const pathToImage = getImage(asset);
 
+	const richTextImages = {};
+
+	// eslint-disable-next-line array-callback-return
+	data.contentfulResource.body.references.map((reference: any) => {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		richTextImages[reference.contentful_id] = {image: reference.gatsbyImageData, alt: reference.title};
+	});
+
+	const options = {
+		renderNode: {
+			[BLOCKS.EMBEDDED_ASSET](node) {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+				const imageData = richTextImages[node.data.target.sys.id];
+				const image = getImage(imageData.image);
+				return (
+					<Box sx={{maxWidth: '1000px', marginBottom: '32px'}}>
+						<GatsbyImage image={image} alt={''} />
+					</Box>
+				);
+			},
+			[BLOCKS.PARAGRAPH](node, children) {
+				return <Text>{children}</Text>;
+			},
+		},
+	};
+
 	return (
 		<Layout>
 			<Container size='xl'>
@@ -48,7 +74,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 							<GatsbyImage image={pathToImage} alt='' />
 						</Container>
 						<Text size={18} className={classes.body}>
-							{body && renderRichText(body)}
+							{body && renderRichText(body, options)}
 						</Text>
 					</Grid.Col>
 				</Grid>
@@ -78,6 +104,12 @@ export const pageQuery = graphql`
 			}
 			body {
 				raw
+				references {
+					contentful_id
+					__typename
+					description
+					gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+				}
 			}
 			createdAt
 			subHeading {

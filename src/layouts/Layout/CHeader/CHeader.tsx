@@ -163,6 +163,20 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			paddingLeft: 0,
 			paddingRight: 0,
 		},
+
+		active: {
+			'&::before': {
+				content: '""',
+				position: 'absolute',
+				bottom: '15px',
+				left: '25px',
+				width: '0px',
+				height: '0px',
+				borderLeft: '20px solid transparent',
+				borderRight: '20px solid transparent',
+				borderBottom: '20px solid #00827e',
+			},
+		},
 	}));
 
 	const [header] = allContentfulHeader.nodes;
@@ -251,7 +265,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						{pages
 							.filter(page => page.title !== 'Home')
 							.map(page => (
-								<List.Item key={page.id + page.title} className={classes.navLink} onClick={onNavLinkClick}>
+								<List.Item
+									key={page.id + page.title}
+									className={classNames(classes.navLink)}
+									onClick={onNavLinkClick}
+								>
 									<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 								</List.Item>
 							))}
@@ -342,26 +360,28 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 															</tr>
 														</thead>
 														<tbody>
-															{allContentfulResource.nodes.map(
-																({id, heading, relatesTo}) =>
-																	section.id === relatesTo.id && (
-																		<Link
-																			to={navigateToPage(
-																				`${slugify(page.title, {lower: true})}/${slugify(
-																					relatesTo.header,
-																					{
-																						lower: true,
-																					},
-																				)}/${slugify(heading, {lower: true})}`,
-																			)}
-																			style={{textDecoration: 'none'}}
-																		>
-																			<Text my={16} color='dark'>
-																				{heading}
-																			</Text>
-																		</Link>
-																	),
-															)}
+															{allContentfulResource.nodes
+																.filter(resource => resource.relatesTo)
+																.map(
+																	({id, heading, relatesTo}) =>
+																		section.id === relatesTo.id && (
+																			<Link
+																				to={navigateToPage(
+																					`${slugify(page.title, {lower: true})}/${slugify(
+																						relatesTo.header,
+																						{
+																							lower: true,
+																						},
+																					)}/${slugify(heading, {lower: true})}`,
+																				)}
+																				style={{textDecoration: 'none'}}
+																			>
+																				<Text my={16} color='dark'>
+																					{heading}
+																				</Text>
+																			</Link>
+																		),
+																)}
 														</tbody>
 													</Table>
 												))}
@@ -413,27 +433,32 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 															<Divider />
 															<List listStyleType='none'>
-																{allContentfulResource.nodes.map(
-																	({id, heading, relatesTo}) =>
-																		section.id === relatesTo.id && (
-																			<List.Item key={id}>
-																				<Link
-																					to={navigateToPage(
-																						`${slugify(page.title, {
-																							lower: true,
-																							strict: true,
-																						})}/${slugify(relatesTo.header, {
-																							lower: true,
-																							strict: true,
-																						})}/${slugify(heading, {lower: true, strict: true})}`,
-																					)}
-																					style={{textDecoration: 'none'}}
-																				>
-																					<Text className={classes.listItems}>{heading}</Text>
-																				</Link>
-																			</List.Item>
-																		),
-																)}
+																{allContentfulResource.nodes
+																	.filter(resource => resource.relatesTo)
+																	.map(
+																		({id, heading, relatesTo}) =>
+																			section.id === relatesTo.id && (
+																				<List.Item key={id}>
+																					<Link
+																						to={navigateToPage(
+																							`${slugify(page.title, {
+																								lower: true,
+																								strict: true,
+																							})}/${slugify(relatesTo.header, {
+																								lower: true,
+																								strict: true,
+																							})}/${slugify(heading, {
+																								lower: true,
+																								strict: true,
+																							})}`,
+																						)}
+																						style={{textDecoration: 'none'}}
+																					>
+																						<Text className={classes.listItems}>{heading}</Text>
+																					</Link>
+																				</List.Item>
+																			),
+																	)}
 															</List>
 														</List.Item>
 													</Grid.Col>
@@ -481,13 +506,19 @@ const query = graphql`
 				}
 			}
 		}
-		allContentfulResource(filter: {relatesTo: {id: {ne: null}}, node_locale: {eq: "en-US"}}) {
+		allContentfulResource(filter: {node_locale: {eq: "en-US"}}) {
 			nodes {
 				id
 				heading
 				relatesTo {
-					id
-					header
+					... on ContentfulReferencedSection {
+						id
+						header
+					}
+					... on ContentfulSection {
+						id
+						header
+					}
 				}
 			}
 		}
