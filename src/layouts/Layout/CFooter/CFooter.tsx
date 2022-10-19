@@ -1,15 +1,38 @@
-import {createStyles, Anchor, Group, Grid, Text, Divider, List, Container, Navbar} from '@mantine/core';
+import {
+	createStyles,
+	Anchor,
+	Group,
+	Grid,
+	Text,
+	Divider,
+	List,
+	Container,
+	Navbar,
+	Button,
+	TextInput,
+	Box,
+	Accordion,
+	Burger,
+	Drawer,
+	Table,
+	Center,
+} from '@mantine/core';
+import {useForm} from '@mantine/form';
+import {upperFirst, useDisclosure} from '@mantine/hooks';
+import {IconChevronDown} from '@tabler/icons';
 import {graphql, Link, StaticQuery} from 'gatsby';
+import {GatsbyImage} from 'gatsby-plugin-image';
 import React from 'react';
 import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
+import {navigateToPage} from 'utils/navigateToPage';
 
 const useStyles = createStyles(theme => ({
 	footer: {
-		borderTop: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]}`,
-		background: '#00827e',
-		color: 'white',
+		[theme.fn.smallerThan('md')]: {
+			display: 'none',
+		},
 	},
 
 	inner: {
@@ -46,7 +69,26 @@ const useStyles = createStyles(theme => ({
 	},
 
 	footerWrapper: {
-		padding: '85px 0',
+		padding: '85px 14vw',
+
+		[theme.fn.smallerThan('lg')]: {
+			padding: '40px ',
+		},
+	},
+	burger: {
+		[theme.fn.largerThan('md')]: {
+			display: 'none !important',
+		},
+	},
+	drawer: {
+		[theme.fn.largerThan('md')]: {
+			display: 'none',
+		},
+	},
+
+	drawerTitle: {
+		width: '100%',
+		margin: 0,
 	},
 }));
 
@@ -57,6 +99,7 @@ type FooterProps = {
 
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResource}) => {
 	const {classes} = useStyles();
+	const [opened, handlers] = useDisclosure(false);
 	// Deprecate
 	// const items = links.map(link => (
 	// 	<Anchor<'a'>
@@ -76,49 +119,169 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 	console.log({allContentfulFooter, allContentfulResource});
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
+	const form = useForm({
+		initialValues: {
+			email: '',
+		},
+
+		validate: {
+			email: val => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
+		},
+	});
 
 	return (
 		<>
-			<Container size={'xl'} className={classes.footerWrapper}>
-				<Grid gutter={'xl'}>
+			<Container fluid className={classes.footerWrapper}>
+				<Grid className={classes.footer} gutter={'xl'}>
 					{pages.map(page => (
 						<Grid.Col span={3}>
-							<Link
-								to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
-								style={{textDecoration: 'none'}}
-							>
-								<Text key={page.id} size={'lg'} className={classes.footLinkHeader}>
-									{page.title}
-								</Text>
-							</Link>
-							<Divider my={10} mr={80} color='dark' />
-							{page.sections
-								.filter(section => section.header?.length)
-								.map(section => (
-									<>
-										<List listStyleType='none'>
-											<List.Item>
-												<Link
-													to={
-														(page.title === 'Home'
-															? ''
-															: `/${slugify(page.title, {lower: true, strict: true})}`)
-														+ `/#${slugify(section.header, {
-															lower: true,
-															strict: true,
-														})}`
-													}
-													style={{textDecoration: 'none'}}
-												>
-													<Text className={classes.footerLink}>{section.header}</Text>
-												</Link>
-											</List.Item>
-										</List>
-									</>
-								))}
+							<Box sx={{width: '80%'}}>
+								<Link
+									to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
+									style={{textDecoration: 'none'}}
+								>
+									<Text span key={page.id} size={'lg'} className={classes.footLinkHeader}>
+										{page.title}
+									</Text>
+								</Link>
+								<Divider my={10} color='dark' />
+								{page.sections
+									.filter(section => section.header?.length)
+									.map(section => (
+										<>
+											<List listStyleType='none'>
+												<List.Item>
+													<Link
+														to={
+															(page.title === 'Home'
+																? ''
+																: `/${slugify(page.title, {lower: true, strict: true})}`)
+															+ `/#${slugify(section.header, {
+																lower: true,
+																strict: true,
+															})}`
+														}
+														style={{textDecoration: 'none'}}
+													>
+														<Text className={classes.footerLink}>{section.header}</Text>
+													</Link>
+												</List.Item>
+											</List>
+										</>
+									))}
+							</Box>
 						</Grid.Col>
 					))}
+					<Grid.Col span={3}>
+						<Box sx={{width: '80%'}}>
+							<Text size={'lg'} className={classes.footLinkHeader}>
+								Newsletter
+							</Text>
+
+							<Divider my={10} color='dark' />
+							<form
+								onSubmit={form.onSubmit(values => {
+									console.log(values);
+								})}
+							>
+								<TextInput
+									radius={0}
+									mb={16}
+									required
+									label='Your Email'
+									placeholder='user@domail.url'
+									value={form.values.email}
+									onChange={event => {
+										form.setFieldValue('email', event.currentTarget.value);
+									}}
+									error={form.errors.email && 'Invalid email'}
+								/>
+								<Button type='submit'>Subscribe</Button>
+							</form>
+						</Box>
+					</Grid.Col>
 				</Grid>
+
+				<Box className={classes.drawer}>
+					<Accordion chevron={<IconChevronDown size={24} />} mb={40}>
+						{pages.map(page => (
+							<Accordion.Item
+								key={page.id + page.title}
+								value={page.title}
+								style={{padding: 'auto 0px', borderBottom: '1px solid #6A7979'}}
+							>
+								<Accordion.Control px={0}>
+									<Text weight='bold' size={18}>
+										{page.title}
+									</Text>
+								</Accordion.Control>
+								<Accordion.Panel>
+									{page.sections
+										.filter(section => Boolean(section.header?.length))
+										.map((section, index) => (
+											<Table key={section.id} mb={16}>
+												<thead>
+													<tr>
+														{
+															<th style={{paddingLeft: 0, paddingRight: 0, fontWeight: 400}}>
+																<Link
+																	to={
+																		(page.title === 'Home'
+																			? ''
+																			: `/${slugify(page.title, {lower: true, strict: true})}`)
+																		+ `/#${slugify(section.header, {
+																			lower: true,
+																			strict: true,
+																		})}`
+																	}
+																	style={{textDecoration: 'none'}}
+																>
+																	<Text size={16} color='dark'>
+																		{section.header}
+																	</Text>
+																</Link>
+															</th>
+														}
+													</tr>
+												</thead>
+											</Table>
+										))}
+								</Accordion.Panel>
+							</Accordion.Item>
+						))}
+					</Accordion>
+					<Box>
+						<Text size={'lg'} className={classes.footLinkHeader}>
+							Newsletter
+						</Text>
+
+						<Divider my={10} color='#6A7979' />
+						<form
+							onSubmit={form.onSubmit(values => {
+								console.log(values);
+							})}
+						>
+							<TextInput
+								radius={0}
+								mb={16}
+								required
+								label='Your Email'
+								placeholder='user@domail.url'
+								value={form.values.email}
+								onChange={event => {
+									form.setFieldValue('email', event.currentTarget.value);
+								}}
+								error={form.errors.email && 'Invalid email'}
+							/>
+							<Button type='submit'>Subscribe</Button>
+						</form>
+					</Box>
+				</Box>
+			</Container>
+			<Container fluid style={{background: '#00827E'}} py={14}>
+				<Center>
+					<Text color={'#FFF'}>© Phil, Inc. | Terms of Use | Privacy Policy | HIPAA Notice</Text>
+				</Center>
 			</Container>
 		</>
 	);
