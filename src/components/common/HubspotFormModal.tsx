@@ -23,6 +23,8 @@ const HubspotFormModal = ({hubspotEmbed}) => {
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	if (hubspotEmbed) {
 		const object: any = parseScript(hubspotEmbed);
+		// TODO: Fix type later
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const [formProps] = object;
 
 		// Create form

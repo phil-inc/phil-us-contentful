@@ -77,14 +77,21 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 					&& (isHubspotEmbed ? (
 						<Grid.Col lg={2} sm={12}>
 							<Group>
-								<Modal size='ls' opened={openHubspotModal} onClose={() => {
-									setopenHubspotModal(false);
-								}}>
+								<Modal
+									size='ls'
+									opened={openHubspotModal}
+									onClose={() => {
+										setopenHubspotModal(false);
+									}}
+								>
 									<HubspotFormModal hubspotEmbed={hubspotEmbed} />
 								</Modal>
-								<Button color={'dark'} onClick={() => {
-									setopenHubspotModal(true);
-								}}>
+								<Button
+									color={'dark'}
+									onClick={() => {
+										setopenHubspotModal(true);
+									}}
+								>
 									{buttonText}
 								</Button>
 							</Group>

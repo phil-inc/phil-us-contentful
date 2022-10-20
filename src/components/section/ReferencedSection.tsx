@@ -148,11 +148,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						noDivider={section.referenceType === 'Info Card'}
 						pr={section.referenceType === 'Featured Resource' ? 50 : 0}
 						resourceBackground={resourceBackground}
-						title={resource.heading}
-						asset={resource.asset}
-					>
-						{resource.body && renderRichText(resource.body)}
-					</Featured>
+						resource={resource}
+					/>
 				);
 
 			case 'Banner':
