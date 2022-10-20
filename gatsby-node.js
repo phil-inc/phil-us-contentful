@@ -152,9 +152,10 @@ const generateBlogPages = async ({actions, graphql}) => {
 	`);
 
 	data.allContentfulResource.nodes
-		.filter(resource => resource.relatesTo)
+		.filter(resource => resource.relatesTo !== null)
 		.forEach(resource => {
 			if (Boolean(resource.relatesTo && resource.heading)) {
+				console.log(resource.relatesTo, resource.heading)
 				const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
 					resource.relatesTo?.header,
 					{lower: true, strict: true}
