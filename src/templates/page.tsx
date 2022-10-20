@@ -245,6 +245,10 @@ export const pageQuery = graphql`
 							}
 						}
 						heading
+						hubspotEmbed {
+							raw
+						}
+						isHubspotEmbed
 						subHeading {
 							subHeading
 						}

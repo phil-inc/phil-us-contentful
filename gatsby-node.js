@@ -91,10 +91,8 @@ const generateBlogPages = async ({actions, graphql}) => {
 			buttonText
 			designation
 			heading
-			hubspotForm
 			id
 			description
-			isHubSpotForm
 			externalLink
 			subHeading {
 			  subHeading
@@ -128,7 +126,6 @@ const generateBlogPages = async ({actions, graphql}) => {
 		  }
 		}
 	  }
-	  
 	`);
 
 	data.allContentfulResource.nodes.filter((resource) => resource.relatesTo).forEach(resource => {
