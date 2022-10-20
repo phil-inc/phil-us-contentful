@@ -59,7 +59,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text>{children}</Text>;
+				return <Text mb={18}>{children}</Text>;
 			},
 		},
 	};
@@ -69,7 +69,9 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 			<Container size='xl'>
 				<Grid gutter='xl' align='center' pb={130} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
-						<Title order={2}>{heading}</Title>
+						<Title order={2} mb={36}>
+							{heading}
+						</Title>
 						<Container size='sm' style={{float: 'right', padding: '30px'}}>
 							<GatsbyImage image={pathToImage} alt='' />
 						</Container>

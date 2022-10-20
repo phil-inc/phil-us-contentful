@@ -1,8 +1,8 @@
-import type {ISection} from './section';
+import type {IReferencedSection, ISection} from './section';
 
 export type ContentfulPage = {
 	id: string;
 	description?: string;
-	sections: ISection[];
+	sections: Array<ISection | IReferencedSection>;
 	title: string;
 };

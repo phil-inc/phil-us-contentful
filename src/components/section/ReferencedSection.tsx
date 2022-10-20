@@ -1,4 +1,4 @@
-import {Grid, Title, Button, Group, TextInput, Container, Box, Anchor} from '@mantine/core';
+import {Grid, Title, Button, Group, TextInput, Container, Box, Anchor, Divider, createStyles} from '@mantine/core';
 import {IconSearch} from '@tabler/icons';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
@@ -22,6 +22,14 @@ import {getLink} from 'utils/getLink';
 import slugify from 'slugify';
 import {CardWithImage} from 'components/common/CardWithImage';
 
+const useStyles = createStyles(theme => ({
+	divider: {
+		maxWidth: '35%',
+		marginTop: '10px',
+		marginBottom: '100px',
+	},
+}));
+
 type ReferencedSectionProps = {
 	section: IReferencedSection;
 };
@@ -35,6 +43,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
 	const {link, isExternal} = getLink(section);
+	const {classes} = useStyles();
 
 	// Get colors for resources based on index
 	const getColor = (index: number) => {
@@ -139,11 +148,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						noDivider={section.referenceType === 'Info Card'}
 						pr={section.referenceType === 'Featured Resource' ? 50 : 0}
 						resourceBackground={resourceBackground}
-						title={resource.heading}
-						asset={resource.asset}
-					>
-						{resource.body && renderRichText(resource.body)}
-					</Featured>
+						resource={resource}
+					/>
 				);
 
 			case 'Banner':
@@ -185,14 +191,25 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			background={background}
 			py={section.referenceType === 'Banner' ? 0 : 116}
 		>
-			{Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
-				<Group position='center' mb={60}>
-					<Title order={2} color={textColor}>
-						{section.header}
-					</Title>
-				</Group>
-			)}
-			{section.referenceType === 'FAQs' && (
+			{Boolean(section.header?.length)
+				&& Boolean(!section.hideHeader)
+				&& (section.referenceType === 'Case Study'
+				|| section.referenceType === 'Phil Blog'
+				|| section.referenceType === 'White Paper'
+				|| section.referenceType === 'Upcoming Events' ? (
+						<Box>
+							<Title order={3}>{section.header}</Title>
+							<Divider variant='dashed' size={1} className={classes.divider} />
+						</Box>
+					) : (
+						<Group position='center' mb={60}>
+							<Title order={2} color={textColor}>
+								{section.header}
+							</Title>
+						</Group>
+					))}
+			{/* Commented out Search Bar because new design doesnot have it */}
+			{/* {section.referenceType === 'FAQs' && (
 				<Container>
 					<Grid>
 						<Grid.Col span={10}>
@@ -211,19 +228,13 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						</Grid.Col>
 					</Grid>
 				</Container>
-			)}
+			)} */}
 			{section.referenceType === 'Image Carousel' ? (
 				<ResourceCarousel imageCaraouselSection={section} />
 			) : (
 				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
 					{section.references.map((resource, index) => (
-						<Grid.Col
-							py={30}
-							key={index}
-							lg={getSpan()}
-							sm={GRID_COLUMNS}
-							md={section.references?.length > 1 ? GRID_COLUMNS / 2 : GRID_COLUMNS}
-						>
+						<Grid.Col py={30} key={index} lg={getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
 							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}

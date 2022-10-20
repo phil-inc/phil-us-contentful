@@ -39,7 +39,7 @@ type CHeaderProps = {
 const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource}) => {
 	const useStyles = createStyles((theme, _params, getRef) => ({
 		inner: {
-			padding: '0 100px',
+			padding: '0 116px',
 			height: HEADER_HEIGHT,
 			display: 'flex',
 			alignItems: 'center',

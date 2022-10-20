@@ -2,13 +2,57 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
-import {graphql, Script} from 'gatsby';
+import {graphql, Link, Script} from 'gatsby';
 import slugify from 'slugify';
 import {SEO} from 'layouts/SEO/SEO';
 import {useInternalPaths} from 'hooks/useInternalPaths';
-import {Box, Grid, Title, Container, TextInput, Button} from '@mantine/core';
+import {Box, Grid, Title, Container, TextInput, Button, createStyles, Text, Group, Center} from '@mantine/core';
 import {IconSearch} from '@tabler/icons';
 import Expanded from 'components/common/Expanded/Expanded';
+import ReferencedSection from 'components/section/ReferencedSection';
+import CareerBlock from 'components/career/CareerBlock';
+import type {TAsset} from 'types/asset';
+import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
+import {parseScript} from 'utils/parseScript';
+import {useMediaQuery} from '@mantine/hooks';
+import {getLink} from 'utils/getLink';
+import Asset from 'components/common/Asset/Asset';
+import ImageContainer from 'components/common/Container/ImageContainer';
+import {renderRichText} from 'gatsby-source-contentful/rich-text';
+import type {IReferencedSection, ISection} from 'types/section';
+
+const useStyles = createStyles(theme => ({
+	body: {
+		p: {
+			marginTop: 0,
+		},
+	},
+	container: {
+		padding: '0 100px',
+		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+			padding: '0 16px',
+		},
+	},
+
+	section: {
+		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+			display: 'none',
+		},
+	},
+
+	largeSection: {
+		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+			display: 'none',
+		},
+	},
+
+	center: {
+		height: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+	},
+}));
 
 type HelmetProps = {
 	pageContext: {title: string};
@@ -23,57 +67,65 @@ export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	</SEO>
 );
 
-type PageTemplateProps = {
+type CareerSectionProps = {
+	sections: Array<ISection | IReferencedSection>;
+};
+
+const CareerSection: React.FC<CareerSectionProps> = ({sections}) => {
+	const {classes} = useStyles();
+	let asset: TAsset;
+
+	return (
+		<Container id={'Career Section'} fluid className={classes.container}>
+			<Grid gutter={60} pb={130}>
+				<Grid.Col orderSm={1} lg={6} md={6} sm={12}>
+					<Box className={classes.center}>
+						<Group align={'center'}>
+							<Box>
+								<Title order={2}>
+									<Text>Careers at Phil</Text>
+								</Title>
+							</Box>
+						</Group>
+						{sections
+							.filter(section => !section.isHidden)
+							.map((section, index) => {
+								if (index === 0) {
+									// TODO: Fix type later
+									// Get hero asset
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+									asset = section.asset;
+									return;
+								}
+
+								// eslint-disable-next-line no-warning-comments
+								// TODO: Fix type later
+								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+								return <CareerBlock title={section.header} listings={section.references} />;
+							})}
+					</Box>
+				</Grid.Col>
+				<Grid.Col orderSm={2} lg={6} md={6} sm={12}>
+					<ImageContainer fluid>
+						<Asset asset={asset} />
+					</ImageContainer>
+				</Grid.Col>
+			</Grid>
+		</Container>
+	);
+};
+
+type CareerTemplateProps = {
 	data: {contentfulPage: ContentfulPage};
 };
 
-const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
+const CareerTemplate: React.FC<CareerTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
-
-	let basicSectionCount = 0;
+	let asset: TAsset;
 
 	return (
 		<Layout>
-			{title === 'Resources' && (
-				<Expanded id={id}>
-					<Grid align='center' justify='space-between'>
-						<Grid.Col span={6}>
-							<Box>
-								<Title order={2}>Resources</Title>
-							</Box>
-						</Grid.Col>
-						<Grid.Col span={6}>
-							<Container fluid pr={8}>
-								<Grid>
-									<Grid.Col span={10}>
-										<TextInput
-											radius={0}
-											icon={<IconSearch size={18} stroke={1.5} />}
-											size='md'
-											placeholder='Search'
-											rightSectionWidth={42}
-										/>
-									</Grid.Col>
-									<Grid.Col span={2} pr={0}>
-										<Button color='dark' size='md' fullWidth>
-											Search
-										</Button>
-									</Grid.Col>
-								</Grid>
-							</Container>
-						</Grid.Col>
-					</Grid>
-				</Expanded>
-			)}
-			{sections
-				.filter(section => !section.isHidden)
-				.map(section => (
-					<Section
-						key={section.id}
-						section={section}
-						index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
-					/>
-				))}
+			<CareerSection sections={sections} />
 		</Layout>
 	);
 };
@@ -332,4 +384,4 @@ export const pageQuery = graphql`
 	}
 `;
 
-export default PageTemplate;
+export default CareerTemplate;
