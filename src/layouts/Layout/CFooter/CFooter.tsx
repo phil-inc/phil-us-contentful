@@ -1,3 +1,4 @@
+import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {
 	createStyles,
 	Anchor,
@@ -99,22 +100,15 @@ type FooterProps = {
 
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResource}) => {
 	const {classes} = useStyles();
-	const [opened, handlers] = useDisclosure(false);
-	// Deprecate
-	// const items = links.map(link => (
-	// 	<Anchor<'a'>
-	// 		className={classes.links}
-	// 		key={link.label}
-	// 		href={link.link}
-	// 		sx={{lineHeight: 1}}
-	// 		onClick={event => {
-	// 			event.preventDefault();
-	// 		}}
-	// 		size='sm'
-	// 	>
-	// 		{link.label}
-	// 	</Anchor>
-	// ));
+	// Create form
+	const {loaded, formCreated} = useHubspotForm({
+		target: '.hubspotForm',
+		...{
+			region: 'na1',
+			portalId: '20880193',
+			formId: 'af4535b2-dc53-4b71-b711-a7e546233d81',
+		},
+	});
 
 	console.log({allContentfulFooter, allContentfulResource});
 	const [footer] = allContentfulFooter.nodes;
@@ -174,30 +168,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 					))}
 					<Grid.Col span={3}>
 						<Box sx={{width: '80%'}}>
-							<Text size={'lg'} className={classes.footLinkHeader}>
-								Newsletter
-							</Text>
-
-							<Divider my={10} color='dark' />
-							<form
-								onSubmit={form.onSubmit(values => {
-									console.log(values);
-								})}
-							>
-								<TextInput
-									radius={0}
-									mb={16}
-									required
-									label='Your Email'
-									placeholder='user@domail.url'
-									value={form.values.email}
-									onChange={event => {
-										form.setFieldValue('email', event.currentTarget.value);
-									}}
-									error={form.errors.email && 'Invalid email'}
-								/>
-								<Button type='submit'>Subscribe</Button>
-							</form>
+							<div className='hubspotForm'></div>
 						</Box>
 					</Grid.Col>
 				</Grid>
@@ -251,30 +222,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 						))}
 					</Accordion>
 					<Box>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Newsletter
-						</Text>
-
-						<Divider my={10} color='#6A7979' />
-						<form
-							onSubmit={form.onSubmit(values => {
-								console.log(values);
-							})}
-						>
-							<TextInput
-								radius={0}
-								mb={16}
-								required
-								label='Your Email'
-								placeholder='user@domail.url'
-								value={form.values.email}
-								onChange={event => {
-									form.setFieldValue('email', event.currentTarget.value);
-								}}
-								error={form.errors.email && 'Invalid email'}
-							/>
-							<Button type='submit'>Subscribe</Button>
-						</form>
+						<div className='hubspotForm'></div>
 					</Box>
 				</Box>
 			</Container>
