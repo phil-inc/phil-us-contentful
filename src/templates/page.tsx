@@ -221,7 +221,7 @@ export const pageQuery = graphql`
 						author
 						designation
 						asset {
-							gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
+							gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
 							id
 							file {
 								contentType

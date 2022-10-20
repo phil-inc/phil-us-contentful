@@ -217,13 +217,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			) : (
 				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
 					{section.references.map((resource, index) => (
-						<Grid.Col
-							py={30}
-							key={index}
-							lg={getSpan()}
-							sm={GRID_COLUMNS}
-							md={section.references?.length > 1 ? GRID_COLUMNS / 2 : GRID_COLUMNS}
-						>
+						<Grid.Col py={30} key={index} lg={getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
 							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}
