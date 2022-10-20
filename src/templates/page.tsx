@@ -6,6 +6,9 @@ import {graphql, Script} from 'gatsby';
 import slugify from 'slugify';
 import {SEO} from 'layouts/SEO/SEO';
 import {useInternalPaths} from 'hooks/useInternalPaths';
+import {Box, Grid, Title, Container, TextInput, Button} from '@mantine/core';
+import {IconSearch} from '@tabler/icons';
+import Expanded from 'components/common/Expanded/Expanded';
 
 type HelmetProps = {
 	pageContext: {title: string};
@@ -31,6 +34,37 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
+			{title === 'Resources' && (
+				<Expanded id={id}>
+					<Grid align='center'>
+						<Grid.Col span={6}>
+							<Box>
+								<Title order={2}>Resources</Title>
+							</Box>
+						</Grid.Col>
+						<Grid.Col span={6}>
+							<Container fluid>
+								<Grid>
+									<Grid.Col span={10}>
+										<TextInput
+											radius={0}
+											icon={<IconSearch size={18} stroke={1.5} />}
+											size='md'
+											placeholder='Search'
+											rightSectionWidth={42}
+										/>
+									</Grid.Col>
+									<Grid.Col span={2}>
+										<Button color='dark' size='md'>
+											Search
+										</Button>
+									</Grid.Col>
+								</Grid>
+							</Container>
+						</Grid.Col>
+					</Grid>
+				</Expanded>
+			)}
 			{sections
 				.filter(section => !section.isHidden)
 				.map(section => (

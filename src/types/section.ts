@@ -34,6 +34,8 @@ export type ISection = {
 	isHidden: boolean;
 };
 
+export type ResourceBlocks = 'Upcoming Events' | 'Phil Blog' | 'Case Study' | 'White Paper';
+
 type ReferenceType =
 	| 'Article'
 	| 'Customer Story'
@@ -42,17 +44,14 @@ type ReferenceType =
 	| 'Team Member'
 	| 'Press Release'
 	| 'Location'
-	| 'Upcoming Events'
-	| 'Phil Blog'
-	| 'Case Study'
-	| 'White Paper'
 	| 'Banner'
 	| 'Stats Card'
 	| 'Prescriber Journey'
 	| 'Info Card'
 	| 'FAQs'
 	| 'Image Carousel'
-	| 'Investors';
+	| 'Investors'
+	| ResourceBlocks;
 
 export type IReferencedSection = {
 	id: string;
