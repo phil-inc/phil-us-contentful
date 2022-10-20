@@ -36,14 +36,14 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 		<Layout>
 			{title === 'Resources' && (
 				<Expanded id={id}>
-					<Grid align='center'>
+					<Grid align='center' justify='space-between'>
 						<Grid.Col span={6}>
 							<Box>
 								<Title order={2}>Resources</Title>
 							</Box>
 						</Grid.Col>
 						<Grid.Col span={6}>
-							<Container fluid>
+							<Container fluid pr={8}>
 								<Grid>
 									<Grid.Col span={10}>
 										<TextInput
@@ -54,8 +54,8 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 											rightSectionWidth={42}
 										/>
 									</Grid.Col>
-									<Grid.Col span={2}>
-										<Button color='dark' size='md'>
+									<Grid.Col span={2} pr={0}>
+										<Button color='dark' size='md' fullWidth>
 											Search
 										</Button>
 									</Grid.Col>
