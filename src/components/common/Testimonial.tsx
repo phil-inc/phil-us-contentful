@@ -11,6 +11,8 @@ const useStyles = createStyles(theme => ({
 		overflow: 'hidden',
 		fontFamily: 'Raleway',
 		fontSize: '26px',
+		height: '100%',
+		display: 'flex',
 	},
 	author: {
 		fontFamily: 'Lato',
@@ -22,8 +24,8 @@ const useStyles = createStyles(theme => ({
 		fontSize: '16px',
 	},
 	testimonialImage: {
-		height: '100%',
 		width: '100%',
+		height : '100%'
 	},
 }));
 
