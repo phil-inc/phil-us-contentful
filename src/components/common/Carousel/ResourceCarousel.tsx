@@ -45,7 +45,7 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 			<Paper radius={0} className={classNames(classes.card)}>
 				<Grid>
 					<Grid.Col lg={12} sm={12} md={12}>
-						<GatsbyImage objectFit="cover" image={getImage(item.asset)} alt={item.heading} />
+						<GatsbyImage objectFit='cover' image={getImage(item.asset)} alt={item.heading} />
 					</Grid.Col>
 				</Grid>
 			</Paper>
@@ -53,10 +53,10 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 	));
 	return (
 		<Carousel
-			slideSize="35%"
+			slideSize='35%'
 			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 3}]}
-			slideGap="sm"
-			align="start"
+			slideGap='sm'
+			align='start'
 			slidesToScroll={mobile ? 1 : 2}
 			withIndicators
 		>

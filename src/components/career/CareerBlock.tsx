@@ -1,21 +1,23 @@
-import {Box, Divider, Title} from '@mantine/core';
+import {Box, Divider, Title, Text} from '@mantine/core';
 import React from 'react';
-import type {Listing} from 'types/careerPage';
+import type {TResource} from 'types/resource';
 import CareerArticle from './CareerArticle';
 
 type CareerBlockProps = {
 	title: string;
-	listings: Listing[];
+	listings: TResource[];
 };
 
 const CareerBlock: React.FC<CareerBlockProps> = ({title, listings}) => (
 	<>
-		<Title order={3}>{title}</Title>
-		<Divider variant="dashed" size={2} my={10} mb={32} />
-		{Boolean(listings) &&
-			listings.map(listing => (
+		<Title order={3}>
+			<Text>{title}</Text>
+		</Title>
+		<Divider variant='dashed' size={2} my={10} mb={32} />
+		{Boolean(listings)
+			&& listings.map(listing => (
 				<Box mb={50}>
-					<CareerArticle title={listing.title} location={listing.location} link={listing.link} />
+					<CareerArticle listing={listing} />
 				</Box>
 			))}
 	</>

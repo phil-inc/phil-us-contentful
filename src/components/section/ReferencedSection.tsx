@@ -148,11 +148,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						noDivider={section.referenceType === 'Info Card'}
 						pr={section.referenceType === 'Featured Resource' ? 50 : 0}
 						resourceBackground={resourceBackground}
-						title={resource.heading}
-						asset={resource.asset}
-					>
-						{resource.body && renderRichText(resource.body)}
-					</Featured>
+						resource={resource}
+					/>
 				);
 
 			case 'Banner':
@@ -173,7 +170,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Investors':
 				return (
 					<Container size={300}>
-						<GatsbyImage image={getImage(resource.asset)} alt="" />
+						<GatsbyImage image={getImage(resource.asset)} alt='' />
 					</Container>
 				);
 
@@ -194,23 +191,23 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			background={background}
 			py={section.referenceType === 'Banner' ? 0 : 116}
 		>
-			{Boolean(section.header?.length) &&
-				Boolean(!section.hideHeader) &&
-				(section.referenceType === 'Case Study' ||
-				section.referenceType === 'Phil Blog' ||
-				section.referenceType === 'White Paper' ||
-				section.referenceType === 'Upcoming Events' ? (
-					<Box>
-						<Title order={3}>{section.header}</Title>
-						<Divider variant="dashed" size={1} className={classes.divider} />
-					</Box>
-				) : (
-					<Group position="center" mb={60}>
-						<Title order={2} color={textColor}>
-							{section.header}
-						</Title>
-					</Group>
-				))}
+			{Boolean(section.header?.length)
+				&& Boolean(!section.hideHeader)
+				&& (section.referenceType === 'Case Study'
+				|| section.referenceType === 'Phil Blog'
+				|| section.referenceType === 'White Paper'
+				|| section.referenceType === 'Upcoming Events' ? (
+						<Box>
+							<Title order={3}>{section.header}</Title>
+							<Divider variant='dashed' size={1} className={classes.divider} />
+						</Box>
+					) : (
+						<Group position='center' mb={60}>
+							<Title order={2} color={textColor}>
+								{section.header}
+							</Title>
+						</Group>
+					))}
 			{/* Commented out Search Bar because new design doesnot have it */}
 			{/* {section.referenceType === 'FAQs' && (
 				<Container>
@@ -244,9 +241,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				</Grid>
 			)}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group position="center">
+				<Group position='center'>
 					{isExternal ? (
-						<Anchor href={link} target="_blank">
+						<Anchor href={link} target='_blank'>
 							<Button color={'dark'}>{section.buttonText}</Button>
 						</Anchor>
 					) : (

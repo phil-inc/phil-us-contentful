@@ -15,13 +15,13 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 
 	if (section.internalLink) {
 		if (
-			section.internalLink.sys.contentType.sys.id === 'section' ||
-			section.internalLink.sys.contentType.sys.id === 'referencedSection'
+			section.internalLink.sys.contentType.sys.id === 'section'
+			|| section.internalLink.sys.contentType.sys.id === 'referencedSection'
 		) {
 			if (section.internalLink?.page[0]) {
 				link.push(slugify(section.internalLink.page[0].title, {lower: true, strict: true}));
 				link.push(
-					`#${slugify(section.internalLink.header ?? section.internalLink.id, {lower: true, strict: true})}`
+					`#${slugify(section.internalLink.header ?? section.internalLink.id, {lower: true, strict: true})}`,
 				);
 			}
 		} else if (section.internalLink.sys.contentType.sys.id === 'page') {

@@ -19,9 +19,14 @@ const Asset: React.FC<AssetProps> = ({asset}) => {
 		return <ReactPlayer url={url} width={'100%'} height={'100%'} controls />;
 	}
 
-	const pathToImage = getImage(asset);
 	const altText = asset.title || '';
 
+	// Handle SVG images
+	if (asset.file.contentType === 'image/svg+xml') {
+		return <img src={asset.file.url} alt={altText} />;
+	}
+
+	const pathToImage = getImage(asset);
 	return <GatsbyImage image={pathToImage} alt={altText} />;
 };
 

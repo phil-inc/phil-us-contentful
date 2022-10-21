@@ -131,27 +131,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	return (
 		// TODO: play around with padding for contact page style
 		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container}>
-			{/* <Group position='apart' align='flex-start' p={0} m={0} className={classes.section}>
-				<Box sx={{width: '40%'}}>
-					<Title order={titleOrdering}>{section.header}</Title>
-					{Boolean(section.subHeader?.subHeader.length) && (
-						<Title order={3} mt={40}>
-							{section.subHeader.subHeader}
-						</Title>
-					)}
-					<Divider size={3} variant='dashed' my={20} />
-					{hasRendered ? (
-						<div id='hubspotForm'></div>
-					) : (
-						<Center>
-							<Loader mt={120} size='lg' />
-						</Center>
-					)}
-				</Box>
-				<Asset asset={section.asset} />
-			</Group> */}
 			<Grid
-				gutter="xl"
+				gutter={50}
 				align={section.isHubspotEmbed ? 'flex-start' : 'center'}
 				pb={130}
 				pt={isHeroSection || isMobile ? 0 : 100}
@@ -165,12 +146,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 									{section.subHeader.subHeader}
 								</Title>
 							)}
-							<Divider size={3} variant="dashed" my={20} />
+							<Divider size={3} variant='dashed' my={20} />
 							{hasRendered ? (
-								<div id="hubspotForm"></div>
+								<div id='hubspotForm'></div>
 							) : (
 								<Center>
-									<Loader mt={120} size="lg" />
+									<Loader mt={120} size='lg' />
 								</Center>
 							)}
 						</>
@@ -178,19 +159,19 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 						<>
 							<Title order={titleOrdering}>{section.header}</Title>
 							{Boolean(section.subHeader?.subHeader.length) && (
-								<Text size={18} weight="bold" mt={20}>
+								<Text size={18} weight='bold' mt={20}>
 									{section.subHeader.subHeader}
 								</Text>
 							)}
 							{Boolean(section.body) && (
-								<Text size={18} className={classes.body}>
+								<Text size={18} className={classes.body} mt={16}>
 									{renderRichText(section.body, options)}
 								</Text>
 							)}
 							{Boolean(section.buttonText?.length) && (
-								<Group>
+								<Group mt={48}>
 									{isExternal ? (
-										<Anchor href={link} target="_blank">
+										<Anchor href={link} target='_blank'>
 											<Button>{section.buttonText}</Button>
 										</Anchor>
 									) : (

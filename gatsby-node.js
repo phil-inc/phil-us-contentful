@@ -1,6 +1,29 @@
 const slugify = require('slugify');
+const careerTemplate = require.resolve(`./src/templates/career.tsx`);
+const pageTemplate = require.resolve(`./src/templates/page.tsx`);
 
-const generateMainPages = async ({actions, graphql})=>{
+const generateMainPages = async ({actions, graphql}) => {
+	// Return page
+	const createPageObject = page => {
+		const slug = page.title === 'Home' ? '/' : slugify(page.title, {lower: true, strict: true});
+		let component;
+
+		// Choose template
+		if (page.title === 'Career') {
+			component = careerTemplate;
+		} else {
+			component = pageTemplate;
+		}
+
+		const pageObject = {
+			path: slug,
+			component: component,
+			context: {title: page.title},
+		};
+
+		return pageObject;
+	};
+
 	const {data} = await graphql(`
 		query getPages {
 			allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
@@ -70,23 +93,20 @@ const generateMainPages = async ({actions, graphql})=>{
 		}
 	`);
 
-	data.allContentfulPage.nodes.forEach(({title}) => {
-		const slug = slugify(title, {lower: true, strict: true});
+	data.allContentfulPage.nodes.forEach(page => {
+		const pageObject = createPageObject(page);
 
-		actions.createPage({
-			path: title === 'Home' ? '/' : slug,
-			component: require.resolve(`./src/templates/page.tsx`),
-			context: {title: title},
-		});
+		actions.createPage(pageObject);
 	});
+};
 
-}
-
-const generateBlogPages = async ({actions, graphql}) => {
-	const {data} = await graphql(`
-	query allBlogPages {
-		allContentfulResource(filter: {node_locale: {eq: "en-US"}, heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}}) {
+const generateStaticPages = async ({actions, graphql}) => {
+	const {data} = await graphql(`query allBlogPages {
+		allContentfulResource(
+		  filter: {node_locale: {eq: "en-US"}, heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}, generateStaticPage: {eq: true}}
+		) {
 		  nodes {
+			slug
 			author
 			buttonText
 			designation
@@ -97,6 +117,33 @@ const generateBlogPages = async ({actions, graphql}) => {
 			subHeading {
 			  subHeading
 			}
+			asset {
+				gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+				title
+				file {
+					contentType
+					details {
+						size
+					}
+					url
+				}
+			}
+			body {
+			  raw
+			  references {
+						  contentful_id
+						  __typename
+						  description
+						  gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+							file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+					  }
+			}
 			sys {
 			  contentType {
 				sys {
@@ -105,6 +152,7 @@ const generateBlogPages = async ({actions, graphql}) => {
 				}
 			  }
 			}
+			generateStaticPage
 			relatesTo {
 			  ... on ContentfulReferencedSection {
 				id
@@ -126,25 +174,41 @@ const generateBlogPages = async ({actions, graphql}) => {
 		  }
 		}
 	  }
-	`);
+`);
 
-	data.allContentfulResource.nodes.filter((resource) => resource.relatesTo).forEach(resource => {
-		if (Boolean(resource.relatesTo && resource.heading)) {
-			const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(resource.relatesTo?.header, {lower: true, strict: true})}/${slugify(resource.heading, {
-				lower: true,
-				strict: true,
-			})}`;
+	data.allContentfulResource.nodes
+		.forEach(resource => {
+			try {
+				const isBlogPage = Boolean(resource.relatesTo && resource.relatesTo.page && resource.heading)
+				let path =  resource.slug ?? `/${slugify(resource.heading, {
+					lower: true,
+					strict: true,
+				})}`
 
-			actions.createPage({
-				path: path,
-				component: require.resolve(`./src/templates/blog.tsx`),
-				context: {title: resource.heading},
-			});
-		}
-	});
-}
+				if (isBlogPage) {
+					path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
+						resource.relatesTo?.header,
+						{lower: true, strict: true}
+					)}/${slugify(resource.heading, {
+						lower: true,
+						strict: true,
+					})}`;
+	
+					
+				}
+
+				actions.createPage({
+					path: path,
+					component: require.resolve(`./src/templates/blog.tsx`),
+					context: resource,
+				});
+			} catch (error) {
+				console.log("Error creating page: ", resource.heading)
+			}
+		});
+};
 
 exports.createPages = async function (props) {
-	await generateMainPages(props)
-	await generateBlogPages(props)
+	await generateMainPages(props);
+	await generateStaticPages(props);
 };

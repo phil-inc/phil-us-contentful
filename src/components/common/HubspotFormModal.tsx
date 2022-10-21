@@ -23,6 +23,8 @@ const HubspotFormModal = ({hubspotEmbed}) => {
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	if (hubspotEmbed) {
 		const object: any = parseScript(hubspotEmbed);
+		// TODO: Fix type later
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const [formProps] = object;
 
 		// Create form
@@ -41,10 +43,10 @@ const HubspotFormModal = ({hubspotEmbed}) => {
 		// TODO: play around with padding for contact page style
 		<Container fluid className={classes.container}>
 			{hasRendered ? (
-				<div id="hubspotForm"></div>
+				<div id='hubspotForm'></div>
 			) : (
 				<Center>
-					<Loader mt={120} size="lg" />
+					<Loader mt={120} size='lg' />
 				</Center>
 			)}
 		</Container>

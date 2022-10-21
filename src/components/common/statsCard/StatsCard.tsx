@@ -37,19 +37,19 @@ export const StatsCard: FC<StatsCardProps> = ({resource: {asset, heading, body}}
 	const {classes} = useStyles();
 
 	return (
-		<Card shadow="none" p="xl" radius={0} className={classes.card}>
+		<Card shadow='none' p='xl' radius={0} className={classes.card}>
 			<Card.Section>
 				<Asset asset={asset} />
 			</Card.Section>
 
 			{heading && (
-				<Title mt="md" className={classes.percentage}>
+				<Title mt='md' className={classes.percentage}>
 					{heading}
 				</Title>
 			)}
 
 			{body && (
-				<Text color="dark" className={classes.description}>
+				<Text color='dark' className={classes.description} p={30}>
 					{renderRichText(body)}
 				</Text>
 			)}

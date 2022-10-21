@@ -62,23 +62,23 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 			<Grid align={'center'}>
 				<Grid.Col lg={10} sm={12}>
 					<Container m={0}>
-						<Title order={3} mt="md">
+						<Title order={3} mt='md'>
 							{heading}
 						</Title>
-						<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
+						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
 						{body && (
-							<Text size="md" mt="sm" mb={11}>
+							<Text size='md' mt='sm' mb={11}>
 								{renderRichText(body)}
 							</Text>
 						)}
 					</Container>
 				</Grid.Col>
-				{Boolean(buttonText?.length) &&
-					(isHubspotEmbed ? (
+				{Boolean(buttonText?.length)
+					&& (isHubspotEmbed ? (
 						<Grid.Col lg={2} sm={12}>
 							<Group>
 								<Modal
-									size="ls"
+									size='ls'
 									opened={openHubspotModal}
 									onClose={() => {
 										setopenHubspotModal(false);
@@ -101,7 +101,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 							<Grid.Col lg={2} sm={12}>
 								<Group>
 									{isExternal ? (
-										<Anchor href={link} target="_blank">
+										<Anchor href={link} target='_blank'>
 											<Button color={'dark'}>{buttonText}</Button>
 										</Anchor>
 									) : (

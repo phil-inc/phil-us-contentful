@@ -1,3 +1,4 @@
+import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {
 	createStyles,
 	Anchor,
@@ -99,22 +100,15 @@ type FooterProps = {
 
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResource}) => {
 	const {classes} = useStyles();
-	const [opened, handlers] = useDisclosure(false);
-	// Deprecate
-	// const items = links.map(link => (
-	// 	<Anchor<'a'>
-	// 		className={classes.links}
-	// 		key={link.label}
-	// 		href={link.link}
-	// 		sx={{lineHeight: 1}}
-	// 		onClick={event => {
-	// 			event.preventDefault();
-	// 		}}
-	// 		size='sm'
-	// 	>
-	// 		{link.label}
-	// 	</Anchor>
-	// ));
+	// Create form
+	const {loaded, formCreated} = useHubspotForm({
+		target: '.hubspotForm',
+		...{
+			region: 'na1',
+			portalId: '20880193',
+			formId: 'af4535b2-dc53-4b71-b711-a7e546233d81',
+		},
+	});
 
 	console.log({allContentfulFooter, allContentfulResource});
 	const [footer] = allContentfulFooter.nodes;
@@ -144,19 +138,19 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 										{page.title}
 									</Text>
 								</Link>
-								<Divider my={10} color="dark" />
+								<Divider my={10} color='dark' />
 								{page.sections
 									.filter(section => section.header?.length)
 									.map(section => (
 										<>
-											<List listStyleType="none">
+											<List listStyleType='none'>
 												<List.Item>
 													<Link
 														to={
 															(page.title === 'Home'
 																? ''
-																: `/${slugify(page.title, {lower: true, strict: true})}`) +
-															`/#${slugify(section.header, {
+																: `/${slugify(page.title, {lower: true, strict: true})}`)
+															+ `/#${slugify(section.header, {
 																lower: true,
 																strict: true,
 															})}`
@@ -177,27 +171,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 							<Text size={'lg'} className={classes.footLinkHeader}>
 								Newsletter
 							</Text>
-
-							<Divider my={10} color="dark" />
-							<form
-								onSubmit={form.onSubmit(values => {
-									console.log(values);
-								})}
-							>
-								<TextInput
-									radius={0}
-									mb={16}
-									required
-									label="Your Email"
-									placeholder="user@domail.url"
-									value={form.values.email}
-									onChange={event => {
-										form.setFieldValue('email', event.currentTarget.value);
-									}}
-									error={form.errors.email && 'Invalid email'}
-								/>
-								<Button type="submit">Subscribe</Button>
-							</form>
+							<div className='hubspotForm'></div>
 						</Box>
 					</Grid.Col>
 				</Grid>
@@ -211,7 +185,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 								style={{padding: 'auto 0px', borderBottom: '1px solid #6A7979'}}
 							>
 								<Accordion.Control px={0}>
-									<Text weight="bold" size={18}>
+									<Text weight='bold' size={18}>
 										{page.title}
 									</Text>
 								</Accordion.Control>
@@ -228,15 +202,15 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 																	to={
 																		(page.title === 'Home'
 																			? ''
-																			: `/${slugify(page.title, {lower: true, strict: true})}`) +
-																		`/#${slugify(section.header, {
+																			: `/${slugify(page.title, {lower: true, strict: true})}`)
+																		+ `/#${slugify(section.header, {
 																			lower: true,
 																			strict: true,
 																		})}`
 																	}
 																	style={{textDecoration: 'none'}}
 																>
-																	<Text size={16} color="dark">
+																	<Text size={16} color='dark'>
 																		{section.header}
 																	</Text>
 																</Link>
@@ -254,27 +228,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 						<Text size={'lg'} className={classes.footLinkHeader}>
 							Newsletter
 						</Text>
-
-						<Divider my={10} color="#6A7979" />
-						<form
-							onSubmit={form.onSubmit(values => {
-								console.log(values);
-							})}
-						>
-							<TextInput
-								radius={0}
-								mb={16}
-								required
-								label="Your Email"
-								placeholder="user@domail.url"
-								value={form.values.email}
-								onChange={event => {
-									form.setFieldValue('email', event.currentTarget.value);
-								}}
-								error={form.errors.email && 'Invalid email'}
-							/>
-							<Button type="submit">Subscribe</Button>
-						</form>
+						<div className='hubspotForm'></div>
 					</Box>
 				</Box>
 			</Container>
