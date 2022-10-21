@@ -1,5 +1,5 @@
 import {Grid} from '@mantine/core';
-import {ResourceCard} from 'components/common/Resources/ResourceCard';
+import {FAQ} from 'components/common/FAQ';
 import {graphql, StaticQuery} from 'gatsby';
 import React from 'react';
 import type {TResource} from 'types/resource';
@@ -13,7 +13,7 @@ const RenderAllBlogs: React.FC<RenderAllBlogsProps> = ({allContentfulResource}) 
 		<Grid>
 			{allContentfulResource.nodes.map(resource => (
 				<Grid.Col py={30} key={resource.id} lg={6} md={12} sm={12}>
-					<ResourceCard sectionHeader={'Phil Blog'} resource={resource} />
+					<FAQ resource={resource} />
 				</Grid.Col>
 			))}
 		</Grid>
@@ -21,13 +21,13 @@ const RenderAllBlogs: React.FC<RenderAllBlogsProps> = ({allContentfulResource}) 
 );
 
 export const query = graphql`
-	query allBlogPages {
+	query allFAQPages {
 		allContentfulResource(
 			filter: {
 				node_locale: {eq: "en-US"}
 				heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}
 				generateStaticPage: {eq: true}
-				isFaq: {ne: true}
+				isFaq: {eq: true}
 			}
 		) {
 			nodes {
@@ -38,27 +38,6 @@ export const query = graphql`
 				heading
 				id
 				description
-				internalLink {
-					... on ContentfulResource {
-						id
-						heading
-						sys {
-							contentType {
-								sys {
-									id
-									type
-								}
-							}
-						}
-						slug
-						description
-						externalLink
-						body {
-							raw
-						}
-						author
-					}
-				}
 				externalLink
 				subHeading {
 					subHeading
@@ -118,9 +97,30 @@ export const query = graphql`
 						}
 					}
 				}
+				internalLink {
+					... on ContentfulResource {
+						id
+						heading
+						sys {
+							contentType {
+								sys {
+									id
+									type
+								}
+							}
+						}
+						slug
+						description
+						externalLink
+						body {
+							raw
+						}
+						author
+					}
+				}
 			}
 		}
 	}
 `;
 
-export const BlogSection: React.FC = () => <StaticQuery query={query} render={RenderAllBlogs} />;
+export const FAQSection: React.FC = () => <StaticQuery query={query} render={RenderAllBlogs} />;

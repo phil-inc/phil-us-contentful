@@ -28,11 +28,11 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 			link.push(slugify(section.internalLink.title, {lower: true, strict: true}));
 		} else if (section.internalLink.sys.contentType.sys.id === 'resource') {
 			const paths = useInternalPaths();
-			const [blog] = paths.filter(path => path.title === section.internalLink.heading);
+			const [staticPage] = paths.filter(path => path.title === section.internalLink.heading);
 
 			// Referencing a internal link but not relating it to a section
 			// can cause issues which is mitigated by # link
-			return {link: blog?.path ?? '#', isExternal: false};
+			return {link: staticPage?.path ?? '#', isExternal: false};
 		}
 
 		if (link.length <= 0) {

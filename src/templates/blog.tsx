@@ -69,9 +69,11 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 						<Title order={2} mb={36}>
 							{heading}
 						</Title>
-						<Container size='sm' style={{float: 'right', padding: '30px'}}>
-							<Asset asset={asset} />
-						</Container>
+						{asset && (
+							<Container size='sm' style={{float: 'right', padding: '30px'}}>
+								<Asset asset={asset} />
+							</Container>
+						)}
 						<Text size={18} className={classes.body}>
 							{body && renderRichText(body, options)}
 						</Text>

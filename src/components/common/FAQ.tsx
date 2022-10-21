@@ -1,7 +1,10 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid, Group} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid, Group, Anchor} from '@mantine/core';
 import classNames from 'classnames';
+import {Link} from 'gatsby';
 import type {FC} from 'react';
 import React from 'react';
+import type {TResource} from 'types/resource';
+import {getLink} from 'utils/getLink';
 
 const useStyles = createStyles(theme => ({
 	FAQWrapper: {
@@ -26,21 +29,47 @@ const useStyles = createStyles(theme => ({
 			background: 'linear-gradient(to left, #FFF 50%, #EDBE3D 0%)',
 		},
 	},
+	title: {
+		textDecoration: 'none',
+		color: '#00201F',
+
+		'&:hover': {
+			color: '#EDBE3D',
+		},
+	},
 }));
 
 type FAQProps = {
-	title?: string;
+	resource: TResource;
 };
 
-export const FAQ: FC<FAQProps> = ({title}) => {
+export const FAQ: FC<FAQProps> = ({resource}) => {
 	const {classes} = useStyles();
+	const {link, isExternal} = getLink(resource);
+	console.log(
+		resource.heading === 'How can offices change their default preference and frequency of receiving updates?'
+			? resource
+			: '',
+	);
 
 	return (
 		<Paper radius={0} className={classNames(classes.FAQWrapper)}>
 			<Group align='center'>
-				<Title order={4} size={30}>
-					{title}
-				</Title>
+				<Group>
+					{isExternal ? (
+						<Anchor href={link} target='_blank' className={classes.title} underline={false}>
+							<Title order={4} size={30} className={classes.title}>
+								{resource.heading}
+							</Title>
+						</Anchor>
+					) : (
+						<Link to={link} className={classes.title}>
+							<Title order={4} size={30} className={classes.title}>
+								{resource.heading}
+							</Title>
+						</Link>
+					)}
+				</Group>
 			</Group>
 		</Paper>
 	);

@@ -2,7 +2,7 @@ import {graphql, useStaticQuery} from 'gatsby';
 
 type PageProps = {
 	pages: {
-		nodes: Array<{path: string; pageContext: {title: string}}>;
+		nodes: Array<{path: string; pageContext: {title: string; heading: string}}>;
 	};
 };
 
@@ -23,5 +23,5 @@ export const useInternalPaths = (): PathResponse[] => {
 		}
 	`);
 
-	return pages.nodes.map(node => ({path: node.path, title: node.pageContext.title}));
+	return pages.nodes.map(node => ({path: node.path, title: node.pageContext.heading ?? node.pageContext.title}));
 };
