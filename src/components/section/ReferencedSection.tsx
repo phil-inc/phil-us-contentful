@@ -21,6 +21,7 @@ import type {IReferencedSection} from 'types/section';
 import {getLink} from 'utils/getLink';
 import slugify from 'slugify';
 import {CardWithImage} from 'components/common/CardWithImage';
+import {BlogSection} from 'components/Blog/BlogSection';
 
 const useStyles = createStyles(theme => ({
 	divider: {
@@ -231,6 +232,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			)} */}
 			{section.referenceType === 'Image Carousel' ? (
 				<ResourceCarousel imageCaraouselSection={section} />
+			) : section.referenceType === 'Phil Blog' ? (
+				<BlogSection />
 			) : (
 				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
 					{section.references.map((resource, index) => (
