@@ -92,6 +92,11 @@ const useStyles = createStyles(theme => ({
 		width: '100%',
 		margin: 0,
 	},
+
+	textDecorationNone: {
+		textDecoration: 'none',
+		color: 'white',
+	},
 }));
 
 type FooterProps = {
@@ -248,7 +253,20 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 			{/* Bottom Footer */}
 			<Container fluid style={{background: '#00827E'}} py={14}>
 				<Center>
-					<Text color={'#FFF'}>© Phil, Inc. | Terms of Use | Privacy Policy | HIPAA Notice</Text>
+					<Text color={'#FFF'}>
+						© Phil, Inc. |{' '}
+						<Link to='/terms' className={classes.textDecorationNone}>
+							Terms of Use
+						</Link>{' '}
+						|{' '}
+						<Link to='/privacy' className={classes.textDecorationNone}>
+							Privacy Policy
+						</Link>{' '}
+						|{' '}
+						<Link to='/hipaa' className={classes.textDecorationNone}>
+							HIPAA Notice
+						</Link>
+					</Text>
 				</Center>
 			</Container>
 		</>

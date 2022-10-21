@@ -405,7 +405,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 										.filter(page => page.title === target)
 										.map(page =>
 											page.sections
-												.filter(section => Boolean(section.header?.length))
+												.filter(section => Boolean(section.header?.length && !section.isHidden))
 												.map((section, index, array) => (
 													<Grid.Col span={Math.floor(100 / array.length)}>
 														<List.Item key={index}>
@@ -494,10 +494,12 @@ const query = graphql`
 						... on ContentfulReferencedSection {
 							id
 							header
+							isHidden
 						}
 						... on ContentfulSection {
 							id
 							header
+							isHidden
 						}
 					}
 				}
