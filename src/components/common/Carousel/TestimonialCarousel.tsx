@@ -1,18 +1,17 @@
 import {Carousel} from '@mantine/carousel';
+import {createStyles, useMantineTheme} from '@mantine/core';
 import {useMediaQuery} from '@mantine/hooks';
-import {createStyles, Paper, Text, Title, Button, useMantineTheme, Grid} from '@mantine/core';
-import React from 'react';
+import {Testimonial} from 'components/common/Testimonial';
+import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
-import classNames from 'classnames';
-import type {TAsset} from 'types/asset';
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
+import React from 'react';
 import type {IReferencedSection} from 'types/section';
 
-type ResourceCarouselProps = {
-	imageCaraouselSection: IReferencedSection;
+type TestimonialCarouselProps = {
+	section: IReferencedSection;
 };
 
-export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSection}) => {
+export const TestimonialCarousel: FC<TestimonialCarouselProps> = ({section}) => {
 	const useStyles = createStyles(theme => ({
 		card: {
 			position: 'relative',
@@ -34,20 +33,27 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 			width: '100%',
 			background: '#00827E',
 		},
+		testimonialImage: {
+			height: '100%',
+			width: '100%',
+		},
 	}));
 
 	const {classes} = useStyles();
 
 	const theme = useMantineTheme();
-	const slides = imageCaraouselSection.references.map(item => (
+	const isMobile = useMediaQuery('(max-width: 576px)', false, {getInitialValueInEffect: false});
+
+	const slides = section.references.map(item => (
 		<Carousel.Slide key={item.heading}>
-			<Paper radius={0} className={classNames(classes.card)}>
-				<Grid>
-					<Grid.Col lg={12} sm={12} md={12}>
-						<GatsbyImage objectFit='cover' image={getImage(item.asset)} alt={item.heading} />
-					</Grid.Col>
-				</Grid>
-			</Paper>
+			<Testimonial
+				type={section.referenceType === 'Testimonial' ? 'person' : 'company'}
+				image={item.asset}
+				author={item.author}
+				designation={item.designation}
+			>
+				{item.body && renderRichText(item.body)}
+			</Testimonial>
 		</Carousel.Slide>
 	));
 	return (
@@ -55,11 +61,11 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 			slideSize='50%'
 			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 'sm'}]}
 			slideGap='sm'
-			align='center'
-			withIndicators
-			slidesToScroll={1}
+			align='start'
 			loop
 			dragFree
+			withIndicators
+			slidesToScroll={isMobile ? 1 : 2}
 		>
 			{slides}
 		</Carousel>

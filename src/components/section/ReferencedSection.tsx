@@ -12,6 +12,7 @@ import {StatsCard} from 'components/common/statsCard/StatsCard';
 import Profile from 'components/common/Team/Profile';
 import {Testimonial} from 'components/common/Testimonial';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
+import {TestimonialCarousel} from 'components/common/Carousel/TestimonialCarousel';
 import {Link} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
