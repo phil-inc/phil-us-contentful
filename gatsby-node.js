@@ -100,80 +100,115 @@ const generateMainPages = async ({actions, graphql}) => {
 	});
 };
 
-const generateBlogPages = async ({actions, graphql}) => {
-	const {data} = await graphql(`
-		query allBlogPages {
-			allContentfulResource(
-				filter: {
-					node_locale: {eq: "en-US"}
-					heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}
-				}
-			) {
-				nodes {
-					author
-					buttonText
-					designation
-					heading
-					id
-					description
-					externalLink
-					subHeading {
-						subHeading
+const generateStaticPages = async ({actions, graphql}) => {
+	const {data} = await graphql(`query allBlogPages {
+		allContentfulResource(
+		  filter: {node_locale: {eq: "en-US"}, heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}, generateStaticPage: {eq: true}}
+		) {
+		  nodes {
+			slug
+			author
+			buttonText
+			designation
+			heading
+			id
+			description
+			externalLink
+			subHeading {
+			  subHeading
+			}
+			asset {
+				gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+				title
+				file {
+					contentType
+					details {
+						size
 					}
-					sys {
-						contentType {
-							sys {
-								id
-								type
-							}
-						}
-					}
-					relatesTo {
-						... on ContentfulReferencedSection {
-							id
-							header
-							page {
-								id
-								title
-							}
-						}
-						... on ContentfulSection {
-							id
-							header
-							page {
-								id
-								title
-							}
-						}
-					}
+					url
 				}
 			}
+			body {
+			  raw
+			  references {
+						  contentful_id
+						  __typename
+						  description
+						  gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+							file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+					  }
+			}
+			sys {
+			  contentType {
+				sys {
+				  id
+				  type
+				}
+			  }
+			}
+			generateStaticPage
+			relatesTo {
+			  ... on ContentfulReferencedSection {
+				id
+				header
+				page {
+				  id
+				  title
+				}
+			  }
+			  ... on ContentfulSection {
+				id
+				header
+				page {
+				  id
+				  title
+				}
+			  }
+			}
+		  }
 		}
-	`);
+	  }
+`);
 
 	data.allContentfulResource.nodes
-		.filter(resource => resource.relatesTo !== null && resource.relatesTo.page !== null)
 		.forEach(resource => {
-			if (Boolean(resource.relatesTo && resource.heading)) {
-				console.log(resource.relatesTo, resource.heading)
-				const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
-					resource.relatesTo?.header,
-					{lower: true, strict: true}
-				)}/${slugify(resource.heading, {
+			try {
+				const isBlogPage = Boolean(resource.relatesTo && resource.relatesTo.page && resource.heading)
+				let path =  resource.slug ?? `/${slugify(resource.heading, {
 					lower: true,
 					strict: true,
-				})}`;
+				})}`
+
+				if (isBlogPage) {
+					path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
+						resource.relatesTo?.header,
+						{lower: true, strict: true}
+					)}/${slugify(resource.heading, {
+						lower: true,
+						strict: true,
+					})}`;
+	
+					
+				}
 
 				actions.createPage({
 					path: path,
 					component: require.resolve(`./src/templates/blog.tsx`),
-					context: {title: resource.heading},
+					context: resource,
 				});
+			} catch (error) {
+				console.log("Error creating page: ", resource.heading)
 			}
 		});
 };
 
 exports.createPages = async function (props) {
 	await generateMainPages(props);
-	await generateBlogPages(props);
+	await generateStaticPages(props);
 };
