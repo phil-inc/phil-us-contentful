@@ -38,6 +38,8 @@ export const query = graphql`
 				isFaq: {ne: true}
 			}
 		) {
+			totalCount
+
 			nodes {
 				slug
 				author
