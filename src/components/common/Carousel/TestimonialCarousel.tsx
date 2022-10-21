@@ -42,7 +42,7 @@ export const TestimonialCarousel: FC<TestimonialCarouselProps> = ({section}) => 
 	const {classes} = useStyles();
 
 	const theme = useMantineTheme();
-	const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
+	const isMobile = useMediaQuery('(max-width: 576px)', false, {getInitialValueInEffect: false});
 
 	const slides = section.references.map(item => (
 		<Carousel.Slide key={item.heading}>
@@ -58,13 +58,14 @@ export const TestimonialCarousel: FC<TestimonialCarouselProps> = ({section}) => 
 	));
 	return (
 		<Carousel
-			slideSize="50%"
-			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 4}]}
-			slideGap="sm"
-			align="start"
-			slidesToScroll={mobile ? 1 : 2}
-            dragFree
+			slideSize='50%'
+			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 'sm'}]}
+			slideGap='sm'
+			align='start'
+			loop
+			dragFree
 			withIndicators
+			slidesToScroll={isMobile ? 1 : 2}
 		>
 			{slides}
 		</Carousel>

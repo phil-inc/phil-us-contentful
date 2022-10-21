@@ -39,7 +39,6 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 	const {classes} = useStyles();
 
 	const theme = useMantineTheme();
-	const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
 	const slides = imageCaraouselSection.references.map(item => (
 		<Carousel.Slide key={item.heading}>
 			<Paper radius={0} className={classNames(classes.card)}>
@@ -53,12 +52,14 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 	));
 	return (
 		<Carousel
-			slideSize='35%'
-			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 3}]}
+			slideSize='50%'
+			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 'sm'}]}
 			slideGap='sm'
-			align='start'
-			slidesToScroll={mobile ? 1 : 2}
+			align='center'
 			withIndicators
+			slidesToScroll={1}
+			loop
+			dragFree
 		>
 			{slides}
 		</Carousel>
