@@ -40,11 +40,13 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 	const richTextImages = {};
 
-	// eslint-disable-next-line array-callback-return
-	body.references.map((reference: any) => {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		richTextImages[reference.contentful_id] = {image: reference.gatsbyImageData, alt: reference.title};
-	});
+	if (body) {
+		// eslint-disable-next-line array-callback-return
+		body.references.map((reference: any) => {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+			richTextImages[reference.contentful_id] = {image: reference.gatsbyImageData, alt: reference.title};
+		});
+	}
 
 	const options = {
 		renderNode: {
