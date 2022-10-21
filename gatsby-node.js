@@ -152,7 +152,7 @@ const generateBlogPages = async ({actions, graphql}) => {
 	`);
 
 	data.allContentfulResource.nodes
-		.filter(resource => resource.relatesTo !== null)
+		.filter(resource => resource.relatesTo !== null && resource.relatesTo.page !== null)
 		.forEach(resource => {
 			if (Boolean(resource.relatesTo && resource.heading)) {
 				console.log(resource.relatesTo, resource.heading)
