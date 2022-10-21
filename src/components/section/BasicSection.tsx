@@ -151,7 +151,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				<Asset asset={section.asset} />
 			</Group> */}
 			<Grid
-				gutter='xl'
+				gutter="xl"
 				align={section.isHubspotEmbed ? 'flex-start' : 'center'}
 				pb={130}
 				pt={isHeroSection || isMobile ? 0 : 100}
@@ -165,12 +165,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 									{section.subHeader.subHeader}
 								</Title>
 							)}
-							<Divider size={3} variant='dashed' my={20} />
+							<Divider size={3} variant="dashed" my={20} />
 							{hasRendered ? (
-								<div id='hubspotForm'></div>
+								<div id="hubspotForm"></div>
 							) : (
 								<Center>
-									<Loader mt={120} size='lg' />
+									<Loader mt={120} size="lg" />
 								</Center>
 							)}
 						</>
@@ -178,7 +178,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 						<>
 							<Title order={titleOrdering}>{section.header}</Title>
 							{Boolean(section.subHeader?.subHeader.length) && (
-								<Text size={18} weight='bold' mt={20}>
+								<Text size={18} weight="bold" mt={20}>
 									{section.subHeader.subHeader}
 								</Text>
 							)}
@@ -190,7 +190,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 							{Boolean(section.buttonText?.length) && (
 								<Group>
 									{isExternal ? (
-										<Anchor href={link} target='_blank'>
+										<Anchor href={link} target="_blank">
 											<Button>{section.buttonText}</Button>
 										</Anchor>
 									) : (

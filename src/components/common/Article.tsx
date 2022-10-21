@@ -94,23 +94,23 @@ export const Article: FC<ArticleProps> = ({color, title, image, children, link, 
 
 	return (
 		<Paper radius={0} className={classNames(classes.card, getColorStyle())}>
-			<Stack align='flex-start' justify='space-between'>
+			<Stack align="flex-start" justify="space-between">
 				<Box>
 					<ImageContainer fluid>
 						<Asset asset={image} />
 					</ImageContainer>
 
-					<Title order={3} mt='md'>
+					<Title order={3} mt="md">
 						{title}
 					</Title>
-					<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
-					<Text size='sm' mt='sm' mb={11}>
+					<Divider variant="dashed" size={1} style={{maxWidth: 404}} my={13} />
+					<Text size="sm" mt="sm" mb={11}>
 						{children}
 					</Text>
 				</Box>
-				<Group position='center'>
+				<Group position="center">
 					{isExternal ? (
-						<Anchor href={href} target='_blank'>
+						<Anchor href={href} target="_blank">
 							<Button color={'dark'}>{buttonText}</Button>
 						</Anchor>
 					) : (

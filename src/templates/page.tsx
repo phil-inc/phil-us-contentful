@@ -17,9 +17,9 @@ type HelmetProps = {
 
 export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	<SEO title={pageContext.title}>
-		<meta name='description' content={data.contentfulPage.description} />
+		<meta name="description" content={data.contentfulPage.description} />
 		<title>Contact</title>
-		<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+		<script charSet="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
 	</SEO>
 );
 
@@ -36,7 +36,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 		<Layout>
 			{title === 'Resources' && (
 				<Expanded id={id}>
-					<Grid align='center' justify='space-between'>
+					<Grid align="center" justify="space-between">
 						<Grid.Col span={6}>
 							<Box>
 								<Title order={2}>Resources</Title>
@@ -49,13 +49,13 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 										<TextInput
 											radius={0}
 											icon={<IconSearch size={18} stroke={1.5} />}
-											size='md'
-											placeholder='Search'
+											size="md"
+											placeholder="Search"
 											rightSectionWidth={42}
 										/>
 									</Grid.Col>
 									<Grid.Col span={2} pr={0}>
-										<Button color='dark' size='md' fullWidth>
+										<Button color="dark" size="md" fullWidth>
 											Search
 										</Button>
 									</Grid.Col>

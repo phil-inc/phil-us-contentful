@@ -47,7 +47,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
-			<Grid justify='center' align='center'>
+			<Grid justify="center" align="center">
 				<Grid.Col lg={5} sm={6} md={6}>
 					{resource.asset && (
 						<ImageContainer fluid>
@@ -58,13 +58,13 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 				<Grid.Col lg={7} sm={6} md={6}>
 					<Box pl={40} pr={36} pb={30}>
 						{resource.heading && (
-							<Title order={3} mt='md' lineClamp={2}>
+							<Title order={3} mt="md" lineClamp={2}>
 								{resource.heading}
 							</Title>
 						)}
-						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+						<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
 						{resource.body && (
-							<Text size={18} mt='sm' mb={20} lineClamp={2}>
+							<Text size={18} mt="sm" mb={20} lineClamp={2}>
 								{/* Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt ullam, labore, ducimus minus corporis reiciendis deleniti quaerat qui laboriosam a laudantium rerum dolores delectus ut ex deserunt eius officiis rem. */}
 								{renderRichText(resource.body)}
 							</Text>
@@ -72,7 +72,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 						{resource.buttonText && (
 							<Group>
 								{isExternal ? (
-									<Anchor href={link} target='_blank'>
+									<Anchor href={link} target="_blank">
 										<Button>{resource.buttonText}</Button>
 									</Anchor>
 								) : (

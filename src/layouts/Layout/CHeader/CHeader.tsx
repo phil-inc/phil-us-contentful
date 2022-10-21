@@ -247,10 +247,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
 			<Container className={classes.inner} fluid>
-				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
-					<Link to='/'>
+				<Group position="apart" noWrap align="center" className={classNames(classes.navbar, 'navbar')}>
+					<Link to="/">
 						<Container m={0} p={0} size={125} style={{minWidth: 125}}>
-							<GatsbyImage image={pathToImage} alt='logo' />
+							<GatsbyImage image={pathToImage} alt="logo" />
 						</Container>
 					</Link>
 					<Burger
@@ -285,11 +285,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						}}
 						withCloseButton={false}
 						title={
-							<Group position='apart' noWrap align='center'>
+							<Group position="apart" noWrap align="center">
 								<Box>
-									<Link to='/'>
+									<Link to="/">
 										<Container m={0} p={0} size={125}>
-											<GatsbyImage image={pathToImage} alt='logo' />
+											<GatsbyImage image={pathToImage} alt="logo" />
 										</Container>
 									</Link>
 								</Box>
@@ -302,9 +302,9 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								/>
 							</Group>
 						}
-						padding='xl'
-						size='full'
-						transition='fade'
+						padding="xl"
+						size="full"
+						transition="fade"
 					>
 						<Accordion
 							classNames={{control: classes.accordionControl, content: classes.accordionContent}}
@@ -315,7 +315,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								.map(page => (
 									<Accordion.Item key={page.id + page.title} value={page.title}>
 										<Accordion.Control>
-											<Text weight='bold' size={18}>
+											<Text weight="bold" size={18}>
 												{page.title}
 											</Text>
 										</Accordion.Control>
@@ -338,7 +338,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																			})}`}
 																			style={{textDecoration: 'none'}}
 																		>
-																			<Text size={16} color='dark'>
+																			<Text size={16} color="dark">
 																				{section.header}
 																			</Text>
 																		</Link>
@@ -347,11 +347,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																	<th style={{paddingLeft: 0, paddingRight: 0}}>
 																		<Link
 																			to={navigateToPage(
-																				slugify(page.title, {lower: true, strict: true}),
+																				slugify(page.title, {lower: true, strict: true})
 																			)}
 																			style={{textDecoration: 'none'}}
 																		>
-																			<Text size={16} color='dark'>
+																			<Text size={16} color="dark">
 																				{section.header}
 																			</Text>
 																		</Link>
@@ -371,16 +371,16 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																						relatesTo.header,
 																						{
 																							lower: true,
-																						},
-																					)}/${slugify(heading, {lower: true})}`,
+																						}
+																					)}/${slugify(heading, {lower: true})}`
 																				)}
 																				style={{textDecoration: 'none'}}
 																			>
-																				<Text my={16} color='dark'>
+																				<Text my={16} color="dark">
 																					{heading}
 																				</Text>
 																			</Link>
-																		),
+																		)
 																)}
 														</tbody>
 													</Table>
@@ -395,11 +395,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						in={opened}
 						className={classes.collapse}
 						transitionDuration={150}
-						transitionTimingFunction='ease-out'
+						transitionTimingFunction="ease-out"
 						animateOpacity={false}
 					>
 						<Container className={classes.container} fluid>
-							<List listStyleType='none' size='xl' styles={{itemWrapper: {width: '100%'}}}>
+							<List listStyleType="none" size="xl" styles={{itemWrapper: {width: '100%'}}}>
 								<Grid px={98} py={78} columns={100}>
 									{pages
 										.filter(page => page.title === target)
@@ -416,7 +416,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																		{
 																			lower: true,
 																			strict: true,
-																		},
+																		}
 																	)}`}
 																	style={{textDecoration: 'none'}}
 																>
@@ -432,7 +432,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 															)}
 
 															<Divider />
-															<List listStyleType='none'>
+															<List listStyleType="none">
 																{allContentfulResource.nodes
 																	.filter(resource => resource.relatesTo)
 																	.map(
@@ -450,19 +450,19 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																							})}/${slugify(heading, {
 																								lower: true,
 																								strict: true,
-																							})}`,
+																							})}`
 																						)}
 																						style={{textDecoration: 'none'}}
 																					>
 																						<Text className={classes.listItems}>{heading}</Text>
 																					</Link>
 																				</List.Item>
-																			),
+																			)
 																	)}
 															</List>
 														</List.Item>
 													</Grid.Col>
-												)),
+												))
 										)}
 								</Grid>
 							</List>

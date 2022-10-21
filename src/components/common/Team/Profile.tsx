@@ -28,20 +28,20 @@ const Profile: React.FC<ProfileProps> = ({resource}) => {
 	const {classes} = useStyles();
 	const {link, isExternal} = getLink(resource as TResource);
 	return (
-		<Card shadow='none' p='lg' radius={0} className={classes.card}>
+		<Card shadow="none" p="lg" radius={0} className={classes.card}>
 			<Card.Section>
 				<Asset asset={resource.asset} />
 			</Card.Section>
 
 			{resource.heading && (
-				<Group mt='md' mb='xs'>
+				<Group mt="md" mb="xs">
 					<Text size={35} weight={'bold'}>
 						{resource.heading}
 					</Text>
 				</Group>
 			)}
 
-			<Divider size={3} variant='dashed' my={12} />
+			<Divider size={3} variant="dashed" my={12} />
 
 			{resource.body && (
 				<Text size={18} mb={12} italic>
@@ -52,7 +52,7 @@ const Profile: React.FC<ProfileProps> = ({resource}) => {
 			{Boolean(resource.buttonText?.length) && (
 				<Group>
 					{isExternal ? (
-						<Anchor href={link} target='_blank'>
+						<Anchor href={link} target="_blank">
 							<Button color={'dark'}>{resource.buttonText}</Button>
 						</Anchor>
 					) : (

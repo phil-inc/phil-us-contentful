@@ -17,7 +17,7 @@ type HelmetProps = {
 
 export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	<SEO title={pageContext.title}>
-		<meta name='description' content={data.contentfulResource.description} />
+		<meta name="description" content={data.contentfulResource.description} />
 	</SEO>
 );
 
@@ -66,12 +66,12 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
-			<Container size='xl'>
-				<Grid gutter='xl' align='center' pb={130} pt={0}>
+			<Container size="xl">
+				<Grid gutter="xl" align="center" pb={130} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
 						<Title order={2}>{heading}</Title>
-						<Container size='sm' style={{float: 'right', padding: '30px'}}>
-							<GatsbyImage image={pathToImage} alt='' />
+						<Container size="sm" style={{float: 'right', padding: '30px'}}>
+							<GatsbyImage image={pathToImage} alt="" />
 						</Container>
 						<Text size={18} className={classes.body}>
 							{body && renderRichText(body, options)}

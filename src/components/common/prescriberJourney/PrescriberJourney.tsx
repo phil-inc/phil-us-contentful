@@ -19,13 +19,13 @@ type PrescriberJourneyProps = {
 export const PrescriberJourney: FC<PrescriberJourneyProps> = ({resource: {asset, body, heading}}) => (
 	<Box>
 		{heading && (
-			<Group position='center'>
+			<Group position="center">
 				<Title>{heading}</Title>
 			</Group>
 		)}
 		{body && (
-			<Container size='sm' mb={25}>
-				<Group position='center'>
+			<Container size="sm" mb={25}>
+				<Group position="center">
 					<Text size={18}>{renderRichText(body)}</Text>
 				</Group>
 			</Container>

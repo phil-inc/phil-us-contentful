@@ -41,10 +41,10 @@ const HubspotFormModal = ({hubspotEmbed}) => {
 		// TODO: play around with padding for contact page style
 		<Container fluid className={classes.container}>
 			{hasRendered ? (
-				<div id='hubspotForm'></div>
+				<div id="hubspotForm"></div>
 			) : (
 				<Center>
-					<Loader mt={120} size='lg' />
+					<Loader mt={120} size="lg" />
 				</Center>
 			)}
 		</Container>
