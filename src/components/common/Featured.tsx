@@ -74,13 +74,13 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 						<Container pr={pr}>
 							{isExternal ? (
 								<Anchor className={classes.title} href={link} target='_blank'>
-									<Title order={3} mt='md' className={classes.title}>
+									<Title order={3} mt='md' className={classes.title} lineClamp={2}>
 										{resource.heading}
 									</Title>
 								</Anchor>
 							) : (
 								<Link className={classes.title} to={link}>
-									<Title order={3} mt='md' className={classes.title}>
+									<Title order={3} mt='md' className={classes.title} lineClamp={4}>
 										{resource.heading}
 									</Title>
 								</Link>
@@ -88,7 +88,7 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 
 							{!noDivider && <Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />}
 							{resource.body && (
-								<Text size={18} mt='sm' mb={12}>
+								<Text size={18} mt='sm' mb={12} lineClamp={3}>
 									{renderRichText(resource.body)}
 								</Text>
 							)}

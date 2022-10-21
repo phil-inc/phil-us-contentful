@@ -101,7 +101,8 @@ const generateMainPages = async ({actions, graphql}) => {
 };
 
 const generateStaticPages = async ({actions, graphql}) => {
-	const {data} = await graphql(`query allBlogPages {
+	const {data} = await graphql(`
+	query allBlogPages {
 		allContentfulResource(
 		  filter: {node_locale: {eq: "en-US"}, heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}, generateStaticPage: {eq: true}}
 		) {
