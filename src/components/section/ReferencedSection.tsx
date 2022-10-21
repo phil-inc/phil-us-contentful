@@ -12,6 +12,7 @@ import {StatsCard} from 'components/common/statsCard/StatsCard';
 import Profile from 'components/common/Team/Profile';
 import {Testimonial} from 'components/common/Testimonial';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
+import {TestimonialCarousel} from 'components/common/Carousel/TestimonialCarousel'
 import {Link} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -170,7 +171,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Investors':
 				return (
 					<Container size={300}>
-						<GatsbyImage image={getImage(resource.asset)} alt='' />
+						<GatsbyImage image={getImage(resource.asset)} alt="" />
 					</Container>
 				);
 
@@ -191,23 +192,23 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			background={background}
 			py={section.referenceType === 'Banner' ? 0 : 116}
 		>
-			{Boolean(section.header?.length)
-				&& Boolean(!section.hideHeader)
-				&& (section.referenceType === 'Case Study'
-				|| section.referenceType === 'Phil Blog'
-				|| section.referenceType === 'White Paper'
-				|| section.referenceType === 'Upcoming Events' ? (
-						<Box>
-							<Title order={3}>{section.header}</Title>
-							<Divider variant='dashed' size={1} className={classes.divider} />
-						</Box>
-					) : (
-						<Group position='center' mb={60}>
-							<Title order={2} color={textColor}>
-								{section.header}
-							</Title>
-						</Group>
-					))}
+			{Boolean(section.header?.length) &&
+				Boolean(!section.hideHeader) &&
+				(section.referenceType === 'Case Study' ||
+				section.referenceType === 'Phil Blog' ||
+				section.referenceType === 'White Paper' ||
+				section.referenceType === 'Upcoming Events' ? (
+					<Box>
+						<Title order={3}>{section.header}</Title>
+						<Divider variant="dashed" size={1} className={classes.divider} />
+					</Box>
+				) : (
+					<Group position="center" mb={60}>
+						<Title order={2} color={textColor}>
+							{section.header}
+						</Title>
+					</Group>
+				))}
 			{/* Commented out Search Bar because new design doesnot have it */}
 			{/* {section.referenceType === 'FAQs' && (
 				<Container>
@@ -231,6 +232,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			)} */}
 			{section.referenceType === 'Image Carousel' ? (
 				<ResourceCarousel imageCaraouselSection={section} />
+			) : section.referenceType == 'Testimonial' ? (
+				<TestimonialCarousel section={section} />
 			) : (
 				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
 					{section.references.map((resource, index) => (
@@ -241,9 +244,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				</Grid>
 			)}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group position='center'>
+				<Group position="center">
 					{isExternal ? (
-						<Anchor href={link} target='_blank'>
+						<Anchor href={link} target="_blank">
 							<Button color={'dark'}>{section.buttonText}</Button>
 						</Anchor>
 					) : (
