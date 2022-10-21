@@ -9,7 +9,7 @@ const generateMainPages = async ({actions, graphql}) => {
 		let component;
 
 		// Choose template
-		if (page.title === 'Career') {
+		if (page.title === 'Careers') {
 			component = careerTemplate;
 		} else {
 			component = pageTemplate;
