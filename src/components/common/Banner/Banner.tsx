@@ -1,11 +1,25 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Group, Grid, Anchor} from '@mantine/core';
+import {
+	Paper,
+	Container,
+	Center,
+	Title,
+	Divider,
+	Button,
+	Text,
+	createStyles,
+	Group,
+	Grid,
+	Anchor,
+	Modal,
+} from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
-import React from 'react';
+import React, {useState} from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
+import HubspotFormModal from '../HubspotFormModal';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -39,8 +53,9 @@ type BannerProps = {
  */
 export const Banner: FC<BannerProps> = ({resource}) => {
 	const {classes} = useStyles();
-	const {heading, body, buttonText, externalLink} = resource;
+	const {heading, body, buttonText, externalLink, isHubspotEmbed, hubspotEmbed} = resource;
 	const {link, isExternal} = getLink(resource);
+	const [openHubspotModal, setopenHubspotModal] = useState(false);
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
@@ -58,21 +73,46 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 						)}
 					</Container>
 				</Grid.Col>
-				{Boolean(buttonText?.length) && Boolean(externalLink?.length) && (
-					<Grid.Col lg={2} sm={12}>
-						<Group>
-							{isExternal ? (
-								<Anchor href={link} target='_blank'>
-									<Button color={'dark'}>{buttonText}</Button>
-								</Anchor>
-							) : (
-								<Link to={link}>
-									<Button color={'dark'}>{buttonText}</Button>
-								</Link>
-							)}
-						</Group>
-					</Grid.Col>
-				)}
+				{Boolean(buttonText?.length)
+					&& (isHubspotEmbed ? (
+						<Grid.Col lg={2} sm={12}>
+							<Group>
+								<Modal
+									size='ls'
+									opened={openHubspotModal}
+									onClose={() => {
+										setopenHubspotModal(false);
+									}}
+								>
+									<HubspotFormModal hubspotEmbed={hubspotEmbed} />
+								</Modal>
+								<Button
+									color={'dark'}
+									onClick={() => {
+										setopenHubspotModal(true);
+									}}
+								>
+									{buttonText}
+								</Button>
+							</Group>
+						</Grid.Col>
+					) : (
+						Boolean(externalLink?.length) && (
+							<Grid.Col lg={2} sm={12}>
+								<Group>
+									{isExternal ? (
+										<Anchor href={link} target='_blank'>
+											<Button color={'dark'}>{buttonText}</Button>
+										</Anchor>
+									) : (
+										<Link to={link}>
+											<Button color={'dark'}>{buttonText}</Button>
+										</Link>
+									)}
+								</Group>
+							</Grid.Col>
+						)
+					))}
 			</Grid>
 		</Paper>
 	);

@@ -26,6 +26,10 @@ fieldset {
     margin-bottom: 18px !important;
 }
 
+fieldset:has(.hs-form-field[style*="display: none"]){
+    display: none;
+}
+
 textarea {
     height: 14em;
 }

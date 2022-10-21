@@ -49,7 +49,7 @@ export const StatsCard: FC<StatsCardProps> = ({resource: {asset, heading, body}}
 			)}
 
 			{body && (
-				<Text color='dark' className={classes.description}>
+				<Text color='dark' className={classes.description} p={30}>
 					{renderRichText(body)}
 				</Text>
 			)}

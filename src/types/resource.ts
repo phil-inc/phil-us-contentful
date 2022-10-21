@@ -34,6 +34,8 @@ export type TResource = {
 	};
 	author?: string;
 	designation?: string;
+	isHubspotEmbed?: boolean;
+	hubspotEmbed?: BodyType;
 };
 
 export type TParsedString = {

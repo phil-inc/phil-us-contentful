@@ -183,12 +183,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								</Text>
 							)}
 							{Boolean(section.body) && (
-								<Text size={18} className={classes.body}>
+								<Text size={18} className={classes.body} mt={16}>
 									{renderRichText(section.body, options)}
 								</Text>
 							)}
 							{Boolean(section.buttonText?.length) && (
-								<Group>
+								<Group mt={48}>
 									{isExternal ? (
 										<Anchor href={link} target='_blank'>
 											<Button>{section.buttonText}</Button>
