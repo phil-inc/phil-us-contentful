@@ -168,6 +168,9 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 					))}
 					<Grid.Col span={3}>
 						<Box sx={{width: '80%'}}>
+							<Text size={'lg'} className={classes.footLinkHeader}>
+								Newsletter
+							</Text>
 							<div className='hubspotForm'></div>
 						</Box>
 					</Grid.Col>
@@ -222,6 +225,9 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 						))}
 					</Accordion>
 					<Box>
+						<Text size={'lg'} className={classes.footLinkHeader}>
+							Newsletter
+						</Text>
 						<div className='hubspotForm'></div>
 					</Box>
 				</Box>
