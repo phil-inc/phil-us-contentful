@@ -21,6 +21,7 @@ import {
 import {useForm} from '@mantine/form';
 import {upperFirst, useDisclosure} from '@mantine/hooks';
 import {IconChevronDown} from '@tabler/icons';
+import Asset from 'components/common/Asset/Asset';
 import {graphql, Link, StaticQuery} from 'gatsby';
 import {GatsbyImage} from 'gatsby-plugin-image';
 import React from 'react';
@@ -101,8 +102,8 @@ type FooterProps = {
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResource}) => {
 	const {classes} = useStyles();
 	// Create form
-	const {loaded, formCreated} = useHubspotForm({
-		target: '.hubspotForm',
+	const newsletterForm = useHubspotForm({
+		target: '#hubspotForm',
 		...{
 			region: 'na1',
 			portalId: '20880193',
@@ -110,18 +111,17 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 		},
 	});
 
-	console.log({allContentfulFooter, allContentfulResource});
-	const [footer] = allContentfulFooter.nodes;
-	const pages = footer.navigationLinks;
-	const form = useForm({
-		initialValues: {
-			email: '',
-		},
-
-		validate: {
-			email: val => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
+	const newsletterFormMobile = useHubspotForm({
+		target: '#hubspotFormMobile',
+		...{
+			region: 'na1',
+			portalId: '20880193',
+			formId: 'af4535b2-dc53-4b71-b711-a7e546233d81',
 		},
 	});
+
+	const [footer] = allContentfulFooter.nodes;
+	const pages = footer.navigationLinks;
 
 	return (
 		<>
@@ -138,7 +138,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 										{page.title}
 									</Text>
 								</Link>
-								<Divider my={10} color='dark' />
+								<Divider my={10} color='#6A7979' />
 								{page.sections
 									.filter(section => section.header?.length)
 									.map(section => (
@@ -168,16 +168,22 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 					))}
 					<Grid.Col span={3}>
 						<Box sx={{width: '80%'}}>
-							<Text size={'lg'} className={classes.footLinkHeader}>
+							<Text size={'lg'} mt={0} className={classes.footLinkHeader}>
 								Newsletter
 							</Text>
-							<div className='hubspotForm'></div>
+							<Divider my={10} color='#6A7979' />
+							<div id='hubspotForm'></div>
+							<Group position='center' mt={60}>
+								{footer.badge.map(badge => (
+									<Asset asset={badge} />
+								))}
+							</Group>
 						</Box>
 					</Grid.Col>
 				</Grid>
 
 				<Box className={classes.drawer}>
-					<Accordion styles={{content: {padding: '0'}}} chevron={<IconChevronDown size={24} />} mb={40}>
+					<Accordion styles={{content: {padding: '0'}}} chevron={<IconChevronDown size={24} />} mb={15}>
 						{pages.map(page => (
 							<Accordion.Item
 								key={page.id + page.title}
@@ -228,10 +234,18 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 						<Text size={'lg'} className={classes.footLinkHeader}>
 							Newsletter
 						</Text>
-						<div className='hubspotForm'></div>
+						<Divider my={10} color='#6A7979' />
+						<div id='hubspotFormMobile'></div>
+						<Group position='center' mt={60}>
+							{footer.badge.map(badge => (
+								<Asset asset={badge} />
+							))}
+						</Group>
 					</Box>
 				</Box>
 			</Container>
+
+			{/* Bottom Footer */}
 			<Container fluid style={{background: '#00827E'}} py={14}>
 				<Center>
 					<Text color={'#FFF'}>© Phil, Inc. | Terms of Use | Privacy Policy | HIPAA Notice</Text>
@@ -269,6 +283,13 @@ const query = graphql`
 					}
 				}
 				badge {
+					file {
+						contentType
+						url
+						details {
+							size
+						}
+					}
 					gatsbyImageData(resizingBehavior: FILL, placeholder: BLURRED, layout: CONSTRAINED)
 				}
 			}

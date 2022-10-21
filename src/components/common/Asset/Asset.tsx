@@ -16,7 +16,7 @@ type AssetProps = {
 const Asset: React.FC<AssetProps> = ({asset}) => {
 	if (isVideoContent(asset.file.contentType)) {
 		const {url} = asset.file;
-		return <ReactPlayer url={url} width={'100%'} height={'100%'} controls />;
+		return <ReactPlayer url={'https://youtu.be/2uvcWi_SAsI'} width={'100%'} height={'100%'} controls />;
 	}
 
 	const altText = asset.title || '';
