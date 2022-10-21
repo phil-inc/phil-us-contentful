@@ -37,12 +37,12 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 			{title === 'Resources' && (
 				<Expanded id={id}>
 					<Grid align='center' justify='space-between'>
-						<Grid.Col span={6}>
+						<Grid.Col span={12}>
 							<Box>
 								<Title order={2}>Resources</Title>
 							</Box>
 						</Grid.Col>
-						<Grid.Col span={6}>
+						{/* <Grid.Col span={6}>
 							<Container fluid pr={8}>
 								<Grid>
 									<Grid.Col span={10}>
@@ -61,7 +61,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 									</Grid.Col>
 								</Grid>
 							</Container>
-						</Grid.Col>
+						</Grid.Col> */}
 					</Grid>
 				</Expanded>
 			)}

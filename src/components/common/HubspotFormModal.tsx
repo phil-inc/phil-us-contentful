@@ -29,7 +29,7 @@ const HubspotFormModal = ({hubspotEmbed}) => {
 
 		// Create form
 		const {loaded, formCreated} = useHubspotForm({
-			target: '#hubspotForm',
+			target: '#hubspotModalForm',
 			...formProps,
 		});
 
@@ -43,7 +43,7 @@ const HubspotFormModal = ({hubspotEmbed}) => {
 		// TODO: play around with padding for contact page style
 		<Container fluid className={classes.container}>
 			{hasRendered ? (
-				<div id='hubspotForm'></div>
+				<div id='hubspotModalForm'></div>
 			) : (
 				<Center>
 					<Loader mt={120} size='lg' />

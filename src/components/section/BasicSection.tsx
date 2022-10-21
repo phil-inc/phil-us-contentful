@@ -118,7 +118,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 		// Create form
 		const {loaded, formCreated} = useHubspotForm({
-			target: '#hubspotForm',
+			target: '#hubspotContactForm',
 			...formProps,
 		});
 
@@ -148,7 +148,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 							)}
 							<Divider size={3} variant='dashed' my={20} />
 							{hasRendered ? (
-								<div id='hubspotForm'></div>
+								<div id='hubspotContactForm'></div>
 							) : (
 								<Center>
 									<Loader mt={120} size='lg' />
