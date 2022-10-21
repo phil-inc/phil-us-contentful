@@ -145,7 +145,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 								</Link>
 								<Divider my={10} color='#6A7979' />
 								{page.sections
-									.filter(section => section.header?.length)
+									.filter(section => Boolean(section.header?.length && !section.isHidden))
 									.map(section => (
 										<>
 											<List listStyleType='none'>
@@ -202,7 +202,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 								</Accordion.Control>
 								<Accordion.Panel>
 									{page.sections
-										.filter(section => Boolean(section.header?.length))
+										.filter(section => Boolean(section.header?.length && !section.isHidden))
 										.map((section, index) => (
 											<Table key={section.id} mb={16}>
 												<thead>
@@ -293,10 +293,12 @@ const query = graphql`
 						... on ContentfulReferencedSection {
 							id
 							header
+							isHidden
 						}
 						... on ContentfulSection {
 							id
 							header
+							isHidden
 						}
 					}
 				}
@@ -320,10 +322,12 @@ const query = graphql`
 					... on ContentfulReferencedSection {
 						id
 						header
+						isHidden
 					}
 					... on ContentfulSection {
 						id
 						header
+						isHidden
 					}
 				}
 			}

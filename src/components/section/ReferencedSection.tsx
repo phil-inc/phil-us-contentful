@@ -198,7 +198,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events' ? (
 						<Box>
-							<Title order={3}>{section.header}</Title>
+							<Title order={3} size={35}>
+								{section.header}
+							</Title>
 							<Divider variant='dashed' size={1} className={classes.divider} />
 						</Box>
 					) : (

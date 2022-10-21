@@ -25,11 +25,21 @@ export const query = graphql`
 		allContentfulResource(
 			filter: {
 				node_locale: {eq: "en-US"}
-				heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}
+				heading: {
+					nin: [
+						"Dummy Resource"
+						"Dummy Resource | Referenced section"
+						"Privacy Policy"
+						"Terms of Use"
+						"HIPAA Privacy Notice"
+					]
+				}
 				generateStaticPage: {eq: true}
 				isFaq: {ne: true}
 			}
 		) {
+			totalCount
+
 			nodes {
 				slug
 				author
