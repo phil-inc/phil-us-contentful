@@ -1,0 +1,29 @@
+# general redirection
+[[redirects]]
+from = "/r/*"
+to = "https://capi.phil.us/api/redirect/:splat"
+status = 302
+
+
+# phil-enroll redirection
+[[redirects]]
+from = "/e/*"
+to = "https://enroll.phil.us/landing/:splat"
+status = 302
+
+[[redirects]]
+from = "/stage/e/*"
+to = "https://enroll.stage.phil.us/landing/:splat"
+status = 302
+
+[[redirects]]
+from = "/dev/e/*"
+to = "https://enroll.dev.phil.us/landing/:splat"
+status = 302
+
+
+# faqs redirection
+[[redirects]]
+from = "/faqs/*"
+to = "https://philhelp.zendesk.com/hc/en-us"
+status = 200
