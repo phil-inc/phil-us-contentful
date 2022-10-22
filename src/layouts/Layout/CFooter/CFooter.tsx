@@ -49,11 +49,8 @@ const useStyles = createStyles(theme => ({
 	},
 
 	links: {
-		[theme.fn.smallerThan('sm')]: {
-			marginTop: theme.spacing.lg,
-			marginBottom: theme.spacing.sm,
-		},
 		color: 'white',
+		fontSize: 14,
 	},
 
 	footLinkHeader: {
@@ -67,7 +64,8 @@ const useStyles = createStyles(theme => ({
 	footerLink: {
 		textDecoration: 'none',
 		color: '#00201F',
-		margin: '14px 0',
+		fontSize: '14px',
+		lineHeight: '40px',
 	},
 
 	footerWrapper: {
@@ -131,6 +129,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 	return (
 		<>
 			<Container fluid className={classes.footerWrapper}>
+				{/* Desktop View */}
 				<Grid className={classes.footer} gutter={'xl'}>
 					{pages.map(page => (
 						<Grid.Col span={3}>
@@ -162,7 +161,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 														}
 														style={{textDecoration: 'none'}}
 													>
-														<Text className={classes.footerLink}>{section.header}</Text>
+														<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
 													</Link>
 												</List.Item>
 											</List>
@@ -187,50 +186,39 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 					</Grid.Col>
 				</Grid>
 
+				{/* Mobile View */}
 				<Box className={classes.drawer}>
-					<Accordion styles={{content: {padding: '0'}}} chevron={<IconChevronDown size={24} />} mb={15}>
+					<Accordion styles={{content: {padding: 0}}} chevron={<IconChevronDown size={24} />} mb={15}>
 						{pages.map(page => (
-							<Accordion.Item
-								key={page.id + page.title}
-								value={page.title}
-								style={{padding: 'auto 0px', borderBottom: '1px solid #6A7979'}}
-							>
+							<Accordion.Item key={page.id + page.title} value={page.title}>
 								<Accordion.Control px={0}>
 									<Text weight='bold' size={18}>
 										{page.title}
 									</Text>
 								</Accordion.Control>
 								<Accordion.Panel>
-									{page.sections
-										.filter(section => Boolean(section.header?.length && !section.isHidden))
-										.map((section, index) => (
-											<Table key={section.id} mb={16}>
-												<thead>
-													<tr>
-														{
-															<th style={{paddingLeft: 0, paddingRight: 0, fontWeight: 400}}>
-																<Link
-																	to={
-																		(page.title === 'Home'
-																			? ''
-																			: `/${slugify(page.title, {lower: true, strict: true})}`)
-																		+ `/#${slugify(section.header, {
-																			lower: true,
-																			strict: true,
-																		})}`
-																	}
-																	style={{textDecoration: 'none'}}
-																>
-																	<Text size={16} color='dark'>
-																		{section.header}
-																	</Text>
-																</Link>
-															</th>
+									<List mb={16} listStyleType={'none'}>
+										{page.sections
+											.filter(section => Boolean(section.header?.length && !section.isHidden))
+											.map(section => (
+												<List.Item key={section.id}>
+													<Link
+														to={
+															(page.title === 'Home'
+																? ''
+																: `/${slugify(page.title, {lower: true, strict: true})}`)
+															+ `/#${slugify(section.header, {
+																lower: true,
+																strict: true,
+															})}`
 														}
-													</tr>
-												</thead>
-											</Table>
-										))}
+														style={{textDecoration: 'none'}}
+													>
+														<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
+													</Link>
+												</List.Item>
+											))}
+									</List>
 								</Accordion.Panel>
 							</Accordion.Item>
 						))}
@@ -253,7 +241,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 			{/* Bottom Footer */}
 			<Container fluid style={{background: '#00827E'}} py={14}>
 				<Center>
-					<Text color={'#FFF'}>
+					<Text className={classes.links}>
 						© Phil, Inc. |{' '}
 						<Link to='/terms' className={classes.textDecorationNone}>
 							Terms of Use

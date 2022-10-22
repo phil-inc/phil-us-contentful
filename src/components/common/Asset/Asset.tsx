@@ -1,8 +1,20 @@
+import {AspectRatio, Box, Center, createStyles} from '@mantine/core';
+import classNames from 'classnames';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import React from 'react';
 import ReactPlayer from 'react-player/lazy';
 import type {TAsset} from 'types/asset';
 import {isVideoContent} from 'utils/isVideoContent';
+
+const useStyles = createStyles(() => ({
+	center: {
+		display: 'grid',
+		placeItems: 'center',
+	},
+	videoWrapper: {
+		maxHeight: '465px',
+	},
+}));
 
 type AssetProps = {
 	asset: TAsset;
@@ -14,9 +26,15 @@ type AssetProps = {
  * @returns Image/Video asset handler.
  */
 const Asset: React.FC<AssetProps> = ({asset}) => {
+	const {classes} = useStyles();
+
 	if (isVideoContent(asset.file.contentType)) {
 		const {url} = asset.file;
-		return <ReactPlayer url={'https://youtu.be/2uvcWi_SAsI'} width={'100%'} height={'100%'} controls />;
+		return (
+			<AspectRatio ratio={1920 / 1080} className={classNames(classes.videoWrapper)} my='auto'>
+				<ReactPlayer url={'https://youtu.be/2uvcWi_SAsI'} width={'100%'} height={'100%'} controls />
+			</AspectRatio>
+		);
 	}
 
 	const altText = asset.title || '';

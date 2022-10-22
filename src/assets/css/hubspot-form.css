@@ -2,7 +2,7 @@ label {
     font-weight: bold;
     color: #00201f;
     font-family: 'Lato';
-    font-size: 18px;
+    font-size: 14px;
     font-style: normal;
 }
 
@@ -52,6 +52,14 @@ input[type=submit] {
     font-size: 14px;
     height: 36px;
     padding: 10px 40px;
+    transition: outline 0.2s ease-out;
+}
+
+input[type=submit]:hover {
+    outline: 3px solid #00201F;
+    background-color: transparent;
+    color: #00201F;
+    font-weight: 900;
 }
 
 .hs-error-msgs{
