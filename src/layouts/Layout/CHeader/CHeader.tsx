@@ -210,11 +210,12 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		}
 	};
 
+	const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+
 	const moveIntidatorActiveTo = (li: HTMLLIElement) => {
 		const INDICATOR_SIZE = 20;
 		const INITIAL_OFFSET = 25;
 
-		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
 		li.classList.add('active');
 
 		indicator.style.transform = `translate(calc(${
@@ -229,8 +230,9 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		const clickHandlers = [];
 
 		allLi.forEach(li => {
+			console.log(location.pathname);
 			// Initial set active
-			if (location.pathname.includes(`/${slugify(li.innerText, {lower: true, strict: true})}`)) {
+			if (location.pathname === '/' ? false : location.pathname.includes(`/${slugify(li.innerText, {lower: true, strict: true})}`)) {
 				setActivePageLI(li);
 				li.classList.add('active');
 				moveIntidatorActiveTo(li);
@@ -243,7 +245,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 					active.classList.remove('active');
 				}
 
-				moveIntidatorActiveTo(li);
+				indicator.style.transform = '';
 			};
 
 			clickHandlers.push(clickEventHandler);
@@ -268,6 +270,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			}
 
 			moveIntidatorActiveTo(activePageLI);
+		} else if (Boolean(!opened) && Boolean(!activePageLI)) {
+			const active = navBar.querySelector('.active');
+			if (active) {
+				active.classList.remove('active');
+			}
 		}
 	}, [opened]);
 
