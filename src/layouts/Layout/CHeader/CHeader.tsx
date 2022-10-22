@@ -22,7 +22,7 @@ import {graphql, Link} from 'gatsby';
 import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
 import {StaticQuery} from 'gatsby';
-
+import {useDocumentTitle} from '@mantine/hooks';
 import type {ContentfulPage} from 'types/page';
 import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
@@ -34,9 +34,10 @@ const HEADER_HEIGHT = 90;
 type CHeaderProps = {
 	allContentfulHeader: {nodes: Array<{logo: TAsset; navigationLinks: ContentfulPage[]}>};
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
+	sitePage: {id: string; pageContext: {title: string}};
 };
 
-const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource}) => {
+const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource, sitePage}) => {
 	const useStyles = createStyles((theme, _params, getRef) => ({
 		inner: {
 			padding: '0 116px',
@@ -133,6 +134,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			fontWeight: 700,
 			textDecoration: 'none',
 		},
+
 		listItems: {
 			color: 'white',
 			fontSize: '12px',
@@ -192,10 +194,12 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	});
 
 	const [isDrawer, toggleDrawer] = useToggle();
+
 	const theme = useMantineTheme();
 	const isBreak = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
 
 	const [target, setTarget] = useState<string>('');
+	const [activePageLI, setActivePageLI] = useState<HTMLLIElement | undefined>();
 
 	const onNavLinkClick = event => {
 		if (event.target.textContent === target) {
@@ -206,43 +210,66 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		}
 	};
 
-	React.useEffect(() => {
-		const navBar = document.querySelector('.navbar');
-		const allLi = navBar.querySelectorAll('li');
+	const moveIntidatorActiveTo = (li: HTMLLIElement) => {
 		const INDICATOR_SIZE = 20;
 		const INITIAL_OFFSET = 25;
 
-		let previousEl;
+		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+		li.classList.add('active');
 
-		allLi.forEach((li, index) => {
-			li.addEventListener('click', e => {
+		indicator.style.transform = `translate(calc(${
+			li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
+		}px), calc(${-20}px))`;
+	};
+
+	React.useEffect(() => {
+		const navBar = document.querySelector('.navbar');
+		const allLi = navBar.querySelectorAll('li');
+
+		const clickHandlers = [];
+
+		allLi.forEach(li => {
+			// Initial set active
+			if (location.pathname.includes(`/${slugify(li.innerText, {lower: true, strict: true})}`)) {
+				setActivePageLI(li);
+				li.classList.add('active');
+				moveIntidatorActiveTo(li);
+			}
+
+			const clickEventHandler = (e: MouseEvent) => {
 				e.preventDefault(); // Preventing from submitting
-				const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
-				if (previousEl === li && navBar.querySelector('.active')) {
-					navBar.querySelector('.active').classList.remove('active');
-					indicator.style.transform = '';
-				} else {
-					previousEl = li;
-					if (navBar.querySelector('.active')) {
-						navBar.querySelector('.active').classList.remove('active');
-					}
-
-					li.classList.add('active');
-
-					indicator.style.transform = `translate(calc(${
-						li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
-					}px), calc(${-20}px))`;
+				const active = navBar.querySelector('.active');
+				if (active) {
+					active.classList.remove('active');
 				}
-			});
+
+				moveIntidatorActiveTo(li);
+			};
+
+			clickHandlers.push(clickEventHandler);
+
+			li.addEventListener('click', clickEventHandler);
 		});
 
-		// // TODO: cleanup for dev purpose only, to be removed on prod
-		// return () => {
-		// 	allLi.forEach(li => {
-		// 		li.removeEventListener('click');
-		// 	});
-		// };
+		return () => {
+			allLi.forEach((li, index) => {
+				li.removeEventListener('click', clickHandlers[index]);
+			});
+		};
 	}, []);
+
+	React.useEffect(() => {
+		const navBar = document.querySelector('.navbar');
+		const active = navBar.querySelector('.active');
+
+		if (Boolean(!opened) && Boolean(activePageLI)) {
+			if (active) {
+				active.classList.remove('active');
+			}
+
+			moveIntidatorActiveTo(activePageLI);
+		}
+	}, [opened]);
 
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
@@ -523,6 +550,10 @@ const query = graphql`
 					}
 				}
 			}
+		}
+		sitePage {
+			id
+			pageContext
 		}
 	}
 `;

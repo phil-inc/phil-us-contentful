@@ -10,8 +10,7 @@ import {HubspotProvider} from '@aaronhayes/react-use-hubspot-form';
 import {CFooter} from './CFooter/CFooter';
 
 // Import css overrides here
-import 'assets/css/hubspot-form.css';
-import 'assets/css/mantine-accordion-override.css';
+import 'assets/css/index.css';
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
