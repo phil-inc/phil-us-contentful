@@ -48,13 +48,13 @@ export function Layout({children}: LayoutProps) {
 			fontWeight: 700,
 			sizes: {
 				h1: {
-					fontSize: isIndex() ? 'calc(3rem + 1.927vw)' : 'calc(2rem + 1.197vw)',
+					fontSize: isIndex() ? 'min(85px, calc(3rem + 1.927vw))' : 'min(calc(2rem + 1.197vw), 85px)',
 				},
 				h2: {
-					fontSize: 'calc(2rem + 1.197vw)',
+					fontSize: 'min(55px, calc(2rem + 1.197vw))',
 				},
 				h3: {
-					fontSize: 'calc(1rem + 0.989vw)',
+					fontSize: 'min(35px, calc(1rem + 0.989vw))',
 				},
 			},
 			fontFamily: 'Raleway',

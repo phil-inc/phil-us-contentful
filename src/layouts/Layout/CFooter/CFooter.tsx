@@ -69,7 +69,7 @@ const useStyles = createStyles(theme => ({
 	},
 
 	footerWrapper: {
-		padding: '85px 14vw',
+		padding: '85px 175px',
 
 		[theme.fn.smallerThan('lg')]: {
 			padding: '40px ',

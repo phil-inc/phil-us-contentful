@@ -31,7 +31,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 
 	return (
 		<Container fluid className={classes.imageContainer}>
-			<AspectRatio ratio={ratio} sx={{maxWidth: '100%'}} mx='auto'>
+			<AspectRatio ratio={ratio} sx={{width: '100%', height: '100%'}} mx='auto'>
 				{children}
 			</AspectRatio>
 		</Container>
