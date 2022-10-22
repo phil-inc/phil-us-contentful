@@ -210,18 +210,17 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		}
 	};
 
-	const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
-
-	const moveIntidatorActiveTo = (li: HTMLLIElement) => {
+	function moveIntidatorActiveTo(li: HTMLLIElement) {
 		const INDICATOR_SIZE = 20;
 		const INITIAL_OFFSET = 25;
+		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
 
 		li.classList.add('active');
 
 		indicator.style.transform = `translate(calc(${
 			li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
 		}px), calc(${-20}px))`;
-	};
+	}
 
 	React.useEffect(() => {
 		const navBar = document.querySelector('.navbar');
@@ -230,9 +229,12 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		const clickHandlers = [];
 
 		allLi.forEach(li => {
-			console.log(location.pathname);
 			// Initial set active
-			if (location.pathname === '/' ? false : location.pathname.includes(`/${slugify(li.innerText, {lower: true, strict: true})}`)) {
+			if (
+				location.pathname === '/'
+					? false
+					: location.pathname.includes(`/${slugify(li.innerText, {lower: true, strict: true})}`)
+			) {
 				setActivePageLI(li);
 				li.classList.add('active');
 				moveIntidatorActiveTo(li);
@@ -245,7 +247,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 					active.classList.remove('active');
 				}
 
-				indicator.style.transform = '';
+				moveIntidatorActiveTo(li);
 			};
 
 			clickHandlers.push(clickEventHandler);
@@ -275,8 +277,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			if (active) {
 				active.classList.remove('active');
 			}
+
+			const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+			indicator.style.transform = '';
 		}
-	}, [opened]);
+	}, [opened, activePageLI]);
 
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
