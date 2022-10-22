@@ -15,6 +15,7 @@ import {
 	Accordion,
 	Table,
 	Grid,
+	ScrollArea,
 } from '@mantine/core';
 import {useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
@@ -362,48 +363,104 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						size='full'
 						transition='fade'
 					>
-						<Accordion
-							classNames={{control: classes.accordionControl, content: classes.accordionContent}}
-							chevron={<IconChevronDown size={24} />}
-						>
-							{pages
-								.filter(page => page.title !== 'Home')
-								.map(page => (
-									<Accordion.Item key={page.id + page.title} value={page.title}>
-										<Accordion.Control>
-											<Text weight='bold' size={18}>
-												{page.title}
-											</Text>
-										</Accordion.Control>
-										<Accordion.Panel>
-											<List mb={16} listStyleType={'none'}>
+						<ScrollArea style={{height: 'calc(100vh - 100px)'}}>
+							<Accordion
+								classNames={{control: classes.accordionControl, content: classes.accordionContent}}
+								chevron={<IconChevronDown size={24} />}
+							>
+								{pages
+									.filter(page => page.title !== 'Home')
+									.map(page => (
+										<Accordion.Item key={page.id + page.title} value={page.title}>
+											<Accordion.Control>
+												<Text weight='bold' size={18}>
+													{page.title}
+												</Text>
+											</Accordion.Control>
+											<Accordion.Panel>
 												{page.sections
 													.filter(section => Boolean(section.header?.length && !section.isHidden))
-													.map(section => (
-														<List.Item key={section.id}>
-															<Link
-																to={
-																	(page.title === 'Home'
-																		? ''
-																		: `/${slugify(page.title, {lower: true, strict: true})}`)
-																	+ `/#${slugify(section.header, {
-																		lower: true,
-																		strict: true,
-																	})}`
-																}
-																style={{textDecoration: 'none'}}
-															>
-																<Text className={classes.sectionHeader}>
-																	{section.header.replace(':', '')}
-																</Text>
-															</Link>
-														</List.Item>
+													.map((section, index) => (
+														<Table key={section.id} mb={16}>
+															<thead>
+																<tr>
+																	{index > 0 ? (
+																		<th style={{paddingLeft: 0, paddingRight: 0}}>
+																			<Link
+																				to={`/${slugify(page.title, {
+																					lower: true,
+																					strict: true,
+																				})}/#${slugify(section.header, {
+																					lower: true,
+																					strict: true,
+																				})}`}
+																				style={{textDecoration: 'none'}}
+																			>
+																				<Text
+																					size={16}
+																					weight={400}
+																					color={theme.colors.primary[0]}
+																				>
+																					{section.header}
+																				</Text>
+																			</Link>
+																		</th>
+																	) : (
+																		<th style={{paddingLeft: 0, paddingRight: 0}}>
+																			<Link
+																				to={navigateToPage(
+																					slugify(page.title, {lower: true, strict: true}),
+																				)}
+																				style={{textDecoration: 'none'}}
+																			>
+																				<Text
+																					size={16}
+																					weight={400}
+																					color={theme.colors.primary[0]}
+																				>
+																					{section.header}
+																				</Text>
+																			</Link>
+																		</th>
+																	)}
+																</tr>
+															</thead>
+															<tbody>
+																{allContentfulResource.nodes
+																	.filter(resource => resource.relatesTo)
+																	.map(
+																		({id, heading, relatesTo}) =>
+																			section.id === relatesTo.id && (
+																				<Link
+																					to={navigateToPage(
+																						`${slugify(page.title, {lower: true})}/${slugify(
+																							relatesTo.header,
+																							{
+																								lower: true,
+																							},
+																						)}/${slugify(heading, {lower: true})}`,
+																					)}
+																					style={{textDecoration: 'none'}}
+																				>
+																					<Text
+																						size={14}
+																						weight={400}
+																						color={theme.colors.primary[0]}
+																						mt={24}
+																					>
+																						{heading}
+																					</Text>
+																				</Link>
+																			),
+																	)}
+															</tbody>
+														</Table>
 													))}
-											</List>
-										</Accordion.Panel>
-									</Accordion.Item>
-								))}
-						</Accordion>
+											</Accordion.Panel>
+										</Accordion.Item>
+									))}
+							</Accordion>
+						</ScrollArea>
 					</Drawer>
 				) : (
 					<Collapse
