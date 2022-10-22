@@ -10,7 +10,6 @@ import {
 	Loader,
 	Center,
 	Divider,
-	Box,
 } from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
@@ -26,10 +25,7 @@ import Asset from 'components/common/Asset/Asset';
 
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {parseScript} from 'utils/parseScript';
-import type {TParsedString} from 'types/resource';
-import {documentToPlainTextString} from '@contentful/rich-text-plain-text-renderer';
-import jsonFromText from 'json-from-text';
-import Expanded from 'components/common/Expanded/Expanded';
+import {isVideoContent} from 'utils/isVideoContent';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -185,7 +181,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 					)}
 				</Grid.Col>
 				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
-					<ImageContainer fluid>
+					<ImageContainer fluid background={isVideoContent(section.asset.file.contentType) ? 'white' : null}>
 						<Asset asset={section.asset} />
 					</ImageContainer>
 				</Grid.Col>

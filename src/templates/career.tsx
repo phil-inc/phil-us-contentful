@@ -20,6 +20,7 @@ import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {IReferencedSection, ISection} from 'types/section';
+import {isVideoContent} from 'utils/isVideoContent';
 
 const useStyles = createStyles(theme => ({
 	body: {
