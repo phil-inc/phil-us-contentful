@@ -11,6 +11,7 @@ import {
 	Stack,
 	Anchor,
 	Group,
+	AspectRatio,
 } from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
@@ -63,6 +64,20 @@ const useStyles = createStyles(theme => ({
 			width: 0,
 		},
 	},
+
+	imageWrapper: {
+		maxWidth: 425,
+		maxHeight: 425,
+		margin: '0 auto',
+	},
+
+	fullHeight: {
+		height: '100%',
+	},
+
+	fullWidth: {
+		width: '100%',
+	},
 }));
 
 type ArticleProps = {
@@ -94,15 +109,17 @@ export const Article: FC<ArticleProps> = ({color, title, image, children, link, 
 
 	return (
 		<Paper radius={0} className={classNames(classes.card, getColorStyle())}>
-			<Stack align='flex-start' justify='space-between'>
-				<Box>
-					<ImageContainer fluid>
-						<Asset asset={image} />
-					</ImageContainer>
+			<Stack align='flex-start' justify='space-between' className={classes.fullHeight}>
+				<Box className={classes.fullWidth}>
+					<Container className={classes.imageWrapper} mb={50}>
+						<ImageContainer fluid>
+							<AspectRatio ratio={1}>
+								<Asset asset={image} />
+							</AspectRatio>
+						</ImageContainer>
+					</Container>
 
-					<Title order={3} mt='md'>
-						{title}
-					</Title>
+					<Title order={3}>{title}</Title>
 					<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
 					<Text size='sm' mt='sm' mb={11}>
 						{children}
