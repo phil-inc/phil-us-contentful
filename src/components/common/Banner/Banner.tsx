@@ -76,16 +76,16 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 				{Boolean(buttonText?.length)
 					&& (isHubspotEmbed ? (
 						<Grid.Col lg={2} sm={12}>
-							<Group>
-								<Modal
-									size='ls'
-									opened={openHubspotModal}
-									onClose={() => {
-										setopenHubspotModal(false);
-									}}
-								>
-									<HubspotFormModal hubspotEmbed={hubspotEmbed} />
-								</Modal>
+							<Modal
+								size='ls'
+								opened={openHubspotModal}
+								onClose={() => {
+									setopenHubspotModal(false);
+								}}
+							>
+								<HubspotFormModal hubspotEmbed={hubspotEmbed} />
+							</Modal>
+							<Container>
 								<Button
 									color={'dark'}
 									onClick={() => {
@@ -94,12 +94,12 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 								>
 									{buttonText}
 								</Button>
-							</Group>
+							</Container>
 						</Grid.Col>
 					) : (
 						Boolean(externalLink?.length) && (
 							<Grid.Col lg={2} sm={12}>
-								<Group>
+								<Container>
 									{isExternal ? (
 										<Anchor href={link} target='_blank'>
 											<Button color={'dark'}>{buttonText}</Button>
@@ -109,7 +109,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 											<Button color={'dark'}>{buttonText}</Button>
 										</Link>
 									)}
-								</Group>
+								</Container>
 							</Grid.Col>
 						)
 					))}

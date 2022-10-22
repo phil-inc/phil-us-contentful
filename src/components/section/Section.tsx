@@ -2,7 +2,6 @@ import React from 'react';
 import type {IReferencedSection, ISection} from 'types/section';
 import BasicSection from './BasicSection';
 import ReferencedSection from './ReferencedSection';
-import 'assets/css/hubspot-form.css';
 
 type SectionProps = {
 	section: ISection | IReferencedSection;

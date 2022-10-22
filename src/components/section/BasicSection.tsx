@@ -10,6 +10,7 @@ import {
 	Loader,
 	Center,
 	Divider,
+	List,
 } from '@mantine/core';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getImage, GatsbyImage} from 'gatsby-plugin-image';
@@ -51,6 +52,12 @@ const useStyles = createStyles(theme => ({
 		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
 			display: 'none',
 		},
+	},
+
+	listItem: {
+		fontSize: 18,
+		lineHeight: 27,
+		marginTop: 14,
 	},
 }));
 
@@ -95,6 +102,19 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return <Text>{children}</Text>;
+			},
+			[BLOCKS.UL_LIST](node, children) {
+				return <List type='unordered'>{children}</List>;
+			},
+			[BLOCKS.OL_LIST](node, children) {
+				return <List type='ordered'>{children}</List>;
+			},
+			[BLOCKS.LIST_ITEM](node, children) {
+				return (
+					<List.Item>
+						<Text className={classes.listItem}>{children}</Text>
+					</List.Item>
+				);
 			},
 		},
 	};
