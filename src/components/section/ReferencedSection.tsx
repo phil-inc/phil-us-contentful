@@ -180,6 +180,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Location':
 				return <CardWithImage resource={resource} />;
 
+			case 'FAQs':
+				return <FAQ resource={resource} />;
+
 			default:
 				break;
 		}
@@ -233,10 +236,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			)} */}
 			{section.referenceType === 'Image Carousel' ? (
 				<ResourceCarousel imageCaraouselSection={section} />
-			) : section.referenceType === 'Phil Blog' ? (
-				<BlogSection />
-			) : section.referenceType === 'FAQs' ? (
-				<FAQSection />
 			) : (
 				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
 					{section.references.map((resource, index) => (

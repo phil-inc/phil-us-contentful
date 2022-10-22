@@ -15,14 +15,15 @@ import {
 	Accordion,
 	Table,
 	Grid,
+	ScrollArea,
 } from '@mantine/core';
-import {useDisclosure, useMediaQuery, useToggle} from '@mantine/hooks';
+import {useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
 import {graphql, Link} from 'gatsby';
 import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
 import {StaticQuery} from 'gatsby';
-
+import {useDocumentTitle} from '@mantine/hooks';
 import type {ContentfulPage} from 'types/page';
 import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
@@ -34,9 +35,10 @@ const HEADER_HEIGHT = 90;
 type CHeaderProps = {
 	allContentfulHeader: {nodes: Array<{logo: TAsset; navigationLinks: ContentfulPage[]}>};
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
+	sitePage: {id: string; pageContext: {title: string}};
 };
 
-const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource}) => {
+const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource, sitePage}) => {
 	const useStyles = createStyles((theme, _params, getRef) => ({
 		inner: {
 			padding: '0 116px',
@@ -133,6 +135,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			fontWeight: 700,
 			textDecoration: 'none',
 		},
+
 		listItems: {
 			color: 'white',
 			fontSize: '12px',
@@ -177,6 +180,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 				borderBottom: '20px solid #00827e',
 			},
 		},
+
+		sectionHeader: {
+			textDecoration: 'none',
+			color: '#00201F',
+			fontSize: '14px',
+			lineHeight: '40px',
+		},
 	}));
 
 	const [header] = allContentfulHeader.nodes;
@@ -192,10 +202,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	});
 
 	const [isDrawer, toggleDrawer] = useToggle();
+	const {height, width} = useViewportSize();
+
 	const theme = useMantineTheme();
 	const isBreak = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
 
 	const [target, setTarget] = useState<string>('');
+	const [activePageLI, setActivePageLI] = useState<HTMLLIElement | undefined>();
 
 	const onNavLinkClick = event => {
 		if (event.target.textContent === target) {
@@ -206,43 +219,87 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		}
 	};
 
+	function moveIntidatorActiveTo(li: HTMLLIElement) {
+		const INDICATOR_SIZE = 20;
+		const INITIAL_OFFSET = 25;
+		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+
+		li.classList.add('active');
+
+		indicator.style.transform = `translate(calc(${
+			li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
+		}px), calc(${-20}px))`;
+	}
+
 	React.useEffect(() => {
 		const navBar = document.querySelector('.navbar');
 		const allLi = navBar.querySelectorAll('li');
-		const INDICATOR_SIZE = 20;
-		const INITIAL_OFFSET = 25;
 
-		let previousEl;
+		const clickHandlers = [];
 
-		allLi.forEach((li, index) => {
-			li.addEventListener('click', e => {
+		allLi.forEach(li => {
+			// Initial set active
+			if (
+				location.pathname === '/'
+					? false
+					: location.pathname.includes(`/${slugify(li.innerText, {lower: true, strict: true})}`)
+			) {
+				setActivePageLI(li);
+				li.classList.add('active');
+				moveIntidatorActiveTo(li);
+			}
+
+			const clickEventHandler = (e: MouseEvent) => {
 				e.preventDefault(); // Preventing from submitting
-				const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
-				if (previousEl === li && navBar.querySelector('.active')) {
-					navBar.querySelector('.active').classList.remove('active');
-					indicator.style.transform = '';
-				} else {
-					previousEl = li;
-					if (navBar.querySelector('.active')) {
-						navBar.querySelector('.active').classList.remove('active');
-					}
-
-					li.classList.add('active');
-
-					indicator.style.transform = `translate(calc(${
-						li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
-					}px), calc(${-20}px))`;
+				const active = navBar.querySelector('.active');
+				if (active) {
+					active.classList.remove('active');
 				}
-			});
+
+				moveIntidatorActiveTo(li);
+			};
+
+			clickHandlers.push(clickEventHandler);
+
+			li.addEventListener('click', clickEventHandler);
 		});
 
-		// // TODO: cleanup for dev purpose only, to be removed on prod
-		// return () => {
-		// 	allLi.forEach(li => {
-		// 		li.removeEventListener('click');
-		// 	});
-		// };
+		return () => {
+			allLi.forEach((li, index) => {
+				li.removeEventListener('click', clickHandlers[index]);
+			});
+		};
 	}, []);
+
+	React.useEffect(() => {
+		const navBar = document.querySelector('.navbar');
+		const active = navBar.querySelector('.active');
+
+		if (Boolean(!opened) && Boolean(activePageLI)) {
+			if (active) {
+				active.classList.remove('active');
+			}
+
+			moveIntidatorActiveTo(activePageLI);
+		} else if (Boolean(!opened) && Boolean(!activePageLI)) {
+			const active = navBar.querySelector('.active');
+			if (active) {
+				active.classList.remove('active');
+			}
+
+			const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+			indicator.style.transform = '';
+		}
+	}, [opened, activePageLI]);
+
+	React.useEffect(() => {
+		const navBar = document.querySelector('.navbar');
+		const active: HTMLLIElement = navBar.querySelector('.active');
+
+		if (active) {
+			moveIntidatorActiveTo(active);
+		}
+	}, [width]);
 
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
@@ -306,89 +363,104 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						size='full'
 						transition='fade'
 					>
-						<Accordion
-							classNames={{control: classes.accordionControl, content: classes.accordionContent}}
-							chevron={<IconChevronDown size={24} />}
-						>
-							{pages
-								.filter(page => page.title !== 'Home')
-								.map(page => (
-									<Accordion.Item key={page.id + page.title} value={page.title}>
-										<Accordion.Control>
-											<Text weight='bold' size={18}>
-												{page.title}
-											</Text>
-										</Accordion.Control>
-										<Accordion.Panel>
-											{page.sections
-												.filter(section => Boolean(section.header?.length))
-												.map((section, index) => (
-													<Table key={section.id} mb={16}>
-														<thead>
-															<tr>
-																{index > 0 ? (
-																	<th style={{paddingLeft: 0, paddingRight: 0}}>
-																		<Link
-																			to={`/${slugify(page.title, {
-																				lower: true,
-																				strict: true,
-																			})}/#${slugify(section.header, {
-																				lower: true,
-																				strict: true,
-																			})}`}
-																			style={{textDecoration: 'none'}}
-																		>
-																			<Text size={16} color='dark'>
-																				{section.header}
-																			</Text>
-																		</Link>
-																	</th>
-																) : (
-																	<th style={{paddingLeft: 0, paddingRight: 0}}>
-																		<Link
-																			to={navigateToPage(
-																				slugify(page.title, {lower: true, strict: true}),
-																			)}
-																			style={{textDecoration: 'none'}}
-																		>
-																			<Text size={16} color='dark'>
-																				{section.header}
-																			</Text>
-																		</Link>
-																	</th>
-																)}
-															</tr>
-														</thead>
-														<tbody>
-															{allContentfulResource.nodes
-																.filter(resource => resource.relatesTo)
-																.map(
-																	({id, heading, relatesTo}) =>
-																		section.id === relatesTo.id && (
+						<ScrollArea style={{height: 'calc(100vh - 100px)'}}>
+							<Accordion
+								classNames={{control: classes.accordionControl, content: classes.accordionContent}}
+								chevron={<IconChevronDown size={24} />}
+							>
+								{pages
+									.filter(page => page.title !== 'Home')
+									.map(page => (
+										<Accordion.Item key={page.id + page.title} value={page.title}>
+											<Accordion.Control>
+												<Text weight='bold' size={18}>
+													{page.title}
+												</Text>
+											</Accordion.Control>
+											<Accordion.Panel>
+												{page.sections
+													.filter(section => Boolean(section.header?.length && !section.isHidden))
+													.map((section, index) => (
+														<Table key={section.id} mb={16}>
+															<thead>
+																<tr>
+																	{index > 0 ? (
+																		<th style={{paddingLeft: 0, paddingRight: 0}}>
+																			<Link
+																				to={`/${slugify(page.title, {
+																					lower: true,
+																					strict: true,
+																				})}/#${slugify(section.header, {
+																					lower: true,
+																					strict: true,
+																				})}`}
+																				style={{textDecoration: 'none'}}
+																			>
+																				<Text
+																					size={16}
+																					weight={400}
+																					color={theme.colors.primary[0]}
+																				>
+																					{section.header}
+																				</Text>
+																			</Link>
+																		</th>
+																	) : (
+																		<th style={{paddingLeft: 0, paddingRight: 0}}>
 																			<Link
 																				to={navigateToPage(
-																					`${slugify(page.title, {lower: true})}/${slugify(
-																						relatesTo.header,
-																						{
-																							lower: true,
-																						},
-																					)}/${slugify(heading, {lower: true})}`,
+																					slugify(page.title, {lower: true, strict: true}),
 																				)}
 																				style={{textDecoration: 'none'}}
 																			>
-																				<Text my={16} color='dark'>
-																					{heading}
+																				<Text
+																					size={16}
+																					weight={400}
+																					color={theme.colors.primary[0]}
+																				>
+																					{section.header}
 																				</Text>
 																			</Link>
-																		),
-																)}
-														</tbody>
-													</Table>
-												))}
-										</Accordion.Panel>
-									</Accordion.Item>
-								))}
-						</Accordion>
+																		</th>
+																	)}
+																</tr>
+															</thead>
+															<tbody>
+																{allContentfulResource.nodes
+																	.filter(resource => resource.relatesTo)
+																	.map(
+																		({id, heading, relatesTo}) =>
+																			section.id === relatesTo.id && (
+																				<Link
+																					to={navigateToPage(
+																						`${slugify(page.title, {lower: true})}/${slugify(
+																							relatesTo.header,
+																							{
+																								lower: true,
+																							},
+																						)}/${slugify(heading, {lower: true})}`,
+																					)}
+																					style={{textDecoration: 'none'}}
+																				>
+																					<Text
+																						size={14}
+																						weight={400}
+																						color={theme.colors.primary[0]}
+																						mt={24}
+																					>
+																						{heading}
+																					</Text>
+																				</Link>
+																			),
+																	)}
+															</tbody>
+														</Table>
+													))}
+											</Accordion.Panel>
+										</Accordion.Item>
+									))}
+							</Accordion>
+						</ScrollArea>
 					</Drawer>
 				) : (
 					<Collapse
@@ -523,6 +595,10 @@ const query = graphql`
 					}
 				}
 			}
+		}
+		sitePage {
+			id
+			pageContext
 		}
 	}
 `;

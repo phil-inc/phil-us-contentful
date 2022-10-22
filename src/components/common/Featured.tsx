@@ -10,6 +10,7 @@ import {
 	Grid,
 	AspectRatio,
 	Anchor,
+	Box,
 } from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
@@ -64,23 +65,23 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Center>
-				<Grid align={'center'} gutter={'sm'}>
-					<Grid.Col lg={6} sm={12} md={12} py={0}>
+				<Grid align={'center'} justify={'left'}>
+					<Grid.Col lg={5} sm={12} md={12} py={0}>
 						<ImageContainer fluid>
 							<Asset asset={resource.asset} />
 						</ImageContainer>
 					</Grid.Col>
-					<Grid.Col lg={6} sm={12} md={12}>
+					<Grid.Col lg={7} sm={12} md={12}>
 						<Container pr={pr}>
 							{isExternal ? (
 								<Anchor className={classes.title} href={link} target='_blank'>
-									<Title order={3} mt='md' className={classes.title} lineClamp={2}>
+									<Title order={3} mt='md' className={classes.title} lineClamp={3}>
 										{resource.heading}
 									</Title>
 								</Anchor>
 							) : (
 								<Link className={classes.title} to={link}>
-									<Title order={3} mt='md' className={classes.title} lineClamp={4}>
+									<Title order={3} mt='md' className={classes.title} lineClamp={3}>
 										{resource.heading}
 									</Title>
 								</Link>
