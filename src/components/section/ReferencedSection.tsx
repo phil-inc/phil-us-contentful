@@ -24,6 +24,8 @@ import slugify from 'slugify';
 import {CardWithImage} from 'components/common/CardWithImage';
 import {BlogSection} from 'components/Blog/BlogSection';
 import {FAQSection} from 'components/FAQSection/FAQSection';
+import Asset from 'components/common/Asset/Asset';
+import ImageContainer from 'components/common/Container/ImageContainer';
 
 const useStyles = createStyles(theme => ({
 	divider: {
@@ -128,14 +130,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Customer Story':
 			case 'Testimonial':
 				return (
-					<Testimonial
-						type={section.referenceType === 'Testimonial' ? 'person' : 'company'}
-						image={resource.asset}
-						author={resource.author}
-						designation={resource.designation}
-					>
-						{resource.body && renderRichText(resource.body)}
-					</Testimonial>
+					<Testimonial type={section.referenceType === 'Testimonial' ? 'person' : 'company'} resource={resource} />
 				);
 
 			case 'Phil Blog':
@@ -170,7 +165,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Investors':
 				return (
 					<Container size={300}>
-						<GatsbyImage image={getImage(resource.asset)} alt='' />
+						<Asset asset={resource.asset} />
 					</Container>
 				);
 
