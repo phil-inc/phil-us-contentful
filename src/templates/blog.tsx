@@ -27,7 +27,6 @@ type PageTemplateProps = {
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	const {heading, body, asset} = pageContext;
-	console.log(pageContext);
 	const useStyles = createStyles(theme => ({
 		body: {
 			p: {

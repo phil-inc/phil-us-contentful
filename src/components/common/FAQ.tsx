@@ -46,11 +46,6 @@ type FAQProps = {
 export const FAQ: FC<FAQProps> = ({resource}) => {
 	const {classes} = useStyles();
 	const {link, isExternal} = getLink(resource);
-	console.log(
-		resource.heading === 'How can offices change their default preference and frequency of receiving updates?'
-			? resource
-			: '',
-	);
 
 	return (
 		<Paper radius={0} className={classNames(classes.FAQWrapper)}>
