@@ -17,11 +17,13 @@ import {
 	Drawer,
 	Table,
 	Center,
+	Avatar,
 } from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {upperFirst, useDisclosure} from '@mantine/hooks';
-import {IconChevronDown} from '@tabler/icons';
+import {IconBrandLinkedin, IconBrandTwitter, IconChevronDown} from '@tabler/icons';
 import Asset from 'components/common/Asset/Asset';
+import ImageContainer from 'components/common/Container/ImageContainer';
 import {graphql, Link, StaticQuery} from 'gatsby';
 import {GatsbyImage} from 'gatsby-plugin-image';
 import React from 'react';
@@ -132,13 +134,13 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 				{/* Desktop View */}
 				<Grid className={classes.footer} gutter={'xl'}>
 					{pages.map(page => (
-						<Grid.Col span={3}>
+						<Grid.Col key={page.id} span={3}>
 							<Box sx={{width: '80%'}}>
 								<Link
 									to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
 									style={{textDecoration: 'none'}}
 								>
-									<Text span key={page.id} size={'lg'} className={classes.footLinkHeader}>
+									<Text span size={'lg'} className={classes.footLinkHeader}>
 										{page.title}
 									</Text>
 								</Link>
@@ -147,7 +149,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 									.filter(section => Boolean(section.header?.length && !section.isHidden))
 									.map(section => (
 										<>
-											<List listStyleType='none'>
+											<List key={page.id + section.id} listStyleType='none'>
 												<List.Item>
 													<Link
 														to={
@@ -165,6 +167,15 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 													</Link>
 												</List.Item>
 											</List>
+											{page.title === 'Contact' && (
+												<Group mt={18}>
+													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+														<div>
+															<img src='../images/linkedin.svg' />
+														</div>
+													</Anchor>
+												</Group>
+											)}
 										</>
 									))}
 							</Box>
@@ -179,10 +190,10 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 							<div id='hubspotForm'></div>
 							<Grid mt={60}>
 								{footer.badge.map(badge => (
-									<Grid.Col span={6}>
-										<Container fluid size={120}>
+									<Grid.Col key={badge.title} span={6}>
+										<ImageContainer background='transparent' fluid>
 											<Asset asset={badge} />
-										</Container>
+										</ImageContainer>
 									</Grid.Col>
 								))}
 							</Grid>
