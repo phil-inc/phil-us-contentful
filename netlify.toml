@@ -52,3 +52,20 @@ from = "/pharmacists/*"
 to = "/healthcare-providers"
 status = 200
 
+[[redirects]]
+from = "/connect/*"
+to = "/contact"
+status = 200
+
+[[redirects]]
+from = "/press-releases"
+to = "/resources"
+status = 200
+
+[[redirects]]
+from = "/press-releases/*"
+to = "/"
+status = 200
+
+
+
