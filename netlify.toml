@@ -24,7 +24,7 @@ status = 302
 # faqs redirection
 [[redirects]]
 from = "/faqs/*"
-to = "/resources/:#faqs"
+to = "/resources/#faqs"
 status = 200
 
 [[redirects]]
