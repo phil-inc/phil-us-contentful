@@ -18,7 +18,6 @@ type HelmetProps = {
 export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	<SEO title={pageContext.title}>
 		<meta name='description' content={data.contentfulPage.description} />
-		<title>Contact</title>
 		<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 	</SEO>
 );

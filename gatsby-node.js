@@ -181,13 +181,13 @@ const generateStaticPages = async ({actions, graphql}) => {
 		.forEach(resource => {
 			try {
 				const isBlogPage = Boolean(resource.relatesTo && resource.relatesTo.page && resource.heading)
-				let path =  resource.slug ?? `/${slugify(resource.heading, {
+				const path =  resource.slug ?? `/${slugify(resource.heading, {
 					lower: true,
 					strict: true,
 				})}`
 
 				if (isBlogPage) {
-					path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
+					const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
 						resource.relatesTo?.header,
 						{lower: true, strict: true}
 					)}/${slugify(resource.heading, {
@@ -195,7 +195,11 @@ const generateStaticPages = async ({actions, graphql}) => {
 						strict: true,
 					})}`;
 	
-					
+					actions.createPage({
+						path: path,
+						component: require.resolve(`./src/templates/blog.tsx`),
+						context: resource,
+					});
 				}
 
 				actions.createPage({

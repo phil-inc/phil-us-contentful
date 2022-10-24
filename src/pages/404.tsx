@@ -1,8 +1,21 @@
-import {createStyles, Image, Container, Title, Text, Button, SimpleGrid} from '@mantine/core';
-import {Link, navigate} from 'gatsby';
-import {StaticImage} from 'gatsby-plugin-image';
+import {createStyles, Container, Title, Text, Button, SimpleGrid} from '@mantine/core';
+import {Link} from 'gatsby';
 import {Layout} from 'layouts/Layout/Layout';
+import {SEO} from 'layouts/SEO/SEO';
 import React from 'react';
+import ErrorImage from '../images/404.svg';
+
+export const Head: React.FC = () => (
+	<SEO title={'Page not found'}>
+		<meta
+			name='description'
+			content={
+				'Page you are trying to open does not exist. You may have mistyped the address, or the page has been moved to another URL. If you think this is an error contact support.'
+			}
+		/>
+		<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+	</SEO>
+);
 
 const useStyles = createStyles(theme => ({
 	root: {
@@ -54,18 +67,14 @@ const Error = () => {
 							moved to another URL. If you think this is an error contact support.
 						</Text>
 						<Link to={'/'}>
-							<Button variant='outline' size='md' mt='xl' className={classes.control}>
+							<Button variant='outline' color={'dark'} size='md' mt='xl' className={classes.control}>
 								Get back to home page
 							</Button>
 						</Link>
 					</div>
-					<StaticImage
-						src='../assets/images/404.svg'
-						placeholder='blurred'
-						layout='constrained'
-						alt='page not found'
-						className={classes.mobileImage}
-					/>
+					<Container>
+						<img src='../images/404.svg' width='100%' height='100%' />
+					</Container>
 				</SimpleGrid>
 			</Container>
 		</Layout>

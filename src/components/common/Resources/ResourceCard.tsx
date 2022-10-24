@@ -41,6 +41,12 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 			display: 'grid',
 			alignItems: 'center',
 		},
+
+		textDecorationNone: {
+			color: 'inherit',
+			textDecoration: 'none',
+			cursor: 'pointer',
+		},
 	}));
 
 	const {classes} = useStyles();
@@ -84,7 +90,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
-			<Grid justify='center' style={{height: '100%'}}>
+			<Grid justify='center' style={{height: '100%'}} mt={0}>
 				<Grid.Col lg={5} sm={6} md={6} p={0} pl={8}>
 					{resource.asset && (
 						<ImageContainer fluid>
@@ -95,9 +101,21 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 				<Grid.Col lg={7} sm={6} md={6} className={classes.center}>
 					<Box pl={40} pr={36} pb={30} sx={{overflow: 'hidden'}}>
 						{resource.heading && (
-							<Title order={3} mt='md'>
-								{resource.heading}
-							</Title>
+							<>
+								{isExternal ? (
+									<Anchor href={link} target='_blank' underline={false} className={classes.textDecorationNone}>
+										<Title order={3} mt='md'>
+											{resource.heading}
+										</Title>
+									</Anchor>
+								) : (
+									<Link to={link} className={classes.textDecorationNone}>
+										<Title order={3} mt='md'>
+											{resource.heading}
+										</Title>
+									</Link>
+								)}
+							</>
 						)}
 						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
 						{resource.body && (
