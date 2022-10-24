@@ -23,6 +23,7 @@ import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import Asset from './Asset/Asset';
 import ImageContainer from './Container/ImageContainer';
+import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
 
 type FeaturedProps = {
 	resource: TResource;
@@ -62,26 +63,62 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 
 	const {link, isExternal} = getLink(resource);
 
+	const options = {
+		renderMark: {
+			[MARKS.BOLD]: text => <>{text}</>,
+			[MARKS.ITALIC]: text => <>{text}</>,
+		},
+		renderNode: {
+			[BLOCKS.PARAGRAPH](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.UL_LIST](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.OL_LIST](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.LIST_ITEM](node, children) {
+				return <>{children}</>;
+			},
+			[INLINES.HYPERLINK](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.HEADING_1](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.HEADING_2](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.HEADING_3](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.HEADING_4](node, children) {
+				return <>{children}</>;
+			},
+		},
+	};
+
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Center>
-				<Grid align={'center'} justify={'left'}>
+				<Grid justify={'left'} style={{height: '100%'}}>
 					<Grid.Col lg={5} sm={12} md={12} py={0}>
 						<ImageContainer fluid>
 							<Asset asset={resource.asset} />
 						</ImageContainer>
 					</Grid.Col>
 					<Grid.Col lg={7} sm={12} md={12}>
-						<Container pr={pr}>
+						<Container pr={pr} pb={75}>
 							{isExternal ? (
-								<Anchor className={classes.title} href={link} target='_blank'>
-									<Title order={3} mt='md' className={classes.title} lineClamp={3}>
+								<Anchor className={classes.title} href={link} target='_blank' underline={false}>
+									<Title order={3} mt='md' className={classes.title}>
 										{resource.heading}
 									</Title>
 								</Anchor>
 							) : (
 								<Link className={classes.title} to={link}>
-									<Title order={3} mt='md' className={classes.title} lineClamp={3}>
+									<Title order={3} mt='md' className={classes.title}>
 										{resource.heading}
 									</Title>
 								</Link>
@@ -90,7 +127,7 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 							{!noDivider && <Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />}
 							{resource.body && (
 								<Text size={18} mt='sm' mb={12} lineClamp={3}>
-									{renderRichText(resource.body)}
+									{renderRichText(resource.body, options)}
 								</Text>
 							)}
 						</Container>

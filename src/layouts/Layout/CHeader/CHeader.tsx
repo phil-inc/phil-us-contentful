@@ -17,7 +17,7 @@ import {
 	Grid,
 	ScrollArea,
 } from '@mantine/core';
-import {useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
+import {useClickOutside, useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
 import {graphql, Link} from 'gatsby';
 import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
@@ -195,20 +195,30 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	const {classes} = useStyles();
 
-	const [opened, {toggle, open}] = useDisclosure(false, {
+	const [opened, {toggle, open, close}] = useDisclosure(false, {
 		onClose() {
 			setTarget('');
 		},
 	});
 
 	const [isDrawer, toggleDrawer] = useToggle();
-	const {height, width} = useViewportSize();
+	const {width} = useViewportSize();
 
 	const theme = useMantineTheme();
 	const isBreak = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
 
 	const [target, setTarget] = useState<string>('');
+
+	const [collapseRef, setCollapseRef] = useState<HTMLElement>();
+	const [listRef, setListRef] = useState<HTMLElement>();
 	const [activePageLI, setActivePageLI] = useState<HTMLLIElement | undefined>();
+	useClickOutside(
+		() => {
+			close();
+		},
+		null,
+		[collapseRef, listRef],
+	);
 
 	const onNavLinkClick = event => {
 		if (event.target.textContent === target) {
@@ -317,7 +327,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						}}
 						className={classes.burger}
 					/>
-					<List className={classes.navLinksWrapper}>
+					<List ref={setListRef} className={classes.navLinksWrapper}>
 						<div className={classes.indicator}></div>
 						{pages
 							.filter(page => page.title !== 'Home')
@@ -469,6 +479,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						transitionDuration={150}
 						transitionTimingFunction='ease-out'
 						animateOpacity={false}
+						ref={setCollapseRef}
 					>
 						<Container className={classes.container} fluid>
 							<List listStyleType='none' size='xl' styles={{itemWrapper: {width: '100%'}}}>
@@ -480,7 +491,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 												.filter(section => Boolean(section.header?.length && !section.isHidden))
 												.map((section, index, array) => (
 													<Grid.Col span={Math.floor(100 / array.length)}>
-														<List.Item key={index}>
+														<List.Item key={index} onClick={close}>
 															{index > 0 ? (
 																<Link
 																	to={`/${slugify(page.title, {lower: true, strict: true})}/#${slugify(

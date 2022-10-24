@@ -10,6 +10,7 @@ import {getLink} from 'utils/getLink';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import ImageContainer from '../Container/ImageContainer';
 import Asset from '../Asset/Asset';
+import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
 
 type ResourceCardProps = {
 	sectionHeader: string;
@@ -35,38 +36,73 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 				background: '#5ABEA4 0% 0% no-repeat padding-box',
 			},
 		},
-		image: {
-			height: '100%',
-			width: '100%',
-			background: '#00827E',
+
+		center: {
+			display: 'grid',
+			alignItems: 'center',
 		},
 	}));
 
 	const {classes} = useStyles();
 	const {link, isExternal} = getLink(resource);
 
+	const options = {
+		renderMark: {
+			[MARKS.BOLD]: text => <>{text}</>,
+			[MARKS.ITALIC]: text => <>{text}</>,
+		},
+		renderNode: {
+			[BLOCKS.PARAGRAPH](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.UL_LIST](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.OL_LIST](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.LIST_ITEM](node, children) {
+				return <>{children}</>;
+			},
+			[INLINES.HYPERLINK](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.HEADING_1](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.HEADING_2](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.HEADING_3](node, children) {
+				return <>{children}</>;
+			},
+			[BLOCKS.HEADING_4](node, children) {
+				return <>{children}</>;
+			},
+		},
+	};
+
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
-			<Grid justify='center' align='center'>
-				<Grid.Col lg={5} sm={6} md={6}>
+			<Grid justify='center' style={{height: '100%'}}>
+				<Grid.Col lg={5} sm={6} md={6} p={0} pl={8}>
 					{resource.asset && (
 						<ImageContainer fluid>
 							<Asset asset={resource.asset} />
 						</ImageContainer>
 					)}
 				</Grid.Col>
-				<Grid.Col lg={7} sm={6} md={6}>
-					<Box pl={40} pr={36} pb={30}>
+				<Grid.Col lg={7} sm={6} md={6} className={classes.center}>
+					<Box pl={40} pr={36} pb={30} sx={{overflow: 'hidden'}}>
 						{resource.heading && (
-							<Title order={3} mt='md' lineClamp={2}>
+							<Title order={3} mt='md'>
 								{resource.heading}
 							</Title>
 						)}
 						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
 						{resource.body && (
 							<Text size={18} mt='sm' mb={20} lineClamp={2}>
-								{/* Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt ullam, labore, ducimus minus corporis reiciendis deleniti quaerat qui laboriosam a laudantium rerum dolores delectus ut ex deserunt eius officiis rem. */}
-								{renderRichText(resource.body)}
+								{renderRichText(resource.body, options)}
 							</Text>
 						)}
 						{resource.buttonText && (
