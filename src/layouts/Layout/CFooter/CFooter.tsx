@@ -17,10 +17,11 @@ import {
 	Drawer,
 	Table,
 	Center,
+	Avatar,
 } from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {upperFirst, useDisclosure} from '@mantine/hooks';
-import {IconChevronDown} from '@tabler/icons';
+import {IconBrandLinkedin, IconBrandTwitter, IconChevronDown} from '@tabler/icons';
 import Asset from 'components/common/Asset/Asset';
 import {graphql, Link, StaticQuery} from 'gatsby';
 import {GatsbyImage} from 'gatsby-plugin-image';
@@ -165,6 +166,15 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 													</Link>
 												</List.Item>
 											</List>
+											{page.title === 'Contact' && (
+												<Group mt={18}>
+													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+														<div>
+															<img src='../images/linkedin.svg' />
+														</div>
+													</Anchor>
+												</Group>
+											)}
 										</>
 									))}
 							</Box>
