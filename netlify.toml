@@ -27,3 +27,9 @@ status = 302
 from = "/faqs/*"
 to = "https://philhelp.zendesk.com/hc/en-us"
 status = 200
+
+
+[[redirects]]
+from = "/about-us"
+to = "/company"
+status = 200
