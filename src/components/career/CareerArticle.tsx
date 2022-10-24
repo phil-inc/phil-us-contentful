@@ -7,7 +7,9 @@ import {getLink} from 'utils/getLink';
 import {Link} from 'gatsby';
 
 type CareerArticleProps = {
-	listing: TResource;
+	title: string;
+	url: string;
+	location: string;
 };
 
 const options = {
@@ -18,25 +20,20 @@ const options = {
 	},
 };
 
-const CareerArticle: React.FC<CareerArticleProps> = ({listing}) => {
-	const {link, isExternal} = getLink(listing);
-
+const CareerArticle = ({title, url, location}) => {
 	return (
-		<Group position='apart'>
+		<Group position="apart">
 			<Box>
-				{listing.heading && <Text weight='bold'>{listing.heading}</Text>}
-				{listing.body && <Text italic>{renderRichText(listing.body, options)}</Text>}
-			</Box>
-
-			{isExternal ? (
-				<Anchor href={link} target='_blank'>
-					<Button>{listing.buttonText}</Button>
+				<Anchor href={url} target="_blank">
+					{
+						<Text weight="bold">
+							{title}
+							<br />
+							{location}
+						</Text>
+					}
 				</Anchor>
-			) : (
-				<Link to={link}>
-					<Button>{listing.buttonText}</Button>
-				</Link>
-			)}
+			</Box>
 		</Group>
 	);
 };

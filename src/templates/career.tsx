@@ -1,26 +1,13 @@
-import React from 'react';
-import {Layout} from 'layouts/Layout/Layout';
-import type {ContentfulPage} from 'types/page';
-import Section from 'components/section/Section';
-import {graphql, Link, Script} from 'gatsby';
-import slugify from 'slugify';
-import {SEO} from 'layouts/SEO/SEO';
-import {useInternalPaths} from 'hooks/useInternalPaths';
-import {Box, Grid, Title, Container, TextInput, Button, createStyles, Text, Group, Center} from '@mantine/core';
-import {IconSearch} from '@tabler/icons';
-import Expanded from 'components/common/Expanded/Expanded';
-import ReferencedSection from 'components/section/ReferencedSection';
-import CareerBlock from 'components/career/CareerBlock';
-import type {TAsset} from 'types/asset';
-import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
-import {parseScript} from 'utils/parseScript';
-import {useMediaQuery} from '@mantine/hooks';
-import {getLink} from 'utils/getLink';
+import { Box, Container, createStyles, Divider, Grid, Group, Text, Title } from '@mantine/core';
+import CareerArticle from 'components/career/CareerArticle';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import {renderRichText} from 'gatsby-source-contentful/rich-text';
-import type {IReferencedSection, ISection} from 'types/section';
-import {isVideoContent} from 'utils/isVideoContent';
+import { graphql } from 'gatsby';
+import { Layout } from 'layouts/Layout/Layout';
+import { SEO } from 'layouts/SEO/SEO';
+import React, { useEffect, useState } from 'react';
+import type { TAsset } from 'types/asset';
+import type { ContentfulPage } from 'types/page';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -62,32 +49,54 @@ type HelmetProps = {
 
 export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	<SEO title={pageContext.title}>
-		<meta name='description' content={data.contentfulPage.description} />
+		<meta name="description" content={data.contentfulPage.description} />
 		<title>Contact</title>
-		<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+		<script charSet="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
 	</SEO>
 );
 
-type CareerSectionProps = {
-	sections: Array<ISection | IReferencedSection>;
-};
-
-const CareerSection: React.FC<CareerSectionProps> = ({sections}) => {
+const CareerSection = ({sections, careers}) => {
+	console.log('sections', careers);
 	const {classes} = useStyles();
 	let asset: TAsset;
 
 	return (
 		<Container id={'Career Section'} fluid className={classes.container}>
-			<Grid gutter={60} pb={130}>
+			<Grid gutter={60} pb={130} align="flex-start">
 				<Grid.Col orderSm={1} lg={6} md={6} sm={12}>
 					<Box className={classes.center}>
-						<Group align={'center'}>
-							<Box>
-								<Title order={2}>
-									<Text>Careers at Phil</Text>
-								</Title>
-							</Box>
-						</Group>
+						<>
+							<Group align={'center'}>
+								<Box>
+									<Title order={2}>
+										<Text>Careers at Phil</Text>
+									</Title>
+								</Box>
+							</Group>
+							{Object.keys(careers).map(function (job) {
+								return (
+									<>
+										<Title order={3}>
+											<Text>{job}</Text>
+										</Title>
+										<Divider variant="dashed" size={2} my={10} mb={32} />
+										{careers[job].map(listing => (
+											<Box mb={50}>
+												<CareerArticle
+													title={listing.title}
+													url={listing.url}
+													location={listing.location.location_str}
+												/>
+											</Box>
+										))}
+									</>
+								);
+							})}
+						</>
+					</Box>
+				</Grid.Col>
+				<Grid.Col orderSm={2} lg={6} md={6} sm={12} span="content" >
+					<ImageContainer fluid>
 						{sections
 							.filter(section => !section.isHidden)
 							.map((section, index) => {
@@ -96,19 +105,9 @@ const CareerSection: React.FC<CareerSectionProps> = ({sections}) => {
 									// Get hero asset
 									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 									asset = section.asset;
-									return;
+									return <Asset asset={asset} />;
 								}
-
-								// eslint-disable-next-line no-warning-comments
-								// TODO: Fix type later
-								// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-								return <CareerBlock title={section.header} listings={section.references} />;
 							})}
-					</Box>
-				</Grid.Col>
-				<Grid.Col orderSm={2} lg={6} md={6} sm={12}>
-					<ImageContainer fluid>
-						<Asset asset={asset} />
 					</ImageContainer>
 				</Grid.Col>
 			</Grid>
@@ -123,10 +122,40 @@ type CareerTemplateProps = {
 const CareerTemplate: React.FC<CareerTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 	let asset: TAsset;
+	const [careers, setCareers] = useState({});
+
+	useEffect(() => {
+		fetchCareers();
+	}, []);
+
+	const fetchCareers = () => {
+		fetch('https://capi.phil.us/api/web/v1/careers')
+			.then(response => response.json())
+			.then(data => {
+				formatCareerData(data);
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	};
+
+	const formatCareerData = jobListings => {
+		var deptWiseJobs = {};
+		jobListings.data.jobs.forEach(function (e, i) {
+			var key = e.department != '' ? e.department : 'Others';
+			if (!(key in deptWiseJobs)) {
+				deptWiseJobs[key] = [];
+			}
+			deptWiseJobs[key].push(e);
+		});
+
+		var sortedJobs = Object.fromEntries(Object.entries(deptWiseJobs).sort());
+		setCareers(sortedJobs);
+	};
 
 	return (
 		<Layout>
-			<CareerSection sections={sections} />
+			<CareerSection sections={sections} careers={careers} />
 		</Layout>
 	);
 };
