@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {Anchor, Box, Button, Container, Group, Text} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
@@ -20,22 +21,20 @@ const options = {
 	},
 };
 
-const CareerArticle = ({title, url, location}) => {
-	return (
-		<Group position="apart">
-			<Box>
-				<Anchor href={url} target="_blank">
-					{
-						<Text weight="bold">
-							{title}
-							<br />
-							{location}
-						</Text>
-					}
-				</Anchor>
-			</Box>
-		</Group>
-	);
-};
+const CareerArticle = ({title, url, location}) => (
+	<Group position='apart'>
+		<Box>
+			<Anchor href={url} target='_blank'>
+				{
+					<Text weight='bold'>
+						{title}
+						<br />
+						{location}
+					</Text>
+				}
+			</Anchor>
+		</Box>
+	</Group>
+);
 
 export default CareerArticle;

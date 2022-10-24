@@ -1,3 +1,8 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable @typescript-eslint/require-array-sort-compare */
+/* eslint-disable no-negated-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {Box, Container, createStyles, Divider, Grid, Group, Text, Title, Loader} from '@mantine/core';
 import CareerArticle from 'components/career/CareerArticle';
 import Asset from 'components/common/Asset/Asset';
@@ -49,9 +54,9 @@ type HelmetProps = {
 
 export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	<SEO title={pageContext.title}>
-		<meta name="description" content={data.contentfulPage.description} />
+		<meta name='description' content={data.contentfulPage.description} />
 		<title>Contact</title>
-		<script charSet="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+		<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 	</SEO>
 );
 
@@ -61,7 +66,7 @@ const CareerSection = ({sections, careers, loader}) => {
 
 	return (
 		<Container id={'Career Section'} fluid className={classes.container}>
-			<Grid gutter={60} pb={130} align="flex-start">
+			<Grid gutter={60} pb={130} align='flex-start'>
 				<Grid.Col orderSm={1} lg={6} md={6} sm={12}>
 					<Box className={classes.center}>
 						<>
@@ -72,30 +77,28 @@ const CareerSection = ({sections, careers, loader}) => {
 									</Title>
 								</Box>
 							</Group>
-							{loader && <Loader color="dark" size="xl" variant="dots" style={{marginTop: '30px'}} />}
-							{Object.keys(careers).map(function (job) {
-								return (
-									<>
-										<Title order={3}>
-											<Text>{job}</Text>
-										</Title>
-										<Divider variant="dashed" size={2} my={10} mb={32} />
-										{careers[job].map(listing => (
-											<Box mb={50}>
-												<CareerArticle
-													title={listing.title}
-													url={listing.url}
-													location={listing.location.location_str}
-												/>
-											</Box>
-										))}
-									</>
-								);
-							})}
+							{loader && <Loader color='dark' size='xl' variant='dots' style={{marginTop: '30px'}} />}
+							{Object.keys(careers).map(job => (
+								<>
+									<Title order={3}>
+										<Text>{job}</Text>
+									</Title>
+									<Divider variant='dashed' size={2} my={10} mb={32} />
+									{careers[job].map(listing => (
+										<Box mb={50}>
+											<CareerArticle
+												title={listing.title}
+												url={listing.url}
+												location={listing.location.location_str}
+											/>
+										</Box>
+									))}
+								</>
+							))}
 						</>
 					</Box>
 				</Grid.Col>
-				<Grid.Col orderSm={2} lg={6} md={6} sm={12} span="content">
+				<Grid.Col orderSm={2} lg={6} md={6} sm={12} span='content'>
 					<ImageContainer fluid>
 						{sections
 							.filter(section => !section.isHidden)
@@ -103,7 +106,7 @@ const CareerSection = ({sections, careers, loader}) => {
 								if (index === 0) {
 									// TODO: Fix type later
 									// Get hero asset
-									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
 									asset = section.asset;
 									return <Asset asset={asset} />;
 								}
@@ -131,7 +134,7 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({data}) => {
 
 	const fetchCareers = () => {
 		fetch('https://capi.phil.us/api/web/v1/careers')
-			.then(response => response.json())
+			.then(async response => response.json())
 			.then(data => {
 				formatCareerData(data);
 			})
@@ -141,16 +144,17 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({data}) => {
 	};
 
 	const formatCareerData = jobListings => {
-		var deptWiseJobs = {};
-		jobListings.data.jobs.forEach(function (e, i) {
-			var key = e.department != '' ? e.department : 'Others';
+		const deptWiseJobs = {};
+		jobListings.data.jobs.forEach((e, i) => {
+			const key = e.department !== '' ? e.department : 'Others';
 			if (!(key in deptWiseJobs)) {
 				deptWiseJobs[key] = [];
 			}
+
 			deptWiseJobs[key].push(e);
 		});
 
-		var sortedJobs = Object.fromEntries(Object.entries(deptWiseJobs).sort());
+		const sortedJobs = Object.fromEntries(Object.entries(deptWiseJobs).sort());
 		setLoader(false);
 		setCareers(sortedJobs);
 	};

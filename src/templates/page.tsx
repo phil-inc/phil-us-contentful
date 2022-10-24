@@ -9,25 +9,43 @@ import {useInternalPaths} from 'hooks/useInternalPaths';
 import {Box, Grid, Title, Container, TextInput, Button} from '@mantine/core';
 import {IconSearch} from '@tabler/icons';
 import Expanded from 'components/common/Expanded/Expanded';
+import type {ISection} from 'types/section';
+import {getLink} from 'utils/getLink';
 
 type HelmetProps = {
-	pageContext: {title: string};
-	data: {contentfulPage: ContentfulPage};
+	pageContext: ContentfulPage;
 };
 
-export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
-	<SEO title={pageContext.title}>
-		<meta name='description' content={data.contentfulPage.description} />
-		<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-	</SEO>
-);
+export const Head: React.FC<HelmetProps> = ({pageContext}) => {
+	const heroSection = pageContext.sections.find(section => section.sectionType === 'Basic Section') as ISection;
+	const heroImage = heroSection?.asset.file.url;
+
+	return (
+		<SEO title={pageContext.title}>
+			<meta name='twitter:card' content='summary_large_image' />
+			<meta name='twitter:title' content={pageContext.title} />
+			<meta name='twitter:description' content={pageContext.description} />
+			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name='description' content={pageContext.description} />
+			<meta property='og:title' content={pageContext.title} />
+			<meta property='og:type' content={'Page'} />
+			<meta property='og:description' content={pageContext.description} />
+			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta
+				property='og:url'
+				content={`https://phil.us${pageContext.title === 'Home' ? '/' : `/${pageContext.title}`}`}
+			/>
+			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+		</SEO>
+	);
+};
 
 type PageTemplateProps = {
-	data: {contentfulPage: ContentfulPage};
+	pageContext: ContentfulPage;
 };
 
-const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
-	const {id, sections, title} = data.contentfulPage;
+const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
+	const {id, sections, title} = pageContext;
 
 	let basicSectionCount = 0;
 
@@ -76,259 +94,5 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 		</Layout>
 	);
 };
-
-export const pageQuery = graphql`
-	query getPage($title: String) {
-		contentfulPage(title: {eq: $title}) {
-			id
-			title
-			description
-			sections {
-				... on ContentfulSection {
-					id
-					isHidden
-					body {
-						raw
-						references {
-							contentful_id
-							__typename
-							description
-							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-						}
-					}
-					isHubspotEmbed
-					asset {
-						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-						title
-						file {
-							contentType
-							details {
-								size
-							}
-							url
-						}
-					}
-					buttonText
-					header
-					sectionType
-					externalLink
-					sys {
-						contentType {
-							sys {
-								id
-							}
-						}
-					}
-					subHeader {
-						subHeader
-					}
-					internalLink {
-						... on ContentfulPage {
-							id
-							title
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulReferencedSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulResource {
-							id
-							heading
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-					}
-				}
-				... on ContentfulReferencedSection {
-					id
-					isHidden
-					hideHeader
-					header
-					sectionType
-					references {
-						externalLink
-						internalLink {
-							... on ContentfulPage {
-								id
-								title
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulReferencedSection {
-								id
-								page {
-									title
-								}
-								header
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulSection {
-								id
-								page {
-									title
-								}
-								header
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulResource {
-								id
-								heading
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-						}
-						heading
-						hubspotEmbed {
-							raw
-						}
-						isHubspotEmbed
-						subHeading {
-							subHeading
-						}
-						buttonText
-						body {
-							raw
-						}
-						author
-						designation
-						asset {
-							gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
-							id
-							file {
-								contentType
-								url
-							}
-						}
-					}
-					referenceType
-					externalLink
-					buttonText
-					internalLink {
-						... on ContentfulPage {
-							id
-							title
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulReferencedSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulResource {
-							id
-							heading
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-`;
 
 export default PageTemplate;

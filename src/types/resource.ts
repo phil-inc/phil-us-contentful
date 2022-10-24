@@ -36,6 +36,8 @@ export type TResource = {
 	designation?: string;
 	isHubspotEmbed?: boolean;
 	hubspotEmbed?: BodyType;
+	isGenerateStaticPage: boolean;
+	isFaq: boolean;
 };
 
 export type TParsedString = {
