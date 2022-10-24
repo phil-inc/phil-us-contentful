@@ -188,12 +188,14 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 							</Text>
 							<Divider my={10} color='#6A7979' />
 							<div id='hubspotForm'></div>
-							<Grid mt={60}>
+							<Grid mt={60} align={'center'} justify='center'>
 								{footer.badge.map(badge => (
 									<Grid.Col key={badge.title} span={6}>
-										<ImageContainer background='transparent' fluid>
-											<Asset asset={badge} />
-										</ImageContainer>
+										<Box sx={{maxWidth: 120}}>
+											<ImageContainer background='transparent' fluid>
+												<Asset asset={badge} />
+											</ImageContainer>
+										</Box>
 									</Grid.Col>
 								))}
 							</Grid>
@@ -244,12 +246,14 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 						</Text>
 						<Divider my={10} color='#6A7979' />
 						<div id='hubspotFormMobile'></div>
-						<Grid mt={60}>
+						<Grid mt={60} align={'center'} justify='center'>
 							{footer.badge.map(badge => (
-								<Grid.Col span={6}>
-									<Container fluid>
-										<Asset asset={badge} />
-									</Container>
+								<Grid.Col key={badge.title} span={2}>
+									<Box sx={{maxWidth: 120}}>
+										<ImageContainer background='transparent' fluid>
+											<Asset asset={badge} />
+										</ImageContainer>
+									</Box>
 								</Grid.Col>
 							))}
 						</Grid>
