@@ -75,6 +75,10 @@ export function Layout({children}: LayoutProps) {
 							fontWeight: 900,
 							outline: `3px solid ${theme.colors.primary[0]}`,
 						},
+
+						'&:focus:not(:focus-visible)': {
+							outline: `3px solid ${theme.colors.primary[0]}`,
+						},
 					},
 				}),
 			},

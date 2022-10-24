@@ -85,25 +85,28 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	};
 
 	// Get grid span based on resource type
-	const getSpan = () => {
+	const getSpan = (): {xl: number; lg: number} => {
 		switch (section.referenceType) {
 			case 'Info Card':
 			case 'Testimonial':
-			case 'FAQs':
 			case 'Phil Blog':
 			case 'Upcoming Events':
 			case 'White Paper':
 			case 'Case Study':
-				return GRID_COLUMNS / 2;
+			case 'Featured Resource':
+				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS};
+
+			case 'FAQs':
+				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS / 2};
 
 			case 'Team Member':
-				return GRID_COLUMNS / 4;
+				return {xl: GRID_COLUMNS / 4, lg: GRID_COLUMNS / 4};
 
 			case 'Investors':
-				return GRID_COLUMNS / 5;
+				return {xl: GRID_COLUMNS / 5, lg: GRID_COLUMNS / 5};
 
 			default:
-				return SPAN_LG;
+				return {xl: SPAN_LG, lg: SPAN_LG};
 		}
 	};
 
@@ -232,9 +235,12 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			{section.referenceType === 'Image Carousel' ? (
 				<ResourceCarousel imageCaraouselSection={section} />
 			) : (
-				<Grid grow={section.referenceType === 'Investors'} columns={GRID_COLUMNS}>
+				<Grid
+					grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
+					columns={GRID_COLUMNS}
+				>
 					{section.references.map((resource, index) => (
-						<Grid.Col py={30} key={index} lg={getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
+						<Grid.Col py={30} key={index} {...getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
 							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}

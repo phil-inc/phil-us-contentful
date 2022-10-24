@@ -177,11 +177,15 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 							</Text>
 							<Divider my={10} color='#6A7979' />
 							<div id='hubspotForm'></div>
-							<Group position='center' mt={60}>
+							<Grid mt={60}>
 								{footer.badge.map(badge => (
-									<Asset asset={badge} />
+									<Grid.Col span={6}>
+										<Container fluid size={120}>
+											<Asset asset={badge} />
+										</Container>
+									</Grid.Col>
 								))}
-							</Group>
+							</Grid>
 						</Box>
 					</Grid.Col>
 				</Grid>
@@ -229,11 +233,15 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 						</Text>
 						<Divider my={10} color='#6A7979' />
 						<div id='hubspotFormMobile'></div>
-						<Group position='center' mt={60}>
+						<Grid mt={60}>
 							{footer.badge.map(badge => (
-								<Asset asset={badge} />
+								<Grid.Col span={6}>
+									<Container fluid>
+										<Asset asset={badge} />
+									</Container>
+								</Grid.Col>
 							))}
-						</Group>
+						</Grid>
 					</Box>
 				</Box>
 			</Container>
