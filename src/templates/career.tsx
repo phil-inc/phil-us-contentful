@@ -1,13 +1,13 @@
-import { Box, Container, createStyles, Divider, Grid, Group, Text, Title } from '@mantine/core';
+import {Box, Container, createStyles, Divider, Grid, Group, Text, Title, Loader} from '@mantine/core';
 import CareerArticle from 'components/career/CareerArticle';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import { graphql } from 'gatsby';
-import { Layout } from 'layouts/Layout/Layout';
-import { SEO } from 'layouts/SEO/SEO';
-import React, { useEffect, useState } from 'react';
-import type { TAsset } from 'types/asset';
-import type { ContentfulPage } from 'types/page';
+import {graphql} from 'gatsby';
+import {Layout} from 'layouts/Layout/Layout';
+import {SEO} from 'layouts/SEO/SEO';
+import React, {useEffect, useState} from 'react';
+import type {TAsset} from 'types/asset';
+import type {ContentfulPage} from 'types/page';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -55,8 +55,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, data}) => (
 	</SEO>
 );
 
-const CareerSection = ({sections, careers}) => {
-	console.log('sections', careers);
+const CareerSection = ({sections, careers, loader}) => {
 	const {classes} = useStyles();
 	let asset: TAsset;
 
@@ -73,6 +72,7 @@ const CareerSection = ({sections, careers}) => {
 									</Title>
 								</Box>
 							</Group>
+							{loader && <Loader color="dark" size="xl" variant="dots" style={{marginTop: '30px'}} />}
 							{Object.keys(careers).map(function (job) {
 								return (
 									<>
@@ -95,7 +95,7 @@ const CareerSection = ({sections, careers}) => {
 						</>
 					</Box>
 				</Grid.Col>
-				<Grid.Col orderSm={2} lg={6} md={6} sm={12} span="content" >
+				<Grid.Col orderSm={2} lg={6} md={6} sm={12} span="content">
 					<ImageContainer fluid>
 						{sections
 							.filter(section => !section.isHidden)
@@ -123,6 +123,7 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 	let asset: TAsset;
 	const [careers, setCareers] = useState({});
+	const [loader, setLoader] = useState(true);
 
 	useEffect(() => {
 		fetchCareers();
@@ -150,12 +151,13 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({data}) => {
 		});
 
 		var sortedJobs = Object.fromEntries(Object.entries(deptWiseJobs).sort());
+		setLoader(false);
 		setCareers(sortedJobs);
 	};
 
 	return (
 		<Layout>
-			<CareerSection sections={sections} careers={careers} />
+			<CareerSection sections={sections} careers={careers} loader={loader} />
 		</Layout>
 	);
 };
