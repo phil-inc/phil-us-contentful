@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>Inventory management</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Inventory-management" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(5.000000, 7.000000)">
+            <g id="screen-1" transform="translate(0.000000, 8.000000)">
+                <rect id="Rectangle" stroke="#292A2E" fill="#FFFFFF" x="0" y="0" width="26" height="37" rx="2"></rect>
+                <g id="text" transform="translate(4.000000, 5.000000)" fill="#292A2E" fill-rule="nonzero">
+                    <path d="M4.5,0.5 L0.5,0.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 Z M3.5,1.5 L3.5,3.5 L1.5,3.5 L1.5,1.5 L3.5,1.5 Z" id="Rectangle"></path>
+                    <polygon id="Line-2-Copy" points="19.5 0.5 19.5 1.5 6.5 1.5 6.5 0.5"></polygon>
+                    <polygon id="Line-2-Copy-2" points="19.5 3.5 19.5 4.5 6.5 4.5 6.5 3.5"></polygon>
+                </g>
+                <g id="text" transform="translate(4.000000, 12.000000)" fill="#292A2E" fill-rule="nonzero">
+                    <path d="M4.5,0.5 L0.5,0.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 Z M3.5,1.5 L3.5,3.5 L1.5,3.5 L1.5,1.5 L3.5,1.5 Z" id="Rectangle"></path>
+                    <polygon id="Line-2-Copy" points="19.5 0.5 19.5 1.5 6.5 1.5 6.5 0.5"></polygon>
+                    <polygon id="Line-2-Copy-2" points="19.5 3.5 19.5 4.5 6.5 4.5 6.5 3.5"></polygon>
+                </g>
+                <g id="text" transform="translate(4.000000, 19.000000)" fill="#292A2E" fill-rule="nonzero">
+                    <path d="M4.5,0.5 L0.5,0.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 Z M3.5,1.5 L3.5,3.5 L1.5,3.5 L1.5,1.5 L3.5,1.5 Z" id="Rectangle"></path>
+                    <polygon id="Line-2-Copy" points="19.5 0.5 19.5 1.5 6.5 1.5 6.5 0.5"></polygon>
+                    <polygon id="Line-2-Copy-2" points="19.5 3.5 19.5 4.5 6.5 4.5 6.5 3.5"></polygon>
+                </g>
+                <g id="text" transform="translate(4.000000, 26.000000)" fill="#292A2E" fill-rule="nonzero">
+                    <path d="M4.5,0.5 L0.5,0.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 Z M3.5,1.5 L3.5,3.5 L1.5,3.5 L1.5,1.5 L3.5,1.5 Z" id="Rectangle"></path>
+                    <polygon id="Line-2-Copy" points="19.5 0.5 19.5 1.5 6.5 1.5 6.5 0.5"></polygon>
+                    <polygon id="Line-2-Copy-2" points="19.5 3.5 19.5 4.5 6.5 4.5 6.5 3.5"></polygon>
+                </g>
+            </g>
+            <g id="screen-2" transform="translate(18.000000, 0.000000)">
+                <rect id="Rectangle" stroke="#292A2E" fill="#FFFFFF" x="0" y="6" width="28" height="41" rx="2"></rect>
+                <g id="text" transform="translate(4.000000, 13.000000)">
+                    <path d="M4.5,0.5 L0.5,0.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 Z M3.5,1.5 L3.5,3.5 L1.5,3.5 L1.5,1.5 L3.5,1.5 Z" id="Rectangle" fill="#292A2E" fill-rule="nonzero"></path>
+                    <line x1="7" y1="1" x2="19" y2="1" id="Line-2-Copy" stroke="#292A2E" stroke-linecap="square"></line>
+                    <line x1="7" y1="4" x2="19" y2="4" id="Line-2-Copy-2" stroke="#292A2E" stroke-linecap="square"></line>
+                </g>
+                <g id="text" transform="translate(4.000000, 20.000000)">
+                    <path d="M4.5,0.5 L0.5,0.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 Z M3.5,1.5 L3.5,3.5 L1.5,3.5 L1.5,1.5 L3.5,1.5 Z" id="Rectangle" fill="#292A2E" fill-rule="nonzero"></path>
+                    <line x1="7" y1="1" x2="19" y2="1" id="Line-2-Copy" stroke="#292A2E" stroke-linecap="square"></line>
+                    <line x1="7" y1="4" x2="19" y2="4" id="Line-2-Copy-2" stroke="#292A2E" stroke-linecap="square"></line>
+                </g>
+                <g id="text" transform="translate(4.000000, 27.000000)">
+                    <path d="M4.5,0.5 L0.5,0.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 Z M3.5,1.5 L3.5,3.5 L1.5,3.5 L1.5,1.5 L3.5,1.5 Z" id="Rectangle" fill="#292A2E" fill-rule="nonzero"></path>
+                    <line x1="7" y1="1" x2="19" y2="1" id="Line-2-Copy" stroke="#292A2E" stroke-linecap="square"></line>
+                    <line x1="7" y1="4" x2="19" y2="4" id="Line-2-Copy-2" stroke="#292A2E" stroke-linecap="square"></line>
+                </g>
+                <g id="text" transform="translate(4.000000, 34.000000)">
+                    <path d="M4.5,0.5 L0.5,0.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 Z M3.5,1.5 L3.5,3.5 L1.5,3.5 L1.5,1.5 L3.5,1.5 Z" id="Rectangle" fill="#292A2E" fill-rule="nonzero"></path>
+                    <line x1="7" y1="1" x2="19" y2="1" id="Line-2-Copy" stroke="#292A2E" stroke-linecap="square"></line>
+                    <line x1="7" y1="4" x2="19" y2="4" id="Line-2-Copy-2" stroke="#292A2E" stroke-linecap="square"></line>
+                </g>
+                <g id="tick" transform="translate(18.000000, 0.000000)" stroke="#1F1FFF" stroke-linejoin="round">
+                    <path d="M15,7.5 C15,11.6420455 11.6413636,15 7.5,15 C3.35727273,15 0,11.6420455 0,7.5 C0,3.35727273 3.35727273,0 7.5,0 C11.6413636,0 15,3.35727273 15,7.5 Z" id="Stroke-6" fill="#FFFFFF"></path>
+                    <polyline id="Stroke-4" points="10.5882353 5.29411765 5.95572092 9.70588235 4.41176471 8.13053447"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
