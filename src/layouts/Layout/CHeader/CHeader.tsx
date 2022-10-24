@@ -187,6 +187,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			fontSize: '14px',
 			lineHeight: '40px',
 		},
+		textDecorationNone: {
+			textDecoration: 'none',
+			color: 'inherit',
+		},
 	}));
 
 	const [header] = allContentfulHeader.nodes;
@@ -493,25 +497,31 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 													<Grid.Col span={Math.floor(100 / array.length)}>
 														<List.Item key={index} onClick={close}>
 															{index > 0 ? (
-																<Link
-																	to={`/${slugify(page.title, {lower: true, strict: true})}/#${slugify(
-																		section.header,
-																		{
+																<Text className={classes.listHeading}>
+																	<Link
+																		to={`/${slugify(page.title, {
 																			lower: true,
 																			strict: true,
-																		},
-																	)}`}
-																	style={{textDecoration: 'none'}}
-																>
-																	<Text className={classes.listHeading}>{section.header}</Text>
-																</Link>
+																		})}/#${slugify(section.header, {
+																			lower: true,
+																			strict: true,
+																		})}`}
+																		className={classes.textDecorationNone}
+																	>
+																		{section.header}
+																	</Link>
+																</Text>
 															) : (
-																<Link
-																	to={navigateToPage(slugify(page.title, {lower: true, strict: true}))}
-																	style={{textDecoration: 'none'}}
-																>
-																	<Text className={classes.listHeading}>{section.header}</Text>
-																</Link>
+																<Text className={classes.listHeading}>
+																	<Link
+																		to={navigateToPage(
+																			slugify(page.title, {lower: true, strict: true}),
+																		)}
+																		className={classes.textDecorationNone}
+																	>
+																		{section.header}
+																	</Link>
+																</Text>
 															)}
 
 															<Divider />
@@ -522,23 +532,25 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																		({id, heading, relatesTo}) =>
 																			section.id === relatesTo.id && (
 																				<List.Item key={id}>
-																					<Link
-																						to={navigateToPage(
-																							`${slugify(page.title, {
-																								lower: true,
-																								strict: true,
-																							})}/${slugify(relatesTo.header, {
-																								lower: true,
-																								strict: true,
-																							})}/${slugify(heading, {
-																								lower: true,
-																								strict: true,
-																							})}`,
-																						)}
-																						style={{textDecoration: 'none'}}
-																					>
-																						<Text className={classes.listItems}>{heading}</Text>
-																					</Link>
+																					<Text className={classes.listItems}>
+																						<Link
+																							to={navigateToPage(
+																								`${slugify(page.title, {
+																									lower: true,
+																									strict: true,
+																								})}/${slugify(relatesTo.header, {
+																									lower: true,
+																									strict: true,
+																								})}/${slugify(heading, {
+																									lower: true,
+																									strict: true,
+																								})}`,
+																							)}
+																							className={classes.textDecorationNone}
+																						>
+																							{heading}
+																						</Link>
+																					</Text>
 																				</List.Item>
 																			),
 																	)}
