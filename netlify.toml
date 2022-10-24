@@ -21,15 +21,34 @@ from = "/dev/e/*"
 to = "https://enroll.dev.phil.us/landing/:splat"
 status = 302
 
-
 # faqs redirection
 [[redirects]]
 from = "/faqs/*"
-to = "https://philhelp.zendesk.com/hc/en-us"
+to = "/resources#faqs"
 status = 200
-
 
 [[redirects]]
-from = "/about-us"
+from = "/about-us/*"
 to = "/company"
 status = 200
+
+[[redirects]]
+from = "/manufacturers/*"
+to = "/life-sciences"
+status = 200
+
+[[redirects]]
+from = "/newpatient/*"
+to = "/patients"
+status = 200
+
+[[redirects]]
+from = "/newprovider/*"
+to = "/healthcare-providers"
+status = 200
+
+[[redirects]]
+from = "/pharmacists/*"
+to = "/healthcare-providers"
+status = 200
+
