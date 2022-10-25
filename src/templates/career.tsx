@@ -47,7 +47,7 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 	) as ISection;
 	const heroAsset = heroSection.asset;
 
-	const [careers, setCareers] = useState<Record<string, Listing[]>>();
+	const [careers, setCareers] = useState({});
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
@@ -56,7 +56,6 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 
 	const fetchCareers = () => {
 		fetch('https://capi.phil.us/api/web/v1/careers')
-			// eslint-disable-next-line @typescript-eslint/promise-function-async
 			.then(response => response.json())
 			.then(data => {
 				formatCareerData(data);
@@ -66,8 +65,18 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 			});
 	};
 
-	const formatCareerData = (jobListings: JobListings) => {
-		const sortedJobs = groupBy(jobListings.data.jobs, 'department');
+	const formatCareerData = jobListings => {
+		const deptWiseJobs = {};
+		jobListings.data.jobs.forEach((e, i) => {
+			const key = e.department != '' ? e.department : 'Others';
+			if (!(key in deptWiseJobs)) {
+				deptWiseJobs[key] = [];
+			}
+
+			deptWiseJobs[key].push(e);
+		});
+
+		const sortedJobs = Object.fromEntries(Object.entries(deptWiseJobs).sort());
 		setIsLoading(false);
 		setCareers(sortedJobs);
 	};
