@@ -31,7 +31,7 @@ const Asset: React.FC<AssetProps> = ({asset}) => {
 	if (isVideoContent(asset.file.contentType)) {
 		const {url} = asset.file;
 		return (
-			<AspectRatio sx={{maxWidth: 826}} ratio={1920 / 1080} className={classNames(classes.videoWrapper)} my='auto'>
+			<AspectRatio sx={{ maxWidth: 826 }} ratio={1920 / 1080} className={classNames(classes.videoWrapper)} my="auto">
 				<ReactPlayer url={'https://youtu.be/2uvcWi_SAsI'} width={'100%'} height={'100%'} controls />
 			</AspectRatio>
 		);

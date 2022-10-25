@@ -18,7 +18,7 @@ const generateMainPages = async ({actions, graphql}) => {
 		const pageObject = {
 			path: slug,
 			component: component,
-			context: page,
+			context: {title: page.title},
 		};
 
 		return pageObject;
@@ -29,252 +29,65 @@ const generateMainPages = async ({actions, graphql}) => {
 			allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
 				nodes {
 					id
-			title
-			description
-			sections {
-				... on ContentfulSection {
-					id
-					isHidden
-					body {
-						raw
-						references {
-							contentful_id
-							__typename
-							description
-							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-						}
-					}
-					isHubspotEmbed
-					asset {
-						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-						title
-						file {
-							contentType
-							details {
-								size
-							}
-							url
-						}
-					}
-					buttonText
-					header
-					sectionType
-					externalLink
-					sys {
-						contentType {
-							sys {
-								id
-							}
-						}
-					}
-					subHeader {
-						subHeader
-					}
-					internalLink {
-						... on ContentfulPage {
-							id
-							title
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
+					title
+					description
+					sections {
 						... on ContentfulReferencedSection {
 							id
-							page {
-								title
-							}
 							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulResource {
-							id
-							heading
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-					}
-				}
-				... on ContentfulReferencedSection {
-					id
-					isHidden
-					hideHeader
-					header
-					sectionType
-					references {
-						externalLink
-						internalLink {
-							... on ContentfulPage {
+							sectionType
+							references {
 								id
-								title
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulReferencedSection {
-								id
-								page {
-									title
-								}
-								header
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulSection {
-								id
-								page {
-									title
-								}
-								header
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulResource {
-								id
+								createdAt
+								externalLink
 								heading
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
+								buttonText
+								asset {
+									gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED, resizingBehavior: SCALE)
+									id
 								}
-							}
-						}
-						heading
-						hubspotEmbed {
-							raw
-						}
-						isHubspotEmbed
-						subHeading {
-							subHeading
-						}
-						buttonText
-						body {
-							raw
-						}
-						author
-						designation
-						asset {
-							gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
-							id
-							file {
-								contentType
-								url
-							}
-						}
-					}
-					referenceType
-					externalLink
-					buttonText
-					internalLink {
-						... on ContentfulPage {
-							id
-							title
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
+								body {
+									raw
 								}
+								author
+								designation
 							}
-						}
-						... on ContentfulReferencedSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
+							referenceType
+							externalLink
+							buttonText
+							createdAt(locale: "en-US")
 						}
 						... on ContentfulSection {
 							id
-							page {
+							body {
+								raw
+								references {
+									contentful_id
+									__typename
+									description
+									gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+								}
+							}
+							asset {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
 								title
 							}
+							buttonText
 							header
+							sectionType
+							externalLink
 							sys {
 								contentType {
 									sys {
-										type
 										id
 									}
 								}
 							}
-						}
-						... on ContentfulResource {
-							id
-							heading
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
+							subHeader {
+								subHeader
 							}
 						}
 					}
-				}
-			}
 				}
 			}
 		}
@@ -295,7 +108,6 @@ const generateStaticPages = async ({actions, graphql}) => {
 		) {
 		  nodes {
 			slug
-			isFaq
 			author
 			buttonText
 			designation
