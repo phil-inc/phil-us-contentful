@@ -1,32 +1,21 @@
-import {BLOCKS} from '@contentful/rich-text-types';
+import { BLOCKS } from '@contentful/rich-text-types';
 import {
-	Anchor,
-	Button,
-	Center,
-	Container,
-	createStyles,
-	Divider,
-	Grid,
-	Group,
-	List,
-	Loader,
-	Text,
-	Title,
+	Anchor, Button, Center, Container, createStyles, Divider, Grid, Group, List, Loader, Text, Title
 } from '@mantine/core';
-import {useMediaQuery} from '@mantine/hooks';
+import { useMediaQuery } from '@mantine/hooks';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import {Link} from 'gatsby';
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
-import {renderRichText} from 'gatsby-source-contentful/rich-text';
+import { Link } from 'gatsby';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { renderRichText } from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import slugify from 'slugify';
-import type {ISection} from 'types/section';
-import {getLink} from 'utils/getLink';
+import type { ISection } from 'types/section';
+import { getLink } from 'utils/getLink';
 
-import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
-import {isVideoContent} from 'utils/isVideoContent';
-import {parseScript} from 'utils/parseScript';
+import { useHubspotForm } from '@aaronhayes/react-use-hubspot-form';
+import { isVideoContent } from 'utils/isVideoContent';
+import { parseScript } from 'utils/parseScript';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -188,7 +177,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								<Group mt={48}>
 									{isExternal ? (
 										<Anchor href={link} target='_blank'>
-											<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>{section.buttonText}</Button>
+											<Button style={{paddingBottom: "2px",paddingTop:"2px"}}>{section.buttonText}</Button>
 										</Anchor>
 									) : (
 										<Link to={link}>

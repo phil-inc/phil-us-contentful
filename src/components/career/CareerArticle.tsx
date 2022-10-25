@@ -1,5 +1,4 @@
-
-import {Anchor, Box, Button, Container, Grid, Group, Text} from '@mantine/core';
+import {Anchor, Box, Button, Container, Group, Text} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import type {TResource} from 'types/resource';
@@ -13,24 +12,30 @@ type CareerArticleProps = {
 	location: string;
 };
 
-const CareerArticle = ({title, url, location}: CareerArticleProps) => (
-	<Grid align={'center'} justify={'space-between'}>
-		<Grid.Col lg={'content'} sm={'content'}>
+const options = {
+	renderNode: {
+		[BLOCKS.PARAGRAPH](node, children) {
+			return <Text>{children}</Text>;
+		},
+	},
+};
+
+const CareerArticle = ({title, url, location}) => {
+	return (
+		<Group position="apart">
 			<Box>
-				<Text size={18} weight='bold'>
-					{title}
-				</Text>
-				<Text size={18} italic>
-					{location}
-				</Text>
+				<Anchor href={url} target="_blank">
+					{
+						<Text weight="bold">
+							{title}
+							<br />
+							{location}
+						</Text>
+					}
+				</Anchor>
 			</Box>
-		</Grid.Col>
-		<Grid.Col lg={'content'} sm={'content'}>
-			<Anchor href={url} target='_blank'>
-				<Button>View details</Button>
-			</Anchor>
-		</Grid.Col>
-	</Grid>
-);
+		</Group>
+	);
+};
 
 export default CareerArticle;
