@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import {Anchor, Box, Button, Container, Group, Text} from '@mantine/core';
+import {Anchor, Box, Button, Container, Grid, Group, Text} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import type {TResource} from 'types/resource';
@@ -13,28 +13,24 @@ type CareerArticleProps = {
 	location: string;
 };
 
-const options = {
-	renderNode: {
-		[BLOCKS.PARAGRAPH](node, children) {
-			return <Text>{children}</Text>;
-		},
-	},
-};
-
 const CareerArticle = ({title, url, location}) => (
-	<Group position='apart'>
-		<Box>
+	<Grid align={'center'} justify={'space-between'}>
+		<Grid.Col lg={'content'} sm={'content'}>
+			<Box>
+				<Text size={18} weight='bold'>
+					{title}
+				</Text>
+				<Text size={18} italic>
+					{location}
+				</Text>
+			</Box>
+		</Grid.Col>
+		<Grid.Col lg={'content'} sm={'content'}>
 			<Anchor href={url} target='_blank'>
-				{
-					<Text weight='bold'>
-						{title}
-						<br />
-						{location}
-					</Text>
-				}
+				<Button>View details</Button>
 			</Anchor>
-		</Box>
-	</Group>
+		</Grid.Col>
+	</Grid>
 );
 
 export default CareerArticle;
