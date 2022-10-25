@@ -1,4 +1,3 @@
-
 import {Anchor, Box, Button, Container, Grid, Group, Text} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
