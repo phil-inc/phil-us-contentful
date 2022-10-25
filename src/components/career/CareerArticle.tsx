@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import {Anchor, Box, Button, Container, Grid, Group, Text} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
@@ -13,7 +13,7 @@ type CareerArticleProps = {
 	location: string;
 };
 
-const CareerArticle = ({title, url, location}) => (
+const CareerArticle = ({title, url, location}: CareerArticleProps) => (
 	<Grid align={'center'} justify={'space-between'}>
 		<Grid.Col lg={'content'} sm={'content'}>
 			<Box>

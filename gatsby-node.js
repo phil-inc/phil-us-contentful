@@ -295,6 +295,7 @@ const generateStaticPages = async ({actions, graphql}) => {
 		) {
 		  nodes {
 			slug
+			isFaq
 			author
 			buttonText
 			designation

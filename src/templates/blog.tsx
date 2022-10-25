@@ -18,7 +18,7 @@ type HelmetProps = {
 };
 
 export const Head: React.FC<HelmetProps> = ({pageContext}) => {
-	const heroImage = pageContext.asset.file.url;
+	const heroImage = pageContext.asset?.file.url;
 
 	return (
 		<SEO title={pageContext.heading}>
@@ -55,7 +55,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 	const richTextImages = {};
 
-	if (body) {
+	if (body && Boolean(body.references)) {
 		// eslint-disable-next-line array-callback-return
 		body.references.map((reference: any) => {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -86,7 +86,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 						<Title order={2} mb={36}>
 							{heading}
 						</Title>
-						{asset && (
+						{Boolean(asset) && (
 							<Container size='sm' style={{float: 'right', padding: '30px'}}>
 								<Asset asset={asset} />
 							</Container>
