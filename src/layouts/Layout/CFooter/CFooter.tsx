@@ -20,10 +20,11 @@ import {
 	Avatar,
 } from '@mantine/core';
 import {useForm} from '@mantine/form';
-import {upperFirst, useDisclosure} from '@mantine/hooks';
+import {upperFirst, useDisclosure, useMediaQuery} from '@mantine/hooks';
 import {IconBrandLinkedin, IconBrandTwitter, IconChevronDown} from '@tabler/icons';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
+import HubSpotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import {graphql, Link, StaticQuery} from 'gatsby';
 import {GatsbyImage} from 'gatsby-plugin-image';
 import React from 'react';
@@ -105,25 +106,7 @@ type FooterProps = {
 };
 
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResource}) => {
-	const {classes} = useStyles();
-	// Create form
-	const newsletterForm = useHubspotForm({
-		target: '#hubspotForm',
-		...{
-			region: 'na1',
-			portalId: '20880193',
-			formId: 'af4535b2-dc53-4b71-b711-a7e546233d81',
-		},
-	});
-
-	const newsletterFormMobile = useHubspotForm({
-		target: '#hubspotFormMobile',
-		...{
-			region: 'na1',
-			portalId: '20880193',
-			formId: 'af4535b2-dc53-4b71-b711-a7e546233d81',
-		},
-	});
+	const {classes, theme} = useStyles();
 
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
@@ -187,7 +170,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 								Newsletter
 							</Text>
 							<Divider my={10} color='#6A7979' />
-							<div id='hubspotForm'></div>
+							<HubSpotNewsletter />
 							<Grid mt={60} align={'center'} justify='center'>
 								{footer.badge.map(badge => (
 									<Grid.Col key={badge.title} span={6}>
@@ -245,7 +228,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 							Newsletter
 						</Text>
 						<Divider my={10} color='#6A7979' />
-						<div id='hubspotFormMobile'></div>
+						<HubSpotNewsletter />
 						<Grid mt={60} align={'center'} justify='center'>
 							{footer.badge.map(badge => (
 								<Grid.Col key={badge.title} span={2}>

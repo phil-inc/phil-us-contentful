@@ -17,11 +17,15 @@ srcDirs.forEach(srcDir => {
 
 // Handle plugins
 module.exports = {
+	siteMetadata: {
+		siteUrl: `https://www.phil.us`,
+	  },
 	plugins: [
 		'gatsby-plugin-mantine',
 		`gatsby-plugin-image`,
 		`gatsby-transformer-sharp`,
 		`gatsby-transformer-inline-svg`,
+		`gatsby-plugin-advanced-sitemap`,
 		{
 			resolve: `gatsby-plugin-sharp`,
 			options: {
@@ -55,5 +59,27 @@ module.exports = {
 				icon: 'src/assets/images/icon.png',
 			},
 		},
+		{
+			resolve: "gatsby-plugin-hubspot",
+			options: {
+			  trackingCode: "20880193",
+			  respectDNT: false,
+			  productionOnly: true,
+			},
+		  },
+		  {
+			resolve: `gatsby-plugin-google-gtag`,
+			options: {
+			  // You can add multiple tracking ids and a pageview event will be fired for all of them.
+			  trackingIds: [
+				"UA-71509531-1"
+			],
+			  // This object is used for configuration specific to this plugin
+			  pluginConfig: {
+				// Puts tracking script in the head instead of the body
+				head: true,
+			  },
+			},
+		  },
 	],
 };

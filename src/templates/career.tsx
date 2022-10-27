@@ -56,7 +56,7 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 
 	const fetchCareers = () => {
 		fetch('https://capi.phil.us/api/web/v1/careers')
-			.then(response => response.json())
+			.then(async response => response.json())
 			.then(data => {
 				formatCareerData(data);
 			})

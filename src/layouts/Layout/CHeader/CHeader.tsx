@@ -19,7 +19,7 @@ import {
 } from '@mantine/core';
 import {useClickOutside, useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
-import {graphql, Link} from 'gatsby';
+import {graphql, Link, Script} from 'gatsby';
 import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
 import React, {useState} from 'react';
 import {StaticQuery} from 'gatsby';
