@@ -16,6 +16,7 @@ import {
 	Table,
 	Grid,
 	ScrollArea,
+	Anchor,
 } from '@mantine/core';
 import {useClickOutside, useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
@@ -394,81 +395,106 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 											<Accordion.Panel>
 												{page.sections
 													.filter(section => Boolean(section.header?.length && !section.isHidden))
-													.map((section, index) => (
-														<Table key={section.id} mb={16}>
-															<thead>
-																<tr>
-																	{index > 0 ? (
-																		<th style={{paddingLeft: 0, paddingRight: 0}}>
-																			<Link
-																				to={`/${slugify(page.title, {
-																					lower: true,
-																					strict: true,
-																				})}/#${slugify(section.header, {
-																					lower: true,
-																					strict: true,
-																				})}`}
-																				style={{textDecoration: 'none'}}
-																			>
-																				<Text
-																					size={16}
-																					weight={400}
-																					color={theme.colors.primary[0]}
+													.map((section, index, array) => (
+														<>
+															<Table key={section.id} mb={16}>
+																<thead>
+																	<tr>
+																		{index > 0 ? (
+																			<th style={{paddingLeft: 0, paddingRight: 0}}>
+																				<Link
+																					to={`/${slugify(page.title, {
+																						lower: true,
+																						strict: true,
+																					})}/#${slugify(section.header, {
+																						lower: true,
+																						strict: true,
+																					})}`}
+																					style={{textDecoration: 'none'}}
 																				>
-																					{section.header}
-																				</Text>
-																			</Link>
-																		</th>
-																	) : (
-																		<th style={{paddingLeft: 0, paddingRight: 0}}>
-																			<Link
-																				to={navigateToPage(
-																					slugify(page.title, {lower: true, strict: true}),
-																				)}
-																				style={{textDecoration: 'none'}}
-																			>
-																				<Text
-																					size={16}
-																					weight={400}
-																					color={theme.colors.primary[0]}
-																				>
-																					{section.header}
-																				</Text>
-																			</Link>
-																		</th>
-																	)}
-																</tr>
-															</thead>
-															<tbody>
-																{allContentfulResource.nodes
-																	.filter(resource => resource.relatesTo)
-																	.map(
-																		({id, heading, relatesTo}) =>
-																			section.id === relatesTo.id && (
+																					<Text
+																						size={16}
+																						weight={400}
+																						color={theme.colors.primary[0]}
+																					>
+																						{section.header}
+																					</Text>
+																				</Link>
+																			</th>
+																		) : (
+																			<th style={{paddingLeft: 0, paddingRight: 0}}>
 																				<Link
 																					to={navigateToPage(
-																						`${slugify(page.title, {lower: true})}/${slugify(
-																							relatesTo.header,
-																							{
-																								lower: true,
-																							},
-																						)}/${slugify(heading, {lower: true})}`,
+																						slugify(page.title, {lower: true, strict: true}),
 																					)}
 																					style={{textDecoration: 'none'}}
 																				>
 																					<Text
-																						size={14}
+																						size={16}
 																						weight={400}
 																						color={theme.colors.primary[0]}
-																						mt={24}
 																					>
-																						{heading}
+																						{section.header}
 																					</Text>
 																				</Link>
-																			),
-																	)}
-															</tbody>
-														</Table>
+																			</th>
+																		)}
+																	</tr>
+																</thead>
+																<tbody>
+																	{allContentfulResource.nodes
+																		.filter(resource => resource.relatesTo)
+																		.map(
+																			({id, heading, relatesTo}) =>
+																				section.id === relatesTo.id && (
+																					<Link
+																						to={navigateToPage(
+																							`${slugify(page.title, {lower: true})}/${slugify(
+																								relatesTo.header,
+																								{
+																									lower: true,
+																								},
+																							)}/${slugify(heading, {lower: true})}`,
+																						)}
+																						style={{textDecoration: 'none'}}
+																					>
+																						<Text
+																							size={14}
+																							weight={400}
+																							color={theme.colors.primary[0]}
+																							mt={24}
+																						>
+																							{heading}
+																						</Text>
+																					</Link>
+																				),
+																		)}
+																</tbody>
+															</Table>
+															{page.title === 'Patients' && index === array.length - 1 && (
+																<Table key={section.id} mb={16}>
+																	<thead>
+																		<tr>
+																			<th style={{paddingLeft: 0, paddingRight: 0}}>
+																				<Anchor
+																					href='https://my.phil.us/'
+																					target='_blank'
+																					style={{textDecoration: 'none'}}
+																				>
+																					<Text
+																						size={16}
+																						weight={400}
+																						color={theme.colors.primary[0]}
+																					>
+																						Patient Log In
+																					</Text>
+																				</Anchor>
+																			</th>
+																		</tr>
+																	</thead>
+																</Table>
+															)}
+														</>
 													))}
 											</Accordion.Panel>
 										</Accordion.Item>
@@ -494,69 +520,94 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 											page.sections
 												.filter(section => Boolean(section.header?.length && !section.isHidden))
 												.map((section, index, array) => (
-													<Grid.Col span={Math.floor(100 / array.length)}>
-														<List.Item key={index} onClick={close}>
-															{index > 0 ? (
-																<Text className={classes.listHeading}>
-																	<Link
-																		to={`/${slugify(page.title, {
-																			lower: true,
-																			strict: true,
-																		})}/#${slugify(section.header, {
-																			lower: true,
-																			strict: true,
-																		})}`}
-																		className={classes.textDecorationNone}
-																	>
-																		{section.header}
-																	</Link>
-																</Text>
-															) : (
-																<Text className={classes.listHeading}>
-																	<Link
-																		to={navigateToPage(
-																			slugify(page.title, {lower: true, strict: true}),
+													<>
+														<Grid.Col
+															span={
+																page.title === 'Patients'
+																	? Math.floor(100 / (array.length + 1))
+																	: Math.floor(100 / array.length)
+															}
+														>
+															<List.Item key={index} onClick={close}>
+																{index > 0 ? (
+																	<Text className={classes.listHeading}>
+																		<Link
+																			to={`/${slugify(page.title, {
+																				lower: true,
+																				strict: true,
+																			})}/#${slugify(section.header, {
+																				lower: true,
+																				strict: true,
+																			})}`}
+																			className={classes.textDecorationNone}
+																		>
+																			{section.header}
+																		</Link>
+																	</Text>
+																) : (
+																	<Text className={classes.listHeading}>
+																		<Link
+																			to={navigateToPage(
+																				slugify(page.title, {lower: true, strict: true}),
+																			)}
+																			className={classes.textDecorationNone}
+																		>
+																			{section.header}
+																		</Link>
+																	</Text>
+																)}
+																<Divider />
+																<List listStyleType='none'>
+																	{allContentfulResource.nodes
+																		.filter(resource => resource.relatesTo)
+																		.map(
+																			({id, heading, relatesTo}) =>
+																				section.id === relatesTo.id && (
+																					<List.Item key={id}>
+																						<Text className={classes.listItems}>
+																							<Link
+																								to={navigateToPage(
+																									`${slugify(page.title, {
+																										lower: true,
+																										strict: true,
+																									})}/${slugify(relatesTo.header, {
+																										lower: true,
+																										strict: true,
+																									})}/${slugify(heading, {
+																										lower: true,
+																										strict: true,
+																									})}`,
+																								)}
+																								className={classes.textDecorationNone}
+																							>
+																								{heading}
+																							</Link>
+																						</Text>
+																					</List.Item>
+																				),
 																		)}
-																		className={classes.textDecorationNone}
-																	>
-																		{section.header}
-																	</Link>
-																</Text>
-															)}
+																</List>
+															</List.Item>
+														</Grid.Col>
 
-															<Divider />
-															<List listStyleType='none'>
-																{allContentfulResource.nodes
-																	.filter(resource => resource.relatesTo)
-																	.map(
-																		({id, heading, relatesTo}) =>
-																			section.id === relatesTo.id && (
-																				<List.Item key={id}>
-																					<Text className={classes.listItems}>
-																						<Link
-																							to={navigateToPage(
-																								`${slugify(page.title, {
-																									lower: true,
-																									strict: true,
-																								})}/${slugify(relatesTo.header, {
-																									lower: true,
-																									strict: true,
-																								})}/${slugify(heading, {
-																									lower: true,
-																									strict: true,
-																								})}`,
-																							)}
-																							className={classes.textDecorationNone}
-																						>
-																							{heading}
-																						</Link>
-																					</Text>
-																				</List.Item>
-																			),
-																	)}
-															</List>
-														</List.Item>
-													</Grid.Col>
+														{page.title === 'Patients' && index === array.length - 1 && (
+															<Grid.Col span={Math.floor(100 / 4)}>
+																<List.Item key={index + 1} onClick={close}>
+																	<Text className={classes.listHeading}>
+																		<Anchor
+																			href='https://my.phil.us/'
+																			target='_blank'
+																			className={classes.textDecorationNone}
+																			style={{textDecoration: 'none'}}
+																		>
+																			Patient Log In
+																		</Anchor>
+																	</Text>
+																	<Divider />
+																</List.Item>
+															</Grid.Col>
+														)}
+													</>
 												)),
 										)}
 								</Grid>

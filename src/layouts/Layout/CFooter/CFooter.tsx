@@ -130,7 +130,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 								<Divider my={10} color='#6A7979' />
 								{page.sections
 									.filter(section => Boolean(section.header?.length && !section.isHidden))
-									.map(section => (
+									.map((section, index, array) => (
 										<>
 											<List key={page.id + section.id} listStyleType='none'>
 												<List.Item>
@@ -150,6 +150,19 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 													</Link>
 												</List.Item>
 											</List>
+											{page.title === 'Patients' && index === array.length - 1 && (
+												<List key={page.id + section.id} listStyleType='none'>
+													<List.Item>
+														<Anchor
+															href='https://my.phil.us/'
+															target='_blank'
+															style={{textDecoration: 'none'}}
+														>
+															<Text className={classes.footerLink}>Patient Log In</Text>
+														</Anchor>
+													</List.Item>
+												</List>
+											)}
 											{page.title === 'Contact' && (
 												<Group mt={18}>
 													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
@@ -200,23 +213,38 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 									<List mb={16} listStyleType={'none'}>
 										{page.sections
 											.filter(section => Boolean(section.header?.length && !section.isHidden))
-											.map(section => (
-												<List.Item key={section.id}>
-													<Link
-														to={
-															(page.title === 'Home'
-																? ''
-																: `/${slugify(page.title, {lower: true, strict: true})}`)
-															+ `/#${slugify(section.header, {
-																lower: true,
-																strict: true,
-															})}`
-														}
-														style={{textDecoration: 'none'}}
-													>
-														<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
-													</Link>
-												</List.Item>
+											.map((section, index) => (
+												<>
+													<List.Item key={section.id}>
+														<Link
+															to={
+																(page.title === 'Home'
+																	? ''
+																	: `/${slugify(page.title, {lower: true, strict: true})}`)
+																+ `/#${slugify(section.header, {
+																	lower: true,
+																	strict: true,
+																})}`
+															}
+															style={{textDecoration: 'none'}}
+														>
+															<Text className={classes.footerLink}>
+																{section.header.replace(':', '')}
+															</Text>
+														</Link>
+													</List.Item>
+													{page.title === 'Patients' && index === page.sections.length - 1 && (
+														<List.Item key={index + 1}>
+															<Anchor
+																href='https://my.phil.us/'
+																target='_blank'
+																style={{textDecoration: 'none'}}
+															>
+																<Text className={classes.footerLink}>Patient Log In</Text>
+															</Anchor>
+														</List.Item>
+													)}
+												</>
 											))}
 									</List>
 								</Accordion.Panel>
