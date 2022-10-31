@@ -165,6 +165,7 @@ export function Layout({children}: LayoutProps) {
 				},
 				h3: {
 					fontSize: 'min(35px, calc(1rem + 0.989vw))',
+					lineHeight: '43px',
 				},
 			},
 			fontFamily: 'Raleway',

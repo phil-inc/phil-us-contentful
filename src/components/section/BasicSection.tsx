@@ -146,12 +146,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	return (
 		// TODO: play around with padding for contact page style
-		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container}>
+		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container} mb={160}>
 			<Grid
 				gutter={50}
 				align={section.isHubspotEmbed ? 'flex-start' : 'center'}
-				pb={130}
-				pt={isHeroSection || isMobile ? 0 : 100}
 			>
 				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
 					{section.isHubspotEmbed ? (

@@ -113,22 +113,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const [background, textColor, resourceBackground] = getSectionColors();
 
 	// Render resource based on resource type
-	// eslint-disable-next-line complexity
+
 	const renderResource = (sectionHeader: string, resource: TResource, index: number) => {
 		switch (section.referenceType) {
 			case 'Article':
-				return (
-					<Article
-						key={resource.id}
-						color={getColor(index)}
-						title={resource.heading}
-						link={getLink(resource)}
-						buttonText={resource.buttonText}
-						image={resource.asset}
-					>
-						{resource.body && renderRichText(resource.body)}
-					</Article>
-				);
+				return <Article color={getColor(index)} resource={resource}/>;
 
 			case 'Customer Story':
 			case 'Testimonial':
@@ -238,6 +227,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				<Grid
 					grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
 					columns={GRID_COLUMNS}
+					gutter={25}
 				>
 					{section.references.map((resource, index) => (
 						<Grid.Col py={30} key={index} {...getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
