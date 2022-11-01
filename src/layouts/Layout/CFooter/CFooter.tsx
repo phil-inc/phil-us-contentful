@@ -53,7 +53,7 @@ const useStyles = createStyles(theme => ({
 
 	links: {
 		color: 'white',
-		fontSize: 14,
+		fontSize: 12,
 	},
 
 	footLinkHeader: {
@@ -132,7 +132,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 									.filter(section => Boolean(section.header?.length && !section.isHidden))
 									.map((section, index, array) => (
 										<>
-											<List key={page.id + section.id} listStyleType='none'>
+											<List key={section.header} listStyleType='none'>
 												<List.Item>
 													<Link
 														to={
@@ -151,7 +151,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 												</List.Item>
 											</List>
 											{page.title === 'Patients' && index === array.length - 1 && (
-												<List key={page.id + section.id} listStyleType='none'>
+												<List key={section.id + page.title} listStyleType='none'>
 													<List.Item>
 														<Anchor
 															href='https://my.phil.us/'
@@ -186,7 +186,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 							<HubSpotNewsletter />
 							<Grid mt={60} align={'center'} justify='center'>
 								{footer.badge.map(badge => (
-									<Grid.Col key={badge.title} span={6}>
+									<Grid.Col key={badge.file.url} span={6}>
 										<Box sx={{maxWidth: 120}}>
 											<ImageContainer background='transparent' fluid>
 												<Asset asset={badge} />
@@ -259,7 +259,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 						<HubSpotNewsletter />
 						<Grid mt={60} align={'center'} justify='center'>
 							{footer.badge.map(badge => (
-								<Grid.Col key={badge.title} span={2}>
+								<Grid.Col key={badge.title + badge.file.url} span={2}>
 									<Box sx={{maxWidth: 120}}>
 										<ImageContainer background='transparent' fluid>
 											<Asset asset={badge} />

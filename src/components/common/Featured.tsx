@@ -124,7 +124,7 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 								</Link>
 							)}
 
-							{!noDivider && <Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />}
+							{!noDivider && <Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />}
 							{resource.body && (
 								<Text size={18} mt='sm' mb={12} lineClamp={3}>
 									{renderRichText(resource.body, options)}

@@ -6,6 +6,7 @@ type ImageContainerProps = {
 	ratio?: number;
 	background?: string;
 	children: React.ReactNode;
+	expanded?: boolean;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -13,11 +14,13 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	fluid = false,
 	background = '#F4F4F4',
 	children,
+	expanded = false,
 }) => {
 	const useStyles = createStyles(() => ({
 		imageContainer: {
 			background,
-			width: '100%',
+			maxWidth: expanded ? '112%' : '100%',
+			width: expanded ? '112%' : '100%',
 			height: '100%',
 			padding: fluid ? 0 : 50,
 		},
@@ -30,8 +33,13 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container fluid className={classes.imageContainer}>
-			<AspectRatio ratio={ratio} sx={{width: '100%', height: '100%'}} mx='auto'>
+		<Container
+			fluid
+			className={classes.imageContainer}
+			mr={expanded ? '-12.18%' : null}
+			mt={expanded ? '-8.47%' : null}
+		>
+			<AspectRatio ratio={ratio} sx={{width: '100%', height: '100%'}}>
 				{children}
 			</AspectRatio>
 		</Container>
