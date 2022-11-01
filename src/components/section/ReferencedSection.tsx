@@ -31,7 +31,7 @@ const useStyles = createStyles(theme => ({
 	divider: {
 		maxWidth: '35%',
 		marginTop: '10px',
-		marginBottom: '100px',
+		marginBottom: '70px',
 	},
 }));
 
@@ -44,6 +44,7 @@ type ReferencedSectionProps = {
  * @param props - {section} Section to be reference rendered
  * @returns Referenced Resources
  */
+// eslint-disable-next-line complexity
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
@@ -66,11 +67,13 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	// Get colors for resources based on resource type
 	const getSectionColors = () => {
 		switch (section.referenceType) {
-			case 'Customer Story':
 			case 'Testimonial':
 			case 'Image Carousel':
 			case 'Location':
-				return ['#29A5B4', 'white']; // Green Background
+				return ['#1D818D', 'white']; // Green Background
+
+			case 'Customer Story':
+				return ['#00827E', 'white'];
 
 			case 'Banner':
 			case 'Article':
@@ -117,7 +120,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const renderResource = (sectionHeader: string, resource: TResource, index: number) => {
 		switch (section.referenceType) {
 			case 'Article':
-				return <Article color={getColor(index)} resource={resource}/>;
+				return <Article color={getColor(index)} resource={resource} />;
 
 			case 'Customer Story':
 			case 'Testimonial':
@@ -179,7 +182,17 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={background}
-			py={section.referenceType === 'Banner' ? 0 : 116}
+			py={
+				section.referenceType === 'Banner'
+				|| section.referenceType === 'Case Study'
+				|| section.referenceType === 'Phil Blog'
+				|| section.referenceType === 'White Paper'
+				|| section.referenceType === 'Upcoming Events'
+					? 0
+					: null
+			}
+			pt={section.referenceType === 'Banner' ? 0 : 125}
+			fullWidth={section.referenceType === 'Image Carousel'}
 		>
 			{Boolean(section.header?.length)
 				&& Boolean(!section.hideHeader)
@@ -200,44 +213,32 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 							</Title>
 						</Group>
 					))}
-			{/* Commented out Search Bar because new design doesnot have it */}
-			{/* {section.referenceType === 'FAQs' && (
-				<Container>
-					<Grid>
-						<Grid.Col span={10}>
-							<TextInput
-								icon={<IconSearch size={18} stroke={1.5} />}
-								size='md'
-								placeholder='Search questions'
-								rightSectionWidth={42}
-								radius={0}
-							/>
-						</Grid.Col>
-						<Grid.Col span={2}>
-							<Button color='dark' size='md'>
-								Search
-							</Button>
-						</Grid.Col>
-					</Grid>
-				</Container>
-			)} */}
 			{section.referenceType === 'Image Carousel' ? (
 				<ResourceCarousel imageCaraouselSection={section} />
 			) : (
 				<Grid
 					grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
 					columns={GRID_COLUMNS}
-					gutter={25}
+					gutter={
+						section.referenceType === 'Article' ? 25 : section.referenceType === 'Featured Resource' ? 18 : 20
+					}
 				>
 					{section.references.map((resource, index) => (
-						<Grid.Col py={30} key={index} {...getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
+						<Grid.Col
+							px={section.referenceType === 'Prescriber Journey' ? 0 : 10}
+							py={30}
+							key={resource.id}
+							{...getSpan()}
+							sm={GRID_COLUMNS}
+							md={GRID_COLUMNS}
+						>
 							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}
 				</Grid>
 			)}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group position='center'>
+				<Group position='center' mt={60}>
 					{isExternal ? (
 						<Anchor href={link} target='_blank'>
 							<Button color={'dark'}>{section.buttonText}</Button>

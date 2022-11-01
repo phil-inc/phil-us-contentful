@@ -37,7 +37,7 @@ export const StatsCard: FC<StatsCardProps> = ({resource: {asset, heading, body}}
 	const {classes} = useStyles();
 
 	return (
-		<Card shadow='none' p='xl' radius={0} className={classes.card}>
+		<Card shadow='none' radius={0} p={0} className={classes.card}>
 			<Card.Section>
 				<Asset asset={asset} />
 			</Card.Section>

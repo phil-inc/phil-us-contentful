@@ -28,7 +28,7 @@ const useStyles = createStyles(theme => ({
 		padding: 32,
 		maxWidth: 1366,
 		width: '100%',
-		margin: '0 auto',
+		margin: '20px auto',
 
 		'&::before': {
 			content: '""',
@@ -65,7 +65,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 						<Title order={3} mt='md'>
 							{heading}
 						</Title>
-						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+						<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
 						{body && (
 							<Text size='md' mt='sm' mb={11}>
 								{renderRichText(body)}

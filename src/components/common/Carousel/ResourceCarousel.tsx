@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import type {TAsset} from 'types/asset';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {IReferencedSection} from 'types/section';
+import {Icon2fa, IconArrowLeft, IconArrowRight, IconChevronLeft, IconChevronRight} from '@tabler/icons';
 
 type ResourceCarouselProps = {
 	imageCaraouselSection: IReferencedSection;
@@ -50,16 +51,49 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 			</Paper>
 		</Carousel.Slide>
 	));
+
+	// Create loop
+	while (slides.length < 4) {
+		slides.push(...slides);
+	}
+
 	return (
 		<Carousel
-			slideSize='50%'
+			slideSize='44%'
 			breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 'sm'}]}
 			slideGap='sm'
 			align='center'
+			slidesToScroll={2}
 			withIndicators
-			slidesToScroll={1}
-			loop
 			dragFree
+			loop
+			styles={{
+				controls: {
+					position: 'relative',
+					marginTop: 85,
+					justifyContent: 'center',
+				},
+				control: {
+					margin: `11px ${slides.length * 7}px`,
+					border: 'none',
+					background: 'transparent',
+					boxShadow: 'none',
+				},
+				indicator: {
+					width: 20,
+					height: 20,
+					border: '3px solid #FFFFFF',
+					background: '#FFFFFF40',
+					opacity: 1,
+					boxShadow: 'none',
+
+					'&[data-active]': {
+						background: '#FFF',
+					},
+				},
+			}}
+			nextControlIcon={<IconChevronRight size={30} color='#FFFFFF' />}
+			previousControlIcon={<IconChevronLeft size={30} color='#FFFFFF' />}
 		>
 			{slides}
 		</Carousel>

@@ -9,6 +9,8 @@ type ExpandedProps = {
 	minHeight?: number | string;
 	noMargin?: boolean;
 	py?: number;
+	pt?: number;
+	fullWidth?: boolean;
 };
 
 /**
@@ -23,6 +25,8 @@ const Expanded: React.FC<ExpandedProps> = ({
 	minHeight = '100%',
 	noMargin = false,
 	py = 0,
+	pt = 0,
+	fullWidth = false,
 }) => {
 	const useStyles = createStyles(theme => ({
 		container: {
@@ -30,7 +34,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 			minHeight,
 			maxWidth: '100%',
 			width: '100vw',
-			padding: '100px 100px 80px 100px',
+			padding: `100px 100px ${background === '#FFFFFF' ? 105 : background === '#29A5B4' ? 60 : 80}px 100px`,
 
 			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
 				padding: '116px 16px',
@@ -41,7 +45,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container id={id} fluid className={classes.container} py={py}>
+		<Container id={id} fluid className={classes.container} py={py} pt={pt} px={fullWidth ? 0 : null}>
 			{children}
 		</Container>
 	);

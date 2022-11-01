@@ -42,7 +42,7 @@ type CHeaderProps = {
 const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource, sitePage}) => {
 	const useStyles = createStyles((theme, _params, getRef) => ({
 		inner: {
-			padding: '0 116px',
+			padding: '0 100px',
 			height: HEADER_HEIGHT,
 			display: 'flex',
 			alignItems: 'center',
@@ -397,7 +397,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 													.filter(section => Boolean(section.header?.length && !section.isHidden))
 													.map((section, index, array) => (
 														<>
-															<Table key={section.id} mb={16}>
+															<Table key={section.id + `${index}`} mb={16}>
 																<thead>
 																	<tr>
 																		{index > 0 ? (
@@ -448,6 +448,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																			({id, heading, relatesTo}) =>
 																				section.id === relatesTo.id && (
 																					<Link
+																						key={heading}
 																						to={navigateToPage(
 																							`${slugify(page.title, {lower: true})}/${slugify(
 																								relatesTo.header,
@@ -472,7 +473,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																</tbody>
 															</Table>
 															{page.title === 'Patients' && index === array.length - 1 && (
-																<Table key={section.id} mb={16}>
+																<Table key={section.id + page.title} mb={16}>
 																	<thead>
 																		<tr>
 																			<th style={{paddingLeft: 0, paddingRight: 0}}>
@@ -520,7 +521,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 											page.sections
 												.filter(section => Boolean(section.header?.length && !section.isHidden))
 												.map((section, index, array) => (
-													<>
+													<React.Fragment key={section.id + `${index}` + section.header}>
 														<Grid.Col
 															span={
 																page.title === 'Patients'
@@ -607,7 +608,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																</List.Item>
 															</Grid.Col>
 														)}
-													</>
+													</React.Fragment>
 												)),
 										)}
 								</Grid>

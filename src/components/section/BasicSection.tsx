@@ -81,7 +81,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	const {classes} = useStyles();
-	const isMobile = useMediaQuery('(max-width: 576px)');
 	const {link, isExternal} = getLink(section);
 
 	const richTextImages = {};
@@ -124,6 +123,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
+	const isContactPage = location.pathname === '/contact';
 
 	// Create form if section has hubspot form
 	if (section.isHubspotEmbed) {
@@ -146,11 +146,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	return (
 		// TODO: play around with padding for contact page style
-		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container} mb={160}>
-			<Grid
-				gutter={50}
-				align={section.isHubspotEmbed ? 'flex-start' : 'center'}
-			>
+		<Container
+			id={slugify(section.header, {lower: true, strict: true})}
+			fluid
+			className={classes.container}
+			mb={135}
+			mt={60}
+		>
+			<Grid gutter={60} align={section.isHubspotEmbed ? 'flex-start' : 'center'}>
 				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
 					{section.isHubspotEmbed ? (
 						<>
@@ -160,7 +163,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 									{section.subHeader.subHeader}
 								</Title>
 							)}
-							<Divider size={3} variant='dashed' my={20} />
+							{isContactPage && (
+								<Title order={3} mt={40}>
+									Start a conversation
+								</Title>
+							)}
+							<Divider size={1} variant='dashed' mt={10} mb={40} />
 							{hasRendered ? (
 								<div id='hubspotContactForm'></div>
 							) : (
@@ -199,7 +207,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 					)}
 				</Grid.Col>
 				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
-					<ImageContainer fluid background={isVideoContent(section.asset.file.contentType) ? 'white' : null}>
+					<ImageContainer
+						fluid
+						background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
+						expanded={isContactPage}
+					>
 						<Asset asset={section.asset} />
 					</ImageContainer>
 				</Grid.Col>
