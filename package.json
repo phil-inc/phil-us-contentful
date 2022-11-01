@@ -9,8 +9,8 @@
 	"scripts": {
 		"build": "gatsby build",
 		"clean": "gatsby clean",
-		"start": "gatsby develop -H 0.0.0.0 -p 3000",
-		"serve": "gatsby serve -H 0.0.0.0 -p 5002",
+		"start": "gatsby develop -p 3000",
+		"serve": "gatsby serve -p 9292",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier . --write",

@@ -13,7 +13,7 @@ import {
 	Text,
 	Title,
 } from '@mantine/core';
-import {useMediaQuery} from '@mantine/hooks';
+import {Location} from '@reach/router';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link} from 'gatsby';
@@ -123,7 +123,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
-	const isContactPage = location.pathname === '/contact';
 
 	// Create form if section has hubspot form
 	if (section.isHubspotEmbed) {
@@ -145,78 +144,84 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	}
 
 	return (
-		// TODO: play around with padding for contact page style
-		<Container
-			id={slugify(section.header, {lower: true, strict: true})}
-			fluid
-			className={classes.container}
-			mb={135}
-			mt={60}
-		>
-			<Grid gutter={60} align={section.isHubspotEmbed ? 'flex-start' : 'center'}>
-				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
-					{section.isHubspotEmbed ? (
-						<>
-							<Title order={titleOrdering}>{section.header}</Title>
-							{Boolean(section.subHeader?.subHeader.length) && (
-								<Title order={3} mt={40}>
-									{section.subHeader.subHeader}
-								</Title>
-							)}
-							{isContactPage && (
-								<Title order={3} mt={40}>
-									Start a conversation
-								</Title>
-							)}
-							<Divider size={1} variant='dashed' mt={10} mb={40} />
-							{hasRendered ? (
-								<div id='hubspotContactForm'></div>
-							) : (
-								<Center>
-									<Loader mt={120} size='lg' />
-								</Center>
-							)}
-						</>
-					) : (
-						<>
-							<Title order={titleOrdering}>{section.header}</Title>
-							{Boolean(section.subHeader?.subHeader.length) && (
-								<Text size={18} weight='bold' mt={20}>
-									{section.subHeader.subHeader}
-								</Text>
-							)}
-							{Boolean(section.body) && (
-								<Text size={18} className={classes.body} mt={16}>
-									{renderRichText(section.body, options)}
-								</Text>
-							)}
-							{Boolean(section.buttonText?.length) && (
-								<Group mt={48}>
-									{isExternal ? (
-										<Anchor href={link} target='_blank'>
-											<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>{section.buttonText}</Button>
-										</Anchor>
-									) : (
-										<Link to={link}>
-											<Button>{section.buttonText}</Button>
-										</Link>
+		<Location>
+			{({location}) => (
+				// TODO: play around with padding for contact page style
+				<Container
+					id={slugify(section.header, {lower: true, strict: true})}
+					fluid
+					className={classes.container}
+					mb={135}
+					mt={60}
+				>
+					<Grid gutter={60} align={section.isHubspotEmbed ? 'flex-start' : 'center'}>
+						<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
+							{section.isHubspotEmbed ? (
+								<>
+									<Title order={titleOrdering}>{section.header}</Title>
+									{Boolean(section.subHeader?.subHeader.length) && (
+										<Title order={3} mt={40}>
+											{section.subHeader.subHeader}
+										</Title>
 									)}
-								</Group>
+									{location.pathname === '/contact' && (
+										<Title order={3} mt={40}>
+											Start a conversation
+										</Title>
+									)}
+									<Divider size={1} variant='dashed' mt={10} mb={40} />
+									{hasRendered ? (
+										<div id='hubspotContactForm'></div>
+									) : (
+										<Center>
+											<Loader mt={120} size='lg' />
+										</Center>
+									)}
+								</>
+							) : (
+								<>
+									<Title order={titleOrdering}>{section.header}</Title>
+									{Boolean(section.subHeader?.subHeader.length) && (
+										<Text size={18} weight='bold' mt={20}>
+											{section.subHeader.subHeader}
+										</Text>
+									)}
+									{Boolean(section.body) && (
+										<Text size={18} className={classes.body} mt={16}>
+											{renderRichText(section.body, options)}
+										</Text>
+									)}
+									{Boolean(section.buttonText?.length) && (
+										<Group mt={48}>
+											{isExternal ? (
+												<Anchor href={link} target='_blank'>
+													<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>
+														{section.buttonText}
+													</Button>
+												</Anchor>
+											) : (
+												<Link to={link}>
+													<Button>{section.buttonText}</Button>
+												</Link>
+											)}
+										</Group>
+									)}
+								</>
 							)}
-						</>
-					)}
-				</Grid.Col>
-				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
-					<ImageContainer
-						fluid
-						background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
-						expanded={isContactPage}
-					>
-						<Asset asset={section.asset} />
-					</ImageContainer>
-				</Grid.Col>
-			</Grid>
-		</Container>
+						</Grid.Col>
+						<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
+							<ImageContainer
+								fluid
+								background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
+								expanded={location.pathname === '/contact'}
+							>
+								<Asset asset={section.asset} />
+							</ImageContainer>
+						</Grid.Col>
+					</Grid>
+				</Container>
+			)}
+		</Location>
 	);
 };
 

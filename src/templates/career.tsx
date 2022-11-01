@@ -53,7 +53,7 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const rawResponse = await fetch('https://capi.phil.us/api/web/v1/careers');
+				const rawResponse = await fetch('https://capi.dev.phil.us/api/web/v1/careers');
 				if (rawResponse.status === 200) {
 					const content: unknown = await rawResponse.json();
 					const sortedJobs = groupBy(content.data.jobs, 'department');
