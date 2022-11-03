@@ -1,7 +1,6 @@
 import React from 'react';
 import {Container, createStyles} from '@mantine/core';
 import classNames from 'classnames';
-import {handleSpacing} from 'utils/handleSpacing';
 
 type ExpandedProps = {
 	id: string;
@@ -38,7 +37,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 			padding: `100px 100px ${background === '#FFFFFF' ? 105 : background === '#29A5B4' ? 60 : 80}px 100px`,
 
 			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-				padding: `${handleSpacing(theme, theme.spacing.xl)}px ${theme.spacing.sm}px`,
+				padding: '116px 16px',
 			},
 		},
 	}));
@@ -46,7 +45,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container id={id} fluid className={classes.container} py={py} px={fullWidth ? 0 : null}>
+		<Container id={id} fluid className={classes.container} py={py} pt={pt} px={fullWidth ? 0 : null}>
 			{children}
 		</Container>
 	);

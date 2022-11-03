@@ -27,7 +27,6 @@ import {getLink} from 'utils/getLink';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {isVideoContent} from 'utils/isVideoContent';
 import {parseScript} from 'utils/parseScript';
-import {handleSpacing} from 'utils/handleSpacing';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -81,7 +80,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const HEADING_SECOND = 2;
 
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
-	const {classes, theme} = useStyles();
+	const {classes} = useStyles();
 	const {link, isExternal} = getLink(section);
 
 	const richTextImages = {};
@@ -98,13 +97,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				const imageData = richTextImages[node.data.target.sys.id];
 				const image = getImage(imageData.image);
-				return (
-					<GatsbyImage
-						style={{marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`}}
-						image={image}
-						alt={''}
-					/>
-				);
+				return <GatsbyImage style={{marginBottom: '32px'}} image={image} alt={''} />;
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return <Text>{children}</Text>;
@@ -153,41 +146,35 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	return (
 		<Location>
 			{({location}) => (
+				// TODO: play around with padding for contact page style
 				<Container
 					id={slugify(section.header, {lower: true, strict: true})}
 					fluid
 					className={classes.container}
-					mb={handleSpacing(theme, theme.spacing.md)}
+					mb={135}
+					mt={60}
 				>
-					<Grid
-						gutter={handleSpacing(theme, theme.spacing.lg)}
-						align={section.isHubspotEmbed ? 'flex-start' : 'center'}
-					>
+					<Grid gutter={60} align={section.isHubspotEmbed ? 'flex-start' : 'center'}>
 						<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
 							{section.isHubspotEmbed ? (
 								<>
 									<Title order={titleOrdering}>{section.header}</Title>
 									{Boolean(section.subHeader?.subHeader.length) && (
-										<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+										<Title order={3} mt={40}>
 											{section.subHeader.subHeader}
 										</Title>
 									)}
 									{location.pathname === '/contact' && (
-										<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+										<Title order={3} mt={40}>
 											Start a conversation
 										</Title>
 									)}
-									<Divider
-										size={1}
-										variant='dashed'
-										mt={handleSpacing(theme, theme.spacing.sm)}
-										mb={handleSpacing(theme, theme.spacing.md)}
-									/>
+									<Divider size={1} variant='dashed' mt={10} mb={40} />
 									{hasRendered ? (
 										<div id='hubspotContactForm'></div>
 									) : (
 										<Center>
-											<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
+											<Loader mt={120} size='lg' />
 										</Center>
 									)}
 								</>
@@ -195,17 +182,17 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								<>
 									<Title order={titleOrdering}>{section.header}</Title>
 									{Boolean(section.subHeader?.subHeader.length) && (
-										<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
+										<Text size={18} weight='bold' mt={20}>
 											{section.subHeader.subHeader}
 										</Text>
 									)}
 									{Boolean(section.body) && (
-										<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
+										<Text size={18} className={classes.body} mt={16}>
 											{renderRichText(section.body, options)}
 										</Text>
 									)}
 									{Boolean(section.buttonText?.length) && (
-										<Group mt={handleSpacing(theme, theme.spacing.lg)}>
+										<Group mt={48}>
 											{isExternal ? (
 												<Anchor href={link} target='_blank'>
 													<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>

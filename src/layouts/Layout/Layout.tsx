@@ -125,8 +125,7 @@ export const Head: React.FC = () => (
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
-		width: '100%',
-		overflow: 'hidden',
+		width: 1920,
 		padding: 0,
 	},
 
@@ -136,7 +135,7 @@ const useStyles = createStyles(theme => ({
 
 		// Dynamic media queries, define breakpoints in theme, use anywhere
 		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			padding: `0 ${theme.spacing.sm}px`,
+			padding: '0 16px',
 		},
 	},
 }));
@@ -166,20 +165,12 @@ export function Layout({children}: LayoutProps) {
 				},
 				h3: {
 					fontSize: 'min(35px, calc(1rem + 0.989vw))',
-					lineHeight: '1.3',
+					lineHeight: '43px',
 				},
 			},
 			fontFamily: 'Raleway',
 		},
 		fontFamily: 'Lato',
-
-		spacing: {
-			xs: 8,
-			sm: 16,
-			md: 32,
-			lg: 64,
-			xl: 128,
-		},
 
 		components: {
 			Button: {
