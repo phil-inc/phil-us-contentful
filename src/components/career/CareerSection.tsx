@@ -54,34 +54,32 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 			<Grid gutter={60} pb={130} align='flex-start'>
 				<Grid.Col orderSm={1} lg={6} md={6} sm={12}>
 					<Box className={classes.center}>
-						<>
-							<Group align={'center'}>
-								<Box>
-									<Title order={2}>
-										<Text>Careers at Phil</Text>
+						<Group align={'center'}>
+							<Box>
+								<Title order={2}>
+									<Text>Careers at Phil</Text>
+								</Title>
+							</Box>
+						</Group>
+						{isLoading && <Loader color='dark' size='xl' variant='dots' style={{marginTop: '21px'}} />}
+						{!isLoading
+							&& Object.keys(careers).map((job, index) => (
+								<Box mt={index === 1 ? 21 : 0} mb={50}>
+									<Title order={3} style={{lineHeight: '1'}}>
+										{job}
 									</Title>
+									<Divider variant='dashed' size={1} mt={10} mb={32} />
+									{careers[job].map(listing => (
+										<Box mb={26}>
+											<CareerArticle
+												title={listing.title}
+												url={listing.url}
+												location={listing.location.location_str}
+											/>
+										</Box>
+									))}
 								</Box>
-							</Group>
-							{isLoading && <Loader color='dark' size='xl' variant='dots' style={{marginTop: '30px'}} />}
-							{!isLoading
-								&& Object.keys(careers).map(job => (
-									<>
-										<Title order={3}>
-											<Text>{job}</Text>
-										</Title>
-										<Divider variant='dashed' size={2} my={10} mb={32} />
-										{careers[job].map(listing => (
-											<Box mb={50}>
-												<CareerArticle
-													title={listing.title}
-													url={listing.url}
-													location={listing.location.location_str}
-												/>
-											</Box>
-										))}
-									</>
-								))}
-						</>
+							))}
 					</Box>
 				</Grid.Col>
 				<Grid.Col orderSm={2} lg={6} md={6} sm={12} span='content'>

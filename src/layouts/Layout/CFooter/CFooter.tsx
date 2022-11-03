@@ -86,8 +86,8 @@ type FooterProps = {
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
 };
 
-const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResource}) => {
-	const {classes, theme} = useStyles();
+const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
+	const {classes} = useStyles();
 
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
