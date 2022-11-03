@@ -1,37 +1,14 @@
-import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
-import {
-	createStyles,
-	Anchor,
-	Group,
-	Grid,
-	Text,
-	Divider,
-	List,
-	Container,
-	Navbar,
-	Button,
-	TextInput,
-	Box,
-	Accordion,
-	Burger,
-	Drawer,
-	Table,
-	Center,
-	Avatar,
-} from '@mantine/core';
-import {useForm} from '@mantine/form';
-import {upperFirst, useDisclosure, useMediaQuery} from '@mantine/hooks';
-import {IconBrandLinkedin, IconBrandTwitter, IconChevronDown} from '@tabler/icons';
+import {createStyles, Anchor, Group, Grid, Text, Divider, List, Container, Box, Accordion, Center} from '@mantine/core';
+import {IconChevronDown} from '@tabler/icons';
+import {footerBackground} from 'assets/images';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import HubSpotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import {graphql, Link, StaticQuery} from 'gatsby';
-import {GatsbyImage} from 'gatsby-plugin-image';
 import React from 'react';
 import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
-import {navigateToPage} from 'utils/navigateToPage';
 
 const useStyles = createStyles(theme => ({
 	footer: {
@@ -73,9 +50,13 @@ const useStyles = createStyles(theme => ({
 
 	footerWrapper: {
 		padding: '85px 175px',
+		backgroundImage: `url("${footerBackground as string}")`,
+		backgroundRepeat: 'no-repeat',
+		backgroundPosition: 'bottom -420px right -220px',
 
 		[theme.fn.smallerThan('lg')]: {
 			padding: '40px ',
+			backgroundPosition: 'bottom -522px right -561px',
 		},
 	},
 	burger: {

@@ -222,6 +222,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					gutter={
 						section.referenceType === 'Article' ? 25 : section.referenceType === 'Featured Resource' ? 18 : 20
 					}
+					m={0}
 				>
 					{section.references.map((resource, index) => (
 						<Grid.Col
