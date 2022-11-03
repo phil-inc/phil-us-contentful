@@ -62,14 +62,14 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			position: 'absolute',
 			top: 90,
 			left: 0,
-			zIndex: 300,
+			zIndex: 2,
 			opacity: 1,
 		},
 
 		container: {
 			width: '100vw',
 			background: '#00827E',
-			marginTop: 8,
+			marginTop: 16,
 		},
 
 		navbar: {
