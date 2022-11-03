@@ -3,8 +3,7 @@ import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import React from 'react';
 import type {TAsset} from 'types/asset';
-import {TResource} from 'types/resource';
-import type {IReferencedSection} from 'types/section';
+import {handleSpacing} from 'utils/handleSpacing';
 import CareerArticle from './CareerArticle';
 
 const useStyles = createStyles(theme => ({
@@ -16,7 +15,7 @@ const useStyles = createStyles(theme => ({
 	container: {
 		padding: '0 100px',
 		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-			padding: '0 16px',
+			padding: `0 ${theme.spacing.sm}px`,
 		},
 	},
 
@@ -47,41 +46,45 @@ type CareerSectionProps = {
 };
 
 const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAsset}) => {
-	const {classes} = useStyles();
+	const {classes, theme} = useStyles();
 
 	return (
 		<Container id={'Career Section'} fluid className={classes.container}>
-			<Grid gutter={60} pb={130} align='flex-start'>
+			<Grid
+				gutter={handleSpacing(theme, theme.spacing.lg)}
+				pb={handleSpacing(theme, theme.spacing.xl)}
+				align='flex-start'
+			>
 				<Grid.Col orderSm={1} lg={6} md={6} sm={12}>
 					<Box className={classes.center}>
-						<>
-							<Group align={'center'}>
-								<Box>
-									<Title order={2}>
-										<Text>Careers at Phil</Text>
+						<Group align={'center'}>
+							<Box>
+								<Title order={2}>
+									<Text>Careers at Phil</Text>
+								</Title>
+							</Box>
+						</Group>
+						{isLoading && (
+							<Loader color='dark' size='xl' variant='dots' style={{marginTop: `${theme.spacing.sm}`}} />
+						)}
+						{!isLoading
+							&& Object.keys(careers).map((job, index) => (
+								<Box mt={index === 1 ? 21 : 0} mb={theme.spacing.lg}>
+									<Title order={3} style={{lineHeight: '1'}}>
+										{job}
 									</Title>
+									<Divider variant='dashed' size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
+									{careers[job].map(listing => (
+										<Box mb={theme.spacing.md}>
+											<CareerArticle
+												title={listing.title}
+												url={listing.url}
+												location={listing.location.location_str}
+											/>
+										</Box>
+									))}
 								</Box>
-							</Group>
-							{isLoading && <Loader color='dark' size='xl' variant='dots' style={{marginTop: '30px'}} />}
-							{!isLoading
-								&& Object.keys(careers).map(job => (
-									<>
-										<Title order={3}>
-											<Text>{job}</Text>
-										</Title>
-										<Divider variant='dashed' size={2} my={10} mb={32} />
-										{careers[job].map(listing => (
-											<Box mb={50}>
-												<CareerArticle
-													title={listing.title}
-													url={listing.url}
-													location={listing.location.location_str}
-												/>
-											</Box>
-										))}
-									</>
-								))}
-						</>
+							))}
 					</Box>
 				</Grid.Col>
 				<Grid.Col orderSm={2} lg={6} md={6} sm={12} span='content'>
