@@ -70,11 +70,11 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 			styles={{
 				controls: {
 					position: 'relative',
-					marginTop: 85,
+					marginTop: theme.spacing.lg,
 					justifyContent: 'center',
 				},
 				control: {
-					margin: `11px ${slides.length * 7}px`,
+					margin: `26px ${slides.length * theme.spacing.xs}px`,
 					border: 'none',
 					background: 'transparent',
 					boxShadow: 'none',

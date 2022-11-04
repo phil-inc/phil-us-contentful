@@ -1,2 +1,4 @@
 gatsby-*.js
+gatsby-*.ts
+gatsby-*.tsx
 public/

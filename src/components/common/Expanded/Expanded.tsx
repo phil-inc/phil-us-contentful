@@ -1,6 +1,5 @@
 import React from 'react';
 import {Container, createStyles} from '@mantine/core';
-import classNames from 'classnames';
 import {handleSpacing} from 'utils/handleSpacing';
 
 type ExpandedProps = {
@@ -11,6 +10,7 @@ type ExpandedProps = {
 	noMargin?: boolean;
 	py?: number;
 	pt?: number;
+	mb?: number;
 	fullWidth?: boolean;
 };
 
@@ -24,6 +24,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	children,
 	background = '#FFFFFF',
 	minHeight = '100%',
+	mb = 0,
 	noMargin = false,
 	py = 0,
 	pt = 0,
@@ -46,7 +47,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container id={id} fluid className={classes.container} py={py} px={fullWidth ? 0 : null}>
+		<Container id={id} fluid className={classes.container} py={py} px={fullWidth ? 0 : null} mb={mb}>
 			{children}
 		</Container>
 	);

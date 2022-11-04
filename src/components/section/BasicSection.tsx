@@ -157,7 +157,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 					id={slugify(section.header, {lower: true, strict: true})}
 					fluid
 					className={classes.container}
-					mb={handleSpacing(theme, theme.spacing.md)}
+					my={handleSpacing(theme, theme.spacing.xl)}
 				>
 					<Grid
 						gutter={handleSpacing(theme, theme.spacing.lg)}

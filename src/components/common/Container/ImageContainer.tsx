@@ -37,7 +37,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			fluid
 			className={classes.imageContainer}
 			mr={expanded ? '-12.18%' : null}
-			mt={expanded ? '-8.47%' : null}
+			mt={expanded ? '-15.57%' : null}
 		>
 			<AspectRatio ratio={ratio} sx={{width: '100%', height: '100%'}}>
 				{children}

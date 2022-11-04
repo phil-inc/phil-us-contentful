@@ -25,7 +25,7 @@ const useStyles = createStyles(theme => ({
 	divider: {
 		maxWidth: '35%',
 		marginTop: theme.spacing.xs,
-		marginBottom: theme.spacing.lg,
+		marginBottom: theme.spacing.xs,
 	},
 }));
 
@@ -38,7 +38,7 @@ type ReferencedSectionProps = {
  * @param props - {section} Section to be reference rendered
  * @returns Referenced Resources
  */
-// eslint-disable-next-line complexity
+
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
@@ -177,12 +177,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={background}
 			py={
-				section.referenceType === 'Banner'
-				|| section.referenceType === 'Case Study'
+				section.referenceType === 'Case Study'
 				|| section.referenceType === 'Phil Blog'
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events'
-					? 0
+					? handleSpacing(theme, theme.spacing.lg)
 					: handleSpacing(theme, theme.spacing.xl)
 			}
 			fullWidth={section.referenceType === 'Image Carousel'}
@@ -193,7 +192,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				|| section.referenceType === 'Phil Blog'
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events' ? (
-						<Box>
+						<Box mb={handleSpacing(theme, theme.spacing.md)}>
 							<Title order={3} size={35}>
 								{section.header}
 							</Title>
@@ -212,18 +211,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				<Grid
 					grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
 					columns={GRID_COLUMNS}
-					gutter={
-						section.referenceType === 'Article'
-							? 25
-							: section.referenceType === 'Featured Resource'
-								? handleSpacing(theme, theme.spacing.sm)
-								: 20
-					}
+					gutter={theme.spacing.xs}
 					m={0}
 				>
 					{section.references.map((resource, index) => (
 						<Grid.Col
-							px={section.referenceType === 'Prescriber Journey' ? 0 : handleSpacing(theme, theme.spacing.xs)}
 							py={handleSpacing(theme, theme.spacing.md)}
 							key={resource.id}
 							{...getSpan()}

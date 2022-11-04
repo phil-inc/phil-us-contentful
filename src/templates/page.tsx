@@ -2,15 +2,11 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
-import {graphql, Script} from 'gatsby';
-import slugify from 'slugify';
 import {SEO} from 'layouts/SEO/SEO';
-import {useInternalPaths} from 'hooks/useInternalPaths';
-import {Box, Grid, Title, Container, TextInput, Button} from '@mantine/core';
-import {IconSearch} from '@tabler/icons';
+import {Box, Grid, Title, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
-import {getLink} from 'utils/getLink';
+import {handleSpacing} from 'utils/handleSpacing';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
@@ -46,39 +42,20 @@ type PageTemplateProps = {
 
 const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	const {id, sections, title} = pageContext;
+	const theme = useMantineTheme();
 
 	let basicSectionCount = 0;
 
 	return (
 		<Layout>
 			{title === 'Resources' && (
-				<Expanded id={id}>
+				<Expanded id={id} mb={handleSpacing(theme, 128)}>
 					<Grid align='center' justify='space-between'>
 						<Grid.Col span={12}>
 							<Box>
 								<Title order={2}>Resources</Title>
 							</Box>
 						</Grid.Col>
-						{/* <Grid.Col span={6}>
-							<Container fluid pr={8}>
-								<Grid>
-									<Grid.Col span={10}>
-										<TextInput
-											radius={0}
-											icon={<IconSearch size={18} stroke={1.5} />}
-											size='md'
-											placeholder='Search'
-											rightSectionWidth={42}
-										/>
-									</Grid.Col>
-									<Grid.Col span={2} pr={0}>
-										<Button color='dark' size='md' fullWidth>
-											Search
-										</Button>
-									</Grid.Col>
-								</Grid>
-							</Container>
-						</Grid.Col> */}
 					</Grid>
 				</Expanded>
 			)}

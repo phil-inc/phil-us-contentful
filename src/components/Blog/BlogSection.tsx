@@ -20,8 +20,8 @@ const RenderAllBlogs: React.FC<RenderAllBlogsProps> = ({allContentfulResource}) 
 	</>
 );
 
-export const query = graphql`
-	query allBlogPages {
+const query = graphql`
+	query {
 		allContentfulResource(
 			filter: {
 				node_locale: {eq: "en-US"}
