@@ -220,7 +220,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				<Grid
 					grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
 					columns={GRID_COLUMNS}
-					gutter={theme.spacing.xs}
+					gutter={theme.spacing.md}
 					m={0}
 					mx={-10}
 				>
