@@ -205,7 +205,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 										</Text>
 									)}
 									{Boolean(section.buttonText?.length) && (
-										<Group mt={handleSpacing(theme, theme.spacing.lg)}>
+										<Group mt={handleSpacing(theme, theme.spacing.md)}>
 											{isExternal ? (
 												<Anchor href={link} target='_blank'>
 													<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>

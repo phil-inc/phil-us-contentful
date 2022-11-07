@@ -27,6 +27,13 @@ const useStyles = createStyles(theme => ({
 		marginTop: '10px',
 		marginBottom: '64px',
 	},
+	investorImage: {
+		width: '300px',
+
+		[theme.fn.smallerThan('md')]: {
+			width: 'fit-content',
+		},
+	},
 }));
 
 type ReferencedSectionProps = {
@@ -154,7 +161,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 
 			case 'Investors':
 				return (
-					<Container size={300}>
+					<Container className={classes.investorImage}>
 						<Asset asset={resource.asset} />
 					</Container>
 				);
