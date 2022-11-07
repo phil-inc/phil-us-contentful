@@ -1,5 +1,4 @@
-import {Grid, Title, Button, Group, TextInput, Container, Box, Anchor, Divider, createStyles} from '@mantine/core';
-import {IconSearch} from '@tabler/icons';
+import {Grid, Title, Button, Group, Container, Box, Anchor, Divider, createStyles} from '@mantine/core';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
 import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
@@ -12,26 +11,28 @@ import {StatsCard} from 'components/common/statsCard/StatsCard';
 import Profile from 'components/common/Team/Profile';
 import {Testimonial} from 'components/common/Testimonial';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
-import {TestimonialCarousel} from 'components/common/Carousel/TestimonialCarousel';
 import {Link} from 'gatsby';
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
-import {renderRichText} from 'gatsby-source-contentful/rich-text';
-import React, {useState} from 'react';
+import React from 'react';
 import type {TResource} from 'types/resource';
 import type {IReferencedSection} from 'types/section';
 import {getLink} from 'utils/getLink';
 import slugify from 'slugify';
 import {CardWithImage} from 'components/common/CardWithImage';
-import {BlogSection} from 'components/Blog/BlogSection';
-import {FAQSection} from 'components/FAQSection/FAQSection';
 import Asset from 'components/common/Asset/Asset';
-import ImageContainer from 'components/common/Container/ImageContainer';
+import {handleSpacing} from 'utils/handleSpacing';
 
 const useStyles = createStyles(theme => ({
 	divider: {
 		maxWidth: '35%',
 		marginTop: '10px',
-		marginBottom: '70px',
+		marginBottom: '64px',
+	},
+	investorImage: {
+		width: '300px',
+
+		[theme.fn.smallerThan('md')]: {
+			width: 'fit-content',
+		},
 	},
 }));
 
@@ -44,12 +45,13 @@ type ReferencedSectionProps = {
  * @param props - {section} Section to be reference rendered
  * @returns Referenced Resources
  */
+
 // eslint-disable-next-line complexity
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
 	const {link, isExternal} = getLink(section);
-	const {classes} = useStyles();
+	const {classes, theme} = useStyles();
 
 	// Get colors for resources based on index
 	const getColor = (index: number) => {
@@ -139,7 +141,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				return (
 					<Featured
 						noDivider={section.referenceType === 'Info Card'}
-						pr={section.referenceType === 'Featured Resource' ? 50 : 0}
+						pr={section.referenceType === 'Featured Resource' ? handleSpacing(theme, theme.spacing.lg) : 0}
 						resourceBackground={resourceBackground}
 						resource={resource}
 					/>
@@ -159,7 +161,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 
 			case 'Investors':
 				return (
-					<Container size={300}>
+					<Container className={classes.investorImage}>
 						<Asset asset={resource.asset} />
 					</Container>
 				);
@@ -182,16 +184,22 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={background}
+			pt={
+				section.referenceType === 'Case Study'
+				|| section.referenceType === 'Phil Blog'
+				|| section.referenceType === 'White Paper'
+				|| section.referenceType === 'Upcoming Events'
+					? handleSpacing(theme, 92)
+					: 0
+			}
 			py={
-				section.referenceType === 'Banner'
-				|| section.referenceType === 'Case Study'
+				section.referenceType === 'Case Study'
 				|| section.referenceType === 'Phil Blog'
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events'
 					? 0
-					: null
+					: handleSpacing(theme, 92)
 			}
-			pt={section.referenceType === 'Banner' ? 0 : 125}
 			fullWidth={section.referenceType === 'Image Carousel'}
 		>
 			{Boolean(section.header?.length)
@@ -200,14 +208,14 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				|| section.referenceType === 'Phil Blog'
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events' ? (
-						<Box>
+						<Box mb={handleSpacing(theme, theme.spacing.md)}>
 							<Title order={3} size={35}>
 								{section.header}
 							</Title>
 							<Divider variant='dashed' size={1} className={classes.divider} />
 						</Box>
 					) : (
-						<Group position='center' mb={60}>
+						<Group position='center' mb={28}>
 							<Title order={2} color={textColor}>
 								{section.header}
 							</Title>
@@ -219,26 +227,19 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				<Grid
 					grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
 					columns={GRID_COLUMNS}
-					gutter={
-						section.referenceType === 'Article' ? 25 : section.referenceType === 'Featured Resource' ? 18 : 20
-					}
+					gutter={theme.spacing.md}
+					m={0}
+					mx={-10}
 				>
 					{section.references.map((resource, index) => (
-						<Grid.Col
-							px={section.referenceType === 'Prescriber Journey' ? 0 : 10}
-							py={30}
-							key={resource.id}
-							{...getSpan()}
-							sm={GRID_COLUMNS}
-							md={GRID_COLUMNS}
-						>
+						<Grid.Col key={resource.id} {...getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
 							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}
 				</Grid>
 			)}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group position='center' mt={60}>
+				<Group position='center' mt={handleSpacing(theme, theme.spacing.lg)}>
 					{isExternal ? (
 						<Anchor href={link} target='_blank'>
 							<Button color={'dark'}>{section.buttonText}</Button>
