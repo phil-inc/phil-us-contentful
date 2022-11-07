@@ -240,7 +240,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 						<HubSpotNewsletter />
 						<Grid mt={60} align={'center'} justify='center'>
 							{footer.badge.map(badge => (
-								<Grid.Col key={badge.title + badge.file.url} span={2}>
+								<Grid.Col key={badge.title + badge.file.url} span={4}>
 									<Box sx={{maxWidth: 120}}>
 										<ImageContainer background='transparent' fluid>
 											<Asset asset={badge} />

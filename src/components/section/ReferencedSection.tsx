@@ -24,8 +24,8 @@ import {handleSpacing} from 'utils/handleSpacing';
 const useStyles = createStyles(theme => ({
 	divider: {
 		maxWidth: '35%',
-		marginTop: theme.spacing.xs,
-		marginBottom: theme.spacing.xs,
+		marginTop: '10px',
+		marginBottom: '64px',
 	},
 }));
 
@@ -39,6 +39,7 @@ type ReferencedSectionProps = {
  * @returns Referenced Resources
  */
 
+// eslint-disable-next-line complexity
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
@@ -176,13 +177,21 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={background}
+			pt={
+				section.referenceType === 'Case Study'
+				|| section.referenceType === 'Phil Blog'
+				|| section.referenceType === 'White Paper'
+				|| section.referenceType === 'Upcoming Events'
+					? 92
+					: 0
+			}
 			py={
 				section.referenceType === 'Case Study'
 				|| section.referenceType === 'Phil Blog'
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events'
-					? handleSpacing(theme, theme.spacing.lg)
-					: handleSpacing(theme, theme.spacing.xl)
+					? 0
+					: 92
 			}
 			fullWidth={section.referenceType === 'Image Carousel'}
 		>
@@ -199,7 +208,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 							<Divider variant='dashed' size={1} className={classes.divider} />
 						</Box>
 					) : (
-						<Group position='center' mb={handleSpacing(theme, theme.spacing.lg)}>
+						<Group position='center' mb={28}>
 							<Title order={2} color={textColor}>
 								{section.header}
 							</Title>
@@ -213,15 +222,10 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					columns={GRID_COLUMNS}
 					gutter={theme.spacing.xs}
 					m={0}
+					mx={-10}
 				>
 					{section.references.map((resource, index) => (
-						<Grid.Col
-							py={handleSpacing(theme, theme.spacing.md)}
-							key={resource.id}
-							{...getSpan()}
-							sm={GRID_COLUMNS}
-							md={GRID_COLUMNS}
-						>
+						<Grid.Col key={resource.id} {...getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
 							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}

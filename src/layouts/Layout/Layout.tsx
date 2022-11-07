@@ -81,7 +81,7 @@ export const Head: React.FC = () => (
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
-		width: '100%',
+		width: '100vw',
 		overflow: 'hidden',
 		padding: 0,
 	},

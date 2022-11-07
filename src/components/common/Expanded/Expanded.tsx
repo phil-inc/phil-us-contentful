@@ -39,7 +39,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 			padding: `100px 100px ${background === '#FFFFFF' ? 105 : background === '#29A5B4' ? 60 : 80}px 100px`,
 
 			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-				padding: `${handleSpacing(theme, theme.spacing.xl)}px ${theme.spacing.sm}px`,
+				padding: `${py}px 16px`,
 			},
 		},
 	}));
@@ -47,7 +47,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container id={id} fluid className={classes.container} py={py} px={fullWidth ? 0 : null} mb={mb}>
+		<Container id={id} fluid className={classes.container} py={py} pt={Boolean(pt) && pt} px={fullWidth ? 0 : null}>
 			{children}
 		</Container>
 	);
