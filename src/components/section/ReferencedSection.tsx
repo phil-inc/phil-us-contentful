@@ -182,7 +182,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				|| section.referenceType === 'Phil Blog'
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events'
-					? 92
+					? handleSpacing(theme, 92)
 					: 0
 			}
 			py={
@@ -191,7 +191,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events'
 					? 0
-					: 92
+					: handleSpacing(theme, 92)
 			}
 			fullWidth={section.referenceType === 'Image Carousel'}
 		>

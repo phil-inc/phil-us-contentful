@@ -36,10 +36,10 @@ const Expanded: React.FC<ExpandedProps> = ({
 			minHeight,
 			maxWidth: '100%',
 			width: '100vw',
-			padding: `100px 100px ${background === '#FFFFFF' ? 105 : background === '#29A5B4' ? 60 : 80}px 100px`,
+			padding: '100px 100px 92px 100px',
 
-			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-				padding: `${py}px 16px`,
+			[theme.fn.smallerThan('md')]: {
+				padding: '42px 16px',
 			},
 		},
 	}));
