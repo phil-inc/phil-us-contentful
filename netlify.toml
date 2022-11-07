@@ -75,6 +75,7 @@ status = 200
 # option and avoid committing sensitive values to public
 # source repositories.
 [context.deploy-preview.environment]
+  NODE_ENV = "development"
   CONTENTFUL_ENVIRONMENT = "develop"
 
 # Branch Deploy context: all deploys that are not from
