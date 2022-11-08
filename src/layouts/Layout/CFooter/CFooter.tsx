@@ -97,8 +97,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 			<Container fluid className={classes.footerWrapper}>
 				{/* Desktop View */}
 				<Grid className={classes.footer} gutter={'xl'}>
-					{pages.map(page => (
-						<Grid.Col key={page.id} span={3}>
+					{pages.map((page, index) => (
+						<Grid.Col key={page.id + page.title + `${index}`} span={3}>
 							<Box sx={{width: '80%'}}>
 								<Link
 									to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
@@ -112,8 +112,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 								{page.sections
 									.filter(section => Boolean(section.header?.length && !section.isHidden))
 									.map((section, index, array) => (
-										<>
-											<List key={section.header} listStyleType='none'>
+										<React.Fragment key={section.header}>
+											<List listStyleType='none'>
 												<List.Item>
 													<Link
 														to={
@@ -155,7 +155,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 													</Anchor>
 												</Group>
 											)}
-										</>
+										</React.Fragment>
 									))}
 							</Box>
 						</Grid.Col>
@@ -185,8 +185,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 				{/* Mobile View */}
 				<Box className={classes.drawer}>
 					<Accordion styles={{content: {padding: 0}}} chevron={<IconChevronDown size={24} />} mb={15}>
-						{pages.map(page => (
-							<Accordion.Item key={page.id + page.title} value={page.title}>
+						{pages.map((page, index) => (
+							<Accordion.Item key={page.id + page.title + `${index}`} value={page.title}>
 								<Accordion.Control px={0}>
 									<Text weight='bold' size={18}>
 										{page.title}
@@ -241,8 +241,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 						<Divider my={10} color='#6A7979' />
 						<HubSpotNewsletter />
 						<Grid mt={60} align={'center'} justify='center'>
-							{footer.badge.map(badge => (
-								<Grid.Col key={badge.title + badge.file.url} span={4}>
+							{footer.badge.map((badge, index) => (
+								<Grid.Col key={`${index}` + badge.file.url} span={4}>
 									<Box sx={{maxWidth: 120}}>
 										<ImageContainer background='transparent' fluid>
 											<Asset asset={badge} />
