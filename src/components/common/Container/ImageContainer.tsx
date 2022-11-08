@@ -7,6 +7,7 @@ type ImageContainerProps = {
 	background?: string;
 	children: React.ReactNode;
 	expanded?: boolean;
+	contain?: boolean;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -15,6 +16,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	background = '#F4F4F4',
 	children,
 	expanded = false,
+	contain = false,
 }) => {
 	const useStyles = createStyles(theme => ({
 		imageContainer: {
@@ -38,9 +40,16 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 				position: 'static',
 			},
 		},
+
 		center: {
 			display: 'grid',
 			placeItems: 'center',
+		},
+
+		objectFitContain: {
+			img: {
+				objectFit: 'contain',
+			},
 		},
 	}));
 
@@ -48,7 +57,11 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 
 	return (
 		<Container fluid className={classes.imageContainer}>
-			<AspectRatio ratio={ratio} sx={{width: '100%', height: '100%'}}>
+			<AspectRatio
+				className={contain ? classes.objectFitContain : null}
+				ratio={ratio}
+				sx={{width: '100%', height: '100%'}}
+			>
 				{children}
 			</AspectRatio>
 		</Container>
