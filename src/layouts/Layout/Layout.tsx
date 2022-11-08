@@ -124,6 +124,10 @@ export function Layout({children}: LayoutProps) {
 					fontSize: 'min(35px, calc(1rem + 0.989vw))',
 					lineHeight: '1.3',
 				},
+				h4: {
+					fontSize: 'min(30px, calc(1rem + 0.989vw))',
+					lineHeight: '1.3',
+				},
 			},
 			fontFamily: 'Raleway',
 		},

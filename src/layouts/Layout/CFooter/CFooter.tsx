@@ -131,6 +131,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 													</Link>
 												</List.Item>
 											</List>
+											{/* Patients section mapping extra elements */}
 											{page.title === 'Patients' && index === array.length - 1 && (
 												<List key={section.id + page.title} listStyleType='none'>
 													<List.Item>
@@ -144,6 +145,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 													</List.Item>
 												</List>
 											)}
+											{/* Contact section mapping extra elements */}
 											{page.title === 'Contact' && (
 												<Group mt={18}>
 													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
