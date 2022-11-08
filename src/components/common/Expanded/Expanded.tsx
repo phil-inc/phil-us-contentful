@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container, createStyles} from '@mantine/core';
-import classNames from 'classnames';
+import {handleSpacing} from 'utils/handleSpacing';
 
 type ExpandedProps = {
 	id: string;
@@ -10,6 +10,7 @@ type ExpandedProps = {
 	noMargin?: boolean;
 	py?: number;
 	pt?: number;
+	mb?: number;
 	fullWidth?: boolean;
 };
 
@@ -23,6 +24,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	children,
 	background = '#FFFFFF',
 	minHeight = '100%',
+	mb = 0,
 	noMargin = false,
 	py = 0,
 	pt = 0,
@@ -34,10 +36,14 @@ const Expanded: React.FC<ExpandedProps> = ({
 			minHeight,
 			maxWidth: '100%',
 			width: '100vw',
-			padding: `100px 100px ${background === '#FFFFFF' ? 105 : background === '#29A5B4' ? 60 : 80}px 100px`,
+			padding: '100px 100px 92px 100px',
 
-			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-				padding: '116px 16px',
+			[theme.fn.smallerThan('md')]: {
+				padding: '42px 100px',
+			},
+
+			[theme.fn.smallerThan('sm')]: {
+				padding: '42px 16px',
 			},
 		},
 	}));
@@ -45,7 +51,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container id={id} fluid className={classes.container} py={py} pt={pt} px={fullWidth ? 0 : null}>
+		<Container id={id} fluid className={classes.container} py={py} pt={Boolean(pt) && pt} px={fullWidth ? 0 : null}>
 			{children}
 		</Container>
 	);

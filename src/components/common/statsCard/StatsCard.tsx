@@ -15,7 +15,7 @@ const useStyles = createStyles(theme => ({
 		fontSize: 82,
 	},
 	description: {
-		fontSize: '35px',
+		fontSize: '32px',
 		color: '#00201F',
 
 		p: {
