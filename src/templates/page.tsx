@@ -7,6 +7,9 @@ import {Box, Grid, Title, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
+import {Script} from 'gatsby';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
@@ -32,6 +35,19 @@ export const Head: React.FC<HelmetProps> = ({pageContext}) => {
 				content={`https://phil.us${pageContext.title === 'Home' ? '/' : `/${pageContext.title}`}`}
 			/>
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			{isProduction && pageContext.title === 'Contact' ? (
+				<Script>
+					{`(function() {
+					window._zi = {formId: '2a091fcc-1139-440c-83c4-d170f9678a32', formLoadTimeout:4000};
+					var zi = document.createElement('script');
+					zi.type = 'text/javascript';
+					zi.async = true;
+					zi.src = 'https://ws-assets.zoominfo.com/formcomplete.js';
+					var s = document.getElementsByTagName('script')[0];
+					s.parentNode.insertBefore(zi, s);
+					})();`}
+				</Script>
+			) : null}
 		</SEO>
 	);
 };
