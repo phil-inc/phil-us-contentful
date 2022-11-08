@@ -47,6 +47,12 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			display: 'flex',
 			alignItems: 'center',
 
+			'&::after': {
+				content: '""',
+				clear: 'both',
+				display: 'table',
+			},
+
 			[theme.fn.smallerThan('sm')]: {
 				padding: '0 16px',
 			},
@@ -62,14 +68,15 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			position: 'absolute',
 			top: 90,
 			left: 0,
-			zIndex: 300,
+			zIndex: 2,
 			opacity: 1,
+			width: '100%',
 		},
 
 		container: {
 			width: '100vw',
+			overflow: 'hidden',
 			background: '#00827E',
-			marginTop: 8,
 		},
 
 		navbar: {
@@ -147,6 +154,14 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			fontWeight: 400,
 		},
 
+		drawerWrapper: {
+			padding: `${theme.spacing.sm + 10}px 100px  !important`,
+
+			[theme.fn.smallerThan('sm')]: {
+				padding: `${theme.spacing.sm + 10}px 16px  !important`,
+			},
+		},
+
 		drawer: {
 			[theme.fn.largerThan('md')]: {
 				display: 'none',
@@ -217,6 +232,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	const [collapseRef, setCollapseRef] = useState<HTMLElement>();
 	const [listRef, setListRef] = useState<HTMLElement>();
 	const [activePageLI, setActivePageLI] = useState<HTMLLIElement | undefined>();
+
 	useClickOutside(
 		() => {
 			close();
@@ -350,7 +366,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 				{isBreak ? (
 					<Drawer
 						className={classes.drawer}
-						classNames={{title: classes.drawerTitle}}
+						classNames={{title: classes.drawerTitle, drawer: classes.drawerWrapper}}
 						opened={isDrawer}
 						onClose={() => {
 							toggleDrawer(false);
@@ -374,7 +390,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								/>
 							</Group>
 						}
-						padding='xl'
 						size='full'
 						transition='fade'
 					>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Title, Button, Text, createStyles, Container, Image, Box} from '@mantine/core';
+import {Grid, Title, Button, Text, createStyles, Container, Image, Box, Anchor, List} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {graphql} from 'gatsby';
@@ -8,7 +8,7 @@ import type {TResource} from 'types/resource';
 import {SEO} from 'layouts/SEO/SEO';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import Asset from 'components/common/Asset/Asset';
-import {BLOCKS} from '@contentful/rich-text-types';
+import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
 import {getLink} from 'utils/getLink';
 import type {ISection} from 'types/section';
@@ -49,6 +49,9 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 				marginTop: 0,
 			},
 		},
+		anchor: {
+			color: '#00827E',
+		},
 	}));
 
 	const {classes} = useStyles();
@@ -67,13 +70,69 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 		renderNode: {
 			[BLOCKS.EMBEDDED_ASSET](node) {
 				return (
-					<Box sx={{maxWidth: '1000px', marginBottom: '32px'}}>
+					<Box sx={{maxWidth: '1000px', marginBottom: '32px', margin: '50px auto'}}>
 						<Asset asset={node.data.target as TAsset} />
 					</Box>
 				);
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text mb={18}>{children}</Text>;
+				return <Text mb={40}>{children}</Text>;
+			},
+
+			[BLOCKS.OL_LIST](node, children) {
+				return (
+					<List type='ordered' mt={16} mb={32}>
+						{children}
+					</List>
+				);
+			},
+
+			[BLOCKS.UL_LIST](node, children) {
+				return (
+					<List type='unordered' mt={16} mb={44}>
+						{children}
+					</List>
+				);
+			},
+
+			[BLOCKS.LIST_ITEM](node, children) {
+				return <List.Item my={8}>{children}</List.Item>;
+			},
+
+			[INLINES.HYPERLINK](node, children) {
+				return <Anchor className={classes.anchor}>{children}</Anchor>;
+			},
+
+			[BLOCKS.HEADING_1](node, children) {
+				return (
+					<Title order={1} mt={40} mb={4}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_2](node, children) {
+				return (
+					<Title order={2} mt={40} mb={4}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_3](node, children) {
+				return (
+					<Title order={3} mt={40} mb={4}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_4](node, children) {
+				return (
+					<Title order={4} mt={40} mb={4}>
+						{children}
+					</Title>
+				);
 			},
 		},
 	};

@@ -22,7 +22,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 		card: {
 			position: 'relative',
 			overflow: 'hidden',
-			paddingLeft: 10,
+			paddingLeft: 18,
 			background: '#F4F4F4',
 			height: '100%',
 
@@ -117,7 +117,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 								)}
 							</>
 						)}
-						<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+						<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={10} />
 						{resource.body && (
 							<Text size={18} mt='sm' mb={20} lineClamp={2}>
 								{renderRichText(resource.body, options)}

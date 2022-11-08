@@ -1,37 +1,14 @@
-import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
-import {
-	createStyles,
-	Anchor,
-	Group,
-	Grid,
-	Text,
-	Divider,
-	List,
-	Container,
-	Navbar,
-	Button,
-	TextInput,
-	Box,
-	Accordion,
-	Burger,
-	Drawer,
-	Table,
-	Center,
-	Avatar,
-} from '@mantine/core';
-import {useForm} from '@mantine/form';
-import {upperFirst, useDisclosure, useMediaQuery} from '@mantine/hooks';
-import {IconBrandLinkedin, IconBrandTwitter, IconChevronDown} from '@tabler/icons';
+import {createStyles, Anchor, Group, Grid, Text, Divider, List, Container, Box, Accordion, Center} from '@mantine/core';
+import {IconChevronDown} from '@tabler/icons';
+import {footerBackground} from 'assets/images';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import HubSpotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import {graphql, Link, StaticQuery} from 'gatsby';
-import {GatsbyImage} from 'gatsby-plugin-image';
 import React from 'react';
 import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
-import {navigateToPage} from 'utils/navigateToPage';
 
 const useStyles = createStyles(theme => ({
 	footer: {
@@ -73,9 +50,13 @@ const useStyles = createStyles(theme => ({
 
 	footerWrapper: {
 		padding: '85px 175px',
+		backgroundImage: `url("${footerBackground as string}")`,
+		backgroundRepeat: 'no-repeat',
+		backgroundPosition: 'bottom -420px right -220px',
 
 		[theme.fn.smallerThan('lg')]: {
 			padding: '40px ',
+			backgroundPosition: 'bottom -522px right -561px',
 		},
 	},
 	burger: {
@@ -105,8 +86,8 @@ type FooterProps = {
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
 };
 
-const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResource}) => {
-	const {classes, theme} = useStyles();
+const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
+	const {classes} = useStyles();
 
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
@@ -116,8 +97,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 			<Container fluid className={classes.footerWrapper}>
 				{/* Desktop View */}
 				<Grid className={classes.footer} gutter={'xl'}>
-					{pages.map(page => (
-						<Grid.Col key={page.id} span={3}>
+					{pages.map((page, index) => (
+						<Grid.Col key={page.id + page.title + `${index}`} span={3}>
 							<Box sx={{width: '80%'}}>
 								<Link
 									to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
@@ -131,8 +112,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 								{page.sections
 									.filter(section => Boolean(section.header?.length && !section.isHidden))
 									.map((section, index, array) => (
-										<>
-											<List key={section.header} listStyleType='none'>
+										<React.Fragment key={section.header}>
+											<List listStyleType='none'>
 												<List.Item>
 													<Link
 														to={
@@ -150,6 +131,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 													</Link>
 												</List.Item>
 											</List>
+											{/* Patients section mapping extra elements */}
 											{page.title === 'Patients' && index === array.length - 1 && (
 												<List key={section.id + page.title} listStyleType='none'>
 													<List.Item>
@@ -163,6 +145,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 													</List.Item>
 												</List>
 											)}
+											{/* Contact section mapping extra elements */}
 											{page.title === 'Contact' && (
 												<Group mt={18}>
 													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
@@ -172,7 +155,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 													</Anchor>
 												</Group>
 											)}
-										</>
+										</React.Fragment>
 									))}
 							</Box>
 						</Grid.Col>
@@ -202,8 +185,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 				{/* Mobile View */}
 				<Box className={classes.drawer}>
 					<Accordion styles={{content: {padding: 0}}} chevron={<IconChevronDown size={24} />} mb={15}>
-						{pages.map(page => (
-							<Accordion.Item key={page.id + page.title} value={page.title}>
+						{pages.map((page, index) => (
+							<Accordion.Item key={page.id + page.title + `${index}`} value={page.title}>
 								<Accordion.Control px={0}>
 									<Text weight='bold' size={18}>
 										{page.title}
@@ -258,8 +241,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, allContentfulResour
 						<Divider my={10} color='#6A7979' />
 						<HubSpotNewsletter />
 						<Grid mt={60} align={'center'} justify='center'>
-							{footer.badge.map(badge => (
-								<Grid.Col key={badge.title + badge.file.url} span={2}>
+							{footer.badge.map((badge, index) => (
+								<Grid.Col key={`${index}` + badge.file.url} span={4}>
 									<Box sx={{maxWidth: 120}}>
 										<ImageContainer background='transparent' fluid>
 											<Asset asset={badge} />
