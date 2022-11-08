@@ -39,6 +39,10 @@ const Expanded: React.FC<ExpandedProps> = ({
 			padding: '100px 100px 92px 100px',
 
 			[theme.fn.smallerThan('md')]: {
+				padding: '42px 100px',
+			},
+
+			[theme.fn.smallerThan('sm')]: {
 				padding: '42px 16px',
 			},
 		},
