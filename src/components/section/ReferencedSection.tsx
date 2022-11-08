@@ -90,28 +90,30 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	};
 
 	// Get grid span based on resource type
-	const getSpan = (): {xl: number; lg: number} => {
+	const getSpan = (): {xl: number; lg: number; md: number; sm: number} => {
 		switch (section.referenceType) {
-			case 'Info Card':
 			case 'Testimonial':
+				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS, md: GRID_COLUMNS, sm: GRID_COLUMNS / 2};
+
+			case 'Info Card':
 			case 'Phil Blog':
 			case 'Upcoming Events':
 			case 'White Paper':
 			case 'Case Study':
 			case 'Featured Resource':
-				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS};
+				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 
 			case 'FAQs':
-				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS / 2};
+				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS / 2, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 
 			case 'Team Member':
-				return {xl: GRID_COLUMNS / 4, lg: GRID_COLUMNS / 4};
+				return {xl: GRID_COLUMNS / 4, lg: GRID_COLUMNS / 4, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 
 			case 'Investors':
-				return {xl: GRID_COLUMNS / 5, lg: GRID_COLUMNS / 5};
+				return {xl: GRID_COLUMNS / 5, lg: GRID_COLUMNS / 5, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 
 			default:
-				return {xl: SPAN_LG, lg: SPAN_LG};
+				return {xl: SPAN_LG, lg: SPAN_LG, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 		}
 	};
 
@@ -232,7 +234,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					mx={-10}
 				>
 					{section.references.map((resource, index) => (
-						<Grid.Col key={resource.id} {...getSpan()} sm={GRID_COLUMNS} md={GRID_COLUMNS}>
+						<Grid.Col key={resource.id} {...getSpan()}>
 							{renderResource(section.header, resource, index)}
 						</Grid.Col>
 					))}

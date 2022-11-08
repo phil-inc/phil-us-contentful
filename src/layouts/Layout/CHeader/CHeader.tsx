@@ -30,6 +30,8 @@ import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
 import type {TAsset} from 'types/asset';
 import {IconChevronDown} from '@tabler/icons';
+import ImageContainer from 'components/common/Container/ImageContainer';
+import Asset from 'components/common/Asset/Asset';
 
 const HEADER_HEIGHT = 90;
 
@@ -157,8 +159,14 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		drawerWrapper: {
 			padding: `${theme.spacing.sm + 10}px 100px  !important`,
 
+			[theme.fn.smallerThan('md')]: {
+				padding: `${theme.spacing.sm + 10}px 100px  !important`,
+				paddingTop: '0px !important',
+			},
+
 			[theme.fn.smallerThan('sm')]: {
 				padding: `${theme.spacing.sm + 10}px 16px  !important`,
+				paddingTop: '0px !important',
 			},
 		},
 
@@ -211,7 +219,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	const [header] = allContentfulHeader.nodes;
 	const pages = header.navigationLinks;
-	const pathToImage = getImage(header.logo);
 
 	const {classes} = useStyles();
 
@@ -333,14 +340,16 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	}, [width]);
 
 	return (
-		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
+		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={62}>
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
-					<Link to='/'>
-						<Container m={0} p={0} size={125} style={{minWidth: 125}}>
-							<GatsbyImage image={pathToImage} alt='logo' />
-						</Container>
-					</Link>
+					<Box sx={{height: 90, width: 125}}>
+						<Link to='/'>
+							<ImageContainer contain fluid background='transparent'>
+								<Asset asset={header.logo} />
+							</ImageContainer>
+						</Link>
+					</Box>
 					<Burger
 						opened={isDrawer}
 						onClick={() => {
@@ -374,11 +383,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						withCloseButton={false}
 						title={
 							<Group position='apart' noWrap align='center'>
-								<Box>
+								<Box sx={{height: 90, width: 125}}>
 									<Link to='/'>
-										<Container m={0} p={0} size={125}>
-											<GatsbyImage image={pathToImage} alt='logo' />
-										</Container>
+										<ImageContainer contain fluid background='transparent'>
+											<Asset asset={header.logo} />
+										</ImageContainer>
 									</Link>
 								</Box>
 								<Burger
@@ -637,7 +646,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 };
 
 const query = graphql`
-	query MyQuery {
+	query {
 		allContentfulHeader(filter: {node_locale: {eq: "en-US"}}) {
 			nodes {
 				id
@@ -667,6 +676,14 @@ const query = graphql`
 				}
 				logo {
 					gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+					title
+					file {
+						contentType
+						details {
+							size
+						}
+						url
+					}
 				}
 			}
 		}
