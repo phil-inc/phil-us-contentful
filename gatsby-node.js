@@ -45,9 +45,9 @@ const generateMainPages = async ({actions, graphql}) => {
 				  }
 				}
 				isHubspotEmbed
-				   isInsertSnippet
-				  codeSnippet {
-					  codeSnippet
+				isInsertSnippet
+				codeSnippet {
+				  codeSnippet
 				}
 				asset {
 				  gatsbyImageData(
@@ -206,9 +206,9 @@ const generateMainPages = async ({actions, graphql}) => {
 				  isHubspotEmbed
 				  isInsertSnippet
 				  codeSnippet {
-					  codeSnippet
-				}
-				subHeading {
+					codeSnippet
+				  }
+				  subHeading {
 					subHeading
 				  }
 				  buttonText
@@ -229,6 +229,7 @@ const generateMainPages = async ({actions, graphql}) => {
 					  url
 					}
 				  }
+				  id
 				}
 				referenceType
 				externalLink
@@ -250,6 +251,7 @@ const generateMainPages = async ({actions, graphql}) => {
 					id
 					page {
 					  title
+					  id
 					}
 					header
 					sys {
@@ -290,6 +292,7 @@ const generateMainPages = async ({actions, graphql}) => {
 					isInsertSnippet
 					codeSnippet {
 					  codeSnippet
+					  id
 					}
 				  }
 				}
@@ -297,7 +300,8 @@ const generateMainPages = async ({actions, graphql}) => {
 			}
 		  }
 		}
-	  }	  
+	  }
+	  
 	`);
 
 	data.allContentfulPage.nodes.forEach(page => {
