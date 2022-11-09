@@ -235,8 +235,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								</ImageContainer>
 							</Grid.Col>
 						</Grid>
-						{section.isHubspotEmbed && section.isInsertSnippet && section.codeSnippet && isProduction ? (
-							<Script>{section.codeSnippet.codeSnippet}</Script>
+						{section.isHubspotEmbed && section.isInsertSnippet && section.codeSnippet ? (
+							<Script>
+								{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+							</Script>
 						) : null}
 					</>
 				</Container>
