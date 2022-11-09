@@ -19,6 +19,7 @@ import type {FC} from 'react';
 import React, {useState} from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
+import {isProduction} from 'utils/isProduction';
 import HubspotFormModal from '../HubspotFormModal';
 
 const useStyles = createStyles(theme => ({
@@ -85,14 +86,18 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 									}}
 								>
 									<HubspotFormModal hubspotEmbed={hubspotEmbed} />
-									{resource.isHubspotEmbed && resource.isInsertSnippet && resource.codeSnippet ? (
-										<Script>
-											{resource.codeSnippet.codeSnippet
-												.trim()
-												.replace('<script>', '')
-												.replace('</script>', '')}
-										</Script>
-									) : null}
+									{resource.isHubspotEmbed
+									&& resource.isInsertSnippet
+									&& resource.codeSnippet
+									&& Boolean(resource.codeSnippet.codeSnippet.length)
+									&& isProduction ? (
+											<Script>
+												{resource.codeSnippet.codeSnippet
+													.trim()
+													.replace('<script>', '')
+													.replace('</script>', '')}
+											</Script>
+										) : null}
 								</Modal>
 								<Container>
 									<Button
