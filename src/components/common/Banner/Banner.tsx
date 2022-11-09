@@ -13,12 +13,13 @@ import {
 	Modal,
 } from '@mantine/core';
 import classNames from 'classnames';
-import {Link} from 'gatsby';
+import {Link, Script} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
 import React, {useState} from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
+import {isProduction} from 'utils/isProduction';
 import HubspotFormModal from '../HubspotFormModal';
 
 const useStyles = createStyles(theme => ({
@@ -58,62 +59,76 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 	const [openHubspotModal, setopenHubspotModal] = useState(false);
 
 	return (
-		<Paper radius={0} className={classNames(classes.card)}>
-			<Grid align={'center'}>
-				<Grid.Col lg={10} sm={12}>
-					<Container m={0}>
-						<Title order={3} mt='md'>
-							{heading}
-						</Title>
-						<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={10} />
-						{body && (
-							<Text size='md' mt='sm' mb={11}>
-								{renderRichText(body)}
-							</Text>
-						)}
-					</Container>
-				</Grid.Col>
-				{Boolean(buttonText?.length)
-					&& (isHubspotEmbed ? (
-						<Grid.Col lg={2} sm={12}>
-							<Modal
-								size='ls'
-								opened={openHubspotModal}
-								onClose={() => {
-									setopenHubspotModal(false);
-								}}
-							>
-								<HubspotFormModal hubspotEmbed={hubspotEmbed} />
-							</Modal>
-							<Container>
-								<Button
-									color={'dark'}
-									onClick={() => {
-										setopenHubspotModal(true);
+		<>
+			<Paper radius={0} className={classNames(classes.card)}>
+				<Grid align={'center'}>
+					<Grid.Col lg={10} sm={12}>
+						<Container m={0}>
+							<Title order={3} mt='md'>
+								{heading}
+							</Title>
+							<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={10} />
+							{body && (
+								<Text size='md' mt='sm' mb={11}>
+									{renderRichText(body)}
+								</Text>
+							)}
+						</Container>
+					</Grid.Col>
+					{Boolean(buttonText?.length)
+						&& (isHubspotEmbed ? (
+							<Grid.Col lg={2} sm={12}>
+								<Modal
+									size='ls'
+									opened={openHubspotModal}
+									onClose={() => {
+										setopenHubspotModal(false);
 									}}
 								>
-									{buttonText}
-								</Button>
-							</Container>
-						</Grid.Col>
-					) : (
-						Boolean(externalLink?.length) && (
-							<Grid.Col lg={2} sm={12}>
+									<HubspotFormModal hubspotEmbed={hubspotEmbed} />
+									{resource.isHubspotEmbed
+									&& resource.isInsertSnippet
+									&& resource.codeSnippet
+									&& Boolean(resource.codeSnippet.codeSnippet.length)
+									&& isProduction ? (
+											<Script>
+												{resource.codeSnippet.codeSnippet
+													.trim()
+													.replace('<script>', '')
+													.replace('</script>', '')}
+											</Script>
+										) : null}
+								</Modal>
 								<Container>
-									{isExternal ? (
-										<Anchor href={link} target='_blank'>
-											<Button color={'dark'}>{buttonText}</Button>
-										</Anchor>
-									) : (
-										<Link to={link}>
-											<Button color={'dark'}>{buttonText}</Button>
-										</Link>
-									)}
+									<Button
+										color={'dark'}
+										onClick={() => {
+											setopenHubspotModal(true);
+										}}
+									>
+										{buttonText}
+									</Button>
 								</Container>
 							</Grid.Col>
-						)
-					))}
-			</Grid>
-		</Paper>
+						) : (
+							Boolean(externalLink?.length) && (
+								<Grid.Col lg={2} sm={12}>
+									<Container>
+										{isExternal ? (
+											<Anchor href={link} target='_blank'>
+												<Button color={'dark'}>{buttonText}</Button>
+											</Anchor>
+										) : (
+											<Link to={link}>
+												<Button color={'dark'}>{buttonText}</Button>
+											</Link>
+										)}
+									</Container>
+								</Grid.Col>
+							)
+						))}
+				</Grid>
+			</Paper>
+		</>
 	);
 };

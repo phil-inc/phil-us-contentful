@@ -16,7 +16,7 @@ import {
 import {Location} from '@reach/router';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import {Link} from 'gatsby';
+import {Link, Script} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
@@ -28,6 +28,7 @@ import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {isVideoContent} from 'utils/isVideoContent';
 import {parseScript} from 'utils/parseScript';
 import {handleSpacing} from 'utils/handleSpacing';
+import {isProduction} from 'utils/isProduction';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -160,79 +161,90 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 					className={classes.container}
 					my={92}
 				>
-					<Grid
-						gutter={handleSpacing(theme, theme.spacing.lg)}
-						align={section.isHubspotEmbed ? 'flex-start' : 'center'}
-					>
-						<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
-							{section.isHubspotEmbed ? (
-								<>
-									<Title order={titleOrdering}>{section.header}</Title>
-									{Boolean(section.subHeader?.subHeader.length) && (
-										<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
-											{section.subHeader.subHeader}
-										</Title>
-									)}
-									{location.pathname === '/contact' && (
-										<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
-											Start a conversation
-										</Title>
-									)}
-									<Divider
-										size={1}
-										variant='dashed'
-										mt={handleSpacing(theme, theme.spacing.sm)}
-										mb={handleSpacing(theme, theme.spacing.md)}
-									/>
-									{hasRendered ? (
-										<div id='hubspotContactForm'></div>
-									) : (
-										<Center>
-											<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
-										</Center>
-									)}
-								</>
-							) : (
-								<>
-									<Title order={titleOrdering}>{section.header}</Title>
-									{Boolean(section.subHeader?.subHeader.length) && (
-										<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
-											{section.subHeader.subHeader}
-										</Text>
-									)}
-									{Boolean(section.body) && (
-										<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
-											{renderRichText(section.body, options)}
-										</Text>
-									)}
-									{Boolean(section.buttonText?.length) && (
-										<Group mt={handleSpacing(theme, theme.spacing.md)}>
-											{isExternal ? (
-												<Anchor href={link} target='_blank'>
-													<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>
-														{section.buttonText}
-													</Button>
-												</Anchor>
-											) : (
-												<Link to={link}>
-													<Button>{section.buttonText}</Button>
-												</Link>
-											)}
-										</Group>
-									)}
-								</>
-							)}
-						</Grid.Col>
-						<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
-							<ImageContainer
-								fluid
-								background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
-								expanded={location.pathname === '/contact'}
-							>
-								<Asset asset={section.asset} />
-							</ImageContainer>
-						</Grid.Col>
-					</Grid>
+					<>
+						<Grid
+							gutter={handleSpacing(theme, theme.spacing.lg)}
+							align={section.isHubspotEmbed ? 'flex-start' : 'center'}
+						>
+							<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
+								{section.isHubspotEmbed ? (
+									<>
+										<Title order={titleOrdering}>{section.header}</Title>
+										{Boolean(section.subHeader?.subHeader.length) && (
+											<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+												{section.subHeader.subHeader}
+											</Title>
+										)}
+										{location.pathname === '/contact' && (
+											<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+												Start a conversation
+											</Title>
+										)}
+										<Divider
+											size={1}
+											variant='dashed'
+											mt={handleSpacing(theme, theme.spacing.sm)}
+											mb={handleSpacing(theme, theme.spacing.md)}
+										/>
+										{hasRendered ? (
+											<div id='hubspotContactForm'></div>
+										) : (
+											<Center>
+												<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
+											</Center>
+										)}
+									</>
+								) : (
+									<>
+										<Title order={titleOrdering}>{section.header}</Title>
+										{Boolean(section.subHeader?.subHeader.length) && (
+											<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
+												{section.subHeader.subHeader}
+											</Text>
+										)}
+										{Boolean(section.body) && (
+											<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
+												{renderRichText(section.body, options)}
+											</Text>
+										)}
+										{Boolean(section.buttonText?.length) && (
+											<Group mt={handleSpacing(theme, theme.spacing.md)}>
+												{isExternal ? (
+													<Anchor href={link} target='_blank'>
+														<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>
+															{section.buttonText}
+														</Button>
+													</Anchor>
+												) : (
+													<Link to={link}>
+														<Button>{section.buttonText}</Button>
+													</Link>
+												)}
+											</Group>
+										)}
+									</>
+								)}
+							</Grid.Col>
+							<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
+								<ImageContainer
+									fluid
+									background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
+									expanded={location.pathname === '/contact'}
+								>
+									<Asset asset={section.asset} />
+								</ImageContainer>
+							</Grid.Col>
+						</Grid>
+						{section.isHubspotEmbed
+						&& section.isInsertSnippet
+						&& section.codeSnippet
+						&& Boolean(section.codeSnippet.codeSnippet.length)
+						&& isProduction ? (
+								<Script>
+									{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+								</Script>
+							) : null}
+					</>
 				</Container>
 			)}
 		</Location>

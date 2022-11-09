@@ -363,7 +363,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 							.filter(page => page.title !== 'Home')
 							.map(page => (
 								<List.Item
-									key={page.id + page.title}
+									key={page.id + 'mapHeaderPages'}
 									className={classNames(classes.navLink)}
 									onClick={onNavLinkClick}
 								>
@@ -410,7 +410,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								{pages
 									.filter(page => page.title !== 'Home')
 									.map(page => (
-										<Accordion.Item key={page.id + page.title} value={page.title}>
+										<Accordion.Item key={page.id + 'mapHeaderPagesDrawer'} value={page.title}>
 											<Accordion.Control>
 												<Text weight='bold' size={18}>
 													{page.title}
@@ -420,8 +420,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 												{page.sections
 													.filter(section => Boolean(section.header?.length && !section.isHidden))
 													.map((section, index, array) => (
-														<>
-															<Table key={section.id + `${index}`} mb={16}>
+														<React.Fragment key={section.id + 'mapHeaderPageSectionsDrawer'}>
+															<Table mb={16}>
 																<thead>
 																	<tr>
 																		{index > 0 ? (
@@ -472,7 +472,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																			({id, heading, relatesTo}) =>
 																				section.id === relatesTo.id && (
 																					<Link
-																						key={heading}
+																						key={id + 'mapResourceDrawer'}
 																						to={navigateToPage(
 																							`${slugify(page.title, {lower: true})}/${slugify(
 																								relatesTo.header,
@@ -497,7 +497,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																</tbody>
 															</Table>
 															{page.title === 'Patients' && index === array.length - 1 && (
-																<Table key={section.id + page.title} mb={16}>
+																<Table mb={16}>
 																	<thead>
 																		<tr>
 																			<th style={{paddingLeft: 0, paddingRight: 0}}>
@@ -519,7 +519,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																	</thead>
 																</Table>
 															)}
-														</>
+														</React.Fragment>
 													))}
 											</Accordion.Panel>
 										</Accordion.Item>
@@ -545,7 +545,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 											page.sections
 												.filter(section => Boolean(section.header?.length && !section.isHidden))
 												.map((section, index, array) => (
-													<React.Fragment key={section.id + `${index}` + section.header}>
+													<React.Fragment key={section.id + 'mapCollapsePages'}>
 														<Grid.Col
 															span={
 																page.title === 'Patients'
@@ -553,7 +553,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																	: Math.floor(100 / array.length)
 															}
 														>
-															<List.Item key={index} onClick={close}>
+															<List.Item onClick={close}>
 																{index > 0 ? (
 																	<Text className={classes.listHeading}>
 																		<Link
@@ -588,7 +588,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																		.map(
 																			({id, heading, relatesTo}) =>
 																				section.id === relatesTo.id && (
-																					<List.Item key={id}>
+																					<List.Item key={id + 'mapCollapseResources'}>
 																						<Text className={classes.listItems}>
 																							<Link
 																								to={navigateToPage(
@@ -617,7 +617,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 														{page.title === 'Patients' && index === array.length - 1 && (
 															<Grid.Col span={Math.floor(100 / 4)}>
-																<List.Item key={index + 1} onClick={close}>
+																<List.Item onClick={close}>
 																	<Text className={classes.listHeading}>
 																		<Anchor
 																			href='https://my.phil.us/'
@@ -652,6 +652,7 @@ const query = graphql`
 				id
 				title
 				navigationLinks {
+					id
 					title
 					sys {
 						contentType {
