@@ -69,13 +69,13 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 						)}
 						{!isLoading
 							&& Object.keys(careers).map((job, index) => (
-								<Box mt={index === 1 ? 21 : 0} mb={theme.spacing.lg}>
+								<Box key={job} mt={index === 1 ? 21 : 0} mb={theme.spacing.lg}>
 									<Title order={3} style={{lineHeight: '1'}}>
 										{job}
 									</Title>
 									<Divider variant='dashed' size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
 									{careers[job].map(listing => (
-										<Box mb={theme.spacing.md}>
+										<Box key={listing.url} mb={theme.spacing.md}>
 											<CareerArticle
 												title={listing.title}
 												url={listing.url}
