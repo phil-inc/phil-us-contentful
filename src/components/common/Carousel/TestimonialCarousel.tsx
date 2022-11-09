@@ -45,7 +45,7 @@ export const TestimonialCarousel: FC<TestimonialCarouselProps> = ({section}) => 
 	const isMobile = useMediaQuery('(max-width: 576px)', false, {getInitialValueInEffect: false});
 
 	const slides = section.references.map(item => (
-		<Carousel.Slide key={item.heading}>
+		<Carousel.Slide key={item.id + 'TestimonialCarousel'}>
 			<Testimonial
 				type={section.referenceType === 'Testimonial' ? 'person' : 'company'}
 				image={item.asset}

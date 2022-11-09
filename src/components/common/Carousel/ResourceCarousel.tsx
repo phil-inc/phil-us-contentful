@@ -41,7 +41,7 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 
 	const theme = useMantineTheme();
 	const slides = imageCaraouselSection.references.map(item => (
-		<Carousel.Slide key={item.heading}>
+		<Carousel.Slide key={item.id + 'ResourceCarousel'}>
 			<Paper radius={0} className={classNames(classes.card)}>
 				<Grid>
 					<Grid.Col lg={12} sm={12} md={12}>

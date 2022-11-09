@@ -12,7 +12,7 @@ const RenderAllBlogs: React.FC<RenderAllBlogsProps> = ({allContentfulResource}) 
 	<>
 		<Grid>
 			{allContentfulResource.nodes.map(resource => (
-				<Grid.Col py={30} key={resource.id} lg={6} md={12} sm={12}>
+				<Grid.Col key={resource.id + 'FAQSection'} py={30} lg={6} md={12} sm={12}>
 					<FAQ resource={resource} />
 				</Grid.Col>
 			))}
