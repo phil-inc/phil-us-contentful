@@ -36,6 +36,8 @@ export type TResource = {
 	designation?: string;
 	isHubspotEmbed?: boolean;
 	hubspotEmbed?: BodyType;
+	isInsertSnippet: boolean;
+	codeSnippet?: {codeSnippet: string};
 	generateStaticPage: boolean;
 	isFaq: boolean;
 };

@@ -98,7 +98,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 				{/* Desktop View */}
 				<Grid className={classes.footer} gutter={'xl'}>
 					{pages.map((page, index) => (
-						<Grid.Col key={page.id + page.title + `${index}`} span={3}>
+						<Grid.Col key={page.id + 'mapFooterPages'} span={3}>
 							<Box sx={{width: '80%'}}>
 								<Link
 									to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
@@ -112,7 +112,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 								{page.sections
 									.filter(section => Boolean(section.header?.length && !section.isHidden))
 									.map((section, index, array) => (
-										<React.Fragment key={section.header}>
+										<React.Fragment key={section.id + 'mapFooterSections'}>
 											<List listStyleType='none'>
 												<List.Item>
 													<Link
@@ -133,7 +133,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 											</List>
 											{/* Patients section mapping extra elements */}
 											{page.title === 'Patients' && index === array.length - 1 && (
-												<List key={section.id + page.title} listStyleType='none'>
+												<List listStyleType='none'>
 													<List.Item>
 														<Anchor
 															href='https://my.phil.us/'
@@ -169,7 +169,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 							<HubSpotNewsletter />
 							<Grid mt={60} align={'center'} justify='center'>
 								{footer.badge.map(badge => (
-									<Grid.Col key={badge.file.url} span={6}>
+									<Grid.Col key={badge.file.url + 'mapBadge'} span={6}>
 										<Box sx={{maxWidth: 120}}>
 											<ImageContainer background='transparent' fluid>
 												<Asset asset={badge} />
@@ -185,8 +185,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 				{/* Mobile View */}
 				<Box className={classes.drawer}>
 					<Accordion styles={{content: {padding: 0}}} chevron={<IconChevronDown size={24} />} mb={15}>
-						{pages.map((page, index) => (
-							<Accordion.Item key={page.id + page.title + `${index}`} value={page.title}>
+						{pages.map(page => (
+							<Accordion.Item key={page.id + 'mapFooterPagesMobile'} value={page.title}>
 								<Accordion.Control px={0}>
 									<Text weight='bold' size={18}>
 										{page.title}
@@ -197,8 +197,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 										{page.sections
 											.filter(section => Boolean(section.header?.length && !section.isHidden))
 											.map((section, index) => (
-												<>
-													<List.Item key={section.id}>
+												<React.Fragment key={section.id + 'mapFooterSectionsMobile'}>
+													<List.Item>
 														<Link
 															to={
 																(page.title === 'Home'
@@ -217,7 +217,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 														</Link>
 													</List.Item>
 													{page.title === 'Patients' && index === page.sections.length - 1 && (
-														<List.Item key={index + 1}>
+														<List.Item>
 															<Anchor
 																href='https://my.phil.us/'
 																target='_blank'
@@ -227,7 +227,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 															</Anchor>
 														</List.Item>
 													)}
-												</>
+												</React.Fragment>
 											))}
 									</List>
 								</Accordion.Panel>
@@ -241,8 +241,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 						<Divider my={10} color='#6A7979' />
 						<HubSpotNewsletter />
 						<Grid mt={60} align={'center'} justify='center'>
-							{footer.badge.map((badge, index) => (
-								<Grid.Col key={`${index}` + badge.file.url} span={4}>
+							{footer.badge.map(badge => (
+								<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
 									<Box sx={{maxWidth: 120}}>
 										<ImageContainer background='transparent' fluid>
 											<Asset asset={badge} />
@@ -285,6 +285,7 @@ const query = graphql`
 				id
 				title
 				navigationLinks {
+					id
 					title
 					sys {
 						contentType {
