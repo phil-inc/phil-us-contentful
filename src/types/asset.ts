@@ -6,6 +6,7 @@ type File = {
 };
 
 export type TAsset = {
+	id: string;
 	file: File;
 	gatsbyImageData: GatsbyImageProps;
 	publicUrl: string;
