@@ -16,50 +16,6 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 export const Head: React.FC = () => (
 	<>
-		{/* Tracking Pixel */}
-		{isProduction && (
-			<Script>
-				{`
-		(function(options) {
-			var s = document.createElement("script");
-			s.async = true;
-			s.src = "https://metadata-static-files.sfo2.cdn.digitaloceanspaces.com/pixel/lp.js";
-			s.onload = function() {
-				window.Metadata.pixel.init(options);
-			};
-			document.head.appendChild(s);
-		})({
-			primaryKey: "name",
-			onReady: function() {
-				var minutes = 30;
-				var setCookie = function(name, value) {
-					var expires = new Date(Date.now() + minutes * 60 * 1000).toUTCString();
-					document.cookie = name + "=" + encodeURIComponent(value) + "; path=/;
-					domain = phil.us;
-					expires = " + expires;
-				};
-				var cid = new URLSearchParams(window.location.search).get("metadata_cid");
-		
-				if (cid) {
-					setCookie("metadata_cid", cid);
-				}
-			},
-			adjustDataBeforeSend: function(data) {
-				var getCookie = function(name) {
-					var value = "; " + document.cookie;
-					var parts = value.split("; " + name + "=");
-					if (parts.length === 2) return parts.pop().split(";").shift();
-				};
-		
-				return Object.assign(data, {
-					metadata_cid: getCookie("metadata_cid"),
-				});
-			},
-		});
-		`}
-			</Script>
-		)}
-
 		{/* ZoomInfo Pixel */}
 		{isProduction && (
 			<Script>
@@ -125,7 +81,8 @@ export const Head: React.FC = () => (
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
-		width: 1920,
+		width: '100vw',
+		overflow: 'hidden',
 		padding: 0,
 	},
 
@@ -135,7 +92,7 @@ const useStyles = createStyles(theme => ({
 
 		// Dynamic media queries, define breakpoints in theme, use anywhere
 		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			padding: '0 16px',
+			padding: `0 ${theme.spacing.sm}px`,
 		},
 	},
 }));
@@ -165,12 +122,24 @@ export function Layout({children}: LayoutProps) {
 				},
 				h3: {
 					fontSize: 'min(35px, calc(1rem + 0.989vw))',
-					lineHeight: '43px',
+					lineHeight: '1.3',
+				},
+				h4: {
+					fontSize: 'min(30px, calc(1rem + 0.989vw))',
+					lineHeight: '1.3',
 				},
 			},
 			fontFamily: 'Raleway',
 		},
 		fontFamily: 'Lato',
+
+		spacing: {
+			xs: 8,
+			sm: 16,
+			md: 32,
+			lg: 64,
+			xl: 128,
+		},
 
 		components: {
 			Button: {
@@ -213,6 +182,47 @@ export function Layout({children}: LayoutProps) {
 			>
 				<HubspotProvider>
 					<Container fluid className={classes.wrapper}>
+						{/* Tracking Pixel */}
+						{isProduction && (
+							<Script>
+								{`
+		(function (options) {
+			var s = document.createElement("script");
+			s.async = true;
+			s.src = "https://metadata-static-files.sfo2.cdn.digitaloceanspaces.com/pixel/lp.js";
+			s.onload = function () {
+			window.Metadata.pixel.init(options);
+			};
+			document.head.appendChild(s);
+			})({
+			primaryKey: "name",
+			onReady: function () {
+			var minutes = 30;
+			var setCookie = function (name, value) {
+			var expires = new Date(Date.now() + minutes * 60 * 1000).toUTCString();
+			document.cookie = name + "=" + encodeURIComponent(value) + "; path=/; domain=phil.us; expires=" + expires;
+			};
+			var cid = new URLSearchParams(window.location.search).get("metadata_cid");
+			
+			if (cid) {
+			setCookie("metadata_cid", cid);
+			}
+			},
+			adjustDataBeforeSend: function (data) {
+			var getCookie = function (name) {
+			var value = "; " + document.cookie;
+			var parts = value.split("; " + name + "=");
+			if (parts.length === 2) return parts.pop().split(";").shift();
+			};
+			
+			return Object.assign(data, {
+			metadata_cid: getCookie("metadata_cid"),
+			});
+			},
+			});			
+		`}
+							</Script>
+						)}
 						<CHeader />
 						<Box>{children}</Box>
 						<CFooter />

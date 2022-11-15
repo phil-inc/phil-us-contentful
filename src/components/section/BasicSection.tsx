@@ -13,10 +13,10 @@ import {
 	Text,
 	Title,
 } from '@mantine/core';
-import {useMediaQuery} from '@mantine/hooks';
+import {Location} from '@reach/router';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import {Link} from 'gatsby';
+import {Link, Script} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
@@ -27,6 +27,8 @@ import {getLink} from 'utils/getLink';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {isVideoContent} from 'utils/isVideoContent';
 import {parseScript} from 'utils/parseScript';
+import {handleSpacing} from 'utils/handleSpacing';
+import {isProduction} from 'utils/isProduction';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -58,6 +60,7 @@ const useStyles = createStyles(theme => ({
 		fontSize: 18,
 		lineHeight: 27,
 		marginTop: 14,
+		color: theme.colors.primary[0],
 	},
 }));
 
@@ -80,8 +83,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const HEADING_SECOND = 2;
 
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
-	const {classes} = useStyles();
-	const isMobile = useMediaQuery('(max-width: 576px)');
+	const {classes, theme} = useStyles();
 	const {link, isExternal} = getLink(section);
 
 	const richTextImages = {};
@@ -98,7 +100,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				const imageData = richTextImages[node.data.target.sys.id];
 				const image = getImage(imageData.image);
-				return <GatsbyImage style={{marginBottom: '32px'}} image={image} alt={''} />;
+				return (
+					<GatsbyImage
+						style={{marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`}}
+						image={image}
+						alt={''}
+					/>
+				);
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return <Text>{children}</Text>;
@@ -145,66 +153,101 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	}
 
 	return (
-		// TODO: play around with padding for contact page style
-		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container} mb={160}>
-			<Grid
-				gutter={50}
-				align={section.isHubspotEmbed ? 'flex-start' : 'center'}
-			>
-				<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
-					{section.isHubspotEmbed ? (
-						<>
-							<Title order={titleOrdering}>{section.header}</Title>
-							{Boolean(section.subHeader?.subHeader.length) && (
-								<Title order={3} mt={40}>
-									{section.subHeader.subHeader}
-								</Title>
-							)}
-							<Divider size={3} variant='dashed' my={20} />
-							{hasRendered ? (
-								<div id='hubspotContactForm'></div>
-							) : (
-								<Center>
-									<Loader mt={120} size='lg' />
-								</Center>
-							)}
-						</>
-					) : (
-						<>
-							<Title order={titleOrdering}>{section.header}</Title>
-							{Boolean(section.subHeader?.subHeader.length) && (
-								<Text size={18} weight='bold' mt={20}>
-									{section.subHeader.subHeader}
-								</Text>
-							)}
-							{Boolean(section.body) && (
-								<Text size={18} className={classes.body} mt={16}>
-									{renderRichText(section.body, options)}
-								</Text>
-							)}
-							{Boolean(section.buttonText?.length) && (
-								<Group mt={48}>
-									{isExternal ? (
-										<Anchor href={link} target='_blank'>
-											<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>{section.buttonText}</Button>
-										</Anchor>
-									) : (
-										<Link to={link}>
-											<Button>{section.buttonText}</Button>
-										</Link>
-									)}
-								</Group>
-							)}
-						</>
-					)}
-				</Grid.Col>
-				<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
-					<ImageContainer fluid background={isVideoContent(section.asset.file.contentType) ? 'white' : null}>
-						<Asset asset={section.asset} />
-					</ImageContainer>
-				</Grid.Col>
-			</Grid>
-		</Container>
+		<Location>
+			{({location}) => (
+				<Container
+					id={slugify(section.header, {lower: true, strict: true})}
+					fluid
+					className={classes.container}
+					my={92}
+				>
+					<>
+						<Grid
+							gutter={handleSpacing(theme, theme.spacing.lg)}
+							align={section.isHubspotEmbed ? 'flex-start' : 'center'}
+						>
+							<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
+								{section.isHubspotEmbed ? (
+									<>
+										<Title order={titleOrdering}>{section.header}</Title>
+										{Boolean(section.subHeader?.subHeader.length) && (
+											<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+												{section.subHeader.subHeader}
+											</Title>
+										)}
+										{location.pathname === '/contact' && (
+											<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+												Start a conversation
+											</Title>
+										)}
+										<Divider
+											size={1}
+											variant='dashed'
+											mt={handleSpacing(theme, theme.spacing.sm)}
+											mb={handleSpacing(theme, theme.spacing.md)}
+										/>
+										{hasRendered ? (
+											<div id='hubspotContactForm'></div>
+										) : (
+											<Center>
+												<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
+											</Center>
+										)}
+									</>
+								) : (
+									<>
+										<Title order={titleOrdering}>{section.header}</Title>
+										{Boolean(section.subHeader?.subHeader.length) && (
+											<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
+												{section.subHeader.subHeader}
+											</Text>
+										)}
+										{Boolean(section.body) && (
+											<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
+												{renderRichText(section.body, options)}
+											</Text>
+										)}
+										{Boolean(section.buttonText?.length) && (
+											<Group mt={handleSpacing(theme, theme.spacing.md)}>
+												{isExternal ? (
+													<Anchor href={link} target='_blank'>
+														<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>
+															{section.buttonText}
+														</Button>
+													</Anchor>
+												) : (
+													<Link to={link}>
+														<Button>{section.buttonText}</Button>
+													</Link>
+												)}
+											</Group>
+										)}
+									</>
+								)}
+							</Grid.Col>
+							<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
+								<ImageContainer
+									fluid
+									background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
+									expanded={location.pathname === '/contact'}
+								>
+									<Asset asset={section.asset} />
+								</ImageContainer>
+							</Grid.Col>
+						</Grid>
+						{section.isHubspotEmbed
+						&& section.isInsertSnippet
+						&& section.codeSnippet
+						&& Boolean(section.codeSnippet.codeSnippet.length)
+						&& isProduction ? (
+								<Script>
+									{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+								</Script>
+							) : null}
+					</>
+				</Container>
+			)}
+		</Location>
 	);
 };
 

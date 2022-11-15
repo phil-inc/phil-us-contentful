@@ -30,6 +30,8 @@ import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
 import type {TAsset} from 'types/asset';
 import {IconChevronDown} from '@tabler/icons';
+import ImageContainer from 'components/common/Container/ImageContainer';
+import Asset from 'components/common/Asset/Asset';
 
 const HEADER_HEIGHT = 90;
 
@@ -42,10 +44,16 @@ type CHeaderProps = {
 const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource, sitePage}) => {
 	const useStyles = createStyles((theme, _params, getRef) => ({
 		inner: {
-			padding: '0 116px',
+			padding: '0 100px',
 			height: HEADER_HEIGHT,
 			display: 'flex',
 			alignItems: 'center',
+
+			'&::after': {
+				content: '""',
+				clear: 'both',
+				display: 'table',
+			},
 
 			[theme.fn.smallerThan('sm')]: {
 				padding: '0 16px',
@@ -62,14 +70,15 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			position: 'absolute',
 			top: 90,
 			left: 0,
-			zIndex: 300,
+			zIndex: 2,
 			opacity: 1,
+			width: '100%',
 		},
 
 		container: {
 			width: '100vw',
+			overflow: 'hidden',
 			background: '#00827E',
-			marginTop: 8,
 		},
 
 		navbar: {
@@ -147,6 +156,20 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			fontWeight: 400,
 		},
 
+		drawerWrapper: {
+			padding: `${theme.spacing.sm + 10}px 100px  !important`,
+
+			[theme.fn.smallerThan('md')]: {
+				padding: `${theme.spacing.sm + 10}px 100px  !important`,
+				paddingTop: '0px !important',
+			},
+
+			[theme.fn.smallerThan('sm')]: {
+				padding: `${theme.spacing.sm + 10}px 16px  !important`,
+				paddingTop: '0px !important',
+			},
+		},
+
 		drawer: {
 			[theme.fn.largerThan('md')]: {
 				display: 'none',
@@ -196,7 +219,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	const [header] = allContentfulHeader.nodes;
 	const pages = header.navigationLinks;
-	const pathToImage = getImage(header.logo);
 
 	const {classes} = useStyles();
 
@@ -217,6 +239,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	const [collapseRef, setCollapseRef] = useState<HTMLElement>();
 	const [listRef, setListRef] = useState<HTMLElement>();
 	const [activePageLI, setActivePageLI] = useState<HTMLLIElement | undefined>();
+
 	useClickOutside(
 		() => {
 			close();
@@ -317,14 +340,16 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	}, [width]);
 
 	return (
-		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={70}>
+		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={62}>
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
-					<Link to='/'>
-						<Container m={0} p={0} size={125} style={{minWidth: 125}}>
-							<GatsbyImage image={pathToImage} alt='logo' />
-						</Container>
-					</Link>
+					<Box sx={{height: 90, width: 125}}>
+						<Link to='/'>
+							<ImageContainer contain fluid background='transparent'>
+								<Asset asset={header.logo} />
+							</ImageContainer>
+						</Link>
+					</Box>
 					<Burger
 						opened={isDrawer}
 						onClick={() => {
@@ -338,7 +363,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 							.filter(page => page.title !== 'Home')
 							.map(page => (
 								<List.Item
-									key={page.id + page.title}
+									key={page.id + 'mapHeaderPages'}
 									className={classNames(classes.navLink)}
 									onClick={onNavLinkClick}
 								>
@@ -350,7 +375,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 				{isBreak ? (
 					<Drawer
 						className={classes.drawer}
-						classNames={{title: classes.drawerTitle}}
+						classNames={{title: classes.drawerTitle, drawer: classes.drawerWrapper}}
 						opened={isDrawer}
 						onClose={() => {
 							toggleDrawer(false);
@@ -358,11 +383,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						withCloseButton={false}
 						title={
 							<Group position='apart' noWrap align='center'>
-								<Box>
+								<Box sx={{height: 90, width: 125}}>
 									<Link to='/'>
-										<Container m={0} p={0} size={125}>
-											<GatsbyImage image={pathToImage} alt='logo' />
-										</Container>
+										<ImageContainer contain fluid background='transparent'>
+											<Asset asset={header.logo} />
+										</ImageContainer>
 									</Link>
 								</Box>
 								<Burger
@@ -374,7 +399,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								/>
 							</Group>
 						}
-						padding='xl'
 						size='full'
 						transition='fade'
 					>
@@ -386,7 +410,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								{pages
 									.filter(page => page.title !== 'Home')
 									.map(page => (
-										<Accordion.Item key={page.id + page.title} value={page.title}>
+										<Accordion.Item key={page.id + 'mapHeaderPagesDrawer'} value={page.title}>
 											<Accordion.Control>
 												<Text weight='bold' size={18}>
 													{page.title}
@@ -396,8 +420,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 												{page.sections
 													.filter(section => Boolean(section.header?.length && !section.isHidden))
 													.map((section, index, array) => (
-														<>
-															<Table key={section.id} mb={16}>
+														<React.Fragment key={section.id + 'mapHeaderPageSectionsDrawer'}>
+															<Table mb={16}>
 																<thead>
 																	<tr>
 																		{index > 0 ? (
@@ -448,6 +472,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																			({id, heading, relatesTo}) =>
 																				section.id === relatesTo.id && (
 																					<Link
+																						key={id + 'mapResourceDrawer'}
 																						to={navigateToPage(
 																							`${slugify(page.title, {lower: true})}/${slugify(
 																								relatesTo.header,
@@ -472,7 +497,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																</tbody>
 															</Table>
 															{page.title === 'Patients' && index === array.length - 1 && (
-																<Table key={section.id} mb={16}>
+																<Table mb={16}>
 																	<thead>
 																		<tr>
 																			<th style={{paddingLeft: 0, paddingRight: 0}}>
@@ -494,7 +519,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																	</thead>
 																</Table>
 															)}
-														</>
+														</React.Fragment>
 													))}
 											</Accordion.Panel>
 										</Accordion.Item>
@@ -520,7 +545,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 											page.sections
 												.filter(section => Boolean(section.header?.length && !section.isHidden))
 												.map((section, index, array) => (
-													<>
+													<React.Fragment key={section.id + 'mapCollapsePages'}>
 														<Grid.Col
 															span={
 																page.title === 'Patients'
@@ -528,7 +553,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																	: Math.floor(100 / array.length)
 															}
 														>
-															<List.Item key={index} onClick={close}>
+															<List.Item onClick={close}>
 																{index > 0 ? (
 																	<Text className={classes.listHeading}>
 																		<Link
@@ -563,7 +588,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																		.map(
 																			({id, heading, relatesTo}) =>
 																				section.id === relatesTo.id && (
-																					<List.Item key={id}>
+																					<List.Item key={id + 'mapCollapseResources'}>
 																						<Text className={classes.listItems}>
 																							<Link
 																								to={navigateToPage(
@@ -592,7 +617,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 														{page.title === 'Patients' && index === array.length - 1 && (
 															<Grid.Col span={Math.floor(100 / 4)}>
-																<List.Item key={index + 1} onClick={close}>
+																<List.Item onClick={close}>
 																	<Text className={classes.listHeading}>
 																		<Anchor
 																			href='https://my.phil.us/'
@@ -607,7 +632,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																</List.Item>
 															</Grid.Col>
 														)}
-													</>
+													</React.Fragment>
 												)),
 										)}
 								</Grid>
@@ -621,12 +646,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 };
 
 const query = graphql`
-	query MyQuery {
+	query {
 		allContentfulHeader(filter: {node_locale: {eq: "en-US"}}) {
 			nodes {
 				id
 				title
 				navigationLinks {
+					id
 					title
 					sys {
 						contentType {
@@ -651,6 +677,14 @@ const query = graphql`
 				}
 				logo {
 					gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+					title
+					file {
+						contentType
+						details {
+							size
+						}
+						url
+					}
 				}
 			}
 		}

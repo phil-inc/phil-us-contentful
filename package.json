@@ -9,8 +9,8 @@
 	"scripts": {
 		"build": "gatsby build",
 		"clean": "gatsby clean",
-		"start": "gatsby develop -H 0.0.0.0 -p 3000",
-		"serve": "gatsby serve -H 0.0.0.0 -p 5002",
+		"start": "gatsby develop -p 3000",
+		"serve": "gatsby serve -p 9292",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier . --write",
@@ -68,6 +68,7 @@
 		"gatsby-plugin-root-import": "^2.0.8",
 		"husky": "^8.0.0",
 		"prettier": "^2.7.1",
+		"ts-node": "^10.9.1",
 		"typescript": ">=4.4"
 	}
 }

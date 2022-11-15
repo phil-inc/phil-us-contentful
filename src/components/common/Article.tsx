@@ -96,7 +96,8 @@ export const Article: FC<ArticleProps> = ({color, resource}) => {
 			[BLOCKS.PARAGRAPH](node, children) {
 				return <>{children}</>;
 			},
-		}};
+		},
+	};
 
 	const getColorStyle = () => {
 		if (color === 'blue') {

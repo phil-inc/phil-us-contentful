@@ -51,35 +51,21 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		fetchCareers();
-	}, []);
+		(async () => {
+			try {
+				const rawResponse = await fetch('https://capi.phil.us/api/web/v1/careers');
+				if (rawResponse.status === 200) {
+					const content: unknown = await rawResponse.json();
+					const sortedJobs = groupBy(content.data.jobs, 'department');
 
-	const fetchCareers = () => {
-		fetch('https://capi.phil.us/api/web/v1/careers')
-			.then(async response => response.json())
-			.then(data => {
-				formatCareerData(data);
-			})
-			.catch(error => {
+					setIsLoading(false);
+					setCareers(sortedJobs);
+				}
+			} catch (error: unknown) {
 				console.log(error);
-			});
-	};
-
-	const formatCareerData = jobListings => {
-		const deptWiseJobs = {};
-		jobListings.data.jobs.forEach((e, i) => {
-			const key = e.department != '' ? e.department : 'Others';
-			if (!(key in deptWiseJobs)) {
-				deptWiseJobs[key] = [];
 			}
-
-			deptWiseJobs[key].push(e);
-		});
-
-		const sortedJobs = Object.fromEntries(Object.entries(deptWiseJobs).sort());
-		setIsLoading(false);
-		setCareers(sortedJobs);
-	};
+		})();
+	}, []);
 
 	return (
 		<Layout>

@@ -53,13 +53,13 @@ export const FAQ: FC<FAQProps> = ({resource}) => {
 				<Group>
 					{isExternal ? (
 						<Anchor href={link} target='_blank' className={classes.title} underline={false}>
-							<Title order={4} size={30} className={classes.title}>
+							<Title order={4} className={classes.title}>
 								{resource.heading}
 							</Title>
 						</Anchor>
 					) : (
 						<Link to={link} className={classes.title}>
-							<Title order={4} size={30} className={classes.title}>
+							<Title order={4} className={classes.title}>
 								{resource.heading}
 							</Title>
 						</Link>

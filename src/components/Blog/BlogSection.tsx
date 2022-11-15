@@ -12,7 +12,7 @@ const RenderAllBlogs: React.FC<RenderAllBlogsProps> = ({allContentfulResource}) 
 	<>
 		<Grid>
 			{allContentfulResource.nodes.map(resource => (
-				<Grid.Col py={30} key={resource.id} lg={6} md={12} sm={12}>
+				<Grid.Col key={resource.id + 'RenderAllBlogs'} py={30} lg={6} md={12} sm={12}>
 					<ResourceCard sectionHeader={'Phil Blog'} resource={resource} />
 				</Grid.Col>
 			))}
@@ -20,8 +20,8 @@ const RenderAllBlogs: React.FC<RenderAllBlogsProps> = ({allContentfulResource}) 
 	</>
 );
 
-export const query = graphql`
-	query allBlogPages {
+const query = graphql`
+	query {
 		allContentfulResource(
 			filter: {
 				node_locale: {eq: "en-US"}
