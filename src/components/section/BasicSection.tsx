@@ -1,6 +1,7 @@
 import {BLOCKS} from '@contentful/rich-text-types';
 import {
 	Anchor,
+	Box,
 	Button,
 	Center,
 	Container,
@@ -186,13 +187,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 											mt={handleSpacing(theme, theme.spacing.sm)}
 											mb={handleSpacing(theme, theme.spacing.md)}
 										/>
-										{hasRendered ? (
-											<div id='hubspotContactForm'></div>
-										) : (
-											<Center>
-												<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
-											</Center>
-										)}
+										<Box sx={{minHeight: 790, height: '100%', transition: 'all 0.5 ease'}}>
+											{hasRendered ? (
+												<div id='hubspotContactForm'></div>
+											) : (
+												<Center>
+													<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
+												</Center>
+											)}
+										</Box>
 									</>
 								) : (
 									<>

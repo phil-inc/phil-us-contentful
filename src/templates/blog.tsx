@@ -100,9 +100,13 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 			},
 
 			[INLINES.HYPERLINK](node, children) {
-				return <Anchor className={classes.anchor}>{children}</Anchor>;
+				const {uri} = node.data as {uri: string};
+				return (
+					<Anchor href={uri} target='_blank' className={classes.anchor}>
+						{children}
+					</Anchor>
+				);
 			},
-
 			[BLOCKS.HEADING_1](node, children) {
 				return (
 					<Title order={1} mt={40} mb={4}>
