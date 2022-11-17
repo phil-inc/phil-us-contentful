@@ -52,6 +52,32 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 		anchor: {
 			color: '#00827E',
 		},
+
+		inner: {
+			padding: '0 100px',
+			display: 'flex',
+			alignItems: 'center',
+
+			'&::after': {
+				content: '""',
+				clear: 'both',
+				display: 'table',
+			},
+
+			[theme.fn.smallerThan('sm')]: {
+				padding: '0 16px',
+			},
+		},
+
+		listItem: {
+			overflow: 'hidden',
+			fontSize: 24,
+
+			'::marker': {
+				fontSize: 16,
+				fontWeight: 700,
+			},
+		},
 	}));
 
 	const {classes} = useStyles();
@@ -76,7 +102,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 				);
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text mb={40}>{children}</Text>;
+				return <Text size={18}>{children}</Text>;
 			},
 
 			[BLOCKS.OL_LIST](node, children) {
@@ -89,14 +115,18 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type='unordered' mt={16} mb={44}>
+					<List type='unordered' listStyleType='disc' pl={32} mt={16} mb={44}>
 						{children}
 					</List>
 				);
 			},
 
 			[BLOCKS.LIST_ITEM](node, children) {
-				return <List.Item my={8}>{children}</List.Item>;
+				return (
+					<List.Item mt={8} mb={0} pr={20} className={classes.listItem}>
+						{children}
+					</List.Item>
+				);
 			},
 
 			[INLINES.HYPERLINK](node, children) {
@@ -117,7 +147,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 			[BLOCKS.HEADING_2](node, children) {
 				return (
-					<Title order={2} mt={40} mb={4}>
+					<Title order={2} size={24} mt={40} mb={4}>
 						{children}
 					</Title>
 				);
@@ -125,7 +155,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 			[BLOCKS.HEADING_3](node, children) {
 				return (
-					<Title order={3} mt={40} mb={4}>
+					<Title order={3} size={18} mt={40} mb={4}>
 						{children}
 					</Title>
 				);
@@ -133,7 +163,23 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 			[BLOCKS.HEADING_4](node, children) {
 				return (
-					<Title order={4} mt={40} mb={4}>
+					<Title order={4} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_5](node, children) {
+				return (
+					<Title order={5} size={18} style={{fontWeight: 400, fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_6](node, children) {
+				return (
+					<Title order={6} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
 						{children}
 					</Title>
 				);
@@ -143,7 +189,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 	return (
 		<Layout>
-			<Container size='xl'>
+			<Container size='xl' className={classes.inner}>
 				<Grid gutter='xl' align='center' pb={130} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
 						<Title order={2} mb={36}>
@@ -154,9 +200,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 								<Asset asset={asset} />
 							</Container>
 						)}
-						<Text size={18} className={classes.body}>
-							{body && renderRichText(body, options)}
-						</Text>
+						<Text>{body && renderRichText(body, options)}</Text>
 					</Grid.Col>
 				</Grid>
 			</Container>
