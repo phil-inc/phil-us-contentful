@@ -128,6 +128,14 @@ export function Layout({children}: LayoutProps) {
 					fontSize: 'min(30px, calc(1rem + 0.989vw))',
 					lineHeight: '1.3',
 				},
+				h5: {
+					fontSize: 'min(24px, calc(1rem + 0.989vw))',
+					lineHeight: '1.3',
+				},
+				h6: {
+					fontSize: 'min(18px, calc(1rem + 0.989vw))',
+					lineHeight: '1.3',
+				},
 			},
 			fontFamily: 'Raleway',
 		},
