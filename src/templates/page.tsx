@@ -35,6 +35,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext}) => {
 				content={`https://phil.us${pageContext.title === 'Home' ? '/' : `/${pageContext.title}`}`}
 			/>
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			{/* FormComplete Snippet */}
 			{isProduction && pageContext.title === 'Contact' ? (
 				<Script>
 					{`(function() {
