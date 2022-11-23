@@ -18,6 +18,7 @@ import {
 	ScrollArea,
 	Anchor,
 } from '@mantine/core';
+import {Link as ScrollToElement} from 'react-scroll';
 import {useClickOutside, useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
 import {graphql, Link, Script} from 'gatsby';
@@ -426,24 +427,50 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																	<tr>
 																		{index > 0 ? (
 																			<th style={{paddingLeft: 0, paddingRight: 0}}>
-																				<Link
-																					to={`/${slugify(page.title, {
-																						lower: true,
-																						strict: true,
-																					})}/#${slugify(section.header, {
-																						lower: true,
-																						strict: true,
-																					})}`}
-																					style={{textDecoration: 'none'}}
-																				>
-																					<Text
-																						size={16}
-																						weight={400}
-																						color={theme.colors.primary[0]}
+																				{page.title === document.title ? (
+																					<ScrollToElement
+																						to={`${slugify(section.header, {
+																							lower: true,
+																							strict: true,
+																						})}`}
+																						spy={true}
+																						smooth={true}
+																						style={{textDecoration: 'none', cursor: 'pointer'}}
 																					>
-																						{section.header}
-																					</Text>
-																				</Link>
+																						<Text
+																							size={16}
+																							weight={400}
+																							color={theme.colors.primary[0]}
+																							onClick={() => {
+																								toggleDrawer(false);
+																							}}
+																						>
+																							{section.header}
+																						</Text>
+																					</ScrollToElement>
+																				) : (
+																					<Link
+																						to={`/${slugify(page.title, {
+																							lower: true,
+																							strict: true,
+																						})}#${slugify(section.header, {
+																							lower: true,
+																							strict: true,
+																						})}`}
+																						style={{textDecoration: 'none'}}
+																					>
+																						<Text
+																							size={16}
+																							weight={400}
+																							color={theme.colors.primary[0]}
+																							onClick={() => {
+																								toggleDrawer(false);
+																							}}
+																						>
+																							{section.header}
+																						</Text>
+																					</Link>
+																				)}
 																			</th>
 																		) : (
 																			<th style={{paddingLeft: 0, paddingRight: 0}}>
@@ -457,6 +484,9 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																						size={16}
 																						weight={400}
 																						color={theme.colors.primary[0]}
+																						onClick={() => {
+																							toggleDrawer(false);
+																						}}
 																					>
 																						{section.header}
 																					</Text>
