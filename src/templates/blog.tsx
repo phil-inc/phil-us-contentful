@@ -102,7 +102,11 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 				);
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text size={18}>{children}</Text>;
+				return (
+					<Text component='p' mt={0} size={18}>
+						{children}
+					</Text>
+				);
 			},
 
 			[BLOCKS.OL_LIST](node, children) {
