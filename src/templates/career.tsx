@@ -74,4 +74,4 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 	);
 };
 
-export default CareerTemplate;
+export default React.memo(CareerTemplate);

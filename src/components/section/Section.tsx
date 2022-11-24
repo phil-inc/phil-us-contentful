@@ -24,4 +24,4 @@ const Section: React.FC<SectionProps> = ({section, index}) => {
 	}
 };
 
-export default Section;
+export default React.memo(Section);
