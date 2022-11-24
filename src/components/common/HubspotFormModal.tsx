@@ -53,4 +53,4 @@ const HubspotFormModal = ({hubspotEmbed}) => {
 	);
 };
 
-export default HubspotFormModal;
+export default React.memo(HubspotFormModal);

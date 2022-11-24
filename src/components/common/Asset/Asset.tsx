@@ -2,7 +2,7 @@ import {AspectRatio, Box, Center, createStyles} from '@mantine/core';
 import classNames from 'classnames';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import React from 'react';
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player/youtube';
 import type {TAsset} from 'types/asset';
 import {isVideoContent} from 'utils/isVideoContent';
 
@@ -48,4 +48,4 @@ const Asset: React.FC<AssetProps> = ({asset}) => {
 	return <GatsbyImage image={pathToImage} alt={altText} />;
 };
 
-export default Asset;
+export default React.memo(Asset);

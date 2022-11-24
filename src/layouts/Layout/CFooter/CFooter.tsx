@@ -1,3 +1,4 @@
+import React from 'react';
 import {createStyles, Anchor, Group, Grid, Text, Divider, List, Container, Box, Accordion, Center} from '@mantine/core';
 import {IconChevronDown} from '@tabler/icons';
 import {footerBackground} from 'assets/images';
@@ -5,7 +6,7 @@ import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import HubSpotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import {graphql, Link, StaticQuery} from 'gatsby';
-import React from 'react';
+import {StaticImage} from 'gatsby-plugin-image';
 import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
@@ -150,7 +151,10 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 												<Group mt={18}>
 													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
 														<div>
-															<img src='../images/linkedin.svg' />
+															<StaticImage
+																src='../../../assets/images/linkedin.svg'
+																alt='LinkedIn Icon'
+															/>
 														</div>
 													</Anchor>
 												</Group>
@@ -239,7 +243,10 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 																	target='_blank'
 																>
 																	<div>
-																		<img src='../images/linkedin.svg' />
+																		<StaticImage
+																			src='../../../assets/images/linkedin.svg'
+																			alt='LinkedIn Icon'
+																		/>
 																	</div>
 																</Anchor>
 															</Group>
@@ -359,4 +366,6 @@ const query = graphql`
 	}
 `;
 
-export const CFooter: React.FC = () => <StaticQuery query={query} render={Footer} />;
+const CFooter: React.FC = () => <StaticQuery query={query} render={Footer} />;
+
+export default React.memo(CFooter);

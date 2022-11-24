@@ -81,4 +81,4 @@ const Error = () => {
 	);
 };
 
-export default Error;
+export default React.memo(Error);

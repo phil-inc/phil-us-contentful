@@ -257,4 +257,4 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	);
 };
 
-export default ReferencedSection;
+export default React.memo(ReferencedSection);

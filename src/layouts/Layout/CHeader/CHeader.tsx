@@ -352,6 +352,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						</Link>
 					</Box>
 					<Burger
+						name='BurgerButton'
 						opened={isDrawer}
 						onClick={() => {
 							toggleDrawer();
@@ -745,4 +746,6 @@ const query = graphql`
 	}
 `;
 
-export const CHeader: React.FC = () => <StaticQuery query={query} render={Navbar} />;
+const CHeader: React.FC = () => <StaticQuery query={query} render={Navbar} />;
+
+export default React.memo(CHeader);
