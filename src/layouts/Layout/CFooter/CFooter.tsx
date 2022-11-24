@@ -216,6 +216,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 															</Text>
 														</Link>
 													</List.Item>
+
+													{/* Patient login on accordian on patients page */}
 													{page.title === 'Patients' && index === page.sections.length - 1 && (
 														<List.Item>
 															<Anchor
@@ -225,6 +227,22 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 															>
 																<Text className={classes.footerLink}>Patient Log In</Text>
 															</Anchor>
+														</List.Item>
+													)}
+
+													{/* Socials on contact accordian on mobile */}
+													{page.title === 'Contact' && index === page.sections.length - 1 && (
+														<List.Item>
+															<Group>
+																<Anchor
+																	href='https://www.linkedin.com/company/phil-inc-'
+																	target='_blank'
+																>
+																	<div>
+																		<img src='../images/linkedin.svg' />
+																	</div>
+																</Anchor>
+															</Group>
 														</List.Item>
 													)}
 												</React.Fragment>
