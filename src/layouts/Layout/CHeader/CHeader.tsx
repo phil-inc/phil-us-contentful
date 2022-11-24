@@ -425,6 +425,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 															<Table mb={16}>
 																<thead>
 																	<tr>
+																		{/* All sections except for the first */}
 																		{index > 0 ? (
 																			<th style={{paddingLeft: 0, paddingRight: 0}}>
 																				{page.title === document.title ? (
@@ -473,6 +474,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																				)}
 																			</th>
 																		) : (
+																			// First section of the page
 																			<th style={{paddingLeft: 0, paddingRight: 0}}>
 																				<Link
 																					to={navigateToPage(
@@ -495,6 +497,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																		)}
 																	</tr>
 																</thead>
+
+																{/* Blog pages attached to a section */}
 																<tbody>
 																	{allContentfulResource.nodes
 																		.filter(resource => resource.relatesTo)
