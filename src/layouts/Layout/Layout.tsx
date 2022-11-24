@@ -3,10 +3,10 @@ import type {ButtonStylesParams, MantineTheme, MantineThemeOverride} from '@mant
 import {Box} from '@mantine/core';
 import {createStyles} from '@mantine/core';
 import {MantineProvider, Container} from '@mantine/core';
-import {CHeader} from './CHeader/CHeader';
+import CHeader from './CHeader/CHeader';
 import {isIndex} from 'hooks/isIndex';
 import {HubspotProvider} from '@aaronhayes/react-use-hubspot-form';
-import {CFooter} from './CFooter/CFooter';
+import CFooter from './CFooter/CFooter';
 
 // Import css overrides here
 import 'assets/css/index.css';

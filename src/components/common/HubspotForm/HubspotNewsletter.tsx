@@ -14,4 +14,4 @@ const HubSpotNewsletter = () => {
 	return <div id={uuid}></div>;
 };
 
-export default HubSpotNewsletter;
+export default React.memo(HubSpotNewsletter);

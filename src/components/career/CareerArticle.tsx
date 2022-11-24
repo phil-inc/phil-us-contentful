@@ -27,4 +27,4 @@ const CareerArticle = ({title, url, location}: CareerArticleProps) => (
 	</Grid>
 );
 
-export default CareerArticle;
+export default React.memo(CareerArticle);

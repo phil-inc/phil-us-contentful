@@ -89,4 +89,4 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	);
 };
 
-export default PageTemplate;
+export default React.memo(PageTemplate);
