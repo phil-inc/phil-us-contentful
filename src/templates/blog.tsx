@@ -8,6 +8,9 @@ import Asset from 'components/common/Asset/Asset';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
 import {getLink} from 'utils/getLink';
+import {graphql} from 'gatsby';
+import {Banner} from 'components/common/Banner/Banner';
+import Expanded from 'components/common/Expanded/Expanded';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -35,10 +38,11 @@ export const Head: React.FC<HelmetProps> = ({pageContext}) => {
 
 type PageTemplateProps = {
 	pageContext: TResource;
+	data: any;
 };
 
-const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
-	const {heading, body, asset} = pageContext;
+const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
+	const {heading, body, asset, banners} = pageContext;
 	const useStyles = createStyles(theme => ({
 		body: {
 			p: {
@@ -51,8 +55,6 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 		inner: {
 			padding: '0 100px',
-			display: 'flex',
-			alignItems: 'center',
 
 			'&::after': {
 				content: '""',
@@ -187,6 +189,9 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 		},
 	};
 
+	const defaultBanners = data.allContentfulResource.nodes as TResource[];
+	const hasBanners = Boolean(banners);
+
 	return (
 		<Layout>
 			<Container size='xl' className={classes.inner}>
@@ -204,8 +209,48 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 					</Grid.Col>
 				</Grid>
 			</Container>
+
+			{/* Bottom Banners */}
+			{hasBanners
+				? banners.map(resource => (
+					<Expanded id={resource.id} fullWidth background='#F4F4F4' py={108}>
+						<Banner key={resource.id} resource={resource} />
+					</Expanded>
+				  ))
+				: defaultBanners.map(r =>
+					r.banners.map(resource => (
+						<Expanded id={resource.id} fullWidth background='#F4F4F4' py={108}>
+							<Banner key={resource.id} resource={resource} />
+						</Expanded>
+					)),
+				  )}
 		</Layout>
 	);
 };
+
+// Query Dummy Resource to get default banner
+export const query = graphql`
+	query dummyResource {
+		allContentfulResource(filter: {node_locale: {eq: "en-US"}, heading: {eq: "Dummy Resource"}}) {
+			nodes {
+				id
+				heading
+				banners {
+					id
+					body {
+						raw
+					}
+					buttonText
+					hubspotEmbed {
+						raw
+					}
+					isHubspotEmbed
+					externalLink
+					heading
+				}
+			}
+		}
+	}
+`;
 
 export default React.memo(BlogTemplate);

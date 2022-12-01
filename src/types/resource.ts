@@ -40,6 +40,7 @@ export type TResource = {
 	codeSnippet?: {codeSnippet: string};
 	generateStaticPage: boolean;
 	isFaq: boolean;
+	banners?: TResource[];
 };
 
 export type TParsedString = {

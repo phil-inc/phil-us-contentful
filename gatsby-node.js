@@ -318,6 +318,19 @@ const generateStaticPages = async ({actions, graphql}) => {
 		  filter: {node_locale: {eq: "en-US"}, heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}, generateStaticPage: {eq: true}}
 		) {
 		  nodes {
+			banners {
+			  id
+			  body {
+				raw
+			  }
+			  buttonText
+			  hubspotEmbed {
+				raw
+			  }
+			  isHubspotEmbed
+			  externalLink
+			  heading
+			}
 			slug
 			isFaq
 			author
@@ -331,31 +344,35 @@ const generateStaticPages = async ({actions, graphql}) => {
 			  subHeading
 			}
 			asset {
-				gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-				title
-				file {
-					contentType
-					details {
-						size
-					}
-					url
+			  gatsbyImageData(
+				resizingBehavior: SCALE
+				placeholder: BLURRED
+				layout: CONSTRAINED
+			  )
+			  title
+			  file {
+				contentType
+				details {
+				  size
 				}
+				url
+			  }
 			}
 			body {
 			  raw
 			  references {
-						  contentful_id
-						  __typename
-						  description
-						  gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-							file {
-									contentType
-									details {
-										size
-									}
-									url
-								}
-					  }
+				contentful_id
+				__typename
+				description
+				gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+				file {
+				  contentType
+				  details {
+					size
+				  }
+				  url
+				}
+			  }
 			}
 			sys {
 			  contentType {
@@ -386,7 +403,7 @@ const generateStaticPages = async ({actions, graphql}) => {
 			}
 		  }
 		}
-	  }
+	  }	  
 `);
 
 	data.allContentfulResource.nodes
