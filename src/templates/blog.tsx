@@ -1,17 +1,13 @@
 import React from 'react';
-import {Grid, Title, Button, Text, createStyles, Container, Image, Box, Anchor, List} from '@mantine/core';
+import {Grid, Title, Text, createStyles, Container, Box, Anchor, List} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
-import {graphql} from 'gatsby';
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {TResource} from 'types/resource';
 import {SEO} from 'layouts/SEO/SEO';
-import ImageContainer from 'components/common/Container/ImageContainer';
 import Asset from 'components/common/Asset/Asset';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
 import {getLink} from 'utils/getLink';
-import type {ISection} from 'types/section';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -212,4 +208,4 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	);
 };
 
-export default BlogTemplate;
+export default React.memo(BlogTemplate);

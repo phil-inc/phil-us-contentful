@@ -97,4 +97,4 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 	);
 };
 
-export default CareerSection;
+export default React.memo(CareerSection);

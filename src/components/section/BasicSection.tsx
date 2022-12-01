@@ -254,4 +254,4 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	);
 };
 
-export default BasicSection;
+export default React.memo(BasicSection);

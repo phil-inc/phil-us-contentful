@@ -66,4 +66,4 @@ const Profile: React.FC<ProfileProps> = ({resource}) => {
 	);
 };
 
-export default Profile;
+export default React.memo(Profile);
