@@ -192,6 +192,12 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const defaultBanners = data.allContentfulResource.nodes as TResource[];
 	const hasBanners = Boolean(banners);
 
+	const bannerFactory = (resource: TResource) => (
+		<Expanded id={resource.id} fullWidth background='#F4F4F4' py={108}>
+			<Banner key={resource.id} resource={resource} />
+		</Expanded>
+	);
+
 	return (
 		<Layout>
 			<Container size='xl' className={classes.inner}>
@@ -211,19 +217,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 			</Container>
 
 			{/* Bottom Banners */}
-			{hasBanners
-				? banners.map(resource => (
-					<Expanded id={resource.id} fullWidth background='#F4F4F4' py={108}>
-						<Banner key={resource.id} resource={resource} />
-					</Expanded>
-				  ))
-				: defaultBanners.map(r =>
-					r.banners.map(resource => (
-						<Expanded id={resource.id} fullWidth background='#F4F4F4' py={108}>
-							<Banner key={resource.id} resource={resource} />
-						</Expanded>
-					)),
-				  )}
+			{hasBanners ? banners.map(bannerFactory) : defaultBanners.map(r => r.banners.map(bannerFactory))}
 		</Layout>
 	);
 };
