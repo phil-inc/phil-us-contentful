@@ -27,7 +27,7 @@
 		"@mantine/carousel": "^5.4.1",
 		"@mantine/core": "^5.4.0",
 		"@mantine/form": "^5.4.1",
-		"@mantine/hooks": "5.4.0",
+		"@mantine/hooks": "^5.4.0",
 		"@tabler/icons": "^1.95.1",
 		"classnames": "^2.3.2",
 		"embla-carousel-react": "^7.0.3",
