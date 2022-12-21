@@ -98,7 +98,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 			<Container fluid className={classes.footerWrapper}>
 				{/* Desktop View */}
 				<Grid className={classes.footer} gutter={'xl'}>
-					{pages.map((page, index) => (
+					{pages.map(page => (
 						<Grid.Col key={page.id + 'mapFooterPages'} span={3}>
 							<Box sx={{width: '80%'}}>
 								<Link
