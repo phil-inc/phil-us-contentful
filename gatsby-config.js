@@ -74,7 +74,8 @@ module.exports = {
 			  // You can add multiple tracking ids and a pageview event will be fired for all of them.
 			  trackingIds: [
 				"UA-71509531-1",
-				"AW-10844415925"
+				"AW-10844415925",
+				"G-0D2JJPD1QY"
 			],
 			  // This object is used for configuration specific to this plugin
 			  pluginConfig: {
