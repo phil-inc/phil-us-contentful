@@ -5,6 +5,7 @@ import {SEO} from 'layouts/SEO/SEO';
 import React, {useEffect, useState} from 'react';
 import type {ContentfulPage} from 'types/page';
 import type {ISection} from 'types/section';
+import {getTitle} from 'utils/getTitle';
 import {groupBy} from 'utils/groupBy';
 
 type HelmetProps = {
@@ -17,13 +18,13 @@ export const Head: React.FC<HelmetProps> = ({pageContext}) => {
 	const heroImage = heroSection?.asset.file.url;
 
 	return (
-		<SEO title={pageContext.title}>
+		<SEO title={getTitle(pageContext.title, pageContext.displayTitle)}>
 			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={pageContext.title} />
+			<meta name='twitter:title' content={getTitle(pageContext.title, pageContext.displayTitle)} />
 			<meta name='twitter:description' content={pageContext.description} />
 			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta name='description' content={pageContext.description} />
-			<meta property='og:title' content={pageContext.title} />
+			<meta property='og:title' content={getTitle(pageContext.title, pageContext.displayTitle)} />
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={pageContext.description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
