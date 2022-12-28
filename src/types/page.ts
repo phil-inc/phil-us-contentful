@@ -5,4 +5,5 @@ export type ContentfulPage = {
 	description?: string;
 	sections: Array<ISection | IReferencedSection>;
 	title: string;
+	displayTitle: string;
 };

@@ -1,11 +1,15 @@
 const slugify = require('slugify');
+
 const careerTemplate = require.resolve(`./src/templates/career.tsx`);
 const pageTemplate = require.resolve(`./src/templates/page.tsx`);
 
 const generateMainPages = async ({actions, graphql}) => {
 	// Return page
 	const createPageObject = page => {
-		const slug = page.title === 'Home' ? '/' : slugify(page.title, {lower: true, strict: true});
+		const slug =
+			page.title === 'Home'
+				? '/'
+				: slugify(page.title, {lower: true, strict: true});
 		let component;
 
 		// Choose template
@@ -25,283 +29,275 @@ const generateMainPages = async ({actions, graphql}) => {
 	};
 
 	const {data} = await graphql(`
-	query getPages {
-		allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
-		  nodes {
-			id
-			title
-			description
-			sections {
-			  ... on ContentfulSection {
-				id
-				isHidden
-				body {
-				  raw
-				  references {
-					contentful_id
-					__typename
+		query getPages {
+			allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
+				nodes {
+					id
+					title
+					displayTitle
 					description
-					gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-				  }
-				}
-				isHubspotEmbed
-				isInsertSnippet
-				codeSnippet {
-				  codeSnippet
-				}
-				asset {
-				  gatsbyImageData(
-					resizingBehavior: SCALE
-					placeholder: BLURRED
-					layout: CONSTRAINED
-				  )
-				  title
-				  file {
-					contentType
-					details {
-					  size
-					}
-					url
-				  }
-				}
-				buttonText
-				header
-				sectionType
-				externalLink
-				sys {
-				  contentType {
-					sys {
-					  id
-					}
-				  }
-				}
-				subHeader {
-				  subHeader
-				}
-				internalLink {
-				  ... on ContentfulPage {
-					id
-					title
-					sys {
-					  contentType {
-						sys {
-						  type
-						  id
-						}
-					  }
-					}
-				  }
-				  ... on ContentfulReferencedSection {
-					id
-					page {
-					  title
-					}
-					header
-					sys {
-					  contentType {
-						sys {
-						  type
-						  id
-						}
-					  }
-					}
-				  }
-				  ... on ContentfulSection {
-					id
-					page {
-					  title
-					}
-					header
-					sys {
-					  contentType {
-						sys {
-						  type
-						  id
-						}
-					  }
-					}
-				  }
-				  ... on ContentfulResource {
-					id
-					heading
-					sys {
-					  contentType {
-						sys {
-						  type
-						  id
-						}
-					  }
-					}
-				  }
-				}
-			  }
-			  ... on ContentfulReferencedSection {
-				id
-				isHidden
-				hideHeader
-				header
-				sectionType
-				references {
-				  externalLink
-				  internalLink {
-					... on ContentfulPage {
-					  id
-					  title
-					  sys {
-						contentType {
-						  sys {
-							type
+					sections {
+						... on ContentfulSection {
 							id
-						  }
+							isHidden
+							body {
+								raw
+								references {
+									contentful_id
+									__typename
+									description
+									gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+								}
+							}
+							isHubspotEmbed
+							isInsertSnippet
+							codeSnippet {
+								codeSnippet
+							}
+							asset {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+								title
+								file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+							}
+							buttonText
+							header
+							sectionType
+							externalLink
+							sys {
+								contentType {
+									sys {
+										id
+									}
+								}
+							}
+							subHeader {
+								subHeader
+							}
+							internalLink {
+								... on ContentfulPage {
+									id
+									title
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulReferencedSection {
+									id
+									page {
+										title
+									}
+									header
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulSection {
+									id
+									page {
+										title
+									}
+									header
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulResource {
+									id
+									heading
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+							}
 						}
-					  }
-					}
-					... on ContentfulReferencedSection {
-					  id
-					  page {
-						title
-					  }
-					  header
-					  sys {
-						contentType {
-						  sys {
-							type
+						... on ContentfulReferencedSection {
 							id
-						  }
+							isHidden
+							hideHeader
+							header
+							sectionType
+							references {
+								externalLink
+								internalLink {
+									... on ContentfulPage {
+										id
+										title
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+									... on ContentfulReferencedSection {
+										id
+										page {
+											title
+										}
+										header
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+									... on ContentfulSection {
+										id
+										page {
+											title
+										}
+										header
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+									... on ContentfulResource {
+										id
+										heading
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+								}
+								heading
+								hubspotEmbed {
+									raw
+								}
+								isHubspotEmbed
+								isInsertSnippet
+								codeSnippet {
+									codeSnippet
+								}
+								subHeading {
+									subHeading
+								}
+								buttonText
+								body {
+									raw
+								}
+								author
+								designation
+								asset {
+									gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
+									id
+									file {
+										contentType
+										url
+									}
+								}
+								id
+							}
+							referenceType
+							externalLink
+							buttonText
+							internalLink {
+								... on ContentfulPage {
+									id
+									title
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulReferencedSection {
+									id
+									page {
+										title
+										id
+									}
+									header
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulSection {
+									id
+									page {
+										title
+									}
+									header
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulResource {
+									id
+									heading
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+									isInsertSnippet
+									codeSnippet {
+										codeSnippet
+										id
+									}
+								}
+							}
 						}
-					  }
 					}
-					... on ContentfulSection {
-					  id
-					  page {
-						title
-					  }
-					  header
-					  sys {
-						contentType {
-						  sys {
-							type
-							id
-						  }
-						}
-					  }
-					}
-					... on ContentfulResource {
-					  id
-					  heading
-					  sys {
-						contentType {
-						  sys {
-							type
-							id
-						  }
-						}
-					  }
-					}
-				  }
-				  heading
-				  hubspotEmbed {
-					raw
-				  }
-				  isHubspotEmbed
-				  isInsertSnippet
-				  codeSnippet {
-					codeSnippet
-				  }
-				  subHeading {
-					subHeading
-				  }
-				  buttonText
-				  body {
-					raw
-				  }
-				  author
-				  designation
-				  asset {
-					gatsbyImageData(
-					  placeholder: BLURRED
-					  layout: FULL_WIDTH
-					  resizingBehavior: FILL
-					)
-					id
-					file {
-					  contentType
-					  url
-					}
-				  }
-				  id
 				}
-				referenceType
-				externalLink
-				buttonText
-				internalLink {
-				  ... on ContentfulPage {
-					id
-					title
-					sys {
-					  contentType {
-						sys {
-						  type
-						  id
-						}
-					  }
-					}
-				  }
-				  ... on ContentfulReferencedSection {
-					id
-					page {
-					  title
-					  id
-					}
-					header
-					sys {
-					  contentType {
-						sys {
-						  type
-						  id
-						}
-					  }
-					}
-				  }
-				  ... on ContentfulSection {
-					id
-					page {
-					  title
-					}
-					header
-					sys {
-					  contentType {
-						sys {
-						  type
-						  id
-						}
-					  }
-					}
-				  }
-				  ... on ContentfulResource {
-					id
-					heading
-					sys {
-					  contentType {
-						sys {
-						  type
-						  id
-						}
-					  }
-					}
-					isInsertSnippet
-					codeSnippet {
-					  codeSnippet
-					  id
-					}
-				  }
-				}
-			  }
 			}
-		  }
 		}
-	  }
-	  
 	`);
 
 	data.allContentfulPage.nodes.forEach(page => {
@@ -313,133 +309,134 @@ const generateMainPages = async ({actions, graphql}) => {
 
 const generateStaticPages = async ({actions, graphql}) => {
 	const {data} = await graphql(`
-	query allBlogPages {
-		allContentfulResource(
-		  filter: {node_locale: {eq: "en-US"}, heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}, generateStaticPage: {eq: true}}
-		) {
-		  nodes {
-			banners {
-			  id
-			  body {
-				raw
-			  }
-			  buttonText
-			  hubspotEmbed {
-				raw
-			  }
-			  isHubspotEmbed
-			  externalLink
-			  heading
-			}
-			slug
-			isFaq
-			author
-			buttonText
-			designation
-			heading
-			id
-			description
-			externalLink
-			subHeading {
-			  subHeading
-			}
-			asset {
-			  gatsbyImageData(
-				resizingBehavior: SCALE
-				placeholder: BLURRED
-				layout: CONSTRAINED
-			  )
-			  title
-			  file {
-				contentType
-				details {
-				  size
+		query allBlogPages {
+			allContentfulResource(
+				filter: {
+					node_locale: {eq: "en-US"}
+					heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}
+					generateStaticPage: {eq: true}
 				}
-				url
-			  }
-			}
-			body {
-			  raw
-			  references {
-				contentful_id
-				__typename
-				description
-				gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-				file {
-				  contentType
-				  details {
-					size
-				  }
-				  url
+			) {
+				nodes {
+					banners {
+						id
+						body {
+							raw
+						}
+						buttonText
+						hubspotEmbed {
+							raw
+						}
+						isHubspotEmbed
+						externalLink
+						heading
+					}
+					slug
+					isFaq
+					author
+					buttonText
+					designation
+					heading
+					id
+					description
+					externalLink
+					subHeading {
+						subHeading
+					}
+					asset {
+						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+						title
+						file {
+							contentType
+							details {
+								size
+							}
+							url
+						}
+					}
+					body {
+						raw
+						references {
+							contentful_id
+							__typename
+							description
+							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+							file {
+								contentType
+								details {
+									size
+								}
+								url
+							}
+						}
+					}
+					sys {
+						contentType {
+							sys {
+								id
+								type
+							}
+						}
+					}
+					generateStaticPage
+					relatesTo {
+						... on ContentfulReferencedSection {
+							id
+							header
+							page {
+								id
+								title
+							}
+						}
+						... on ContentfulSection {
+							id
+							header
+							page {
+								id
+								title
+							}
+						}
+					}
 				}
-			  }
 			}
-			sys {
-			  contentType {
-				sys {
-				  id
-				  type
-				}
-			  }
-			}
-			generateStaticPage
-			relatesTo {
-			  ... on ContentfulReferencedSection {
-				id
-				header
-				page {
-				  id
-				  title
-				}
-			  }
-			  ... on ContentfulSection {
-				id
-				header
-				page {
-				  id
-				  title
-				}
-			  }
-			}
-		  }
 		}
-	  }	  
-`);
+	`);
 
-	data.allContentfulResource.nodes
-		.forEach(resource => {
-			try {
-				const isBlogPage = Boolean(resource.relatesTo && resource.relatesTo.page && resource.heading)
-				const path =  resource.slug ?? `/${slugify(resource.heading, {
+	data.allContentfulResource.nodes.forEach(resource => {
+		try {
+			const isBlogPage = Boolean(resource.relatesTo && resource.relatesTo.page && resource.heading);
+			const path =
+				resource.slug ??
+				`/${slugify(resource.heading, {
 					lower: true,
 					strict: true,
-				})}`
+				})}`;
 
-				if (isBlogPage) {
-					const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
-						resource.relatesTo?.header,
-						{lower: true, strict: true}
-					)}/${slugify(resource.heading, {
-						lower: true,
-						strict: true,
-					})}`;
-	
-					actions.createPage({
-						path: path,
-						component: require.resolve(`./src/templates/blog.tsx`),
-						context: resource,
-					});
-				}
+			if (isBlogPage) {
+				const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
+					resource.relatesTo?.header,
+					{lower: true, strict: true}
+				)}/${slugify(resource.heading, {
+					lower: true,
+					strict: true,
+				})}`;
 
 				actions.createPage({
 					path: path,
 					component: require.resolve(`./src/templates/blog.tsx`),
 					context: resource,
 				});
-			} catch (error) {
-				console.log("Error creating page: ", resource.heading)
 			}
-		});
+
+			actions.createPage({
+				path: path,
+				component: require.resolve(`./src/templates/blog.tsx`),
+				context: resource,
+			});
+		} catch (error) {
+			console.log('Error creating page: ', resource.heading);
+		}
+	});
 };
 
 exports.createPages = async function (props) {

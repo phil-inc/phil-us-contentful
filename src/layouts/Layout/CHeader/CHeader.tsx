@@ -39,7 +39,7 @@ const HEADER_HEIGHT = 90;
 type CHeaderProps = {
 	allContentfulHeader: {nodes: Array<{logo: TAsset; navigationLinks: ContentfulPage[]}>};
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
-	sitePage: {id: string; pageContext: {title: string}};
+	sitePage: {id: string; pageContext: {title: string; displayTitle: string}};
 };
 
 const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource, sitePage}) => {
@@ -277,11 +277,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		const clickHandlers = [];
 
 		allLi.forEach(li => {
+			const [currentPage] = pages.filter(page => page.title === li.innerText);
+
 			// Initial set active
 			if (
 				location.pathname === '/'
 					? false
-					: location.pathname.includes(`/${slugify(li.innerText, {lower: true, strict: true})}`)
+					: location.pathname.includes(`/${slugify(currentPage.title, {lower: true, strict: true})}`)
 			) {
 				setActivePageLI(li);
 				li.classList.add('active');
@@ -608,7 +610,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																	<Text className={classes.listHeading}>
 																		<Link
 																			to={navigateToPage(
-																				slugify(page.title, {lower: true, strict: true}),
+																				slugify(page.title, {
+																					lower: true,
+																					strict: true,
+																				}),
 																			)}
 																			className={classes.textDecorationNone}
 																		>
@@ -689,6 +694,7 @@ const query = graphql`
 				navigationLinks {
 					id
 					title
+					displayTitle
 					sys {
 						contentType {
 							sys {
