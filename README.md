@@ -1,19 +1,13 @@
-# Mantine + Gatsby.js template
+# Phil.us marketing website
 
-[Read documentation](https://mantine.dev/theming/gatsby/)
+This is the repo for phil marketing website hosted at [phil.us](https://phil.us)
 
-Get started with Mantine + Gatsby with just a few button clicks.
-Click `Use this template` button at the header of repository or [follow this link](https://github.com/mantinedev/mantine-gatsby-template/generate) and
-create new repository with all @mantine packages.
+The project uses Gatsby for SSG and Contentful as headless CMS.
 
-## What's included
+The project uses [Mantine](https://mantine.dev) as UI library.
 
-- `gatsby-plugin-mantine` – server side rendering setup for gatsby
-- `@mantine/core` and `@mantine/hooks` packages
-- Color scheme toggle example (`Ctrl + J` shortcut or button click)
-
-## npm scripts
-
-- `npm start` – start project locally
-- `npm run build` – export project for production
-- `npm run serve` – serve production build locally
+## yarn scripts
+- `yarn install` – install required packages
+- `yarn start` – start project locally in development environment
+- `yarn build` – export project for production
+- `yarn serve` – serve production build locally
