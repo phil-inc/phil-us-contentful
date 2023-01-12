@@ -21,23 +21,89 @@ const RenderAllBlogs: React.FC<RenderAllBlogsProps> = ({allContentfulResource}) 
 );
 
 export const query = graphql`
-	query allFAQPages {
+	query {
 		allContentfulResource(
 			filter: {
 				node_locale: {eq: "en-US"}
-				heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}
+				heading: {
+					nin: [
+						"Dummy Resource"
+						"Dummy Resource | Referenced section"
+						"Privacy Policy"
+						"Terms of Use"
+						"HIPAA Privacy Notice"
+					]
+				}
 				generateStaticPage: {eq: true}
-				isFaq: {eq: true}
+				isFaq: {ne: true}
 			}
 		) {
+			totalCount
+
 			nodes {
 				slug
-				author
+				author {
+					id
+					name
+					authorTitle
+					bio {
+						raw
+					}
+					avatar {
+						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+						title
+						file {
+							contentType
+							details {
+								size
+							}
+							url
+						}
+					}
+				}
 				buttonText
-				designation
 				heading
 				id
 				description
+				internalLink {
+					... on ContentfulResource {
+						id
+						heading
+						sys {
+							contentType {
+								sys {
+									id
+									type
+								}
+							}
+						}
+						slug
+						description
+						externalLink
+						body {
+							raw
+						}
+						author {
+							id
+							name
+							authorTitle
+							bio {
+								raw
+							}
+							avatar {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+								title
+								file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+							}
+						}
+					}
+				}
 				externalLink
 				subHeading {
 					subHeading
@@ -95,27 +161,6 @@ export const query = graphql`
 							id
 							title
 						}
-					}
-				}
-				internalLink {
-					... on ContentfulResource {
-						id
-						heading
-						sys {
-							contentType {
-								sys {
-									id
-									type
-								}
-							}
-						}
-						slug
-						description
-						externalLink
-						body {
-							raw
-						}
-						author
 					}
 				}
 			}
