@@ -21,25 +21,15 @@ const RenderAllBlogs: React.FC<RenderAllBlogsProps> = ({allContentfulResource}) 
 );
 
 export const query = graphql`
-	query {
+	query allFAQPages {
 		allContentfulResource(
 			filter: {
 				node_locale: {eq: "en-US"}
-				heading: {
-					nin: [
-						"Dummy Resource"
-						"Dummy Resource | Referenced section"
-						"Privacy Policy"
-						"Terms of Use"
-						"HIPAA Privacy Notice"
-					]
-				}
+				heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}
 				generateStaticPage: {eq: true}
-				isFaq: {ne: true}
+				isFaq: {eq: true}
 			}
 		) {
-			totalCount
-
 			nodes {
 				slug
 				author {
@@ -65,45 +55,6 @@ export const query = graphql`
 				heading
 				id
 				description
-				internalLink {
-					... on ContentfulResource {
-						id
-						heading
-						sys {
-							contentType {
-								sys {
-									id
-									type
-								}
-							}
-						}
-						slug
-						description
-						externalLink
-						body {
-							raw
-						}
-						author {
-							id
-							name
-							authorTitle
-							bio {
-								raw
-							}
-							avatar {
-								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-								title
-								file {
-									contentType
-									details {
-										size
-									}
-									url
-								}
-							}
-						}
-					}
-				}
 				externalLink
 				subHeading {
 					subHeading
@@ -160,6 +111,45 @@ export const query = graphql`
 						page {
 							id
 							title
+						}
+					}
+				}
+				internalLink {
+					... on ContentfulResource {
+						id
+						heading
+						sys {
+							contentType {
+								sys {
+									id
+									type
+								}
+							}
+						}
+						slug
+						description
+						externalLink
+						body {
+							raw
+						}
+						author {
+							id
+							name
+							authorTitle
+							bio {
+								raw
+							}
+							avatar {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+								title
+								file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+							}
 						}
 					}
 				}
