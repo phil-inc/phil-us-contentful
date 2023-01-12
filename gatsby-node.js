@@ -6,10 +6,7 @@ const pageTemplate = require.resolve(`./src/templates/page.tsx`);
 const generateMainPages = async ({actions, graphql}) => {
 	// Return page
 	const createPageObject = page => {
-		const slug =
-			page.title === 'Home'
-				? '/'
-				: slugify(page.title, {lower: true, strict: true});
+		const slug = page.title === 'Home' ? '/' : slugify(page.title, {lower: true, strict: true});
 		let component;
 
 		// Choose template
@@ -216,8 +213,25 @@ const generateMainPages = async ({actions, graphql}) => {
 								body {
 									raw
 								}
-								author
-								designation
+								author {
+									id
+									name
+									authorTitle
+									bio {
+										raw
+									}
+									avatar {
+										gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+										title
+										file {
+											contentType
+											details {
+												size
+											}
+											url
+										}
+									}
+								}
 								asset {
 									gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
 									id
@@ -333,9 +347,26 @@ const generateStaticPages = async ({actions, graphql}) => {
 					}
 					slug
 					isFaq
-					author
+					author {
+						id
+						name
+						authorTitle
+						bio {
+							raw
+						}
+						avatar {
+							gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+							title
+							file {
+								contentType
+								details {
+									size
+								}
+								url
+							}
+						}
+					}
 					buttonText
-					designation
 					heading
 					id
 					description
