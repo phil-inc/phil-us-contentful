@@ -79,6 +79,24 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 				fontWeight: 700,
 			},
 		},
+
+		floatingImage: {
+			float: 'right',
+			padding: '30px 40px',
+
+			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+				float: 'none',
+				display: 'flex',
+				placeContent: 'center',
+			},
+		},
+
+		embededAsset: {
+			float: 'left',
+			maxWidth: 500,
+			margin: '40px 0',
+			marginRight: 46,
+		},
 	}));
 
 	const {classes} = useStyles();
@@ -97,7 +115,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		renderNode: {
 			[BLOCKS.EMBEDDED_ASSET](node) {
 				return (
-					<Box sx={{maxWidth: '1000px', marginBottom: '32px', margin: '50px auto'}}>
+					<Box className={classes.embededAsset}>
 						<Asset asset={node.data.target as TAsset} />
 					</Box>
 				);
@@ -210,7 +228,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 							{heading}
 						</Title>
 						{Boolean(asset) && (
-							<Container size='sm' style={{float: 'right', padding: '30px'}}>
+							<Container className={classes.floatingImage} size='sm'>
 								<Asset asset={asset} />
 							</Container>
 						)}
