@@ -1,6 +1,6 @@
+import React from 'react';
 import {Text, Divider, Box, Title, Grid, Avatar, Group, createStyles, Anchor} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
-import React from 'react';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAuthor} from 'types/resource';
 import Asset from 'components/common/Asset/Asset';
@@ -75,13 +75,13 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 				<Title order={4} mb={42} className={cx(classes['font-lato'], classes.authorHeading)}>
 					Author
 				</Title>
-				<Grid gutter='xs'>
-					<Grid.Col span={2}>
-						<Avatar radius={100} size={120} m={0}>
+				<Grid>
+					<Grid.Col sm={12} md='content'>
+						<Avatar radius={100} size={100} m={0}>
 							<Asset asset={author.avatar} />
 						</Avatar>
 					</Grid.Col>
-					<Grid.Col span={10}>
+					<Grid.Col sm={12} md='auto'>
 						<Group spacing={20}>
 							<Box>
 								<Text className={classes.authorName}>{author.name}</Text>

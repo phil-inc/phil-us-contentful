@@ -196,8 +196,8 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const hasBanners = Boolean(banners);
 
 	const bannerFactory = (resource: TResource) => (
-		<Expanded id={resource.id} fullWidth background='#F4F4F4' py={108}>
-			<Banner key={resource.id} resource={resource} />
+		<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={108}>
+			<Banner resource={resource} />
 		</Expanded>
 	);
 

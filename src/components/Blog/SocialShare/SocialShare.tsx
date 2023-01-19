@@ -1,6 +1,7 @@
 import {createStyles, Group, Text} from '@mantine/core';
 import {useHover} from '@mantine/hooks';
 import React from 'react';
+import {ESocialShare} from 'types/social';
 import {FacebookIcon} from '../../common/Buttons/SocialButtons/FacebookIcon';
 import {LinkedinIcon} from '../../common/Buttons/SocialButtons/LinkedinIcon';
 import {LinkIcon} from '../../common/Buttons/SocialButtons/LinkIcon';
@@ -22,10 +23,10 @@ const SocialShare: React.FC = () => {
 				Share this article on:
 			</Text>
 			<Group spacing='sm'>
-				<SocialButton tooltipLabel='Share on Facebook' icon={FacebookIcon as React.FC} />
-				<SocialButton tooltipLabel='Share on Linkedin' icon={LinkedinIcon as React.FC} />
-				<SocialButton tooltipLabel='Share on Twitter' icon={TwitterIcon as React.FC} />
-				<SocialButton tooltipLabel='Copy Link' icon={LinkIcon as React.FC} />
+				<SocialButton type={ESocialShare.Facebook} icon={FacebookIcon as React.FC} />
+				<SocialButton type={ESocialShare.Linkedin} icon={LinkedinIcon as React.FC} />
+				<SocialButton type={ESocialShare.Twitter} icon={TwitterIcon as React.FC} />
+				<SocialButton type={ESocialShare.Custom} tooltipLabel='Copy Link' icon={LinkIcon as React.FC} />
 			</Group>
 		</Group>
 	);
