@@ -277,7 +277,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		const clickHandlers = [];
 
 		allLi.forEach(li => {
-			const [currentPage] = pages.filter(page => page.title === li.innerText);
+			const titleToMatch = li.innerText.trim();
+			const [currentPage] = pages.filter(page => page.title === titleToMatch);
 
 			// Initial set active
 			if (
