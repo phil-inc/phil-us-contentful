@@ -93,9 +93,10 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 		embededAsset: {
 			float: 'left',
-			maxWidth: 500,
-			margin: '40px 0',
-			marginRight: 46,
+			maxWidth: 360,
+			maxHeight: 360,
+			marginTop: 5,
+			marginRight: 40,
 		},
 	}));
 
