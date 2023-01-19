@@ -11,6 +11,8 @@ import {getLink} from 'utils/getLink';
 import {graphql} from 'gatsby';
 import {Banner} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
+import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
+import SocialShare from 'components/Blog/SocialShare/SocialShare';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -42,7 +44,8 @@ type PageTemplateProps = {
 };
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
-	const {heading, body, asset, banners} = pageContext;
+	const {heading, body, asset, banners, author} = pageContext;
+
 	const useStyles = createStyles(theme => ({
 		body: {
 			p: {
@@ -201,9 +204,9 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	return (
 		<Layout>
 			<Container size='xl' className={classes.inner}>
-				<Grid gutter='xl' align='center' pb={130} pt={0}>
+				<Grid gutter='xl' align='center' pb={52} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
-						<Title order={2} mb={36}>
+						<Title order={1} mb={36}>
 							{heading}
 						</Title>
 						{Boolean(asset) && (
@@ -211,7 +214,11 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 								<Asset asset={asset} />
 							</Container>
 						)}
-						<Text>{body && renderRichText(body, options)}</Text>
+						<Text mb={42}>{body && renderRichText(body, options)}</Text>
+
+						<SocialShare />
+
+						{Boolean(author) && <AuthorBlock author={author} />}
 					</Grid.Col>
 				</Grid>
 			</Container>
