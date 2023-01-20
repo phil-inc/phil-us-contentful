@@ -1,16 +1,14 @@
-import {Paper, Title, Divider, Button, Text, createStyles, Grid, Box, Anchor, Group, Center} from '@mantine/core';
+import {Paper, Title, Divider, Button, Text, createStyles, Grid, Box, Anchor, Group} from '@mantine/core';
 import classNames from 'classnames';
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import type {FC} from 'react';
-import type {TAsset} from 'types/asset';
 import {Link} from 'gatsby';
 import React from 'react';
-import type {TLink, TResource} from 'types/resource';
+import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
-import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import ImageContainer from '../Container/ImageContainer';
 import Asset from '../Asset/Asset';
 import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
+import {getDescriptionFromRichtext} from 'utils/getDescription';
 
 type ResourceCardProps = {
 	sectionHeader: string;
@@ -54,36 +52,36 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 
 	const options = {
 		renderMark: {
-			[MARKS.BOLD]: text => <>{text}</>,
-			[MARKS.ITALIC]: text => <>{text}</>,
+			[MARKS.BOLD]: text => text as string,
+			[MARKS.ITALIC]: text => text as string,
 		},
 		renderNode: {
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 			[BLOCKS.UL_LIST](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 			[BLOCKS.OL_LIST](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 			[BLOCKS.LIST_ITEM](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 			[INLINES.HYPERLINK](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 			[BLOCKS.HEADING_1](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 			[BLOCKS.HEADING_2](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 			[BLOCKS.HEADING_3](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 			[BLOCKS.HEADING_4](node, children) {
-				return <>{children}</>;
+				return children as string;
 			},
 		},
 	};
@@ -120,7 +118,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 						<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={10} />
 						{resource.body && (
 							<Text size={18} mt='sm' mb={20} lineClamp={2}>
-								{renderRichText(resource.body, options)}
+								{getDescriptionFromRichtext(resource.body.raw)}
 							</Text>
 						)}
 						{resource.buttonText && (
