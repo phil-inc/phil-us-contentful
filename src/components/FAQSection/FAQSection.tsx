@@ -32,9 +32,26 @@ export const query = graphql`
 		) {
 			nodes {
 				slug
-				author
+				author {
+					id
+					name
+					authorTitle
+					bio {
+						raw
+					}
+					avatar {
+						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+						title
+						file {
+							contentType
+							details {
+								size
+							}
+							url
+						}
+					}
+				}
 				buttonText
-				designation
 				heading
 				id
 				description
@@ -115,7 +132,25 @@ export const query = graphql`
 						body {
 							raw
 						}
-						author
+						author {
+							id
+							name
+							authorTitle
+							bio {
+								raw
+							}
+							avatar {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+								title
+								file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+							}
+						}
 					}
 				}
 			}
