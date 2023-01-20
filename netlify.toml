@@ -76,7 +76,6 @@ status = 200
 # source repositories.
 [context.deploy-preview.environment]
   NODE_ENV = "development"
-  CONTENTFUL_ENVIRONMENT = "develop"
 
 # Dev context: environment variables set here 
 # are available for local development environments 
