@@ -1,4 +1,5 @@
 import {ESocialShare} from 'types/social';
+import {getWindowProperty} from './getWindowProperty';
 
 /**
 @function getShareLink - Generate share links to be used as href.
@@ -7,8 +8,8 @@ import {ESocialShare} from 'types/social';
 */
 export const getShareLink = (type: ESocialShare) => {
 	let shareLink: string;
-	const url = window.location.href;
-	const domain = window.location.hostname;
+	const url = getWindowProperty('location.href', '#');
+	const domain = getWindowProperty('location.hostname', 'phil.us');
 
 	switch (type) {
 		case ESocialShare.Facebook:

@@ -1,3 +1,5 @@
+import {getWindowProperty} from './getWindowProperty';
+
 const copyToClipboard = async (text: string): Promise<boolean> => {
 	try {
 		await navigator.clipboard.writeText(text);
@@ -8,7 +10,7 @@ const copyToClipboard = async (text: string): Promise<boolean> => {
 };
 
 export const copyLocationToClipboard = async () => {
-	const url = window.location.href;
+	const url = getWindowProperty('location.href', '#');
 
 	await copyToClipboard(url);
 };
