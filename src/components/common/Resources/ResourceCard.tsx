@@ -1,13 +1,12 @@
 import {Paper, Title, Divider, Button, Text, createStyles, Grid, Box, Anchor, Group} from '@mantine/core';
 import classNames from 'classnames';
+import React from 'react';
 import type {FC} from 'react';
 import {Link} from 'gatsby';
-import React from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import ImageContainer from '../Container/ImageContainer';
 import Asset from '../Asset/Asset';
-import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
 
 type ResourceCardProps = {
@@ -49,42 +48,6 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 
 	const {classes} = useStyles();
 	const {link, isExternal} = getLink(resource);
-
-	const options = {
-		renderMark: {
-			[MARKS.BOLD]: text => text as string,
-			[MARKS.ITALIC]: text => text as string,
-		},
-		renderNode: {
-			[BLOCKS.PARAGRAPH](node, children) {
-				return children as string;
-			},
-			[BLOCKS.UL_LIST](node, children) {
-				return children as string;
-			},
-			[BLOCKS.OL_LIST](node, children) {
-				return children as string;
-			},
-			[BLOCKS.LIST_ITEM](node, children) {
-				return children as string;
-			},
-			[INLINES.HYPERLINK](node, children) {
-				return children as string;
-			},
-			[BLOCKS.HEADING_1](node, children) {
-				return children as string;
-			},
-			[BLOCKS.HEADING_2](node, children) {
-				return children as string;
-			},
-			[BLOCKS.HEADING_3](node, children) {
-				return children as string;
-			},
-			[BLOCKS.HEADING_4](node, children) {
-				return children as string;
-			},
-		},
-	};
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
