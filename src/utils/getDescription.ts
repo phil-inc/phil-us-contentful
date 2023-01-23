@@ -13,9 +13,9 @@ export const getDescriptionFromRichtext = (rawRichTextField: string): string => 
 	const document: Document = JSON.parse(rawRichTextField) as Document;
 
 	const plainText = documentToPlainTextString(document);
-	const re = /(?<=[.!?])\s/g;
+	const re = /[.!?]\s/g;
 	const sentences = plainText.split(re);
-	const firstThreeSentences = sentences.slice(0, 3).join(' ');
+	const firstThreeSentences = sentences.slice(0, 3).join('. ');
 
 	return firstThreeSentences;
 };
