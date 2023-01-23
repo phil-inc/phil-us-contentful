@@ -1,6 +1,6 @@
 import React from 'react';
 import {ActionIcon, Anchor, createStyles, Tooltip} from '@mantine/core';
-import {useClipboard, useHover} from '@mantine/hooks';
+import {useClipboard, useHover, useTimeout} from '@mantine/hooks';
 import type {TablerIcon} from '@tabler/icons';
 import {ESocialShare} from 'types/social';
 import {getShareLink} from 'utils/socialShare';
@@ -13,7 +13,10 @@ type TSocialButton = {
 
 const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabel, type}) => {
 	const {hovered, ref} = useHover();
-	const clipboard = useClipboard({timeout: 10000});
+	const clipboard = useClipboard({timeout: 5000});
+	const {start: clearClipboard} = useTimeout(() => {
+		clipboard.reset();
+	}, 100);
 
 	const useStyles = createStyles(() => ({
 		socialButton: {
@@ -55,9 +58,21 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 		clipboard.copy(url);
 	};
 
+	React.useEffect(() => {
+		if (!hovered && clipboard.copied) {
+			clearClipboard();
+		}
+	}, [hovered]);
+
 	return (
-		<Tooltip color={clipboard.copied ? '#11827D' : '#01201F'} label={computedLabel} withArrow arrowSize={10}>
-			<Anchor href={!isCopyLink && getShareLink(type)} target='_blank' onClick={isCopyLink ? onClick : null}>
+		<Anchor href={!isCopyLink && getShareLink(type)} target='_blank' onClick={isCopyLink ? onClick : null}>
+			<Tooltip
+				color={clipboard.copied ? '#11827D' : '#01201F'}
+				label={computedLabel}
+				withArrow
+				arrowSize={10}
+				closeDelay={0}
+			>
 				<ActionIcon
 					ref={ref}
 					component='div'
@@ -68,8 +83,8 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 				>
 					<IconComponent className={classes.socialIcon} size={16} />
 				</ActionIcon>
-			</Anchor>
-		</Tooltip>
+			</Tooltip>
+		</Anchor>
 	);
 };
 
