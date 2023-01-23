@@ -6,10 +6,6 @@ import type {TAuthor} from 'types/resource';
 import Asset from 'components/common/Asset/Asset';
 
 const useStyles = createStyles(() => ({
-	'font-lato': {
-		fontFamily: 'Lato, sans-serif; !important',
-	},
-
 	authorHeading: {
 		fontWeight: 'bold',
 		fontSize: 30,
@@ -45,7 +41,7 @@ type TAuthorBlock = {
 };
 
 const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
-	const {classes, cx} = useStyles();
+	const {classes} = useStyles();
 
 	const options = {
 		renderNode: {
@@ -60,7 +56,7 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 			[INLINES.HYPERLINK](node, children) {
 				const {uri} = node.data as {uri: string};
 				return (
-					<Anchor href={uri} target='_blank' className={classes.anchor}>
+					<Anchor href={uri} target='_blank' className={classes.anchor} underline>
 						{children}
 					</Anchor>
 				);
@@ -72,7 +68,7 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 		<>
 			<Divider my={52} />
 			<Box mb={12}>
-				<Title order={4} mb={42} className={cx(classes['font-lato'], classes.authorHeading)}>
+				<Title order={4} mb={42} className={classes.authorHeading}>
 					Author
 				</Title>
 				<Grid>

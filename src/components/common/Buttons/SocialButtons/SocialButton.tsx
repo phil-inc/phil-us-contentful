@@ -1,9 +1,8 @@
-import {ActionIcon, Anchor, createStyles, Tooltip} from '@mantine/core';
-import {useHover} from '@mantine/hooks';
-import type {TablerIcon} from '@tabler/icons';
 import React from 'react';
+import {ActionIcon, Anchor, createStyles, Tooltip} from '@mantine/core';
+import {useClipboard, useHover} from '@mantine/hooks';
+import type {TablerIcon} from '@tabler/icons';
 import {ESocialShare} from 'types/social';
-import {copyLocationToClipboard} from 'utils/clipboard';
 import {getShareLink} from 'utils/socialShare';
 
 type TSocialButton = {
@@ -14,6 +13,7 @@ type TSocialButton = {
 
 const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabel, type}) => {
 	const {hovered, ref} = useHover();
+	const clipboard = useClipboard({timeout: 10000});
 
 	const useStyles = createStyles(() => ({
 		socialButton: {
@@ -21,8 +21,8 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 			background: '#f4f4f4',
 
 			':hover': {
-				color: '#FFF',
-				background: '#000',
+				color: clipboard.copied ? '#FFF' : '#FFF',
+				background: clipboard.copied ? '#11827D' : '#000',
 			},
 		},
 
@@ -30,25 +30,34 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 			fill: hovered ? '#fff' : '#01201F',
 			strokeWidth: '0',
 		},
-
-		tooltip: {
-			color: '#01201F',
-		},
 	}));
 
 	const {classes} = useStyles();
 
-	const isCustom = type === ESocialShare.Custom;
-	const usePropLabel = Boolean(tooltipLabel) || isCustom;
-	const computedLabel = usePropLabel ? tooltipLabel : `Share on ${type}`;
+	const isCopyLink = type === ESocialShare.CopyLink;
+	const computeLabel = (type: ESocialShare) => {
+		const usePropLabel = Boolean(tooltipLabel?.length);
+		if (usePropLabel) {
+			return tooltipLabel;
+		}
+
+		if (isCopyLink) {
+			return ESocialShare.CopyLink;
+		}
+
+		return `Share on ${type}`;
+	};
+
+	const computedLabel = clipboard.copied ? 'Link Copied!' : computeLabel(type);
 
 	const onClick = async () => {
-		await copyLocationToClipboard();
+		const url = getShareLink(type);
+		clipboard.copy(url);
 	};
 
 	return (
-		<Tooltip className={classes.tooltip} label={computedLabel} withArrow arrowSize={10}>
-			<Anchor href={getShareLink(type)} target='_blank' onClick={onClick}>
+		<Tooltip color={clipboard.copied ? '#11827D' : '#01201F'} label={computedLabel} withArrow arrowSize={10}>
+			<Anchor href={!isCopyLink && getShareLink(type)} target='_blank' onClick={isCopyLink ? onClick : null}>
 				<ActionIcon
 					ref={ref}
 					component='div'

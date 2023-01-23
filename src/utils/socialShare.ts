@@ -24,6 +24,10 @@ export const getShareLink = (type: ESocialShare) => {
 			shareLink = `http://www.linkedin.com/shareArticle?mini=true&url=${url}&source=${domain}`;
 			break;
 
+		case ESocialShare.CopyLink:
+			shareLink = url;
+			break;
+
 		default:
 			break;
 	}
