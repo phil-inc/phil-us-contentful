@@ -26,7 +26,7 @@ const SocialShare: React.FC = () => {
 				<SocialButton type={ESocialShare.Facebook} icon={FacebookIcon as React.FC} />
 				<SocialButton type={ESocialShare.Linkedin} icon={LinkedinIcon as React.FC} />
 				<SocialButton type={ESocialShare.Twitter} icon={TwitterIcon as React.FC} />
-				<SocialButton type={ESocialShare.Custom} tooltipLabel='Copy Link' icon={LinkIcon as React.FC} />
+				<SocialButton type={ESocialShare.CopyLink} icon={LinkIcon as React.FC} />
 			</Group>
 		</Group>
 	);
