@@ -6,6 +6,14 @@ export type TLink = {
 	isExternal: boolean;
 };
 
+export type TAuthor = {
+	id: string;
+	name: string;
+	authorTitle: string;
+	bio: BodyType;
+	avatar: TAsset;
+};
+
 export type TResource = {
 	id: string;
 	createdAt: string;
@@ -32,7 +40,7 @@ export type TResource = {
 			};
 		};
 	};
-	author?: string;
+	author?: TAuthor;
 	designation?: string;
 	isHubspotEmbed?: boolean;
 	hubspotEmbed?: BodyType;
@@ -41,12 +49,4 @@ export type TResource = {
 	generateStaticPage: boolean;
 	isFaq: boolean;
 	banners?: TResource[];
-};
-
-export type TParsedString = {
-	jsonResults: Array<{
-		formId: string;
-		portalId: string;
-		region: string;
-	}>;
 };
