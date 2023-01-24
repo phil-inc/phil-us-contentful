@@ -11,6 +11,8 @@ import {getLink} from 'utils/getLink';
 import {graphql} from 'gatsby';
 import {Banner} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
+import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
+import SocialShare from 'components/Blog/SocialShare/SocialShare';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -42,7 +44,8 @@ type PageTemplateProps = {
 };
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
-	const {heading, body, asset, banners} = pageContext;
+	const {heading, body, asset, banners, author} = pageContext;
+
 	const useStyles = createStyles(theme => ({
 		body: {
 			p: {
@@ -76,6 +79,25 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 				fontWeight: 700,
 			},
 		},
+
+		floatingImage: {
+			float: 'right',
+			padding: '30px 40px',
+
+			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+				float: 'none',
+				display: 'flex',
+				placeContent: 'center',
+			},
+		},
+
+		embededAsset: {
+			float: 'left',
+			maxWidth: 360,
+			maxHeight: 360,
+			marginTop: 5,
+			marginRight: 40,
+		},
 	}));
 
 	const {classes} = useStyles();
@@ -94,7 +116,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		renderNode: {
 			[BLOCKS.EMBEDDED_ASSET](node) {
 				return (
-					<Box sx={{maxWidth: '1000px', marginBottom: '32px', margin: '50px auto'}}>
+					<Box className={classes.embededAsset}>
 						<Asset asset={node.data.target as TAsset} />
 					</Box>
 				);
@@ -193,25 +215,29 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const hasBanners = Boolean(banners);
 
 	const bannerFactory = (resource: TResource) => (
-		<Expanded id={resource.id} fullWidth background='#F4F4F4' py={108}>
-			<Banner key={resource.id} resource={resource} />
+		<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={108}>
+			<Banner resource={resource} />
 		</Expanded>
 	);
 
 	return (
 		<Layout>
 			<Container size='xl' className={classes.inner}>
-				<Grid gutter='xl' align='center' pb={130} pt={0}>
+				<Grid gutter='xl' align='center' pb={52} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
-						<Title order={2} mb={36}>
+						<Title order={1} mb={36}>
 							{heading}
 						</Title>
 						{Boolean(asset) && (
-							<Container size='sm' style={{float: 'right', padding: '30px'}}>
+							<Container className={classes.floatingImage} size='sm'>
 								<Asset asset={asset} />
 							</Container>
 						)}
-						<Text>{body && renderRichText(body, options)}</Text>
+						<Text mb={42}>{body && renderRichText(body, options)}</Text>
+
+						<SocialShare />
+
+						{Boolean(author) && <AuthorBlock author={author} />}
 					</Grid.Col>
 				</Grid>
 			</Container>
