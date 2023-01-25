@@ -83,12 +83,6 @@ status = 200
 [context.branch-deploy.environment]
   NODE_ENV = "development"
 
-# Branch Deploy context: all deploys that are not from
-# a pull/merge request or from the Production branch
-# will inherit these settings.
-[context.branch-deploy.environment]
-  NODE_ENV = "development"
-
 # Dev context: environment variables set here 
 # are available for local development environments 
 # run using Netlify Dev. These values can be 
