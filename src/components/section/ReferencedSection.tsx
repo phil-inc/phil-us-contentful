@@ -80,6 +80,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Banner':
 			case 'Article':
 			case 'Stats Card':
+			case 'Stats Card with Arrows':
 			case 'Prescriber Journey':
 			case 'Info Card':
 				return ['#F4F4F4', 'black', '#FFFFFF']; // Gray Background
@@ -90,10 +91,19 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	};
 
 	// Get grid span based on resource type
-	const getSpan = (): {xl: number; lg: number; md: number; sm: number} => {
+	const getSpan = (): {xl: number; lg: number; md: number; sm: number; xs?: number} => {
 		switch (section.referenceType) {
 			case 'Testimonial':
 				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS, md: GRID_COLUMNS, sm: GRID_COLUMNS / 2};
+
+			case 'Stats Card with Arrows':
+				return {
+					xl: GRID_COLUMNS / 5,
+					lg: GRID_COLUMNS / 3,
+					md: GRID_COLUMNS / 3,
+					sm: GRID_COLUMNS / 2,
+					xs: GRID_COLUMNS / 2,
+				};
 
 			case 'Info Card':
 			case 'Phil Blog':
@@ -120,8 +130,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const [background, textColor, resourceBackground] = getSectionColors();
 
 	// Render resource based on resource type
-
-	const renderResource = (sectionHeader: string, resource: TResource, index: number) => {
+	// eslint-disable-next-line complexity
+	const renderResource = (sectionHeader: string, resource: TResource, index: number, arrayLength: number) => {
 		switch (section.referenceType) {
 			case 'Article':
 				return <Article color={getColor(index)} resource={resource} />;
@@ -154,6 +164,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 
 			case 'Stats Card':
 				return <StatsCard resource={resource} />;
+			case 'Stats Card with Arrows':
+				return <StatsCard resource={resource} arrow={true} index={index === arrayLength - 1 ? null : index} />;
 
 			case 'Prescriber Journey':
 				return <PrescriberJourney resource={resource} />;
@@ -229,13 +241,13 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				<Grid
 					grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
 					columns={GRID_COLUMNS}
-					gutter={theme.spacing.md}
+					gutter={section.referenceType === 'Stats Card with Arrows' ? 20 : theme.spacing.md}
 					m={0}
 					mx={-10}
 				>
-					{section.references.map((resource, index) => (
+					{section.references.map((resource, index, array) => (
 						<Grid.Col key={resource.id + 'mapReferencedSectionResource'} {...getSpan()}>
-							{renderResource(section.header, resource, index)}
+							{renderResource(section.header, resource, index, array.length)}
 						</Grid.Col>
 					))}
 				</Grid>
