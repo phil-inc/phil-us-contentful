@@ -14,6 +14,7 @@ type TSocialButton = {
 const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabel, type}) => {
 	const {hovered, ref} = useHover();
 	const clipboard = useClipboard({timeout: 5000});
+	const [url, setUrl] = React.useState(getShareLink(type));
 	const {start: clearClipboard} = useTimeout(() => {
 		clipboard.reset();
 	}, 100);
@@ -59,13 +60,19 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	};
 
 	React.useEffect(() => {
+		if (!isCopyLink) {
+			setUrl(getShareLink(type));
+		}
+	}, [isCopyLink]);
+
+	React.useEffect(() => {
 		if (!hovered && clipboard.copied) {
 			clearClipboard();
 		}
 	}, [hovered]);
 
 	return (
-		<Anchor href={!isCopyLink && getShareLink(type)} target='_blank' onClick={isCopyLink ? onClick : null}>
+		<Anchor href={isCopyLink ? null : url} target='_blank' onClick={isCopyLink ? onClick : null}>
 			<Tooltip
 				color={clipboard.copied ? '#11827D' : '#01201F'}
 				label={computedLabel}
