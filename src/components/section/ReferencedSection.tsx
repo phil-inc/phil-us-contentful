@@ -1,3 +1,4 @@
+import React from 'react';
 import {Grid, Title, Button, Group, Container, Box, Anchor, Divider, createStyles} from '@mantine/core';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
@@ -11,8 +12,7 @@ import {StatsCard} from 'components/common/statsCard/StatsCard';
 import Profile from 'components/common/Team/Profile';
 import {Testimonial} from 'components/common/Testimonial';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
-import {Link} from 'gatsby';
-import React from 'react';
+import {Link, Script} from 'gatsby';
 import type {TResource} from 'types/resource';
 import type {IReferencedSection} from 'types/section';
 import {getLink} from 'utils/getLink';
@@ -20,6 +20,11 @@ import slugify from 'slugify';
 import {CardWithImage} from 'components/common/CardWithImage';
 import Asset from 'components/common/Asset/Asset';
 import {handleSpacing} from 'utils/handleSpacing';
+import type {IMixpanel} from 'contexts/MixpanelContext';
+import {MixpanelContext} from 'contexts/MixpanelContext';
+import {getWindowProperty} from 'utils/getWindowProperty';
+import * as FullStory from '@fullstory/browser';
+import {isProduction} from 'utils/isProduction';
 
 const useStyles = createStyles(theme => ({
 	divider: {
@@ -48,10 +53,20 @@ type ReferencedSectionProps = {
 
 // eslint-disable-next-line complexity
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
+	const params = new URLSearchParams(getWindowProperty('location.search', {}));
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
 	const {link, isExternal} = getLink(section);
 	const {classes, theme} = useStyles();
+	const mixpanel: IMixpanel = React.useContext(MixpanelContext);
+
+	React.useEffect(() => {
+		const isFromSMSIntro = params.get('isFromSMSIntro');
+		if (section.referenceType === 'Stats Card with Arrows' && isFromSMSIntro === 'true' && isProduction) {
+			mixpanel.track('PhilIntro_SMS_Clicked');
+			FullStory.init({orgId: process.env.FULLSTORY_ORG_ID});
+		}
+	}, []);
 
 	// Get colors for resources based on index
 	const getColor = (index: number) => {
