@@ -53,6 +53,7 @@ type ReferenceType =
 	| 'FAQs'
 	| 'Image Carousel'
 	| 'Investors'
+	| 'Stats Card with Arrows'
 	| ResourceBlocks;
 
 export type IReferencedSection = {
