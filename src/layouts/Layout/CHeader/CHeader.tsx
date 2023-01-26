@@ -657,7 +657,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 														</Grid.Col>
 
 														{page.title === 'Patients' && index === array.length - 1 && (
-															<Grid.Col span={Math.floor(100 / 4)}>
+															<Grid.Col span={Math.floor(100 / (array.length + 1))}>
 																<List.Item onClick={close}>
 																	<Text className={classes.listHeading}>
 																		<Anchor
