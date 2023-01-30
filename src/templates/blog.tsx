@@ -14,19 +14,26 @@ import Expanded from 'components/common/Expanded/Expanded';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
+import {getWindowProperty} from 'utils/getWindowProperty';
+import {isProduction} from 'utils/isProduction';
 
 type HelmetProps = {
 	pageContext: TResource;
+	location: {pathname: string};
 };
 
-export const Head: React.FC<HelmetProps> = ({pageContext}) => {
+export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 	const heroImage = pageContext.asset?.file.url;
 	const description = pageContext.description?.length
 		? pageContext.description
-		: getDescriptionFromRichtext(pageContext.body.raw);
+		: pageContext.body?.raw
+			? getDescriptionFromRichtext(pageContext.body.raw)
+			: '';
+	const domain = getWindowProperty('location.hostname', 'phil.us');
 
 	return (
 		<SEO title={pageContext.heading}>
+			{isProduction && domain !== 'phil.us' && <link rel='canonical' href={'https://phil.us' + location.pathname} />}
 			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={pageContext.heading} />
 			<meta name='twitter:description' content={description} />
