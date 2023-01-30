@@ -13,6 +13,7 @@ import {Banner} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
+import {getDescriptionFromRichtext} from 'utils/getDescription';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -20,17 +21,20 @@ type HelmetProps = {
 
 export const Head: React.FC<HelmetProps> = ({pageContext}) => {
 	const heroImage = pageContext.asset?.file.url;
+	const description = pageContext.description?.length
+		? pageContext.description
+		: getDescriptionFromRichtext(pageContext.body.raw);
 
 	return (
 		<SEO title={pageContext.heading}>
 			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={pageContext.heading} />
-			<meta name='twitter:description' content={pageContext.description} />
+			<meta name='twitter:description' content={description} />
 			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={pageContext.description} />
+			<meta name='description' content={description} />
 			<meta property='og:title' content={pageContext.heading} />
 			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={pageContext.description} />
+			<meta property='og:description' content={description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us/${getLink(pageContext).link}`} />
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
