@@ -14,7 +14,6 @@ type TSocialButton = {
 const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabel, type}) => {
 	const {hovered, ref} = useHover();
 	const clipboard = useClipboard({timeout: 5000});
-
 	const [url, setUrl] = React.useState(getShareLink(type));
 	const {start: clearClipboard} = useTimeout(() => {
 		clipboard.reset();
