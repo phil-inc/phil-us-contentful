@@ -7,11 +7,11 @@ import CHeader from './CHeader/CHeader';
 import {isIndex} from 'hooks/isIndex';
 import {HubspotProvider} from '@aaronhayes/react-use-hubspot-form';
 import CFooter from './CFooter/CFooter';
-import ZoominfoAnalytics from 'analytics/Zoominfo';
 import LinkedinInsights from 'analytics/LinkedinInsights';
 
 // Import css overrides here
 import 'assets/css/index.css';
+import ZoominfoAnalytics from 'analytics/ZoominfoAnalytics';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
