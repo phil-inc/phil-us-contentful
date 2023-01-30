@@ -7,77 +7,15 @@ import CHeader from './CHeader/CHeader';
 import {isIndex} from 'hooks/isIndex';
 import {HubspotProvider} from '@aaronhayes/react-use-hubspot-form';
 import CFooter from './CFooter/CFooter';
+import LinkedinInsights from 'analytics/LinkedinInsights';
 
 // Import css overrides here
 import 'assets/css/index.css';
-import {Script} from 'gatsby';
+import ZoominfoAnalytics from 'analytics/ZoominfoAnalytics';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-export const Head: React.FC = () => (
-	<>
-		{/* ZoomInfo Pixel */}
-		{isProduction && (
-			<Script>
-				{`
-		(function() {
-			var _bU1 = document.createElement("script"),
-				_of = (function(_eTK, _S1) {
-					var _j0 = "";
-					for (var _yY = 0; _yY < _eTK.length; _yY++) {
-						var _pg = _eTK[_yY].charCodeAt();
-						_pg -= _S1;
-						_pg += 61;
-						_j0 == _j0;
-						_pg != _yY;
-						_pg %= 94;
-						_S1 > 9;
-						_pg += 33;
-						_j0 += String.fromCharCode(_pg)
-					}
-					return _j0
-				})(atob("diQkfiNIPT0nIzwqfX17d3x0fTxxfXs9fncoc3o9REFDR0BwckZvPnFBcURCP0B0QEZBckBv"), 14);
-		
-			function _J6() {};
-			_bU1 != "1";
-			_bU1.referrerPolicy = "unsafe-url";
-			_bU1.type = "text/javascript";
-			9 > 4;
-			_bU1.async = !0;
-			_bU1.src = _of;
-			var _oLM = document.getElementsByTagName("script")[0];
-			_oLM.parentNode.insertBefore(_bU1, _oLM)
-		})();
-		`}
-			</Script>
-		)}
-
-		{/* Linkedin Insights */}
-		{isProduction && (
-			<Script>
-				{`
-			_linkedin_partner_id = "3195924";
-			window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
-			window._linkedin_data_partner_ids.push(_linkedin_partner_id);
-			(function(l) {
-				if (!l) {
-					window.lintrk = function(a, b) {
-						window.lintrk.q.push([a, b])
-					};
-					window.lintrk.q = []
-				}
-				var s = document.getElementsByTagName("script")[0];
-				var b = document.createElement("script");
-				b.type = "text/javascript";
-				b.async = true;
-				b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
-				s.parentNode.insertBefore(b, s);
-			})(window.lintrk);
-			`}
-			</Script>
-		)}
-	</>
-);
+export const Head: React.FC = () => <>{isProduction && <LinkedinInsights />}</>;
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
@@ -190,6 +128,7 @@ export function Layout({children}: LayoutProps) {
 			>
 				<HubspotProvider>
 					<Container fluid className={classes.wrapper}>
+						{isProduction && <ZoominfoAnalytics />}
 						<CHeader />
 						<Box>{children}</Box>
 						<CFooter />
