@@ -6,19 +6,24 @@ import React, {useEffect, useState} from 'react';
 import type {ContentfulPage} from 'types/page';
 import type {ISection} from 'types/section';
 import {getTitle} from 'utils/getTitle';
+import {getWindowProperty} from 'utils/getWindowProperty';
 import {groupBy} from 'utils/groupBy';
+import {isProduction} from 'utils/isProduction';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
 	data: {contentfulPage: ContentfulPage};
+	location: {pathname: string};
 };
 
-export const Head: React.FC<HelmetProps> = ({pageContext}) => {
+export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 	const heroSection = pageContext.sections.find(section => section.sectionType === 'Basic Section') as ISection;
 	const heroImage = heroSection?.asset.file.url;
+	const domain = getWindowProperty('location.hostname', 'phil.us');
 
 	return (
 		<SEO title={getTitle(pageContext.title, pageContext.displayTitle)}>
+			{isProduction && domain !== 'phil.us' && <link rel='canonical' href={'https://phil.us' + location.pathname} />}
 			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={getTitle(pageContext.title, pageContext.displayTitle)} />
 			<meta name='twitter:description' content={pageContext.description} />
