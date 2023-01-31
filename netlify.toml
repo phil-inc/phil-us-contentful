@@ -65,13 +65,13 @@ status = 200
 # redirect blog.phil.us to phil.us as 301 Moved Permanently
 [[redirects]]
 from = "http://blog.phil.us/*"
-to = "http://phil.us/"
+to = "http://phil.us/:splat"
 status = 301
 force = true
 
 [[redirects]]
 from = "https://blog.phil.us/*"
-to = "https://phil.us/"
+to = "https://phil.us/:splat"
 status = 301
 force = true
 
