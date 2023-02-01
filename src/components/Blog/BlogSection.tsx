@@ -64,7 +64,11 @@ const query = graphql`
 				buttonText
 				heading
 				id
-				description
+				description {
+					id
+					description
+				}
+				metaDescription
 				internalLink {
 					... on ContentfulResource {
 						id
@@ -78,7 +82,9 @@ const query = graphql`
 							}
 						}
 						slug
-						description
+						description {
+							id
+						}
 						externalLink
 						body {
 							raw
@@ -105,9 +111,6 @@ const query = graphql`
 					}
 				}
 				externalLink
-				subHeading {
-					subHeading
-				}
 				asset {
 					gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
 					title
