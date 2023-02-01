@@ -62,6 +62,20 @@ from = "/press-releases"
 to = "/resources"
 status = 200
 
+# redirect blog.phil.us to phil.us as 301 Moved Permanently
+[[redirects]]
+from = "http://blog.phil.us/*"
+to = "http://phil.us/:splat"
+status = 301
+force = true
+
+[[redirects]]
+from = "https://blog.phil.us/*"
+to = "https://phil.us/:splat"
+status = 301
+force = true
+
+
 # Production context: all deploys from the Production branch
 # set in your site’s Branches settings in the UI will inherit
 # these settings. You can define environment variables
