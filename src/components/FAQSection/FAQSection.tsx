@@ -54,11 +54,13 @@ export const query = graphql`
 				buttonText
 				heading
 				id
-				description
-				externalLink
-				subHeading {
-					subHeading
+				description {
+					id
+					description
 				}
+				metaDescription
+				externalLink
+				subheading
 				asset {
 					gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
 					title
@@ -127,7 +129,10 @@ export const query = graphql`
 							}
 						}
 						slug
-						description
+						description {
+							id
+							description
+						}
 						externalLink
 						body {
 							raw

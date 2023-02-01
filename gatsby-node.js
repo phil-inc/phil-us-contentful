@@ -198,6 +198,7 @@ const generateMainPages = async ({actions, graphql}) => {
 									}
 								}
 								heading
+								subheading
 								hubspotEmbed {
 									raw
 								}
@@ -206,8 +207,9 @@ const generateMainPages = async ({actions, graphql}) => {
 								codeSnippet {
 									codeSnippet
 								}
-								subHeading {
-									subHeading
+								description {
+									id
+									description
 								}
 								buttonText
 								body {
@@ -369,11 +371,13 @@ const generateStaticPages = async ({actions, graphql}) => {
 					buttonText
 					heading
 					id
-					description
-					externalLink
-					subHeading {
-						subHeading
+					subheading
+					description {
+						id
+						description
 					}
+					metaDescription
+					externalLink
 					asset {
 						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
 						title

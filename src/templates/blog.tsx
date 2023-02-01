@@ -24,8 +24,8 @@ type HelmetProps = {
 
 export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 	const heroImage = pageContext.asset?.file.url;
-	const description = pageContext.description?.length
-		? pageContext.description
+	const description = pageContext.metaDescription?.length
+		? pageContext.metaDescription
 		: pageContext.body?.raw
 			? getDescriptionFromRichtext(pageContext.body.raw)
 			: '';
