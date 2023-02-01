@@ -18,10 +18,12 @@ export type TResource = {
 	id: string;
 	createdAt: string;
 	heading: string;
-	description?: string;
-	subHeading?: {
-		subHeading: string;
+	subheading: string;
+	description: {
+		id: string;
+		description: string;
 	};
+	metaDescription: string;
 	body: BodyType;
 	asset?: TAsset;
 	buttonText?: string;
