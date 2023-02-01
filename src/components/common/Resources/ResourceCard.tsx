@@ -49,6 +49,8 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 	const {classes} = useStyles();
 	const {link, isExternal} = getLink(resource);
 
+	const heading = resource.subheading?.length ? resource.subheading : resource.heading;
+
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
 			<Grid justify='center' style={{height: '100%'}} mt={0}>
@@ -61,18 +63,18 @@ export const ResourceCard: FC<ResourceCardProps> = ({resource}) => {
 				</Grid.Col>
 				<Grid.Col lg={7} sm={6} md={6} className={classes.center}>
 					<Box pl={40} pr={36} pb={30} sx={{overflow: 'hidden'}}>
-						{resource.heading && (
+						{heading && (
 							<>
 								{isExternal ? (
 									<Anchor href={link} target='_blank' underline={false} className={classes.textDecorationNone}>
 										<Title order={3} mt='md'>
-											{resource.heading}
+											{heading}
 										</Title>
 									</Anchor>
 								) : (
 									<Link to={link} className={classes.textDecorationNone}>
 										<Title order={3} mt='md'>
-											{resource.heading}
+											{heading}
 										</Title>
 									</Link>
 								)}
