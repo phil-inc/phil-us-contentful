@@ -30,7 +30,6 @@ import {isVideoContent} from 'utils/isVideoContent';
 import {parseScript} from 'utils/parseScript';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
-import {extractLinks} from 'utils/extractLinks';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -142,8 +141,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
-	const subheader = marked(section.subHeader?.subHeader, {renderer: new marked.Renderer()});
-
 	// Create form if section has hubspot form
 	if (section.isHubspotEmbed) {
 		const object: any = parseScript(section.body);
@@ -191,10 +188,16 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 												<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
 													Start a conversation
 												</Title>
-												<div
-													className={classes.contactSubheader}
-													dangerouslySetInnerHTML={{__html: subheader}}
-												/>
+												{Boolean(section.subHeader?.subHeader.length) && (
+													<div
+														className={classes.contactSubheader}
+														dangerouslySetInnerHTML={{
+															__html: marked(section.subHeader?.subHeader, {
+																renderer: new marked.Renderer(),
+															}),
+														}}
+													/>
+												)}
 											</>
 										)}
 										<Divider
