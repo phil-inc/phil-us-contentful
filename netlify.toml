@@ -48,8 +48,18 @@ to = "/company"
 status = 301
 
 [[redirects]]
+from = "/life-sciences/"
+to = "/life-sciences"
+status = 301
+
+[[redirects]]
 from = "/patients/"
 to = "/patients"
+status = 301
+
+[[redirects]]
+from = "/healthcare-providers/"
+to = "/healthcare-providers"
 status = 301
 
 [[redirects]]
