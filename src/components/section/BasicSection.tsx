@@ -24,12 +24,13 @@ import React from 'react';
 import slugify from 'slugify';
 import type {ISection} from 'types/section';
 import {getLink} from 'utils/getLink';
-
+import {marked} from 'marked';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {isVideoContent} from 'utils/isVideoContent';
 import {parseScript} from 'utils/parseScript';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
+import {extractLinks} from 'utils/extractLinks';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -62,6 +63,13 @@ const useStyles = createStyles(theme => ({
 		lineHeight: 27,
 		marginTop: 14,
 		color: theme.colors.primary[0],
+	},
+
+	contactSubheader: {
+		a: {
+			color: '#00827E',
+			textDecoration: 'none',
+		},
 	},
 }));
 
@@ -134,6 +142,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 
+	const subheader = marked(section.subHeader?.subHeader, {renderer: new marked.Renderer()});
+
 	// Create form if section has hubspot form
 	if (section.isHubspotEmbed) {
 		const object: any = parseScript(section.body);
@@ -171,15 +181,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								{section.isHubspotEmbed ? (
 									<>
 										<Title order={titleOrdering}>{section.header}</Title>
-										{Boolean(section.subHeader?.subHeader.length) && (
+										{Boolean(section.subHeader?.subHeader.length) && location.pathname !== '/contact' && (
 											<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
 												{section.subHeader.subHeader}
 											</Title>
 										)}
 										{location.pathname === '/contact' && (
-											<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
-												Start a conversation
-											</Title>
+											<>
+												<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+													Start a conversation
+												</Title>
+												<div
+													className={classes.contactSubheader}
+													dangerouslySetInnerHTML={{__html: subheader}}
+												/>
+											</>
 										)}
 										<Divider
 											size={1}
