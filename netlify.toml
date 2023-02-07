@@ -35,7 +35,7 @@ status = 200
 [[redirects]]
 from = "/manufacturers/*"
 to = "/life-sciences"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/newpatient/*"
