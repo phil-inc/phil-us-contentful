@@ -17,8 +17,9 @@ srcDirs.forEach(srcDir => {
 
 // Handle plugins
 module.exports = {
+	trailingSlash: "never",
 	siteMetadata: {
-		siteUrl: `https://www.phil.us`,
+		siteUrl: `https://phil.us`,
 	},
 	plugins: [
 		'gatsby-plugin-mantine',
@@ -83,8 +84,8 @@ module.exports = {
 		{
 			resolve: 'gatsby-plugin-robots-txt',
 			options: {
-				host: 'https://www.phil.us',
-				sitemap: 'https://www.phil.us/sitemap.xml',
+				host: 'https://phil.us',
+				sitemap: 'https://phil.us/sitemap.xml',
 				resolveEnv: () => process.env.NODE_ENV,
 				env: {
 					development: {

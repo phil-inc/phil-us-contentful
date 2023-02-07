@@ -67,7 +67,7 @@
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-plugin-react": "^7.31.8",
 		"eslint-plugin-react-hooks": "^4.3.0",
-		"gatsby": "^4.24.0",
+		"gatsby": "^4.7.0",
 		"gatsby-plugin-mantine": "5.0.0",
 		"gatsby-plugin-root-import": "^2.0.8",
 		"husky": "^8.0.0",
