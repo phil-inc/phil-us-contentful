@@ -42,7 +42,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us/${getLink(pageContext).link}`} />
+			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 		</SEO>
 	);
