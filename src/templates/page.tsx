@@ -21,11 +21,9 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 	const heroSection = pageContext.sections.find(section => section.sectionType === 'Basic Section') as ISection;
 	const heroImage = heroSection?.asset.file.url;
 	const title = pageContext.displayTitle.length ? pageContext.displayTitle : pageContext.title;
-	const domain = getWindowProperty('location.hostname', 'phil.us');
 
 	return (
 		<SEO title={title}>
-			{isProduction && domain !== 'phil.us' && <link rel='canonical' href={'https://phil.us' + location.pathname} />}
 			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={title} />
 			<meta name='twitter:description' content={pageContext.description} />

@@ -4,5 +4,5 @@
 yarn prettify
 yarn lint:fix
 yarn lint
-git add .
+git add -u
 
