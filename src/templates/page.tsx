@@ -21,7 +21,6 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 	const heroSection = pageContext.sections.find(section => section.sectionType === 'Basic Section') as ISection;
 	const heroImage = heroSection?.asset.file.url;
 	const title = pageContext.displayTitle.length ? pageContext.displayTitle : pageContext.title;
-	console.log({location, pageContext});
 
 	return (
 		<SEO title={title}>
