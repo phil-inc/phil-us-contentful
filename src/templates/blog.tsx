@@ -33,7 +33,6 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 
 	return (
 		<SEO title={pageContext.heading}>
-			{isProduction && domain !== 'phil.us' && <link rel='canonical' href={'https://phil.us' + location.pathname} />}
 			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={pageContext.heading} />
 			<meta name='twitter:description' content={description} />

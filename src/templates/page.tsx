@@ -24,9 +24,6 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 
 	return (
 		<SEO title={title}>
-			{isProduction && location.pathname.endsWith('/') && (
-				<link rel='canonical' href={'https://phil.us' + location.pathname.replace(/\/$/, '')} />
-			)}
 			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={title} />
 			<meta name='twitter:description' content={pageContext.description} />
