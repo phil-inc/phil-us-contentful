@@ -62,12 +62,6 @@ from = "/press-releases"
 to = "/resources"
 status = 200
 
-[[redirects]]
-from = "/patients/"
-to = "/patients"
-status = 301
-force = true
-
 # redirect blog.phil.us to phil.us as 301 Moved Permanently
 [[redirects]]
 from = "http://blog.phil.us/*"
