@@ -48,7 +48,20 @@ export function Layout({children}: LayoutProps) {
 		},
 		colors: {
 			primary: ['#00201F', '#031A19', '#051515', '#061211', '#060F0F', '#060D0C', '#060B0B'],
+			philBranding: [
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+			],
 		},
+		primaryColor: 'philBranding',
 		headings: {
 			fontWeight: 700,
 			sizes: {
