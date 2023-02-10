@@ -5,7 +5,6 @@ import {
 	Group,
 	Collapse,
 	Text,
-	SimpleGrid,
 	Divider,
 	List,
 	Burger,
@@ -17,15 +16,14 @@ import {
 	Grid,
 	ScrollArea,
 	Anchor,
+	Button,
 } from '@mantine/core';
 import {Link as ScrollToElement} from 'react-scroll';
 import {useClickOutside, useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
-import {graphql, Link, Script} from 'gatsby';
-import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
+import {graphql, Link} from 'gatsby';
 import React, {useState} from 'react';
 import {StaticQuery} from 'gatsby';
-import {useDocumentTitle} from '@mantine/hooks';
 import type {ContentfulPage} from 'types/page';
 import slugify from 'slugify';
 import {navigateToPage} from 'utils/navigateToPage';
@@ -36,6 +34,188 @@ import Asset from 'components/common/Asset/Asset';
 
 const HEADER_HEIGHT = 90;
 
+const useStyles = createStyles(theme => ({
+	inner: {
+		padding: '0 100px',
+		height: HEADER_HEIGHT,
+		display: 'flex',
+		alignItems: 'center',
+
+		'&::after': {
+			content: '""',
+			clear: 'both',
+			display: 'table',
+		},
+
+		[theme.fn.smallerThan('sm')]: {
+			padding: '0 16px',
+		},
+	},
+
+	burger: {
+		[theme.fn.largerThan('md')]: {
+			display: 'none !important',
+		},
+	},
+
+	collapse: {
+		position: 'absolute',
+		top: 90,
+		left: 0,
+		zIndex: 2,
+		opacity: 1,
+		width: '100%',
+	},
+
+	container: {
+		width: '100vw',
+		overflow: 'hidden',
+		background: '#00827E',
+	},
+
+	navbar: {
+		position: 'relative',
+		height: '90px',
+		width: '100vw',
+		background: '#fff',
+		display: 'flex',
+		alignItems: 'center',
+		overflow: 'hidden',
+
+		ul: {
+			position: 'relative',
+			display: 'flex',
+
+			li: {
+				position: 'relative',
+				listStyleType: 'none',
+				height: '120px',
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				textDecoration: 'none',
+			},
+		},
+	},
+
+	indicator: {
+		position: 'absolute',
+		bottom: '-5px',
+		left: '25px',
+		width: '0px',
+		height: '0px',
+		borderLeft: '20px solid transparent',
+		borderRight: '20px solid transparent',
+		borderBottom: '20px solid #00827e',
+		transition: 'transform 0.5s',
+	},
+
+	navLinksWrapper: {
+		[theme.fn.smallerThan('md')]: {
+			display: 'none !important',
+		},
+	},
+
+	navLink: {
+		position: 'relative',
+		marginRight: 'calc(1.313rem + 1.5vw)',
+		cursor: 'pointer',
+		textDecoration: 'none',
+
+		'&:last-child': {
+			marginRight: '0px',
+		},
+	},
+
+	listHeading: {
+		color: 'white',
+		fontSize: '16px',
+		letterSpacing: '0.4px',
+		lineHeight: '27px',
+		marginBottom: '11px',
+		fontFamily: 'Lato',
+		fontWeight: 700,
+		textDecoration: 'none',
+	},
+
+	listItems: {
+		color: 'white',
+		fontSize: '12px',
+		letterSpacing: 0,
+		lineHeight: '35px',
+		margin: '8px 0',
+		fontFamily: 'Lato',
+		fontWeight: 400,
+	},
+
+	drawerWrapper: {
+		padding: `${theme.spacing.sm + 10}px 100px  !important`,
+
+		[theme.fn.smallerThan('md')]: {
+			padding: `${theme.spacing.sm + 10}px 100px  !important`,
+			paddingTop: '0px !important',
+		},
+
+		[theme.fn.smallerThan('sm')]: {
+			padding: `${theme.spacing.sm + 10}px 16px  !important`,
+			paddingTop: '0px !important',
+		},
+	},
+
+	drawer: {
+		[theme.fn.largerThan('md')]: {
+			display: 'none',
+		},
+	},
+
+	drawerTitle: {
+		width: '100%',
+		margin: 0,
+	},
+
+	accordionControl: {
+		paddingLeft: 0,
+		paddingRight: 0,
+	},
+
+	accordionContent: {
+		paddingLeft: 0,
+		paddingRight: 0,
+	},
+
+	active: {
+		'&::before': {
+			content: '""',
+			position: 'absolute',
+			bottom: '15px',
+			left: '25px',
+			width: '0px',
+			height: '0px',
+			borderLeft: '20px solid transparent',
+			borderRight: '20px solid transparent',
+			borderBottom: '20px solid #00827e',
+		},
+	},
+
+	sectionHeader: {
+		textDecoration: 'none',
+		color: '#00201F',
+		fontSize: '14px',
+		lineHeight: '40px',
+	},
+	textDecorationNone: {
+		textDecoration: 'none',
+		color: 'inherit',
+	},
+
+	patientLoginButton: {
+		'&:hover': {
+			backgroundColor: theme.colors.philBranding[9],
+			color: 'white',
+		},
+	},
+}));
+
 type CHeaderProps = {
 	allContentfulHeader: {nodes: Array<{logo: TAsset; navigationLinks: ContentfulPage[]}>};
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
@@ -43,184 +223,10 @@ type CHeaderProps = {
 };
 
 const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource, sitePage}) => {
-	const useStyles = createStyles((theme, _params, getRef) => ({
-		inner: {
-			padding: '0 100px',
-			height: HEADER_HEIGHT,
-			display: 'flex',
-			alignItems: 'center',
-
-			'&::after': {
-				content: '""',
-				clear: 'both',
-				display: 'table',
-			},
-
-			[theme.fn.smallerThan('sm')]: {
-				padding: '0 16px',
-			},
-		},
-
-		burger: {
-			[theme.fn.largerThan('md')]: {
-				display: 'none !important',
-			},
-		},
-
-		collapse: {
-			position: 'absolute',
-			top: 90,
-			left: 0,
-			zIndex: 2,
-			opacity: 1,
-			width: '100%',
-		},
-
-		container: {
-			width: '100vw',
-			overflow: 'hidden',
-			background: '#00827E',
-		},
-
-		navbar: {
-			position: 'relative',
-			height: '90px',
-			width: '100vw',
-			background: '#fff',
-			display: 'flex',
-			alignItems: 'center',
-			overflow: 'hidden',
-
-			ul: {
-				position: 'relative',
-				display: 'flex',
-
-				li: {
-					position: 'relative',
-					listStyleType: 'none',
-					height: '120px',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					textDecoration: 'none',
-				},
-			},
-		},
-
-		indicator: {
-			position: 'absolute',
-			bottom: '-5px',
-			left: '25px',
-			width: '0px',
-			height: '0px',
-			borderLeft: '20px solid transparent',
-			borderRight: '20px solid transparent',
-			borderBottom: '20px solid #00827e',
-			transition: 'transform 0.5s',
-		},
-
-		navLinksWrapper: {
-			[theme.fn.smallerThan('md')]: {
-				display: 'none !important',
-			},
-		},
-
-		navLink: {
-			position: 'relative',
-			marginRight: '5.313rem',
-			cursor: 'pointer',
-			textDecoration: 'none',
-
-			'&:last-child': {
-				marginRight: '0px',
-			},
-		},
-
-		listHeading: {
-			color: 'white',
-			fontSize: '16px',
-			letterSpacing: '0.4px',
-			lineHeight: '27px',
-			marginBottom: '11px',
-			fontFamily: 'Lato',
-			fontWeight: 700,
-			textDecoration: 'none',
-		},
-
-		listItems: {
-			color: 'white',
-			fontSize: '12px',
-			letterSpacing: 0,
-			lineHeight: '35px',
-			margin: '8px 0',
-			fontFamily: 'Lato',
-			fontWeight: 400,
-		},
-
-		drawerWrapper: {
-			padding: `${theme.spacing.sm + 10}px 100px  !important`,
-
-			[theme.fn.smallerThan('md')]: {
-				padding: `${theme.spacing.sm + 10}px 100px  !important`,
-				paddingTop: '0px !important',
-			},
-
-			[theme.fn.smallerThan('sm')]: {
-				padding: `${theme.spacing.sm + 10}px 16px  !important`,
-				paddingTop: '0px !important',
-			},
-		},
-
-		drawer: {
-			[theme.fn.largerThan('md')]: {
-				display: 'none',
-			},
-		},
-
-		drawerTitle: {
-			width: '100%',
-			margin: 0,
-		},
-
-		accordionControl: {
-			paddingLeft: 0,
-			paddingRight: 0,
-		},
-
-		accordionContent: {
-			paddingLeft: 0,
-			paddingRight: 0,
-		},
-
-		active: {
-			'&::before': {
-				content: '""',
-				position: 'absolute',
-				bottom: '15px',
-				left: '25px',
-				width: '0px',
-				height: '0px',
-				borderLeft: '20px solid transparent',
-				borderRight: '20px solid transparent',
-				borderBottom: '20px solid #00827e',
-			},
-		},
-
-		sectionHeader: {
-			textDecoration: 'none',
-			color: '#00201F',
-			fontSize: '14px',
-			lineHeight: '40px',
-		},
-		textDecorationNone: {
-			textDecoration: 'none',
-			color: 'inherit',
-		},
-	}));
-
 	const [header] = allContentfulHeader.nodes;
 	const pages = header.navigationLinks;
 
+	const {width} = useViewportSize();
 	const {classes} = useStyles();
 
 	const [opened, {toggle, open, close}] = useDisclosure(false, {
@@ -230,7 +236,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	});
 
 	const [isDrawer, toggleDrawer] = useToggle();
-	const {width} = useViewportSize();
 
 	const theme = useMantineTheme();
 	const isBreak = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
@@ -259,6 +264,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	};
 
 	function moveIntidatorActiveTo(li: HTMLLIElement) {
+		if (li.dataset.noindicator === 'true') {
+			return;
+		}
+
 		const INDICATOR_SIZE = 20;
 		const INITIAL_OFFSET = 25;
 		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
@@ -277,6 +286,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		const clickHandlers = [];
 
 		allLi.forEach(li => {
+			if (li.dataset.noindicator === 'true') {
+				return;
+			}
+
 			const titleToMatch = li.innerText.trim();
 			const [currentPage] = pages.filter(page => page.title === titleToMatch);
 
@@ -318,6 +331,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		const active = navBar.querySelector('.active');
 
 		if (Boolean(!opened) && Boolean(activePageLI)) {
+			if (activePageLI.dataset.noindicator === 'true') {
+				return;
+			}
+
 			if (active) {
 				active.classList.remove('active');
 			}
@@ -349,7 +366,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
 					<Box sx={{height: 90, width: 125}}>
 						<Link to='/'>
-							<ImageContainer contain fluid background='transparent'>
+							<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
 								<Asset asset={header.logo} />
 							</ImageContainer>
 						</Link>
@@ -369,12 +386,25 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 							.map(page => (
 								<List.Item
 									key={page.id + 'mapHeaderPages'}
-									className={classNames(classes.navLink)}
+									className={classes.navLink}
 									onClick={onNavLinkClick}
 								>
 									<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 								</List.Item>
 							))}
+						<List.Item data-noindicator='true'>
+							<Anchor href='https://my.phil.us' target='_blank'>
+								<Button
+									size='md'
+									uppercase
+									variant='outline'
+									color='philBranding'
+									className={classes.patientLoginButton}
+								>
+									Patient Login
+								</Button>
+							</Anchor>
+						</List.Item>
 					</List>
 				</Group>
 				{isBreak ? (
@@ -409,6 +439,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 					>
 						<ScrollArea style={{height: 'calc(100vh - 100px)'}}>
 							<Accordion
+								mb={16}
 								classNames={{control: classes.accordionControl, content: classes.accordionContent}}
 								chevron={<IconChevronDown size={24} />}
 							>
@@ -563,6 +594,18 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 										</Accordion.Item>
 									))}
 							</Accordion>
+							<Anchor href='https://my.phil.us' target='_blank'>
+								<Button
+									size='lg'
+									uppercase
+									fullWidth
+									variant='outline'
+									color='philBranding'
+									className={classes.patientLoginButton}
+								>
+									Patient Login
+								</Button>
+							</Anchor>
 						</ScrollArea>
 					</Drawer>
 				) : (

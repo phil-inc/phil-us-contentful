@@ -48,7 +48,20 @@ export function Layout({children}: LayoutProps) {
 		},
 		colors: {
 			primary: ['#00201F', '#031A19', '#051515', '#061211', '#060F0F', '#060D0C', '#060B0B'],
+			philBranding: [
+				'#D5F1F0',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+				'#00827E',
+			],
 		},
+		primaryColor: 'philBranding',
 		headings: {
 			fontWeight: 700,
 			sizes: {
@@ -98,13 +111,13 @@ export function Layout({children}: LayoutProps) {
 
 						'&:hover': {
 							backgroundColor: params.variant === 'filled' ? 'transparent' : undefined,
-							color: theme.colors.primary[0],
+							color: params.variant === 'filled' ? theme.colors.primary[0] : undefined,
 							fontWeight: 900,
-							outline: `3px solid ${theme.colors.primary[0]}`,
+							outline: params.variant === 'filled' ? `3px solid ${theme.colors.primary[0]}` : undefined,
 						},
 
 						'&:focus:not(:focus-visible)': {
-							outline: `3px solid ${theme.colors.primary[0]}`,
+							outline: params.variant === 'filled' ? `3px solid ${theme.colors.primary[0]}` : undefined,
 						},
 					},
 				}),
