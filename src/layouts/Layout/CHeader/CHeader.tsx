@@ -168,6 +168,10 @@ const useStyles = createStyles(theme => ({
 		},
 	},
 
+	drawerHeader: {
+		marginBottom: 0,
+	},
+
 	drawerTitle: {
 		width: '100%',
 		margin: 0,
@@ -410,7 +414,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 				{isBreak ? (
 					<Drawer
 						className={classes.drawer}
-						classNames={{title: classes.drawerTitle, drawer: classes.drawerWrapper}}
+						classNames={{title: classes.drawerTitle, drawer: classes.drawerWrapper, header: classes.drawerHeader}}
 						opened={isDrawer}
 						onClose={() => {
 							toggleDrawer(false);
@@ -437,7 +441,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						size='full'
 						transition='fade'
 					>
-						<ScrollArea style={{height: 'calc(100vh - 100px)'}}>
+						<ScrollArea style={{height: 'calc(100vh - 100px)'}} type='never'>
 							<Accordion
 								mb={16}
 								classNames={{control: classes.accordionControl, content: classes.accordionContent}}
@@ -602,6 +606,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 									variant='outline'
 									color='philBranding'
 									className={classes.patientLoginButton}
+									mb={90}
 								>
 									Patient Login
 								</Button>
