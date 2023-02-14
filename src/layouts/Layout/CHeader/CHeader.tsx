@@ -168,6 +168,10 @@ const useStyles = createStyles(theme => ({
 		},
 	},
 
+	drawerHeader: {
+		marginBottom: 0,
+	},
+
 	drawerTitle: {
 		width: '100%',
 		margin: 0,
@@ -212,6 +216,35 @@ const useStyles = createStyles(theme => ({
 		'&:hover': {
 			backgroundColor: theme.colors.philBranding[9],
 			color: 'white',
+		},
+	},
+
+	patientLoginButtonMobile: {
+		'&:hover': {
+			backgroundColor: theme.colors.philBranding[9],
+			color: 'white',
+		},
+
+		[theme.fn.largerThan('md')]: {
+			display: 'none',
+		},
+	},
+
+	logo: {
+		maxWidth: 125,
+		maxHeight: 90,
+
+		width: '100%',
+
+		[theme.fn.smallerThan('md')]: {
+			width: 100,
+			marginRight: 25,
+		},
+	},
+
+	hideOnLarge: {
+		[theme.fn.largerThan('md')]: {
+			display: 'none',
 		},
 	},
 }));
@@ -364,7 +397,20 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={62}>
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
-					<Box sx={{height: 90, width: 125}}>
+					<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+						<Button
+							size='sm'
+							uppercase
+							variant='outline'
+							px={4}
+							color='philBranding'
+							className={classes.patientLoginButtonMobile}
+						>
+							Patient Login
+						</Button>
+					</Anchor>
+
+					<Box className={classes.logo}>
 						<Link to='/'>
 							<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
 								<Asset asset={header.logo} />
@@ -410,17 +456,29 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 				{isBreak ? (
 					<Drawer
 						className={classes.drawer}
-						classNames={{title: classes.drawerTitle, drawer: classes.drawerWrapper}}
+						classNames={{title: classes.drawerTitle, drawer: classes.drawerWrapper, header: classes.drawerHeader}}
 						opened={isDrawer}
 						onClose={() => {
 							toggleDrawer(false);
 						}}
 						withCloseButton={false}
 						title={
-							<Group position='apart' noWrap align='center'>
-								<Box sx={{height: 90, width: 125}}>
+							<Group position='apart' noWrap align='center' mt={9}>
+								<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+									<Button
+										size='sm'
+										uppercase
+										variant='outline'
+										px={4}
+										color='philBranding'
+										className={classes.patientLoginButtonMobile}
+									>
+										Patient Login
+									</Button>
+								</Anchor>
+								<Box className={classes.logo}>
 									<Link to='/'>
-										<ImageContainer contain fluid background='transparent'>
+										<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
 											<Asset asset={header.logo} />
 										</ImageContainer>
 									</Link>
@@ -437,7 +495,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						size='full'
 						transition='fade'
 					>
-						<ScrollArea style={{height: 'calc(100vh - 100px)'}}>
+						<ScrollArea style={{height: 'calc(100vh - 100px)'}} type='never'>
 							<Accordion
 								mb={16}
 								classNames={{control: classes.accordionControl, content: classes.accordionContent}}
@@ -594,18 +652,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 										</Accordion.Item>
 									))}
 							</Accordion>
-							<Anchor href='https://my.phil.us' target='_blank'>
-								<Button
-									size='lg'
-									uppercase
-									fullWidth
-									variant='outline'
-									color='philBranding'
-									className={classes.patientLoginButton}
-								>
-									Patient Login
-								</Button>
-							</Anchor>
 						</ScrollArea>
 					</Drawer>
 				) : (
