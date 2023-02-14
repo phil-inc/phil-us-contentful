@@ -652,18 +652,6 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 										</Accordion.Item>
 									))}
 							</Accordion>
-							<Anchor href='https://my.phil.us' target='_blank'>
-								<Button
-									size='lg'
-									uppercase
-									fullWidth
-									variant='outline'
-									color='philBranding'
-									className={classes.patientLoginButton}
-								>
-									Patient Login
-								</Button>
-							</Anchor>
 						</ScrollArea>
 					</Drawer>
 				) : (
