@@ -253,7 +253,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 									background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
 									expanded={location.pathname === '/contact/'}
 								>
-									<Asset asset={section.asset} />
+									<Asset asset={section.asset} youtubeVideoURL={section.youtubeVideoUrl} />
 								</ImageContainer>
 							</Grid.Col>
 						</Grid>
