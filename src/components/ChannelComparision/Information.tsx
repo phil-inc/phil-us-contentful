@@ -344,7 +344,9 @@ const Information = () => {
 					/>
 				</Group>
 
-				<Button>Get my customized report</Button>
+				<Button type='submit' onClick={stepper.nextStep}>
+					Get my customized report
+				</Button>
 			</Box>
 		</Grid.Col>
 	);
