@@ -6,9 +6,9 @@ import {getWindowProperty} from './getWindowProperty';
 @param {ESocialShare} type - type of social share.
 @returns {string} - returns the share link of the specified social media.
 */
-export const getShareLink = (type: ESocialShare) => {
+export const getShareLink = (type: ESocialShare, overrideUrl?: string) => {
 	let shareLink: string;
-	const url = getWindowProperty('location.href', '#');
+	const url = getWindowProperty('location.href', overrideUrl);
 	const domain = getWindowProperty('location.hostname', 'phil.us');
 
 	switch (type) {
