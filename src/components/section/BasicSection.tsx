@@ -178,12 +178,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								{section.isHubspotEmbed ? (
 									<>
 										<Title order={titleOrdering}>{section.header}</Title>
-										{Boolean(section.subHeader?.subHeader.length) && location.pathname !== '/contact' && (
+										{Boolean(section.subHeader?.subHeader.length) && location.pathname !== '/contact/' && (
 											<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
 												{section.subHeader.subHeader}
 											</Title>
 										)}
-										{location.pathname === '/contact' && (
+										{location.pathname === '/contact/' && (
 											<>
 												<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
 													Start a conversation
@@ -251,9 +251,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								<ImageContainer
 									fluid
 									background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
-									expanded={location.pathname === '/contact'}
+									expanded={location.pathname === '/contact/'}
 								>
-									<Asset asset={section.asset} />
+									<Asset asset={section.asset} youtubeVideoURL={section.youtubeVideoUrl} />
 								</ImageContainer>
 							</Grid.Col>
 						</Grid>
