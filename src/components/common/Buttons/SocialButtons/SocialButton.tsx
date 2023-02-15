@@ -4,6 +4,7 @@ import {useClipboard, useHover, useTimeout} from '@mantine/hooks';
 import type {TablerIcon} from '@tabler/icons';
 import {ESocialShare} from 'types/social';
 import {getShareLink} from 'utils/socialShare';
+import {Location} from '@reach/router';
 
 type TSocialButton = {
 	type: ESocialShare;
@@ -14,7 +15,6 @@ type TSocialButton = {
 const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabel, type}) => {
 	const {hovered, ref} = useHover();
 	const clipboard = useClipboard({timeout: 5000});
-	const [url, setUrl] = React.useState(getShareLink(type));
 	const {start: clearClipboard} = useTimeout(() => {
 		clipboard.reset();
 	}, 100);
@@ -39,6 +39,7 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	const {classes} = useStyles();
 
 	const isCopyLink = type === ESocialShare.CopyLink;
+
 	const computeLabel = (type: ESocialShare) => {
 		const usePropLabel = Boolean(tooltipLabel?.length);
 		if (usePropLabel) {
@@ -60,38 +61,40 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	};
 
 	React.useEffect(() => {
-		if (!isCopyLink) {
-			setUrl(getShareLink(type));
-		}
-	}, [isCopyLink]);
-
-	React.useEffect(() => {
 		if (!hovered && clipboard.copied) {
 			clearClipboard();
 		}
 	}, [hovered]);
 
 	return (
-		<Anchor href={isCopyLink ? null : url} target='_blank' onClick={isCopyLink ? onClick : null}>
-			<Tooltip
-				color={clipboard.copied ? '#11827D' : '#01201F'}
-				label={computedLabel}
-				withArrow
-				arrowSize={10}
-				closeDelay={0}
-			>
-				<ActionIcon
-					ref={ref}
-					component='div'
-					size={40}
-					variant='filled'
-					radius='xl'
-					className={classes.socialButton}
+		<Location>
+			{({location}) => (
+				<Anchor
+					href={isCopyLink ? null : getShareLink(type, location.href)}
+					target='_blank'
+					onClick={isCopyLink ? onClick : null}
 				>
-					<IconComponent className={classes.socialIcon} size={16} />
-				</ActionIcon>
-			</Tooltip>
-		</Anchor>
+					<Tooltip
+						color={clipboard.copied ? '#11827D' : '#01201F'}
+						label={computedLabel}
+						withArrow
+						arrowSize={10}
+						closeDelay={0}
+					>
+						<ActionIcon
+							ref={ref}
+							component='div'
+							size={40}
+							variant='filled'
+							radius='xl'
+							className={classes.socialButton}
+						>
+							<IconComponent className={classes.socialIcon} size={16} />
+						</ActionIcon>
+					</Tooltip>
+				</Anchor>
+			)}
+		</Location>
 	);
 };
 
