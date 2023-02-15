@@ -4,6 +4,7 @@ import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import React from 'react';
 import ReactPlayer from 'react-player';
 import type {TAsset} from 'types/asset';
+import {getWindowProperty} from 'utils/getWindowProperty';
 import {isVideoContent} from 'utils/isVideoContent';
 
 const useStyles = createStyles(() => ({
@@ -28,9 +29,11 @@ type AssetProps = {
  */
 const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 	const {classes} = useStyles();
+	const origin = getWindowProperty('location.origin', 'https://phil.us');
 
 	if (isVideoContent(asset.file.contentType) || youtubeVideoURL?.length) {
 		const {url} = asset.file;
+
 		return (
 			<AspectRatio sx={{maxWidth: 826}} ratio={1920 / 1080} className={classNames(classes.videoWrapper)} my='auto'>
 				<ReactPlayer
@@ -41,7 +44,7 @@ const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 					config={{
 						youtube: {
 							playerVars: {
-								origin: 'https://phil.us',
+								origin,
 							},
 						},
 					}}
