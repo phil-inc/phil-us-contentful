@@ -1,6 +1,7 @@
 import React from 'react';
-import {Grid, Box, Title, createStyles, Stepper, TextInput, Button, Image, Text} from '@mantine/core';
+import {Grid, Box, Title, createStyles, Stepper, TextInput, Button, Image, Text, AspectRatio} from '@mantine/core';
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
+import {channelComparisionCheck} from 'assets/images';
 
 const useStyles = createStyles(theme => ({
 	content: {
@@ -61,21 +62,10 @@ const Done = () => {
 	return (
 		<Grid.Col span='auto' className={classes.contentGrid}>
 			<Box className={classes.content}>
-				<Title className={classes.title} order={1} size={44} mb={20}>
-					{'Learn how you can optimize your '}
-					<Text className={classes.title} component='span' color={'#00827E'}>
-						patient access strategy to improve adherence and gross-to-net
-					</Text>
-				</Title>
-
-				<Text className={classes.normalText} size={24} mb={64}>
-					How does your brand’s channel stack up? Complete the following for a customized channel comparison report
-				</Text>
-
 				<Stepper
 					active={stepper.step}
 					iconSize={48}
-					mb={48}
+					mb={90}
 					color={'philBranding'}
 					breakpoint='sm'
 					classNames={{
@@ -89,19 +79,18 @@ const Done = () => {
 					<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 				</Stepper>
-				<Title order={2} size={27} color='#0A0A0A' mb={16}>
-					Where should we send the report?*
+
+				<Image width={124} height={124} src={channelComparisionCheck as string} alt='Check icon' mb={44} />
+
+				<Title className={classes.title} order={1} size={44} mb={20}>
+					Thank you!
 				</Title>
-				<TextInput
-					classNames={{label: classes.inputLabel, required: classes.inputLabel}}
-					label='Email Address'
-					radius={0}
-					withAsterisk
-					mb={48}
-					{...form.getInputProps('email')}
-				/>
+
+				<Text className={classes.normalText} size={24} mb={64}>
+					We’ve got all your details and we will be sending your reports soon on your email address.
+				</Text>
 				<Button type='submit' onClick={stepper.nextStep}>
-					Continue
+					Check out our other pages
 				</Button>
 			</Box>
 		</Grid.Col>

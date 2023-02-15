@@ -37,9 +37,10 @@ const useStyles = createStyles(theme => ({
 
 type LayoutProps = {
 	children: React.ReactNode;
+	minimal?: boolean;
 };
 
-export function Layout({children}: LayoutProps) {
+export function Layout({children, minimal = false}: LayoutProps) {
 	const {classes} = useStyles();
 
 	const themeOverride: MantineThemeOverride = {
@@ -142,9 +143,9 @@ export function Layout({children}: LayoutProps) {
 				<HubspotProvider>
 					<Container fluid className={classes.wrapper}>
 						{isProduction && <ZoominfoAnalytics />}
-						<CHeader />
+						<CHeader minimal={minimal} />
 						<Box>{children}</Box>
-						<CFooter />
+						<CFooter minimal={minimal} />
 					</Container>
 				</HubspotProvider>
 			</MantineProvider>

@@ -8,6 +8,7 @@ import {useForm} from '@mantine/form';
 import type {FormValues, TStepper} from 'contexts/ChannelComparisionContext';
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
 import Information from 'components/ChannelComparision/Information';
+import Done from 'components/ChannelComparision/Done';
 
 export const Head: React.FC = () => <SEO title={'Channel comparision'}></SEO>;
 
@@ -54,7 +55,7 @@ const ChannelComparisionPage = () => {
 	const [step, setStep] = React.useState(0);
 
 	const nextStep = () => {
-		setStep(current => (current < 3 ? current + 1 : current));
+		setStep(current => (current < 1 ? current + 1 : current + 2));
 	};
 
 	const prevStep = () => {
@@ -68,13 +69,13 @@ const ChannelComparisionPage = () => {
 	};
 
 	return (
-		<Layout>
+		<Layout minimal={true}>
 			<Container className={classes.root}>
 				<Grid className={classes.innerGrid} justify='center'>
 					<ChannelComparisionContext.Provider value={{stepper, form}}>
 						{step === 0 && <EmailCollection />}
 						{step === 1 && <Information />}
-						{step === 2 && <EmailCollection />}
+						{step >= 2 && <Done />}
 					</ChannelComparisionContext.Provider>
 
 					<Grid.Col span='auto' p={0}>
