@@ -2,6 +2,7 @@ import React from 'react';
 import {Grid, Box, Title, createStyles, Stepper, TextInput, Button, Image, Text, AspectRatio} from '@mantine/core';
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
 import {channelComparisionCheck} from 'assets/images';
+import {Link} from 'gatsby';
 
 const useStyles = createStyles(theme => ({
 	content: {
@@ -89,9 +90,9 @@ const Done = () => {
 				<Text className={classes.normalText} size={24} mb={64}>
 					We’ve got all your details and we will be sending your reports soon on your email address.
 				</Text>
-				<Button type='submit' onClick={stepper.nextStep}>
-					Check out our other pages
-				</Button>
+				<Link to='/resources/'>
+					<Button>Patient Access Resources</Button>
+				</Link>
 			</Box>
 		</Grid.Col>
 	);
