@@ -44,7 +44,9 @@ const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 					config={{
 						youtube: {
 							playerVars: {
-								origin,
+								origin: 'https://www.youtube.com',
+								enablejsapi: 1,
+								widget_referrer: origin,
 							},
 						},
 					}}
