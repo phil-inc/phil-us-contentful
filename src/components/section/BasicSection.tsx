@@ -17,7 +17,7 @@ import {
 import {Location} from '@reach/router';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import {Link, Script} from 'gatsby';
+import {graphql, Link, Script, useStaticQuery} from 'gatsby';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
@@ -68,6 +68,18 @@ const useStyles = createStyles(theme => ({
 		a: {
 			color: '#00827E',
 			textDecoration: 'none',
+		},
+	},
+
+	hubspotContactForm: {
+		minHeight: 790,
+
+		'&[data-hs-forms-root="true"]': {
+			minHeight: 0,
+
+			[theme.fn.largerThan('md')]: {
+				minHeight: 790,
+			},
 		},
 	},
 }));
@@ -135,6 +147,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		},
 	};
 
+	const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
 	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
 	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
 
@@ -159,6 +172,57 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 			setHasRendered(true);
 		}
 	}
+
+	// Scroll to top on hubspot form submit
+	React.useEffect(() => {
+		const parentDiv = document.getElementById('hubspotContactForm');
+
+		if (window.location.pathname === '/contact/') {
+			if (!isSubmitted) {
+				let observer: MutationObserver;
+
+				// eslint-disable-next-line prefer-const
+				observer = new MutationObserver(mutations => {
+					mutations.forEach(mutation => {
+						// Check if the added or removed nodes belong to a HubSpot form
+						const addedNodes = Array.from(mutation.addedNodes);
+
+						const isHubSpotFormAdded = addedNodes.some(
+							(node: Element) => node.className.includes('hs-form') || node.id.includes('hs-form'),
+						);
+
+						if (isHubSpotFormAdded) {
+							// Get the form element and the submit button element
+							const form = (mutation.target as Element).querySelector('form.hs-form');
+
+							const submitButton = form?.querySelector('input[type="submit"]');
+							if (submitButton) {
+								submitButton.addEventListener('click', () => {
+									observer.disconnect();
+									setIsSubmitted(true);
+									window.scrollTo({top: 0, behavior: 'smooth'});
+								});
+							}
+						}
+					});
+				});
+
+				// Configure the observer to watch for changes in the parent of the button you want to find
+				const observerConfig = {
+					childList: true,
+					subtree: true,
+				};
+
+				if (parentDiv) {
+					observer.observe(parentDiv.parentNode, observerConfig);
+				}
+
+				return () => {
+					observer.disconnect();
+				};
+			}
+		}
+	}, [hasRendered]);
 
 	return (
 		<Location>
@@ -206,9 +270,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 											mt={handleSpacing(theme, theme.spacing.sm)}
 											mb={handleSpacing(theme, theme.spacing.md)}
 										/>
-										<Box sx={{minHeight: 790, height: '100%', transition: 'all 0.5 ease'}}>
+										<Box sx={{height: hasRendered ? 'auto' : 790}}>
 											{hasRendered ? (
-												<div id='hubspotContactForm'></div>
+												<div className={classes.hubspotContactForm} id='hubspotContactForm'></div>
 											) : (
 												<Center>
 													<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
@@ -253,7 +317,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 									background={isVideoContent(section.asset.file.contentType) ? 'white' : null}
 									expanded={location.pathname === '/contact/'}
 								>
-									<Asset asset={section.asset} youtubeVideoURL={section.youtubeVideoUrl} />
+									<Asset asset={section.asset} youtubeVideoURL={section?.youtubeVideoUrl} />
 								</ImageContainer>
 							</Grid.Col>
 						</Grid>
