@@ -148,6 +148,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	};
 
 	const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
+	const [isListenerAdded, setIsListenerAdded] = React.useState<boolean>(false);
 	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
 	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
 
@@ -178,7 +179,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		const parentDiv = document.getElementById('hubspotContactForm');
 
 		if (window.location.pathname === '/contact/') {
-			if (!isSubmitted) {
+			if (!isListenerAdded) {
 				let observer: MutationObserver;
 
 				// eslint-disable-next-line prefer-const
@@ -187,9 +188,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 						// Check if the added or removed nodes belong to a HubSpot form
 						const addedNodes = Array.from(mutation.addedNodes);
 
-						const isHubSpotFormAdded = addedNodes.some(
-							(node: Element) => node.className.includes('hs-form') || node.id.includes('hs-form'),
-						);
+						const isHubSpotFormAdded = addedNodes.some((node: Element) => {
+							if (node.className) {
+								return node.className.includes('hs-form') || node.id.includes('hs-form');
+							}
+
+							return false;
+						});
 
 						if (isHubSpotFormAdded) {
 							// Get the form element and the submit button element
@@ -202,6 +207,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 									setIsSubmitted(true);
 									window.scrollTo({top: 0, behavior: 'smooth'});
 								});
+								setIsListenerAdded(true);
 							}
 						}
 					});
