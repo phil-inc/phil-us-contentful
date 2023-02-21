@@ -8,8 +8,8 @@ type CareerArticleProps = {
 };
 
 const CareerArticle = ({title, url, location}: CareerArticleProps) => (
-	<Grid align={'center'} justify={'space-between'}>
-		<Grid.Col span={8}>
+	<Grid align='center' gutter='sm' justify='end'>
+		<Grid.Col xs={12} sm={9} lg={9}>
 			<Box>
 				<Text size={18} weight='bold'>
 					{title}
@@ -19,7 +19,7 @@ const CareerArticle = ({title, url, location}: CareerArticleProps) => (
 				</Text>
 			</Box>
 		</Grid.Col>
-		<Grid.Col span={4}>
+		<Grid.Col xs={12} sm={2} lg={3} offsetSm={1} offsetLg={0}>
 			<Anchor href={url} target='_blank'>
 				<Button>View details</Button>
 			</Anchor>

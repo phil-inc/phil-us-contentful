@@ -349,6 +349,7 @@ const generateStaticPages = async ({actions, graphql}) => {
 						heading
 					}
 					slug
+					noindex
 					isFaq
 					author {
 						id

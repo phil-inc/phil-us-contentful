@@ -7,10 +7,6 @@ import {Box, Grid, Title, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
-import {Script} from 'gatsby';
-import {getWindowProperty} from 'utils/getWindowProperty';
-
-const isProduction = process.env.NODE_ENV === 'production';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
@@ -35,6 +31,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${pageContext.title === 'Home' ? '/' : `/${title}`}`} />
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
 };
@@ -56,7 +53,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 					<Grid align='center' justify='space-between'>
 						<Grid.Col span={12}>
 							<Box>
-								<Title order={2}>Resources</Title>
+								<Title order={1}>Resources</Title>
 							</Box>
 						</Grid.Col>
 					</Grid>

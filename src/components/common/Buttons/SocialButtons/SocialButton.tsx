@@ -5,6 +5,7 @@ import type {TablerIcon} from '@tabler/icons';
 import {ESocialShare} from 'types/social';
 import {getShareLink} from 'utils/socialShare';
 import {Location} from '@reach/router';
+import {getWindowProperty} from 'utils/getWindowProperty';
 
 type TSocialButton = {
 	type: ESocialShare;
@@ -18,6 +19,7 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	const {start: clearClipboard} = useTimeout(() => {
 		clipboard.reset();
 	}, 100);
+	const [href, setHref] = React.useState<string>();
 
 	const useStyles = createStyles(() => ({
 		socialButton: {
@@ -66,35 +68,32 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 		}
 	}, [hovered]);
 
+	React.useEffect(() => {
+		const url: string = getWindowProperty('location.href', 'phil.us');
+		setHref(url);
+	}, []);
+
 	return (
-		<Location>
-			{({location}) => (
-				<Anchor
-					href={isCopyLink ? null : getShareLink(type, location.href)}
-					target='_blank'
-					onClick={isCopyLink ? onClick : null}
+		<Anchor href={isCopyLink ? null : getShareLink(type, href)} target='_blank' onClick={isCopyLink ? onClick : null}>
+			<Tooltip
+				color={clipboard.copied ? '#11827D' : '#01201F'}
+				label={computedLabel}
+				withArrow
+				arrowSize={10}
+				closeDelay={0}
+			>
+				<ActionIcon
+					ref={ref}
+					component='div'
+					size={40}
+					variant='filled'
+					radius='xl'
+					className={classes.socialButton}
 				>
-					<Tooltip
-						color={clipboard.copied ? '#11827D' : '#01201F'}
-						label={computedLabel}
-						withArrow
-						arrowSize={10}
-						closeDelay={0}
-					>
-						<ActionIcon
-							ref={ref}
-							component='div'
-							size={40}
-							variant='filled'
-							radius='xl'
-							className={classes.socialButton}
-						>
-							<IconComponent className={classes.socialIcon} size={16} />
-						</ActionIcon>
-					</Tooltip>
-				</Anchor>
-			)}
-		</Location>
+					<IconComponent className={classes.socialIcon} size={16} />
+				</ActionIcon>
+			</Tooltip>
+		</Anchor>
 	);
 };
 
