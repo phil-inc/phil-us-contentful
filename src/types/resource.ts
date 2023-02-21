@@ -19,6 +19,7 @@ export type TResource = {
 	createdAt: string;
 	heading: string;
 	subheading: string;
+	noindex?: boolean;
 	description: {
 		id: string;
 		description: string;
