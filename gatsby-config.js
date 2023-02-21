@@ -17,7 +17,7 @@ srcDirs.forEach(srcDir => {
 
 // Handle plugins
 module.exports = {
-	trailingSlash: "always",
+	trailingSlash: 'always',
 	siteMetadata: {
 		siteUrl: `https://phil.us`,
 	},
@@ -26,7 +26,20 @@ module.exports = {
 		`gatsby-plugin-image`,
 		`gatsby-transformer-sharp`,
 		`gatsby-transformer-inline-svg`,
-		`gatsby-plugin-advanced-sitemap-patch`,
+		{
+			resolve: `gatsby-plugin-advanced-sitemap-patch`,
+			options: {
+				exclude: [
+					`/dev-404-page`,
+					`/dev-404-page/`,
+					`/404`,
+					`/404/`,
+					`/404.html`,
+					`/field`
+				],
+				createLinkInHead: true,
+			},
+		},
 		{
 			resolve: `gatsby-plugin-sharp`,
 			options: {

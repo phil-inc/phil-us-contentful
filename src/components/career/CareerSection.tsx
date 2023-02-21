@@ -19,18 +19,6 @@ const useStyles = createStyles(theme => ({
 		},
 	},
 
-	section: {
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			display: 'none',
-		},
-	},
-
-	largeSection: {
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			display: 'none',
-		},
-	},
-
 	center: {
 		height: '100%',
 		display: 'flex',
@@ -57,9 +45,9 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 			>
 				<Grid.Col orderSm={1} lg={6} md={6} sm={12}>
 					<Box className={classes.center}>
-						<Group align={'center'}>
+						<Group align={'center'} mb={28}>
 							<Box>
-								<Title order={2}>
+								<Title order={1}>
 									<Text>Careers at Phil</Text>
 								</Title>
 							</Box>
@@ -87,7 +75,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 							))}
 					</Box>
 				</Grid.Col>
-				<Grid.Col orderSm={2} lg={6} md={6} sm={12} span='content'>
+				<Grid.Col orderSm={2} lg={6} md={6} sm={12}>
 					<ImageContainer fluid>
 						<Asset asset={heroAsset} />
 					</ImageContainer>
