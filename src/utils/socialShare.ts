@@ -4,11 +4,11 @@ import {getWindowProperty} from './getWindowProperty';
 /**
 @function getShareLink - Generate share links to be used as href.
 @param {ESocialShare} type - type of social share.
+@param {string} url - href.
 @returns {string} - returns the share link of the specified social media.
 */
-export const getShareLink = (type: ESocialShare, overrideUrl?: string) => {
+export const getShareLink = (type: ESocialShare, url: string) => {
 	let shareLink: string;
-	const url = getWindowProperty('location.href', overrideUrl);
 	const domain = getWindowProperty('location.hostname', 'phil.us');
 
 	switch (type) {

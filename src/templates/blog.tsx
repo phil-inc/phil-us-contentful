@@ -242,7 +242,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 						)}
 						<Text mb={42}>{body && renderRichText(body, options)}</Text>
 
-						<SocialShare />
+						{!noindex && <SocialShare />}
 
 						{Boolean(author) && <AuthorBlock author={author} />}
 					</Grid.Col>
@@ -250,7 +250,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 			</Container>
 
 			{/* Bottom Banners */}
-			{hasBanners ? banners.map(bannerFactory) : defaultBanners.map(r => r.banners.map(bannerFactory))}
+			{hasBanners ? banners.map(bannerFactory) : !noindex && defaultBanners.map(r => r.banners.map(bannerFactory))}
 		</Layout>
 	);
 };
