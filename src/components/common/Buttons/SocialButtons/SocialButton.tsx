@@ -58,7 +58,7 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	const computedLabel = clipboard.copied ? 'Link Copied!' : computeLabel(type);
 
 	const onClick = async () => {
-		const url = getShareLink(type);
+		const url = getShareLink(type, href);
 		clipboard.copy(url);
 	};
 
