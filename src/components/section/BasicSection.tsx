@@ -83,6 +83,12 @@ const useStyles = createStyles(theme => ({
 			},
 		},
 	},
+
+	formBody: {
+		[theme.fn.largerThan('md')]: {
+			minHeight: 790,
+		},
+	},
 }));
 
 type BasicSectionProps = {
@@ -277,7 +283,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 											mt={handleSpacing(theme, theme.spacing.sm)}
 											mb={handleSpacing(theme, theme.spacing.md)}
 										/>
-										<Box sx={{height: 790}}>
+										<Box className={classes.formBody}>
 											<ContactForm />
 											{/* {hasRendered ? (
 												<div className={classes.hubspotContactForm} id='hubspotContactForm'></div>

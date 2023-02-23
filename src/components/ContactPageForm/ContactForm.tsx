@@ -1,8 +1,11 @@
 import React from 'react';
-import {Box, Button, Grid, Group, Textarea, TextInput} from '@mantine/core';
+import {Anchor, Box, Text, Button, Grid, Group, Textarea, TextInput} from '@mantine/core';
 import {ContactFormProvider, useContactForm} from 'contexts/ContactFormContext';
+import http from 'utils/http';
+import {HttpStatusCode} from 'axios';
 
 const ContactForm: React.FC = () => {
+	const [isLoading, setisLoading] = React.useState(false);
 	const [isSubmitted, setisSubmitted] = React.useState(false);
 
 	const form = useContactForm({
@@ -22,7 +25,7 @@ const ContactForm: React.FC = () => {
 		},
 	});
 
-	const onSubmit = (values: typeof form.values) => {
+	const onSubmit = async (values: typeof form.values) => {
 		const portalId = '23154898';
 		const formGuid = '31cd219d-e1fd-441e-aeb7-b5681e821779';
 		const url = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formGuid}`;
@@ -68,30 +71,29 @@ const ContactForm: React.FC = () => {
 			},
 		};
 
-		const token = process.env.GATSBY_HUBSPOT_API_KEY;
+		try {
+			setisLoading(false);
 
-		fetch(url, {
-			method: 'POST',
-			headers: {
-				Authorization: 'Bearer ' + token,
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formData),
-		})
-			.then(res => {
-				console.log(res);
-			})
-			.catch(err => {
-				console.log(err);
-			});
+			const res = await http.post(url, formData);
+
+			if (res.status === HttpStatusCode.Ok) {
+				setisSubmitted(true);
+			}
+		} catch (error: unknown) {
+			console.log(error);
+		} finally {
+			setisLoading(false);
+		}
 	};
 
 	return (
 		<ContactFormProvider form={form}>
-			{form.values.who.length ? (
+			{isSubmitted ? (
+				<Text>Thanks for submitting the form!</Text>
+			) : form.values.who.length ? (
 				<form
-					onSubmit={form.onSubmit(values => {
-						onSubmit(values);
+					onSubmit={form.onSubmit(async values => {
+						await onSubmit(values);
 					})}
 				>
 					<Box mb={16}>
@@ -108,12 +110,16 @@ const ContactForm: React.FC = () => {
 						<TextInput label='Phone number' {...form.getInputProps('phone')} />
 						<Textarea label='Message' {...form.getInputProps('message')} />
 					</Box>
-					<Button type='submit'>Submit</Button>
+					<Button type='submit' loading={isLoading}>
+						Submit
+					</Button>
 				</form>
 			) : (
 				<Grid>
 					<Grid.Col span={6}>
-						<Button fullWidth>Patient/Caregiver</Button>
+						<Anchor style={{textDecoration: 'none'}} href='https://my.phil.us' target='_blank'>
+							<Button fullWidth>Patient/Caregiver</Button>
+						</Anchor>
 					</Grid.Col>
 					<Grid.Col span={6}>
 						<Button
