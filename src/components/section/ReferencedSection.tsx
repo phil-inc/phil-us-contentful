@@ -51,10 +51,11 @@ const useStyles = createStyles(theme => ({
 		div: {
 			justifyContent: 'start',
 			marginBottom: 0,
+			overflowWrap: 'anywhere',
 
 			h2: {
 				fontFamily: 'Raleway, sans-serif',
-				fontSize: 30,
+				fontSize: 'min(55px, calc(2rem + 0.197vw))',
 			},
 		},
 	},
@@ -62,11 +63,21 @@ const useStyles = createStyles(theme => ({
 	control: {
 		paddingLeft: 100,
 		paddingRight: 100,
+
+		[theme.fn.smallerThan('md')]: {
+			paddingLeft: 20,
+			paddingRight: 20,
+		},
 	},
 
 	content: {
 		paddingLeft: 105,
 		paddingRight: 105,
+
+		[theme.fn.smallerThan('md')]: {
+			paddingLeft: 20,
+			paddingRight: 20,
+		},
 	},
 
 	item: {
