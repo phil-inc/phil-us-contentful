@@ -10,7 +10,6 @@ type ExpandedProps = {
 	noMargin?: boolean;
 	py?: number;
 	pt?: number;
-	pb?: number;
 	mb?: number;
 	fullWidth?: boolean;
 };
@@ -29,7 +28,6 @@ const Expanded: React.FC<ExpandedProps> = ({
 	noMargin = false,
 	py = 0,
 	pt = 0,
-	pb = 0,
 	fullWidth = false,
 }) => {
 	const useStyles = createStyles(theme => ({
@@ -53,15 +51,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container
-			id={id}
-			fluid
-			className={classes.container}
-			py={py}
-			pt={Boolean(pt) && pt}
-			pb={Boolean(pb) && pb}
-			px={fullWidth ? 0 : null}
-		>
+		<Container id={id} fluid className={classes.container} py={py} pt={Boolean(pt) && pt} px={fullWidth ? 0 : null}>
 			{children}
 		</Container>
 	);
