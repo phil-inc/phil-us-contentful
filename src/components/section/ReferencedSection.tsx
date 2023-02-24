@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Title, Button, Group, Container, Box, Anchor, Divider, createStyles} from '@mantine/core';
+import {Grid, Title, Button, Group, Container, Box, Anchor, Divider, createStyles, Accordion} from '@mantine/core';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
 import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
@@ -24,6 +24,8 @@ import {getWindowProperty} from 'utils/getWindowProperty';
 import * as FullStory from '@fullstory/browser';
 import {isProduction} from 'utils/isProduction';
 import mixpanel from 'mixpanel-browser';
+import PageContext from 'contexts/PageContext';
+import {IconDownload} from '@tabler/icons';
 
 const useStyles = createStyles(theme => ({
 	divider: {
@@ -38,6 +40,42 @@ const useStyles = createStyles(theme => ({
 			width: 'fit-content',
 		},
 	},
+	chevron: {
+		svg: {
+			width: 40,
+			height: 40,
+		},
+	},
+
+	label: {
+		div: {
+			justifyContent: 'start',
+			marginBottom: 0,
+
+			h2: {
+				fontFamily: 'Raleway, sans-serif',
+				fontSize: 30,
+			},
+		},
+	},
+
+	control: {
+		paddingLeft: 100,
+		paddingRight: 100,
+	},
+
+	content: {
+		paddingLeft: 105,
+		paddingRight: 105,
+	},
+
+	item: {
+		background: '#F4F4F4',
+
+		'&[data-active]': {
+			background: '#F4F4F4',
+		},
+	},
 }));
 
 type ReferencedSectionProps = {
@@ -50,13 +88,13 @@ type ReferencedSectionProps = {
  * @returns Referenced Resources
  */
 
-// eslint-disable-next-line complexity
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	const params = new URLSearchParams(getWindowProperty('location.search', {}));
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
 	const {link, isExternal} = getLink(section);
 	const {classes, theme} = useStyles();
+	const context = React.useContext(PageContext);
 
 	React.useEffect(() => {
 		try {
@@ -212,6 +250,46 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		}
 	};
 
+	const ReferencedSectionTitle = () =>
+		Boolean(section.header?.length)
+		&& Boolean(!section.hideHeader)
+		&& (section.referenceType === 'Case Study'
+		|| section.referenceType === 'Phil Blog'
+		|| section.referenceType === 'White Paper'
+		|| section.referenceType === 'Upcoming Events' ? (
+				<Box mb={handleSpacing(theme, theme.spacing.md)}>
+					<Title order={3} size={35}>
+						{section.header}
+					</Title>
+					<Divider variant='dashed' size={1} className={classes.divider} />
+				</Box>
+			) : (
+				<Group position='center' mb={28}>
+					<Title order={2} color={textColor}>
+						{section.header}
+					</Title>
+				</Group>
+			));
+
+	const ReferencedSectionBody = () =>
+		section.referenceType === 'Image Carousel' ? (
+			<ResourceCarousel imageCaraouselSection={section} />
+		) : (
+			<Grid
+				grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
+				columns={GRID_COLUMNS}
+				gutter={section.referenceType === 'Stats Card with Arrows' ? 20 : theme.spacing.md}
+				m={0}
+				mx={-10}
+			>
+				{section.references.map((resource, index, array) => (
+					<Grid.Col key={resource.id + 'mapReferencedSectionResource'} {...getSpan()}>
+						{renderResource(section.header, resource, index, array.length)}
+					</Grid.Col>
+				))}
+			</Grid>
+		);
+
 	return (
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
@@ -229,47 +307,44 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				|| section.referenceType === 'Phil Blog'
 				|| section.referenceType === 'White Paper'
 				|| section.referenceType === 'Upcoming Events'
+				|| context.title === 'Field'
 					? 0
 					: handleSpacing(theme, 92)
 			}
 			fullWidth={section.referenceType === 'Image Carousel'}
+			pb={context.title === 'Field' ? 44 : 0}
 		>
-			{Boolean(section.header?.length)
-				&& Boolean(!section.hideHeader)
-				&& (section.referenceType === 'Case Study'
-				|| section.referenceType === 'Phil Blog'
-				|| section.referenceType === 'White Paper'
-				|| section.referenceType === 'Upcoming Events' ? (
-						<Box mb={handleSpacing(theme, theme.spacing.md)}>
-							<Title order={3} size={35}>
-								{section.header}
-							</Title>
-							<Divider variant='dashed' size={1} className={classes.divider} />
-						</Box>
-					) : (
-						<Group position='center' mb={28}>
-							<Title order={2} color={textColor}>
-								{section.header}
-							</Title>
-						</Group>
-					))}
-			{section.referenceType === 'Image Carousel' ? (
-				<ResourceCarousel imageCaraouselSection={section} />
-			) : (
-				<Grid
-					grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
-					columns={GRID_COLUMNS}
-					gutter={section.referenceType === 'Stats Card with Arrows' ? 20 : theme.spacing.md}
-					m={0}
-					mx={-10}
+			{context.title === 'Field' ? (
+				<Accordion
+					variant='separated'
+					radius='xs'
+					chevronPosition='left'
+					chevronSize={44}
+					classNames={{
+						chevron: classes.chevron,
+						label: classes.label,
+						control: classes.control,
+						content: classes.content,
+						item: classes.item,
+					}}
 				>
-					{section.references.map((resource, index, array) => (
-						<Grid.Col key={resource.id + 'mapReferencedSectionResource'} {...getSpan()}>
-							{renderResource(section.header, resource, index, array.length)}
-						</Grid.Col>
-					))}
-				</Grid>
+					<Accordion.Item value={section.id}>
+						<Accordion.Control>
+							<ReferencedSectionTitle />
+						</Accordion.Control>
+						<Accordion.Panel>
+							<ReferencedSectionBody />
+						</Accordion.Panel>
+					</Accordion.Item>{' '}
+				</Accordion>
+			) : (
+				<>
+					<ReferencedSectionTitle />
+					<ReferencedSectionBody />
+				</>
 			)}
+
+			{/* bottom buttons */}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
 				<Group position='center' mt={handleSpacing(theme, theme.spacing.lg)}>
 					{isExternal ? (

@@ -1,17 +1,18 @@
 import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid, Group, Anchor} from '@mantine/core';
 import classNames from 'classnames';
+import PageContext from 'contexts/PageContext';
 import {Link} from 'gatsby';
 import type {FC} from 'react';
 import React from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((theme, _params: {background: string; fontSize: number}) => ({
 	FAQWrapper: {
 		position: 'relative',
 		overflow: 'hidden',
 		padding: '30px 60px',
-		background: '#F4F4F4',
+		background: _params.background,
 		fontFamily: 'Raleway',
 		fontWeight: 700,
 		display: 'flex',
@@ -32,6 +33,7 @@ const useStyles = createStyles(theme => ({
 	title: {
 		textDecoration: 'none',
 		color: '#00201F',
+		fontSize: _params.fontSize,
 
 		'&:hover': {
 			color: '#EDBE3D',
@@ -44,7 +46,11 @@ type FAQProps = {
 };
 
 export const FAQ: FC<FAQProps> = ({resource}) => {
-	const {classes} = useStyles();
+	const context = React.useContext(PageContext);
+	const {classes} = useStyles({
+		background: context.title === 'Field' ? '#ffffff' : '#f4f4f4',
+		fontSize: context.title === 'Field' ? 24 : null,
+	});
 	const {link, isExternal} = getLink(resource);
 
 	return (
