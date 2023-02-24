@@ -30,6 +30,7 @@ import {isVideoContent} from 'utils/isVideoContent';
 import {parseScript} from 'utils/parseScript';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
+import ContactForm from 'components/ContactPageForm/ContactForm';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -80,6 +81,12 @@ const useStyles = createStyles(theme => ({
 			[theme.fn.largerThan('md')]: {
 				minHeight: 790,
 			},
+		},
+	},
+
+	formBody: {
+		[theme.fn.largerThan('md')]: {
+			minHeight: 790,
 		},
 	},
 }));
@@ -276,14 +283,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 											mt={handleSpacing(theme, theme.spacing.sm)}
 											mb={handleSpacing(theme, theme.spacing.md)}
 										/>
-										<Box sx={{height: hasRendered ? 'auto' : 790}}>
-											{hasRendered ? (
+										<Box className={classes.formBody}>
+											<ContactForm />
+											{/* {hasRendered ? (
 												<div className={classes.hubspotContactForm} id='hubspotContactForm'></div>
 											) : (
 												<Center>
 													<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
 												</Center>
-											)}
+											)} */}
 										</Box>
 									</>
 								) : (
