@@ -61,6 +61,15 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 						</Grid>
 					</Expanded>
 				)}
+				{title === 'Field' && (
+					<Expanded id={id} mb={60}>
+						<Box>
+							<Title order={1} mb={60}>
+								FAQ
+							</Title>
+						</Box>
+					</Expanded>
+				)}
 				{sections
 					.filter(section => !section.isHidden)
 					.map(section => (
