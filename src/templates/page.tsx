@@ -3,10 +3,11 @@ import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {SEO} from 'layouts/SEO/SEO';
-import {Box, Grid, Title, useMantineTheme} from '@mantine/core';
+import {Accordion, Box, Grid, Title, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
+import PageContext from 'contexts/PageContext';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
@@ -47,28 +48,39 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	let basicSectionCount = 0;
 
 	return (
-		<Layout>
-			{title === 'Resources' && (
-				<Expanded id={id} mb={handleSpacing(theme, 128)}>
-					<Grid align='center' justify='space-between'>
-						<Grid.Col span={12}>
-							<Box>
-								<Title order={1}>Resources</Title>
-							</Box>
-						</Grid.Col>
-					</Grid>
-				</Expanded>
-			)}
-			{sections
-				.filter(section => !section.isHidden)
-				.map(section => (
-					<Section
-						key={section.id + 'mapSectionComponent'}
-						section={section}
-						index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
-					/>
-				))}
-		</Layout>
+		<PageContext.Provider value={pageContext}>
+			<Layout>
+				{title === 'Resources' && (
+					<Expanded id={id} mb={handleSpacing(theme, 128)}>
+						<Grid align='center' justify='space-between'>
+							<Grid.Col span={12}>
+								<Box>
+									<Title order={1}>Resources</Title>
+								</Box>
+							</Grid.Col>
+						</Grid>
+					</Expanded>
+				)}
+				{title === 'Field' && (
+					<Expanded id={id} mb={60}>
+						<Box>
+							<Title order={1} mb={60}>
+								FAQ
+							</Title>
+						</Box>
+					</Expanded>
+				)}
+				{sections
+					.filter(section => !section.isHidden)
+					.map(section => (
+						<Section
+							key={section.id + 'mapSectionComponent'}
+							section={section}
+							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
+						/>
+					))}
+			</Layout>
+		</PageContext.Provider>
 	);
 };
 
