@@ -2,7 +2,6 @@ const slugify = require('slugify');
 
 const careerTemplate = require.resolve(`./src/templates/career.tsx`);
 const pageTemplate = require.resolve(`./src/templates/page.tsx`);
-const contactTemplate = require.resolve(`./src/templates/contact.tsx`);
 
 const generateMainPages = async ({actions, graphql}) => {
 	// Return page
@@ -13,8 +12,6 @@ const generateMainPages = async ({actions, graphql}) => {
 		// Choose template
 		if (page.title === 'Careers') {
 			component = careerTemplate;
-		} else if (page.title === 'Contact') {
-			component = contactTemplate
 		} else {
 			component = pageTemplate;
 		}
