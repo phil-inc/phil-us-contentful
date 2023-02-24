@@ -55,7 +55,7 @@ const useStyles = createStyles(theme => ({
 
 			h2: {
 				fontFamily: 'Raleway, sans-serif',
-				fontSize: 'min(55px, calc(2rem + 0.197vw))',
+				fontSize: 'min(55px, calc(1.5rem + 0.31vw))',
 			},
 		},
 	},
