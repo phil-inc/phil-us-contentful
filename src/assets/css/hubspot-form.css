@@ -27,7 +27,7 @@ fieldset {
 }
 
 fieldset:has(.hs-form-field[style*="display: none"]){
-    display: none !important;
+    display: none;
 }
 
 textarea {

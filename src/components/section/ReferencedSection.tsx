@@ -326,7 +326,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					: handleSpacing(theme, 92)
 			}
 			fullWidth={section.referenceType === 'Image Carousel'}
-			pb={24}
+			pb={context.title === 'Field' ? 24 : 0}
 		>
 			{context.title === 'Field' ? (
 				<Accordion
