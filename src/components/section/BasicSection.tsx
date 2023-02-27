@@ -109,7 +109,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const HEADING_FIRST = 1;
 	const HEADING_SECOND = 2;
 
-	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	const {classes, theme} = useStyles();
 	const {link, isExternal} = getLink(section);
 
@@ -154,88 +153,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		},
 	};
 
-	const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
-	const [isListenerAdded, setIsListenerAdded] = React.useState<boolean>(false);
 	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
 	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
 
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
-
-	// Create form if section has hubspot form
-	if (section.isHubspotEmbed) {
-		const object: any = parseScript(section.body);
-
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const [formProps] = object;
-
-		// Create form
-		const {loaded, formCreated} = useHubspotForm({
-			target: '#hubspotContactForm',
-			...formProps,
-		});
-
-		// Handle loader
-		if (loaded && formCreated && !hasRendered) {
-			setHasRendered(true);
-		}
-	}
-
-	// Scroll to top on hubspot form submit
-	React.useEffect(() => {
-		const parentDiv = document.getElementById('hubspotContactForm');
-
-		if (window.location.pathname === '/contact/') {
-			if (!isListenerAdded) {
-				let observer: MutationObserver;
-
-				// eslint-disable-next-line prefer-const
-				observer = new MutationObserver(mutations => {
-					mutations.forEach(mutation => {
-						// Check if the added or removed nodes belong to a HubSpot form
-						const addedNodes = Array.from(mutation.addedNodes);
-
-						const isHubSpotFormAdded = addedNodes.some((node: Element) => {
-							if (node.className) {
-								return node.className.includes('hs-form') || node.id.includes('hs-form');
-							}
-
-							return false;
-						});
-
-						if (isHubSpotFormAdded) {
-							// Get the form element and the submit button element
-							const form = (mutation.target as Element).querySelector('form.hs-form');
-
-							const submitButton = form?.querySelector('input[type="submit"]');
-							if (submitButton) {
-								submitButton.addEventListener('click', () => {
-									observer.disconnect();
-									setIsSubmitted(true);
-									window.scrollTo({top: 0, behavior: 'smooth'});
-								});
-								setIsListenerAdded(true);
-							}
-						}
-					});
-				});
-
-				// Configure the observer to watch for changes in the parent of the button you want to find
-				const observerConfig = {
-					childList: true,
-					subtree: true,
-				};
-
-				if (parentDiv) {
-					observer.observe(parentDiv.parentNode, observerConfig);
-				}
-
-				return () => {
-					observer.disconnect();
-				};
-			}
-		}
-	}, [hasRendered]);
 
 	return (
 		<Location>
@@ -284,14 +206,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 											mb={handleSpacing(theme, theme.spacing.md)}
 										/>
 										<Box className={classes.formBody}>
-											<ContactForm />
-											{/* {hasRendered ? (
-												<div className={classes.hubspotContactForm} id='hubspotContactForm'></div>
-											) : (
-												<Center>
-													<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
-												</Center>
-											)} */}
+											<ContactForm section={section} />
 										</Box>
 									</>
 								) : (
