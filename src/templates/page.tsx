@@ -3,7 +3,7 @@ import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {SEO} from 'layouts/SEO/SEO';
-import {Accordion, Box, Grid, Title, useMantineTheme} from '@mantine/core';
+import {Accordion, Box, Container, createStyles, Grid, Title, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
@@ -41,11 +41,28 @@ type PageTemplateProps = {
 	pageContext: ContentfulPage;
 };
 
+const useStyles = createStyles((theme, {title}: {title: string}) => ({
+	container: {
+		margin: 0,
+		padding: '0px 100px',
+
+		[theme.fn.smallerThan('md')]: {
+			padding: title === 'Field' ? '0px 100px' : '42px 100px',
+		},
+
+		[theme.fn.smallerThan('sm')]: {
+			padding: title === 'Field' ? '0px 16px' : '42px 16px',
+		},
+	},
+}));
+
 const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	const {id, sections, title} = pageContext;
 	const theme = useMantineTheme();
 
 	let basicSectionCount = 0;
+
+	const {classes} = useStyles({title});
 
 	return (
 		<PageContext.Provider value={pageContext}>
@@ -62,13 +79,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 					</Expanded>
 				)}
 				{title === 'Field' && (
-					<Expanded id={id} mb={60}>
-						<Box>
-							<Title order={1} mb={60}>
-								FAQ
-							</Title>
-						</Box>
-					</Expanded>
+					<Container className={classes.container}>
+						<Title order={1} mb={60}>
+							FAQ
+						</Title>
+					</Container>
 				)}
 				{sections
 					.filter(section => !section.isHidden)
