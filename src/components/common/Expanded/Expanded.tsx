@@ -44,11 +44,11 @@ const Expanded: React.FC<ExpandedProps> = ({
 			padding: '100px 100px 92px 100px',
 
 			[theme.fn.smallerThan('md')]: {
-				padding: context.title === 'Field' ? '0px 100px' : '42px 100px',
+				padding: context.title === 'Field' ? '0px 100px 24px' : '42px 100px',
 			},
 
 			[theme.fn.smallerThan('sm')]: {
-				padding: context.title === 'Field' ? '0px 16px' : '42px 16px',
+				padding: context.title === 'Field' ? '0px 16px 24px' : '42px 16px',
 			},
 		},
 	}));

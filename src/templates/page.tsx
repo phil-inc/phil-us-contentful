@@ -80,7 +80,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 				)}
 				{title === 'Field' && (
 					<Container className={classes.container}>
-						<Title order={1} mb={60}>
+						<Title order={1} mb={30}>
 							FAQ
 						</Title>
 					</Container>

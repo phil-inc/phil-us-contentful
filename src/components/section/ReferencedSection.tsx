@@ -67,6 +67,7 @@ const useStyles = createStyles(theme => ({
 		borderBottom: '0px !important',
 
 		[theme.fn.smallerThan('md')]: {
+			padding: 20,
 			paddingLeft: 20,
 			paddingRight: 20,
 		},
