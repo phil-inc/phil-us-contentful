@@ -1,6 +1,7 @@
 import React from 'react';
 import {Container, createStyles} from '@mantine/core';
 import {handleSpacing} from 'utils/handleSpacing';
+import PageContext from 'contexts/PageContext';
 
 type ExpandedProps = {
 	id: string;
@@ -32,6 +33,8 @@ const Expanded: React.FC<ExpandedProps> = ({
 	pb = 0,
 	fullWidth = false,
 }) => {
+	const context = React.useContext(PageContext);
+
 	const useStyles = createStyles(theme => ({
 		container: {
 			background,
@@ -41,11 +44,11 @@ const Expanded: React.FC<ExpandedProps> = ({
 			padding: '100px 100px 92px 100px',
 
 			[theme.fn.smallerThan('md')]: {
-				padding: '42px 100px',
+				padding: context.title === 'Field' ? '0px 100px 24px' : '42px 100px',
 			},
 
 			[theme.fn.smallerThan('sm')]: {
-				padding: '42px 16px',
+				padding: context.title === 'Field' ? '0px 16px 24px' : '42px 16px',
 			},
 		},
 	}));

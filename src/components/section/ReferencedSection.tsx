@@ -55,16 +55,19 @@ const useStyles = createStyles(theme => ({
 
 			h2: {
 				fontFamily: 'Raleway, sans-serif',
-				fontSize: 'min(55px, calc(2rem + 0.197vw))',
+				fontSize: 'min(55px, calc(1.5rem + 0.31vw))',
 			},
 		},
 	},
 
 	control: {
+		padding: 20,
 		paddingLeft: 100,
 		paddingRight: 100,
+		borderBottom: '0px !important',
 
 		[theme.fn.smallerThan('md')]: {
+			padding: 20,
 			paddingLeft: 20,
 			paddingRight: 20,
 		},
@@ -323,7 +326,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					: handleSpacing(theme, 92)
 			}
 			fullWidth={section.referenceType === 'Image Carousel'}
-			pb={context.title === 'Field' ? 44 : 0}
+			pb={context.title === 'Field' ? 24 : 0}
 		>
 			{context.title === 'Field' ? (
 				<Accordion
