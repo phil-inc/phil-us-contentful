@@ -68,7 +68,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 		<PageContext.Provider value={pageContext}>
 			<Layout>
 				{title === 'Resources' && (
-					<Expanded id={id} mb={handleSpacing(theme, 128)}>
+					<Expanded id={id} py={0}>
 						<Grid align='center' justify='space-between'>
 							<Grid.Col span={12}>
 								<Box>

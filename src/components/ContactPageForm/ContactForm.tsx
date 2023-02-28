@@ -1,12 +1,10 @@
 import React from 'react';
-import {Anchor, Box, Text, Button, Grid, Group, Textarea, TextInput, createStyles, Center, Loader} from '@mantine/core';
-import {ContactFormProvider, useContactForm} from 'contexts/ContactFormContext';
-import http from 'utils/http';
-import {HttpStatusCode} from 'axios';
-import type {IReferencedSection, ISection} from 'types/section';
+import {Anchor, Button, Grid, createStyles, Center, Loader} from '@mantine/core';
+import type {ISection} from 'types/section';
 import {parseScript} from 'utils/parseScript';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {handleSpacing} from 'utils/handleSpacing';
+import type {TResponse} from 'extract-json-from-string';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -67,10 +65,9 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-const HubspotForm = ({formTag, section}) => {
+const HubspotForm = ({formProps, section, formTag}: {formProps: TResponse; section: ISection; formTag: string}) => {
 	const {classes, theme} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
-	const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
 	const [isListenerAdded, setIsListenerAdded] = React.useState<boolean>(false);
 
 	// Scroll to top on hubspot form submit
@@ -103,7 +100,6 @@ const HubspotForm = ({formTag, section}) => {
 							if (submitButton) {
 								submitButton.addEventListener('click', () => {
 									observer.disconnect();
-									setIsSubmitted(true);
 									window.scrollTo({top: 0, behavior: 'smooth'});
 								});
 								setIsListenerAdded(true);
@@ -129,28 +125,14 @@ const HubspotForm = ({formTag, section}) => {
 		}
 	}, [hasRendered]);
 
-	const config = {
-		hcp: {
-			portalId: '23154898',
-			formId: '31cd219d-e1fd-441e-aeb7-b5681e821779',
-		},
-		manufacturer: {
-			portalId: '23154898',
-			formId: '0762647c-07e8-485d-af1f-76dbf51ad37b',
-		},
-	};
-
-	if (formTag.length) {
-		const object: any = parseScript(section.body);
-
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const [formProps] = object;
-
+	if (section.isHubspotEmbed) {
 		// Create form
 		const {loaded, formCreated} = useHubspotForm({
 			target: '#hubspotContactForm',
-			...(formTag === 'hcp' && config.hcp),
-			...(formTag === 'manufacturer' && config.manufacturer),
+			...(Boolean(!formProps.custom) && {formId: formProps.formId, portalId: formProps.portalId}),
+			...(formTag === 'hcp' && Boolean(formProps.custom) && formProps.custom.forms.hcp),
+			...(formTag === 'manufacturer' && Boolean(formProps.custom) && formProps.custom.forms.manufacturer),
+			...(formTag === 'other' && Boolean(formProps.custom) && formProps.custom.forms.other),
 		});
 
 		// Handle loader
@@ -171,8 +153,12 @@ const HubspotForm = ({formTag, section}) => {
 const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 	const [formTag, setFormTag] = React.useState<string>('');
 
-	return formTag.length ? (
-		<HubspotForm formTag={formTag} section={section} />
+	const object: any = parseScript(section.body);
+
+	const [formProps] = object as TResponse[];
+
+	return formTag.length || Boolean(!formProps.custom) ? (
+		<HubspotForm formProps={formProps} formTag={formTag} section={section} />
 	) : (
 		<Grid>
 			<Grid.Col span={6}>

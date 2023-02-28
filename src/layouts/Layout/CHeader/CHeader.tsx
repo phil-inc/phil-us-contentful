@@ -275,24 +275,18 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	const [target, setTarget] = useState<string>('');
 
-	const [collapseRef, setCollapseRef] = useState<HTMLElement>();
-	const [listRef, setListRef] = useState<HTMLElement>();
-	const [activePageLI, setActivePageLI] = useState<HTMLLIElement | undefined>();
+	const [activePageLI, setActivePageLI] = useState<HTMLLIElement>();
 
-	useClickOutside(
-		() => {
-			close();
-		},
-		null,
-		[collapseRef, listRef],
-	);
+	const ref = useClickOutside(() => {
+		close();
+	});
 
 	const onNavLinkClick = event => {
 		if (event.target.textContent === target) {
 			toggle();
 		} else {
 			open();
-			setTarget(event.target.textContent);
+			setTarget(event.target.textContent as string);
 		}
 	};
 
@@ -303,7 +297,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 		const INDICATOR_SIZE = 20;
 		const INITIAL_OFFSET = 25;
-		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`)!;
 
 		li.classList.add('active');
 
@@ -313,10 +307,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	}
 
 	React.useEffect(() => {
-		const navBar = document.querySelector('.navbar');
+		const navBar = document.querySelector('.navbar')!;
 		const allLi = navBar.querySelectorAll('li');
 
-		const clickHandlers = [];
+		const clickHandlers: Array<(e: MouseEvent) => void> = [];
 
 		allLi.forEach(li => {
 			if (li.dataset.noindicator === 'true') {
@@ -360,11 +354,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	}, []);
 
 	React.useEffect(() => {
-		const navBar = document.querySelector('.navbar');
+		const navBar = document.querySelector('.navbar')!;
 		const active = navBar.querySelector('.active');
 
 		if (Boolean(!opened) && Boolean(activePageLI)) {
-			if (activePageLI.dataset.noindicator === 'true') {
+			if (activePageLI!.dataset.noindicator === 'true') {
 				return;
 			}
 
@@ -372,21 +366,21 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 				active.classList.remove('active');
 			}
 
-			moveIntidatorActiveTo(activePageLI);
+			moveIntidatorActiveTo(activePageLI!);
 		} else if (Boolean(!opened) && Boolean(!activePageLI)) {
 			const active = navBar.querySelector('.active');
 			if (active) {
 				active.classList.remove('active');
 			}
 
-			const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+			const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`)!;
 			indicator.style.transform = '';
 		}
 	}, [opened, activePageLI]);
 
 	React.useEffect(() => {
-		const navBar = document.querySelector('.navbar');
-		const active: HTMLLIElement = navBar.querySelector('.active');
+		const navBar = document.querySelector('.navbar')!;
+		const active: HTMLLIElement = navBar.querySelector('.active')!;
 
 		if (active) {
 			moveIntidatorActiveTo(active);
@@ -425,7 +419,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						}}
 						className={classes.burger}
 					/>
-					<List ref={setListRef} className={classes.navLinksWrapper}>
+					<List ref={ref} className={classes.navLinksWrapper}>
 						<div className={classes.indicator}></div>
 						{pages
 							.filter(page => page.title !== 'Home')
@@ -661,7 +655,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						transitionDuration={150}
 						transitionTimingFunction='ease-out'
 						animateOpacity={false}
-						ref={setCollapseRef}
+						ref={ref}
 					>
 						<Container className={classes.container} fluid>
 							<List listStyleType='none' size='xl' styles={{itemWrapper: {width: '100%'}}}>

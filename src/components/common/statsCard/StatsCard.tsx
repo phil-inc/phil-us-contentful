@@ -5,8 +5,6 @@ import React from 'react';
 import type {TResource} from 'types/resource';
 import {ArrowIcon} from '../Asset/Arrow';
 import Asset from '../Asset/Asset';
-import type {IMixpanel} from 'contexts/MixpanelContext';
-import {MixpanelContext} from 'contexts/MixpanelContext';
 
 type StyleProps = {
 	arrow: boolean;
