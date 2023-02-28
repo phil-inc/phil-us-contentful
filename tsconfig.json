@@ -12,6 +12,7 @@
 		"noEmitOnError": true,
 		"allowJs": true,
 		"baseUrl": "./src",
+		"strictNullChecks": true,
 		"typeRoots": [
 			"./node_modules/@types",
 			"./src/@types"

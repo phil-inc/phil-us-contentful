@@ -1,4 +1,3 @@
-import {createStyles} from '@mantine/core';
 import CareerSection from 'components/career/CareerSection';
 import {Layout} from 'layouts/Layout/Layout';
 import {SEO} from 'layouts/SEO/SEO';
@@ -61,14 +60,15 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 			try {
 				const rawResponse = await fetch('https://capi.phil.us/api/web/v1/careers');
 				if (rawResponse.status === 200) {
-					const content: unknown = await rawResponse.json();
+					const content = (await rawResponse.json()) as Record<string, Record<string, unknown[]>>;
 					const sortedJobs = groupBy(content.data.jobs, 'department');
 
-					setIsLoading(false);
 					setCareers(sortedJobs);
 				}
 			} catch (error: unknown) {
 				console.log(error);
+			} finally {
+				setIsLoading(false);
 			}
 		})();
 	}, []);

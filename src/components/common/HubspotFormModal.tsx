@@ -1,7 +1,8 @@
-import {Center, Container, createStyles, Loader} from '@mantine/core';
 import React from 'react';
+import {Center, Container, createStyles, Loader} from '@mantine/core';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {parseScript} from 'utils/parseScript';
+import {type BodyType} from 'types/section';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -12,25 +13,27 @@ const useStyles = createStyles(theme => ({
 
 	container: {
 		padding: '0 20px 20px',
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+
+		[theme.fn.smallerThan('md')]: {
 			padding: '0 16px',
 		},
 	},
 }));
 
-const HubspotFormModal = ({hubspotEmbed}) => {
+const HubspotFormModal = ({hubspotEmbed}: {hubspotEmbed: BodyType}) => {
 	const {classes} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	if (hubspotEmbed) {
-		const object: any = parseScript(hubspotEmbed);
-		// TODO: Fix type later
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		const object = parseScript(hubspotEmbed);
 		const [formProps] = object;
+
+		console.log(formProps);
 
 		// Create form
 		const {loaded, formCreated} = useHubspotForm({
 			target: '#hubspotModalForm',
-			...formProps,
+			formId: formProps.formId,
+			portalId: formProps.portalId,
 		});
 
 		// Handle loader
@@ -40,7 +43,6 @@ const HubspotFormModal = ({hubspotEmbed}) => {
 	}
 
 	return (
-		// TODO: play around with padding for contact page style
 		<Container fluid className={classes.container}>
 			{hasRendered ? (
 				<div id='hubspotModalForm'></div>

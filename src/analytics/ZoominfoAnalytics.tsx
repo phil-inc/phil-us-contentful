@@ -4,7 +4,7 @@ import {Script} from 'gatsby';
 const ZoominfoAnalytics = () => (
 	<Script>
 		{`
-        window.ZIProjectKey = "${process.env.GATSBY_ZI_PROJECT_KEY}"; 
+        window.ZIProjectKey = "${process.env.GATSBY_ZI_PROJECT_KEY ?? ''}"; 
         var zi = document.createElement('script');
         (zi.type = 'text/javascript'),
         (zi.async = true),
