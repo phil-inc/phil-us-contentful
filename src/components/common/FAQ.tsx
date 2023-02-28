@@ -49,7 +49,7 @@ export const FAQ: FC<FAQProps> = ({resource}) => {
 	const context = React.useContext(PageContext);
 	const {classes} = useStyles({
 		background: context.title === 'Field' ? '#ffffff' : '#f4f4f4',
-		fontSize: context.title === 'Field' ? 24 : null,
+		...(context.title === 'Field' && {fontSize: 24}),
 	});
 	const {link, isExternal} = getLink(resource);
 

@@ -4,7 +4,6 @@ import {useClipboard, useHover, useTimeout} from '@mantine/hooks';
 import type {TablerIcon} from '@tabler/icons';
 import {ESocialShare} from 'types/social';
 import {getShareLink} from 'utils/socialShare';
-import {Location} from '@reach/router';
 import {getWindowProperty} from 'utils/getWindowProperty';
 
 type TSocialButton = {

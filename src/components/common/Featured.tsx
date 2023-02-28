@@ -100,7 +100,7 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 					)}
 				</Grid.Col>
 				<Grid.Col lg={7} sm={6} md={6} className={classes.center}>
-					<Box px={theme.spacing.sm} pr={pr} sx={{overflow: 'hidden'}}>
+					<Box pl={theme.spacing.sm} pr={60} sx={{overflow: 'hidden'}}>
 						{resource.heading && (
 							<>
 								{isExternal ? (

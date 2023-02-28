@@ -25,7 +25,6 @@ import * as FullStory from '@fullstory/browser';
 import {isProduction} from 'utils/isProduction';
 import mixpanel from 'mixpanel-browser';
 import PageContext from 'contexts/PageContext';
-import {IconDownload} from '@tabler/icons';
 
 const useStyles = createStyles(theme => ({
 	divider: {
@@ -114,8 +113,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		try {
 			const isFromSMSIntro = params.get('isFromSMSIntro');
 			if (section.referenceType === 'Stats Card with Arrows' && isFromSMSIntro === 'true' && isProduction) {
-				mixpanel.init(process.env.GATSBY_MIXPANEL_TOKEN);
-				FullStory.init({orgId: process.env.GATSBY_FULLSTORY_ORG_ID});
+				mixpanel.init(process.env.GATSBY_MIXPANEL_TOKEN ?? '');
+				FullStory.init({orgId: process.env.GATSBY_FULLSTORY_ORG_ID ?? ''});
 				mixpanel.track('PhilIntro_SMS_Clicked');
 			}
 		} catch (error: unknown) {
@@ -126,7 +125,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	// Get colors for resources based on index
 	const getColor = (index: number) => {
 		if (index % 3 === 0) {
-			return null;
+			return 'green';
 		}
 
 		if (index % 3 === 1) {
@@ -235,7 +234,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Stats Card':
 				return <StatsCard resource={resource} />;
 			case 'Stats Card with Arrows':
-				return <StatsCard resource={resource} arrow={true} index={index === arrayLength - 1 ? null : index} />;
+				return <StatsCard resource={resource} arrow={true} index={index === arrayLength - 1 ? undefined : index} />;
 
 			case 'Prescriber Journey':
 				return <PrescriberJourney resource={resource} />;
@@ -246,7 +245,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Investors':
 				return (
 					<Container className={classes.investorImage}>
-						<Asset asset={resource.asset} />
+						<Asset asset={resource.asset!} />
 					</Container>
 				);
 
@@ -265,9 +264,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	};
 
 	const ReferencedSectionTitle = () =>
-		Boolean(section.header?.length)
-		&& Boolean(!section.hideHeader)
-		&& (section.referenceType === 'Case Study'
+		section.referenceType === 'Case Study'
 		|| section.referenceType === 'Phil Blog'
 		|| section.referenceType === 'White Paper'
 		|| section.referenceType === 'Upcoming Events' ? (
@@ -283,7 +280,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						{section.header}
 					</Title>
 				</Group>
-			));
+			);
 
 	const ReferencedSectionBody = () =>
 		section.referenceType === 'Image Carousel' ? (
@@ -308,15 +305,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={background}
-			pt={
-				section.referenceType === 'Case Study'
-				|| section.referenceType === 'Phil Blog'
-				|| section.referenceType === 'White Paper'
-				|| section.referenceType === 'Upcoming Events'
-					? handleSpacing(theme, 92)
-					: 0
-			}
-			py={
+			pt={context.title === 'Field' ? 0 : handleSpacing(theme, 92)}
+			pb={
 				section.referenceType === 'Case Study'
 				|| section.referenceType === 'Phil Blog'
 				|| section.referenceType === 'White Paper'
@@ -326,13 +316,13 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					: handleSpacing(theme, 92)
 			}
 			fullWidth={section.referenceType === 'Image Carousel'}
-			pb={context.title === 'Field' ? 24 : 0}
 		>
 			{context.title === 'Field' ? (
 				<Accordion
 					variant='separated'
 					radius='xs'
 					chevronPosition='left'
+					mb={24}
 					chevronSize={44}
 					classNames={{
 						chevron: classes.chevron,
@@ -349,11 +339,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 						<Accordion.Panel>
 							<ReferencedSectionBody />
 						</Accordion.Panel>
-					</Accordion.Item>{' '}
+					</Accordion.Item>
 				</Accordion>
 			) : (
 				<>
-					<ReferencedSectionTitle />
+					{Boolean(section.header?.length) && Boolean(!section.hideHeader) && <ReferencedSectionTitle />}
 					<ReferencedSectionBody />
 				</>
 			)}

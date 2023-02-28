@@ -27,7 +27,7 @@ const useStyles = createStyles(theme => ({
 		fontWeight: 900,
 		fontSize: 34,
 		marginBottom: theme.spacing.md,
-		fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+		fontFamily: 'Raleway, sans-serif',
 
 		[theme.fn.smallerThan('sm')]: {
 			fontSize: 32,
