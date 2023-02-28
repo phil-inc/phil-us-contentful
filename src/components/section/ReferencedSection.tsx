@@ -294,7 +294,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				mx={-10}
 			>
 				{section.references.map((resource, index, array) => (
-					<Grid.Col key={resource.id + 'mapReferencedSectionResource'} {...getSpan()}>
+					<Grid.Col
+						p={section.referenceType === 'Investors' ? 0 : undefined}
+						key={resource.id + 'mapReferencedSectionResource'}
+						{...getSpan()}
+					>
 						{renderResource(section.header, resource, index, array.length)}
 					</Grid.Col>
 				))}
