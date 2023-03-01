@@ -1,5 +1,5 @@
 import React from 'react';
-import {Anchor, Button, Grid, createStyles, Center, Loader} from '@mantine/core';
+import {Anchor, Button, Grid, createStyles, Center, Loader, Text} from '@mantine/core';
 import type {ISection} from 'types/section';
 import {parseScript} from 'utils/parseScript';
 import {useHubspotForm, UseHubSpotFormProps} from '@aaronhayes/react-use-hubspot-form';
@@ -175,51 +175,57 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 	return formTag.length || Boolean(!formProps.custom) ? (
 		<HubspotForm formProps={formProps} formTag={formTag} section={section} />
 	) : (
-		<Grid>
-			<Grid.Col span={6}>
-				<Anchor style={{textDecoration: 'none'}} href='https://my.phil.us' target='_blank'>
-					<Button variant='outline' color='dark' fullWidth>
-						Patient/Caregiver
+		<>
+			<Text m={0} mb={16}>
+				Who are you (select one below)
+			</Text>
+
+			<Grid gutter={'sm'}>
+				<Grid.Col span={6}>
+					<Anchor style={{textDecoration: 'none'}} href='https://my.phil.us' target='_blank'>
+						<Button variant='outline' color='dark' fullWidth>
+							Patient/Caregiver
+						</Button>
+					</Anchor>
+				</Grid.Col>
+				<Grid.Col span={6}>
+					<Button
+						variant='outline'
+						color='dark'
+						onClick={() => {
+							setFormTag('HCP'.toLowerCase());
+						}}
+						fullWidth
+					>
+						HCP
 					</Button>
-				</Anchor>
-			</Grid.Col>
-			<Grid.Col span={6}>
-				<Button
-					variant='outline'
-					color='dark'
-					onClick={() => {
-						setFormTag('HCP'.toLowerCase());
-					}}
-					fullWidth
-				>
-					HCP
-				</Button>
-			</Grid.Col>
-			<Grid.Col span={6}>
-				<Button
-					variant='outline'
-					color='dark'
-					onClick={() => {
-						setFormTag('Manufacturer'.toLowerCase());
-					}}
-					fullWidth
-				>
-					Manufacturer
-				</Button>
-			</Grid.Col>
-			<Grid.Col span={6}>
-				<Button
-					variant='outline'
-					color='dark'
-					onClick={() => {
-						setFormTag('Other'.toLowerCase());
-					}}
-					fullWidth
-				>
-					Other
-				</Button>
-			</Grid.Col>
-		</Grid>
+				</Grid.Col>
+				<Grid.Col span={6}>
+					<Button
+						variant='outline'
+						color='dark'
+						onClick={() => {
+							setFormTag('Manufacturer'.toLowerCase());
+						}}
+						fullWidth
+					>
+						Manufacturer
+					</Button>
+				</Grid.Col>
+				<Grid.Col span={6}>
+					<Button
+						variant='outline'
+						color='dark'
+						onClick={() => {
+							setFormTag('Other'.toLowerCase());
+						}}
+						fullWidth
+					>
+						Other
+					</Button>
+				</Grid.Col>
+			</Grid>
+		</>
 	);
 };
 
