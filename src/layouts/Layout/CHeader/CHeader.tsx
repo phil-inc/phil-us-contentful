@@ -262,6 +262,9 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	const {width} = useViewportSize();
 	const {classes} = useStyles();
 
+	const [navRef, setNavRef] = React.useState<HTMLUListElement | undefined>(null);
+	const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement | undefined>(null);
+
 	const [opened, {toggle, open, close}] = useDisclosure(false, {
 		onClose() {
 			setTarget('');
@@ -277,9 +280,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	const [activePageLI, setActivePageLI] = useState<HTMLLIElement>();
 
-	const ref = useClickOutside(() => {
-		close();
-	});
+	const ref = useClickOutside(
+		() => {
+			close();
+		},
+		null,
+		[navRef, collapseRef],
+	);
 
 	const onNavLinkClick = event => {
 		if (event.target.textContent === target) {
@@ -419,7 +426,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						}}
 						className={classes.burger}
 					/>
-					<List ref={ref} className={classes.navLinksWrapper}>
+					<List ref={setNavRef} className={classes.navLinksWrapper}>
 						<div className={classes.indicator}></div>
 						{pages
 							.filter(page => page.title !== 'Home')
@@ -655,7 +662,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 						transitionDuration={150}
 						transitionTimingFunction='ease-out'
 						animateOpacity={false}
-						ref={ref}
+						ref={setCollapseRef}
 					>
 						<Container className={classes.container} fluid>
 							<List listStyleType='none' size='xl' styles={{itemWrapper: {width: '100%'}}}>
