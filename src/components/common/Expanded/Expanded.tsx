@@ -26,11 +26,11 @@ const Expanded: React.FC<ExpandedProps> = ({
 	children,
 	background = '#FFFFFF',
 	minHeight = '100%',
-	mb = 0,
+	mb,
 	noMargin = false,
-	py = 0,
-	pt = 0,
-	pb = 0,
+	py,
+	pt,
+	pb,
 	fullWidth = false,
 }) => {
 	const context = React.useContext(PageContext);
@@ -44,11 +44,11 @@ const Expanded: React.FC<ExpandedProps> = ({
 			padding: '100px 100px 92px 100px',
 
 			[theme.fn.smallerThan('md')]: {
-				padding: context.title === 'Field' ? '0px 100px 24px' : '42px 100px',
+				padding: context.title === 'Field' ? '0px 100px' : '42px 100px',
 			},
 
 			[theme.fn.smallerThan('sm')]: {
-				padding: context.title === 'Field' ? '0px 16px 24px' : '42px 16px',
+				padding: context.title === 'Field' ? '0px 16px' : '42px 16px',
 			},
 		},
 	}));
@@ -61,9 +61,10 @@ const Expanded: React.FC<ExpandedProps> = ({
 			fluid
 			className={classes.container}
 			py={py}
-			pt={Boolean(pt) && pt}
-			pb={Boolean(pb) && pb}
-			px={fullWidth ? 0 : null}
+			pt={pt}
+			pb={pb}
+			mb={mb}
+			px={fullWidth ? 0 : undefined}
 		>
 			{children}
 		</Container>

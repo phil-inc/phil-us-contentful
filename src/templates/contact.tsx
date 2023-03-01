@@ -3,11 +3,10 @@ import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {SEO} from 'layouts/SEO/SEO';
-import {Accordion, Box, Container, createStyles, Grid, Title, useMantineTheme} from '@mantine/core';
+import {Box, Grid, Title, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
-import PageContext from 'contexts/PageContext';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
@@ -37,66 +36,29 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 	);
 };
 
-type PageTemplateProps = {
+type ContactTemplateProps = {
 	pageContext: ContentfulPage;
 };
 
-const useStyles = createStyles((theme, {title}: {title: string}) => ({
-	container: {
-		margin: 0,
-		padding: '0px 100px',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: title === 'Field' ? '0px 100px' : '42px 100px',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: title === 'Field' ? '0px 16px' : '42px 16px',
-		},
-	},
-}));
-
-const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
+const ContactTemplate: React.FC<ContactTemplateProps> = ({pageContext}) => {
 	const {id, sections, title} = pageContext;
 	const theme = useMantineTheme();
 
 	let basicSectionCount = 0;
 
-	const {classes} = useStyles({title});
-
 	return (
-		<PageContext.Provider value={pageContext}>
-			<Layout>
-				{title === 'Resources' && (
-					<Expanded id={id} py={0}>
-						<Grid align='center' justify='space-between'>
-							<Grid.Col span={12}>
-								<Box>
-									<Title order={1}>Resources</Title>
-								</Box>
-							</Grid.Col>
-						</Grid>
-					</Expanded>
-				)}
-				{title === 'Field' && (
-					<Container className={classes.container}>
-						<Title order={1} mb={30}>
-							FAQ
-						</Title>
-					</Container>
-				)}
-				{sections
-					.filter(section => !section.isHidden)
-					.map(section => (
-						<Section
-							key={section.id + 'mapSectionComponent'}
-							section={section}
-							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
-						/>
-					))}
-			</Layout>
-		</PageContext.Provider>
+		<Layout>
+			{sections
+				.filter(section => !section.isHidden)
+				.map(section => (
+					<Section
+						key={section.id + 'mapSectionComponent'}
+						section={section}
+						index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
+					/>
+				))}
+		</Layout>
 	);
 };
 
-export default React.memo(PageTemplate);
+export default React.memo(ContactTemplate);

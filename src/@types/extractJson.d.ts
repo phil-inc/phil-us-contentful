@@ -1,10 +1,20 @@
 declare module 'extract-json-from-string' {
 	import * as extractJson from 'extract-json-from-string';
 
-	type TResponse = {
+	type formDetails = {
 		portalId: string;
 		formId: string;
+	};
+
+	type TResponse = formDetails & {
 		region?: string;
+		custom?: {
+			forms: {
+				hcp: formDetails;
+				manufacturer: formDetails;
+				other: formDetails;
+			};
+		};
 	};
 
 	/**

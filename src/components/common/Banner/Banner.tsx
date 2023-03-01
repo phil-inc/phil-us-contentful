@@ -80,12 +80,13 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 							<Grid.Col lg={2} sm={12}>
 								<Modal
 									size='ls'
+									p={0}
 									opened={openHubspotModal}
 									onClose={() => {
 										setopenHubspotModal(false);
 									}}
 								>
-									<HubspotFormModal hubspotEmbed={hubspotEmbed} />
+									<HubspotFormModal hubspotEmbed={hubspotEmbed!} />
 									{resource.isHubspotEmbed
 									&& resource.isInsertSnippet
 									&& resource.codeSnippet

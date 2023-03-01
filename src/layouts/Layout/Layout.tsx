@@ -106,18 +106,21 @@ export function Layout({children}: LayoutProps) {
 					root: {
 						borderRadius: '0',
 						padding: '10px 20px',
-						backgroundColor: params.variant === 'filled' ? theme.colors.primary[0] : undefined,
-						transition: 'outline 0.2s ease-out',
+						...(params.variant === 'filled' && {backgroundColor: theme.colors.primary[0]}),
+						transition: 'outline 0.2s ease-in-out',
+						outlineOffset: -3,
 
 						'&:hover': {
-							backgroundColor: params.variant === 'filled' ? 'transparent' : undefined,
-							color: params.variant === 'filled' ? theme.colors.primary[0] : undefined,
+							...(params.variant === 'filled' && {backgroundColor: 'transparent'}),
+							...(params.variant === 'filled' && {color: theme.colors.primary[0]}),
+							...(params.variant === 'filled' && {outline: `3px solid ${theme.colors.primary[0]}`}),
 							fontWeight: 900,
-							outline: params.variant === 'filled' ? `3px solid ${theme.colors.primary[0]}` : undefined,
+							outlineOffset: -3,
 						},
 
 						'&:focus:not(:focus-visible)': {
-							outline: params.variant === 'filled' ? `3px solid ${theme.colors.primary[0]}` : undefined,
+							...(params.variant === 'filled' && {outline: `3px solid ${theme.colors.primary[0]}`}),
+							outlineOffset: -3,
 						},
 					},
 				}),
