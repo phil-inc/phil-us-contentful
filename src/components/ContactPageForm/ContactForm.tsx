@@ -2,9 +2,9 @@ import React from 'react';
 import {Anchor, Button, Grid, createStyles, Center, Loader} from '@mantine/core';
 import type {ISection} from 'types/section';
 import {parseScript} from 'utils/parseScript';
-import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
+import {useHubspotForm, UseHubSpotFormProps} from '@aaronhayes/react-use-hubspot-form';
 import {handleSpacing} from 'utils/handleSpacing';
-import type {TResponse} from 'extract-json-from-string';
+import type {formDetails, TResponse} from 'extract-json-from-string';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -114,7 +114,7 @@ const HubspotForm = ({formProps, section, formTag}: {formProps: TResponse; secti
 					subtree: true,
 				};
 
-				if (parentDiv) {
+				if (parentDiv?.parentNode) {
 					observer.observe(parentDiv.parentNode, observerConfig);
 				}
 
@@ -126,14 +126,29 @@ const HubspotForm = ({formProps, section, formTag}: {formProps: TResponse; secti
 	}, [hasRendered]);
 
 	if (section.isHubspotEmbed) {
-		// Create form
-		const {loaded, formCreated} = useHubspotForm({
+		let options: {target: string; formId: string; portalId: string} = {
 			target: '#hubspotContactForm',
-			...(Boolean(!formProps.custom) && {formId: formProps.formId, portalId: formProps.portalId}),
-			...(formTag === 'hcp' && Boolean(formProps.custom) && formProps.custom.forms.hcp),
-			...(formTag === 'manufacturer' && Boolean(formProps.custom) && formProps.custom.forms.manufacturer),
-			...(formTag === 'other' && Boolean(formProps.custom) && formProps.custom.forms.other),
-		});
+			formId: '',
+			portalId: '',
+		};
+		if (!formProps.custom) {
+			options.formId = formProps.formId;
+			options.portalId = formProps.portalId;
+		}
+
+		if (formTag === 'hcp' && formProps.custom) {
+			options = {
+				...options,
+				formId: formProps.custom.forms.hcp.formId,
+				portalId: formProps.custom.forms.hcp.portalId,
+			};
+		} else if (formTag === 'manufacturer' && formProps.custom) {
+			options = {...options, ...formProps.custom.forms.manufacturer};
+		} else if (formTag === 'other' && formProps.custom) {
+			options = {...options, ...formProps.custom.forms.other};
+		}
+
+		const {loaded, formCreated} = useHubspotForm(options);
 
 		// Handle loader
 		if (loaded && formCreated && !hasRendered) {
@@ -163,11 +178,15 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 		<Grid>
 			<Grid.Col span={6}>
 				<Anchor style={{textDecoration: 'none'}} href='https://my.phil.us' target='_blank'>
-					<Button fullWidth>Patient/Caregiver</Button>
+					<Button variant='outline' color='dark' fullWidth>
+						Patient/Caregiver
+					</Button>
 				</Anchor>
 			</Grid.Col>
 			<Grid.Col span={6}>
 				<Button
+					variant='outline'
+					color='dark'
 					onClick={() => {
 						setFormTag('HCP'.toLowerCase());
 					}}
@@ -178,6 +197,8 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 			</Grid.Col>
 			<Grid.Col span={6}>
 				<Button
+					variant='outline'
+					color='dark'
 					onClick={() => {
 						setFormTag('Manufacturer'.toLowerCase());
 					}}
@@ -188,6 +209,8 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 			</Grid.Col>
 			<Grid.Col span={6}>
 				<Button
+					variant='outline'
+					color='dark'
 					onClick={() => {
 						setFormTag('Other'.toLowerCase());
 					}}
