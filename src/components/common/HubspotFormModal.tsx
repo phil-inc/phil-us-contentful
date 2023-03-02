@@ -27,8 +27,6 @@ const HubspotFormModal = ({hubspotEmbed}: {hubspotEmbed: BodyType}) => {
 		const object = parseScript(hubspotEmbed);
 		const [formProps] = object;
 
-		console.log(formProps);
-
 		// Create form
 		const {loaded, formCreated} = useHubspotForm({
 			target: '#hubspotModalForm',
