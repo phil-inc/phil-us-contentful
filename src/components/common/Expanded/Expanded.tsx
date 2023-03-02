@@ -1,6 +1,7 @@
 import React from 'react';
 import {Container, createStyles} from '@mantine/core';
 import {handleSpacing} from 'utils/handleSpacing';
+import PageContext from 'contexts/PageContext';
 
 type ExpandedProps = {
 	id: string;
@@ -10,6 +11,7 @@ type ExpandedProps = {
 	noMargin?: boolean;
 	py?: number;
 	pt?: number;
+	pb?: number;
 	mb?: number;
 	fullWidth?: boolean;
 };
@@ -24,12 +26,15 @@ const Expanded: React.FC<ExpandedProps> = ({
 	children,
 	background = '#FFFFFF',
 	minHeight = '100%',
-	mb = 0,
+	mb,
 	noMargin = false,
-	py = 0,
-	pt = 0,
+	py,
+	pt,
+	pb,
 	fullWidth = false,
 }) => {
+	const context = React.useContext(PageContext);
+
 	const useStyles = createStyles(theme => ({
 		container: {
 			background,
@@ -39,11 +44,11 @@ const Expanded: React.FC<ExpandedProps> = ({
 			padding: '100px 100px 92px 100px',
 
 			[theme.fn.smallerThan('md')]: {
-				padding: '42px 100px',
+				padding: context.title === 'Field' ? '0px 100px' : '42px 100px',
 			},
 
 			[theme.fn.smallerThan('sm')]: {
-				padding: '42px 16px',
+				padding: context.title === 'Field' ? '0px 16px' : '42px 16px',
 			},
 		},
 	}));
@@ -51,7 +56,16 @@ const Expanded: React.FC<ExpandedProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container id={id} fluid className={classes.container} py={py} pt={Boolean(pt) && pt} px={fullWidth ? 0 : null}>
+		<Container
+			id={id}
+			fluid
+			className={classes.container}
+			py={py}
+			pt={pt}
+			pb={pb}
+			mb={mb}
+			px={fullWidth ? 0 : undefined}
+		>
 			{children}
 		</Container>
 	);

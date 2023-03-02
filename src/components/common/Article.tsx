@@ -82,7 +82,7 @@ const useStyles = createStyles(theme => ({
 }));
 
 type ArticleProps = {
-	color: 'blue' | 'yellow' | 'none';
+	color: 'blue' | 'yellow' | 'green' | 'none';
 	resource: TResource;
 };
 
@@ -120,7 +120,7 @@ export const Article: FC<ArticleProps> = ({color, resource}) => {
 					<Container className={classes.imageWrapper} mb={45}>
 						<ImageContainer fluid>
 							<AspectRatio ratio={1}>
-								<Asset asset={asset} />
+								<Asset asset={asset!} />
 							</AspectRatio>
 						</ImageContainer>
 					</Container>

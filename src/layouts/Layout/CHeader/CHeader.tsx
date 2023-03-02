@@ -218,6 +218,35 @@ const useStyles = createStyles(theme => ({
 			color: 'white',
 		},
 	},
+
+	patientLoginButtonMobile: {
+		'&:hover': {
+			backgroundColor: theme.colors.philBranding[9],
+			color: 'white',
+		},
+
+		[theme.fn.largerThan('md')]: {
+			display: 'none',
+		},
+	},
+
+	logo: {
+		maxWidth: 125,
+		maxHeight: 90,
+
+		width: '100%',
+
+		[theme.fn.smallerThan('md')]: {
+			width: 100,
+			marginRight: 25,
+		},
+	},
+
+	hideOnLarge: {
+		[theme.fn.largerThan('md')]: {
+			display: 'none',
+		},
+	},
 }));
 
 type CHeaderProps = {
@@ -234,6 +263,9 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	const {width} = useViewportSize();
 	const {classes} = useStyles();
 
+	const [navRef, setNavRef] = React.useState<HTMLUListElement>();
+	const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement>();
+
 	const [opened, {toggle, open, close}] = useDisclosure(false, {
 		onClose() {
 			setTarget('');
@@ -247,16 +279,14 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	const [target, setTarget] = useState<string>('');
 
-	const [collapseRef, setCollapseRef] = useState<HTMLElement>();
-	const [listRef, setListRef] = useState<HTMLElement>();
-	const [activePageLI, setActivePageLI] = useState<HTMLLIElement | undefined>();
+	const [activePageLI, setActivePageLI] = useState<HTMLLIElement>();
 
 	useClickOutside(
 		() => {
 			close();
 		},
 		null,
-		[collapseRef, listRef],
+		[navRef!, collapseRef!],
 	);
 
 	const onNavLinkClick = event => {
@@ -264,7 +294,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			toggle();
 		} else {
 			open();
-			setTarget(event.target.textContent);
+			setTarget(event.target.textContent as string);
 		}
 	};
 
@@ -275,7 +305,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 		const INDICATOR_SIZE = 20;
 		const INITIAL_OFFSET = 25;
-		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+		const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`)!;
 
 		li.classList.add('active');
 
@@ -286,10 +316,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	React.useEffect(() => {
 		if (!minimal) {
-			const navBar = document.querySelector('.navbar');
+			const navBar = document.querySelector('.navbar')!;
 			const allLi = navBar.querySelectorAll('li');
 
-			const clickHandlers = [];
+			const clickHandlers: Array<(e: MouseEvent) => void> = [];
 
 			allLi.forEach(li => {
 				if (li.dataset.noindicator === 'true') {
@@ -335,11 +365,11 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	React.useEffect(() => {
 		if (!minimal) {
-			const navBar = document.querySelector('.navbar');
+			const navBar = document.querySelector('.navbar')!;
 			const active = navBar.querySelector('.active');
 
 			if (Boolean(!opened) && Boolean(activePageLI)) {
-				if (activePageLI.dataset.noindicator === 'true') {
+				if (activePageLI!.dataset.noindicator === 'true') {
 					return;
 				}
 
@@ -347,14 +377,14 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 					active.classList.remove('active');
 				}
 
-				moveIntidatorActiveTo(activePageLI);
+				moveIntidatorActiveTo(activePageLI!);
 			} else if (Boolean(!opened) && Boolean(!activePageLI)) {
 				const active = navBar.querySelector('.active');
 				if (active) {
 					active.classList.remove('active');
 				}
 
-				const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`);
+				const indicator: HTMLElement = document.querySelector(`.${classes.indicator}`)!;
 				indicator.style.transform = '';
 			}
 		}
@@ -362,8 +392,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	React.useEffect(() => {
 		if (!minimal) {
-			const navBar = document.querySelector('.navbar');
-			const active: HTMLLIElement = navBar.querySelector('.active');
+			const navBar = document.querySelector('.navbar')!;
+			const active: HTMLLIElement = navBar.querySelector('.active')!;
 
 			if (active) {
 				moveIntidatorActiveTo(active);
@@ -375,7 +405,20 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={62}>
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
-					<Box sx={{height: 90, width: 125}}>
+					<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+						<Button
+							size='sm'
+							uppercase
+							variant='outline'
+							px={4}
+							color='philBranding'
+							className={classes.patientLoginButtonMobile}
+						>
+							Patient Login
+						</Button>
+					</Anchor>
+
+					<Box className={classes.logo}>
 						<Link to='/'>
 							<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
 								<Asset asset={header.logo} />
@@ -392,7 +435,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								}}
 								className={classes.burger}
 							/>
-							<List ref={setListRef} className={classes.navLinksWrapper}>
+							<List ref={setNavRef} className={classes.navLinksWrapper}>
 								<div className={classes.indicator}></div>
 								{pages
 									.filter(page => page.title !== 'Home')

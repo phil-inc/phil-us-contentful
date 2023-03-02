@@ -25,9 +25,9 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			padding: fluid ? 0 : 50,
 			maxWidth: expanded ? '50vw' : '100%',
 			width: expanded ? '50vw' : '100%',
-			position: expanded ? 'absolute' : null,
-			top: expanded ? '90px' : null,
-			right: expanded ? 0 : null,
+			...(expanded && {position: 'absolute'}),
+			...(expanded && {top: '90px'}),
+			...(expanded && {right: 0}),
 
 			[theme.fn.smallerThan('lg')]: {
 				maxWidth: '100%',
@@ -58,7 +58,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	return (
 		<Container fluid className={classes.imageContainer}>
 			<AspectRatio
-				className={contain ? classes.objectFitContain : null}
+				className={contain && classes.objectFitContain}
 				ratio={ratio}
 				sx={{width: '100%', height: '100%'}}
 			>
