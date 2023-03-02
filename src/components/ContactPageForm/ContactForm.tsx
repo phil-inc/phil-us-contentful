@@ -2,9 +2,11 @@ import React from 'react';
 import {Anchor, Button, Grid, createStyles, Center, Loader, Text} from '@mantine/core';
 import type {ISection} from 'types/section';
 import {parseScript} from 'utils/parseScript';
-import {useHubspotForm, UseHubSpotFormProps} from '@aaronhayes/react-use-hubspot-form';
+import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {handleSpacing} from 'utils/handleSpacing';
-import type {formDetails, TResponse} from 'extract-json-from-string';
+import type {TResponse} from 'extract-json-from-string';
+import PageContext from 'contexts/PageContext';
+import {CONTACT_PAGE} from 'constants/page';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -47,34 +49,32 @@ const useStyles = createStyles(theme => ({
 	},
 
 	hubspotContactForm: {
-		minHeight: 790,
-
 		'&[data-hs-forms-root="true"]': {
 			minHeight: 0,
-
-			[theme.fn.largerThan('md')]: {
-				minHeight: 790,
-			},
-		},
-	},
-
-	formBody: {
-		[theme.fn.largerThan('md')]: {
-			minHeight: 790,
 		},
 	},
 }));
 
-const HubspotForm = ({formProps, section, formTag}: {formProps: TResponse; section: ISection; formTag: string}) => {
+const HubspotForm: React.FC = ({
+	formProps,
+	section,
+	formTag,
+}: {
+	formProps: TResponse;
+	section: ISection;
+	formTag: string;
+}) => {
 	const {classes, theme} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	const [isListenerAdded, setIsListenerAdded] = React.useState<boolean>(false);
+
+	const context = React.useContext(PageContext);
 
 	// Scroll to top on hubspot form submit
 	React.useEffect(() => {
 		const parentDiv = document.getElementById('hubspotContactForm');
 
-		if (window.location.pathname === '/contact/') {
+		if (context.title === CONTACT_PAGE) {
 			if (!isListenerAdded) {
 				let observer: MutationObserver;
 
