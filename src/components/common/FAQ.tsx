@@ -7,7 +7,7 @@ import React from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 
-const useStyles = createStyles((theme, _params: {background: string; fontSize: number}) => ({
+const useStyles = createStyles((theme, _params: {background: string; fontSize?: number}) => ({
 	FAQWrapper: {
 		position: 'relative',
 		overflow: 'hidden',
@@ -47,6 +47,7 @@ type FAQProps = {
 
 export const FAQ: FC<FAQProps> = ({resource}) => {
 	const context = React.useContext(PageContext);
+
 	const {classes} = useStyles({
 		background: context.title === 'Field' ? '#ffffff' : '#f4f4f4',
 		...(context.title === 'Field' && {fontSize: 24}),

@@ -1,4 +1,6 @@
 import {AspectRatio, Container, createStyles, Group, useMantineTheme} from '@mantine/core';
+import {CONTACT_PAGE} from 'constants/page';
+import PageContext from 'contexts/PageContext';
 import React from 'react';
 
 type ImageContainerProps = {
@@ -8,6 +10,7 @@ type ImageContainerProps = {
 	children: React.ReactNode;
 	expanded?: boolean;
 	contain?: boolean;
+	containerRef?: React.MutableRefObject<undefined>;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -17,17 +20,20 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	children,
 	expanded = false,
 	contain = false,
+	containerRef,
 }) => {
-	const useStyles = createStyles(theme => ({
+	const context = React.useContext(PageContext);
+
+	const useStyles = createStyles((theme, _, getRef) => ({
 		imageContainer: {
 			background,
-			height: '100%',
 			padding: fluid ? 0 : 50,
 			maxWidth: expanded ? '50vw' : '100%',
 			width: expanded ? '50vw' : '100%',
 			...(expanded && {position: 'absolute'}),
 			...(expanded && {top: '90px'}),
-			...(expanded && {right: 0}),
+			...(expanded && {right: '0px'}),
+			...(context.title !== CONTACT_PAGE && {height: '100%'}),
 
 			[theme.fn.smallerThan('lg')]: {
 				maxWidth: '100%',
@@ -56,9 +62,9 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container fluid className={classes.imageContainer}>
+		<Container ref={containerRef} fluid className={classes.imageContainer}>
 			<AspectRatio
-				className={contain && classes.objectFitContain}
+				className={contain ? classes.objectFitContain : undefined}
 				ratio={ratio}
 				sx={{width: '100%', height: '100%'}}
 			>

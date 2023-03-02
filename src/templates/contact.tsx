@@ -7,6 +7,7 @@ import {Box, Grid, Title, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
+import PageContext from 'contexts/PageContext';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
@@ -47,17 +48,19 @@ const ContactTemplate: React.FC<ContactTemplateProps> = ({pageContext}) => {
 	let basicSectionCount = 0;
 
 	return (
-		<Layout>
-			{sections
-				.filter(section => !section.isHidden)
-				.map(section => (
-					<Section
-						key={section.id + 'mapSectionComponent'}
-						section={section}
-						index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
-					/>
-				))}
-		</Layout>
+		<PageContext.Provider value={pageContext}>
+			<Layout>
+				{sections
+					.filter(section => !section.isHidden)
+					.map(section => (
+						<Section
+							key={section.id + 'mapSectionComponent'}
+							section={section}
+							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
+						/>
+					))}
+			</Layout>
+		</PageContext.Provider>
 	);
 };
 
