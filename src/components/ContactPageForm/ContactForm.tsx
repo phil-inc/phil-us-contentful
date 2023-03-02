@@ -5,6 +5,8 @@ import {parseScript} from 'utils/parseScript';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {handleSpacing} from 'utils/handleSpacing';
 import type {TResponse} from 'extract-json-from-string';
+import PageContext from 'contexts/PageContext';
+import {CONTACT_PAGE} from 'constants/page';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -53,16 +55,26 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-const HubspotForm = ({formProps, section, formTag}: {formProps: TResponse; section: ISection; formTag: string}) => {
+const HubspotForm: React.FC = ({
+	formProps,
+	section,
+	formTag,
+}: {
+	formProps: TResponse;
+	section: ISection;
+	formTag: string;
+}) => {
 	const {classes, theme} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	const [isListenerAdded, setIsListenerAdded] = React.useState<boolean>(false);
+
+	const context = React.useContext(PageContext);
 
 	// Scroll to top on hubspot form submit
 	React.useEffect(() => {
 		const parentDiv = document.getElementById('hubspotContactForm');
 
-		if (window.location.pathname === '/contact/') {
+		if (context.title === CONTACT_PAGE) {
 			if (!isListenerAdded) {
 				let observer: MutationObserver;
 

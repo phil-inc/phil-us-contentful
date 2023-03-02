@@ -1,4 +1,6 @@
 import {AspectRatio, Container, createStyles, Group, useMantineTheme} from '@mantine/core';
+import {CONTACT_PAGE} from 'constants/page';
+import PageContext from 'contexts/PageContext';
 import React from 'react';
 
 type ImageContainerProps = {
@@ -20,6 +22,8 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	contain = false,
 	containerRef,
 }) => {
+	const context = React.useContext(PageContext);
+
 	const useStyles = createStyles((theme, _, getRef) => ({
 		imageContainer: {
 			background,
@@ -29,6 +33,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			...(expanded && {position: 'absolute'}),
 			...(expanded && {top: '90px'}),
 			...(expanded && {right: '0px'}),
+			...(context.title !== CONTACT_PAGE && {height: '100%'}),
 
 			[theme.fn.smallerThan('lg')]: {
 				maxWidth: '100%',

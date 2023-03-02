@@ -10,6 +10,7 @@ import {StaticImage} from 'gatsby-plugin-image';
 import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
+import {CONTACT_PAGE} from 'constants/page';
 
 const useStyles = createStyles(theme => ({
 	footer: {
@@ -147,7 +148,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 												</List>
 											)}
 											{/* Contact section mapping extra elements */}
-											{page.title === 'Contact' && (
+											{page.title === CONTACT_PAGE && (
 												<Group mt={18}>
 													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
 														<div>
@@ -235,7 +236,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 													)}
 
 													{/* Socials on contact accordian on mobile */}
-													{page.title === 'Contact' && index === page.sections.length - 1 && (
+													{page.title === CONTACT_PAGE && index === page.sections.length - 1 && (
 														<List.Item>
 															<Group>
 																<Anchor
