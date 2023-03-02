@@ -8,6 +8,7 @@ type ImageContainerProps = {
 	children: React.ReactNode;
 	expanded?: boolean;
 	contain?: boolean;
+	containerRef?: React.MutableRefObject<undefined>;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -17,13 +18,13 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	children,
 	expanded = false,
 	contain = false,
+	containerRef,
 }) => {
-	const useStyles = createStyles(theme => ({
+	const useStyles = createStyles((theme, _, getRef) => ({
 		imageContainer: {
 			background,
 			padding: fluid ? 0 : 50,
 			maxWidth: expanded ? '50vw' : '100%',
-			maxHeight: 1100,
 			width: expanded ? '50vw' : '100%',
 			...(expanded && {position: 'absolute'}),
 			...(expanded && {top: '90px'}),
@@ -56,11 +57,11 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<Container fluid className={classes.imageContainer}>
+		<Container ref={containerRef} fluid className={classes.imageContainer}>
 			<AspectRatio
 				className={contain ? classes.objectFitContain : undefined}
 				ratio={ratio}
-				sx={{width: '100%', height: '100%', maxWidth: '100%', maxHeight: 1100}}
+				sx={{width: '100%', height: '100%'}}
 			>
 				{children}
 			</AspectRatio>

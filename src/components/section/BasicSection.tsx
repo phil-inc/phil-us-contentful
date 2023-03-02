@@ -15,6 +15,7 @@ import {isVideoContent} from 'utils/isVideoContent';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
 import ContactForm from 'components/ContactPageForm/ContactForm';
+import {useViewportSize} from '@mantine/hooks';
 
 const useStyles = createStyles(theme => ({
 	body: {
@@ -53,24 +54,6 @@ const useStyles = createStyles(theme => ({
 		a: {
 			color: '#00827E',
 			textDecoration: 'none',
-		},
-	},
-
-	hubspotContactForm: {
-		minHeight: 790,
-
-		'&[data-hs-forms-root="true"]': {
-			minHeight: 0,
-
-			[theme.fn.largerThan('md')]: {
-				minHeight: 790,
-			},
-		},
-	},
-
-	formBody: {
-		[theme.fn.largerThan('md')]: {
-			minHeight: 790,
 		},
 	},
 }));
@@ -142,6 +125,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
+	const ref = React.useRef();
+	const {width} = useViewportSize();
+	const [height, setHeight] = React.useState<number>();
+
+	React.useEffect(() => {
+		setHeight(ref.current?.clientWidth);
+	}, [ref.current, width]);
 
 	return (
 		<Location>
@@ -189,7 +179,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 											mt={handleSpacing(theme, theme.spacing.sm)}
 											mb={handleSpacing(theme, theme.spacing.md)}
 										/>
-										<Box className={classes.formBody}>
+										<Box>
 											<ContactForm section={section} />
 										</Box>
 									</>
@@ -224,8 +214,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 									</>
 								)}
 							</Grid.Col>
-							<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12}>
+							<Grid.Col orderMd={imageColumnOrder} orderSm={2} lg={6} md={6} sm={12} sx={{height: height!}}>
 								<ImageContainer
+									containerRef={ref}
 									fluid
 									background={isVideoContent(section.asset.file.contentType) ? 'white' : undefined}
 									expanded={location.pathname === '/contact/'}
