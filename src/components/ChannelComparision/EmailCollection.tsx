@@ -2,7 +2,7 @@ import React from 'react';
 import {Grid, Box, Title, createStyles, Stepper, TextInput, Button, Image, Text} from '@mantine/core';
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles(() => ({
 	content: {
 		height: '100%',
 		padding: '72px 105px',
@@ -89,20 +89,25 @@ const EmailCollection = () => {
 					<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 				</Stepper>
-				<Title order={2} size={27} color='#0A0A0A' mb={16}>
-					Where should we send the report?*
-				</Title>
-				<TextInput
-					classNames={{label: classes.inputLabel, required: classes.inputLabel}}
-					label='Email Address'
-					radius={0}
-					withAsterisk
-					mb={48}
-					{...form.getInputProps('email')}
-				/>
-				<Button type='submit' onClick={stepper.nextStep}>
-					Continue
-				</Button>
+				<form
+					onSubmit={form.onSubmit(() => {
+						stepper.nextStep();
+					})}
+				>
+					<Title order={2} size={27} color='#0A0A0A' mb={16}>
+						Where should we send the report?*
+					</Title>
+					<TextInput
+						classNames={{label: classes.inputLabel, required: classes.inputLabel}}
+						label='Email Address'
+						radius={0}
+						required
+						withAsterisk
+						mb={48}
+						{...form.getInputProps('email')}
+					/>
+					<Button type='submit'>Continue</Button>
+				</form>
 			</Box>
 		</Grid.Col>
 	);

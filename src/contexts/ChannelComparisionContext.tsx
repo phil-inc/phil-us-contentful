@@ -7,13 +7,13 @@ export type FormValues = {
 	title: string;
 	brand: string;
 	company: string;
-	brandWAC: string;
-	fillPerPatient: string;
-	percentDispense: string;
-	percentFormulatoryCoverage: string;
-	copayAmountCovered: string;
-	copayAmountUncovered: string;
-	copayAmountCash: string;
+	brandWAC: number | undefined;
+	fillPerPatient: number | undefined;
+	percentDispense: number | undefined;
+	percentFormulatoryCoverage: number | undefined;
+	copayAmountCovered: number | undefined;
+	copayAmountUncovered: number | undefined;
+	copayAmountCash: number | undefined;
 	primaryPharmacy: string;
 	concerns: string;
 };
@@ -24,7 +24,10 @@ export type TStepper = {
 	prevStep: () => void;
 };
 
+const stepper: unknown = {};
+const form: unknown = {};
+
 export const ChannelComparisionContext = React.createContext<{
 	stepper: TStepper;
-	form: UseFormReturnType<FormValues, undefined>;
-}>({stepper: {step: 0, nextStep: null, prevStep: null}, form: null});
+	form: UseFormReturnType<FormValues, (values: FormValues) => FormValues>;
+}>({stepper: stepper as TStepper, form: form as UseFormReturnType<FormValues, (values: FormValues) => FormValues>});

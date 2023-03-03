@@ -1,6 +1,6 @@
-import {Container, Title, Button, Text, createStyles, Grid, Box, Stepper, TextInput, Image} from '@mantine/core';
-import {SEO} from 'layouts/SEO/SEO';
 import React from 'react';
+import {Container, createStyles, Grid, Image} from '@mantine/core';
+import {SEO} from 'layouts/SEO/SEO';
 import {Layout} from 'layouts/Layout/Layout';
 import {getCustomizedReport} from 'assets/images';
 import EmailCollection from 'components/ChannelComparision/EmailCollection';
@@ -40,13 +40,13 @@ const ChannelComparisionPage = () => {
 			title: '',
 			brand: '',
 			company: '',
-			brandWAC: '',
-			fillPerPatient: '',
-			percentDispense: '',
-			percentFormulatoryCoverage: '',
-			copayAmountCovered: '',
-			copayAmountUncovered: '',
-			copayAmountCash: '',
+			brandWAC: undefined,
+			fillPerPatient: undefined,
+			percentDispense: undefined,
+			percentFormulatoryCoverage: undefined,
+			copayAmountCovered: undefined,
+			copayAmountUncovered: undefined,
+			copayAmountCash: undefined,
 			primaryPharmacy: '',
 			concerns: '',
 		},
