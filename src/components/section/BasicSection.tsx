@@ -18,7 +18,7 @@ import {useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((theme, {isContact}: {isContact: boolean}) => ({
 	body: {
 		p: {
 			marginTop: 0,
@@ -32,7 +32,7 @@ const useStyles = createStyles(theme => ({
 		},
 
 		[theme.fn.smallerThan('md')]: {
-			marginBottom: 32,
+			...(isContact && {marginBottom: 42}),
 		},
 	},
 
@@ -81,8 +81,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const ORDER_SECOND = 2;
 	const HEADING_FIRST = 1;
 	const HEADING_SECOND = 2;
+	const context = React.useContext(PageContext);
 
-	const {classes, theme} = useStyles();
+	const {classes, theme} = useStyles({isContact: context.title === CONTACT_PAGE});
 	const {link, isExternal} = getLink(section);
 
 	const richTextImages = {};
@@ -134,7 +135,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const ref = React.useRef();
 	const {width} = useViewportSize();
 	const [height, setHeight] = React.useState<number>(790);
-	const context = React.useContext(PageContext);
 
 	React.useEffect(() => {
 		if (ref.current) {
