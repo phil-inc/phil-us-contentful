@@ -16,9 +16,10 @@ import {
 	NumberInput,
 	SimpleGrid,
 } from '@mantine/core';
+import type {FormValues} from 'contexts/ChannelComparisionContext';
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
 import {IconArrowLeft, IconCheck} from '@tabler/icons';
-import {CHANNEL_COMPARISION_API} from 'constants/api';
+import {CHANNEL_COMPARISION_API, HUBSPOT_CHANNEL_COMPARISION_URL} from 'constants/api';
 import {useScrollIntoView} from '@mantine/hooks';
 
 const useStyles = createStyles(theme => ({
@@ -129,6 +130,72 @@ const Information = () => {
 		scrollIntoView({alignment: 'start'});
 	}, []);
 
+	const onSubmit = async (values: FormValues) => {
+		try {
+			setLoading(true);
+
+			const hubspotData = {
+				fields: [
+					{
+						objectTypeId: '0-1',
+						name: 'firstname',
+						value: values.yourName,
+					},
+					{objectTypeId: '0-1', name: 'jobtitle', value: values.title},
+					{objectTypeId: '0-2', name: 'name', value: values.company},
+					{objectTypeId: '0-1', name: 'email', value: values.email},
+					{objectTypeId: '2-9880972', name: 'drug_name', value: values.brand},
+					{objectTypeId: '2-9880972', name: 'wac', value: values.brandWAC},
+					{objectTypeId: '2-9880972', name: 'dosage__wac_comments', value: values.fillPerPatient},
+					{
+						objectTypeId: '2-9880972',
+						name: 'percentage_of_dispenses_utilize_a_manufacturer_uncovered_coupon',
+						value: values.percentDispense,
+					},
+					{
+						objectTypeId: '2-9880972',
+						name: 'percentage_of_formulary_coverage',
+						value: values.percentFormulatoryCoverage,
+					},
+					{objectTypeId: '2-9880972', name: 'opay_amount_covered', value: values.copayAmountCovered},
+					{objectTypeId: '2-9880972', name: 'opay_amount_uncovered', value: values.copayAmountUncovered},
+					{objectTypeId: '2-9880972', name: 'copay_amount_cash', value: values.copayAmountCash},
+					{objectTypeId: '2-9880972', name: 'what_is_your_primary_pharmacy_', value: values.primaryPharmacy},
+					{objectTypeId: '2-9880972', name: 'additional_refill_notes', value: values.concerns},
+				],
+				context: {
+					pageUri: 'https://phil.us/channel-comparision/',
+					pageName: 'Channel Comparision Page',
+				},
+			};
+
+			// Submit to hubspot
+			const hubspotRes = fetch(HUBSPOT_CHANNEL_COMPARISION_URL, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(hubspotData),
+			});
+
+			// Submit to capi
+			const capiRes = fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(values),
+			});
+
+			await Promise.all([hubspotRes, capiRes]);
+			stepper.nextStep();
+		} catch (error: unknown) {
+			console.log(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return (
 		<Grid.Col
 			ref={targetRef}
@@ -168,28 +235,7 @@ const Information = () => {
 					<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 				</Stepper>
-				<form
-					onSubmit={form.onSubmit(values => {
-						setLoading(true);
-						fetch(url, {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-							},
-							body: JSON.stringify(values),
-						})
-							.then(async response => response.json())
-							.then(() => {
-								stepper.nextStep();
-							})
-							.catch(error => {
-								console.error(error);
-							})
-							.finally(() => {
-								setLoading(false);
-							});
-					})}
-				>
+				<form onSubmit={form.onSubmit(onSubmit)}>
 					<Title order={2} size={28} mb={16}>
 						Details
 					</Title>
