@@ -18,7 +18,7 @@ import {useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((theme, {isContact}: {isContact: boolean}) => ({
 	body: {
 		p: {
 			marginTop: 0,
@@ -29,6 +29,10 @@ const useStyles = createStyles(theme => ({
 		padding: '0 100px',
 		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
 			padding: '0 16px',
+		},
+
+		[theme.fn.smallerThan('md')]: {
+			...(isContact && {marginBottom: 42}),
 		},
 	},
 
@@ -77,8 +81,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const ORDER_SECOND = 2;
 	const HEADING_FIRST = 1;
 	const HEADING_SECOND = 2;
+	const context = React.useContext(PageContext);
 
-	const {classes, theme} = useStyles();
+	const {classes, theme} = useStyles({isContact: context.title === CONTACT_PAGE});
 	const {link, isExternal} = getLink(section);
 
 	const richTextImages = {};
@@ -129,15 +134,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 	const ref = React.useRef();
 	const {width} = useViewportSize();
-	const [height, setHeight] = React.useState<number>();
-	const context = React.useContext(PageContext);
+	const [height, setHeight] = React.useState<number>(790);
 
 	React.useEffect(() => {
-		setHeight(ref.current?.clientWidth);
+		if (ref.current) {
+			setHeight(ref.current.clientWidth as number);
+		}
 	}, [ref.current, width]);
 
 	return (
-		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container} my={92}>
+		<Container
+			id={slugify(section.header, {lower: true, strict: true})}
+			fluid
+			className={classes.container}
+			my={context.title === CONTACT_PAGE ? 0 : 92}
+		>
 			<>
 				<Grid
 					gutter={handleSpacing(theme, theme.spacing.lg)}
