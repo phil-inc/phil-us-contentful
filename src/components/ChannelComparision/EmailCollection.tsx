@@ -2,18 +2,23 @@ import React from 'react';
 import {Grid, Box, Title, createStyles, Stepper, TextInput, Button, Image, Text} from '@mantine/core';
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles(theme => ({
 	content: {
 		height: '100%',
 		padding: '72px 105px',
-	},
 
-	contentGrid: {
-		background: '#F4F4F4',
+		[theme.fn.smallerThan('md')]: {
+			padding: 40,
+		},
 	},
 
 	title: {
 		lineHeight: 1.2,
+		fontSize: 44,
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 32,
+		},
 	},
 
 	normalText: {
@@ -42,7 +47,7 @@ const useStyles = createStyles(() => ({
 	},
 
 	inputLabel: {
-		color: '#9E9E9E',
+		color: '#525252',
 		fontSize: 20,
 	},
 
@@ -59,9 +64,9 @@ const EmailCollection = () => {
 	const {stepper, form} = React.useContext(ChannelComparisionContext);
 
 	return (
-		<Grid.Col span='auto' className={classes.contentGrid}>
+		<Grid.Col p={0} sm={6} xs={12} order={2} orderLg={1} orderMd={1} orderSm={1}>
 			<Box className={classes.content}>
-				<Title className={classes.title} order={1} size={44} mb={20}>
+				<Title className={classes.title} order={1} mb={20}>
 					{'Learn how you can optimize your '}
 					<Text className={classes.title} component='span' color={'#00827E'}>
 						patient access strategy to improve adherence and gross-to-net
@@ -77,7 +82,6 @@ const EmailCollection = () => {
 					iconSize={48}
 					mb={48}
 					color={'philBranding'}
-					breakpoint='sm'
 					classNames={{
 						step: classes.step,
 						stepBody: classes.stepBody,
@@ -89,12 +93,13 @@ const EmailCollection = () => {
 					<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 				</Stepper>
+
 				<form
 					onSubmit={form.onSubmit(() => {
 						stepper.nextStep();
 					})}
 				>
-					<Title order={2} size={27} color='#0A0A0A' mb={16}>
+					<Title order={2} size={28} color='#0A0A0A' mb={16}>
 						Where should we send the report?*
 					</Title>
 					<TextInput

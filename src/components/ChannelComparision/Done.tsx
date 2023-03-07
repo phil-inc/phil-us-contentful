@@ -3,11 +3,15 @@ import {Grid, Box, Title, createStyles, Stepper, TextInput, Button, Image, Text,
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
 import {channelComparisionCheck} from 'assets/images';
 import {Link} from 'gatsby';
+import {useScrollIntoView} from '@mantine/hooks';
 
 const useStyles = createStyles(theme => ({
 	content: {
 		height: '100%',
 		padding: '72px 105px',
+		[theme.fn.smallerThan('md')]: {
+			padding: 40,
+		},
 	},
 
 	contentGrid: {
@@ -57,18 +61,29 @@ const useStyles = createStyles(theme => ({
 
 const Done = () => {
 	const {classes} = useStyles();
-
+	const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>({offset: 60});
 	const {stepper, form} = React.useContext(ChannelComparisionContext);
 
+	React.useEffect(() => {
+		scrollIntoView({alignment: 'start'});
+	}, []);
+
 	return (
-		<Grid.Col span='auto' className={classes.contentGrid}>
+		<Grid.Col
+			ref={targetRef}
+			span='auto'
+			className={classes.contentGrid}
+			order={2}
+			orderLg={1}
+			orderMd={1}
+			orderSm={1}
+		>
 			<Box className={classes.content}>
 				<Stepper
 					active={stepper.step}
 					iconSize={48}
 					mb={90}
 					color={'philBranding'}
-					breakpoint='sm'
 					classNames={{
 						step: classes.step,
 						stepBody: classes.stepBody,

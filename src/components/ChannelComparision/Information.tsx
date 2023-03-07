@@ -14,15 +14,21 @@ import {
 	Radio,
 	Textarea,
 	NumberInput,
+	SimpleGrid,
 } from '@mantine/core';
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
-import {IconCheck} from '@tabler/icons';
+import {IconArrowLeft, IconCheck} from '@tabler/icons';
 import {CHANNEL_COMPARISION_API} from 'constants/api';
+import {useScrollIntoView} from '@mantine/hooks';
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles(theme => ({
 	content: {
 		height: '100%',
 		padding: '72px 105px',
+
+		[theme.fn.smallerThan('md')]: {
+			padding: 40,
+		},
 	},
 
 	contentGrid: {
@@ -102,26 +108,55 @@ const useStyles = createStyles(() => ({
 			rowGap: 12,
 		},
 	},
+
+	backButton: {
+		color: '#525252',
+
+		'&:hover': {
+			background: 'none',
+		},
+	},
 }));
 
 const Information = () => {
 	const {classes} = useStyles();
-
+	const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>();
 	const {stepper, form} = React.useContext(ChannelComparisionContext);
 	const url = CHANNEL_COMPARISION_API;
 	const [loading, setLoading] = React.useState(false);
-	const ref = React.useRef();
+
+	React.useEffect(() => {
+		scrollIntoView({alignment: 'start'});
+	}, []);
 
 	return (
-		<Grid.Col span='auto' className={classes.contentGrid}>
+		<Grid.Col
+			ref={targetRef}
+			p={0}
+			span='auto'
+			className={classes.contentGrid}
+			order={2}
+			orderLg={1}
+			orderMd={1}
+			orderSm={1}
+		>
 			<Box className={classes.content}>
-				<Text onClick={stepper.prevStep}>Go back to edit</Text>
+				<Button
+					className={classes.backButton}
+					pl={0}
+					mb={32}
+					variant='subtle'
+					leftIcon={<IconArrowLeft />}
+					onClick={stepper.prevStep}
+				>
+					Go back to edit
+				</Button>
+
 				<Stepper
 					active={stepper.step}
 					iconSize={48}
 					mb={48}
 					color={'philBranding'}
-					breakpoint='sm'
 					classNames={{
 						step: classes.step,
 						stepBody: classes.stepBody,
@@ -144,24 +179,27 @@ const Information = () => {
 							body: JSON.stringify(values),
 						})
 							.then(async response => response.json())
-							.then(data => {
-								console.log(data);
+							.then(() => {
 								stepper.nextStep();
 							})
 							.catch(error => {
 								console.error(error);
 							})
 							.finally(() => {
-								if (ref.current) {
-									setLoading(false);
-								}
+								setLoading(false);
 							});
 					})}
 				>
 					<Title order={2} size={28} mb={16}>
 						Details
 					</Title>
-					<Group position='apart' grow spacing={40}>
+					<SimpleGrid
+						cols={2}
+						breakpoints={[
+							{maxWidth: 'md', cols: 1, spacing: 'xs', verticalSpacing: 1},
+							{maxWidth: 'xs', cols: 1, spacing: 'xs', verticalSpacing: 1},
+						]}
+					>
 						<TextInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -169,6 +207,7 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
+							required
 							label='Your Name'
 							radius={0}
 							withAsterisk
@@ -182,15 +221,22 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
+							required
 							label='Title'
 							radius={0}
 							withAsterisk
 							mb={48}
 							{...form.getInputProps('title')}
 						/>
-					</Group>
+					</SimpleGrid>
 
-					<Group position='apart' grow spacing={40}>
+					<SimpleGrid
+						cols={2}
+						breakpoints={[
+							{maxWidth: 'md', cols: 1, spacing: 'xs', verticalSpacing: 1},
+							{maxWidth: 'xs', cols: 1, spacing: 'xs', verticalSpacing: 1},
+						]}
+					>
 						<TextInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -210,13 +256,14 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
+							required
 							label='Company'
 							radius={0}
 							withAsterisk
 							mb={48}
 							{...form.getInputProps('company')}
 						/>
-					</Group>
+					</SimpleGrid>
 
 					<Group position='apart' grow spacing={40}>
 						<NumberInput
@@ -226,8 +273,10 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
+							required
 							withAsterisk
 							label='What is your brand’s WAC'
+							min={0}
 							radius={0}
 							mb={48}
 							{...form.getInputProps('brandWAC')}
@@ -242,7 +291,9 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
+							required
 							withAsterisk
+							min={0}
 							label='Average number of fills per patient'
 							radius={0}
 							mb={48}
@@ -258,9 +309,12 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
+							required
 							withAsterisk
 							label='Percentage of dispenses utilize a manufacturer uncovered coupon?'
 							radius={0}
+							max={100}
+							min={0}
 							mb={48}
 							{...form.getInputProps('percentDispense')}
 						/>
@@ -274,6 +328,8 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
+							max={100}
+							min={0}
 							label='Percentage of formulary coverage'
 							radius={0}
 							mb={48}
@@ -285,7 +341,14 @@ const Information = () => {
 						<Text size={20} color='#525252'>
 							What is patient’s copay amount ($):*
 						</Text>
-						<Group position='apart' grow spacing={40}>
+						<SimpleGrid
+							cols={3}
+							breakpoints={[
+								{maxWidth: 'md', cols: 2, spacing: 'xs', verticalSpacing: 1},
+								{maxWidth: 'sm', cols: 2, spacing: 'xs', verticalSpacing: 1},
+								{maxWidth: 'xs', cols: 1, spacing: 'xs', verticalSpacing: 1},
+							]}
+						>
 							<NumberInput
 								classNames={{
 									root: classes.rootWrapper,
@@ -296,6 +359,7 @@ const Information = () => {
 								label='Covered'
 								required
 								radius={0}
+								min={0}
 								mb={48}
 								{...form.getInputProps('copayAmountCovered')}
 							/>
@@ -308,6 +372,7 @@ const Information = () => {
 								}}
 								required
 								label='Uncovered'
+								min={0}
 								radius={0}
 								mb={48}
 								{...form.getInputProps('copayAmountUncovered')}
@@ -321,11 +386,12 @@ const Information = () => {
 								}}
 								required
 								label='Cash'
+								min={0}
 								radius={0}
 								mb={48}
 								{...form.getInputProps('copayAmountCash')}
 							/>
-						</Group>
+						</SimpleGrid>
 					</Stack>
 
 					<Group position='apart' grow spacing={40} mb={20}>
@@ -334,24 +400,28 @@ const Information = () => {
 							name='primaryPharmacy'
 							label='What is your primary pharmacy?'
 							withAsterisk
+							{...form.getInputProps('primaryPharmacy')}
 						>
 							<Radio
 								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
+								required
 								icon={IconCheck as React.FC}
-								value='Retail Pharmacy'
 								label='Retail Pharmacy'
+								value='Retail Pharmacy'
 							/>
 							<Radio
 								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
+								required
 								icon={IconCheck as React.FC}
-								value='Specialty Pharmacy'
 								label='Specialty Pharmacy'
+								value='Specialty Pharmacy'
 							/>
 							<Radio
 								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
+								required
 								icon={IconCheck as React.FC}
-								value='Digital Pharmacy'
 								label='Digital Pharmacy'
+								value='Digital Pharmacy'
 							/>
 						</Radio.Group>
 					</Group>
@@ -374,10 +444,20 @@ const Information = () => {
 						/>
 					</Group>
 
-					<Button loading={loading} type='submit'>
+					<Button type='submit' loading={loading} loaderPosition='right'>
 						Get my customized report
 					</Button>
 				</form>
+				<Button
+					className={classes.backButton}
+					pl={0}
+					mt={32}
+					variant='subtle'
+					leftIcon={<IconArrowLeft />}
+					onClick={stepper.prevStep}
+				>
+					Go back to edit
+				</Button>
 			</Box>
 		</Grid.Col>
 	);

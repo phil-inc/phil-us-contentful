@@ -34,12 +34,13 @@ import Asset from 'components/common/Asset/Asset';
 
 const HEADER_HEIGHT = 90;
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	inner: {
-		padding: '0 100px',
+		padding: minimal ? '0 32px' : '0 100px',
 		height: HEADER_HEIGHT,
 		display: 'flex',
 		alignItems: 'center',
+		...(minimal && {maxWidth: 1440}),
 
 		'&::after': {
 			content: '""',
@@ -48,7 +49,7 @@ const useStyles = createStyles(theme => ({
 		},
 
 		[theme.fn.smallerThan('sm')]: {
-			padding: '0 16px',
+			padding: minimal ? '0 32px' : '0 16px',
 		},
 	},
 
@@ -261,7 +262,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	const pages = header.navigationLinks;
 
 	const {width} = useViewportSize();
-	const {classes} = useStyles();
+	const {classes} = useStyles({minimal});
 
 	const [navRef, setNavRef] = React.useState<HTMLUListElement>();
 	const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement>();
@@ -402,21 +403,23 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	}, [width]);
 
 	return (
-		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={62}>
+		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={minimal ? 0 : 62}>
 			<Container className={classes.inner} fluid>
 				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
-					<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
-						<Button
-							size='sm'
-							uppercase
-							variant='outline'
-							px={4}
-							color='philBranding'
-							className={classes.patientLoginButtonMobile}
-						>
-							Patient Login
-						</Button>
-					</Anchor>
+					{!minimal && (
+						<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+							<Button
+								size='sm'
+								uppercase
+								variant='outline'
+								px={4}
+								color='philBranding'
+								className={classes.patientLoginButtonMobile}
+							>
+								Patient Login
+							</Button>
+						</Anchor>
+					)}
 
 					<Box className={classes.logo}>
 						<Link to='/'>
