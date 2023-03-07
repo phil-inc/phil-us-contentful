@@ -30,6 +30,10 @@ const useStyles = createStyles(theme => ({
 		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
 			padding: '0 16px',
 		},
+
+		[theme.fn.smallerThan('md')]: {
+			marginBottom: 32,
+		},
 	},
 
 	section: {
@@ -129,15 +133,22 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 	const ref = React.useRef();
 	const {width} = useViewportSize();
-	const [height, setHeight] = React.useState<number>();
+	const [height, setHeight] = React.useState<number>(790);
 	const context = React.useContext(PageContext);
 
 	React.useEffect(() => {
-		setHeight(ref.current?.clientWidth);
+		if (ref.current) {
+			setHeight(ref.current.clientWidth as number);
+		}
 	}, [ref.current, width]);
 
 	return (
-		<Container id={slugify(section.header, {lower: true, strict: true})} fluid className={classes.container} my={92}>
+		<Container
+			id={slugify(section.header, {lower: true, strict: true})}
+			fluid
+			className={classes.container}
+			my={context.title === CONTACT_PAGE ? 0 : 92}
+		>
 			<>
 				<Grid
 					gutter={handleSpacing(theme, theme.spacing.lg)}
