@@ -22,7 +22,21 @@ import Information from 'components/ChannelComparision/Information';
 import Done from 'components/ChannelComparision/Done';
 import {StaticImage} from 'gatsby-plugin-image';
 
-export const Head: React.FC = () => <SEO title={'Channel comparision'}></SEO>;
+export const Head: React.FC = () => (
+	<SEO title='Channel Comparision'>
+		<meta
+			name='description'
+			content='Learn how you can optimize your patient access strategy to improve adherence and gross-to-net'
+		/>
+		<meta property='og:title' content='Channel Comparision' />
+		<meta property='og:type' content='Page' />
+		<meta
+			property='og:description'
+			content='Learn how you can optimize your patient access strategy to improve adherence and gross-to-net'
+		/>
+		<meta property='og:url' content='https://phil.us/channel-comparision/' />
+	</SEO>
+);
 
 const useStyles = createStyles(theme => ({
 	root: {
