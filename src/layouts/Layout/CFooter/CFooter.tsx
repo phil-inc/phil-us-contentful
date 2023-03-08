@@ -86,9 +86,10 @@ const useStyles = createStyles(theme => ({
 type FooterProps = {
 	allContentfulFooter: {nodes: Array<{badge: TAsset[]; navigationLinks: ContentfulPage[]}>};
 	allContentfulResource: {nodes: Array<{id: string; heading: string; relatesTo: {id: string; header: string}}>};
+	minimal: boolean;
 };
 
-const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
+const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 	const {classes} = useStyles();
 
 	const [footer] = allContentfulFooter.nodes;
@@ -96,113 +97,27 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 
 	return (
 		<>
-			<Container fluid className={classes.footerWrapper}>
-				{/* Desktop View */}
-				<Grid className={classes.footer} gutter={'xl'}>
-					{pages.map(page => (
-						<Grid.Col key={page.id + 'mapFooterPages'} span={3}>
-							<Box sx={{width: '80%'}}>
-								<Link
-									to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
-									style={{textDecoration: 'none'}}
-								>
-									<Text span size={'lg'} className={classes.footLinkHeader}>
-										{page.title}
-									</Text>
-								</Link>
-								<Divider my={10} color='#6A7979' />
-								{page.sections
-									.filter(section => Boolean(section.header?.length && !section.isHidden))
-									.map((section, index, array) => (
-										<React.Fragment key={section.id + 'mapFooterSections'}>
-											<List listStyleType='none'>
-												<List.Item>
-													<Link
-														to={
-															(page.title === 'Home'
-																? ''
-																: `/${slugify(page.title, {lower: true, strict: true})}`)
-															+ `/#${slugify(section.header, {
-																lower: true,
-																strict: true,
-															})}`
-														}
-														style={{textDecoration: 'none'}}
-													>
-														<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
-													</Link>
-												</List.Item>
-											</List>
-											{/* Patients section mapping extra elements */}
-											{page.title === 'Patients' && index === array.length - 1 && (
-												<List listStyleType='none'>
-													<List.Item>
-														<Anchor
-															href='https://my.phil.us/'
-															target='_blank'
-															style={{textDecoration: 'none'}}
-														>
-															<Text className={classes.footerLink}>Patient Log In</Text>
-														</Anchor>
-													</List.Item>
-												</List>
-											)}
-											{/* Contact section mapping extra elements */}
-											{page.title === CONTACT_PAGE && (
-												<Group mt={18}>
-													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
-														<div>
-															<StaticImage
-																src='../../../assets/images/linkedin.svg'
-																alt='LinkedIn Icon'
-															/>
-														</div>
-													</Anchor>
-												</Group>
-											)}
-										</React.Fragment>
-									))}
-							</Box>
-						</Grid.Col>
-					))}
-					<Grid.Col span={3}>
-						<Box sx={{width: '80%'}}>
-							<Text size={'lg'} mt={0} className={classes.footLinkHeader}>
-								Newsletter
-							</Text>
-							<Divider my={10} color='#6A7979' />
-							<HubSpotNewsletter />
-							<Grid mt={60} align={'center'} justify='center'>
-								{footer.badge.map(badge => (
-									<Grid.Col key={badge.file.url + 'mapBadge'} span={6}>
-										<Box sx={{maxWidth: 120}}>
-											<ImageContainer background='transparent' fluid>
-												<Asset asset={badge} />
-											</ImageContainer>
-										</Box>
-									</Grid.Col>
-								))}
-							</Grid>
-						</Box>
-					</Grid.Col>
-				</Grid>
-
-				{/* Mobile View */}
-				<Box className={classes.drawer}>
-					<Accordion styles={{content: {padding: 0}}} chevron={<IconChevronDown size={24} />} mb={15}>
+			{!minimal && (
+				<Container fluid className={classes.footerWrapper}>
+					{/* Desktop View */}
+					<Grid className={classes.footer} gutter={'xl'}>
 						{pages.map(page => (
-							<Accordion.Item key={page.id + 'mapFooterPagesMobile'} value={page.title}>
-								<Accordion.Control px={0}>
-									<Text weight='bold' size={18}>
-										{page.title}
-									</Text>
-								</Accordion.Control>
-								<Accordion.Panel>
-									<List mb={16} listStyleType={'none'}>
-										{page.sections
-											.filter(section => Boolean(section.header?.length && !section.isHidden))
-											.map((section, index) => (
-												<React.Fragment key={section.id + 'mapFooterSectionsMobile'}>
+							<Grid.Col key={page.id + 'mapFooterPages'} span={3}>
+								<Box sx={{width: '80%'}}>
+									<Link
+										to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
+										style={{textDecoration: 'none'}}
+									>
+										<Text span size={'lg'} className={classes.footLinkHeader}>
+											{page.title}
+										</Text>
+									</Link>
+									<Divider my={10} color='#6A7979' />
+									{page.sections
+										.filter(section => Boolean(section.header?.length && !section.isHidden))
+										.map((section, index, array) => (
+											<React.Fragment key={section.id + 'mapFooterSections'}>
+												<List listStyleType='none'>
 													<List.Item>
 														<Link
 															to={
@@ -221,9 +136,10 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 															</Text>
 														</Link>
 													</List.Item>
-
-													{/* Patient login on accordian on patients page */}
-													{page.title === 'Patients' && index === page.sections.length - 1 && (
+												</List>
+												{/* Patients section mapping extra elements */}
+												{page.title === 'Patients' && index === array.length - 1 && (
+													<List listStyleType='none'>
 														<List.Item>
 															<Anchor
 																href='https://my.phil.us/'
@@ -233,53 +149,142 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter}) => {
 																<Text className={classes.footerLink}>Patient Log In</Text>
 															</Anchor>
 														</List.Item>
-													)}
-
-													{/* Socials on contact accordian on mobile */}
-													{page.title === CONTACT_PAGE && index === page.sections.length - 1 && (
-														<List.Item>
-															<Group>
-																<Anchor
-																	href='https://www.linkedin.com/company/phil-inc-'
-																	target='_blank'
-																>
-																	<div>
-																		<StaticImage
-																			src='../../../assets/images/linkedin.svg'
-																			alt='LinkedIn Icon'
-																		/>
-																	</div>
-																</Anchor>
-															</Group>
-														</List.Item>
-													)}
-												</React.Fragment>
-											))}
-									</List>
-								</Accordion.Panel>
-							</Accordion.Item>
+													</List>
+												)}
+												{/* Contact section mapping extra elements */}
+												{page.title === 'Contact' && (
+													<Group mt={18}>
+														<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+															<div>
+																<StaticImage
+																	src='../../../assets/images/linkedin.svg'
+																	alt='LinkedIn Icon'
+																/>
+															</div>
+														</Anchor>
+													</Group>
+												)}
+											</React.Fragment>
+										))}
+								</Box>
+							</Grid.Col>
 						))}
-					</Accordion>
-					<Box>
-						<Text size={'lg'} className={classes.footLinkHeader}>
-							Newsletter
-						</Text>
-						<Divider my={10} color='#6A7979' />
-						<HubSpotNewsletter />
-						<Grid mt={60} align={'center'} justify='center'>
-							{footer.badge.map(badge => (
-								<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
-									<Box sx={{maxWidth: 120}}>
-										<ImageContainer background='transparent' fluid>
-											<Asset asset={badge} />
-										</ImageContainer>
-									</Box>
-								</Grid.Col>
+						<Grid.Col span={3}>
+							<Box sx={{width: '80%'}}>
+								<Text size={'lg'} mt={0} className={classes.footLinkHeader}>
+									Newsletter
+								</Text>
+								<Divider my={10} color='#6A7979' />
+								<HubSpotNewsletter />
+								<Grid mt={60} align={'center'} justify='center'>
+									{footer.badge.map(badge => (
+										<Grid.Col key={badge.file.url + 'mapBadge'} span={6}>
+											<Box sx={{maxWidth: 120}}>
+												<ImageContainer background='transparent' fluid>
+													<Asset asset={badge} />
+												</ImageContainer>
+											</Box>
+										</Grid.Col>
+									))}
+								</Grid>
+							</Box>
+						</Grid.Col>
+					</Grid>
+
+					{/* Mobile View */}
+					<Box className={classes.drawer}>
+						<Accordion styles={{content: {padding: 0}}} chevron={<IconChevronDown size={24} />} mb={15}>
+							{pages.map(page => (
+								<Accordion.Item key={page.id + 'mapFooterPagesMobile'} value={page.title}>
+									<Accordion.Control px={0}>
+										<Text weight='bold' size={18}>
+											{page.title}
+										</Text>
+									</Accordion.Control>
+									<Accordion.Panel>
+										<List mb={16} listStyleType={'none'}>
+											{page.sections
+												.filter(section => Boolean(section.header?.length && !section.isHidden))
+												.map((section, index) => (
+													<React.Fragment key={section.id + 'mapFooterSectionsMobile'}>
+														<List.Item>
+															<Link
+																to={
+																	(page.title === 'Home'
+																		? ''
+																		: `/${slugify(page.title, {lower: true, strict: true})}`)
+																	+ `/#${slugify(section.header, {
+																		lower: true,
+																		strict: true,
+																	})}`
+																}
+																style={{textDecoration: 'none'}}
+															>
+																<Text className={classes.footerLink}>
+																	{section.header.replace(':', '')}
+																</Text>
+															</Link>
+														</List.Item>
+
+														{/* Patient login on accordian on patients page */}
+														{page.title === 'Patients' && index === page.sections.length - 1 && (
+															<List.Item>
+																<Anchor
+																	href='https://my.phil.us/'
+																	target='_blank'
+																	style={{textDecoration: 'none'}}
+																>
+																	<Text className={classes.footerLink}>Patient Log In</Text>
+																</Anchor>
+															</List.Item>
+														)}
+
+														{/* Socials on contact accordian on mobile */}
+														{page.title === 'Contact' && index === page.sections.length - 1 && (
+															<List.Item>
+																<Group>
+																	<Anchor
+																		href='https://www.linkedin.com/company/phil-inc-'
+																		target='_blank'
+																	>
+																		<div>
+																			<StaticImage
+																				src='../../../assets/images/linkedin.svg'
+																				alt='LinkedIn Icon'
+																			/>
+																		</div>
+																	</Anchor>
+																</Group>
+															</List.Item>
+														)}
+													</React.Fragment>
+												))}
+										</List>
+									</Accordion.Panel>
+								</Accordion.Item>
 							))}
-						</Grid>
+						</Accordion>
+						<Box>
+							<Text size={'lg'} className={classes.footLinkHeader}>
+								Newsletter
+							</Text>
+							<Divider my={10} color='#6A7979' />
+							<HubSpotNewsletter />
+							<Grid mt={60} align={'center'} justify='center'>
+								{footer.badge.map(badge => (
+									<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
+										<Box sx={{maxWidth: 120}}>
+											<ImageContainer background='transparent' fluid>
+												<Asset asset={badge} />
+											</ImageContainer>
+										</Box>
+									</Grid.Col>
+								))}
+							</Grid>
+						</Box>
 					</Box>
-				</Box>
-			</Container>
+				</Container>
+			)}
 
 			{/* Bottom Footer */}
 			<Container fluid style={{background: '#00827E'}} py={14}>
@@ -367,6 +372,8 @@ const query = graphql`
 	}
 `;
 
-const CFooter: React.FC = () => <StaticQuery query={query} render={Footer} />;
+const CFooter: React.FC<{minimal: boolean}> = ({minimal = false}) => (
+	<StaticQuery query={query} render={props => <Footer minimal={minimal} {...props} />} />
+);
 
 export default React.memo(CFooter);
