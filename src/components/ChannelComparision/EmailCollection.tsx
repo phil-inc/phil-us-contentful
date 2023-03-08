@@ -105,6 +105,7 @@ const EmailCollection = () => {
 					<TextInput
 						classNames={{label: classes.inputLabel, required: classes.inputLabel}}
 						label='Email Address'
+						type='email'
 						radius={0}
 						required
 						withAsterisk

@@ -20,10 +20,18 @@ const useStyles = createStyles(theme => ({
 
 	title: {
 		lineHeight: 1.2,
+		fontSize: 28,
 	},
 
 	normalText: {
 		lineHeight: '29px',
+		fontSize: 24,
+		marginBottom: 64,
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 18,
+			marginBottom: 44,
+		},
 	},
 
 	step: {
@@ -57,12 +65,26 @@ const useStyles = createStyles(theme => ({
 		marginTop: -50,
 		backgroundColor: '#9E9E9E',
 	},
+
+	image: {
+		height: 124,
+		width: 124,
+		marginBottom: 44,
+		marginTop: 90,
+
+		[theme.fn.smallerThan('md')]: {
+			height: 80,
+			width: 80,
+			marginBottom: 20,
+			marginTop: 44,
+		},
+	},
 }));
 
 const Done = () => {
 	const {classes} = useStyles();
-	const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>({offset: 60});
-	const {stepper, form} = React.useContext(ChannelComparisionContext);
+	const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>();
+	const {stepper} = React.useContext(ChannelComparisionContext);
 
 	React.useEffect(() => {
 		scrollIntoView({alignment: 'start'});
@@ -82,7 +104,6 @@ const Done = () => {
 				<Stepper
 					active={stepper.step}
 					iconSize={48}
-					mb={90}
 					color={'philBranding'}
 					classNames={{
 						step: classes.step,
@@ -96,13 +117,15 @@ const Done = () => {
 					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 				</Stepper>
 
-				<Image width={124} height={124} src={channelComparisionCheck as string} alt='Check icon' mb={44} />
+				<AspectRatio ratio={1} className={classes.image}>
+					<Image src={channelComparisionCheck as string} alt='Check icon' />
+				</AspectRatio>
 
-				<Title className={classes.title} order={1} size={44} mb={20}>
+				<Title className={classes.title} order={1} mb={20}>
 					Thank you!
 				</Title>
 
-				<Text className={classes.normalText} size={24} mb={64}>
+				<Text className={classes.normalText}>
 					We’ve got all your details and we will be sending your reports soon on your email address.
 				</Text>
 				<Link to='/resources/'>

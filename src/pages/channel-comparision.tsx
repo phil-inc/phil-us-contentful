@@ -72,6 +72,10 @@ const ChannelComparisionPage = () => {
 			primaryPharmacy: '',
 			concerns: '',
 		},
+
+		validate: {
+			email: value => (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? null : 'Invalid email'),
+		},
 	});
 
 	const [step, setStep] = React.useState(0);
@@ -118,7 +122,7 @@ const ChannelComparisionPage = () => {
 								Connect on
 							</Box>{' '}
 							<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
-								<StaticImage src='../../../assets/images/linkedin.svg' alt='LinkedIn Icon' />
+								<StaticImage src='../assets/images/linkedin-whitebg.svg' alt='LinkedIn Icon' />
 							</Anchor>
 						</Group>
 					</Grid.Col>
