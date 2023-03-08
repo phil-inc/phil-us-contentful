@@ -10,6 +10,7 @@ import {StaticImage} from 'gatsby-plugin-image';
 import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
+import {CONTACT_PAGE} from 'constants/page';
 
 const useStyles = createStyles(theme => ({
 	footer: {

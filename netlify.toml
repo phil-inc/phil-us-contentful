@@ -4,12 +4,18 @@ from = "/r/*"
 to = "https://capi.phil.us/api/redirect/:splat"
 status = 302
 
-
 # phil-enroll redirection
 [[redirects]]
 from = "/e/*"
 to = "https://enroll.phil.us/landing/:splat"
 status = 302
+
+# /md/enroll redirection
+[[redirects]]
+from = "/md/enroll"
+to = "https://forms.gle/rNbj6LQ4po1pmcpr6"
+status = 302
+
 
 [[redirects]]
 from = "/stage/e/*"
