@@ -3,7 +3,6 @@ import {Link} from 'gatsby';
 import {Layout} from 'layouts/Layout/Layout';
 import {SEO} from 'layouts/SEO/SEO';
 import React from 'react';
-import ErrorImage from '../images/404.svg';
 
 export const Head: React.FC = () => (
 	<SEO title={'Page not found'}>
