@@ -253,10 +253,10 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
-							required
-							label='Your Name'
+							label='Your Name*'
 							radius={0}
-							withAsterisk
+							required
+							withAsterisk={false}
 							mb={48}
 							{...form.getInputProps('yourName')}
 						/>
@@ -267,10 +267,10 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
-							required
-							label='Title'
+							label='Title*'
 							radius={0}
-							withAsterisk
+							required
+							withAsterisk={false}
 							mb={48}
 							{...form.getInputProps('title')}
 						/>
@@ -302,10 +302,10 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
-							required
-							label='Company'
+							label='Company*'
 							radius={0}
-							withAsterisk
+							required
+							withAsterisk={false}
 							mb={48}
 							{...form.getInputProps('company')}
 						/>
@@ -320,8 +320,8 @@ const Information = () => {
 								required: classes.inputLabel,
 							}}
 							required
-							withAsterisk
-							label='What is your brand’s WAC'
+							withAsterisk={false}
+							label='What is your brand’s WAC*'
 							min={0}
 							radius={0}
 							mb={48}
@@ -338,9 +338,9 @@ const Information = () => {
 								required: classes.inputLabel,
 							}}
 							required
-							withAsterisk
+							withAsterisk={false}
 							min={0}
-							label='Average number of fills per patient'
+							label='Average number of fills per patient*'
 							radius={0}
 							mb={48}
 							{...form.getInputProps('fillPerPatient')}
@@ -356,8 +356,8 @@ const Information = () => {
 								required: classes.inputLabel,
 							}}
 							required
-							withAsterisk
-							label='Percentage of dispenses utilize a manufacturer uncovered coupon?'
+							withAsterisk={false}
+							label='Percentage of dispenses that utilize a manufacturer uncovered coupon?*'
 							radius={0}
 							max={100}
 							min={0}
@@ -402,8 +402,9 @@ const Information = () => {
 									label: classes.inputLabel,
 									required: classes.inputLabel,
 								}}
-								label='Covered'
+								label='Covered*'
 								required
+								withAsterisk={false}
 								radius={0}
 								min={0}
 								mb={48}
@@ -417,7 +418,8 @@ const Information = () => {
 									required: classes.inputLabel,
 								}}
 								required
-								label='Uncovered'
+								withAsterisk={false}
+								label='Uncovered*'
 								min={0}
 								radius={0}
 								mb={48}
@@ -431,7 +433,8 @@ const Information = () => {
 									required: classes.inputLabel,
 								}}
 								required
-								label='Cash'
+								withAsterisk={false}
+								label='Cash*'
 								min={0}
 								radius={0}
 								mb={48}
@@ -444,8 +447,8 @@ const Information = () => {
 						<Radio.Group
 							classNames={{root: classes.radioGroup, label: classes.inputLabel, required: classes.inputLabel}}
 							name='primaryPharmacy'
-							label='What is your primary pharmacy?'
-							withAsterisk
+							label='What is your primary pharmacy?*'
+							withAsterisk={false}
 							{...form.getInputProps('primaryPharmacy')}
 						>
 							<Radio
