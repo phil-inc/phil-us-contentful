@@ -100,15 +100,15 @@ const EmailCollection = () => {
 					})}
 				>
 					<Title order={2} size={28} color='#0A0A0A' mb={16}>
-						Where should we send the report?*
+						Where should we send the <span style={{whiteSpace: 'nowrap'}}>report?*</span>
 					</Title>
 					<TextInput
 						classNames={{label: classes.inputLabel, required: classes.inputLabel}}
-						label='Email Address'
+						label='Email Address*'
 						type='email'
 						radius={0}
 						required
-						withAsterisk
+						withAsterisk={false}
 						mb={48}
 						{...form.getInputProps('email')}
 					/>
