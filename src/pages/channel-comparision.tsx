@@ -85,6 +85,7 @@ const ChannelComparisionPage = () => {
 			copayAmountCash: undefined,
 			primaryPharmacy: '',
 			concerns: '',
+			cycle: 'Channel Calculator',
 		},
 
 		validate: {

@@ -125,9 +125,14 @@ const Information = () => {
 	const {stepper, form} = React.useContext(ChannelComparisionContext);
 	const url = CHANNEL_COMPARISION_API;
 	const [loading, setLoading] = React.useState(false);
+	const [hutk, setHutk] = React.useState<string>('');
 
 	React.useEffect(() => {
 		scrollIntoView({alignment: 'start'});
+
+		const hutk = document.cookie.replace(/(?:(?:^|.*;\s*)hubspotutk\s*=\s*([^;]*).*$)|^.*$/, '$1');
+
+		setHutk(hutk);
 	}, []);
 
 	const onSubmit = async (values: FormValues) => {
@@ -162,8 +167,10 @@ const Information = () => {
 					{objectTypeId: '2-9880972', name: 'copay_amount_cash', value: values.copayAmountCash},
 					{objectTypeId: '2-9880972', name: 'what_is_your_primary_pharmacy_', value: values.primaryPharmacy},
 					{objectTypeId: '2-9880972', name: 'additional_refill_notes', value: values.concerns},
+					{objectTypeId: '2-9880972', name: 'cycle', value: values.cycle},
 				],
 				context: {
+					...(hutk.length && {hutk}),
 					pageUri: 'https://phil.us/channel-comparision/',
 					pageName: 'Channel Comparision Page',
 				},
