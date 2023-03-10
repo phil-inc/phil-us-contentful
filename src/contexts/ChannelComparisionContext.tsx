@@ -16,6 +16,7 @@ export type FormValues = {
 	copayAmountCash: number | undefined;
 	primaryPharmacy: string;
 	concerns: string;
+	cycle: string;
 };
 
 export type TStepper = {
