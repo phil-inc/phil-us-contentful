@@ -31,6 +31,7 @@ import type {TAsset} from 'types/asset';
 import {IconChevronDown} from '@tabler/icons';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import Asset from 'components/common/Asset/Asset';
+import {HCP_PAGE} from 'constants/page';
 
 const HEADER_HEIGHT = 90;
 
@@ -484,10 +485,22 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								}}
 								withCloseButton={false}
 								title={
-									<Group position='apart' noWrap align='center'>
-										<Box sx={{height: 90, width: 125}}>
+									<Group position='apart' noWrap align='center' mt={9}>
+										<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+											<Button
+												size='sm'
+												uppercase
+												variant='outline'
+												px={4}
+												color='philBranding'
+												className={classes.patientLoginButtonMobile}
+											>
+												Patient Login
+											</Button>
+										</Anchor>
+										<Box className={classes.logo}>
 											<Link to='/'>
-												<ImageContainer contain fluid background='transparent'>
+												<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
 													<Asset asset={header.logo} />
 												</ImageContainer>
 											</Link>
@@ -657,25 +670,36 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																			</thead>
 																		</Table>
 																	)}
+
+																	{page.title === HCP_PAGE && index === array.length - 1 && (
+																		<Table mb={16}>
+																			<thead>
+																				<tr>
+																					<th style={{paddingLeft: 0, paddingRight: 0}}>
+																						<Anchor
+																							href='https://md.phil.us/'
+																							target='_blank'
+																							style={{textDecoration: 'none'}}
+																						>
+																							<Text
+																								size={16}
+																								weight={400}
+																								color={theme.colors.primary[0]}
+																							>
+																								HCP Log In
+																							</Text>
+																						</Anchor>
+																					</th>
+																				</tr>
+																			</thead>
+																		</Table>
+																	)}
 																</React.Fragment>
 															))}
 													</Accordion.Panel>
 												</Accordion.Item>
 											))}
 									</Accordion>
-									<Anchor href='https://my.phil.us' target='_blank'>
-										<Button
-											size='lg'
-											uppercase
-											fullWidth
-											variant='outline'
-											color='philBranding'
-											className={classes.patientLoginButton}
-											mb={90}
-										>
-											Patient Login
-										</Button>
-									</Anchor>
 								</ScrollArea>
 							</Drawer>
 						) : (
@@ -699,7 +723,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 															<React.Fragment key={section.id + 'mapCollapsePages'}>
 																<Grid.Col
 																	span={
-																		page.title === 'Patients'
+																		['Patients', HCP_PAGE].includes(page.title)
 																			? Math.floor(100 / (array.length + 1))
 																			: Math.floor(100 / array.length)
 																	}
@@ -780,6 +804,24 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																					style={{textDecoration: 'none'}}
 																				>
 																					Patient Log In
+																				</Anchor>
+																			</Text>
+																			<Divider />
+																		</List.Item>
+																	</Grid.Col>
+																)}
+
+																{page.title === HCP_PAGE && index === array.length - 1 && (
+																	<Grid.Col span={Math.floor(100 / (array.length + 1))}>
+																		<List.Item onClick={close}>
+																			<Text className={classes.listHeading}>
+																				<Anchor
+																					href='https://md.phil.us/'
+																					target='_blank'
+																					className={classes.textDecorationNone}
+																					style={{textDecoration: 'none'}}
+																				>
+																					HCP Log In
 																				</Anchor>
 																			</Text>
 																			<Divider />

@@ -1,5 +1,18 @@
 import React from 'react';
-import {createStyles, Anchor, Group, Grid, Text, Divider, List, Container, Box, Accordion, Center} from '@mantine/core';
+import {
+	createStyles,
+	Anchor,
+	Group,
+	Grid,
+	Text,
+	Divider,
+	List,
+	Container,
+	Box,
+	Accordion,
+	Center,
+	Table,
+} from '@mantine/core';
 import {IconChevronDown} from '@tabler/icons';
 import {footerBackground} from 'assets/images';
 import Asset from 'components/common/Asset/Asset';
@@ -10,7 +23,7 @@ import {StaticImage} from 'gatsby-plugin-image';
 import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
-import {CONTACT_PAGE} from 'constants/page';
+import {CONTACT_PAGE, HCP_PAGE} from 'constants/page';
 
 const useStyles = createStyles(theme => ({
 	footer: {
@@ -151,6 +164,22 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 														</List.Item>
 													</List>
 												)}
+
+												{/* HCP section mapping extra elements */}
+												{page.title === HCP_PAGE && index === array.length - 1 && (
+													<List listStyleType='none'>
+														<List.Item>
+															<Anchor
+																href='https://md.phil.us/'
+																target='_blank'
+																style={{textDecoration: 'none'}}
+															>
+																<Text className={classes.footerLink}>HCP Log In</Text>
+															</Anchor>
+														</List.Item>
+													</List>
+												)}
+
 												{/* Contact section mapping extra elements */}
 												{page.title === 'Contact' && (
 													<Group mt={18}>
