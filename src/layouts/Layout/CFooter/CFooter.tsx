@@ -268,6 +268,19 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 															</List.Item>
 														)}
 
+														{/* HCP login on accordian on HCP page */}
+														{page.title === HCP_PAGE && index === page.sections.length - 1 && (
+															<List.Item>
+																<Anchor
+																	href='https://md.phil.us/'
+																	target='_blank'
+																	style={{textDecoration: 'none'}}
+																>
+																	<Text className={classes.footerLink}>Patient Log In</Text>
+																</Anchor>
+															</List.Item>
+														)}
+
 														{/* Socials on contact accordian on mobile */}
 														{page.title === 'Contact' && index === page.sections.length - 1 && (
 															<List.Item>
