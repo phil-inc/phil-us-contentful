@@ -16,6 +16,7 @@ import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import {isProduction} from 'utils/isProduction';
+import {isVideoContent} from 'utils/isVideoContent';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -102,7 +103,6 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		},
 
 		embededAsset: {
-			maxWidth: '420px',
 			marginBottom: '32px',
 		},
 	}));
@@ -123,7 +123,10 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		renderNode: {
 			[BLOCKS.EMBEDDED_ASSET](node) {
 				return (
-					<Box className={classes.embededAsset}>
+					<Box
+						className={classes.embededAsset}
+						sx={{maxWidth: isVideoContent(node.data.target.file.contentType as string) ? undefined : 420}}
+					>
 						<Asset asset={node.data.target as TAsset} />
 					</Box>
 				);
