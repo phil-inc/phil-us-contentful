@@ -67,7 +67,11 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 
 	return (
 		<Container ref={containerRef} fluid className={classes.imageContainer}>
-			<AspectRatio className={contain ? classes.objectFitContain : undefined} ratio={ratio}>
+			<AspectRatio
+				className={contain ? classes.objectFitContain : undefined}
+				sx={{width: '100%', height: '100%'}}
+				ratio={ratio}
+			>
 				{children}
 			</AspectRatio>
 		</Container>
