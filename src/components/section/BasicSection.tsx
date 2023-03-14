@@ -232,8 +232,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 						<ImageContainer
 							containerRef={ref}
 							fluid
+							ratio={section?.youtubeVideoUrl ? 16 / 9 : undefined}
 							background={isVideoContent(section.asset.file.contentType) ? 'white' : undefined}
 							expanded={context.title === CONTACT_PAGE}
+							isVideo={isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)}
 						>
 							<Asset asset={section.asset} youtubeVideoURL={section?.youtubeVideoUrl} />
 						</ImageContainer>
