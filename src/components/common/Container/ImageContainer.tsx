@@ -11,6 +11,7 @@ type ImageContainerProps = {
 	expanded?: boolean;
 	contain?: boolean;
 	containerRef?: React.MutableRefObject<undefined>;
+	isVideo?: boolean;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -21,6 +22,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	expanded = false,
 	contain = false,
 	containerRef,
+	isVideo,
 }) => {
 	const context = React.useContext(PageContext);
 
@@ -34,12 +36,14 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			...(expanded && {top: '90px'}),
 			...(expanded && {right: '0px'}),
 			...(context.title !== CONTACT_PAGE && {height: '100%'}),
+			...(isVideo && {padding: '100px 0'}),
 
 			[theme.fn.smallerThan('lg')]: {
 				maxWidth: '100%',
 				width: '100%',
 				marginTop: 0,
 				marginRight: 0,
+				...(isVideo && {padding: '0'}),
 			},
 
 			[theme.fn.smallerThan('md')]: {
@@ -63,11 +67,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 
 	return (
 		<Container ref={containerRef} fluid className={classes.imageContainer}>
-			<AspectRatio
-				className={contain ? classes.objectFitContain : undefined}
-				ratio={ratio}
-				sx={{width: '100%', height: '100%'}}
-			>
+			<AspectRatio className={contain ? classes.objectFitContain : undefined} ratio={ratio}>
 				{children}
 			</AspectRatio>
 		</Container>
