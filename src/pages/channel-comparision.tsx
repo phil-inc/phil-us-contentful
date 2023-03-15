@@ -68,6 +68,8 @@ const useStyles = createStyles(theme => ({
 
 const ChannelComparisionPage = () => {
 	const {classes} = useStyles();
+	const formattedDateTime
+		= new Date().toLocaleString('en-US', {hour12: false}).replace(/[,/: ]+/g, '_') + '_' + String(Date.now());
 
 	const form = useForm<FormValues>({
 		initialValues: {
@@ -86,6 +88,7 @@ const ChannelComparisionPage = () => {
 			primaryPharmacy: '',
 			concerns: '',
 			cycle: 'Channel Calculator',
+			drug_name: formattedDateTime,
 		},
 
 		validate: {
