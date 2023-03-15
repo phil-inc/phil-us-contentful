@@ -168,6 +168,7 @@ const Information = () => {
 					{objectTypeId: '2-9880972', name: 'what_is_your_primary_pharmacy_', value: values.primaryPharmacy},
 					{objectTypeId: '2-9880972', name: 'additional_refill_notes', value: values.concerns},
 					{objectTypeId: '2-9880972', name: 'cycle', value: values.cycle},
+					{objectTypeId: '2-9880972', name: 'drug_name', value: values.drug_name},
 				],
 				context: {
 					...(hutk.length && {hutk}),
