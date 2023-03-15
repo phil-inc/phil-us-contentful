@@ -17,6 +17,7 @@ export type FormValues = {
 	primaryPharmacy: string;
 	concerns: string;
 	cycle: string;
+	drug_name: string;
 };
 
 export type TStepper = {
