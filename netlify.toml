@@ -16,6 +16,16 @@ from = "/md/enroll"
 to = "https://forms.gle/rNbj6LQ4po1pmcpr6"
 status = 302
 
+# /{md|hcp}/enroll redirection
+[[redirects]]
+from = "/md/enroll"
+to = "https://md.phil.us/enroll"
+status = 302
+
+[[redirects]]
+from = "/hcp/enroll"
+to = "https://md.phil.us/enroll"
+status = 302
 
 [[redirects]]
 from = "/stage/e/*"
