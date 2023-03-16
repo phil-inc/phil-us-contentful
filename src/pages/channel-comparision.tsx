@@ -94,6 +94,11 @@ const ChannelComparisionPage = () => {
 		validate: {
 			email: value => (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? null : 'Invalid email'),
 		},
+
+		transformValues: (values: FormValues) => ({
+			...values,
+			percentFormulatoryCoverage: Number(values.percentFormulatoryCoverage) || 0,
+		}),
 	});
 
 	const [step, setStep] = React.useState(0);
