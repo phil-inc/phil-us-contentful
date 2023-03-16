@@ -126,6 +126,7 @@ const Information = () => {
 	const url = CHANNEL_COMPARISION_API;
 	const [loading, setLoading] = React.useState(false);
 	const [hutk, setHutk] = React.useState<string>('');
+	const [isSubmitError, setIsSubmitError] = React.useState(false);
 
 	React.useEffect(() => {
 		scrollIntoView({alignment: 'start'});
@@ -138,6 +139,7 @@ const Information = () => {
 	const onSubmit = async (values: FormValues) => {
 		try {
 			setLoading(true);
+			setIsSubmitError(false);
 
 			const hubspotData = {
 				fields: [
@@ -199,6 +201,7 @@ const Information = () => {
 			stepper.nextStep();
 		} catch (error: unknown) {
 			console.log(error);
+			setIsSubmitError(true);
 		} finally {
 			setLoading(false);
 		}
@@ -501,9 +504,14 @@ const Information = () => {
 						/>
 					</Group>
 
-					<Button type='submit' loading={loading} loaderPosition='right'>
+					<Button type='submit' loading={loading} loaderPosition='right' mb={8}>
 						Get my customized report
 					</Button>
+					{isSubmitError && (
+						<Text size={16} color='red'>
+							Error submitting form, please try again!
+						</Text>
+					)}
 				</form>
 				<Button
 					className={classes.backButton}
