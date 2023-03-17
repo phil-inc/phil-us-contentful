@@ -126,6 +126,7 @@ const Information = () => {
 	const url = CHANNEL_COMPARISION_API;
 	const [loading, setLoading] = React.useState(false);
 	const [hutk, setHutk] = React.useState<string>('');
+	const [isSubmitError, setIsSubmitError] = React.useState(false);
 
 	React.useEffect(() => {
 		scrollIntoView({alignment: 'start'});
@@ -138,6 +139,7 @@ const Information = () => {
 	const onSubmit = async (values: FormValues) => {
 		try {
 			setLoading(true);
+			setIsSubmitError(false);
 
 			const hubspotData = {
 				fields: [
@@ -199,6 +201,7 @@ const Information = () => {
 			stepper.nextStep();
 		} catch (error: unknown) {
 			console.log(error);
+			setIsSubmitError(true);
 		} finally {
 			setLoading(false);
 		}
@@ -365,7 +368,7 @@ const Information = () => {
 							}}
 							required
 							withAsterisk={false}
-							label='Percentage of dispenses that utilize a manufacturer uncovered coupon?*'
+							label='Approximately what % of dispenses utilize an uncovered coupon? (put 0 if unknown):*'
 							radius={0}
 							max={100}
 							min={0}
@@ -384,7 +387,7 @@ const Information = () => {
 							}}
 							max={100}
 							min={0}
-							label='Percentage of formulary coverage'
+							label='Percentage of formulary coverage (approximate)?'
 							radius={0}
 							mb={48}
 							{...form.getInputProps('percentFormulatoryCoverage')}
@@ -393,7 +396,7 @@ const Information = () => {
 
 					<Stack spacing={0}>
 						<Text size={20} color='#525252'>
-							What is patient’s copay amount ($):*
+							Manufacturer-sponsored copay offer ($)*
 						</Text>
 						<SimpleGrid
 							cols={3}
@@ -463,21 +466,21 @@ const Information = () => {
 								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
 								required
 								icon={IconCheck as React.FC}
-								label='Retail Pharmacy'
+								label='Retail'
 								value='Retail Pharmacy'
 							/>
 							<Radio
 								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
 								required
 								icon={IconCheck as React.FC}
-								label='Specialty Pharmacy'
+								label='Specialty'
 								value='Specialty Pharmacy'
 							/>
 							<Radio
 								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
 								required
 								icon={IconCheck as React.FC}
-								label='Digital Pharmacy'
+								label='Digital'
 								value='Digital Pharmacy'
 							/>
 						</Radio.Group>
@@ -501,9 +504,14 @@ const Information = () => {
 						/>
 					</Group>
 
-					<Button type='submit' loading={loading} loaderPosition='right'>
+					<Button type='submit' loading={loading} loaderPosition='right' mb={8}>
 						Get my customized report
 					</Button>
+					{isSubmitError && (
+						<Text size={16} color='red'>
+							Error submitting form, please try again!
+						</Text>
+					)}
 				</form>
 				<Button
 					className={classes.backButton}
