@@ -17,8 +17,10 @@ type SectionProps = {
 const Section: React.FC<SectionProps> = ({section, index}) => {
 	switch (section.sectionType) {
 		case 'Basic Section':
+			// Return <></>;
 			return <BasicSection section={section as ISection} index={index!} />;
 		case 'Referenced Section':
+			// Return <></>;
 			return <ReferencedSection section={section as IReferencedSection} />;
 		default:
 			break;

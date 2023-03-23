@@ -18,26 +18,30 @@ type AssetProps = {
  * @returns Image/Video asset handler.
  */
 const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
-	const origin = getWindowProperty('location.origin', 'https://phil.us');
+	const [playerCompnnent, setPlayerComponent] = React.useState(<></>);
+
+	React.useEffect(() => {
+		const player = (
+			<ReactPlayer
+				url={youtubeVideoURL}
+				controls
+				width={'100%'}
+				height={'100%'}
+				config={{
+					youtube: {
+						playerVars: {
+							origin: 'https://phil.us',
+						},
+					},
+				}}
+			/>
+		);
+
+		setPlayerComponent(player);
+	}, []);
 
 	if (youtubeVideoURL?.length) {
-		return (
-			<AspectRatio ratio={16 / 9}>
-				<ReactPlayer
-					url={youtubeVideoURL}
-					controls
-					width={'100%'}
-					height={'100%'}
-					config={{
-						youtube: {
-							playerVars: {
-								origin,
-							},
-						},
-					}}
-				/>
-			</AspectRatio>
-		);
+		return <AspectRatio ratio={16 / 9}>{playerCompnnent}</AspectRatio>;
 	}
 
 	if (isVideoContent(asset.file.contentType)) {
