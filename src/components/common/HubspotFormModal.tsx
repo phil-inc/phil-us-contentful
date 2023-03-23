@@ -21,6 +21,7 @@ const useStyles = createStyles(theme => ({
 }));
 
 const HubspotFormModal = ({hubspotEmbed}: {hubspotEmbed: BodyType}) => {
+	const hubspotRef = React.useRef(null);
 	const {classes} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	if (hubspotEmbed) {
@@ -40,10 +41,36 @@ const HubspotFormModal = ({hubspotEmbed}: {hubspotEmbed: BodyType}) => {
 		}
 	}
 
+	React.useEffect(() => {
+		if (hasRendered) {
+			const modalForm = document.querySelector('#hubspotModalForm');
+
+			if (modalForm) {
+				const observer = new MutationObserver((mutationsList, observer) => {
+					mutationsList.forEach(mutation => {
+						if (mutation.type === 'childList') {
+							const fieldsets: NodeList[] = (mutation.target as Element).querySelectorAll(
+								'fieldset div[style*="display: none"]',
+							) as unknown as NodeList[];
+							fieldsets.forEach(fieldset => {
+								const {parentElement} = fieldset as unknown as HTMLDivElement;
+								parentElement!.style.display = 'none';
+							});
+						}
+					});
+				});
+				observer.observe(modalForm, {attributes: true, childList: true, subtree: true});
+				return () => {
+					observer.disconnect();
+				};
+			}
+		}
+	}, [hasRendered]);
+
 	return (
 		<Container fluid className={classes.container}>
 			{hasRendered ? (
-				<div id='hubspotModalForm'></div>
+				<div ref={hubspotRef} id='hubspotModalForm'></div>
 			) : (
 				<Center>
 					<Loader mt={120} size='lg' />
