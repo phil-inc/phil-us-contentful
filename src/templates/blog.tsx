@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Title, Text, createStyles, Container, Box, Anchor, List} from '@mantine/core';
+import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, Table} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {TResource} from 'types/resource';
@@ -17,6 +17,8 @@ import {getDescriptionFromRichtext} from 'utils/getDescription';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import {isProduction} from 'utils/isProduction';
 import {isVideoContent} from 'utils/isVideoContent';
+import {documentToPlainTextString} from '@contentful/rich-text-plain-text-renderer';
+import {type Block} from '@contentful/rich-text-types';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -104,6 +106,12 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 		embededAsset: {
 			marginBottom: '32px',
+		},
+
+		warning: {
+			border: '2px solid black',
+			borderRadius: 10,
+			padding: 10,
 		},
 	}));
 
@@ -217,6 +225,16 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 						{children}
 					</Title>
 				);
+			},
+
+			[BLOCKS.TABLE_HEADER_CELL](node: Block, children) {
+				const startsWithWarning = (text: string) => text.startsWith('WARNING');
+
+				const plainText = documentToPlainTextString(node);
+
+				const hasWarning = startsWithWarning(plainText);
+
+				return <th className={hasWarning ? classes.warning : undefined}>{children}</th>;
 			},
 		},
 	};
