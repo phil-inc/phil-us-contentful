@@ -108,14 +108,22 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 			marginBottom: '32px',
 		},
 
-		warning: {
+		border: {
 			border: '2px solid black',
-			borderRadius: 10,
 			padding: 10,
+		},
+
+		table: {
+			borderCollapse: 'collapse',
+			borderSpacing: 0,
+		},
+
+		tableHeader: {
+			textAlign: 'start',
 		},
 	}));
 
-	const {classes} = useStyles();
+	const {classes, cx} = useStyles();
 
 	const richTextImages = {};
 
@@ -227,14 +235,16 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 				);
 			},
 
+			[BLOCKS.TABLE](node: Block, children) {
+				return <td className={classes.table}>{children}</td>;
+			},
+
+			[BLOCKS.TABLE_CELL](node: Block, children) {
+				return <td className={classes.border}>{children}</td>;
+			},
+
 			[BLOCKS.TABLE_HEADER_CELL](node: Block, children) {
-				const startsWithWarning = (text: string) => text.startsWith('WARNING');
-
-				const plainText = documentToPlainTextString(node);
-
-				const hasWarning = startsWithWarning(plainText);
-
-				return <th className={hasWarning ? classes.warning : undefined}>{children}</th>;
+				return <th className={cx(classes.tableHeader, classes.border)}>{children}</th>;
 			},
 		},
 	};
