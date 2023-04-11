@@ -32,7 +32,7 @@ export const CardWithImage: FC<CardWithImageProps> = ({resource}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.card)}>
-			<Grid align='center'>
+			<Grid align="center">
 				<Grid.Col lg={4} sm={12}>
 					{Boolean(resource.asset) && (
 						<ImageContainer ratio={1} fluid>
@@ -43,7 +43,7 @@ export const CardWithImage: FC<CardWithImageProps> = ({resource}) => {
 
 				<Grid.Col lg={8} sm={12} px={38} py={34}>
 					<Text className={classes.title}>{resource.heading}</Text>
-					<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+					<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
 					{Boolean(resource.body) && <Text className={classes.description}>{renderRichText(resource.body)}</Text>}
 				</Grid.Col>
 			</Grid>

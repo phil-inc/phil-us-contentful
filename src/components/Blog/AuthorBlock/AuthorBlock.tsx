@@ -47,7 +47,7 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 		renderNode: {
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
-					<Text component='p' mt={0} size={18}>
+					<Text component="p" mt={0} size={18}>
 						{children}
 					</Text>
 				);
@@ -56,7 +56,7 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 			[INLINES.HYPERLINK](node, children) {
 				const {uri} = node.data as {uri: string};
 				return (
-					<Anchor href={uri} target='_blank' className={classes.anchor} underline>
+					<Anchor href={uri} target="_blank" className={classes.anchor} underline>
 						{children}
 					</Anchor>
 				);
@@ -72,17 +72,17 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 					Author
 				</Title>
 				<Grid>
-					<Grid.Col sm={12} md='content'>
+					<Grid.Col sm={12} md="content">
 						<Avatar radius={100} size={100} m={0}>
 							<Asset asset={author.avatar} />
 						</Avatar>
 					</Grid.Col>
-					<Grid.Col sm={12} md='auto'>
+					<Grid.Col sm={12} md="auto">
 						<Group spacing={20}>
 							<Box>
 								<Text className={classes.authorName}>{author.name}</Text>
 								<Text className={classes.authorTitle}>{author.authorTitle}</Text>
-								<Text className={classes.authorBio} size={16} m={0} mb={12} color='#01201F'>
+								<Text className={classes.authorBio} size={16} m={0} mb={12} color="#01201F">
 									{Boolean(author.bio) && renderRichText(author.bio, options)}
 								</Text>
 							</Box>

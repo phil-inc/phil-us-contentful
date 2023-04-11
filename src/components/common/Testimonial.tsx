@@ -61,7 +61,7 @@ export const Testimonial: FC<TestimonialProps> = ({resource, type = 'company'}) 
 						</ImageContainer>
 					)}
 					{resource.body && renderRichText(resource.body)}
-					<Divider variant='dashed' size={3} style={{maxWidth: 404}} my={13} />
+					<Divider variant="dashed" size={3} style={{maxWidth: 404}} my={13} />
 					{/* Old implementation needs new implementation */}
 					{/* {resource.author && (
 						<Text color={'#00827E'} weight={700} className={classes.author}>

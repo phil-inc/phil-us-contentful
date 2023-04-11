@@ -288,7 +288,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			close();
 		},
 		null,
-		[navRef!, collapseRef!],
+		[navRef!, collapseRef!]
 	);
 
 	const onNavLinkClick = event => {
@@ -406,15 +406,15 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={minimal ? 0 : 62}>
 			<Container className={classes.inner} fluid>
-				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
+				<Group position="apart" noWrap align="center" className={classNames(classes.navbar, 'navbar')}>
 					{!minimal && (
-						<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+						<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
 							<Button
-								size='sm'
+								size="sm"
 								uppercase
-								variant='outline'
+								variant="outline"
 								px={4}
-								color='philBranding'
+								color="philBranding"
 								className={classes.patientLoginButtonMobile}
 							>
 								Patient Login
@@ -423,8 +423,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 					)}
 
 					<Box className={classes.logo}>
-						<Link to='/'>
-							<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
+						<Link to="/">
+							<ImageContainer ratio={125 / 90} contain fluid background="transparent">
 								<Asset asset={header.logo} />
 							</ImageContainer>
 						</Link>
@@ -432,7 +432,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 					{!minimal && (
 						<>
 							<Burger
-								name='BurgerButton'
+								name="BurgerButton"
 								opened={isDrawer}
 								onClick={() => {
 									toggleDrawer();
@@ -452,13 +452,13 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 											<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 										</List.Item>
 									))}
-								<List.Item data-noindicator='true'>
-									<Anchor href='https://my.phil.us' target='_blank'>
+								<List.Item data-noindicator="true">
+									<Anchor href="https://my.phil.us" target="_blank">
 										<Button
-											size='md'
+											size="md"
 											uppercase
-											variant='outline'
-											color='philBranding'
+											variant="outline"
+											color="philBranding"
 											className={classes.patientLoginButton}
 										>
 											Patient Login
@@ -485,22 +485,22 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								}}
 								withCloseButton={false}
 								title={
-									<Group position='apart' noWrap align='center' mt={9}>
-										<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+									<Group position="apart" noWrap align="center" mt={9}>
+										<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
 											<Button
-												size='sm'
+												size="sm"
 												uppercase
-												variant='outline'
+												variant="outline"
 												px={4}
-												color='philBranding'
+												color="philBranding"
 												className={classes.patientLoginButtonMobile}
 											>
 												Patient Login
 											</Button>
 										</Anchor>
 										<Box className={classes.logo}>
-											<Link to='/'>
-												<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
+											<Link to="/">
+												<ImageContainer ratio={125 / 90} contain fluid background="transparent">
 													<Asset asset={header.logo} />
 												</ImageContainer>
 											</Link>
@@ -514,10 +514,10 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 										/>
 									</Group>
 								}
-								size='full'
-								transition='fade'
+								size="full"
+								transition="fade"
 							>
-								<ScrollArea style={{height: 'calc(100vh - 100px)'}} type='never'>
+								<ScrollArea style={{height: 'calc(100vh - 100px)'}} type="never">
 									<Accordion
 										mb={16}
 										classNames={{control: classes.accordionControl, content: classes.accordionContent}}
@@ -528,7 +528,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 											.map(page => (
 												<Accordion.Item key={page.id + 'mapHeaderPagesDrawer'} value={page.title}>
 													<Accordion.Control>
-														<Text weight='bold' size={18}>
+														<Text weight="bold" size={18}>
 															{page.title}
 														</Text>
 													</Accordion.Control>
@@ -596,7 +596,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																					<th style={{paddingLeft: 0, paddingRight: 0}}>
 																						<Link
 																							to={navigateToPage(
-																								slugify(page.title, {lower: true, strict: true}),
+																								slugify(page.title, {lower: true, strict: true})
 																							)}
 																							style={{textDecoration: 'none'}}
 																						>
@@ -630,7 +630,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																										lower: true,
 																									})}/${slugify(relatesTo.header, {
 																										lower: true,
-																									})}/${slugify(heading, {lower: true})}`,
+																									})}/${slugify(heading, {lower: true})}`
 																								)}
 																								style={{textDecoration: 'none'}}
 																							>
@@ -643,7 +643,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																									{heading}
 																								</Text>
 																							</Link>
-																						),
+																						)
 																				)}
 																		</tbody>
 																	</Table>
@@ -653,8 +653,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																				<tr>
 																					<th style={{paddingLeft: 0, paddingRight: 0}}>
 																						<Anchor
-																							href='https://my.phil.us/'
-																							target='_blank'
+																							href="https://my.phil.us/"
+																							target="_blank"
 																							style={{textDecoration: 'none'}}
 																						>
 																							<Text
@@ -677,8 +677,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																				<tr>
 																					<th style={{paddingLeft: 0, paddingRight: 0}}>
 																						<Anchor
-																							href='https://md.phil.us/'
-																							target='_blank'
+																							href="https://md.phil.us/"
+																							target="_blank"
 																							style={{textDecoration: 'none'}}
 																						>
 																							<Text
@@ -707,12 +707,12 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 								in={opened}
 								className={classes.collapse}
 								transitionDuration={150}
-								transitionTimingFunction='ease-out'
+								transitionTimingFunction="ease-out"
 								animateOpacity={false}
 								ref={setCollapseRef}
 							>
 								<Container className={classes.container} fluid>
-									<List listStyleType='none' size='xl' styles={{itemWrapper: {width: '100%'}}}>
+									<List listStyleType="none" size="xl" styles={{itemWrapper: {width: '100%'}}}>
 										<Grid px={98} py={78} columns={100}>
 											{pages
 												.filter(page => page.title === target)
@@ -751,7 +751,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																						slugify(page.title, {
 																							lower: true,
 																							strict: true,
-																						}),
+																						})
 																					)}
 																					className={classes.textDecorationNone}
 																				>
@@ -760,7 +760,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																			</Text>
 																		)}
 																		<Divider />
-																		<List listStyleType='none'>
+																		<List listStyleType="none">
 																			{allContentfulResource.nodes
 																				.filter(resource => resource.relatesTo)
 																				.map(
@@ -779,7 +779,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																											})}/${slugify(heading, {
 																												lower: true,
 																												strict: true,
-																											})}`,
+																											})}`
 																										)}
 																										className={classes.textDecorationNone}
 																									>
@@ -787,7 +787,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																									</Link>
 																								</Text>
 																							</List.Item>
-																						),
+																						)
 																				)}
 																		</List>
 																	</List.Item>
@@ -798,8 +798,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																		<List.Item onClick={close}>
 																			<Text className={classes.listHeading}>
 																				<Anchor
-																					href='https://my.phil.us/'
-																					target='_blank'
+																					href="https://my.phil.us/"
+																					target="_blank"
 																					className={classes.textDecorationNone}
 																					style={{textDecoration: 'none'}}
 																				>
@@ -816,8 +816,8 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																		<List.Item onClick={close}>
 																			<Text className={classes.listHeading}>
 																				<Anchor
-																					href='https://md.phil.us/'
-																					target='_blank'
+																					href="https://md.phil.us/"
+																					target="_blank"
 																					className={classes.textDecorationNone}
 																					style={{textDecoration: 'none'}}
 																				>
@@ -829,7 +829,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 																	</Grid.Col>
 																)}
 															</React.Fragment>
-														)),
+														))
 												)}
 										</Grid>
 									</List>

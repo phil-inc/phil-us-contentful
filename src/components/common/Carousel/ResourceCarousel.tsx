@@ -61,7 +61,7 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 			<Paper radius={0} className={classNames(classes.card)}>
 				<Grid>
 					<Grid.Col lg={12} sm={12} md={12}>
-						<GatsbyImage objectFit='cover' image={getImage(item.asset)} alt={item.heading} />
+						<GatsbyImage objectFit="cover" image={getImage(item.asset)} alt={item.heading} />
 					</Grid.Col>
 				</Grid>
 			</Paper>
@@ -73,7 +73,7 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 			<Paper radius={0} className={classNames(classes.card)}>
 				<Grid>
 					<Grid.Col lg={12} sm={12} md={12}>
-						<GatsbyImage objectFit='cover' image={getImage(item.asset)} alt={item.heading} />
+						<GatsbyImage objectFit="cover" image={getImage(item.asset)} alt={item.heading} />
 					</Grid.Col>
 				</Grid>
 			</Paper>
@@ -84,10 +84,10 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 		<>
 			<Carousel
 				className={classes.carousel}
-				slideSize='44%'
+				slideSize="44%"
 				breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 'sm'}]}
-				slideGap='sm'
-				align='center'
+				slideGap="sm"
+				align="center"
 				slidesToScroll={2}
 				withIndicators
 				dragFree
@@ -119,18 +119,18 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 						},
 					},
 				}}
-				nextControlIcon={<IconChevronRight size={30} color='#FFFFFF' />}
-				previousControlIcon={<IconChevronLeft size={30} color='#FFFFFF' />}
+				nextControlIcon={<IconChevronRight size={30} color="#FFFFFF" />}
+				previousControlIcon={<IconChevronLeft size={30} color="#FFFFFF" />}
 			>
 				{slides}
 				{slides2}
 			</Carousel>
 			<Carousel
 				className={classes.mobileCarousel}
-				slideSize='44%'
+				slideSize="44%"
 				breakpoints={[{maxWidth: 'sm', slideSize: '100%', slideGap: 'sm'}]}
-				slideGap='sm'
-				align='center'
+				slideGap="sm"
+				align="center"
 				slidesToScroll={1}
 				withIndicators
 				dragFree
@@ -162,8 +162,8 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 						},
 					},
 				}}
-				nextControlIcon={<IconChevronRight size={30} color='#FFFFFF' />}
-				previousControlIcon={<IconChevronLeft size={30} color='#FFFFFF' />}
+				nextControlIcon={<IconChevronRight size={30} color="#FFFFFF" />}
+				previousControlIcon={<IconChevronLeft size={30} color="#FFFFFF" />}
 			>
 				{slides}
 			</Carousel>

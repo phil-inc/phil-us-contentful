@@ -112,10 +112,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				return <Text>{children}</Text>;
 			},
 			[BLOCKS.UL_LIST](node, children) {
-				return <List type='unordered'>{children}</List>;
+				return <List type="unordered">{children}</List>;
 			},
 			[BLOCKS.OL_LIST](node, children) {
-				return <List type='ordered'>{children}</List>;
+				return <List type="ordered">{children}</List>;
 			},
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
@@ -182,7 +182,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								)}
 								<Divider
 									size={1}
-									variant='dashed'
+									variant="dashed"
 									mt={handleSpacing(theme, theme.spacing.sm)}
 									mb={handleSpacing(theme, theme.spacing.md)}
 								/>
@@ -194,7 +194,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 							<>
 								<Title order={titleOrdering}>{section.header}</Title>
 								{Boolean(section.subHeader?.subHeader.length) && (
-									<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
+									<Text size={18} weight="bold" mt={handleSpacing(theme, theme.spacing.sm)}>
 										{section.subHeader?.subHeader}
 									</Text>
 								)}
@@ -206,7 +206,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 								{Boolean(section.buttonText?.length) && (
 									<Group mt={handleSpacing(theme, theme.spacing.md)}>
 										{isExternal ? (
-											<Anchor href={link} target='_blank'>
+											<Anchor href={link} target="_blank">
 												<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>
 													{section.buttonText}
 												</Button>
@@ -241,15 +241,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 						</ImageContainer>
 					</Grid.Col>
 				</Grid>
-				{section.isHubspotEmbed
-				&& section.isInsertSnippet
-				&& section.codeSnippet
-				&& Boolean(section.codeSnippet.codeSnippet.length)
-				&& isProduction ? (
-						<Script>
-							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-						</Script>
-					) : null}
+				{section.isHubspotEmbed &&
+				section.isInsertSnippet &&
+				section.codeSnippet &&
+				Boolean(section.codeSnippet.codeSnippet.length) &&
+				isProduction ? (
+					<Script>
+						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+					</Script>
+				) : null}
 			</>
 		</Container>
 	);

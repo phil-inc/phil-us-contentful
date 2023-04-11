@@ -30,23 +30,23 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 	const description = pageContext.metaDescription?.length
 		? pageContext.metaDescription
 		: pageContext.body?.raw
-			? getDescriptionFromRichtext(pageContext.body.raw)
-			: '';
+		? getDescriptionFromRichtext(pageContext.body.raw)
+		: '';
 
 	return (
 		<SEO title={pageContext.heading}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={pageContext.heading} />
-			<meta name='twitter:description' content={description} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={description} />
-			<meta property='og:title' content={pageContext.heading} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={description} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us/${getLink(pageContext).link}`} />
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-			{pageContext.noindex && <meta name='robots' content='noindex' />}
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={pageContext.heading} />
+			<meta name="twitter:description" content={description} />
+			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={description} />
+			<meta property="og:title" content={pageContext.heading} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={description} />
+			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={`https://phil.us/${getLink(pageContext).link}`} />
+			<script charSet="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+			{pageContext.noindex && <meta name="robots" content="noindex" />}
 		</SEO>
 	);
 };
@@ -149,7 +149,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
-					<Text component='p' mt={0} size={18}>
+					<Text component="p" mt={0} size={18}>
 						{children}
 					</Text>
 				);
@@ -157,7 +157,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type='ordered' mt={16} mb={32}>
+					<List type="ordered" mt={16} mb={32}>
 						{children}
 					</List>
 				);
@@ -165,7 +165,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type='unordered' listStyleType='disc' pl={32} mt={16} mb={44}>
+					<List type="unordered" listStyleType="disc" pl={32} mt={16} mb={44}>
 						{children}
 					</List>
 				);
@@ -182,7 +182,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 			[INLINES.HYPERLINK](node, children) {
 				const {uri} = node.data as {uri: string};
 				return (
-					<Anchor href={uri} target='_blank' className={classes.anchor}>
+					<Anchor href={uri} target="_blank" className={classes.anchor}>
 						{children}
 					</Anchor>
 				);
@@ -253,21 +253,21 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const hasBanners = Boolean(banners);
 
 	const bannerFactory = (resource: TResource) => (
-		<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={108}>
+		<Expanded key={resource.id} id={resource.id} fullWidth background="#F4F4F4" py={108}>
 			<Banner resource={resource} />
 		</Expanded>
 	);
 
 	return (
 		<Layout>
-			<Container size='xl' className={classes.inner}>
-				<Grid gutter='xl' align='center' pb={52} pt={0}>
+			<Container size="xl" className={classes.inner}>
+				<Grid gutter="xl" align="center" pb={52} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
 						<Title order={1} mb={36}>
 							{heading}
 						</Title>
 						{Boolean(asset) && (
-							<Container className={classes.floatingImage} size='sm'>
+							<Container className={classes.floatingImage} size="sm">
 								<Asset asset={asset} />
 							</Container>
 						)}

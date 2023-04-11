@@ -21,18 +21,18 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 
 	return (
 		<SEO title={title}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={title} />
-			<meta name='twitter:description' content={pageContext.description} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={pageContext.description} />
-			<meta property='og:title' content={title} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={pageContext.description} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${pageContext.title === 'Home' ? '/' : `/${title}`}`} />
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={title} />
+			<meta name="twitter:description" content={pageContext.description} />
+			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={pageContext.description} />
+			<meta property="og:title" content={title} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={pageContext.description} />
+			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={`https://phil.us${pageContext.title === 'Home' ? '/' : `/${title}`}`} />
+			<script charSet="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+			{location.pathname === '/field/' && <meta name="robots" content="noindex" />}
 		</SEO>
 	);
 };

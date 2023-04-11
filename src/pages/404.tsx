@@ -7,12 +7,12 @@ import React from 'react';
 export const Head: React.FC = () => (
 	<SEO title={'Page not found'}>
 		<meta
-			name='description'
+			name="description"
 			content={
 				'Page you are trying to open does not exist. You may have mistyped the address, or the page has been moved to another URL. If you think this is an error contact support.'
 			}
 		/>
-		<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+		<script charSet="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
 	</SEO>
 );
 
@@ -61,18 +61,18 @@ const Error = () => {
 				<SimpleGrid spacing={80} cols={2} breakpoints={[{maxWidth: 'sm', cols: 1, spacing: 40}]}>
 					<div>
 						<Title className={classes.title}>Something is not right...</Title>
-						<Text color='dimmed' size='lg'>
+						<Text color="dimmed" size="lg">
 							Page you are trying to open does not exist. You may have mistyped the address, or the page has been
 							moved to another URL. If you think this is an error contact support.
 						</Text>
 						<Link to={'/'}>
-							<Button variant='outline' color={'dark'} size='md' mt='xl' className={classes.control}>
+							<Button variant="outline" color={'dark'} size="md" mt="xl" className={classes.control}>
 								Get back to home page
 							</Button>
 						</Link>
 					</div>
 					<Container>
-						<img src='../images/404.svg' width='100%' height='100%' />
+						<img src="../images/404.svg" width="100%" height="100%" />
 					</Container>
 				</SimpleGrid>
 			</Container>

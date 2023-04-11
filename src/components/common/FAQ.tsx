@@ -56,10 +56,10 @@ export const FAQ: FC<FAQProps> = ({resource}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.FAQWrapper)}>
-			<Group align='center'>
+			<Group align="center">
 				<Group>
 					{isExternal ? (
-						<Anchor href={link} target='_blank' className={classes.title} underline={false}>
+						<Anchor href={link} target="_blank" className={classes.title} underline={false}>
 							<Title order={4} className={classes.title}>
 								{resource.heading}
 							</Title>

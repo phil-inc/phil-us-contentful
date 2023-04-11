@@ -89,19 +89,19 @@ export const StatsCard: FC<StatsCardProps> = ({resource: {asset, heading, body},
 
 	return (
 		<Box className={classes.fragment}>
-			<Card shadow='none' radius={0} className={classes.card}>
+			<Card shadow="none" radius={0} className={classes.card}>
 				<Card.Section className={classes.imageSection}>
 					<Asset asset={asset} />
 				</Card.Section>
 
 				{heading && !arrow && (
-					<Title mt='md' className={classes.percentage}>
+					<Title mt="md" className={classes.percentage}>
 						{heading}
 					</Title>
 				)}
 
 				{body && (
-					<Text color='dark' className={classes.description}>
+					<Text color="dark" className={classes.description}>
 						{renderRichText(body)}
 					</Text>
 				)}

@@ -50,7 +50,7 @@ const HubspotFormModal = ({hubspotEmbed}: {hubspotEmbed: BodyType}) => {
 					mutationsList.forEach(mutation => {
 						if (mutation.type === 'childList') {
 							const fieldsets: NodeList[] = (mutation.target as Element).querySelectorAll(
-								'fieldset div[style*="display: none"]',
+								'fieldset div[style*="display: none"]'
 							) as unknown as NodeList[];
 							fieldsets.forEach(fieldset => {
 								const {parentElement} = fieldset as unknown as HTMLDivElement;
@@ -70,10 +70,10 @@ const HubspotFormModal = ({hubspotEmbed}: {hubspotEmbed: BodyType}) => {
 	return (
 		<Container fluid className={classes.container}>
 			{hasRendered ? (
-				<div ref={hubspotRef} id='hubspotModalForm'></div>
+				<div ref={hubspotRef} id="hubspotModalForm"></div>
 			) : (
 				<Center>
-					<Loader mt={120} size='lg' />
+					<Loader mt={120} size="lg" />
 				</Center>
 			)}
 		</Container>

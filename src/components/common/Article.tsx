@@ -115,7 +115,7 @@ export const Article: FC<ArticleProps> = ({color, resource}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.card, getColorStyle())}>
-			<Stack align='flex-start' justify='space-between' className={classes.fullHeight}>
+			<Stack align="flex-start" justify="space-between" className={classes.fullHeight}>
 				<Box className={classes.fullWidth}>
 					<Container className={classes.imageWrapper} mb={45}>
 						<ImageContainer fluid>
@@ -126,14 +126,14 @@ export const Article: FC<ArticleProps> = ({color, resource}) => {
 					</Container>
 
 					<Title order={3}>{heading}</Title>
-					<Divider variant='dashed' size={1} style={{maxWidth: 404}} mt={10} mb={13} />
-					<Text size='sm' mt={0} mb={11} pr={50}>
+					<Divider variant="dashed" size={1} style={{maxWidth: 404}} mt={10} mb={13} />
+					<Text size="sm" mt={0} mb={11} pr={50}>
 						{resource.body && renderRichText(resource.body, options)}
 					</Text>
 				</Box>
-				<Group position='center'>
+				<Group position="center">
 					{isExternal ? (
-						<Anchor href={link} target='_blank'>
+						<Anchor href={link} target="_blank">
 							<Button color={'dark'}>{buttonText}</Button>
 						</Anchor>
 					) : (

@@ -264,23 +264,23 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	};
 
 	const ReferencedSectionTitle = () =>
-		section.referenceType === 'Case Study'
-		|| section.referenceType === 'Phil Blog'
-		|| section.referenceType === 'White Paper'
-		|| section.referenceType === 'Upcoming Events' ? (
-				<Box mb={handleSpacing(theme, theme.spacing.md)}>
-					<Title order={3} size={35}>
-						{section.header}
-					</Title>
-					<Divider variant='dashed' size={1} className={classes.divider} />
-				</Box>
-			) : (
-				<Group position='center' mb={28}>
-					<Title order={2} color={textColor}>
-						{section.header}
-					</Title>
-				</Group>
-			);
+		section.referenceType === 'Case Study' ||
+		section.referenceType === 'Phil Blog' ||
+		section.referenceType === 'White Paper' ||
+		section.referenceType === 'Upcoming Events' ? (
+			<Box mb={handleSpacing(theme, theme.spacing.md)}>
+				<Title order={3} size={35}>
+					{section.header}
+				</Title>
+				<Divider variant="dashed" size={1} className={classes.divider} />
+			</Box>
+		) : (
+			<Group position="center" mb={28}>
+				<Title order={2} color={textColor}>
+					{section.header}
+				</Title>
+			</Group>
+		);
 
 	const ReferencedSectionBody = () =>
 		section.referenceType === 'Image Carousel' ? (
@@ -311,11 +311,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			background={background}
 			pt={context.title === 'Field' ? 0 : handleSpacing(theme, 92)}
 			pb={
-				section.referenceType === 'Case Study'
-				|| section.referenceType === 'Phil Blog'
-				|| section.referenceType === 'White Paper'
-				|| section.referenceType === 'Upcoming Events'
-				|| context.title === 'Field'
+				section.referenceType === 'Case Study' ||
+				section.referenceType === 'Phil Blog' ||
+				section.referenceType === 'White Paper' ||
+				section.referenceType === 'Upcoming Events' ||
+				context.title === 'Field'
 					? 0
 					: handleSpacing(theme, 92)
 			}
@@ -323,9 +323,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		>
 			{context.title === 'Field' ? (
 				<Accordion
-					variant='separated'
-					radius='xs'
-					chevronPosition='left'
+					variant="separated"
+					radius="xs"
+					chevronPosition="left"
 					mb={24}
 					chevronSize={44}
 					classNames={{
@@ -354,9 +354,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 
 			{/* bottom buttons */}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group position='center' mt={handleSpacing(theme, theme.spacing.lg)}>
+				<Group position="center" mt={handleSpacing(theme, theme.spacing.lg)}>
 					{isExternal ? (
-						<Anchor href={link} target='_blank'>
+						<Anchor href={link} target="_blank">
 							<Button color={'dark'}>{section.buttonText}</Button>
 						</Anchor>
 					) : (

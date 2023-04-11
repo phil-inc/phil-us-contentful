@@ -126,19 +126,19 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 											{page.title}
 										</Text>
 									</Link>
-									<Divider my={10} color='#6A7979' />
+									<Divider my={10} color="#6A7979" />
 									{page.sections
 										.filter(section => Boolean(section.header?.length && !section.isHidden))
 										.map((section, index, array) => (
 											<React.Fragment key={section.id + 'mapFooterSections'}>
-												<List listStyleType='none'>
+												<List listStyleType="none">
 													<List.Item>
 														<Link
 															to={
 																(page.title === 'Home'
 																	? ''
-																	: `/${slugify(page.title, {lower: true, strict: true})}`)
-																+ `/#${slugify(section.header, {
+																	: `/${slugify(page.title, {lower: true, strict: true})}`) +
+																`/#${slugify(section.header, {
 																	lower: true,
 																	strict: true,
 																})}`
@@ -153,11 +153,11 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 												</List>
 												{/* Patients section mapping extra elements */}
 												{page.title === 'Patients' && index === array.length - 1 && (
-													<List listStyleType='none'>
+													<List listStyleType="none">
 														<List.Item>
 															<Anchor
-																href='https://my.phil.us/'
-																target='_blank'
+																href="https://my.phil.us/"
+																target="_blank"
 																style={{textDecoration: 'none'}}
 															>
 																<Text className={classes.footerLink}>Patient Log In</Text>
@@ -168,11 +168,11 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 
 												{/* HCP section mapping extra elements */}
 												{page.title === HCP_PAGE && index === array.length - 1 && (
-													<List listStyleType='none'>
+													<List listStyleType="none">
 														<List.Item>
 															<Anchor
-																href='https://md.phil.us/'
-																target='_blank'
+																href="https://md.phil.us/"
+																target="_blank"
 																style={{textDecoration: 'none'}}
 															>
 																<Text className={classes.footerLink}>HCP Log In</Text>
@@ -184,11 +184,11 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 												{/* Contact section mapping extra elements */}
 												{page.title === 'Contact' && (
 													<Group mt={18}>
-														<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+														<Anchor href="https://www.linkedin.com/company/phil-inc-" target="_blank">
 															<div>
 																<StaticImage
-																	src='../../../assets/images/linkedin.svg'
-																	alt='LinkedIn Icon'
+																	src="../../../assets/images/linkedin.svg"
+																	alt="LinkedIn Icon"
 																/>
 															</div>
 														</Anchor>
@@ -204,13 +204,13 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 								<Text size={'lg'} mt={0} className={classes.footLinkHeader}>
 									Newsletter
 								</Text>
-								<Divider my={10} color='#6A7979' />
+								<Divider my={10} color="#6A7979" />
 								<HubSpotNewsletter />
-								<Grid mt={60} align={'center'} justify='center'>
+								<Grid mt={60} align={'center'} justify="center">
 									{footer.badge.map(badge => (
 										<Grid.Col key={badge.file.url + 'mapBadge'} span={6}>
 											<Box sx={{maxWidth: 120}}>
-												<ImageContainer background='transparent' fluid>
+												<ImageContainer background="transparent" fluid>
 													<Asset asset={badge} />
 												</ImageContainer>
 											</Box>
@@ -227,7 +227,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 							{pages.map(page => (
 								<Accordion.Item key={page.id + 'mapFooterPagesMobile'} value={page.title}>
 									<Accordion.Control px={0}>
-										<Text weight='bold' size={18}>
+										<Text weight="bold" size={18}>
 											{page.title}
 										</Text>
 									</Accordion.Control>
@@ -242,8 +242,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 																to={
 																	(page.title === 'Home'
 																		? ''
-																		: `/${slugify(page.title, {lower: true, strict: true})}`)
-																	+ `/#${slugify(section.header, {
+																		: `/${slugify(page.title, {lower: true, strict: true})}`) +
+																	`/#${slugify(section.header, {
 																		lower: true,
 																		strict: true,
 																	})}`
@@ -260,8 +260,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 														{page.title === 'Patients' && index === getFinalIndex(page) && (
 															<List.Item>
 																<Anchor
-																	href='https://my.phil.us/'
-																	target='_blank'
+																	href="https://my.phil.us/"
+																	target="_blank"
 																	style={{textDecoration: 'none'}}
 																>
 																	<Text className={classes.footerLink}>Patient Log In</Text>
@@ -273,8 +273,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 														{page.title === HCP_PAGE && index === getFinalIndex(page) && (
 															<List.Item>
 																<Anchor
-																	href='https://md.phil.us/'
-																	target='_blank'
+																	href="https://md.phil.us/"
+																	target="_blank"
 																	style={{textDecoration: 'none'}}
 																>
 																	<Text className={classes.footerLink}>HCP Log In</Text>
@@ -287,13 +287,13 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 															<List.Item>
 																<Group>
 																	<Anchor
-																		href='https://www.linkedin.com/company/phil-inc-'
-																		target='_blank'
+																		href="https://www.linkedin.com/company/phil-inc-"
+																		target="_blank"
 																	>
 																		<div>
 																			<StaticImage
-																				src='../../../assets/images/linkedin.svg'
-																				alt='LinkedIn Icon'
+																				src="../../../assets/images/linkedin.svg"
+																				alt="LinkedIn Icon"
 																			/>
 																		</div>
 																	</Anchor>
@@ -311,13 +311,13 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 							<Text size={'lg'} className={classes.footLinkHeader}>
 								Newsletter
 							</Text>
-							<Divider my={10} color='#6A7979' />
+							<Divider my={10} color="#6A7979" />
 							<HubSpotNewsletter />
-							<Grid mt={60} align={'center'} justify='center'>
+							<Grid mt={60} align={'center'} justify="center">
 								{footer.badge.map(badge => (
 									<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
 										<Box sx={{maxWidth: 120}}>
-											<ImageContainer background='transparent' fluid>
+											<ImageContainer background="transparent" fluid>
 												<Asset asset={badge} />
 											</ImageContainer>
 										</Box>
@@ -334,15 +334,15 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 				<Center>
 					<Text className={classes.links}>
 						© Phil, Inc. |{' '}
-						<Link to='/terms' className={classes.textDecorationNone}>
+						<Link to="/terms" className={classes.textDecorationNone}>
 							Terms of Use
 						</Link>{' '}
 						|{' '}
-						<Link to='/privacy' className={classes.textDecorationNone}>
+						<Link to="/privacy" className={classes.textDecorationNone}>
 							Privacy Policy
 						</Link>{' '}
 						|{' '}
-						<Link to='/hipaa' className={classes.textDecorationNone}>
+						<Link to="/hipaa" className={classes.textDecorationNone}>
 							HIPAA Notice
 						</Link>
 					</Text>

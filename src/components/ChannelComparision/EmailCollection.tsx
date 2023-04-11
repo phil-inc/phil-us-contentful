@@ -40,7 +40,7 @@ const useStyles = createStyles(theme => ({
 		borderColor: '#9E9E9E',
 		fontSize: 20,
 
-		'&[data-progress=\'true\']': {
+		"&[data-progress='true']": {
 			background: '#00827E',
 			color: '#FFFFFF',
 		},
@@ -68,7 +68,7 @@ const EmailCollection = () => {
 			<Box className={classes.content}>
 				<Title className={classes.title} order={1} mb={20}>
 					{'Learn how you can optimize your '}
-					<Text className={classes.title} component='span' color={'#00827E'}>
+					<Text className={classes.title} component="span" color={'#00827E'}>
 						patient access strategy to improve adherence and gross-to-net
 					</Text>
 				</Title>
@@ -89,9 +89,9 @@ const EmailCollection = () => {
 						stepIcon: classes.stepIcon,
 					}}
 				>
-					<Stepper.Step label='Email' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label="Email" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label="Information" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label="Done" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 				</Stepper>
 
 				<form
@@ -99,20 +99,20 @@ const EmailCollection = () => {
 						stepper.nextStep();
 					})}
 				>
-					<Title order={2} size={28} color='#0A0A0A' mb={16}>
+					<Title order={2} size={28} color="#0A0A0A" mb={16}>
 						Where should we send the <span style={{whiteSpace: 'nowrap'}}>report?*</span>
 					</Title>
 					<TextInput
 						classNames={{label: classes.inputLabel, required: classes.inputLabel}}
-						label='Email Address*'
-						type='email'
+						label="Email Address*"
+						type="email"
 						radius={0}
 						required
 						withAsterisk={false}
 						mb={48}
 						{...form.getInputProps('email')}
 					/>
-					<Button type='submit'>Continue</Button>
+					<Button type="submit">Continue</Button>
 				</form>
 			</Box>
 		</Grid.Col>

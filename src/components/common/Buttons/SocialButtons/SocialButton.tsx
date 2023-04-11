@@ -73,7 +73,7 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	}, []);
 
 	return (
-		<Anchor href={isCopyLink ? null : getShareLink(type, href)} target='_blank' onClick={isCopyLink ? onClick : null}>
+		<Anchor href={isCopyLink ? null : getShareLink(type, href)} target="_blank" onClick={isCopyLink ? onClick : null}>
 			<Tooltip
 				color={clipboard.copied ? '#11827D' : '#01201F'}
 				label={computedLabel}
@@ -83,10 +83,10 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 			>
 				<ActionIcon
 					ref={ref}
-					component='div'
+					component="div"
 					size={40}
-					variant='filled'
-					radius='xl'
+					variant="filled"
+					radius="xl"
 					className={classes.socialButton}
 				>
 					<IconComponent className={classes.socialIcon} size={16} />
