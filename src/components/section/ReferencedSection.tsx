@@ -215,7 +215,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			case 'Upcoming Events':
 			case 'White Paper':
 			case 'Case Study':
-				return <ResourceCard sectionHeader={sectionHeader} resource={resource} />;
+				return <ResourceCard resource={resource} />;
 
 			case 'Featured Resource':
 			case 'Info Card':

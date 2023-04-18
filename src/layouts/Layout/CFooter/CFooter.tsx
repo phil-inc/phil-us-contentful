@@ -129,73 +129,79 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 									<Divider my={10} color='#6A7979' />
 									{page.sections
 										.filter(section => Boolean(section.header?.length && !section.isHidden))
-										.map((section, index, array) => (
-											<React.Fragment key={section.id + 'mapFooterSections'}>
-												<List listStyleType='none'>
-													<List.Item>
-														<Link
-															to={
-																(page.title === 'Home'
-																	? ''
-																	: `/${slugify(page.title, {lower: true, strict: true})}`)
-																+ `/#${slugify(section.header, {
-																	lower: true,
-																	strict: true,
-																})}`
-															}
-															style={{textDecoration: 'none'}}
-														>
-															<Text className={classes.footerLink}>
-																{section.header.replace(':', '')}
-															</Text>
-														</Link>
-													</List.Item>
-												</List>
-												{/* Patients section mapping extra elements */}
-												{page.title === 'Patients' && index === array.length - 1 && (
+										.map((section, index, array) => {
+											// Set path based on page and section
+											let path = '';
+											if (page.title !== 'Home') {
+												const pageSlug = slugify(page.title, {lower: true, strict: true});
+												path = `/${pageSlug}`;
+											}
+
+											if (page.title === 'Resources') {
+												const sectionSlug = slugify(section.header, {lower: true, strict: true});
+												path += `/${sectionSlug}`;
+											} else {
+												const sectionSlug = slugify(section.header, {lower: true, strict: true});
+												path += `/#${sectionSlug}`;
+											}
+
+											return (
+												<React.Fragment key={section.id + 'mapFooterSections'}>
 													<List listStyleType='none'>
 														<List.Item>
-															<Anchor
-																href='https://my.phil.us/'
-																target='_blank'
-																style={{textDecoration: 'none'}}
-															>
-																<Text className={classes.footerLink}>Patient Log In</Text>
-															</Anchor>
+															<Link to={path} style={{textDecoration: 'none'}}>
+																<Text className={classes.footerLink}>
+																	{section.header.replace(':', '')}
+																</Text>
+															</Link>
 														</List.Item>
 													</List>
-												)}
+													{/* Patients section mapping extra elements */}
+													{page.title === 'Patients' && index === array.length - 1 && (
+														<List listStyleType='none'>
+															<List.Item>
+																<Anchor
+																	href='https://my.phil.us/'
+																	target='_blank'
+																	style={{textDecoration: 'none'}}
+																>
+																	<Text className={classes.footerLink}>Patient Log In</Text>
+																</Anchor>
+															</List.Item>
+														</List>
+													)}
 
-												{/* HCP section mapping extra elements */}
-												{page.title === HCP_PAGE && index === array.length - 1 && (
-													<List listStyleType='none'>
-														<List.Item>
-															<Anchor
-																href='https://md.phil.us/'
-																target='_blank'
-																style={{textDecoration: 'none'}}
-															>
-																<Text className={classes.footerLink}>HCP Log In</Text>
+													{/* HCP section mapping extra elements */}
+													{page.title === HCP_PAGE && index === array.length - 1 && (
+														<List listStyleType='none'>
+															<List.Item>
+																<Anchor
+																	href='https://md.phil.us/'
+																	target='_blank'
+																	style={{textDecoration: 'none'}}
+																>
+																	<Text className={classes.footerLink}>HCP Log In</Text>
+																</Anchor>
+															</List.Item>
+														</List>
+													)}
+
+													{/* Contact section mapping extra elements */}
+													{page.title === 'Contact' && (
+														<Group mt={18}>
+															<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+																<div>
+																	<StaticImage
+																		src='../../../assets/images/linkedin.svg'
+																		alt='LinkedIn Icon'
+																	/>
+																</div>
 															</Anchor>
-														</List.Item>
-													</List>
-												)}
-
-												{/* Contact section mapping extra elements */}
-												{page.title === 'Contact' && (
-													<Group mt={18}>
-														<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
-															<div>
-																<StaticImage
-																	src='../../../assets/images/linkedin.svg'
-																	alt='LinkedIn Icon'
-																/>
-															</div>
-														</Anchor>
-													</Group>
-												)}
-											</React.Fragment>
-										))}
+														</Group>
+													)}
+												</React.Fragment>
+											);
+										})}
 								</Box>
 							</Grid.Col>
 						))}
