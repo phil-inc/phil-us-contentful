@@ -30,6 +30,7 @@ const useStyles = createStyles(theme => ({
 		paddingLeft: 18,
 		background: '#FFF',
 		height: '100%',
+		padding: '40px 60px',
 
 		'&::before': {
 			content: '""',
@@ -65,6 +66,8 @@ const useStyles = createStyles(theme => ({
 	},
 
 	title: {
+		fontSize: 28,
+
 		[theme.fn.smallerThan('md')]: {
 			fontSize: 20,
 		},
@@ -73,12 +76,24 @@ const useStyles = createStyles(theme => ({
 	body: {
 		marginTop: 8,
 		marginBottom: 20,
+		fontSize: 18,
 
 		[theme.fn.smallerThan('md')]: {
 			marginTop: 8,
 			marginBottom: 12,
 
 			fontSize: 14,
+		},
+	},
+
+	button: {
+		fontSize: 16,
+		padding: '11px 20px',
+		fontWeight: 400,
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 10.28,
+			padding: '7px 12px',
 		},
 	},
 }));
@@ -116,11 +131,11 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleSystemProps> = ({r
 							<Group>
 								{isExternal ? (
 									<Anchor href={link} target='_blank'>
-										<Button>{resource.buttonText}</Button>
+										<Button className={classes.button}>{resource.buttonText}</Button>
 									</Anchor>
 								) : (
 									<Link to={link}>
-										<Button>{resource.buttonText}</Button>
+										<Button className={classes.button}>{resource.buttonText}</Button>
 									</Link>
 								)}
 							</Group>

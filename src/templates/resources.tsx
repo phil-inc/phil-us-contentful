@@ -105,6 +105,10 @@ const useStyles = createStyles(theme => ({
 		fontSize: 12,
 		fontWeight: 700,
 		color: '#9a9a9a',
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 16,
+		},
 	},
 
 	navLinkRoot: {
@@ -128,6 +132,24 @@ const useStyles = createStyles(theme => ({
 	textDecorationNone: {
 		textDecoration: 'none',
 		color: 'white',
+	},
+
+	heading1: {
+		fontSize: 48,
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 32,
+		},
+	},
+
+	sectionNavLinksContainer: {
+		'> a:first-child > button': {
+			paddingTop: 0,
+		},
+
+		'> a:last-child > button': {
+			paddingBottom: 0,
+		},
 	},
 }));
 
@@ -176,46 +198,50 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 			<Expanded id={currentSection.id} py={0}>
 				{/* PAGE HEADER */}
 				<Box>
-					<Title order={1}>Resources{!isMobileView && `/${currentSection.header}`}</Title>
+					<Title className={classes.heading1} order={1}>
+						Resources{!isMobileView && `/${currentSection.header}`}
+					</Title>
 				</Box>
 
-				<Grid mt={isMobileView ? 42 : 36} mb={20}>
+				<Grid mt={36} mb={20}>
 					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={3}>
 						{/* RESOURCE TYPE NAV LINKS */}
 						<Card className={classes.navigationList} mb={isMobileView ? 20 : 36}>
-							<Title order={4} mb={24}>
+							<Title size={24} order={4} mb={24}>
 								Resources Type
 							</Title>
 
-							{data.contentfulPage.sections
-								.filter(section => !section.isHidden && Boolean(section.header))
-								.map((section, index, array) => {
-									const path = '/resources/' + slugify(section.header, {lower: true, strict: true});
+							<Box className={classes.sectionNavLinksContainer}>
+								{data.contentfulPage.sections
+									.filter(section => !section.isHidden && Boolean(section.header))
+									.map((section, index, array) => {
+										const path = '/resources/' + slugify(section.header, {lower: true, strict: true});
 
-									return (
-										<>
-											<Link to={path} className={classes.textDecorationNone}>
-												<NavLink
-													active={currentSection.id === section.id}
-													color='#00827E'
-													py={12}
-													variant='subtle'
-													classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
-													pl={0}
-													key={section.id}
-													label={section.header}
-												/>
-											</Link>
-											{index !== array.length - 1 && <Divider my={0} />}
-										</>
-									);
-								})}
+										return (
+											<>
+												<Link to={path} className={classes.textDecorationNone}>
+													<NavLink
+														active={currentSection.id === section.id}
+														color='#00827E'
+														py={12}
+														variant='subtle'
+														classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
+														pl={0}
+														key={section.id}
+														label={section.header}
+													/>
+												</Link>
+												{index !== array.length - 1 && <Divider my={0} />}
+											</>
+										);
+									})}
+							</Box>
 						</Card>
 
 						{/* FEATURED ITEMS NAV LINKS */}
 						{currentSection?.featuredItems?.length && (
 							<Card className={classes.featuredItemsList}>
-								<Title order={4} mb={24}>
+								<Title size={24} order={4} mb={24}>
 									Featured Items
 								</Title>
 								{data.contentfulReferencedSection.featuredItems
@@ -317,7 +343,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 				{currentSection?.featuredItems?.length && (
 					<Card className={classes.featuredItemsListMobile}>
-						<Title order={4} mb={24}>
+						<Title size={24} order={4} mb={24}>
 							Featured Items
 						</Title>
 						{data.contentfulReferencedSection.featuredItems

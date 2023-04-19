@@ -73,8 +73,13 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	}, []);
 
 	return (
-		<Anchor href={isCopyLink ? null : getShareLink(type, href)} target='_blank' onClick={isCopyLink ? onClick : null}>
+		<Anchor
+			href={isCopyLink ? undefined : getShareLink(type, href)}
+			target='_blank'
+			onClick={isCopyLink ? onClick : undefined}
+		>
 			<Tooltip
+				opened={clipboard.copied}
 				color={clipboard.copied ? '#11827D' : '#01201F'}
 				label={computedLabel}
 				withArrow
