@@ -2,14 +2,27 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import {SEO} from 'layouts/SEO/SEO';
-import {Anchor, Box, Card, Divider, Grid, NavLink, Pagination, Text, Title, createStyles} from '@mantine/core';
+import {
+	Accordion,
+	Anchor,
+	Box,
+	Card,
+	Divider,
+	Grid,
+	NavLink,
+	Pagination,
+	Text,
+	Title,
+	createStyles,
+	useMantineTheme,
+} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {IReferencedSection, ISection} from 'types/section';
 import {Link, graphql, navigate} from 'gatsby';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
-import {useViewportSize} from '@mantine/hooks';
+import {useToggle, useViewportSize} from '@mantine/hooks';
 
 type HelmetProps = {
 	data: {
@@ -41,7 +54,7 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 	);
 };
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 	container: {
 		margin: 0,
 		padding: '0px 100px',
@@ -151,6 +164,35 @@ const useStyles = createStyles(theme => ({
 			paddingBottom: 0,
 		},
 	},
+
+	accordionContent: {
+		padding: 0,
+	},
+
+	accordionControl: {
+		padding: 0,
+		borderBottom: '0 !important',
+		backgroundColor: 'transparent !important',
+		cursor: _params.isMobileView ? 'pointer' : 'default !important',
+		marginBottom: 0,
+
+		color: '#0A0A0A !important',
+
+		'&[data-active]': {
+			marginBottom: 24,
+		},
+
+		':disabled': {
+			opacity: 1,
+		},
+	},
+
+	chevron: {
+		svg: {
+			height: 24,
+			width: 24,
+		},
+	},
 }));
 
 type ResourcesPageProps = {
@@ -171,10 +213,10 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	data,
 	pageContext: {currentPage: currentPageNumber, limit, numPages},
 }) => {
-	const {classes, theme} = useStyles();
 	const {width} = useViewportSize();
-
+	const theme = useMantineTheme();
 	const isMobileView = theme.breakpoints.md > width;
+	const {classes} = useStyles({isMobileView});
 
 	const currentSection = data.contentfulReferencedSection;
 
@@ -193,6 +235,14 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 		return false;
 	}) as IReferencedSection[];
 
+	const [value, toggle] = useToggle(['ResourcesType', null]);
+
+	React.useEffect(() => {
+		if (!isMobileView) {
+			toggle('ResourcesType');
+		}
+	}, [isMobileView]);
+
 	return (
 		<Layout>
 			<Expanded id={currentSection.id} py={0}>
@@ -207,35 +257,56 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={3}>
 						{/* RESOURCE TYPE NAV LINKS */}
 						<Card className={classes.navigationList} mb={isMobileView ? 20 : 36}>
-							<Title size={24} order={4} mb={24}>
-								Resources Type
-							</Title>
+							<Accordion
+								value={value}
+								chevronSize={isMobileView ? 24 : 0}
+								classNames={{
+									content: classes.accordionContent,
+									control: classes.accordionControl,
+									chevron: classes.chevron,
+								}}
+							>
+								<Accordion.Item value='ResourcesType'>
+									<Accordion.Control
+										disabled={!isMobileView}
+										onClick={() => {
+											toggle();
+										}}
+									>
+										<Title size={24} order={4}>
+											Resources Type
+										</Title>
+									</Accordion.Control>
+									<Accordion.Panel>
+										<Box className={classes.sectionNavLinksContainer}>
+											{data.contentfulPage.sections
+												.filter(section => !section.isHidden && Boolean(section.header))
+												.map((section, index, array) => {
+													const path
+														= '/resources/' + slugify(section.header, {lower: true, strict: true});
 
-							<Box className={classes.sectionNavLinksContainer}>
-								{data.contentfulPage.sections
-									.filter(section => !section.isHidden && Boolean(section.header))
-									.map((section, index, array) => {
-										const path = '/resources/' + slugify(section.header, {lower: true, strict: true});
-
-										return (
-											<>
-												<Link to={path} className={classes.textDecorationNone}>
-													<NavLink
-														active={currentSection.id === section.id}
-														color='#00827E'
-														py={12}
-														variant='subtle'
-														classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
-														pl={0}
-														key={section.id}
-														label={section.header}
-													/>
-												</Link>
-												{index !== array.length - 1 && <Divider my={0} />}
-											</>
-										);
-									})}
-							</Box>
+													return (
+														<>
+															<Link to={path} className={classes.textDecorationNone}>
+																<NavLink
+																	active={currentSection.id === section.id}
+																	color='#00827E'
+																	py={12}
+																	variant='subtle'
+																	classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
+																	pl={0}
+																	key={section.id}
+																	label={section.header}
+																/>
+															</Link>
+															{index !== array.length - 1 && <Divider my={0} />}
+														</>
+													);
+												})}
+										</Box>
+									</Accordion.Panel>
+								</Accordion.Item>
+							</Accordion>
 						</Card>
 
 						{/* FEATURED ITEMS NAV LINKS */}
