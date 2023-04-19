@@ -337,8 +337,6 @@ const generateMainPages = async ({actions, graphql}) => {
 		if (page.title === 'Resources') {
 			const sections = [...page.sections];
 
-			console.log({sections})
-
 			sections.forEach(section => {
 				if (!section.header) {
 					return;

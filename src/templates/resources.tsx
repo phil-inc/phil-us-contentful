@@ -193,6 +193,14 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 			width: 24,
 		},
 	},
+
+	currentSectionHeader: {
+		display: 'none',
+
+		[theme.fn.smallerThan('md')]: {
+			display: 'block',
+		},
+	},
 }));
 
 type ResourcesPageProps = {
@@ -369,13 +377,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
 						{/* RESOURCES MAP */}
 						<Box className={classes.cardContainer}>
-							{isMobileView && (
-								<Box mb={28}>
-									<Title order={2} m={0} size={32}>
-										{currentSection.header}
-									</Title>
-								</Box>
-							)}
+							<Box className={classes.currentSectionHeader} mb={28}>
+								<Title order={2} m={0} size={32}>
+									{currentSection.header}
+								</Title>
+							</Box>
 
 							{resources?.length
 								&& resources
