@@ -401,11 +401,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 										= '/resources/' + slugify(currentSection.header, {lower: true, strict: true}) + '/';
 
 									if (pageNumber === 1) {
-										await navigate(path);
+										void navigate(path);
 										return;
 									}
 
-									await navigate(path + `${pageNumber}`);
+									void navigate(path + `${pageNumber}`);
 								}}
 							/>
 						)}
