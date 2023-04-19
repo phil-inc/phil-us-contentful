@@ -99,6 +99,24 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		},
 	},
 
+	featuredItemsNavLinksContainer: {
+		'> div': {
+			padding: '16px 0',
+
+			'&[role|="separator"]': {
+				padding: 0,
+			},
+		},
+
+		'> div:first-child': {
+			paddingTop: 0,
+		},
+
+		'> div:last-child': {
+			paddingBottom: 0,
+		},
+	},
+
 	featuredItemsListMobile: {
 		background: '#F4F4F4',
 		padding: '36px 34px',
@@ -323,54 +341,56 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 								<Title size={24} order={4} mb={24}>
 									Featured Items
 								</Title>
-								{data.contentfulReferencedSection.featuredItems
-									.filter(resource => resource.generateStaticPage)
-									.map((resource, index, array) => {
-										const path = '/' + slugify(resource.heading, {lower: true, strict: true});
+								<Box className={classes.featuredItemsNavLinksContainer}>
+									{data.contentfulReferencedSection.featuredItems
+										.filter(resource => resource.generateStaticPage)
+										.map((resource, index, array) => {
+											const path = '/' + slugify(resource.heading, {lower: true, strict: true});
 
-										const sectionLabelText = (
-											<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
-										);
+											const sectionLabelText = (
+												<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
+											);
 
-										const navLink = (
-											<NavLink
-												classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
-												p={0}
-												pl={0}
-												key={resource.id}
-												label={resource.heading}
-											/>
-										);
+											const navLink = (
+												<NavLink
+													classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
+													p={0}
+													pl={0}
+													key={resource.id}
+													label={resource.heading}
+												/>
+											);
 
-										return (
-											<>
-												<Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
-													{resource?.internalLink && (
-														<>
-															{sectionLabelText}
-															<Link to={path} className={classes.textDecorationNone}>
-																{navLink}
-															</Link>
-														</>
-													)}
+											return (
+												<>
+													<Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
+														{resource?.internalLink && (
+															<>
+																{sectionLabelText}
+																<Link to={path} className={classes.textDecorationNone}>
+																	{navLink}
+																</Link>
+															</>
+														)}
 
-													{resource?.externalLink && (
-														<>
-															{sectionLabelText}
-															<Anchor
-																href={resource.externalLink}
-																target='_blank'
-																className={classes.textDecorationNone}
-															>
-																{navLink}
-															</Anchor>
-														</>
-													)}
-												</Box>
-												{index !== array.length - 1 && <Divider my={0} />}
-											</>
-										);
-									})}
+														{resource?.externalLink && (
+															<>
+																{sectionLabelText}
+																<Anchor
+																	href={resource.externalLink}
+																	target='_blank'
+																	className={classes.textDecorationNone}
+																>
+																	{navLink}
+																</Anchor>
+															</>
+														)}
+													</Box>
+													{index !== array.length - 1 && <Divider my={0} />}
+												</>
+											);
+										})}
+								</Box>
 							</Card>
 						)}
 					</Grid.Col>
@@ -423,54 +443,56 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 						<Title size={24} order={4} mb={24}>
 							Featured Items
 						</Title>
-						{data.contentfulReferencedSection.featuredItems
-							.filter(resource => resource.generateStaticPage)
-							.map((resource, index, array) => {
-								const path = '/' + slugify(resource.heading, {lower: true, strict: true});
+						<Box className={classes.featuredItemsNavLinksContainer}>
+							{data.contentfulReferencedSection.featuredItems
+								.filter(resource => resource.generateStaticPage)
+								.map((resource, index, array) => {
+									const path = '/' + slugify(resource.heading, {lower: true, strict: true});
 
-								const sectionLabelText = (
-									<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
-								);
+									const sectionLabelText = (
+										<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
+									);
 
-								const navLink = (
-									<NavLink
-										classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
-										p={0}
-										pl={0}
-										key={resource.id}
-										label={resource.heading}
-									/>
-								);
+									const navLink = (
+										<NavLink
+											classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
+											p={0}
+											pl={0}
+											key={resource.id}
+											label={resource.heading}
+										/>
+									);
 
-								return (
-									<>
-										<Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
-											{resource?.internalLink && (
-												<>
-													{sectionLabelText}
-													<Link to={path} className={classes.textDecorationNone}>
-														{navLink}
-													</Link>
-												</>
-											)}
+									return (
+										<>
+											<Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
+												{resource?.internalLink && (
+													<>
+														{sectionLabelText}
+														<Link to={path} className={classes.textDecorationNone}>
+															{navLink}
+														</Link>
+													</>
+												)}
 
-											{resource?.externalLink && (
-												<>
-													{sectionLabelText}
-													<Anchor
-														href={resource.externalLink}
-														target='_blank'
-														className={classes.textDecorationNone}
-													>
-														{navLink}
-													</Anchor>
-												</>
-											)}
-										</Box>
-										{index !== array.length - 1 && <Divider my={0} />}
-									</>
-								);
-							})}
+												{resource?.externalLink && (
+													<>
+														{sectionLabelText}
+														<Anchor
+															href={resource.externalLink}
+															target='_blank'
+															className={classes.textDecorationNone}
+														>
+															{navLink}
+														</Anchor>
+													</>
+												)}
+											</Box>
+											{index !== array.length - 1 && <Divider my={0} />}
+										</>
+									);
+								})}
+						</Box>
 					</Card>
 				)}
 			</Expanded>
