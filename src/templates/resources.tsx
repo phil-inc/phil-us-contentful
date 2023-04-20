@@ -108,7 +108,7 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 			},
 		},
 
-		'> div:first-child': {
+		'div:first-of-type': {
 			paddingTop: 0,
 		},
 
@@ -174,7 +174,7 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 	},
 
 	sectionNavLinksContainer: {
-		'> a:first-child > button': {
+		'a:first-of-type > button': {
 			paddingTop: 0,
 		},
 
@@ -468,7 +468,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									);
 
 									return (
-										<>
+										<React.Fragment key={resource.id + path}>
 											<Box key={path + index.toString()} pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
 												{resource?.internalLink && (
 													<>
@@ -493,7 +493,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 												)}
 											</Box>
 											{index !== array.length - 1 && <Divider my={0} />}
-										</>
+										</React.Fragment>
 									);
 								})}
 						</Box>
