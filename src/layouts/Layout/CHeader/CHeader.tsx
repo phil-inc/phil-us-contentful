@@ -383,6 +383,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 							opened,
 							setCollapseRef,
 							target,
+							close,
 						}}
 					>
 						{isBreak ? <CDrawer /> : <CCollapse />}
@@ -464,4 +465,4 @@ const CHeader: React.FC<{minimal: boolean}> = ({minimal}) => (
 	<StaticQuery query={query} render={props => <Navbar minimal={minimal} {...props} />} />
 );
 
-export default React.memo(CHeader);
+export default CHeader;

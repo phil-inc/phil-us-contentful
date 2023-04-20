@@ -52,7 +52,8 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 }));
 
 const CCollapse = () => {
-	const {allContentfulResource, opened, target, minimal, pages, setCollapseRef} = React.useContext(HeaderContext);
+	const {allContentfulResource, opened, target, minimal, pages, setCollapseRef, close}
+		= React.useContext(HeaderContext);
 	const {classes} = useStyles({minimal});
 
 	return (
@@ -100,7 +101,16 @@ const CCollapse = () => {
 																		section.id === relatesTo.id && (
 																			<List.Item key={id + 'mapCollapseResources'}>
 																				<Text className={classes.listItems}>
-																					<Link to={path} className={classes.textDecorationNone}>
+																					<Link
+																						to={navigateToPage(
+																							`${slugify(page.title, {
+																								lower: true,
+																							})}/${slugify(relatesTo.header, {
+																								lower: true,
+																							})}/${slugify(heading, {lower: true})}`,
+																						)}
+																						className={classes.textDecorationNone}
+																					>
 																						{heading}
 																					</Link>
 																				</Text>

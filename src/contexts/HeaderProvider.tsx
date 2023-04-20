@@ -7,6 +7,7 @@ export type THeaderContext = {
 	minimal: boolean;
 	isDrawer: boolean;
 	toggleDrawer: (value?: boolean) => void;
+	close: () => void;
 	header: {
 		logo: TAsset;
 		navigationLinks: ContentfulPage[];

@@ -17,5 +17,5 @@ export const getPathForSectionAndPage = (pageTitle: string, sectionHeader: strin
 		path += `/#${sectionSlug}`;
 	}
 
-	return path;
+	return path || '#';
 };
