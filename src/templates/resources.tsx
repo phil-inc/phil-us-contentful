@@ -312,7 +312,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 														= '/resources/' + slugify(section.header, {lower: true, strict: true});
 
 													return (
-														<>
+														<React.Fragment key={path}>
 															<Link to={path} className={classes.textDecorationNone}>
 																<NavLink
 																	active={currentSection.id === section.id}
@@ -326,7 +326,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 																/>
 															</Link>
 															{index !== array.length - 1 && <Divider my={0} />}
-														</>
+														</React.Fragment>
 													);
 												})}
 										</Box>
@@ -362,7 +362,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 											);
 
 											return (
-												<>
+												<React.Fragment key={path + index.toString() + index.toString()}>
 													<Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
 														{resource?.internalLink && (
 															<>
@@ -387,7 +387,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 														)}
 													</Box>
 													{index !== array.length - 1 && <Divider my={0} />}
-												</>
+												</React.Fragment>
 											);
 										})}
 								</Box>
@@ -406,8 +406,12 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							{resources?.length
 								&& resources
 									.slice(startIndex, endIndex)
-									.map(resource => (
-										<ResourceCard resource={resource} isFaq={currentSection.referenceType === 'FAQs'} />
+									.map((resource, index) => (
+										<ResourceCard
+											key={resource.id + index.toString()}
+											resource={resource}
+											isFaq={currentSection.referenceType === 'FAQs'}
+										/>
 									))}
 						</Box>
 
@@ -465,7 +469,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 									return (
 										<>
-											<Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
+											<Box key={path + index.toString()} pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
 												{resource?.internalLink && (
 													<>
 														{sectionLabelText}
@@ -497,7 +501,9 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 				)}
 			</Expanded>
 			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={108}>
-				{banners.map(bannerSection => bannerSection.references.map(resource => <Banner resource={resource} />))}
+				{banners.map(bannerSection =>
+					bannerSection.references.map(resource => <Banner key={resource.id} resource={resource} />),
+				)}
 			</Expanded>
 		</Layout>
 	);

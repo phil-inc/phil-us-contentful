@@ -100,21 +100,7 @@ const CCollapse = () => {
 																		section.id === relatesTo.id && (
 																			<List.Item key={id + 'mapCollapseResources'}>
 																				<Text className={classes.listItems}>
-																					<Link
-																						to={navigateToPage(
-																							`${slugify(page.title, {
-																								lower: true,
-																								strict: true,
-																							})}/${slugify(relatesTo.header, {
-																								lower: true,
-																								strict: true,
-																							})}/${slugify(heading, {
-																								lower: true,
-																								strict: true,
-																							})}`,
-																						)}
-																						className={classes.textDecorationNone}
-																					>
+																					<Link to={path} className={classes.textDecorationNone}>
 																						{heading}
 																					</Link>
 																				</Text>
