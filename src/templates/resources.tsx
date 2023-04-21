@@ -504,7 +504,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 				<Grid>
 					{banners.map(bannerSection =>
 						bannerSection.references.map(resource => (
-							<Grid.Col sm={12} lg={6}>
+							<Grid.Col sm={12} lg={bannerSection.references?.length > 1 ? 6 : 12}>
 								<Banner key={resource.id} resource={resource} />
 							</Grid.Col>
 						)),
