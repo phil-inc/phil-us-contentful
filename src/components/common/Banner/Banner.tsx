@@ -28,6 +28,7 @@ const useStyles = createStyles(theme => ({
 		overflow: 'hidden',
 		padding: 16,
 		width: '100%',
+		maxWidth: 1725,
 		margin: '0 auto',
 
 		'&::before': {
