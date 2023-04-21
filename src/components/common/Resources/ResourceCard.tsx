@@ -95,6 +95,7 @@ const useStyles = createStyles(theme => ({
 		[theme.fn.smallerThan('md')]: {
 			fontSize: 10.28,
 			padding: '7px 12px',
+			height: 26,
 		},
 	},
 }));
