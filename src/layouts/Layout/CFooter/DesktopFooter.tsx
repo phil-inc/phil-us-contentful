@@ -1,7 +1,7 @@
 import {Grid, Box, Divider, List, Anchor, Group, Text, createStyles} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import {HCP_PAGE} from 'constants/page';
+import {HCP_PAGE, RESOURCES} from 'constants/page';
 import {Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React from 'react';
@@ -19,6 +19,7 @@ type TDesktopFooter = {
 		navigationLinks: ContentfulPage[];
 	};
 };
+
 const useStyles = createStyles(theme => ({
 	footer: {
 		[theme.fn.smallerThan('md')]: {
@@ -89,83 +90,102 @@ const useStyles = createStyles(theme => ({
 		color: 'white',
 	},
 }));
+
 const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 	const {classes} = useStyles();
 
 	return (
 		<Grid className={classes.footer} gutter={'xl'}>
-			{pages.map(page => (
-				<Grid.Col key={page.id + 'mapFooterPages'} span={3}>
-					<Box sx={{width: '80%'}}>
-						<Link
-							to={page.title === 'Home' ? '/' : `/${slugify(page.title, {lower: true, strict: true})}`}
-							style={{textDecoration: 'none'}}
-						>
-							<Text span size={'lg'} className={classes.footLinkHeader}>
-								{page.title}
-							</Text>
-						</Link>
-						<Divider my={10} color='#6A7979' />
-						{page.sections
-							.filter(section => Boolean(section.header?.length && !section.isHidden))
-							.map((section, index, array) => {
-								const path = getPathForSectionAndPage(page.title, section.header);
+			{pages.map(page => {
+				const [firstSection = {header: '#'}] = page.sections;
 
-								return (
-									<React.Fragment key={section.id + 'mapFooterSections'}>
-										<List listStyleType='none'>
-											<List.Item>
-												<Link to={path} style={{textDecoration: 'none'}}>
-													<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
-												</Link>
-											</List.Item>
-										</List>
-										{/* Patients section mapping extra elements */}
-										{page.title === 'Patients' && index === array.length - 1 && (
+				let path: string;
+				if (page.title === 'Home') {
+					path = '/';
+				} else {
+					const slug = slugify(page.title, {lower: true, strict: true});
+
+					if (page.title === RESOURCES) {
+						const sectionSlug = slugify(firstSection.header, {lower: true, strict: true});
+						path = `/${slug}/${sectionSlug}`;
+					} else {
+						path = `/${slug}`;
+					}
+				}
+
+				return (
+					<Grid.Col key={page.id + 'mapFooterPages'} span={3}>
+						<Box sx={{width: '80%'}}>
+							<Link to={path} style={{textDecoration: 'none'}}>
+								<Text span size={'lg'} className={classes.footLinkHeader}>
+									{page.title}
+								</Text>
+							</Link>
+							<Divider my={10} color='#6A7979' />
+							{page.sections
+								.filter(section => Boolean(section.header?.length && !section.isHidden))
+								.map((section, index, array) => {
+									const path = getPathForSectionAndPage(page.title, section.header);
+
+									return (
+										<React.Fragment key={section.id + 'mapFooterSections'}>
 											<List listStyleType='none'>
 												<List.Item>
-													<Anchor
-														href='https://my.phil.us/'
-														target='_blank'
-														style={{textDecoration: 'none'}}
-													>
-														<Text className={classes.footerLink}>Patient Log In</Text>
-													</Anchor>
+													<Link to={path} style={{textDecoration: 'none'}}>
+														<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
+													</Link>
 												</List.Item>
 											</List>
-										)}
+											{/* Patients section mapping extra elements */}
+											{page.title === 'Patients' && index === array.length - 1 && (
+												<List listStyleType='none'>
+													<List.Item>
+														<Anchor
+															href='https://my.phil.us/'
+															target='_blank'
+															style={{textDecoration: 'none'}}
+														>
+															<Text className={classes.footerLink}>Patient Log In</Text>
+														</Anchor>
+													</List.Item>
+												</List>
+											)}
 
-										{/* HCP section mapping extra elements */}
-										{page.title === HCP_PAGE && index === array.length - 1 && (
-											<List listStyleType='none'>
-												<List.Item>
-													<Anchor
-														href='https://md.phil.us/'
-														target='_blank'
-														style={{textDecoration: 'none'}}
-													>
-														<Text className={classes.footerLink}>HCP Log In</Text>
+											{/* HCP section mapping extra elements */}
+											{page.title === HCP_PAGE && index === array.length - 1 && (
+												<List listStyleType='none'>
+													<List.Item>
+														<Anchor
+															href='https://md.phil.us/'
+															target='_blank'
+															style={{textDecoration: 'none'}}
+														>
+															<Text className={classes.footerLink}>HCP Log In</Text>
+														</Anchor>
+													</List.Item>
+												</List>
+											)}
+
+											{/* Contact section mapping extra elements */}
+											{page.title === 'Contact' && (
+												<Group mt={18}>
+													<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+														<div>
+															<StaticImage
+																src='../../../assets/images/linkedin.svg'
+																alt='LinkedIn Icon'
+															/>
+														</div>
 													</Anchor>
-												</List.Item>
-											</List>
-										)}
-
-										{/* Contact section mapping extra elements */}
-										{page.title === 'Contact' && (
-											<Group mt={18}>
-												<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
-													<div>
-														<StaticImage src='../../../assets/images/linkedin.svg' alt='LinkedIn Icon' />
-													</div>
-												</Anchor>
-											</Group>
-										)}
-									</React.Fragment>
-								);
-							})}
-					</Box>
-				</Grid.Col>
-			))}
+												</Group>
+											)}
+										</React.Fragment>
+									);
+								})}
+						</Box>
+					</Grid.Col>
+				);
+			})}
 			<Grid.Col span={3}>
 				<Box sx={{width: '80%'}}>
 					<Text size={'lg'} mt={0} className={classes.footLinkHeader}>

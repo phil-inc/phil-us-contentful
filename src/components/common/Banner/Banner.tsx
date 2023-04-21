@@ -26,8 +26,7 @@ const useStyles = createStyles(theme => ({
 	card: {
 		position: 'relative',
 		overflow: 'hidden',
-		padding: 32,
-		maxWidth: 1366,
+		padding: 16,
 		width: '100%',
 		margin: '0 auto',
 
@@ -40,6 +39,10 @@ const useStyles = createStyles(theme => ({
 			width: 6,
 			background: '#5ABEA4 0% 0% no-repeat padding-box',
 		},
+	},
+
+	gridColumn: {
+		padding: '64px 32px 52px',
 	},
 }));
 
@@ -60,13 +63,11 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 
 	return (
 		<>
-			<Paper radius={0} className={classNames(classes.card)}>
+			<Paper radius={0} className={classes.card}>
 				<Grid align={'center'}>
-					<Grid.Col lg={10} sm={12}>
+					<Grid.Col className={classes.gridColumn} lg={10} sm={12}>
 						<Container m={0}>
-							<Title order={3} mt='md'>
-								{heading}
-							</Title>
+							<Title order={3}>{heading}</Title>
 							<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={10} />
 							{body && (
 								<Text size='md' mt='sm' mb={11}>

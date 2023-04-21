@@ -500,7 +500,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					</Card>
 				)}
 			</Expanded>
-			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={108}>
+			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={120} px={106}>
 				{banners.map(bannerSection =>
 					bannerSection.references.map(resource => <Banner key={resource.id} resource={resource} />),
 				)}

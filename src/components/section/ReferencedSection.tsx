@@ -290,8 +290,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 				grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
 				columns={GRID_COLUMNS}
 				gutter={section.referenceType === 'Stats Card with Arrows' ? 20 : theme.spacing.md}
-				m={0}
-				mx={-10}
+				m={section.referenceType === 'Banner' ? -16 : 0}
+				mx={section.referenceType === 'Banner' ? -16 : -10}
 			>
 				{section.references.map((resource, index, array) => (
 					<Grid.Col
@@ -320,6 +320,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					: handleSpacing(theme, 92)
 			}
 			fullWidth={section.referenceType === 'Image Carousel'}
+			py={section.referenceType === 'Banner' ? 120 : undefined}
+			px={section.referenceType === 'Banner' ? 106 : undefined}
 		>
 			{context.title === 'Field' ? (
 				<Accordion
