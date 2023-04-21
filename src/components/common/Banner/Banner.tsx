@@ -39,10 +39,18 @@ const useStyles = createStyles(theme => ({
 			width: 6,
 			background: '#5ABEA4 0% 0% no-repeat padding-box',
 		},
+
+		[theme.fn.smallerThan('md')]: {
+			padding: 32,
+		},
 	},
 
 	gridColumn: {
 		padding: '64px 32px 52px',
+
+		[theme.fn.smallerThan('md')]: {
+			padding: '64px 16px 10px',
+		},
 	},
 }));
 
@@ -101,7 +109,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 											</Script>
 										) : null}
 								</Modal>
-								<Container p={0}>
+								<Container>
 									<Button
 										color={'dark'}
 										onClick={() => {
