@@ -81,4 +81,5 @@ export type IReferencedSection = {
 	externalLink?: string;
 	sectionType: SectionType;
 	isHidden: boolean;
+	featuredItems: Array<Pick<TResource, 'generateStaticPage' | 'id' | 'heading' | 'externalLink' | 'internalLink'>>;
 };
