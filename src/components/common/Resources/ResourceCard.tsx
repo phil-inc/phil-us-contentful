@@ -90,6 +90,7 @@ const useStyles = createStyles(theme => ({
 		fontSize: 16,
 		padding: '11px 20px',
 		fontWeight: 400,
+		height: 40,
 
 		[theme.fn.smallerThan('md')]: {
 			fontSize: 10.28,
