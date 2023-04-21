@@ -10,6 +10,7 @@ type ExpandedProps = {
 	minHeight?: number | string;
 	noMargin?: boolean;
 	py?: number;
+	px?: number;
 	pt?: number;
 	pb?: number;
 	mb?: number;
@@ -31,6 +32,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	py,
 	pt,
 	pb,
+	px,
 	fullWidth = false,
 }) => {
 	const context = React.useContext(PageContext);
@@ -64,7 +66,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 			pt={pt}
 			pb={pb}
 			mb={mb}
-			px={fullWidth ? 0 : undefined}
+			px={px ? px : fullWidth ? 0 : undefined}
 		>
 			{children}
 		</Container>

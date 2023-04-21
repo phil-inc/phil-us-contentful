@@ -52,4 +52,12 @@ export type TResource = {
 	generateStaticPage: boolean;
 	isFaq: boolean;
 	banners?: TResource[];
+	relatesTo: {
+		id: string;
+		header: string;
+		page: {
+			id: string;
+			title: string;
+		};
+	};
 };
