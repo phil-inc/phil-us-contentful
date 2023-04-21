@@ -501,9 +501,15 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 				)}
 			</Expanded>
 			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={120} px={106}>
-				{banners.map(bannerSection =>
-					bannerSection.references.map(resource => <Banner key={resource.id} resource={resource} />),
-				)}
+				<Grid>
+					{banners.map(bannerSection =>
+						bannerSection.references.map(resource => (
+							<Grid.Col sm={12} lg={6}>
+								<Banner key={resource.id} resource={resource} />
+							</Grid.Col>
+						)),
+					)}
+				</Grid>
 			</Expanded>
 		</Layout>
 	);

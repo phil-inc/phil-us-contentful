@@ -101,7 +101,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 											</Script>
 										) : null}
 								</Modal>
-								<Container>
+								<Container p={0}>
 									<Button
 										color={'dark'}
 										onClick={() => {
