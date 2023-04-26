@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, Table} from '@mantine/core';
+import {Grid, Title, Text, createStyles, Container, Box, Anchor, List} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {TResource} from 'types/resource';
@@ -14,10 +14,7 @@ import Expanded from 'components/common/Expanded/Expanded';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
-import {getWindowProperty} from 'utils/getWindowProperty';
-import {isProduction} from 'utils/isProduction';
 import {isVideoContent} from 'utils/isVideoContent';
-import {documentToPlainTextString} from '@contentful/rich-text-plain-text-renderer';
 import {type Block} from '@contentful/rich-text-types';
 
 type HelmetProps = {
@@ -57,7 +54,7 @@ type PageTemplateProps = {
 };
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
-	const {heading, body, asset, banners, author, noindex} = pageContext;
+	const {heading, body, asset, banners, author, noindex, isFaq} = pageContext;
 
 	const useStyles = createStyles(theme => ({
 		body: {
@@ -251,12 +248,17 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const defaultBanners = data.allContentfulResource.nodes as TResource[];
 	const hasBanners = Boolean(banners);
+	const hideBanners = noindex ?? isFaq;
 
 	const bannerFactory = (resource: TResource) => (
-		<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={108}>
+		<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={120} px={106}>
 			<Banner resource={resource} />
 		</Expanded>
 	);
+
+	const renderBanners = (bannersToRender: TResource[]) => bannersToRender.map(bannerFactory);
+
+	const bannersToDisplay = hasBanners ? banners! : (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
 	return (
 		<Layout>
@@ -268,20 +270,20 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 						</Title>
 						{Boolean(asset) && (
 							<Container className={classes.floatingImage} size='sm'>
-								<Asset asset={asset} />
+								<Asset asset={asset!} />
 							</Container>
 						)}
 						<Text mb={42}>{body && renderRichText(body, options)}</Text>
 
 						{!noindex && <SocialShare />}
 
-						{Boolean(author) && <AuthorBlock author={author} />}
+						{Boolean(author) && <AuthorBlock author={author!} />}
 					</Grid.Col>
 				</Grid>
 			</Container>
 
 			{/* Bottom Banners */}
-			{hasBanners ? banners.map(bannerFactory) : !noindex && defaultBanners.map(r => r.banners.map(bannerFactory))}
+			{!hideBanners && renderBanners(bannersToDisplay)}
 		</Layout>
 	);
 };
