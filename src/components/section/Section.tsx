@@ -21,7 +21,7 @@ const Section: React.FC<SectionProps> = ({section, index}) => {
 		case 'Referenced Section':
 			return <ReferencedSection section={section as IReferencedSection} />;
 		default:
-			break;
+			return <></>;
 	}
 };
 
