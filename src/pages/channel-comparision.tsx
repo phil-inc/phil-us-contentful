@@ -118,7 +118,7 @@ const ChannelComparisionPage = () => {
 	};
 
 	return (
-		<Layout minimal={true}>
+		<Layout minimal headerTargetBlank={true}>
 			<Container className={classes.root} py={0}>
 				<Grid className={classes.innerGrid} justify='center'>
 					<ChannelComparisionContext.Provider value={{stepper, form}}>
