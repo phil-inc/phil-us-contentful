@@ -158,9 +158,16 @@ type CHeaderProps = {
 	allContentfulResource: {nodes: Array<Pick<TResource, 'id' | 'heading' | 'relatesTo'>>};
 	sitePage: {id: string; pageContext: {title: string; displayTitle: string}};
 	minimal: boolean;
+	headerTargetBlank: boolean;
 };
 
-const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource, sitePage, minimal}) => {
+const Navbar: React.FC<CHeaderProps> = ({
+	allContentfulHeader,
+	allContentfulResource,
+	sitePage,
+	minimal,
+	headerTargetBlank,
+}) => {
 	const [header] = allContentfulHeader.nodes;
 	const pages = header.navigationLinks;
 
@@ -325,11 +332,19 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 					)}
 
 					<Box className={classes.logo}>
-						<Link to='/'>
-							<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
-								<Asset asset={header.logo} />
-							</ImageContainer>
-						</Link>
+						{headerTargetBlank ? (
+							<Anchor href='https://phil.us' target='_blank'>
+								<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
+									<Asset asset={header.logo} />
+								</ImageContainer>
+							</Anchor>
+						) : (
+							<Link to='/'>
+								<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
+									<Asset asset={header.logo} />
+								</ImageContainer>
+							</Link>
+						)}
 					</Box>
 					{!minimal && (
 						<>
@@ -461,8 +476,11 @@ const query = graphql`
 	}
 `;
 
-const CHeader: React.FC<{minimal: boolean}> = ({minimal}) => (
-	<StaticQuery query={query} render={props => <Navbar minimal={minimal} {...props} />} />
+const CHeader: React.FC<{minimal: boolean; headerTargetBlank?: boolean}> = ({minimal, headerTargetBlank}) => (
+	<StaticQuery
+		query={query}
+		render={props => <Navbar minimal={minimal} headerTargetBlank={headerTargetBlank} {...props} />}
+	/>
 );
 
 export default CHeader;
