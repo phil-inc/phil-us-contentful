@@ -77,23 +77,6 @@ const EmailCollection = () => {
 					How does your brand’s channel stack up? Complete the following for a customized channel comparison report
 				</Text>
 
-				<Stepper
-					active={stepper.step}
-					iconSize={48}
-					mb={48}
-					color={'philBranding'}
-					classNames={{
-						step: classes.step,
-						stepBody: classes.stepBody,
-						separator: classes.separator,
-						stepIcon: classes.stepIcon,
-					}}
-				>
-					<Stepper.Step label='Email' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-				</Stepper>
-
 				<form
 					onSubmit={form.onSubmit(() => {
 						stepper.nextStep();
