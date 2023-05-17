@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import {SEO} from 'layouts/SEO/SEO';
 import {Layout} from 'layouts/Layout/Layout';
-import {getCustomizedReport, getCustomizedReportMobile} from 'assets/images';
+import {getCustomizedReport} from 'assets/images';
 import EmailCollection from 'components/ChannelComparision/EmailCollection';
 import {useForm} from '@mantine/form';
 import type {FormValues, TStepper} from 'contexts/ChannelComparisionContext';
@@ -130,9 +130,6 @@ const ChannelComparisionPage = () => {
 					<Grid.Col sm={6} xs={12} p={0} order={1}>
 						<MediaQuery styles={{display: 'none'}} smallerThan={'sm'}>
 							<Image src={getCustomizedReport as string} fit='cover' />
-						</MediaQuery>
-						<MediaQuery styles={{display: 'none'}} largerThan={'sm'}>
-							<Image src={getCustomizedReportMobile as string} fit='cover' />
 						</MediaQuery>
 					</Grid.Col>
 				</Grid>
