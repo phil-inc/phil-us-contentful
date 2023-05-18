@@ -92,9 +92,9 @@ status = 301
 force = true
 
 [[redirects]]
-from = "/digihaler/*"
+from = "/digihaler"
 to = "https://enroll.phil.us/digihaler"
-status = 200
+status = 301
 
 
 # Production context: all deploys from the Production branch
