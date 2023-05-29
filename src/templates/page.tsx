@@ -58,11 +58,9 @@ const useStyles = createStyles((theme, {title}: {title: string}) => ({
 
 const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	const {id, sections, title} = pageContext;
-	const theme = useMantineTheme();
+	const {classes} = useStyles({title});
 
 	let basicSectionCount = 0;
-
-	const {classes} = useStyles({title});
 
 	return (
 		<PageContext.Provider value={pageContext}>

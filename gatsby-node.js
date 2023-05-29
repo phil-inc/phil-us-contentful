@@ -378,117 +378,145 @@ const generateMainPages = async ({actions, graphql}) => {
 
 const generateStaticPages = async ({actions, graphql}) => {
 	const {data} = await graphql(`
-		query allBlogPages {
-			allContentfulResource(
-				filter: {
-					node_locale: {eq: "en-US"}
-					heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}
-					generateStaticPage: {eq: true}
-				}
-			) {
-				nodes {
-					banners {
-						id
-						body {
-							raw
-						}
-						buttonText
-						hubspotEmbed {
-							raw
-						}
-						isHubspotEmbed
-						externalLink
-						heading
-					}
-					slug
-					noindex
-					isFaq
-					author {
-						id
-						name
-						authorTitle
-						bio {
-							raw
-						}
-						avatar {
-							gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-							title
-							file {
-								contentType
-								details {
-									size
-								}
-								url
-							}
-						}
-					}
-					buttonText
-					heading
-					id
-					subheading
-					description {
-						id
-						description
-					}
-					metaDescription
-					externalLink
-					asset {
-						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-						title
-						file {
-							contentType
-							details {
-								size
-							}
-							url
-						}
-					}
-					body {
-						raw
-						references {
-							contentful_id
-							__typename
-							description
-							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-							file {
-								contentType
-								details {
-									size
-								}
-								url
-							}
-						}
-					}
-					sys {
-						contentType {
-							sys {
-								id
-								type
-							}
-						}
-					}
-					generateStaticPage
-					relatesTo {
-						... on ContentfulReferencedSection {
-							id
-							header
-							page {
-								id
-								title
-							}
-						}
-						... on ContentfulSection {
-							id
-							header
-							page {
-								id
-								title
-							}
-						}
-					}
-				}
+	query allBlogPages {
+		allContentfulResource(
+		  filter: {node_locale: {eq: "en-US"}, heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}, generateStaticPage: {eq: true}}
+		) {
+		  nodes {
+			banners {
+			  id
+			  body {
+				raw
+			  }
+			  buttonText
+			  hubspotEmbed {
+				raw
+			  }
+			  isHubspotEmbed
+			  externalLink
+			  heading
 			}
+			slug
+			noindex
+			isFaq
+			author {
+			  id
+			  name
+			  authorTitle
+			  bio {
+				raw
+			  }
+			  avatar {
+				gatsbyImageData(
+				  resizingBehavior: SCALE
+				  placeholder: BLURRED
+				  layout: CONSTRAINED
+				)
+				title
+				file {
+				  contentType
+				  details {
+					size
+				  }
+				  url
+				}
+			  }
+			}
+			buttonText
+			heading
+			id
+			subheading
+			description {
+			  id
+			  description
+			}
+			metaDescription
+			externalLink
+			asset {
+			  gatsbyImageData(
+				resizingBehavior: SCALE
+				placeholder: BLURRED
+				layout: CONSTRAINED
+			  )
+			  title
+			  file {
+				contentType
+				details {
+				  size
+				}
+				url
+			  }
+			}
+			body {
+			  raw
+			  references {
+				... on ContentfulAsset {
+				  contentful_id
+				  __typename
+				  description
+				  gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+				  file {
+					contentType
+					details {
+					  size
+					}
+					url
+				  }
+				  sys {
+					type
+				  }
+				}
+				... on ContentfulYoutubeEmbedResource {
+				  id
+				  contentful_id
+				  __typename
+				  youtubeVideoUrl
+				  title
+				  sys {
+					contentType {
+					  sys {
+						id
+						type
+					  }
+					}
+					type
+				  }
+				  internal {
+					type
+				  }
+				}
+			  }
+			}
+			sys {
+			  contentType {
+				sys {
+				  id
+				  type
+				}
+			  }
+			}
+			generateStaticPage
+			relatesTo {
+			  ... on ContentfulReferencedSection {
+				id
+				header
+				page {
+				  id
+				  title
+				}
+			  }
+			  ... on ContentfulSection {
+				id
+				header
+				page {
+				  id
+				  title
+				}
+			  }
+			}
+		  }
 		}
+	  }
 	`);
 
 	data.allContentfulResource.nodes.forEach(resource => {
