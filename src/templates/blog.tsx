@@ -15,9 +15,9 @@ import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
 import {isVideoContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
-import ReactPlayer from 'react-player/youtube';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
+import ReactPlayer from 'react-player/youtube';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -126,6 +126,16 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const {classes, cx} = useStyles();
 
+	const [isMounted, setIsMounted] = React.useState(false);
+	const [origin, setOrigin] = React.useState('https://phil.us');
+
+	React.useEffect(() => {
+		setIsMounted(true);
+
+		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
+		setOrigin(origin);
+	}, []);
+
 	// Map for future reference to match content
 	const richTextImages: Record<string, {image: any; alt: string}> = {};
 	const youtubeEmbeds = new Map<string, {title: string; url: string}>();
@@ -164,7 +174,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 					url: string;
 				};
 
-				if (content && ReactPlayer.canPlay(content.url)) {
+				if (isMounted && content && ReactPlayer.canPlay(content.url)) {
 					return (
 						<AspectRatio ratio={16 / 9}>
 							<ReactPlayer
@@ -176,8 +186,8 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 									playerVars: {
 										rel: 0,
 										enablejsapi: 1,
-										origin: getWindowProperty('location.origin', 'https://www.phil.us/'),
-										widget_referrer: getWindowProperty('location.origin', 'https://www.phil.us/'),
+										origin,
+										widget_referrer: origin,
 									},
 								}}
 							/>
@@ -185,7 +195,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 					);
 				}
 
-				return <></>;
+				return null; // Return null during SSR
 			},
 
 			[BLOCKS.EMBEDDED_ASSET](node) {
