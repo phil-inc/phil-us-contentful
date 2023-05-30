@@ -2,6 +2,7 @@ import CareerSection from 'components/career/CareerSection';
 import {Layout} from 'layouts/Layout/Layout';
 import {SEO} from 'layouts/SEO/SEO';
 import React, {useEffect, useState} from 'react';
+import slugify from 'slugify';
 import type {ContentfulPage} from 'types/page';
 import type {ISection} from 'types/section';
 import {getTitle} from 'utils/getTitle';
@@ -34,7 +35,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta
 				property='og:url'
-				content={`https://phil.us${pageContext.title === 'Home' ? '/' : `/${pageContext.title}`}`}
+				content={`https://phil.us/${slugify(pageContext.title, {lower: true, strict: true})}`}
 			/>
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 		</SEO>

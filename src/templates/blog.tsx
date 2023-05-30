@@ -7,7 +7,6 @@ import {SEO} from 'layouts/SEO/SEO';
 import Asset from 'components/common/Asset/Asset';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
-import {getLink} from 'utils/getLink';
 import {graphql} from 'gatsby';
 import {Banner} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
@@ -17,8 +16,8 @@ import {getDescriptionFromRichtext} from 'utils/getDescription';
 import {isVideoContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
 import ReactPlayer from 'react-player/youtube';
-import {IGatsbyImageData} from 'gatsby-plugin-image';
 import {getWindowProperty} from 'utils/getWindowProperty';
+import slugify from 'slugify';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -33,6 +32,8 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 			? getDescriptionFromRichtext(pageContext.body.raw)
 			: '';
 
+	const slug = pageContext.slug ?? `/${slugify(pageContext.heading, {strict: true, lower: true})}`;
+
 	return (
 		<SEO title={pageContext.heading}>
 			<meta name='twitter:card' content='summary_large_image' />
@@ -44,7 +45,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us/${getLink(pageContext).link}`} />
+			<meta property='og:url' content={`https://phil.us${slug}/`} />
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 			{pageContext.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
@@ -56,72 +57,72 @@ type PageTemplateProps = {
 	data: any;
 };
 
+const useStyles = createStyles(theme => ({
+	body: {
+		p: {
+			marginTop: 0,
+		},
+	},
+	anchor: {
+		color: '#00827E',
+	},
+
+	inner: {
+		padding: '0 100px',
+
+		'&::after': {
+			content: '""',
+			clear: 'both',
+			display: 'table',
+		},
+
+		[theme.fn.smallerThan('sm')]: {
+			padding: '0 16px',
+		},
+	},
+
+	listItem: {
+		overflow: 'hidden',
+		fontSize: 24,
+
+		'::marker': {
+			fontSize: 16,
+			fontWeight: 700,
+		},
+	},
+
+	floatingImage: {
+		float: 'right',
+		padding: '30px 40px',
+
+		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+			float: 'none',
+			display: 'flex',
+			placeContent: 'center',
+		},
+	},
+
+	embededAsset: {
+		marginBottom: '32px',
+	},
+
+	border: {
+		border: '2px solid black',
+		padding: 10,
+	},
+
+	table: {
+		borderCollapse: 'collapse',
+		borderSpacing: 0,
+	},
+
+	tableHeader: {
+		textAlign: 'start',
+	},
+}));
+
 const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const {heading, body, asset, banners, author, noindex, isFaq} = pageContext;
-
-	const useStyles = createStyles(theme => ({
-		body: {
-			p: {
-				marginTop: 0,
-			},
-		},
-		anchor: {
-			color: '#00827E',
-		},
-
-		inner: {
-			padding: '0 100px',
-
-			'&::after': {
-				content: '""',
-				clear: 'both',
-				display: 'table',
-			},
-
-			[theme.fn.smallerThan('sm')]: {
-				padding: '0 16px',
-			},
-		},
-
-		listItem: {
-			overflow: 'hidden',
-			fontSize: 24,
-
-			'::marker': {
-				fontSize: 16,
-				fontWeight: 700,
-			},
-		},
-
-		floatingImage: {
-			float: 'right',
-			padding: '30px 40px',
-
-			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-				float: 'none',
-				display: 'flex',
-				placeContent: 'center',
-			},
-		},
-
-		embededAsset: {
-			marginBottom: '32px',
-		},
-
-		border: {
-			border: '2px solid black',
-			padding: 10,
-		},
-
-		table: {
-			borderCollapse: 'collapse',
-			borderSpacing: 0,
-		},
-
-		tableHeader: {
-			textAlign: 'start',
-		},
-	}));
 
 	const {classes, cx} = useStyles();
 
@@ -163,7 +164,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 					url: string;
 				};
 
-				if (content) {
+				if (content && ReactPlayer.canPlay(content.url)) {
 					return (
 						<AspectRatio ratio={16 / 9}>
 							<ReactPlayer
@@ -285,8 +286,47 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 				);
 			},
 
-			[BLOCKS.TABLE](node: Block, children) {
-				return <table className={classes.table}>{children}</table>;
+			[BLOCKS.TABLE](node: Block, children: React.ReactElement[]) {
+				if (children.length === 1) {
+					// Only one row
+					return (
+						<table className={classes.table}>
+							<tbody>{children}</tbody>
+						</table>
+					);
+				}
+
+				if (children.length === 2) {
+					// Two rows
+					const [first, second] = children;
+					return (
+						<table className={classes.table}>
+							<tbody>
+								{first}
+								{second}
+							</tbody>
+						</table>
+					);
+				}
+
+				if (children.length >= 3) {
+					// Three or more rows
+					const [first, ...rest] = children;
+					const last = rest.pop();
+					return (
+						<table className={classes.table}>
+							<thead>{first}</thead>
+							<tbody>{rest}</tbody>
+							<tfoot>{last}</tfoot>
+						</table>
+					);
+				}
+
+				return null; // Return null if no rows present
+			},
+
+			[BLOCKS.TABLE_ROW](node, children) {
+				return <tr>{children}</tr>;
 			},
 
 			[BLOCKS.TABLE_CELL](node: Block, children) {
