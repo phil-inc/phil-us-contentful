@@ -1,8 +1,8 @@
 import React from 'react';
 import {type TResource} from 'types/resource';
 import {extractString} from 'utils/parseScript';
-import DOMPurify from 'dompurify';
 import {Box} from '@mantine/core';
+import {ParseContent} from './ParseContent';
 
 type CodeSnippetType = {
 	resource: TResource;
@@ -10,15 +10,11 @@ type CodeSnippetType = {
 
 const CodeSnippet: React.FC<CodeSnippetType> = React.memo(({resource}) => {
 	const snippet = extractString(resource.hubspotEmbed as {raw: string});
-	const cleaned = DOMPurify.sanitize(snippet);
 
 	return (
-		<Box
-			mt={30}
-			dangerouslySetInnerHTML={{
-				__html: cleaned,
-			}}
-		></Box>
+		<Box mt={30}>
+			<ParseContent content={snippet} />
+		</Box>
 	);
 });
 
