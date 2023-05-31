@@ -55,6 +55,7 @@ type ReferenceType =
 	| 'Image Carousel'
 	| 'Investors'
 	| 'Stats Card with Arrows'
+	| 'Code Snippet'
 	| ResourceBlocks;
 
 export type IReferencedSection = {
@@ -62,6 +63,10 @@ export type IReferencedSection = {
 	hideHeader: boolean;
 	referenceType: ReferenceType;
 	header: string;
+	subHeading: {
+		id: string;
+		subHeading: string;
+	};
 	references: TResource[];
 	buttonText?: string;
 	internalLink: {

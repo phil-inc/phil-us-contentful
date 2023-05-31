@@ -155,6 +155,10 @@ const generateMainPages = async ({actions, graphql}) => {
 							isHidden
 							hideHeader
 							header
+							subHeading {
+								id
+								subHeading
+							}
 							sectionType
 							references {
 								externalLink
