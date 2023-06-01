@@ -1,12 +1,12 @@
 import {Text, Collapse, Container, List, Grid, Divider, Anchor, createStyles} from '@mantine/core';
-import {HCP_PAGE} from 'constants/page';
+import {PATIENTS_PAGE} from 'constants/page';
 import HeaderContext from 'contexts/HeaderProvider';
 import {Link} from 'gatsby';
 import React from 'react';
 import slugify from 'slugify';
 import {getPathForSectionAndPage} from 'utils/links';
 import {navigateToPage} from 'utils/navigateToPage';
-import {HEADER_HEIGHT} from './CHeader';
+import {type IReferencedSection} from 'types/section';
 
 const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	collapse: {
@@ -51,6 +51,10 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	},
 }));
 
+/**
+ * Represents a custom collapse component to be used in the top navbar.
+ * @component
+ */
 const CCollapse = () => {
 	const {allContentfulResource, opened, target, minimal, pages, setCollapseRef, close}
 		= React.useContext(HeaderContext);
@@ -72,7 +76,13 @@ const CCollapse = () => {
 							.filter(page => page.title === target)
 							.map(page =>
 								page.sections
-									.filter(section => Boolean(section.header?.length && !section.isHidden))
+									.filter(section =>
+										Boolean(
+											section.header?.length
+												&& !section.isHidden
+												&& !(section as IReferencedSection)?.hideNavigationAnchor,
+										),
+									)
 									.map((section, index, array) => {
 										const path = getPathForSectionAndPage(page.title, section.header);
 
@@ -80,7 +90,7 @@ const CCollapse = () => {
 											<React.Fragment key={section.id + 'mapCollapsePages'}>
 												<Grid.Col
 													span={
-														['Patients', HCP_PAGE].includes(page.title)
+														[PATIENTS_PAGE].includes(page.title)
 															? Math.floor(100 / (array.length + 1))
 															: Math.floor(100 / array.length)
 													}
@@ -132,24 +142,6 @@ const CCollapse = () => {
 																	style={{textDecoration: 'none'}}
 																>
 																	Patient Log In
-																</Anchor>
-															</Text>
-															<Divider />
-														</List.Item>
-													</Grid.Col>
-												)}
-
-												{page.title === HCP_PAGE && index === array.length - 1 && (
-													<Grid.Col span={Math.floor(100 / (array.length + 1))}>
-														<List.Item onClick={close}>
-															<Text className={classes.listHeading}>
-																<Anchor
-																	href='https://md.phil.us/'
-																	target='_blank'
-																	className={classes.textDecorationNone}
-																	style={{textDecoration: 'none'}}
-																>
-																	HCP Log In
 																</Anchor>
 															</Text>
 															<Divider />

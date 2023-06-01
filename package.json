@@ -46,6 +46,8 @@
 		"gatsby-transformer-inline-svg": "^1.2.0",
 		"gatsby-transformer-json": "^5.7.0",
 		"gatsby-transformer-sharp": "^5.8.0",
+		"html-react-parser": "^4.0.0",
+		"isomorphic-dompurify": "^1.6.0",
 		"json-from-text": "^1.1.0",
 		"marked": "^4.2.12",
 		"mixpanel-browser": "^2.45.0",
@@ -56,6 +58,7 @@
 		"slugify": "^1.6.5"
 	},
 	"devDependencies": {
+		"@types/dompurify": "^3.0.2",
 		"@types/mixpanel-browser": "^2.38.1",
 		"@typescript-eslint/eslint-plugin": ">=5.31.0",
 		"@typescript-eslint/parser": ">=5.31.0",

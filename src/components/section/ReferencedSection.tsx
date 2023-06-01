@@ -1,5 +1,17 @@
 import React from 'react';
-import {Grid, Title, Button, Group, Container, Box, Anchor, Divider, createStyles, Accordion} from '@mantine/core';
+import {
+	Grid,
+	Title,
+	Button,
+	Group,
+	Container,
+	Box,
+	Anchor,
+	Divider,
+	createStyles,
+	Accordion,
+	Stack,
+} from '@mantine/core';
 import {Article} from 'components/common/Article';
 import {Banner} from 'components/common/Banner/Banner';
 import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
@@ -25,6 +37,9 @@ import * as FullStory from '@fullstory/browser';
 import {isProduction} from 'utils/isProduction';
 import mixpanel from 'mixpanel-browser';
 import PageContext from 'contexts/PageContext';
+import CodeSnippet from 'components/common/CodeSnippet/CodeSnippet';
+import {RESOURCE_BLOCKS} from 'constants/section';
+import {useMediaQuery} from '@mantine/hooks';
 
 const useStyles = createStyles(theme => ({
 	divider: {
@@ -87,6 +102,34 @@ const useStyles = createStyles(theme => ({
 
 		'&[data-active]': {
 			background: '#F4F4F4',
+		},
+	},
+
+	heading: {
+		lineHeight: '1.2',
+		color: '#000000',
+
+		[theme.fn.smallerThan('md')]: {
+			textAlign: 'center',
+			marginBottom: 10,
+		},
+	},
+
+	subHeading: {
+		fontFamily: 'Lato, sans-serif',
+		fontWeight: 400,
+		color: '#01201F',
+
+		[theme.fn.smallerThan('md')]: {
+			textAlign: 'center',
+		},
+	},
+
+	codeSnippetStack: {
+		alignItems: 'flex-start',
+
+		[theme.fn.smallerThan('md')]: {
+			alignItems: 'center',
 		},
 	},
 }));
@@ -202,6 +245,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	// eslint-disable-next-line complexity
 	const renderResource = (sectionHeader: string, resource: TResource, index: number, arrayLength: number) => {
 		switch (section.referenceType) {
+			case 'Code Snippet':
+				return <CodeSnippet resource={resource} />;
+
 			case 'Article':
 				return <Article color={getColor(index)} resource={resource} />;
 
@@ -264,23 +310,29 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	};
 
 	const ReferencedSectionTitle = () =>
-		section.referenceType === 'Case Study'
-		|| section.referenceType === 'Phil Blog'
-		|| section.referenceType === 'White Paper'
-		|| section.referenceType === 'Upcoming Events' ? (
-				<Box mb={handleSpacing(theme, theme.spacing.md)}>
-					<Title order={3} size={35}>
-						{section.header}
-					</Title>
-					<Divider variant='dashed' size={1} className={classes.divider} />
-				</Box>
-			) : (
-				<Group position='center' mb={28}>
-					<Title order={2} color={textColor}>
-						{section.header}
-					</Title>
-				</Group>
-			);
+		RESOURCE_BLOCKS.includes(section.referenceType) ? (
+			<Box mb={handleSpacing(theme, theme.spacing.md)}>
+				<Title order={3} size={35}>
+					{section.header}
+				</Title>
+				<Divider variant='dashed' size={1} className={classes.divider} />
+			</Box>
+		) : section.referenceType === 'Code Snippet' ? (
+			<Stack className={classes.codeSnippetStack} justify='flex-start' spacing={0}>
+				<Title className={classes.heading} order={2} size={36}>
+					{section.header}
+				</Title>
+				<Title className={classes.subHeading} order={3} size={20}>
+					{section.subHeading.subHeading}
+				</Title>
+			</Stack>
+		) : (
+			<Group position='center' mb={28}>
+				<Title order={2} color={textColor}>
+					{section.header}
+				</Title>
+			</Group>
+		);
 
 	const ReferencedSectionBody = () =>
 		section.referenceType === 'Image Carousel' ? (
@@ -309,7 +361,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={background}
-			pt={context.title === 'Field' ? 0 : handleSpacing(theme, 92)}
+			pt={context.title === 'Field' || section.referenceType === 'Code Snippet' ? 0 : handleSpacing(theme, 92)}
 			pb={
 				section.referenceType === 'Case Study'
 				|| section.referenceType === 'Phil Blog'

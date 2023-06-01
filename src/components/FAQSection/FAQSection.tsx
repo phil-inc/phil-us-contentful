@@ -75,16 +75,33 @@ export const query = graphql`
 				body {
 					raw
 					references {
-						contentful_id
-						__typename
-						description
-						gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-						file {
-							contentType
-							details {
-								size
+						... on ContentfulAsset {
+							contentful_id
+							__typename
+							description
+							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+							file {
+								contentType
+								details {
+									size
+								}
+								url
 							}
-							url
+							sys {
+								type
+							}
+						}
+						... on ContentfulYoutubeEmbedResource {
+							id
+							youtubeVideoUrl
+							title
+							sys {
+								contentType {
+									sys {
+										id
+									}
+								}
+							}
 						}
 					}
 				}
