@@ -158,21 +158,6 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 												</List>
 											)}
 
-											{/* HCP section mapping extra elements */}
-											{page.title === HCP_PAGE && index === array.length - 1 && (
-												<List listStyleType='none'>
-													<List.Item>
-														<Anchor
-															href='https://md.phil.us/'
-															target='_blank'
-															style={{textDecoration: 'none'}}
-														>
-															<Text className={classes.footerLink}>HCP Log In</Text>
-														</Anchor>
-													</List.Item>
-												</List>
-											)}
-
 											{/* Contact section mapping extra elements */}
 											{page.title === 'Contact' && (
 												<Group mt={18}>
