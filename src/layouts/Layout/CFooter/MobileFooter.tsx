@@ -4,12 +4,13 @@ import {footerBackground} from 'assets/images';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
-import {HCP_PAGE} from 'constants/page';
+import {PATIENTS_PAGE} from 'constants/page';
 import {Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React from 'react';
 import {type TAsset} from 'types/asset';
 import {type ContentfulPage} from 'types/page';
+import {type IReferencedSection} from 'types/section';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {getPathForSectionAndPage} from 'utils/links';
 
@@ -108,7 +109,13 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => {
 						<Accordion.Panel>
 							<List mb={16} listStyleType={'none'}>
 								{page.sections
-									.filter(section => Boolean(section.header?.length && !section.isHidden))
+									.filter(section =>
+										Boolean(
+											section.header?.length
+												&& !section.isHidden
+												&& !(section as IReferencedSection)?.hideNavigationAnchor,
+										),
+									)
 									.map((section, index) => {
 										const path = getPathForSectionAndPage(page.title, section.header);
 
@@ -121,7 +128,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => {
 												</List.Item>
 
 												{/* Patient login on accordian on patients page */}
-												{page.title === 'Patients' && index === getFinalIndex(page) && (
+												{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
 													<List.Item>
 														<Anchor
 															href='https://my.phil.us/'
@@ -129,19 +136,6 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => {
 															style={{textDecoration: 'none'}}
 														>
 															<Text className={classes.footerLink}>Patient Log In</Text>
-														</Anchor>
-													</List.Item>
-												)}
-
-												{/* HCP login on accordian on HCP page */}
-												{page.title === HCP_PAGE && index === getFinalIndex(page) && (
-													<List.Item>
-														<Anchor
-															href='https://md.phil.us/'
-															target='_blank'
-															style={{textDecoration: 'none'}}
-														>
-															<Text className={classes.footerLink}>HCP Log In</Text>
 														</Anchor>
 													</List.Item>
 												)}

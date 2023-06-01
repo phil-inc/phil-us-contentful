@@ -147,6 +147,7 @@ const query = graphql`
 							id
 							header
 							isHidden
+							hideNavigationAnchor
 						}
 						... on ContentfulSection {
 							id
@@ -176,6 +177,7 @@ const query = graphql`
 						id
 						header
 						isHidden
+						hideNavigationAnchor
 					}
 					... on ContentfulSection {
 						id

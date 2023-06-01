@@ -15,15 +15,14 @@ import {
 import {IconChevronDown} from '@tabler/icons';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import {HCP_PAGE} from 'constants/page';
 import {Link} from 'gatsby';
 import React from 'react';
 import slugify from 'slugify';
 import {getPathForSectionAndPage} from 'utils/links';
 import {navigateToPage} from 'utils/navigateToPage';
 import {Link as ScrollToElement} from 'react-scroll';
-import {HEADER_HEIGHT} from './CHeader';
 import HeaderContext from 'contexts/HeaderProvider';
+import {type IReferencedSection} from 'types/section';
 
 const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	burger: {
@@ -108,6 +107,10 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	},
 }));
 
+/**
+ * Represents a custom drawer component.
+ * @component
+ */
 const CDrawer: React.FC = () => {
 	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer} = React.useContext(HeaderContext);
 	const {classes} = useStyles({minimal});
@@ -176,7 +179,13 @@ const CDrawer: React.FC = () => {
 								</Accordion.Control>
 								<Accordion.Panel>
 									{page.sections
-										.filter(section => Boolean(section.header?.length && !section.isHidden))
+										.filter(section =>
+											Boolean(
+												section.header?.length
+													&& !section.isHidden
+													&& !(section as IReferencedSection)?.hideNavigationAnchor,
+											),
+										)
 										.map((section, index, array) => {
 											const path = getPathForSectionAndPage(page.title, section.header);
 
@@ -270,26 +279,6 @@ const CDrawer: React.FC = () => {
 																		>
 																			<Text size={16} weight={400} color={theme.colors.primary[0]}>
 																				Patient Log In
-																			</Text>
-																		</Anchor>
-																	</th>
-																</tr>
-															</thead>
-														</Table>
-													)}
-
-													{page.title === HCP_PAGE && index === array.length - 1 && (
-														<Table mb={16}>
-															<thead>
-																<tr>
-																	<th style={{paddingLeft: 0, paddingRight: 0}}>
-																		<Anchor
-																			href='https://md.phil.us/'
-																			target='_blank'
-																			style={{textDecoration: 'none'}}
-																		>
-																			<Text size={16} weight={400} color={theme.colors.primary[0]}>
-																				HCP Log In
 																			</Text>
 																		</Anchor>
 																	</th>

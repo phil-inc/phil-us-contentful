@@ -11,6 +11,7 @@ import {type ContentfulPage} from 'types/page';
 import {getPathForSectionAndPage} from 'utils/links';
 import {footerBackground} from 'assets/images';
 import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
+import {type IReferencedSection} from 'types/section';
 
 type TDesktopFooter = {
 	pages: ContentfulPage[];
@@ -123,7 +124,13 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 							</Link>
 							<Divider my={10} color='#6A7979' />
 							{page.sections
-								.filter(section => Boolean(section.header?.length && !section.isHidden))
+								.filter(section =>
+									Boolean(
+										section.header?.length
+											&& !section.isHidden
+											&& !(section as IReferencedSection)?.hideNavigationAnchor,
+									),
+								)
 								.map((section, index, array) => {
 									const path = getPathForSectionAndPage(page.title, section.header);
 
@@ -146,21 +153,6 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 															style={{textDecoration: 'none'}}
 														>
 															<Text className={classes.footerLink}>Patient Log In</Text>
-														</Anchor>
-													</List.Item>
-												</List>
-											)}
-
-											{/* HCP section mapping extra elements */}
-											{page.title === HCP_PAGE && index === array.length - 1 && (
-												<List listStyleType='none'>
-													<List.Item>
-														<Anchor
-															href='https://md.phil.us/'
-															target='_blank'
-															style={{textDecoration: 'none'}}
-														>
-															<Text className={classes.footerLink}>HCP Log In</Text>
 														</Anchor>
 													</List.Item>
 												</List>

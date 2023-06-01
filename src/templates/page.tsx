@@ -3,11 +3,12 @@ import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {SEO} from 'layouts/SEO/SEO';
-import {Accordion, Box, Container, createStyles, Grid, Title, useMantineTheme} from '@mantine/core';
+import {Box, Container, createStyles, Grid, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
-import {handleSpacing} from 'utils/handleSpacing';
 import PageContext from 'contexts/PageContext';
+import {Script} from 'gatsby';
+import slugify from 'slugify';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
@@ -30,9 +31,19 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={pageContext.description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${pageContext.title === 'Home' ? '/' : `/${title}`}`} />
+			<meta
+				property='og:url'
+				content={`https://phil.us${
+					pageContext.title === 'Home' ? '/' : `/${slugify(pageContext.title, {strict: true, lower: true})}/`
+				}`}
+			/>
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			<Script
+				type='text/javascript'
+				src='//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'
+				async
+			></Script>
 		</SEO>
 	);
 };
@@ -58,11 +69,9 @@ const useStyles = createStyles((theme, {title}: {title: string}) => ({
 
 const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	const {id, sections, title} = pageContext;
-	const theme = useMantineTheme();
+	const {classes} = useStyles({title});
 
 	let basicSectionCount = 0;
-
-	const {classes} = useStyles({title});
 
 	return (
 		<PageContext.Provider value={pageContext}>
