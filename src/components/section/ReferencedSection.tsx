@@ -112,6 +112,8 @@ const useStyles = createStyles(theme => ({
 		[theme.fn.smallerThan('md')]: {
 			textAlign: 'center',
 			marginBottom: 10,
+			paddingLeft: 20,
+			paddingRight: 20,
 		},
 	},
 
@@ -122,6 +124,8 @@ const useStyles = createStyles(theme => ({
 
 		[theme.fn.smallerThan('md')]: {
 			textAlign: 'center',
+			paddingLeft: 34,
+			paddingRight: 34,
 		},
 	},
 
