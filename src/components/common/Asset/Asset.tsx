@@ -21,6 +21,8 @@ const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 	const [playerCompnnent, setPlayerComponent] = React.useState(<></>);
 
 	React.useEffect(() => {
+		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
+
 		const player = (
 			<ReactPlayer
 				url={youtubeVideoURL}
@@ -30,7 +32,10 @@ const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 				config={{
 					youtube: {
 						playerVars: {
-							origin: 'https://phil.us',
+							rel: 0,
+							enablejsapi: 1,
+							origin,
+							widget_referrer: origin,
 						},
 					},
 				}}
