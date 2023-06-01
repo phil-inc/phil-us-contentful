@@ -24,6 +24,7 @@ import {navigateToPage} from 'utils/navigateToPage';
 import {Link as ScrollToElement} from 'react-scroll';
 import {HEADER_HEIGHT} from './CHeader';
 import HeaderContext from 'contexts/HeaderProvider';
+import {type IReferencedSection} from 'types/section';
 
 const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	burger: {
@@ -176,7 +177,13 @@ const CDrawer: React.FC = () => {
 								</Accordion.Control>
 								<Accordion.Panel>
 									{page.sections
-										.filter(section => Boolean(section.header?.length && !section.isHidden))
+										.filter(section =>
+											Boolean(
+												section.header?.length
+													&& !section.isHidden
+													&& !(section as IReferencedSection)?.hideNavigationAnchor,
+											),
+										)
 										.map((section, index, array) => {
 											const path = getPathForSectionAndPage(page.title, section.header);
 

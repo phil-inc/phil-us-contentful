@@ -153,6 +153,7 @@ const generateMainPages = async ({actions, graphql}) => {
 						... on ContentfulReferencedSection {
 							id
 							isHidden
+							hideNavigationAnchor
 							hideHeader
 							header
 							subHeading {

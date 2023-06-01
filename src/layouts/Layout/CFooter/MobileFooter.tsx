@@ -10,6 +10,7 @@ import {StaticImage} from 'gatsby-plugin-image';
 import React from 'react';
 import {type TAsset} from 'types/asset';
 import {type ContentfulPage} from 'types/page';
+import {type IReferencedSection} from 'types/section';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {getPathForSectionAndPage} from 'utils/links';
 
@@ -108,7 +109,13 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => {
 						<Accordion.Panel>
 							<List mb={16} listStyleType={'none'}>
 								{page.sections
-									.filter(section => Boolean(section.header?.length && !section.isHidden))
+									.filter(section =>
+										Boolean(
+											section.header?.length
+												&& !section.isHidden
+												&& !(section as IReferencedSection)?.hideNavigationAnchor,
+										),
+									)
 									.map((section, index) => {
 										const path = getPathForSectionAndPage(page.title, section.header);
 

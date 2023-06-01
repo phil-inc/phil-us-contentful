@@ -68,6 +68,8 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 
 	let basicSectionCount = 0;
 
+	console.log({sections});
+
 	return (
 		<PageContext.Provider value={pageContext}>
 			<Layout>

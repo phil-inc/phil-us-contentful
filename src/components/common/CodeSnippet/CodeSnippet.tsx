@@ -9,7 +9,7 @@ type CodeSnippetType = {
 };
 
 const CodeSnippet: React.FC<CodeSnippetType> = React.memo(({resource}) => {
-	const snippet = extractString(resource.hubspotEmbed as {raw: string});
+	const snippet = extractString(resource.body as {raw: string});
 
 	return (
 		<Box mt={30}>

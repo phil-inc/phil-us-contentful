@@ -11,6 +11,7 @@ import {type ContentfulPage} from 'types/page';
 import {getPathForSectionAndPage} from 'utils/links';
 import {footerBackground} from 'assets/images';
 import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
+import {type IReferencedSection} from 'types/section';
 
 type TDesktopFooter = {
 	pages: ContentfulPage[];
@@ -123,7 +124,13 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 							</Link>
 							<Divider my={10} color='#6A7979' />
 							{page.sections
-								.filter(section => Boolean(section.header?.length && !section.isHidden))
+								.filter(section =>
+									Boolean(
+										section.header?.length
+											&& !section.isHidden
+											&& !(section as IReferencedSection)?.hideNavigationAnchor,
+									),
+								)
 								.map((section, index, array) => {
 									const path = getPathForSectionAndPage(page.title, section.header);
 
