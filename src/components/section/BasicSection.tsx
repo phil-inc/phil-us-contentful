@@ -14,7 +14,7 @@ import {isVideoContent} from 'utils/isVideoContent';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
 import ContactForm from 'components/ContactPageForm/ContactForm';
-import {useViewportSize} from '@mantine/hooks';
+import {useMediaQuery, useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
 
@@ -130,6 +130,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
 	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
 
+	const isMobile = useMediaQuery('(max-width: 576px)', false, {getInitialValueInEffect: false});
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 	const ref = React.useRef();
@@ -147,7 +148,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 			id={slugify(section.header, {lower: true, strict: true})}
 			fluid
 			className={classes.container}
-			my={context.title === CONTACT_PAGE ? 0 : 92}
+			my={context.title === CONTACT_PAGE ? 0 : isMobile ? 32 : 92}
 		>
 			<>
 				<Grid

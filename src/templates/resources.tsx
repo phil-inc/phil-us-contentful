@@ -520,6 +520,7 @@ export const resourcesQuery = graphql`
 		contentfulReferencedSection(id: {eq: $id}) {
 			id
 			isHidden
+			hideNavigationAnchor
 			hideHeader
 			header
 			sectionType
@@ -764,6 +765,7 @@ export const resourcesQuery = graphql`
 				... on ContentfulReferencedSection {
 					id
 					isHidden
+					hideNavigationAnchor
 					hideHeader
 					header
 					sectionType

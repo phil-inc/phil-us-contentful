@@ -153,8 +153,13 @@ const generateMainPages = async ({actions, graphql}) => {
 						... on ContentfulReferencedSection {
 							id
 							isHidden
+							hideNavigationAnchor
 							hideHeader
 							header
+							subHeading {
+								id
+								subHeading
+							}
 							sectionType
 							references {
 								externalLink

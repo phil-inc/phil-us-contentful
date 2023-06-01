@@ -7,6 +7,7 @@ import slugify from 'slugify';
 import {getPathForSectionAndPage} from 'utils/links';
 import {navigateToPage} from 'utils/navigateToPage';
 import {HEADER_HEIGHT} from './CHeader';
+import {type IReferencedSection} from 'types/section';
 
 const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	collapse: {
@@ -72,7 +73,13 @@ const CCollapse = () => {
 							.filter(page => page.title === target)
 							.map(page =>
 								page.sections
-									.filter(section => Boolean(section.header?.length && !section.isHidden))
+									.filter(section =>
+										Boolean(
+											section.header?.length
+												&& !section.isHidden
+												&& !(section as IReferencedSection)?.hideNavigationAnchor,
+										),
+									)
 									.map((section, index, array) => {
 										const path = getPathForSectionAndPage(page.title, section.header);
 

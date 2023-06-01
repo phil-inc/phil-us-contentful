@@ -7,6 +7,7 @@ import {Box, Container, createStyles, Grid, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {ISection} from 'types/section';
 import PageContext from 'contexts/PageContext';
+import {Script} from 'gatsby';
 import slugify from 'slugify';
 
 type HelmetProps = {
@@ -38,6 +39,11 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 			/>
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
 			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			<Script
+				type='text/javascript'
+				src='//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'
+				async
+			></Script>
 		</SEO>
 	);
 };
@@ -66,6 +72,8 @@ const PageTemplate: React.FC<PageTemplateProps> = ({pageContext}) => {
 	const {classes} = useStyles({title});
 
 	let basicSectionCount = 0;
+
+	console.log({sections});
 
 	return (
 		<PageContext.Provider value={pageContext}>
