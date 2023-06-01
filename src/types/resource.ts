@@ -60,4 +60,5 @@ export type TResource = {
 			title: string;
 		};
 	};
+	slug?: string; // Populates only for static pages
 };
