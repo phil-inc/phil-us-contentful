@@ -1,7 +1,7 @@
 import type {Config} from 'https://edge.netlify.com';
 
 const getCareerListing = async (request: Request) => {
-	const uri = Deno.env.get('ISOLVEDHIRE_FEED_URI');
+	const uri = Deno.env.get('ASHBY_FEED_URI');
 	if (!uri) {
 		const error = 'Failed to initiate function. URI is undefined.';
 		console.error(error);
