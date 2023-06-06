@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type CSSProperties} from 'react';
 import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, AspectRatio} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -119,12 +119,16 @@ const useStyles = createStyles(theme => ({
 	tableHeader: {
 		textAlign: 'start',
 	},
+
+	inlineEmbededYoutubeVideo: {
+		float: 'left',
+	},
 }));
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const {heading, body, asset, banners, author, noindex, isFaq} = pageContext;
-
 	const {classes, cx} = useStyles();
+	let count = 0;
 
 	const [isMounted, setIsMounted] = React.useState(false);
 	const [origin, setOrigin] = React.useState('https://phil.us');
@@ -168,6 +172,40 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const options = {
 		renderNode: {
+			[INLINES.EMBEDDED_ENTRY](node, children) {
+				const content: {title: string; url: string} = youtubeEmbeds[node?.data?.target?.contentful_id] as {
+					title: string;
+					url: string;
+				};
+
+				if (isMounted && content && ReactPlayer.canPlay(content.url)) {
+					let float: CSSProperties['float'] = 'left';
+					if (count % 2 === 1) {
+						float = 'right';
+					}
+
+					count++;
+
+					return (
+						<ReactPlayer
+							style={{float, margin: '20px'}}
+							url={content.url}
+							controls
+							config={{
+								playerVars: {
+									rel: 0,
+									enablejsapi: 1,
+									origin,
+									widget_referrer: origin,
+								},
+							}}
+						/>
+					);
+				}
+
+				return null; // Return null during SSR
+			},
+
 			[BLOCKS.EMBEDDED_ENTRY](node, children) {
 				const content: {title: string; url: string} = youtubeEmbeds[node?.data?.target?.contentful_id] as {
 					title: string;
