@@ -450,7 +450,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							{data.contentfulReferencedSection.featuredItems
 								.filter(resource => resource.generateStaticPage)
 								.map((resource, index, array) => {
-									const path = HOME + slugify(resource.heading, {lower: true, strict: true});
+									const path = '/' + slugify(resource.heading, {lower: true, strict: true});
 
 									const sectionLabelText = (
 										<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
