@@ -5,7 +5,7 @@ import {navigate} from 'gatsby';
 // when we select navigation to Resources page from contentful
 const Resources: React.FC = () => {
 	React.useEffect(() => {
-		void navigate('/resources/white-papers/');
+		void navigate('/resources/white-papers/', {replace: true});
 	}, []);
 
 	return null;
