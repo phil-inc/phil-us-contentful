@@ -37,31 +37,40 @@ export type ISection = {
 	isHidden: boolean;
 };
 
-export type ResourceBlocks = 'Upcoming Events' | 'Phil Blog' | 'Case Study' | 'White Paper';
+export enum ResourceBlocksEnum {
+	'Upcoming Events' = 'Upcoming Events',
+	'Phil Blog' = 'Phil Blog',
+	'Case Study' = 'Case Study',
+	'White Paper' = 'White Paper',
+}
 
-type ReferenceType =
-	| 'Article'
-	| 'Customer Story'
-	| 'Featured Resource'
-	| 'Testimonial'
-	| 'Team Member'
-	| 'Press Release'
-	| 'Location'
-	| 'Banner'
-	| 'Stats Card'
-	| 'Prescriber Journey'
-	| 'Info Card'
-	| 'FAQs'
-	| 'Image Carousel'
-	| 'Investors'
-	| 'Stats Card with Arrows'
-	| 'Code Snippet'
-	| ResourceBlocks;
+export type ResourceBlocks = keyof typeof ResourceBlocksEnum;
+
+export enum ReferenceTypeEnum {
+	'Article' = 'Article',
+	'Customer Story' = 'Customer Story',
+	'Featured Resource' = 'Featured Resource',
+	'Testimonial' = 'Testimonial',
+	'Team Member' = 'Team Member',
+	'Press Release' = 'Press Release',
+	'Location' = 'Location',
+	'Banner' = 'Banner',
+	'Stats Card' = 'Stats Card',
+	'Prescriber Journey' = 'Prescriber Journey',
+	'Info Card' = 'Info Card',
+	'FAQs' = 'FAQs',
+	'Image Carousel' = 'Image Carousel',
+	'Investors' = 'Investors',
+	'Stats Card with Arrows' = 'Stats Card with Arrows',
+	'Code Snippet' = 'Code Snippet',
+}
+
+export type ReferenceType = keyof typeof ReferenceTypeEnum;
 
 export type IReferencedSection = {
 	id: string;
 	hideHeader: boolean;
-	referenceType: ReferenceType;
+	referenceType: ReferenceType | ResourceBlocks;
 	header: string;
 	subHeading: {
 		id: string;

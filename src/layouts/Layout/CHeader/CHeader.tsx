@@ -222,7 +222,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 
 		indicator.style.transform = `translate(calc(${
 			li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
-		}px), calc(${-20}px))`;
+		}px), calc(${-INDICATOR_SIZE}px))`;
 	}
 
 	React.useEffect(() => {

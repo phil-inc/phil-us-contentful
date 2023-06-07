@@ -26,7 +26,7 @@ import {Testimonial} from 'components/common/Testimonial';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import {Link} from 'gatsby';
 import type {TResource} from 'types/resource';
-import type {IReferencedSection} from 'types/section';
+import {type IReferencedSection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {getLink} from 'utils/getLink';
 import slugify from 'slugify';
 import {CardWithImage} from 'components/common/CardWithImage';
@@ -39,7 +39,7 @@ import mixpanel from 'mixpanel-browser';
 import PageContext from 'contexts/PageContext';
 import CodeSnippet from 'components/common/CodeSnippet/CodeSnippet';
 import {RESOURCE_BLOCKS} from 'constants/section';
-import {useMediaQuery} from '@mantine/hooks';
+import {FIELD_PAGE} from 'constants/page';
 
 const useStyles = createStyles(theme => ({
 	divider: {
@@ -185,20 +185,20 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	// Get colors for resources based on resource type
 	const getSectionColors = () => {
 		switch (section.referenceType) {
-			case 'Testimonial':
-			case 'Image Carousel':
-			case 'Location':
+			case ReferenceTypeEnum.Testimonial:
+			case ReferenceTypeEnum['Image Carousel']:
+			case ReferenceTypeEnum.Location:
 				return ['#1D818D', 'white']; // Green Background
 
-			case 'Customer Story':
+			case ReferenceTypeEnum['Customer Story']:
 				return ['#00827E', 'white'];
 
-			case 'Banner':
-			case 'Article':
-			case 'Stats Card':
-			case 'Stats Card with Arrows':
-			case 'Prescriber Journey':
-			case 'Info Card':
+			case ReferenceTypeEnum.Banner:
+			case ReferenceTypeEnum.Article:
+			case ReferenceTypeEnum['Stats Card']:
+			case ReferenceTypeEnum['Stats Card with Arrows']:
+			case ReferenceTypeEnum['Prescriber Journey']:
+			case ReferenceTypeEnum['Info Card']:
 				return ['#F4F4F4', 'black', '#FFFFFF']; // Gray Background
 
 			default:
@@ -209,10 +209,10 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	// Get grid span based on resource type
 	const getSpan = (): {xl: number; lg: number; md: number; sm: number; xs?: number} => {
 		switch (section.referenceType) {
-			case 'Testimonial':
+			case ReferenceTypeEnum.Testimonial:
 				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS, md: GRID_COLUMNS, sm: GRID_COLUMNS / 2};
 
-			case 'Stats Card with Arrows':
+			case ReferenceTypeEnum['Stats Card with Arrows']:
 				return {
 					xl: GRID_COLUMNS / 5,
 					lg: GRID_COLUMNS / 3,
@@ -221,21 +221,20 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					xs: GRID_COLUMNS / 2,
 				};
 
-			case 'Info Card':
-			case 'Phil Blog':
-			case 'Upcoming Events':
-			case 'White Paper':
-			case 'Case Study':
-			case 'Featured Resource':
+			case ResourceBlocksEnum['Case Study']:
+			case ResourceBlocksEnum['Phil Blog']:
+			case ResourceBlocksEnum['Upcoming Events']:
+			case ResourceBlocksEnum['White Paper']:
+			case ReferenceTypeEnum['Featured Resource']:
 				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 
-			case 'FAQs':
+			case ReferenceTypeEnum.FAQs:
 				return {xl: GRID_COLUMNS / 2, lg: GRID_COLUMNS / 2, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 
-			case 'Team Member':
+			case ReferenceTypeEnum['Team Member']:
 				return {xl: GRID_COLUMNS / 4, lg: GRID_COLUMNS / 4, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 
-			case 'Investors':
+			case ReferenceTypeEnum.Investors:
 				return {xl: GRID_COLUMNS / 5, lg: GRID_COLUMNS / 5, md: GRID_COLUMNS, sm: GRID_COLUMNS};
 
 			default:
@@ -249,26 +248,26 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 	// eslint-disable-next-line complexity
 	const renderResource = (sectionHeader: string, resource: TResource, index: number, arrayLength: number) => {
 		switch (section.referenceType) {
-			case 'Code Snippet':
+			case ReferenceTypeEnum['Code Snippet']:
 				return <CodeSnippet resource={resource} />;
 
-			case 'Article':
+			case ReferenceTypeEnum.Article:
 				return <Article color={getColor(index)} resource={resource} />;
 
-			case 'Customer Story':
-			case 'Testimonial':
+			case ReferenceTypeEnum['Customer Story']:
+			case ReferenceTypeEnum.Testimonial:
 				return (
 					<Testimonial type={section.referenceType === 'Testimonial' ? 'person' : 'company'} resource={resource} />
 				);
 
-			case 'Phil Blog':
-			case 'Upcoming Events':
-			case 'White Paper':
-			case 'Case Study':
+			case ResourceBlocksEnum['Phil Blog']:
+			case ResourceBlocksEnum['Upcoming Events']:
+			case ResourceBlocksEnum['White Paper']:
+			case ResourceBlocksEnum['Case Study']:
 				return <ResourceCard resource={resource} />;
 
-			case 'Featured Resource':
-			case 'Info Card':
+			case ReferenceTypeEnum['Featured Resource']:
+			case ReferenceTypeEnum['Info Card']:
 				return (
 					<Featured
 						noDivider={section.referenceType === 'Info Card'}
@@ -278,34 +277,34 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 					/>
 				);
 
-			case 'Banner':
+			case ReferenceTypeEnum.Banner:
 				return <Banner resource={resource} />;
 
-			case 'Stats Card':
+			case ReferenceTypeEnum['Stats Card']:
 				return <StatsCard resource={resource} />;
-			case 'Stats Card with Arrows':
+			case ReferenceTypeEnum['Stats Card with Arrows']:
 				return <StatsCard resource={resource} arrow={true} index={index === arrayLength - 1 ? undefined : index} />;
 
-			case 'Prescriber Journey':
+			case ReferenceTypeEnum['Prescriber Journey']:
 				return <PrescriberJourney resource={resource} />;
 
-			case 'Team Member':
+			case ReferenceTypeEnum['Team Member']:
 				return <Profile resource={resource} />;
 
-			case 'Investors':
+			case ReferenceTypeEnum.Investors:
 				return (
 					<Container className={classes.investorImage}>
 						<Asset asset={resource.asset!} />
 					</Container>
 				);
 
-			case 'Press Release':
+			case ReferenceTypeEnum['Press Release']:
 				return <PressRelease resource={resource} />;
 
-			case 'Location':
+			case ReferenceTypeEnum.Location:
 				return <CardWithImage resource={resource} />;
 
-			case 'FAQs':
+			case ReferenceTypeEnum.FAQs:
 				return <FAQ resource={resource} />;
 
 			default:
@@ -339,19 +338,21 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		);
 
 	const ReferencedSectionBody = () =>
-		section.referenceType === 'Image Carousel' ? (
+		section.referenceType === ReferenceTypeEnum['Image Carousel'] ? (
 			<ResourceCarousel imageCaraouselSection={section} />
 		) : (
 			<Grid
-				grow={section.referenceType === 'Investors' || section.referenceType === 'FAQs'}
+				grow={
+					section.referenceType === ReferenceTypeEnum.Investors || section.referenceType === ReferenceTypeEnum.FAQs
+				}
 				columns={GRID_COLUMNS}
-				gutter={section.referenceType === 'Stats Card with Arrows' ? 20 : theme.spacing.md}
-				m={section.referenceType === 'Banner' ? -16 : 0}
-				mx={section.referenceType === 'Banner' ? -16 : -10}
+				gutter={section.referenceType === ReferenceTypeEnum['Stats Card with Arrows'] ? 20 : theme.spacing.md}
+				m={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
+				mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
 			>
 				{section.references.map((resource, index, array) => (
 					<Grid.Col
-						p={section.referenceType === 'Investors' ? 0 : undefined}
+						p={section.referenceType === ReferenceTypeEnum.Investors ? 0 : undefined}
 						key={resource.id + 'mapReferencedSectionResource'}
 						{...getSpan()}
 					>
@@ -365,21 +366,25 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={background}
-			pt={context.title === 'Field' || section.referenceType === 'Code Snippet' ? 0 : handleSpacing(theme, 92)}
-			pb={
-				section.referenceType === 'Case Study'
-				|| section.referenceType === 'Phil Blog'
-				|| section.referenceType === 'White Paper'
-				|| section.referenceType === 'Upcoming Events'
-				|| context.title === 'Field'
+			pt={
+				context.title === FIELD_PAGE || section.referenceType === ReferenceTypeEnum['Code Snippet']
 					? 0
 					: handleSpacing(theme, 92)
 			}
-			fullWidth={section.referenceType === 'Image Carousel'}
-			py={section.referenceType === 'Banner' ? 120 : undefined}
-			px={section.referenceType === 'Banner' ? 106 : undefined}
+			pb={
+				section.referenceType === ResourceBlocksEnum['Phil Blog']
+				|| section.referenceType === ResourceBlocksEnum['Case Study']
+				|| section.referenceType === ResourceBlocksEnum['White Paper']
+				|| section.referenceType === ResourceBlocksEnum['Upcoming Events']
+				|| context.title === FIELD_PAGE
+					? 0
+					: handleSpacing(theme, 92)
+			}
+			fullWidth={section.referenceType === ReferenceTypeEnum['Image Carousel']}
+			py={section.referenceType === ReferenceTypeEnum.Banner ? 120 : undefined}
+			px={section.referenceType === ReferenceTypeEnum.Banner ? 106 : undefined}
 		>
-			{context.title === 'Field' ? (
+			{context.title === FIELD_PAGE ? (
 				<Accordion
 					variant='separated'
 					radius='xs'
