@@ -119,10 +119,17 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 							</>
 						)}
 						<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
-						{resource.body && (
+
+						{resource?.description?.description?.length ? (
 							<Text size={18} mt='sm' mb={20} lineClamp={2}>
-								{renderRichText(resource.body, options)}
+								{resource.description.description}
 							</Text>
+						) : (
+							resource.body && (
+								<Text size={18} mt='sm' mb={20} lineClamp={2}>
+									{renderRichText(resource.body, options)}
+								</Text>
+							)
 						)}
 					</Box>
 				</Grid.Col>
