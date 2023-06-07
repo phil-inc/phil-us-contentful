@@ -17,12 +17,13 @@ import {
 	useMantineTheme,
 } from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import type {IReferencedSection, ISection} from 'types/section';
+import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
 import {Link, graphql, navigate} from 'gatsby';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
+import {HOME, RESOURCES} from 'constants/routes';
 
 type HelmetProps = {
 	data: {
@@ -253,7 +254,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 	const banners = data.contentfulPage.sections.filter(section => {
 		if (section?.sectionType === 'Referenced Section') {
-			if ((section as IReferencedSection).referenceType === 'Banner') {
+			if ((section as IReferencedSection).referenceType === ReferenceTypeEnum.Banner) {
 				return true;
 			}
 		}
@@ -308,8 +309,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 											{data.contentfulPage.sections
 												.filter(section => !section.isHidden && Boolean(section.header))
 												.map((section, index, array) => {
-													const path
-														= '/resources/' + slugify(section.header, {lower: true, strict: true});
+													const path = RESOURCES + slugify(section.header, {lower: true, strict: true});
 
 													return (
 														<React.Fragment key={path}>
@@ -345,7 +345,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									{data.contentfulReferencedSection.featuredItems
 										.filter(resource => resource.generateStaticPage)
 										.map((resource, index, array) => {
-											const path = '/' + slugify(resource.heading, {lower: true, strict: true});
+											const path = HOME + slugify(resource.heading, {lower: true, strict: true});
 
 											const sectionLabelText = (
 												<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
@@ -410,7 +410,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 										<ResourceCard
 											key={resource.id + index.toString()}
 											resource={resource}
-											isFaq={currentSection.referenceType === 'FAQs'}
+											isFaq={currentSection.referenceType === ReferenceTypeEnum.FAQs}
 										/>
 									))}
 						</Box>
@@ -427,8 +427,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 								page={currentPageNumber}
 								withControls={false}
 								onChange={async pageNumber => {
-									const path
-										= '/resources/' + slugify(currentSection.header, {lower: true, strict: true}) + '/';
+									const path = RESOURCES + slugify(currentSection.header, {lower: true, strict: true}) + '/';
 
 									if (pageNumber === 1) {
 										void navigate(path);
@@ -451,7 +450,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							{data.contentfulReferencedSection.featuredItems
 								.filter(resource => resource.generateStaticPage)
 								.map((resource, index, array) => {
-									const path = '/' + slugify(resource.heading, {lower: true, strict: true});
+									const path = HOME + slugify(resource.heading, {lower: true, strict: true});
 
 									const sectionLabelText = (
 										<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
