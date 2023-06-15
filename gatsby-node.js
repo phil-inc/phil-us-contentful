@@ -4,6 +4,9 @@ const careerTemplate = require.resolve(`./src/templates/career.tsx`);
 const pageTemplate = require.resolve(`./src/templates/page.tsx`);
 const contactTemplate = require.resolve(`./src/templates/contact.tsx`);
 const resourcesTemplate = require.resolve(`./src/templates/resources.tsx`);
+const {pagination} = require.resolve(`./src/utils/pagination.ts`);
+
+console.log({pagination})
 
 const generateMainPages = async ({actions, graphql}) => {
 	// Return page
@@ -348,7 +351,7 @@ const generateMainPages = async ({actions, graphql}) => {
 				}
 				
 				const postsPerPage = 5;
-				const numPages = Math.ceil(section.references.length / postsPerPage);
+				const numPages = pagination.numberOfPages(section.references.length, POSTS_PER_SECTION);
 
 				Array.from({length: numPages}).forEach((_, i) => {
 					const pageObject = createPageObject(page);

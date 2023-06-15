@@ -7,11 +7,15 @@ import {
 	Anchor,
 	Box,
 	Card,
+	Center,
 	Divider,
 	Grid,
+	Group,
 	NavLink,
 	Pagination,
+	SimpleGrid,
 	Text,
+	TextInput,
 	Title,
 	createStyles,
 	useMantineTheme,
@@ -24,6 +28,7 @@ import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
 import {HOME, RESOURCES} from 'constants/routes';
+import SearchBox from 'components/common/SearchBox/SearchBox';
 
 type HelmetProps = {
 	data: {
@@ -220,6 +225,10 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 			display: 'block',
 		},
 	},
+
+	searchInput: {
+		borderRadius: 0,
+	},
 }));
 
 type ResourcesPageProps = {
@@ -246,7 +255,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	const {classes} = useStyles({isMobileView});
 
 	const currentSection = data.contentfulReferencedSection;
-
+	console.log({currentSection}, currentSection.header);
 	const resources = currentSection?.references || [];
 
 	const startIndex = (currentPageNumber - 1) * limit;
@@ -270,14 +279,34 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 		}
 	}, [isMobileView]);
 
+	const [searchText, setSearchText] = React.useState('');
+
+	const onSearchTextChange = (searchText: string) => {
+		setSearchText(searchText);
+	};
+
 	return (
 		<Layout>
 			<Expanded id={currentSection.id} py={0}>
 				{/* PAGE HEADER */}
 				<Box>
-					<Title className={classes.heading1} order={1}>
-						Resources{!isMobileView && `/${currentSection.header}`}
-					</Title>
+					<Grid align='center'>
+						<Grid.Col sm={12} md={12} lg={9.76}>
+							<Title className={classes.heading1} order={1}>
+								Resources{!isMobileView && `/${currentSection.header}`}
+							</Title>
+						</Grid.Col>
+
+						<Grid.Col sm={12} md={12} lg={2.24}>
+							<SearchBox
+								onSubmitCallback={vs => {
+									console.log(vs);
+								}}
+								onChange={onSearchTextChange}
+								placeholder='Search...'
+							/>
+						</Grid.Col>
+					</Grid>
 				</Box>
 
 				<Grid mt={36} mb={20}>
@@ -397,11 +426,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
 						{/* RESOURCES MAP */}
 						<Box className={classes.cardContainer}>
-							<Box className={classes.currentSectionHeader} mb={28}>
+							{/* <Box className={classes.currentSectionHeader} mb={28}>
 								<Title order={2} m={0} size={32}>
 									{currentSection.header}
 								</Title>
-							</Box>
+							</Box> */}
 
 							{resources?.length
 								&& resources
