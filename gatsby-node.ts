@@ -5,8 +5,6 @@ import type {Actions, GatsbyNode, NodePluginArgs} from 'gatsby';
 import {POSTS_PER_SECTION} from './src/constants/section';
 import {pagination} from './src/utils/pagination';
 
-console.log('output:', {pagination, POSTS_PER_SECTION});
-
 export const createPages: GatsbyNode['createPages'] = async function ({actions, graphql}) {
 	type GraphqlType = <TData, TVariables = any>(
 		query: string,

@@ -256,7 +256,6 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	const {classes} = useStyles({isMobileView});
 
 	const currentSection = data.contentfulReferencedSection;
-	console.log({currentSection}, currentSection.header);
 	const resources = currentSection?.references || [];
 
 	const startIndex = (currentPageNumber - 1) * limit;
