@@ -1,5 +1,5 @@
-import {Accordion, Box, Card, Checkbox, Divider, Title, createStyles} from '@mantine/core';
-import {useDebouncedState, useToggle} from '@mantine/hooks';
+import {Accordion, Box, Card, Checkbox, Divider, Title, createStyles, useMantineTheme} from '@mantine/core';
+import {useDebouncedState, useToggle, useViewportSize} from '@mantine/hooks';
 import React from 'react';
 import SearchBox from '../SearchBox/SearchBox';
 import {generateSearchParams} from 'utils/search';
@@ -50,10 +50,6 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		},
 	},
 
-	searchInput: {
-		borderRadius: 0,
-	},
-
 	checkboxRoot: {
 		padding: '12px 0 12px 0',
 	},
@@ -77,10 +73,13 @@ type FilterType = {
 };
 
 const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryParam}) => {
-	const {classes} = useStyles({isMobileView: false});
+	const {width} = useViewportSize();
+	const theme = useMantineTheme();
+	const isMobileView = theme.breakpoints.md > width;
+	const {classes} = useStyles({isMobileView});
 	const [value, toggle] = useToggle(['ResourcesType', null]);
 
-	const [checkboxState, setCheckboxState] = React.useState({});
+	const [checkboxState, setCheckboxState] = React.useState<Record<string, boolean>>({});
 	const [searchText, setSearchText] = React.useState('');
 
 	React.useEffect(() => {
@@ -88,8 +87,6 @@ const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryPara
 
 		setCheckboxState(initCheckboxState);
 	}, [values, filterQueryParam]);
-
-	console.log({checkboxState, values, filterQueryParam});
 
 	return (
 		<Card className={classes.navigationList} mb={36}>
@@ -102,7 +99,7 @@ const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryPara
 					value={searchQueryParam}
 					onSubmitCallback={vs => {
 						const trueKeys = Object.entries(checkboxState)
-							.filter(([key, value]) => value === true)
+							.filter(([key, value]) => value)
 							.map(([key]) => key);
 						const path = generateSearchParams(trueKeys, vs.searchText);
 
@@ -113,60 +110,65 @@ const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryPara
 				/>
 			</Box>
 
-			<Divider my={28} />
+			{Boolean(values.length) && <Divider my={28} />}
 
-			<Accordion
-				value={value}
-				chevronSize={24}
-				classNames={{
-					content: classes.accordionContent,
-					control: classes.accordionControl,
-					chevron: classes.chevron,
-				}}
-			>
-				<Accordion.Item value='ResourcesType'>
-					<Accordion.Control
-						onClick={() => {
-							toggle();
-						}}
-					>
-						<Title size={24} order={4}>
-							Content Type
-						</Title>
-					</Accordion.Control>
-					<Accordion.Panel>
-						<Box className={classes.sectionNavLinksContainer}>
-							{values.map((value, index, array) => (
-								<React.Fragment key={value}>
-									<Checkbox
-										classNames={{
-											root: classes.checkboxRoot,
-											label: checkboxState[value] ? classes.checkboxLabelChecked : classes.checkboxLabel,
-										}}
-										onClick={e => {
-											const newState = {...checkboxState, [value]: (e.target as HTMLInputElement).checked};
+			{Boolean(values.length) && (
+				<Accordion
+					value={value}
+					chevronSize={24}
+					classNames={{
+						content: classes.accordionContent,
+						control: classes.accordionControl,
+						chevron: classes.chevron,
+					}}
+				>
+					<Accordion.Item value='ResourcesType'>
+						<Accordion.Control
+							onClick={() => {
+								toggle();
+							}}
+						>
+							<Title size={24} order={4}>
+								Content Type
+							</Title>
+						</Accordion.Control>
+						<Accordion.Panel>
+							<Box className={classes.sectionNavLinksContainer}>
+								{values.map((value, index, array) => (
+									<React.Fragment key={value}>
+										<Checkbox
+											classNames={{
+												root: classes.checkboxRoot,
+												label: checkboxState[value] ? classes.checkboxLabelChecked : classes.checkboxLabel,
+											}}
+											onChange={e => {
+												const newState = {
+													...checkboxState,
+													[value]: (e.target as HTMLInputElement).checked,
+												};
 
-											const trueKeys = Object.entries(newState)
-												.filter(([key, value]) => value === true)
-												.map(([key]) => key);
+												const trueKeys = Object.entries(newState)
+													.filter(([key, value]) => value)
+													.map(([key]) => key);
 
-											const path = generateSearchParams(trueKeys, searchText);
+												const path = generateSearchParams(trueKeys, searchText);
 
-											setCheckboxState({...newState});
+												setCheckboxState({...newState});
 
-											void navigate('/resources/search/' + path);
-										}}
-										label={value}
-										checked={checkboxState[value] as boolean}
-									/>
+												void navigate('/resources/search/' + path);
+											}}
+											label={value}
+											checked={Boolean(checkboxState[value])}
+										/>
 
-									{index !== array.length - 1 && <Divider my={0} />}
-								</React.Fragment>
-							))}
-						</Box>
-					</Accordion.Panel>
-				</Accordion.Item>
-			</Accordion>
+										{index !== array.length - 1 && <Divider my={0} />}
+									</React.Fragment>
+								))}
+							</Box>
+						</Accordion.Panel>
+					</Accordion.Item>
+				</Accordion>
+			)}
 		</Card>
 	);
 };

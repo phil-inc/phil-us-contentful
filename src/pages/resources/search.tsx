@@ -6,6 +6,7 @@ import {
 	ActionIcon,
 	Badge,
 	Box,
+	Divider,
 	Grid,
 	Image,
 	Pagination,
@@ -18,7 +19,7 @@ import Expanded from 'components/common/Expanded/Expanded';
 import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
 import {graphql, navigate} from 'gatsby';
 import {Banner} from 'components/common/Banner/Banner';
-import {useToggle, useViewportSize} from '@mantine/hooks';
+import {useViewportSize} from '@mantine/hooks';
 import {type TResource} from 'types/resource';
 import * as JsSearch from 'js-search';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
@@ -27,6 +28,7 @@ import {pagination} from 'utils/pagination';
 import Filter from 'components/common/Filter/Filter';
 import {crossIcon} from 'assets/images';
 import {generateSearchParams} from 'utils/search';
+import LoadingIndicator from 'components/common/LoadingIndicator/LoadingIndicator';
 
 type HelmetProps = {
 	data: {
@@ -58,20 +60,7 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 	);
 };
 
-const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
-	container: {
-		margin: 0,
-		padding: '0px 100px',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '42px 100px',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: '42px 16px',
-		},
-	},
-
+const useStyles = createStyles(theme => ({
 	cardContainer: {
 		padding: 70,
 		background: '#F4F4F4',
@@ -90,72 +79,6 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		},
 	},
 
-	navigationList: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-	},
-
-	featuredItemsList: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	featuredItemsNavLinksContainer: {
-		'> div': {
-			padding: '16px 0',
-
-			'&[role|="separator"]': {
-				padding: 0,
-			},
-		},
-
-		'div:first-of-type': {
-			paddingTop: 0,
-		},
-
-		'> div:last-child': {
-			paddingBottom: 0,
-		},
-	},
-
-	featuredItemsListMobile: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-		display: 'none',
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'block',
-		},
-	},
-
-	navLabel: {
-		fontSize: 16,
-		fontWeight: 700,
-	},
-
-	featuredItemSectionLabel: {
-		fontSize: 12,
-		fontWeight: 700,
-		color: '#9a9a9a',
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 16,
-		},
-	},
-
-	navLinkRoot: {
-		backgroundColor: 'transparent',
-
-		':hover': {
-			backgroundColor: 'transparent !important',
-			color: '#00827E',
-		},
-	},
-
 	paginationItem: {
 		height: 40,
 		width: 40,
@@ -163,11 +86,6 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		'&[data-active]': {
 			background: '#0A0A0A',
 		},
-	},
-
-	textDecorationNone: {
-		textDecoration: 'none',
-		color: 'white',
 	},
 
 	heading1: {
@@ -178,54 +96,11 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		},
 	},
 
-	sectionNavLinksContainer: {
-		'a:first-of-type > button': {
-			paddingTop: 0,
-		},
-
-		'> a:last-child > button': {
-			paddingBottom: 0,
-		},
-	},
-
-	accordionContent: {
-		padding: 0,
-	},
-
-	accordionControl: {
-		padding: 0,
-		borderBottom: '0 !important',
-		backgroundColor: 'transparent !important',
-		cursor: _params.isMobileView ? 'pointer' : 'default !important',
-		marginBottom: 0,
-
-		color: '#0A0A0A !important',
-
-		'&[data-active]': {
-			marginBottom: 24,
-		},
-
-		':disabled': {
-			opacity: 1,
-		},
-	},
-
-	chevron: {
-		svg: {
-			height: 24,
-			width: 24,
-		},
-	},
-
 	searchTermDisplay: {
 		fontFamily: 'Lato, sans-serif',
 		fontSize: 18,
 		color: '#0A0A0A',
 		lineHeight: '27px',
-	},
-
-	searchInput: {
-		borderRadius: 0,
 	},
 
 	badgeRoot: {
@@ -253,6 +128,23 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		fontSize: 14,
 		cursor: 'pointer',
 	},
+
+	divider: {
+		marginTop: 22,
+		marginBottom: 47,
+
+		[theme.fn.smallerThan('md')]: {
+			margin: '40px auto',
+		},
+	},
+
+	emptyStateContainer: {
+		marginBottom: 175,
+
+		[theme.fn.smallerThan('md')]: {
+			marginBottom: 42,
+		},
+	},
 }));
 
 type ResourcesSearchProps = {
@@ -272,114 +164,6 @@ string,
 }
 >;
 
-const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
-	const {width} = useViewportSize();
-	const theme = useMantineTheme();
-	const isMobileView = theme.breakpoints.md > width;
-	const {classes} = useStyles({isMobileView});
-
-	const resources = data.allContentfulResource.nodes;
-	const {sections} = data.contentfulPage;
-
-	const params = new URLSearchParams(location.search);
-	const searchQueryParam = params.get('q');
-	const filterQueryParam = params.getAll('filter');
-
-	const [{search, searchResults, isLoading, isError, searchQuery}, setState] = React.useState({
-		search: new JsSearch.Search('id'),
-		searchResults: [] as TResource[],
-		isLoading: false,
-		isError: false,
-		searchQuery: searchQueryParam ?? '',
-	});
-
-	const banners = data.contentfulPage.sections.filter(section => {
-		if (section?.sectionType === 'Referenced Section') {
-			if ((section as IReferencedSection).referenceType === ReferenceTypeEnum.Banner) {
-				return true;
-			}
-		}
-
-		return false;
-	}) as IReferencedSection[];
-
-	const filteredSection = (sections as IReferencedSection[])
-		.map(section => ({
-			...section,
-			references: section.references.filter(ref => searchResults.map(sr => sr.id).includes(ref.id)),
-		}))
-		.filter(section => section.references.length);
-
-	const availableSectionHeaders = filteredSection.map(section => section.header);
-
-	// Create search index
-	React.useEffect(() => {
-		search.indexStrategy = new JsSearch.AllSubstringsIndexStrategy();
-
-		search.sanitizer = new JsSearch.LowerCaseSanitizer();
-
-		search.addIndex('heading');
-
-		search.addDocuments(resources);
-	}, []);
-
-	// Check for new search
-	React.useEffect(() => {
-		const results = search.search(searchQuery) as TResource[];
-
-		setState(p => ({...p, searchResults: results, searchQuery: searchQueryParam ?? ''}));
-	}, [searchQueryParam, searchQuery]);
-
-	return (
-		<Layout>
-			<Expanded id='ResourcesContainer' py={0}>
-				{/* PAGE HEADER */}
-				<Box>
-					<Title className={classes.heading1} order={1}>
-						Resources
-					</Title>
-				</Box>
-
-				<Grid mt={36} mb={20}>
-					{/* Filter Column */}
-					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={3}>
-						<Filter
-							values={availableSectionHeaders}
-							searchQueryParam={searchQueryParam ?? ''}
-							filterQueryParam={filterQueryParam}
-						/>
-					</Grid.Col>
-
-					{/* Sections Column */}
-					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
-						<SearchBody
-							searchQueryParam={searchQueryParam!}
-							searchResults={searchResults}
-							filterQueryParam={filterQueryParam}
-							sections={filteredSection}
-						/>
-					</Grid.Col>
-				</Grid>
-			</Expanded>
-			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={120} px={106}>
-				<Grid>
-					{banners.map(bannerSection =>
-						bannerSection.references.map((resource, index) => (
-							<Grid.Col
-								key={resource.id + index.toString()}
-								sm={12}
-								lg={bannerSection.references?.length > 1 ? 6 : 12}
-							>
-								<Banner resource={resource} />
-							</Grid.Col>
-						)),
-					)}
-				</Grid>
-			</Expanded>
-		</Layout>
-	);
-};
-
 type SearchBodyType = {
 	searchResults: TResource[];
 	sections: IReferencedSection[];
@@ -387,8 +171,27 @@ type SearchBodyType = {
 	filterQueryParam: string[];
 };
 
-const SearchBody: React.FC<SearchBodyType> = ({sections, searchQueryParam, filterQueryParam}) => {
-	const {classes} = useStyles({isMobileView: false});
+const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryParam}) => {
+	const {classes} = useStyles();
+
+	return (
+		<Box className={classes.emptyStateContainer}>
+			<Text size={18} color='#0A0A0A'>
+				0 items found for "{searchQueryParam}"
+			</Text>
+			<Divider mt={22} mb={47} />
+			<Title color='#0A0A0A' order={2} size={28} mb={8}>
+				Search No Result
+			</Title>
+			<Text size={18} color='#0A0A0A'>
+				We're sorry. We cannot find any matches for your search term.
+			</Text>
+		</Box>
+	);
+};
+
+const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQueryParam, filterQueryParam}) => {
+	const {classes} = useStyles();
 	const [paginationState, setPaginationState] = React.useState<PaginationState>({});
 	const availableSectionHeaders = sections.map(section => section.header);
 	const badgeRef = React.useRef(null);
@@ -424,7 +227,6 @@ const SearchBody: React.FC<SearchBodyType> = ({sections, searchQueryParam, filte
 				void navigate('/resources/search/' + path);
 			}}
 			size={10}
-			color='blue'
 			radius='xl'
 			variant='transparent'
 		>
@@ -432,7 +234,7 @@ const SearchBody: React.FC<SearchBodyType> = ({sections, searchQueryParam, filte
 		</ActionIcon>
 	);
 
-	return (
+	return searchResults.length ? (
 		<>
 			<Box mb={badgeRef.current ? 36 : 26}>
 				<Text mb={4} className={classes.searchTermDisplay}>
@@ -448,6 +250,7 @@ const SearchBody: React.FC<SearchBodyType> = ({sections, searchQueryParam, filte
 						<Grid.Col md={'content'}>
 							{badges.map((badge, index, original) => (
 								<Badge
+									key={badge + index.toString()}
 									mr={index + 1 >= original.length ? 0 : 12}
 									classNames={{
 										inner: classes.badgeInner,
@@ -544,6 +347,121 @@ const SearchBody: React.FC<SearchBodyType> = ({sections, searchQueryParam, filte
 						</Box>
 					))}
 		</>
+	) : (
+		<EmptySearchState searchQueryParam={searchQueryParam} />
+	);
+};
+
+const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
+	const {width} = useViewportSize();
+	const theme = useMantineTheme();
+	const isMobileView = theme.breakpoints.md > width;
+	const {classes} = useStyles();
+
+	const resources = data.allContentfulResource.nodes;
+	const {sections} = data.contentfulPage;
+
+	const params = new URLSearchParams(location.search);
+	const searchQueryParam = params.get('q');
+	const filterQueryParam = params.getAll('filter');
+
+	const [{search, searchResults, isLoading, searchQuery}, setState] = React.useState({
+		search: new JsSearch.Search('id'),
+		searchResults: [] as TResource[],
+		isLoading: false,
+		searchQuery: searchQueryParam ?? '',
+	});
+
+	const banners = data.contentfulPage.sections.filter(section => {
+		if (section?.sectionType === 'Referenced Section') {
+			if ((section as IReferencedSection).referenceType === ReferenceTypeEnum.Banner) {
+				return true;
+			}
+		}
+
+		return false;
+	}) as IReferencedSection[];
+
+	const filteredSection = (sections as IReferencedSection[])
+		.map(section => ({
+			...section,
+			references: section.references.filter(ref => searchResults.map(sr => sr.id).includes(ref.id)),
+		}))
+		.filter(section => section.references.length);
+
+	const availableSectionHeaders = filteredSection.map(section => section.header);
+
+	// Create search index
+	React.useEffect(() => {
+		search.indexStrategy = new JsSearch.AllSubstringsIndexStrategy();
+
+		search.sanitizer = new JsSearch.LowerCaseSanitizer();
+
+		search.addIndex('heading');
+
+		search.addDocuments(resources);
+	}, []);
+
+	// Check for new search
+	React.useEffect(() => {
+		setState(p => ({...p, isLoading: true}));
+
+		const results = search.search(searchQuery) as TResource[];
+
+		setState(p => ({...p, searchResults: results, searchQuery: searchQueryParam ?? '', isLoading: false}));
+	}, [searchQueryParam, searchQuery]);
+
+	return (
+		<Layout>
+			<Expanded id='ResourcesContainer' py={0}>
+				{/* PAGE HEADER */}
+				<Box>
+					<Title className={classes.heading1} order={1}>
+						Resources
+					</Title>
+				</Box>
+
+				<Grid mt={36} mb={20}>
+					{/* Filter Column */}
+					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={3}>
+						<Filter
+							values={availableSectionHeaders}
+							searchQueryParam={searchQueryParam ?? ''}
+							filterQueryParam={filterQueryParam}
+						/>
+					</Grid.Col>
+
+					{/* Sections Column */}
+					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
+						{isLoading ? (
+							<LoadingIndicator size={'lg'} />
+						) : (
+							<SearchBody
+								searchQueryParam={searchQueryParam!}
+								searchResults={searchResults}
+								filterQueryParam={filterQueryParam}
+								sections={filteredSection}
+							/>
+						)}
+					</Grid.Col>
+				</Grid>
+			</Expanded>
+			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={120} px={106}>
+				<Grid>
+					{banners.map(bannerSection =>
+						bannerSection.references.map((resource, index) => (
+							<Grid.Col
+								key={resource.id + index.toString()}
+								sm={12}
+								lg={bannerSection.references?.length > 1 ? 6 : 12}
+							>
+								<Banner resource={resource} />
+							</Grid.Col>
+						)),
+					)}
+				</Grid>
+			</Expanded>
+		</Layout>
 	);
 };
 

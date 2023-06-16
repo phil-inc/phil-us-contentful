@@ -29,6 +29,7 @@ import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
 import {HOME, RESOURCES} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
+import {generateSearchParams} from 'utils/search';
 
 type HelmetProps = {
 	data: {
@@ -299,8 +300,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 						<Grid.Col sm={12} md={12} lg={2.24}>
 							<SearchBox
+								value=''
 								onSubmitCallback={vs => {
-									console.log(vs);
+									const path = generateSearchParams([], vs.searchText);
+
+									void navigate('/resources/search/' + path);
 								}}
 								onChange={onSearchTextChange}
 								placeholder='Search...'
