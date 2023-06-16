@@ -7,15 +7,11 @@ import {
 	Anchor,
 	Box,
 	Card,
-	Center,
 	Divider,
 	Grid,
-	Group,
 	NavLink,
 	Pagination,
-	SimpleGrid,
 	Text,
-	TextInput,
 	Title,
 	createStyles,
 	useMantineTheme,
@@ -27,9 +23,9 @@ import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
-import {HOME, RESOURCES} from 'constants/routes';
+import {HOME, RESOURCES_PAGE} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
-import {generateSearchParams} from 'utils/search';
+import {searchSubmitCallback} from 'utils/search';
 
 type HelmetProps = {
 	data: {
@@ -279,12 +275,6 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 		}
 	}, [isMobileView]);
 
-	const [searchText, setSearchText] = React.useState('');
-
-	const onSearchTextChange = (searchText: string) => {
-		setSearchText(searchText);
-	};
-
 	return (
 		<Layout>
 			<Expanded id={currentSection.id} py={0}>
@@ -301,11 +291,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							<SearchBox
 								value=''
 								onSubmitCallback={vs => {
-									const path = generateSearchParams([], vs.searchText);
-
-									void navigate('/resources/search/' + path);
+									searchSubmitCallback(vs.searchText, []);
 								}}
-								onChange={onSearchTextChange}
 								placeholder='Search...'
 							/>
 						</Grid.Col>
@@ -341,7 +328,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 											{data.contentfulPage.sections
 												.filter(section => !section.isHidden && Boolean(section.header))
 												.map((section, index, array) => {
-													const path = RESOURCES + slugify(section.header, {lower: true, strict: true});
+													const path
+														= RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
 
 													return (
 														<React.Fragment key={path}>
@@ -377,7 +365,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									{data.contentfulReferencedSection.featuredItems
 										.filter(resource => resource.generateStaticPage)
 										.map((resource, index, array) => {
-											const path = HOME + slugify(resource.heading, {lower: true, strict: true});
+											const path = '/' + slugify(resource.heading, {lower: true, strict: true});
 
 											const sectionLabelText = (
 												<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
@@ -429,11 +417,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
 						{/* RESOURCES MAP */}
 						<Box className={classes.cardContainer}>
-							{/* <Box className={classes.currentSectionHeader} mb={28}>
+							<Box className={classes.currentSectionHeader} mb={28}>
 								<Title order={2} m={0} size={32}>
 									{currentSection.header}
 								</Title>
-							</Box> */}
+							</Box>
 
 							{resources?.length
 								&& resources
@@ -459,7 +447,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 								page={currentPageNumber}
 								withControls={false}
 								onChange={async pageNumber => {
-									const path = RESOURCES + slugify(currentSection.header, {lower: true, strict: true}) + '/';
+									const path
+										= RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
 
 									if (pageNumber === 1) {
 										void navigate(path);
@@ -535,7 +524,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 				<Grid>
 					{banners.map(bannerSection =>
 						bannerSection.references.map(resource => (
-							<Grid.Col sm={12} lg={bannerSection.references?.length > 1 ? 6 : 12}>
+							<Grid.Col
+								key={resource.id + resource.heading}
+								sm={12}
+								lg={bannerSection.references?.length > 1 ? 6 : 12}
+							>
 								<Banner key={resource.id} resource={resource} />
 							</Grid.Col>
 						)),

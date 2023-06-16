@@ -29,6 +29,7 @@ import Filter from 'components/common/Filter/Filter';
 import {crossIcon} from 'assets/images';
 import {generateSearchParams} from 'utils/search';
 import LoadingIndicator from 'components/common/LoadingIndicator/LoadingIndicator';
+import {RESOURCES_PAGE} from 'constants/routes';
 
 type HelmetProps = {
 	data: {
@@ -367,8 +368,13 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 	const {sections} = data.contentfulPage;
 
 	const params = new URLSearchParams(location.search);
-	const searchQueryParam = params.get('q');
-	const filterQueryParam = params.getAll('filter');
+	const searchQueryParam = params.get('q') ?? '';
+	const filterQueryParam = params.getAll('filter') ?? [];
+
+	if (!searchQueryParam.length) {
+		void navigate(RESOURCES_PAGE, {replace: true});
+		return <></>;
+	}
 
 	const [{search, searchResults, isLoading, searchQuery}, setState] = React.useState({
 		search: new JsSearch.Search('id'),
@@ -442,7 +448,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 							<LoadingIndicator size={'lg'} />
 						) : (
 							<SearchBody
-								searchQueryParam={searchQueryParam!}
+								searchQueryParam={searchQueryParam}
 								searchResults={searchResults}
 								filterQueryParam={filterQueryParam}
 								sections={filteredSection}

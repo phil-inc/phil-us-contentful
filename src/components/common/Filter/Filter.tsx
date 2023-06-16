@@ -2,7 +2,7 @@ import {Accordion, Box, Card, Checkbox, Divider, Title, createStyles, useMantine
 import {useDebouncedState, useToggle, useViewportSize} from '@mantine/hooks';
 import React from 'react';
 import SearchBox from '../SearchBox/SearchBox';
-import {generateSearchParams} from 'utils/search';
+import {generateSearchParams, searchSubmitCallback} from 'utils/search';
 import {navigate} from 'gatsby';
 
 const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
@@ -101,9 +101,8 @@ const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryPara
 						const trueKeys = Object.entries(checkboxState)
 							.filter(([key, value]) => value)
 							.map(([key]) => key);
-						const path = generateSearchParams(trueKeys, vs.searchText);
 
-						void navigate('/resources/search/' + path);
+						searchSubmitCallback(vs.searchText, trueKeys);
 					}}
 					placeholder='Search'
 					onChange={setSearchText}

@@ -1,3 +1,5 @@
+import {navigate} from 'gatsby';
+
 export const generateSearchParams = (filterOptions: string[], searchTerm: string): string => {
 	const searchParams = new URLSearchParams();
 	searchParams.set('q', searchTerm);
@@ -11,4 +13,14 @@ export const generateSearchParams = (filterOptions: string[], searchTerm: string
 	const link = `?${searchParams.toString()}`;
 
 	return link;
+};
+
+export const searchSubmitCallback = (searchText: string, filterOptions: string[]) => {
+	if (!searchText.length) {
+		return;
+	}
+
+	const path = generateSearchParams(filterOptions, searchText);
+
+	void navigate('/resources/search/' + path);
 };
