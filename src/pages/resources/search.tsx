@@ -467,18 +467,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 
 export const resourcesQuery = graphql`
 	query resourceSearchPage {
-		contentfulPage(
-			title: {eq: "Resources"}
-			referencedsection: {
-				elemMatch: {
-					references: {
-						elemMatch: {
-							heading: {eq: "Modernize the Patient Access Experience. Transform Your Pharmaceutical Brand."}
-						}
-					}
-				}
-			}
-		) {
+		contentfulPage(title: {eq: "Resources"}) {
 			id
 			title
 			displayTitle
