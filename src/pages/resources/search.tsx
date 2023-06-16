@@ -2,10 +2,21 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import {SEO} from 'layouts/SEO/SEO';
-import {Box, Grid, Pagination, Text, Title, createStyles, useMantineTheme} from '@mantine/core';
+import {
+	ActionIcon,
+	Badge,
+	Box,
+	Grid,
+	Image,
+	Pagination,
+	Text,
+	Title,
+	createStyles,
+	useMantineTheme,
+} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
-import {graphql} from 'gatsby';
+import {graphql, navigate} from 'gatsby';
 import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
 import {type TResource} from 'types/resource';
@@ -14,6 +25,8 @@ import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import {POSTS_PER_SECTION} from 'constants/section';
 import {pagination} from 'utils/pagination';
 import Filter from 'components/common/Filter/Filter';
+import {crossIcon} from 'assets/images';
+import {generateSearchParams} from 'utils/search';
 
 type HelmetProps = {
 	data: {
@@ -209,11 +222,36 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		fontSize: 18,
 		color: '#0A0A0A',
 		lineHeight: '27px',
-		marginBottom: 26,
 	},
 
 	searchInput: {
 		borderRadius: 0,
+	},
+
+	badgeRoot: {
+		borderColor: '#D7DCDC',
+		padding: 0,
+		height: 26,
+	},
+
+	badgeInner: {
+		color: '#525252',
+		fontSize: 14,
+		fontWeight: 400,
+		padding: '0.625rem 0.5rem',
+		paddingRight: 4,
+		textTransform: 'none',
+	},
+
+	badgeRightSection: {
+		marginLeft: 0,
+		paddingRight: 10,
+	},
+
+	clearAll: {
+		color: '#00827E',
+		fontSize: 14,
+		cursor: 'pointer',
 	},
 }));
 
@@ -349,10 +387,11 @@ type SearchBodyType = {
 	filterQueryParam: string[];
 };
 
-const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQueryParam, filterQueryParam}) => {
+const SearchBody: React.FC<SearchBodyType> = ({sections, searchQueryParam, filterQueryParam}) => {
 	const {classes} = useStyles({isMobileView: false});
 	const [paginationState, setPaginationState] = React.useState<PaginationState>({});
 	const availableSectionHeaders = sections.map(section => section.header);
+	const badgeRef = React.useRef(null);
 
 	// Set pagination state
 	React.useEffect(() => {
@@ -370,11 +409,75 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 		});
 	}, [sections]);
 
-	console.log({sections, filterQueryParam, availableSectionHeaders, paginationState});
+	const badges = filterQueryParam.filter(element => availableSectionHeaders.includes(element));
+
+	const RemoveButton: React.FC<{badge: string}> = ({badge}) => (
+		<ActionIcon
+			onClick={() => {
+				const badges = filterQueryParam.filter(element => availableSectionHeaders.includes(element));
+
+				const path = generateSearchParams(
+					badges.filter(b => b !== badge),
+					searchQueryParam,
+				);
+
+				void navigate('/resources/search/' + path);
+			}}
+			size={10}
+			color='blue'
+			radius='xl'
+			variant='transparent'
+		>
+			<Image src={crossIcon as string} width={9} />
+		</ActionIcon>
+	);
 
 	return (
 		<>
-			<Text className={classes.searchTermDisplay}>Showing results for "{searchQueryParam}"</Text>
+			<Box mb={badgeRef.current ? 36 : 26}>
+				<Text mb={4} className={classes.searchTermDisplay}>
+					Showing results for "{searchQueryParam}"
+				</Text>
+
+				{Boolean(badges.length) && (
+					<Grid ref={badgeRef} gutter={12}>
+						<Grid.Col md={'content'}>
+							<Text size={14}>Filtered By:</Text>
+						</Grid.Col>
+
+						<Grid.Col md={'content'}>
+							{badges.map((badge, index, original) => (
+								<Badge
+									mr={index + 1 >= original.length ? 0 : 12}
+									classNames={{
+										inner: classes.badgeInner,
+										root: classes.badgeRoot,
+										rightSection: classes.badgeRightSection,
+									}}
+									variant='outline'
+									rightSection={<RemoveButton badge={badge} />}
+								>
+									{badge}
+								</Badge>
+							))}
+						</Grid.Col>
+
+						<Grid.Col md={'content'}>
+							<Text
+								className={classes.clearAll}
+								onClick={() => {
+									const path = generateSearchParams([], searchQueryParam);
+
+									void navigate('/resources/search/' + path);
+								}}
+							>
+								Clear All
+							</Text>
+						</Grid.Col>
+					</Grid>
+				)}
+			</Box>
+
 			{/* Section Map */}
 			{Boolean(Object.keys(paginationState).length)
 				&& sections
