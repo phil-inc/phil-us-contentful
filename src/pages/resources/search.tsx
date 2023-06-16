@@ -296,7 +296,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 						return true;
 					})
 					.map((section, index) => (
-						<Box key={section.id + index.toString()} className={classes.cardContainer}>
+						<Box id={section.id} key={section.id + index.toString()} className={classes.cardContainer}>
 							{/* Section Header */}
 							<Box mb={28}>
 								<Title order={2} m={0} size={32}>
@@ -341,6 +341,11 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 												skip: pageNumber * POSTS_PER_SECTION,
 											},
 										}));
+
+										const element = document.getElementById(section.id);
+										if (element) {
+											element.scrollIntoView({behavior: 'smooth'});
+										}
 									}}
 								/>
 							)}
