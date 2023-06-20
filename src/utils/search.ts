@@ -14,13 +14,3 @@ export const generateSearchParams = (filterOptions: string[], searchTerm: string
 
 	return link;
 };
-
-export const searchSubmitCallback = (searchText: string, filterOptions: string[]) => {
-	if (!searchText.length) {
-		return;
-	}
-
-	const path = generateSearchParams(filterOptions, searchText);
-
-	void navigate('/resources/search/' + path);
-};

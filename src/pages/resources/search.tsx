@@ -31,6 +31,16 @@ import {generateSearchParams} from 'utils/search';
 import LoadingIndicator from 'components/common/LoadingIndicator/LoadingIndicator';
 import {RESOURCES_PAGE} from 'constants/routes';
 
+export const searchSubmitCallback = (searchText: string, filterOptions: string[]) => {
+	if (!searchText.length) {
+		return;
+	}
+
+	const path = generateSearchParams(filterOptions, searchText);
+
+	void navigate('/resources/search/' + path);
+};
+
 type HelmetProps = {
 	data: {
 		contentfulPage: ContentfulPage;
@@ -307,7 +317,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 
 							{/* Resource Cards */}
 							{(section as unknown as IReferencedSection)?.references
-								.filter((reference, index) => {
+								.filter((_, index) => {
 									if (paginationState[section.id]) {
 										const {skip} = paginationState[section.id];
 
@@ -343,9 +353,11 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 											},
 										}));
 
-										const element = document.getElementById(section.id);
-										if (element) {
-											element.scrollIntoView({behavior: 'smooth'});
+										if (document) {
+											const element = document.getElementById(section.id);
+											if (element) {
+												element.scrollIntoView({behavior: 'smooth'});
+											}
 										}
 									}}
 								/>
@@ -364,17 +376,12 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 	const isMobileView = theme.breakpoints.md > width;
 	const {classes} = useStyles();
 
-	const resources = data.allContentfulResource.nodes;
 	const {sections} = data.contentfulPage;
+	const resources = sections.map(section => (section as IReferencedSection).references).flat();
 
 	const params = new URLSearchParams(location.search);
 	const searchQueryParam = params.get('q') ?? '';
 	const filterQueryParam = params.getAll('filter') ?? [];
-
-	if (!searchQueryParam.length) {
-		void navigate(RESOURCES_PAGE, {replace: true});
-		return <></>;
-	}
 
 	const [{search, searchResults, isLoading, searchQuery}, setState] = React.useState({
 		search: new JsSearch.Search('id'),
@@ -404,6 +411,11 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 
 	// Create search index
 	React.useEffect(() => {
+		if (!searchQueryParam.length) {
+			void navigate(RESOURCES_PAGE);
+			return;
+		}
+
 		search.indexStrategy = new JsSearch.AllSubstringsIndexStrategy();
 
 		search.sanitizer = new JsSearch.LowerCaseSanitizer();
@@ -667,27 +679,6 @@ export const resourcesQuery = graphql`
 					isHidden
 					sectionType
 				}
-			}
-		}
-
-		allContentfulResource(
-			filter: {
-				node_locale: {eq: "en-US"}
-				heading: {nin: ["Dummy Resource", "Dummy Resource | Referenced section"]}
-				generateStaticPage: {eq: true}
-				noindex: {ne: true}
-			}
-		) {
-			nodes {
-				slug
-				heading
-				id
-				description {
-					id
-					description
-				}
-				metaDescription
-				subheading
 			}
 		}
 	}

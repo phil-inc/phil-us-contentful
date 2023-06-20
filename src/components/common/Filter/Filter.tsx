@@ -2,8 +2,9 @@ import {Accordion, Box, Card, Checkbox, Divider, Title, createStyles, useMantine
 import {useDebouncedState, useToggle, useViewportSize} from '@mantine/hooks';
 import React from 'react';
 import SearchBox from '../SearchBox/SearchBox';
-import {generateSearchParams, searchSubmitCallback} from 'utils/search';
+import {generateSearchParams} from 'utils/search';
 import {navigate} from 'gatsby';
+import {searchSubmitCallback} from 'pages/resources/search';
 
 const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 	navigationList: {

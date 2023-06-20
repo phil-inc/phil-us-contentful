@@ -25,7 +25,7 @@ import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
 import {HOME, RESOURCES_PAGE} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
-import {searchSubmitCallback} from 'utils/search';
+import {searchSubmitCallback} from 'pages/resources/search';
 
 type HelmetProps = {
 	data: {
@@ -283,7 +283,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					<Grid align='center'>
 						<Grid.Col sm={12} md={12} lg={9.76}>
 							<Title className={classes.heading1} order={1}>
-								Resources{!isMobileView && `/${currentSection.header}`}
+								Resources/{isMobileView && <br />}
+								{currentSection.header}
 							</Title>
 						</Grid.Col>
 
