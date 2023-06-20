@@ -307,7 +307,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 						return true;
 					})
 					.map((section, index) => (
-						<Box id={section.id} key={section.id + index.toString()} className={classes.cardContainer}>
+						<Box key={section.id + index.toString()} id={section.id} className={classes.cardContainer}>
 							{/* Section Header */}
 							<Box mb={28}>
 								<Title order={2} m={0} size={32}>
@@ -401,11 +401,11 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 	}) as IReferencedSection[];
 
 	const filteredSection = (sections as IReferencedSection[])
+		.filter(section => Object.keys(ResourceBlocksEnum).includes(section.referenceType))
 		.map(section => ({
 			...section,
 			references: section.references.filter(ref => searchResults.map(sr => sr.id).includes(ref.id)),
 		}))
-		.filter(section => Object.keys(ResourceBlocksEnum).includes(section.header))
 		.filter(section => section.references.length);
 
 	const availableSectionHeaders = filteredSection.map(section => section.header);
