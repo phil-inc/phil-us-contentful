@@ -204,7 +204,7 @@ const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryPara
 const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQueryParam, filterQueryParam}) => {
 	const {classes} = useStyles();
 	const [paginationState, setPaginationState] = React.useState<PaginationState>({});
-	const availableSectionHeaders = sections.map(section => section.header);
+	const availableSectionHeaders = React.useMemo(() => sections.map(section => section.header), [sections]);
 	const badgeRef = React.useRef(null);
 
 	// Set pagination state
@@ -223,7 +223,10 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 		});
 	}, [sections]);
 
-	const badges = filterQueryParam.filter(element => availableSectionHeaders.includes(element));
+	const badges = React.useMemo(
+		() => filterQueryParam.filter(element => availableSectionHeaders.includes(element)),
+		[filterQueryParam, availableSectionHeaders],
+	);
 
 	const RemoveButton: React.FC<{badge: string}> = ({badge}) => (
 		<ActionIcon
@@ -377,7 +380,10 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 	const {classes} = useStyles();
 
 	const {sections} = data.contentfulPage;
-	const resources = sections.map(section => (section as IReferencedSection).references).flat();
+	const resources = React.useMemo(
+		() => sections.map(section => (section as IReferencedSection).references).flat(),
+		[],
+	);
 
 	const params = new URLSearchParams(location.search);
 	const searchQueryParam = params.get('q') ?? '';
@@ -390,25 +396,36 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 		searchQuery: searchQueryParam ?? '',
 	});
 
-	const banners = data.contentfulPage.sections.filter(section => {
-		if (section?.sectionType === 'Referenced Section') {
-			if ((section as IReferencedSection).referenceType === ReferenceTypeEnum.Banner) {
-				return true;
-			}
-		}
+	const banners = React.useMemo(
+		() =>
+			data.contentfulPage.sections.filter(section => {
+				if (section?.sectionType === 'Referenced Section') {
+					if ((section as IReferencedSection).referenceType === ReferenceTypeEnum.Banner) {
+						return true;
+					}
+				}
 
-		return false;
-	}) as IReferencedSection[];
+				return false;
+			}) as IReferencedSection[],
+		[],
+	);
 
-	const filteredSection = (sections as IReferencedSection[])
-		.filter(section => Object.keys(ResourceBlocksEnum).includes(section.referenceType))
-		.map(section => ({
-			...section,
-			references: section.references.filter(ref => searchResults.map(sr => sr.id).includes(ref.id)),
-		}))
-		.filter(section => section.references.length);
+	const filteredSection = React.useMemo(
+		() =>
+			(sections as IReferencedSection[])
+				.filter(section => Object.keys(ResourceBlocksEnum).includes(section.referenceType))
+				.map(section => ({
+					...section,
+					references: section.references.filter(ref => searchResults.map(sr => sr.id).includes(ref.id)),
+				}))
+				.filter(section => section.references.length),
+		[sections, searchResults],
+	);
 
-	const availableSectionHeaders = filteredSection.map(section => section.header);
+	const availableSectionHeaders = React.useMemo(
+		() => filteredSection.map(section => section.header),
+		[filteredSection],
+	);
 
 	// Create search index
 	React.useEffect(() => {
