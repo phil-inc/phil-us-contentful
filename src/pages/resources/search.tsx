@@ -16,7 +16,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
+import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {graphql, navigate} from 'gatsby';
 import {Banner} from 'components/common/Banner/Banner';
 import {useViewportSize} from '@mantine/hooks';
@@ -405,6 +405,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 			...section,
 			references: section.references.filter(ref => searchResults.map(sr => sr.id).includes(ref.id)),
 		}))
+		.filter(section => Object.keys(ResourceBlocksEnum).includes(section.header))
 		.filter(section => section.references.length);
 
 	const availableSectionHeaders = filteredSection.map(section => section.header);
