@@ -1,3 +1,3 @@
 export const HOME = '/';
-export const RESOURCES = '/resources/';
-export const WHITE_PAPERS = RESOURCES + 'white-papers/';
+export const RESOURCES_PAGE = '/resources/';
+export const WHITE_PAPERS = RESOURCES_PAGE + 'white-papers/';
