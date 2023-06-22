@@ -23,7 +23,9 @@ import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
-import {HOME, RESOURCES} from 'constants/routes';
+import {HOME, RESOURCES_PAGE} from 'constants/routes';
+import SearchBox from 'components/common/SearchBox/SearchBox';
+import {searchSubmitCallback} from 'pages/resources/search';
 
 type HelmetProps = {
 	data: {
@@ -220,6 +222,10 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 			display: 'block',
 		},
 	},
+
+	searchInput: {
+		borderRadius: 0,
+	},
 }));
 
 type ResourcesPageProps = {
@@ -246,7 +252,6 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	const {classes} = useStyles({isMobileView});
 
 	const currentSection = data.contentfulReferencedSection;
-
 	const resources = currentSection?.references || [];
 
 	const startIndex = (currentPageNumber - 1) * limit;
@@ -275,9 +280,24 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 			<Expanded id={currentSection.id} py={0}>
 				{/* PAGE HEADER */}
 				<Box>
-					<Title className={classes.heading1} order={1}>
-						Resources{!isMobileView && `/${currentSection.header}`}
-					</Title>
+					<Grid align='center'>
+						<Grid.Col sm={12} md={12} lg={9.76}>
+							<Title className={classes.heading1} order={1}>
+								Resources/{isMobileView && <br />}
+								{currentSection.header}
+							</Title>
+						</Grid.Col>
+
+						<Grid.Col sm={12} md={12} lg={2.24}>
+							<SearchBox
+								value=''
+								onSubmitCallback={vs => {
+									searchSubmitCallback(vs.searchText, []);
+								}}
+								placeholder='Search...'
+							/>
+						</Grid.Col>
+					</Grid>
 				</Box>
 
 				<Grid mt={36} mb={20}>
@@ -309,7 +329,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 											{data.contentfulPage.sections
 												.filter(section => !section.isHidden && Boolean(section.header))
 												.map((section, index, array) => {
-													const path = RESOURCES + slugify(section.header, {lower: true, strict: true});
+													const path
+														= RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
 
 													return (
 														<React.Fragment key={path}>
@@ -345,7 +366,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									{data.contentfulReferencedSection.featuredItems
 										.filter(resource => resource.generateStaticPage)
 										.map((resource, index, array) => {
-											const path = HOME + slugify(resource.heading, {lower: true, strict: true});
+											const path = '/' + slugify(resource.heading, {lower: true, strict: true});
 
 											const sectionLabelText = (
 												<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
@@ -427,7 +448,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 								page={currentPageNumber}
 								withControls={false}
 								onChange={async pageNumber => {
-									const path = RESOURCES + slugify(currentSection.header, {lower: true, strict: true}) + '/';
+									const path
+										= RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
 
 									if (pageNumber === 1) {
 										void navigate(path);
@@ -503,7 +525,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 				<Grid>
 					{banners.map(bannerSection =>
 						bannerSection.references.map(resource => (
-							<Grid.Col sm={12} lg={bannerSection.references?.length > 1 ? 6 : 12}>
+							<Grid.Col
+								key={resource.id + resource.heading}
+								sm={12}
+								lg={bannerSection.references?.length > 1 ? 6 : 12}
+							>
 								<Banner key={resource.id} resource={resource} />
 							</Grid.Col>
 						)),
