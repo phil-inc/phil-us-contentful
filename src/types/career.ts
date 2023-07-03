@@ -3,7 +3,7 @@ type Listing = {
 	department: string;
 	title: string;
 	url: string;
-	location: {location_str: string};
+	location: string;
 };
 
 type JobListings = {

@@ -64,11 +64,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 									<Divider variant='dashed' size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
 									{careers[job].map(listing => (
 										<Box key={listing.url} mb={theme.spacing.md}>
-											<CareerArticle
-												title={listing.title}
-												url={listing.url}
-												location={listing.location.location_str}
-											/>
+											<CareerArticle title={listing.title} url={listing.url} location={listing.location} />
 										</Box>
 									))}
 								</Box>
