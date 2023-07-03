@@ -102,6 +102,6 @@
 			  "./src/@types"
 			]
 	},
-	"include": ["./src/**/*", "./gatsby-node.ts", "./gatsby-config.ts", "./plugins/**/*"]
+	"include": ["./src/**/*", "./gatsby-node.ts", "./gatsby-config.ts", "./plugins/**/*", "./netlify/**/*"]
   }
   

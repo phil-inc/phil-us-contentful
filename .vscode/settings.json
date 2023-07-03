@@ -1,5 +1,12 @@
 {
-	"prettier.eslintIntegration": true,
-	"editor.formatOnSave": false,
-	"files.eol": "\n"
+  "prettier.eslintIntegration": true,
+  "editor.formatOnSave": false,
+  "files.eol": "\n",
+  "deno.enable": true,
+  "deno.enablePaths": [
+    "netlify/edge-functions"
+  ],
+  "deno.unstable": true,
+  "deno.importMap": ".netlify/edge-functions-import-map.json",
+  "deno.path": "/home/shailesz/.config/netlify/deno-cli/deno"
 }
