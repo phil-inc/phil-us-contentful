@@ -4,8 +4,8 @@ const ISOLVEDHIRE_FEED = "https://phil.isolvedhire.com/feeds/jobs_by_domain.xml"
 const ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:8888", "https://develop--phil-us.netlify.app", "https://stage--phil-us.netlify.app", "https://phil.us"];
 
 const getCareerListing = async (request: Request) => {
-    const origin = request.headers.get("origin");
-    // If the origin is not allowed, deny the request
+    const origin = request.headers.get("origin") || new URL(request.headers.get("referer") || "").origin;
+    // If the origin is not allowed or not the same origin, deny the request
     if (!ALLOWED_ORIGINS.includes(origin)) {
         return new Response(JSON.stringify({ error: "Not allowed" }), {
             status: 403,
