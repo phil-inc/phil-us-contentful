@@ -1,4 +1,5 @@
 import CareerSection from 'components/career/CareerSection';
+import {CAREER_LISTING_URL} from 'constants/api';
 import {Layout} from 'layouts/Layout/Layout';
 import {SEO} from 'layouts/SEO/SEO';
 import React, {useEffect, useState} from 'react';
@@ -56,13 +57,16 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({pageContext}) => {
 	const [careers, setCareers] = useState({});
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
+	const listingURL = process.env.GATSBY_CAREER_LISTING_URI ?? CAREER_LISTING_URL;
+
 	useEffect(() => {
 		(async () => {
 			try {
-				const rawResponse = await fetch('https://capi.phil.us/api/web/v1/careers');
+				const rawResponse = await fetch(listingURL);
 				if (rawResponse.status === 200) {
-					const content = (await rawResponse.json()) as Record<string, Record<string, unknown[]>>;
-					const sortedJobs = groupBy(content.data.jobs, 'department');
+					const content = (await rawResponse.json()) as Array<Record<string, string>>;
+
+					const sortedJobs = groupBy(content, 'department');
 
 					setCareers(sortedJobs);
 				}
