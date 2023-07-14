@@ -265,8 +265,6 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	const isMobileView = theme.breakpoints.md > width;
 	const {classes} = useStyles({isMobileView});
 
-	console.log(data);
-
 	const currentSection = data.contentfulReferencedSection;
 	const resources = currentSection?.references || [];
 
