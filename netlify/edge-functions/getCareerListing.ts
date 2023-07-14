@@ -1,18 +1,12 @@
 import {parse} from 'https://deno.land/x/xml@2.1.1/mod.ts';
 import type { Config } from "https://edge.netlify.com"
 
-const ISOLVEDHIRE_FEED = 'https://phil.isolvedhire.com/feeds/jobs_by_domain.xml';
-const ALLOWED_ORIGINS = [
-	'http://localhost:3000',
-	'http://localhost:8888',
-	'https://develop--phil-us.netlify.app',
-	'https://stage--phil-us.netlify.app',
-	'https://main--phil-us.netlify.app',
-	'https://phil.us',
-];
-
 const getCareerListing = async (request: Request) => {
 	let origin;
+
+  // fetch allowed origins from netlify
+  const allowedOrigins = Deno.env.get("ALLOWED_ORIGINS");
+  const uri = Deno.env.get("ISOLVEDHIRE_FEED_URI")
 
 	try {
 		origin = request.headers.get('origin') || new URL(request.headers.get('referer') || '').origin;
@@ -24,7 +18,7 @@ const getCareerListing = async (request: Request) => {
 	}
 
 	// If the origin is not allowed or not the same origin, deny the request
-	if (!ALLOWED_ORIGINS.includes(origin)) {
+	if (!allowedOrigins.includes(origin)) {
 		return new Response(JSON.stringify({error: 'Not allowed'}), {
 			status: 403,
 			headers: {
@@ -34,7 +28,7 @@ const getCareerListing = async (request: Request) => {
 	}
 
 	try {
-		const response = await fetch(ISOLVEDHIRE_FEED);
+		const response = await fetch(uri);
 
 		const text = await response.text();
 		const json = parse(text);
