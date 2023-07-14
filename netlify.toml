@@ -91,9 +91,15 @@ to = "https://phil.us/:splat"
 status = 301
 force = true
 
+[[redirects]]
+from = "/digihaler"
+to = "https://enroll.phil.us/digihaler"
+status = 301
+
 [[edge_functions]]
-function = "getCareerListing"
-path = "/api/get-career-listing"
+  cache = "manual"
+  function = "getCareerListing"
+  path = "/api/get-career-listing"
 
 # Production context: all deploys from the Production branch
 # set in your site’s Branches settings in the UI will inherit

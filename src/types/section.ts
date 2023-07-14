@@ -69,6 +69,8 @@ export type ReferenceType = keyof typeof ReferenceTypeEnum;
 
 export type IReferencedSection = {
 	id: string;
+	title: string;
+	metaDescription: string;
 	hideHeader: boolean;
 	referenceType: ReferenceType | ResourceBlocks;
 	header: string;
