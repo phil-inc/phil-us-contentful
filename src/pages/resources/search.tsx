@@ -439,6 +439,8 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 		search.sanitizer = new JsSearch.LowerCaseSanitizer();
 
 		search.addIndex('heading');
+		search.addIndex(['description', 'description']);
+		search.addIndex('metaDescription');
 
 		search.addDocuments(resources);
 	}, []);
