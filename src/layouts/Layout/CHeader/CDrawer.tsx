@@ -23,6 +23,9 @@ import {navigateToPage} from 'utils/navigateToPage';
 import {Link as ScrollToElement} from 'react-scroll';
 import HeaderContext from 'contexts/HeaderProvider';
 import {type IReferencedSection} from 'types/section';
+import {COMPANY_PAGE, PATIENTS_PAGE} from 'constants/page';
+import {getFinalIndex} from 'utils/getFinalIndex';
+import {CAREERS} from 'constants/routes';
 
 const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	burger: {
@@ -267,7 +270,9 @@ const CDrawer: React.FC = () => {
 																)}
 														</tbody>
 													</Table>
-													{page.title === 'Patients' && index === array.length - 1 && (
+
+													{/* Add Patient Login to mobile drawer under patiens accordian */}
+													{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
 														<Table mb={16}>
 															<thead>
 																<tr>
@@ -281,6 +286,23 @@ const CDrawer: React.FC = () => {
 																				Patient Log In
 																			</Text>
 																		</Anchor>
+																	</th>
+																</tr>
+															</thead>
+														</Table>
+													)}
+
+													{/* Add Careers mobile drawer under company accordian */}
+													{page.title === COMPANY_PAGE && index === getFinalIndex(page) && (
+														<Table mb={16}>
+															<thead>
+																<tr>
+																	<th style={{paddingLeft: 0, paddingRight: 0}}>
+																		<Link to={CAREERS} style={{textDecoration: 'none'}}>
+																			<Text size={16} weight={400} color={theme.colors.primary[0]}>
+																				Careers
+																			</Text>
+																		</Link>
 																	</th>
 																</tr>
 															</thead>
