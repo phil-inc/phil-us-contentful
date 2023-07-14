@@ -30,25 +30,39 @@ import {searchSubmitCallback} from 'pages/resources/search';
 type HelmetProps = {
 	data: {
 		contentfulPage: ContentfulPage;
+		contentfulReferencedSection: IReferencedSection;
 	};
 	location: {pathname: string};
 };
 
-export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) => {
+export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulReferencedSection}, location}) => {
 	const heroSection = contentfulPage.sections.find(section => section.sectionType === 'Basic Section') as ISection;
 	const heroImage = heroSection?.asset.file.url;
-	const title = contentfulPage?.displayTitle?.length ? contentfulPage.displayTitle : contentfulPage.title;
+
+	const computeTitle = () => {
+		const referencedSectionTitle = contentfulReferencedSection.title;
+		const pageTitle = contentfulPage?.displayTitle?.length ? contentfulPage.displayTitle : contentfulPage.title;
+
+		return referencedSectionTitle.trim().length ? referencedSectionTitle : pageTitle;
+	};
+
+	const computeMetaDescription = () => {
+		const referencedSectionMetaDescription = contentfulReferencedSection.metaDescription;
+		const pageMetaDescription = contentfulPage.description;
+
+		return referencedSectionMetaDescription.trim().length ? referencedSectionMetaDescription : pageMetaDescription;
+	};
 
 	return (
-		<SEO title={title}>
+		<SEO title={computeTitle()}>
 			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={title} />
-			<meta name='twitter:description' content={contentfulPage.description} />
+			<meta name='twitter:title' content={computeTitle()} />
+			<meta name='twitter:description' content={computeMetaDescription()} />
 			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={contentfulPage.description} />
-			<meta property='og:title' content={title} />
+			<meta name='description' content={computeMetaDescription()} />
+			<meta property='og:title' content={computeTitle()} />
 			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={contentfulPage.description} />
+			<meta property='og:description' content={computeMetaDescription()} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
@@ -544,6 +558,8 @@ export const resourcesQuery = graphql`
 	query getReferencedSection($id: String!) {
 		contentfulReferencedSection(id: {eq: $id}) {
 			id
+			title
+			metaDescription
 			isHidden
 			hideNavigationAnchor
 			hideHeader
@@ -965,7 +981,6 @@ export const resourcesQuery = graphql`
 						}
 					}
 				}
-
 				... on ContentfulSection {
 					id
 					header
