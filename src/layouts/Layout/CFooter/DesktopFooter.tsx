@@ -1,7 +1,7 @@
 import {Grid, Box, Divider, List, Anchor, Group, Text, createStyles} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import {HCP_PAGE, RESOURCES} from 'constants/page';
+import {COMPANY_PAGE, HCP_PAGE, PATIENTS_PAGE, RESOURCES} from 'constants/page';
 import {Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React from 'react';
@@ -12,6 +12,8 @@ import {getPathForSectionAndPage} from 'utils/links';
 import {footerBackground} from 'assets/images';
 import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import {type IReferencedSection} from 'types/section';
+import {getFinalIndex} from 'utils/getFinalIndex';
+import {CAREERS} from 'constants/routes';
 
 type TDesktopFooter = {
 	pages: ContentfulPage[];
@@ -142,10 +144,18 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 														<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
 													</Link>
 												</List.Item>
-											</List>
-											{/* Patients section mapping extra elements */}
-											{page.title === 'Patients' && index === array.length - 1 && (
-												<List listStyleType='none'>
+
+												{/* Careers on accordian on company page */}
+												{page.title === COMPANY_PAGE && index === getFinalIndex(page) && (
+													<List.Item>
+														<Link to={CAREERS} style={{textDecoration: 'none'}}>
+															<Text className={classes.footerLink}>Careers</Text>
+														</Link>
+													</List.Item>
+												)}
+
+												{/* Patients section mapping extra elements */}
+												{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
 													<List.Item>
 														<Anchor
 															href='https://my.phil.us/'
@@ -155,8 +165,8 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 															<Text className={classes.footerLink}>Patient Log In</Text>
 														</Anchor>
 													</List.Item>
-												</List>
-											)}
+												)}
+											</List>
 
 											{/* Contact section mapping extra elements */}
 											{page.title === 'Contact' && (
