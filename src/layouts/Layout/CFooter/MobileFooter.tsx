@@ -4,7 +4,8 @@ import {footerBackground} from 'assets/images';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
-import {PATIENTS_PAGE} from 'constants/page';
+import {COMPANY_PAGE, PATIENTS_PAGE} from 'constants/page';
+import {CAREERS} from 'constants/routes';
 import {Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React from 'react';
@@ -137,6 +138,15 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => {
 														>
 															<Text className={classes.footerLink}>Patient Log In</Text>
 														</Anchor>
+													</List.Item>
+												)}
+
+												{/* Careers on accordian on company page */}
+												{page.title === COMPANY_PAGE && index === getFinalIndex(page) && (
+													<List.Item>
+														<Link to={CAREERS} style={{textDecoration: 'none'}}>
+															<Text className={classes.footerLink}>Careers</Text>
+														</Link>
 													</List.Item>
 												)}
 

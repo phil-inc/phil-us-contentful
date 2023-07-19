@@ -1,5 +1,5 @@
 import {Text, Collapse, Container, List, Grid, Divider, Anchor, createStyles} from '@mantine/core';
-import {PATIENTS_PAGE} from 'constants/page';
+import {COMPANY_PAGE, PATIENTS_PAGE} from 'constants/page';
 import HeaderContext from 'contexts/HeaderProvider';
 import {Link} from 'gatsby';
 import React from 'react';
@@ -7,6 +7,8 @@ import slugify from 'slugify';
 import {getPathForSectionAndPage} from 'utils/links';
 import {navigateToPage} from 'utils/navigateToPage';
 import {type IReferencedSection} from 'types/section';
+import {getFinalIndex} from 'utils/getFinalIndex';
+import {CAREERS} from 'constants/routes';
 
 const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 	collapse: {
@@ -90,7 +92,7 @@ const CCollapse = () => {
 											<React.Fragment key={section.id + 'mapCollapsePages'}>
 												<Grid.Col
 													span={
-														[PATIENTS_PAGE].includes(page.title)
+														[PATIENTS_PAGE, COMPANY_PAGE].includes(page.title)
 															? Math.floor(100 / (array.length + 1))
 															: Math.floor(100 / array.length)
 													}
@@ -131,7 +133,8 @@ const CCollapse = () => {
 													</List.Item>
 												</Grid.Col>
 
-												{page.title === 'Patients' && index === array.length - 1 && (
+												{/* Add Patient Login Button to header nav collapse */}
+												{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
 													<Grid.Col span={Math.floor(100 / (array.length + 1))}>
 														<List.Item onClick={close}>
 															<Text className={classes.listHeading}>
@@ -143,6 +146,24 @@ const CCollapse = () => {
 																>
 																	Patient Log In
 																</Anchor>
+															</Text>
+															<Divider />
+														</List.Item>
+													</Grid.Col>
+												)}
+
+												{/* Add Careers Button to header nav collapse under company */}
+												{page.title === COMPANY_PAGE && index === getFinalIndex(page) && (
+													<Grid.Col span={Math.floor(100 / (array.length + 1))}>
+														<List.Item onClick={close}>
+															<Text className={classes.listHeading}>
+																<Link
+																	to={CAREERS}
+																	className={classes.textDecorationNone}
+																	style={{textDecoration: 'none'}}
+																>
+																	Careers
+																</Link>
 															</Text>
 															<Divider />
 														</List.Item>
