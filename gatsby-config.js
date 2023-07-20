@@ -22,6 +22,7 @@ module.exports = {
 		siteUrl: `https://phil.us`,
 	},
 	plugins: [
+		`gatsby-plugin-netlify`,
 		'gatsby-plugin-mantine',
 		`gatsby-plugin-image`,
 		`gatsby-transformer-sharp`,
