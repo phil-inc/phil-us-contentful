@@ -39,6 +39,7 @@
 		"gatsby-plugin-hubspot": "^2.0.0",
 		"gatsby-plugin-image": "^3.8.0",
 		"gatsby-plugin-manifest": "^5.7.0",
+		"gatsby-plugin-netlify": "^5.1.0",
 		"gatsby-plugin-robots-txt": "^1.8.0",
 		"gatsby-plugin-sass": "^5.23.0",
 		"gatsby-plugin-sharp": "^5.8.0",
