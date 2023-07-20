@@ -584,12 +584,14 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 	createRedirect({
 		fromPath: '/resources/',
 		toPath: '/resources/white-papers/',
+		isPermanent: true,
 		redirectInBrowser: true,
 	})
 
 	createRedirect({
 		fromPath: '/resources',
 		toPath: '/resources/white-papers/',
+		isPermanent: true,
 		redirectInBrowser: true,
 	})
 };
