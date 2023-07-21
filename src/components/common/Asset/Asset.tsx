@@ -1,15 +1,16 @@
-import {AspectRatio, Box, Center, createStyles} from '@mantine/core';
-import classNames from 'classnames';
-import {GatsbyImage, getImage, type IGatsbyImageData} from 'gatsby-plugin-image';
+import {AspectRatio} from '@mantine/core';
+import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import React from 'react';
 import ReactPlayer from 'react-player';
 import type {TAsset} from 'types/asset';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import {isVideoContent} from 'utils/isVideoContent';
+import PDFViewer from '../PDFViewer/PDFViewer';
 
 type AssetProps = {
 	asset: TAsset;
 	youtubeVideoURL?: string;
+	width?: number;
 };
 
 /**
@@ -17,12 +18,11 @@ type AssetProps = {
  * @param param Asset prop
  * @returns Image/Video asset handler.
  */
-const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
+const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL, width}) => {
 	const [playerCompnnent, setPlayerComponent] = React.useState(<></>);
 
 	React.useEffect(() => {
 		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
-
 		const player = (
 			<ReactPlayer
 				url={youtubeVideoURL}
@@ -45,10 +45,12 @@ const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 		setPlayerComponent(player);
 	}, []);
 
+	// Handle youtube embed
 	if (youtubeVideoURL?.length) {
 		return <AspectRatio ratio={16 / 9}>{playerCompnnent}</AspectRatio>;
 	}
 
+	// Handle embeded video content
 	if (isVideoContent(asset.file.contentType)) {
 		const {url} = asset.file;
 
@@ -64,6 +66,11 @@ const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 	// Handle SVG images
 	if (asset.file.contentType === 'image/svg+xml') {
 		return <img src={asset.file.url} alt={altText} />;
+	}
+
+	// Handle PDF content
+	if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
+		return <PDFViewer url={asset.file.url} width={width} />;
 	}
 
 	const pathToImage = getImage(asset);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, AspectRatio} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -13,7 +13,7 @@ import Expanded from 'components/common/Expanded/Expanded';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
-import {isVideoContent} from 'utils/isVideoContent';
+import {isPDFContent, isVideoContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
@@ -129,6 +129,8 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const [isMounted, setIsMounted] = React.useState(false);
 	const [origin, setOrigin] = React.useState('https://phil.us');
 
+	const ref = useRef(null);
+
 	React.useEffect(() => {
 		setIsMounted(true);
 
@@ -198,13 +200,19 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 				return null; // Return null during SSR
 			},
 
-			[BLOCKS.EMBEDDED_ASSET](node) {
+			[BLOCKS.EMBEDDED_ASSET](node, children) {
 				return (
 					<Box
 						className={classes.embededAsset}
-						sx={{maxWidth: isVideoContent(node.data.target.file.contentType as string) ? undefined : 420}}
+						sx={{
+							maxWidth: isVideoContent(node.data.target.file.contentType as string)
+								? undefined
+								: isPDFContent(node.data.target.file.contentType as string)
+									? undefined
+									: 420,
+						}}
 					>
-						<Asset asset={node.data.target as TAsset} />
+						<Asset asset={node.data.target as TAsset} width={ref?.current?.clientWidth as number} />
 					</Box>
 				);
 			},
@@ -363,11 +371,13 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const bannersToDisplay = hasBanners ? banners! : (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
+	console.log({ref}, ref?.current?.clientWidth);
+
 	return (
 		<Layout>
 			<Container size='xl' className={classes.inner}>
 				<Grid gutter='xl' align='center' pb={52} pt={0}>
-					<Grid.Col lg={12} md={12} sm={12}>
+					<Grid.Col ref={ref} lg={12} md={12} sm={12}>
 						<Title order={1} mb={36}>
 							{heading}
 						</Title>

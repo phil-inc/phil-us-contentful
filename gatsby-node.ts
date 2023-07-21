@@ -1,6 +1,6 @@
 import slugify from 'slugify';
 import path from 'path';
-import type {Actions, GatsbyNode, NodePluginArgs} from 'gatsby';
+import type {Actions, GatsbyNode} from 'gatsby';
 
 import {POSTS_PER_SECTION} from './src/constants/section';
 import {pagination} from './src/utils/pagination';
@@ -13,6 +13,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		errors?: any;
 		data?: TData | undefined;
 	}>;
+
+	
 
 	const careerTemplate = path.resolve(`./src/templates/career.tsx`);
 	const pageTemplate = path.resolve(`./src/templates/page.tsx`);
@@ -578,4 +580,31 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 
 	await generateMainPages({actions, graphql});
 	await generateStaticPages({actions, graphql});
+};
+
+export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({actions, loaders, stage}) => {
+	if (stage === "build-html" || stage === "develop-html") {
+		actions.setWebpackConfig({
+		  module: {
+			rules: [
+				{
+				  test: /react-pdf/,
+				  use: loaders.null()
+				},
+				{
+				  test: /pdfjs-dist/,
+				  use: loaders.null()
+				},
+				{
+				  test: /safer-buffer/,
+				  use: loaders.null()
+				},
+				{
+					test: /canvas/,
+					use: loaders.null()
+				  }
+			  ]
+		  },
+		})
+	  }
 };
