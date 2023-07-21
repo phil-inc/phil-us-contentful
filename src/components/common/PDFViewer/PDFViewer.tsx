@@ -1,7 +1,7 @@
 // Import necessary dependencies
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, forwardRef} from 'react';
 import {Document, Page} from 'react-pdf';
-import {AspectRatio, Box, Button, Container, Group, Text, createStyles} from '@mantine/core';
+import {Anchor, AspectRatio, Box, Button, Container, Group, Text, createStyles} from '@mantine/core';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 
 // Define styles for the PDF viewer
@@ -32,12 +32,10 @@ type PDFViewerProps = {
 };
 
 // PDFViewer component
-const PDFViewer: React.FC<PDFViewerProps> = ({url, width}) => {
+const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref) => {
 	// Define the state variables for the component
 	const [numPages, setNumPages] = useState<number>(0);
 	const [pageNumber, setPageNumber] = useState(1);
-
-	const ref = useRef(null);
 
 	const height = ref?.current?.clientHeight as number;
 	const {classes} = useStyles({pageContainerHeight: height ?? 500});
@@ -62,10 +60,8 @@ const PDFViewer: React.FC<PDFViewerProps> = ({url, width}) => {
 		changePage(1);
 	};
 
-	console.log(ref);
-
 	return (
-		<div>
+		<div ref={ref}>
 			<Document
 				className={classes.pdfDocument}
 				file={url}
@@ -80,7 +76,6 @@ const PDFViewer: React.FC<PDFViewerProps> = ({url, width}) => {
 				}}
 			>
 				<Page
-					canvasRef={ref}
 					width={width}
 					loading={
 						<Container className={classes.pageLoadingContainer}>
@@ -95,7 +90,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({url, width}) => {
 					renderForms={false}
 				/>
 			</Document>
-			<Group position='center' align='center' mt={16}>
+			<Group position='center' align='center' mt={16} spacing='lg'>
 				<Button type='button' disabled={pageNumber <= 1} onClick={previousPage}>
 					Previous
 				</Button>
@@ -106,8 +101,13 @@ const PDFViewer: React.FC<PDFViewerProps> = ({url, width}) => {
 					Next
 				</Button>
 			</Group>
+			<Group position='center' align='center' mt={16} ml={24}>
+				<Anchor variant='text' type='button' href={url} target='_blank'>
+					<Button>Download this file</Button>
+				</Anchor>
+			</Group>
 		</div>
 	);
-};
+});
 
 export default PDFViewer;

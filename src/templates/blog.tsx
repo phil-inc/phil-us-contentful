@@ -128,7 +128,9 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const [isMounted, setIsMounted] = React.useState(false);
 	const [origin, setOrigin] = React.useState('https://phil.us');
+	const [hide, setHide] = React.useState(false);
 
+	const canvasRef = useRef(null);
 	const ref = useRef(null);
 
 	React.useEffect(() => {
@@ -137,6 +139,36 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
 		setOrigin(origin);
 	}, []);
+
+	React.useEffect(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					console.log('intersecting');
+					setHide(true);
+				} else {
+					console.log('not intersecting');
+					setHide(false);
+				}
+			},
+			{
+				root: ref.current,
+				rootMargin: '0px',
+				threshold: 1.0,
+			},
+		);
+
+		if (canvasRef.current) {
+			observer.observe(canvasRef.current);
+		}
+
+		// Clean up
+		return () => {
+			if (canvasRef.current) {
+				observer.unobserve(canvasRef.current);
+			}
+		};
+	}, []); // Empty array ensures that effect is only run on mount and unmount
 
 	// Map for future reference to match content
 	const richTextImages: Record<string, {image: any; alt: string}> = {};
@@ -212,7 +244,11 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 									: 420,
 						}}
 					>
-						<Asset asset={node.data.target as TAsset} width={ref?.current?.clientWidth as number} />
+						<Asset
+							ref={canvasRef}
+							asset={node.data.target as TAsset}
+							width={canvasRef?.current?.clientWidth as number}
+						/>
 					</Box>
 				);
 			},
@@ -371,7 +407,9 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const bannersToDisplay = hasBanners ? banners! : (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
+	console.log({canvasRef}, canvasRef?.current?.clientWidth);
 	console.log({ref}, ref?.current?.clientWidth);
+	console.log({hide});
 
 	return (
 		<Layout>
@@ -381,8 +419,8 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 						<Title order={1} mb={36}>
 							{heading}
 						</Title>
-						{Boolean(asset) && (
-							<Container className={classes.floatingImage} size='sm'>
+						{Boolean(asset) && !hide && (
+							<Container ref={ref} className={classes.floatingImage} size='sm'>
 								<Asset asset={asset!} />
 							</Container>
 						)}
