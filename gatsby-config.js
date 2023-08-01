@@ -60,6 +60,7 @@ module.exports = {
 				spaceId: process.env.SPACE_ID,
 				accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
 				environment: process.env.CONTENTFUL_ENVIRONMENT,
+				host: process.env.CONTENTFUL_HOST
 			},
 		},
 		{
