@@ -1,6 +1,8 @@
+import React, {useState, useEffect} from 'react';
 import {Button, Text, Stack, Flex} from '@contentful/f36-components';
 import {SiNetlify} from 'react-icons/si';
-import {useState, useEffect} from 'react';
+import {useSDK} from '@contentful/react-apps-toolkit';
+import {triggerBuildHook} from '../utils/request';
 
 // Preview is the component that holds buttons for sending build hooks and opening preview links and showing build status.
 const Preview: React.FC = () => {
@@ -10,34 +12,7 @@ const Preview: React.FC = () => {
 	const [isBuildTriggered, setIsBuildTriggered] = useState<boolean>(false);
 	// State to store any error messages
 	const [error, setError] = useState<string | undefined>(undefined);
-
-	// Function to trigger the build hook
-	async function triggerBuildHook(): Promise<void> {
-		setIsBuildTriggered(true);
-		setError(undefined);
-		try {
-			const response = await fetch(`${import.meta.env.REACT_APP_NETLIFY_BUILD_HOOK as string}`, {
-				method: 'POST',
-			});
-			if (response.ok) {
-				setIsBuildTriggered(false);
-				setTimestamp(Date.now()); // Update timestamp to reload image
-			} else {
-				console.log(`Build webhook failed with status: ${response.status}`);
-				setError(`Build webhook failed with status: ${response.status}`);
-				setIsBuildTriggered(false);
-			}
-		} catch (e: unknown) {
-			if (e instanceof Error) {
-				console.log(e);
-				setError('An error occurred: ' + e.message);
-			} else {
-				setError('An unknown error occurred');
-			}
-
-			setIsBuildTriggered(false);
-		}
-	}
+	const sdk = useSDK();
 
 	// Effect to reload the image every 10 seconds
 	useEffect(() => {
@@ -55,14 +30,14 @@ const Preview: React.FC = () => {
 			<Button
 				isFullWidth
 				startIcon={<SiNetlify size={24}/>}
-				onClick={triggerBuildHook}
+				onClick={async () => triggerBuildHook(sdk, setIsBuildTriggered, setTimestamp, setError)}
 				isDisabled={isBuildTriggered}
 			>
           Build Netlify Preview
 			</Button>
 
 			<Flex alignItems='center'>
-				<img src={`https://api.netlify.com/api/v1/badges/c1066e08-87fc-4714-99df-11bd0fb48770/deploy-status?branch=preview&timestamp=${timestamp}`} />
+				<img src={'https://api.netlify.com/api/v1/badges/c1066e08-87fc-4714-99df-11bd0fb48770/deploy-status?branch=preview'} />
 			</Flex>
 
 			{error && <Text fontColor='red500'>{error}</Text>}
