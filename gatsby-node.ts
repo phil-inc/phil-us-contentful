@@ -57,7 +57,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 
 		const {data} = await graphql(`
 			query getPages {
-				allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
+				allContentfulPage(filter: {node_locale: {eq: "en-US"}, title: {ne: null}}) {
 					nodes {
 						id
 						title
@@ -579,19 +579,19 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 	await generateMainPages({actions, graphql});
 	await generateStaticPages({actions, graphql});
 
-	const {createRedirect}= actions
+	const {createRedirect} = actions;
 
 	createRedirect({
 		fromPath: '/resources/',
 		toPath: '/resources/white-papers/',
 		isPermanent: true,
 		redirectInBrowser: true,
-	})
+	});
 
 	createRedirect({
 		fromPath: '/resources',
 		toPath: '/resources/white-papers/',
 		isPermanent: true,
 		redirectInBrowser: true,
-	})
+	});
 };

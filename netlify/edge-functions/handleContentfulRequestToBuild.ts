@@ -2,7 +2,7 @@ import type {Config} from 'https://edge.netlify.com';
 import {verifyRequest} from 'https://esm.sh/@contentful/node-apps-toolkit@2.2.0';
 
 const corsHeaders = {
-	'Access-Control-Allow-Origin': Deno.env.get('ALLOWED_ORIGINS_CONTENTFUL_APP'),
+	'Access-Control-Allow-Origin': Deno.env.get('ALLOWED_ORIGINS_CONTENTFUL_APP') || '',
 	'Access-Control-Allow-Headers':
 		'x-contentful-environment-id,x-contentful-signed-headers,x-contentful-space-id,x-contentful-timestamp,x-contentful-user-id,x-contentful-signature',
 };
@@ -17,7 +17,8 @@ const hasRequiredOrigin = (origin: string): boolean => {
 	if (allowedOrigins) {
 		return corsHeaders['Access-Control-Allow-Origin'].split(',').some(o => o === origin);
 	}
-	
+
+	return false;
 };
 
 const withCors = (handler: (request: Request) => Promise<Response>) => async (request: Request) => {
@@ -35,14 +36,21 @@ const withCors = (handler: (request: Request) => Promise<Response>) => async (re
 	return response;
 };
 
-const buildPreviewTrigger = async (request: Request) => {
+const triggerNetlifyBuild = async (buildHookUrl: string) => {
+	return await fetch(buildHookUrl, {method: 'POST'});
+};
+
+const handleContentfulRequestToBuild = async (request: Request) => {
 	try {
 		const key = Deno.env.get('CONTENTFUL_SIGNING_KEY');
-
+		const webhook = Deno.env.get('PREVIEW_BUILD_WEBHOOK');
+		if (!webhook || !key) {
+			return new Response('Bad setup vars!', {status: 500});
+		}
 		const canonicalRequest = {
 			path: new URL(request.url).pathname,
 			headers: Object.fromEntries(request.headers.entries()),
-			method: request.method,
+			method: request.method as 'GET' | 'PATCH' | 'HEAD' | 'POST' | 'DELETE' | 'OPTIONS' | 'PUT',
 			body: await request.text(),
 		};
 
@@ -52,12 +60,17 @@ const buildPreviewTrigger = async (request: Request) => {
 			return new Response('Unauthorized', {status: 403});
 		}
 
-		return new Response('OK', {status: 200});
+		const res = await triggerNetlifyBuild(webhook);
+		if (res.ok) {
+			return new Response('OK', {status: 200});
+		}
+
+		return new Response(res.body, {status: res.status});
 	} catch (error) {
 		return new Response(error.message, {status: 403});
 	}
 };
 
-export default withCors(buildPreviewTrigger);
+export default withCors(handleContentfulRequestToBuild);
 
 export const config: Config = {path: '/api/contentful/apps/phil-preview-ca'};
