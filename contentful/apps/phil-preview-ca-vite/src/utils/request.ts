@@ -1,11 +1,10 @@
-import {DEV_PREVIEW_BUILD_WEBHOOK} from '../constants/api';
 import {type KnownAppSDK} from '@contentful/app-sdk';
 import {getInstanceParameter} from './sdk';
 import {BASE_URL} from '../constants/instanceMap';
 import {BUILD_HOOK} from '../constants/api';
 
 type Request = {
-	method: string;
+	method: 'GET' | 'PUT' | 'POST' | 'DELETE' | 'PATCH' | 'HEAD';
 	url: string;
 	headers: Record<string, string>;
 	body: string | undefined;
@@ -15,7 +14,7 @@ export async function signRequest(req: Request, sdk: KnownAppSDK): Promise<Reque
 	const {additionalHeaders} = await sdk.cma.appSignedRequest.create({
 		appDefinitionId: sdk.ids.app!,
 	}, {
-		method: req.method as 'GET' | 'PUT' | 'POST' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS',
+		method: req.method,
 		headers: req.headers,
 		body: req.body,
 		path: new URL(req.url).pathname,
