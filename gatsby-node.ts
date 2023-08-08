@@ -20,7 +20,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 	const pageTemplate = path.resolve(`./src/templates/page.tsx`);
 	const contactTemplate = path.resolve(`./src/templates/contact.tsx`);
 	const resourcesTemplate = path.resolve(`./src/templates/resources.tsx`);
-	const downloadableResourcesTemplate = path.resolve(`./src/templates/downloadableResource.tsx`);
+	const downloadableResourcesTemplate = path.resolve(`./src/templates/downloadable-resource.tsx`);
 	const blogTemplate = path.resolve(`./src/templates/blog.tsx`);
 	const generateMainPages = async ({actions, graphql}: {actions: Actions; graphql: GraphqlType}) => {
 		// Return page

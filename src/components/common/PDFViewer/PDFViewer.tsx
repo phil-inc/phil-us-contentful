@@ -1,11 +1,37 @@
 // Import necessary dependencies
 import React, {useRef, useState, forwardRef} from 'react';
 import {Document, Page} from 'react-pdf';
-import {Anchor, AspectRatio, Box, Button, Container, Group, Text, createStyles} from '@mantine/core';
+import {ActionIcon, Anchor, AspectRatio, Box, Button, Container, Flex, Group, Text, createStyles} from '@mantine/core';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
+import Expanded from '../Expanded/Expanded';
+import {IconArrowBack, IconChevronLeft, IconChevronRight} from '@tabler/icons';
 
 // Define styles for the PDF viewer
 const useStyles = createStyles((theme, {pageContainerHeight}: {pageContainerHeight: number}) => ({
+	container: {
+		minHeight: '64.5rem',
+		background: '#6A7979',
+		margin: '100px -100px',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		padding: '22px 20px',
+
+		[theme.fn.smallerThan('sm')]: {
+			margin: 'auto -16px',
+			minHeight: '35rem',
+		},
+	},
+	pageContainer: {
+		display: 'flex',
+		alignItems: 'center',
+		columnGap: 70,
+
+		[theme.fn.smallerThan('sm')]: {
+			// Padding: 20,
+		},
+	},
 	pdfPage: {
 		'>canvas': {
 			maxWidth: '100%',
@@ -16,12 +42,43 @@ const useStyles = createStyles((theme, {pageContainerHeight}: {pageContainerHeig
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
+		marginTop: 71.5,
+
+		[theme.fn.smallerThan('sm')]: {
+			marginTop: 0,
+		},
 	},
 	loadingContainer: {
-		height: 500,
+		height: 742,
 	},
 	pageLoadingContainer: {
 		height: pageContainerHeight,
+	},
+	actionButtons: {
+		[theme.fn.smallerThan('sm')]: {
+			display: 'none',
+		},
+	},
+
+	actionButtonsMobile: {
+		[theme.fn.largerThan('sm')]: {
+			display: 'none',
+		},
+	},
+	pageNumber: {
+		marginTop: 30,
+
+		[theme.fn.smallerThan('sm')]: {
+			marginTop: 20,
+		},
+	},
+
+	downloadButton: {
+		marginTop: 30,
+
+		[theme.fn.smallerThan('sm')]: {
+			marginTop: 20,
+		},
 	},
 }));
 
@@ -61,7 +118,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 	};
 
 	return (
-		<div ref={ref}>
+		<div className={classes.container} ref={ref}>
 			<Document
 				className={classes.pdfDocument}
 				file={url}
@@ -75,35 +132,80 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 					console.error('Error while loading document: ', error);
 				}}
 			>
-				<Page
-					width={width}
-					loading={
-						<Container className={classes.pageLoadingContainer}>
-							<LoadingIndicator size='xl' />
-						</Container>
-					}
-					className={classes.pdfPage}
-					pageNumber={pageNumber}
-					renderMode='canvas'
-					renderTextLayer={false}
-					renderAnnotationLayer={false}
-					renderForms={false}
-				/>
+				<Box className={classes.pageContainer}>
+					<ActionIcon
+						className={classes.actionButtons}
+						variant='filled'
+						color='dark'
+						size={75}
+						radius={'50%'}
+						pr={5}
+						onClick={previousPage}
+						disabled={pageNumber <= 1}
+					>
+						<IconChevronLeft size={50} />
+					</ActionIcon>
+					<Page
+						width={width}
+						loading={
+							<Container className={classes.pageLoadingContainer}>
+								<LoadingIndicator size='xl' />
+							</Container>
+						}
+						className={classes.pdfPage}
+						pageNumber={pageNumber}
+						renderMode='canvas'
+						renderTextLayer={false}
+						renderAnnotationLayer={false}
+						renderForms={false}
+					/>
+					<ActionIcon
+						className={classes.actionButtons}
+						variant='filled'
+						color='dark'
+						size={75}
+						radius={'50%'}
+						pl={5}
+						onClick={nextPage}
+						disabled={pageNumber >= numPages}
+					>
+						<IconChevronRight size={50} />
+					</ActionIcon>
+				</Box>
 			</Document>
-			<Group position='center' align='center' mt={16} spacing='lg'>
-				<Button type='button' disabled={pageNumber <= 1} onClick={previousPage}>
-					Previous
-				</Button>
-				<Text>
+
+			<Group position='center' align='center' className={classes.pageNumber} spacing='lg'>
+				<ActionIcon
+					className={classes.actionButtonsMobile}
+					variant='filled'
+					color='dark'
+					size={36}
+					radius={'50%'}
+					onClick={previousPage}
+					disabled={pageNumber <= 0}
+				>
+					<IconChevronLeft size={25} />
+				</ActionIcon>
+				<Text size={24} color='#fff'>
 					Page {pageNumber} of {numPages}
 				</Text>
-				<Button type='button' disabled={pageNumber >= numPages} onClick={nextPage}>
-					Next
-				</Button>
+				<ActionIcon
+					className={classes.actionButtonsMobile}
+					variant='filled'
+					color='dark'
+					size={36}
+					radius={'50%'}
+					onClick={nextPage}
+					disabled={pageNumber >= numPages}
+				>
+					<IconChevronRight size={25} />
+				</ActionIcon>
 			</Group>
-			<Group position='center' align='center' mt={16} ml={24}>
+			<Group position='center' align='center' className={classes.downloadButton}>
 				<Anchor variant='text' type='button' href={url} target='_blank'>
-					<Button>Download this file</Button>
+					<Button px={50} size='lg'>
+						Download PDF
+					</Button>
 				</Anchor>
 			</Group>
 		</div>
