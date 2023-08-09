@@ -6,9 +6,11 @@ import {
 	Accordion,
 	Anchor,
 	Box,
+	Button,
 	Card,
 	Divider,
 	Grid,
+	Group,
 	NavLink,
 	Pagination,
 	Text,
@@ -240,6 +242,19 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 	searchInput: {
 		borderRadius: 0,
 	},
+
+	faqContainer: {
+		padding: '16px 24px',
+		background: '#F4F4F4',
+		marginBottom: 38,
+	},
+	faqContainerButton: {
+		fontSize: 16,
+		fontWeight: 400,
+		padding: '8px 20px',
+		[theme.fn.smallerThan('sm')]: {fontSize: 10.28, padding: '10px 7px'},
+	},
+	faqContainerText: {fontSize: 20, [theme.fn.smallerThan('sm')]: {fontSize: 16}},
 }));
 
 type ResourcesPageProps = {
@@ -431,6 +446,23 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					</Grid.Col>
 					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
 						{/* RESOURCES MAP */}
+						{currentSection.referenceType === 'FAQs' && (
+							<Box className={classes.faqContainer}>
+								<Grid gutter={isMobileView ? 10 : 28} align='center'>
+									<Grid.Col sm={12} md={'content'}>
+										<Title order={4} className={classes.faqContainerText}>
+											For Patient FAQs
+										</Title>
+									</Grid.Col>
+									<Grid.Col sm={12} md={'content'}>
+										<Anchor target='_blank' href='https://philhelp.zendesk.com/hc/en-us'>
+											<Button className={classes.faqContainerButton}>View the entire FAQ</Button>
+										</Anchor>
+									</Grid.Col>
+								</Grid>
+							</Box>
+						)}
+
 						<Box className={classes.cardContainer}>
 							<Box className={classes.currentSectionHeader} mb={28}>
 								<Title order={2} m={0} size={32}>
@@ -566,109 +598,111 @@ export const resourcesQuery = graphql`
 			header
 			sectionType
 			references {
-				externalLink
-				internalLink {
-					... on ContentfulPage {
-						id
-						title
-						sys {
-							contentType {
-								sys {
-									type
-									id
-								}
-							}
-						}
-					}
-					... on ContentfulReferencedSection {
-						id
-						page {
+				... on ContentfulResource {
+					externalLink
+					internalLink {
+						... on ContentfulPage {
+							id
 							title
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
 						}
-						header
-						sys {
-							contentType {
-								sys {
-									type
-									id
+						... on ContentfulReferencedSection {
+							id
+							page {
+								title
+							}
+							header
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulSection {
+							id
+							page {
+								title
+							}
+							header
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
+						... on ContentfulResource {
+							id
+							heading
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
 								}
 							}
 						}
 					}
-					... on ContentfulSection {
-						id
-						page {
-							title
-						}
-						header
-						sys {
-							contentType {
-								sys {
-									type
-									id
-								}
-							}
-						}
-					}
-					... on ContentfulResource {
-						id
-						heading
-						sys {
-							contentType {
-								sys {
-									type
-									id
-								}
-							}
-						}
-					}
-				}
-				heading
-				subheading
-				hubspotEmbed {
-					raw
-				}
-				isHubspotEmbed
-				isInsertSnippet
-				codeSnippet {
-					codeSnippet
-				}
-				description {
-					id
-					description
-				}
-				buttonText
-				body {
-					raw
-				}
-				author {
-					id
-					name
-					authorTitle
-					bio {
+					heading
+					subheading
+					hubspotEmbed {
 						raw
 					}
-					avatar {
-						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-						title
+					isHubspotEmbed
+					isInsertSnippet
+					codeSnippet {
+						codeSnippet
+					}
+					description {
+						id
+						description
+					}
+					buttonText
+					body {
+						raw
+					}
+					author {
+						id
+						name
+						authorTitle
+						bio {
+							raw
+						}
+						avatar {
+							gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+							title
+							file {
+								contentType
+								details {
+									size
+								}
+								url
+							}
+						}
+					}
+					asset {
+						gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
+						id
 						file {
 							contentType
-							details {
-								size
-							}
 							url
 						}
 					}
-				}
-				asset {
-					gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
 					id
-					file {
-						contentType
-						url
-					}
 				}
-				id
 			}
 			referenceType
 			externalLink
@@ -811,109 +845,111 @@ export const resourcesQuery = graphql`
 					header
 					sectionType
 					references {
-						externalLink
-						internalLink {
-							... on ContentfulPage {
-								id
-								title
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulReferencedSection {
-								id
-								page {
+						... on ContentfulResource {
+							externalLink
+							internalLink {
+								... on ContentfulPage {
+									id
 									title
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
 								}
-								header
-								sys {
-									contentType {
-										sys {
-											type
-											id
+								... on ContentfulReferencedSection {
+									id
+									page {
+										title
+									}
+									header
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulSection {
+									id
+									page {
+										title
+									}
+									header
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulResource {
+									id
+									heading
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
 										}
 									}
 								}
 							}
-							... on ContentfulSection {
-								id
-								page {
-									title
-								}
-								header
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulResource {
-								id
-								heading
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-						}
-						heading
-						subheading
-						hubspotEmbed {
-							raw
-						}
-						isHubspotEmbed
-						isInsertSnippet
-						codeSnippet {
-							codeSnippet
-						}
-						description {
-							id
-							description
-						}
-						buttonText
-						body {
-							raw
-						}
-						author {
-							id
-							name
-							authorTitle
-							bio {
+							heading
+							subheading
+							hubspotEmbed {
 								raw
 							}
-							avatar {
-								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-								title
+							isHubspotEmbed
+							isInsertSnippet
+							codeSnippet {
+								codeSnippet
+							}
+							description {
+								id
+								description
+							}
+							buttonText
+							body {
+								raw
+							}
+							author {
+								id
+								name
+								authorTitle
+								bio {
+									raw
+								}
+								avatar {
+									gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+									title
+									file {
+										contentType
+										details {
+											size
+										}
+										url
+									}
+								}
+							}
+							asset {
+								gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
+								id
 								file {
 									contentType
-									details {
-										size
-									}
 									url
 								}
 							}
-						}
-						asset {
-							gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
 							id
-							file {
-								contentType
-								url
-							}
 						}
-						id
 					}
 					referenceType
 					externalLink
