@@ -56,7 +56,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		};
 
 		const {data} = await graphql(`
-			query getPages {
+		query getPages {
 				allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
 					nodes {
 						id
@@ -176,7 +176,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 								}
 								sectionType
 								references {
-									externalLink
+									...on ContentfulResource {
+                    externalLink
 									internalLink {
 										... on ContentfulPage {
 											id
@@ -279,6 +280,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 										}
 									}
 									id
+                  }
 								}
 								referenceType
 								externalLink
@@ -349,8 +351,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 						}
 					}
 				}
-			}
-		`);
+			}`);
 
 		data.allContentfulPage.nodes.forEach(page => {
 			if (page.title === 'Resources') {

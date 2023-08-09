@@ -523,109 +523,111 @@ export const resourcesQuery = graphql`
 					header
 					sectionType
 					references {
-						externalLink
-						internalLink {
-							... on ContentfulPage {
-								id
-								title
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulReferencedSection {
-								id
-								page {
+						... on ContentfulResource {
+							externalLink
+							internalLink {
+								... on ContentfulPage {
+									id
 									title
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
 								}
-								header
-								sys {
-									contentType {
-										sys {
-											type
-											id
+								... on ContentfulReferencedSection {
+									id
+									page {
+										title
+									}
+									header
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulSection {
+									id
+									page {
+										title
+									}
+									header
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulResource {
+									id
+									heading
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
 										}
 									}
 								}
 							}
-							... on ContentfulSection {
-								id
-								page {
-									title
-								}
-								header
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-							... on ContentfulResource {
-								id
-								heading
-								sys {
-									contentType {
-										sys {
-											type
-											id
-										}
-									}
-								}
-							}
-						}
-						heading
-						subheading
-						hubspotEmbed {
-							raw
-						}
-						isHubspotEmbed
-						isInsertSnippet
-						codeSnippet {
-							codeSnippet
-						}
-						description {
-							id
-							description
-						}
-						buttonText
-						body {
-							raw
-						}
-						author {
-							id
-							name
-							authorTitle
-							bio {
+							heading
+							subheading
+							hubspotEmbed {
 								raw
 							}
-							avatar {
-								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-								title
+							isHubspotEmbed
+							isInsertSnippet
+							codeSnippet {
+								codeSnippet
+							}
+							description {
+								id
+								description
+							}
+							buttonText
+							body {
+								raw
+							}
+							author {
+								id
+								name
+								authorTitle
+								bio {
+									raw
+								}
+								avatar {
+									gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+									title
+									file {
+										contentType
+										details {
+											size
+										}
+										url
+									}
+								}
+							}
+							asset {
+								gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
+								id
 								file {
 									contentType
-									details {
-										size
-									}
 									url
 								}
 							}
-						}
-						asset {
-							gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
 							id
-							file {
-								contentType
-								url
-							}
 						}
-						id
 					}
 					referenceType
 					externalLink
