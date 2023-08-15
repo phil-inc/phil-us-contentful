@@ -76,10 +76,16 @@ const useStyles = createStyles((theme, {pageContainerHeight}: {pageContainerHeig
 	downloadButton: {
 		marginTop: 30,
 
+
 		[theme.fn.smallerThan('sm')]: {
 			marginTop: 20,
 		},
 	},
+
+	buttonText: {
+		fontSize: 14,
+		fontWeight: 500,
+	}
 }));
 
 // Define the properties for the PDFViewer component
@@ -203,7 +209,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 			</Group>
 			<Group position='center' align='center' className={classes.downloadButton}>
 				<Anchor variant='text' type='button' href={url} target='_blank'>
-					<Button px={50} size='lg'>
+					<Button classes={classes.buttonText} px={21} size='md'>
 						Download PDF
 					</Button>
 				</Anchor>
