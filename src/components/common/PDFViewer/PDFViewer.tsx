@@ -215,7 +215,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 			</Group>
 			<Group position='center' align='center' className={classes.downloadButton}>
 				<Anchor variant='text' type='button' href={url} target='_blank'>
-					<Button classes={classes.buttonText} px={21} size='md'>
+					<Button className={classes.buttonText} px={21} size='md'>
 						Download PDF
 					</Button>
 				</Anchor>
