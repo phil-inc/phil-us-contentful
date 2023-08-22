@@ -55,7 +55,7 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulDownloadableResour
 
 const useStyles = createStyles(theme => ({
 	section: {
-		fontSize: 36,
+		fontSize: 24,
 
 		[theme.fn.smallerThan('sm')]: {
 			fontSize: 20,
@@ -63,7 +63,7 @@ const useStyles = createStyles(theme => ({
 	},
 
 	title: {
-		fontSize: 68,
+		fontSize: 52,
 
 		[theme.fn.smallerThan('sm')]: {
 			fontSize: 38,
@@ -73,7 +73,7 @@ const useStyles = createStyles(theme => ({
 		maxWidth: 500,
 		marginTop: 24,
 		marginBottom: 45,
-		fontSize: 24,
+		fontSize: 18,
 		[theme.fn.smallerThan('sm')]: {
 			marginTop: 20,
 			marginBottom: 20,
@@ -81,7 +81,7 @@ const useStyles = createStyles(theme => ({
 		},
 	},
 	bodyText: {
-		fontSize: 24,
+		fontSize: 18,
 
 		[theme.fn.smallerThan('sm')]: {
 			fontSize: 16,
@@ -112,6 +112,10 @@ const useStyles = createStyles(theme => ({
 			fontSize: 16,
 			fontWeight: 700,
 		},
+	},
+	buttonText: {
+		fontSize: 14,
+		fontWeight: 500,
 	},
 }));
 

@@ -85,6 +85,11 @@ const useStyles = createStyles(
 				marginTop: 20,
 			},
 		},
+
+		buttonText: {
+			fontSize: 14,
+			fontWeight: 500,
+		},
 	}),
 );
 
@@ -210,7 +215,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 			</Group>
 			<Group position='center' align='center' className={classes.downloadButton}>
 				<Anchor variant='text' type='button' href={url} target='_blank'>
-					<Button px={50} size='lg'>
+					<Button classes={classes.buttonText} px={21} size='md'>
 						Download PDF
 					</Button>
 				</Anchor>
