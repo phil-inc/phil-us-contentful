@@ -483,9 +483,16 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 							<Box className={classes.description}>
 								<Text>{data.contentfulDownloadableResource.description}</Text>
 							</Box>
-							<Button size='lg' px={50}>
-								{data.contentfulDownloadableResource.buttonText}
-							</Button>
+							<Anchor
+								variant='text'
+								type='button'
+								href={data.contentfulDownloadableResource.downloadableAsset.file.url}
+								target='_blank'
+							>
+								<Button size='lg' px={50}>
+									Download PDF
+								</Button>
+							</Anchor>
 						</Grid.Col>
 						<Grid.Col sm={12} md={5}>
 							<AspectRatio ratio={1} ref={ref}>

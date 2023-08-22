@@ -7,80 +7,86 @@ import Expanded from '../Expanded/Expanded';
 import {IconArrowBack, IconChevronLeft, IconChevronRight} from '@tabler/icons';
 
 // Define styles for the PDF viewer
-const useStyles = createStyles((theme, {pageContainerHeight}: {pageContainerHeight: number}) => ({
-	container: {
-		minHeight: '64.5rem',
-		background: '#6A7979',
-		margin: '100px -100px',
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		padding: '22px 20px',
+const useStyles = createStyles(
+	(theme, {pageContainerHeight, pageContainerWidth}: {pageContainerHeight: number; pageContainerWidth: number}) => ({
+		container: {
+			minHeight: '64.5rem',
+			background: '#6A7979',
+			margin: '100px -100px',
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			justifyContent: 'center',
+			padding: '22px 20px',
 
-		[theme.fn.smallerThan('sm')]: {
-			margin: 'auto -16px',
-			minHeight: '35rem',
+			[theme.fn.smallerThan('sm')]: {
+				margin: 'auto -16px',
+				minHeight: '35rem',
+			},
 		},
-	},
-	pageContainer: {
-		display: 'flex',
-		alignItems: 'center',
-		columnGap: 70,
+		pageContainer: {
+			display: 'flex',
+			alignItems: 'center',
+			columnGap: 70,
 
-		[theme.fn.smallerThan('sm')]: {
-			// Padding: 20,
+			[theme.fn.smallerThan('sm')]: {
+				// Padding: 20,
+			},
 		},
-	},
-	pdfPage: {
-		'>canvas': {
-			maxWidth: '100%',
-			height: 'auto !important',
+		pdfPage: {
+			'>canvas': {
+				maxWidth: '100%',
+				height: 'auto !important',
+			},
 		},
-	},
-	pdfDocument: {
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		marginTop: 71.5,
+		pdfDocument: {
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			marginTop: 71.5,
 
-		[theme.fn.smallerThan('sm')]: {
-			marginTop: 0,
+			[theme.fn.smallerThan('sm')]: {
+				marginTop: 0,
+			},
 		},
-	},
-	loadingContainer: {
-		height: 742,
-	},
-	pageLoadingContainer: {
-		height: pageContainerHeight,
-	},
-	actionButtons: {
-		[theme.fn.smallerThan('sm')]: {
-			display: 'none',
+		loadingContainer: {
+			height: 742,
+			width: '100%',
+			maxWidth: 595,
 		},
-	},
+		pageLoadingContainer: {
+			height: pageContainerHeight,
+			width: pageContainerWidth,
+			maxWidth: 595,
+		},
+		actionButtons: {
+			[theme.fn.smallerThan('sm')]: {
+				display: 'none',
+			},
+		},
 
-	actionButtonsMobile: {
-		[theme.fn.largerThan('sm')]: {
-			display: 'none',
+		actionButtonsMobile: {
+			[theme.fn.largerThan('sm')]: {
+				display: 'none',
+			},
 		},
-	},
-	pageNumber: {
-		marginTop: 30,
+		pageNumber: {
+			marginTop: 30,
 
-		[theme.fn.smallerThan('sm')]: {
-			marginTop: 20,
+			[theme.fn.smallerThan('sm')]: {
+				marginTop: 20,
+			},
 		},
-	},
 
-	downloadButton: {
-		marginTop: 30,
+		downloadButton: {
+			marginTop: 30,
 
-		[theme.fn.smallerThan('sm')]: {
-			marginTop: 20,
+			[theme.fn.smallerThan('sm')]: {
+				marginTop: 20,
+			},
 		},
-	},
-}));
+	}),
+);
 
 // Define the properties for the PDFViewer component
 type PDFViewerProps = {
@@ -95,7 +101,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 	const [pageNumber, setPageNumber] = useState(1);
 
 	const height = ref?.current?.clientHeight as number;
-	const {classes} = useStyles({pageContainerHeight: height ?? 500});
+	const {classes} = useStyles({pageContainerHeight: height ?? 500, pageContainerWidth: width ?? 595});
 
 	// Function to handle the successful loading of a document
 	const onDocumentLoadSuccess = ({numPages}: {numPages: number}) => {
@@ -118,7 +124,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 	};
 
 	return (
-		<div className={classes.container} ref={ref}>
+		<div className={classes.container}>
 			<Document
 				className={classes.pdfDocument}
 				file={url}
@@ -146,6 +152,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 						<IconChevronLeft size={50} />
 					</ActionIcon>
 					<Page
+						canvasRef={ref}
 						width={width}
 						loading={
 							<Container className={classes.pageLoadingContainer}>
