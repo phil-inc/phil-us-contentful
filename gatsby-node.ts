@@ -676,7 +676,23 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 
 	await generateMainPages({actions, graphql});
 	await generateStaticPages({actions, graphql});
-	await generateDownloadableResourcePages({actions, graphql})
+	await generateDownloadableResourcePages({actions, graphql});
+
+	const {createRedirect} = actions
+
+	createRedirect({
+		fromPath: '/resources/',
+		toPath: '/resources/white-papers/',
+		isPermanent: true,
+		redirectInBrowser: true,
+	})
+
+	createRedirect({
+		fromPath: '/resources',
+		toPath: '/resources/white-papers/',
+		isPermanent: true,
+		redirectInBrowser: true,
+	})
 };
 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({actions, loaders, stage}) => {
