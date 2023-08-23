@@ -132,9 +132,13 @@ type ReferenceTypeGroup = {
 function parseReferenceData(referenceData: ReferenceTypeGroup[]): Map<string, string> {
 	const idToReferenceTypeMap = new Map<string, string>();
 	for (const group of referenceData) {
-		for (const ref of group.references) {
-			if (ref.id) {
-				idToReferenceTypeMap.set(ref.id, group.referenceType);
+		const refs = group?.references;
+
+		if (refs) {
+			for (const ref of refs) {
+				if (ref.id) {
+					idToReferenceTypeMap.set(ref.id, group.referenceType);
+				}
 			}
 		}
 	}
