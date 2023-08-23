@@ -12,6 +12,7 @@ import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import Asset from 'components/common/Asset/Asset';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {type TAsset} from 'types/asset';
+import PageContext from 'contexts/PageContext';
 
 type HelmetProps = {
 	data: {
@@ -48,7 +49,7 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulDownloadableResour
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			{contentfulDownloadableResource.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
 };
@@ -524,6 +525,7 @@ export const downloadableResourceQuery = graphql`
 	query getDownloadableResource($id: String) {
 		contentfulDownloadableResource(id: {eq: $id}) {
 			id
+			noindex
 			heading
 			description
 			metaDescription
