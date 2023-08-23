@@ -26,7 +26,10 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 			}
 		} else if (section.internalLink.sys.contentType.sys.id === 'page') {
 			link.push(slugify(section.internalLink.title, {lower: true, strict: true}));
-		} else if (section.internalLink.sys.contentType.sys.id === 'resource') {
+		} else if (
+			section.internalLink.sys.contentType.sys.id === 'resource'
+			|| section.internalLink.sys.contentType.sys.id === 'downloadableResource'
+		) {
 			const paths = useInternalPaths();
 			const [staticPage] = paths.filter(path => path.title === section.internalLink.heading);
 

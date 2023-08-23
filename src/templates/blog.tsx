@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, AspectRatio} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -8,12 +8,12 @@ import Asset from 'components/common/Asset/Asset';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
 import {graphql} from 'gatsby';
-import {Banner} from 'components/common/Banner/Banner';
+import {Banner, renderBanners} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
-import {isVideoContent} from 'utils/isVideoContent';
+import {isPDFContent, isVideoContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
@@ -198,16 +198,6 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 				return null; // Return null during SSR
 			},
 
-			[BLOCKS.EMBEDDED_ASSET](node) {
-				return (
-					<Box
-						className={classes.embededAsset}
-						sx={{maxWidth: isVideoContent(node.data.target.file.contentType as string) ? undefined : 420}}
-					>
-						<Asset asset={node.data.target as TAsset} />
-					</Box>
-				);
-			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
 					<Text component='p' mt={0} size={18}>
@@ -352,14 +342,6 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const defaultBanners = data.allContentfulResource.nodes as TResource[];
 	const hasBanners = Boolean(banners);
 	const hideBanners = noindex ?? isFaq;
-
-	const bannerFactory = (resource: TResource) => (
-		<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={120} px={106}>
-			<Banner resource={resource} />
-		</Expanded>
-	);
-
-	const renderBanners = (bannersToRender: TResource[]) => bannersToRender.map(bannerFactory);
 
 	const bannersToDisplay = hasBanners ? banners! : (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 

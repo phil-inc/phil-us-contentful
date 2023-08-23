@@ -21,6 +21,7 @@ import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import {isProduction} from 'utils/isProduction';
 import HubspotFormModal from '../HubspotFormModal';
+import Expanded from '../Expanded/Expanded';
 
 const useStyles = createStyles(theme => ({
 	card: {
@@ -143,3 +144,11 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 		</>
 	);
 };
+
+export const bannerFactory = (resource: TResource) => (
+	<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={120} px={106}>
+		<Banner resource={resource} />
+	</Expanded>
+);
+
+export const renderBanners = (bannersToRender: TResource[]) => bannersToRender.map(bannerFactory);

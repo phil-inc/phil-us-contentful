@@ -22,7 +22,7 @@ input,select,textarea{
 
 fieldset {
     width: 100%;
-    max-width: 700px !important;
+    max-width: 100% !important;
     margin-bottom: 18px !important;
 }
 
