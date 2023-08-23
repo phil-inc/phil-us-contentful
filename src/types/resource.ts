@@ -62,3 +62,30 @@ export type TResource = {
 	};
 	slug?: string; // Populates only for static pages
 };
+
+export type DownloadableAsset = {
+	id: string;
+	file: {
+		url: string;
+		contentType: string;
+	};
+};
+
+export type TDownloadableResource = Pick<
+TResource,
+| 'slug'
+| 'id'
+| 'noindex'
+| 'heading'
+| 'buttonText'
+| 'internalLink'
+| 'externalLink'
+| 'metaDescription'
+| 'body'
+| 'author'
+> & {
+	image: TResource['asset'];
+	downloadableAsset: DownloadableAsset;
+	description: string;
+	banner: TResource;
+};

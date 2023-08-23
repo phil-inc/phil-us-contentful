@@ -1,15 +1,16 @@
-import {AspectRatio, Box, Center, createStyles} from '@mantine/core';
-import classNames from 'classnames';
-import {GatsbyImage, getImage, type IGatsbyImageData} from 'gatsby-plugin-image';
-import React from 'react';
+import {AspectRatio} from '@mantine/core';
+import {GatsbyImage, getImage} from 'gatsby-plugin-image';
+import React, {forwardRef, useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 import type {TAsset} from 'types/asset';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import {isVideoContent} from 'utils/isVideoContent';
+import PDFViewer from '../PDFViewer/PDFViewer';
 
 type AssetProps = {
 	asset: TAsset;
 	youtubeVideoURL?: string;
+	width?: number;
 };
 
 /**
@@ -17,12 +18,12 @@ type AssetProps = {
  * @param param Asset prop
  * @returns Image/Video asset handler.
  */
-const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
-	const [playerCompnnent, setPlayerComponent] = React.useState(<></>);
+const Asset = forwardRef((props: AssetProps, ref) => {
+	const {asset, youtubeVideoURL, width} = props;
+	const [playerCompnnent, setPlayerComponent] = useState(<></>);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
-
 		const player = (
 			<ReactPlayer
 				url={youtubeVideoURL}
@@ -45,10 +46,12 @@ const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 		setPlayerComponent(player);
 	}, []);
 
+	// Handle youtube embed
 	if (youtubeVideoURL?.length) {
 		return <AspectRatio ratio={16 / 9}>{playerCompnnent}</AspectRatio>;
 	}
 
+	// Handle embeded video content
 	if (isVideoContent(asset.file.contentType)) {
 		const {url} = asset.file;
 
@@ -66,8 +69,13 @@ const Asset: React.FC<AssetProps> = ({asset, youtubeVideoURL}) => {
 		return <img src={asset.file.url} alt={altText} />;
 	}
 
+	// Handle PDF content
+	if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
+		return <PDFViewer url={asset.file.url} width={width} ref={ref} />;
+	}
+
 	const pathToImage = getImage(asset);
 	return <GatsbyImage image={pathToImage!} alt={altText} />;
-};
+});
 
 export default React.memo(Asset);

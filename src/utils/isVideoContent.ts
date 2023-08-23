@@ -7,3 +7,13 @@ export const isVideoContent = (contentType: string) => {
 
 	return false;
 };
+
+export const isPDFContent = (contentType: string) => {
+	const [mime, type] = contentType.split('/');
+
+	if (mime === 'application' && type === 'pdf') {
+		return true;
+	}
+
+	return false;
+};
