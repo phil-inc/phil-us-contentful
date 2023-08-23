@@ -31,7 +31,6 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 			|| section.internalLink.sys.contentType.sys.id === 'downloadableResource'
 		) {
 			const paths = useInternalPaths();
-			console.log({paths});
 			const [staticPage] = paths.filter(path => path.title === section.internalLink.heading);
 
 			// Referencing a internal link but not relating it to a section

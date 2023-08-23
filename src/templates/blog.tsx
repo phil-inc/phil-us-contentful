@@ -128,10 +128,6 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const [isMounted, setIsMounted] = React.useState(false);
 	const [origin, setOrigin] = React.useState('https://phil.us');
-	const [hide, setHide] = React.useState(false);
-
-	const canvasRef = useRef(null);
-	const ref = useRef(null);
 
 	React.useEffect(() => {
 		setIsMounted(true);
@@ -139,36 +135,6 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
 		setOrigin(origin);
 	}, []);
-
-	React.useEffect(() => {
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (entry.isIntersecting) {
-					console.log('intersecting');
-					setHide(true);
-				} else {
-					console.log('not intersecting');
-					setHide(false);
-				}
-			},
-			{
-				root: ref.current,
-				rootMargin: '0px',
-				threshold: 1.0,
-			},
-		);
-
-		if (canvasRef.current) {
-			observer.observe(canvasRef.current);
-		}
-
-		// Clean up
-		return () => {
-			if (canvasRef.current) {
-				observer.unobserve(canvasRef.current);
-			}
-		};
-	}, []); // Empty array ensures that effect is only run on mount and unmount
 
 	// Map for future reference to match content
 	const richTextImages: Record<string, {image: any; alt: string}> = {};
@@ -383,12 +349,12 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		<Layout>
 			<Container size='xl' className={classes.inner}>
 				<Grid gutter='xl' align='center' pb={52} pt={0}>
-					<Grid.Col ref={ref} lg={12} md={12} sm={12}>
+					<Grid.Col lg={12} md={12} sm={12}>
 						<Title order={1} mb={36}>
 							{heading}
 						</Title>
-						{Boolean(asset) && !hide && (
-							<Container ref={ref} className={classes.floatingImage} size='sm'>
+						{Boolean(asset) && (
+							<Container className={classes.floatingImage} size='sm'>
 								<Asset asset={asset!} />
 							</Container>
 						)}
