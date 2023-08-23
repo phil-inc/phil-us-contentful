@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, AspectRatio} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -8,12 +8,12 @@ import Asset from 'components/common/Asset/Asset';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
 import {graphql} from 'gatsby';
-import {Banner} from 'components/common/Banner/Banner';
+import {Banner, renderBanners} from 'components/common/Banner/Banner';
 import Expanded from 'components/common/Expanded/Expanded';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
-import {isVideoContent} from 'utils/isVideoContent';
+import {isPDFContent, isVideoContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
@@ -128,6 +128,10 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const [isMounted, setIsMounted] = React.useState(false);
 	const [origin, setOrigin] = React.useState('https://phil.us');
+	const [hide, setHide] = React.useState(false);
+
+	const canvasRef = useRef(null);
+	const ref = useRef(null);
 
 	React.useEffect(() => {
 		setIsMounted(true);
@@ -135,6 +139,36 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
 		setOrigin(origin);
 	}, []);
+
+	React.useEffect(() => {
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					console.log('intersecting');
+					setHide(true);
+				} else {
+					console.log('not intersecting');
+					setHide(false);
+				}
+			},
+			{
+				root: ref.current,
+				rootMargin: '0px',
+				threshold: 1.0,
+			},
+		);
+
+		if (canvasRef.current) {
+			observer.observe(canvasRef.current);
+		}
+
+		// Clean up
+		return () => {
+			if (canvasRef.current) {
+				observer.unobserve(canvasRef.current);
+			}
+		};
+	}, []); // Empty array ensures that effect is only run on mount and unmount
 
 	// Map for future reference to match content
 	const richTextImages: Record<string, {image: any; alt: string}> = {};
@@ -198,16 +232,6 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 				return null; // Return null during SSR
 			},
 
-			[BLOCKS.EMBEDDED_ASSET](node) {
-				return (
-					<Box
-						className={classes.embededAsset}
-						sx={{maxWidth: isVideoContent(node.data.target.file.contentType as string) ? undefined : 420}}
-					>
-						<Asset asset={node.data.target as TAsset} />
-					</Box>
-				);
-			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
 					<Text component='p' mt={0} size={18}>
@@ -353,26 +377,18 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 	const hasBanners = Boolean(banners);
 	const hideBanners = noindex ?? isFaq;
 
-	const bannerFactory = (resource: TResource) => (
-		<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={120} px={106}>
-			<Banner resource={resource} />
-		</Expanded>
-	);
-
-	const renderBanners = (bannersToRender: TResource[]) => bannersToRender.map(bannerFactory);
-
 	const bannersToDisplay = hasBanners ? banners! : (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
 	return (
 		<Layout>
 			<Container size='xl' className={classes.inner}>
 				<Grid gutter='xl' align='center' pb={52} pt={0}>
-					<Grid.Col lg={12} md={12} sm={12}>
+					<Grid.Col ref={ref} lg={12} md={12} sm={12}>
 						<Title order={1} mb={36}>
 							{heading}
 						</Title>
-						{Boolean(asset) && (
-							<Container className={classes.floatingImage} size='sm'>
+						{Boolean(asset) && !hide && (
+							<Container ref={ref} className={classes.floatingImage} size='sm'>
 								<Asset asset={asset!} />
 							</Container>
 						)}

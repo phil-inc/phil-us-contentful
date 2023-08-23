@@ -628,6 +628,55 @@ export const resourcesQuery = graphql`
 							}
 							id
 						}
+						... on ContentfulDownloadableResource {
+							id
+							heading
+							desc: description
+							metaDescription
+							buttonText
+							internalLink {
+								id
+								... on ContentfulDownloadableResource {
+									slug
+									heading
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+							}
+							image {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+								title
+								file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+							}
+							body {
+								raw
+							}
+							downloadableAsset {
+								url
+								publicUrl
+								file {
+									contentType
+									details {
+										size
+									}
+									url
+									fileName
+								}
+								mimeType
+							}
+						}
 					}
 					referenceType
 					externalLink

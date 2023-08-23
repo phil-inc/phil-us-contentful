@@ -3,3 +3,4 @@ gatsby-*.ts
 gatsby-*.tsx
 public/
 netlify/
+node_modules/

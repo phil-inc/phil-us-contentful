@@ -1,6 +1,6 @@
 import slugify from 'slugify';
 import path from 'path';
-import type {Actions, GatsbyNode, NodePluginArgs} from 'gatsby';
+import type {Actions, GatsbyNode} from 'gatsby';
 
 import {POSTS_PER_SECTION} from './src/constants/section';
 import {pagination} from './src/utils/pagination';
@@ -14,10 +14,13 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		data?: TData | undefined;
 	}>;
 
+	
+
 	const careerTemplate = path.resolve(`./src/templates/career.tsx`);
 	const pageTemplate = path.resolve(`./src/templates/page.tsx`);
 	const contactTemplate = path.resolve(`./src/templates/contact.tsx`);
 	const resourcesTemplate = path.resolve(`./src/templates/resources.tsx`);
+	const downloadableResourcesTemplate = path.resolve(`./src/templates/downloadable-resource.tsx`);
 	const blogTemplate = path.resolve(`./src/templates/blog.tsx`);
 	const generateMainPages = async ({actions, graphql}: {actions: Actions; graphql: GraphqlType}) => {
 		// Return page
@@ -56,7 +59,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		};
 
 		const {data} = await graphql(`
-		query getPages {
+			query getPages {
 				allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
 					nodes {
 						id
@@ -176,8 +179,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 								}
 								sectionType
 								references {
-									...on ContentfulResource {
-                    externalLink
+									externalLink
 									internalLink {
 										... on ContentfulPage {
 											id
@@ -280,7 +282,6 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 										}
 									}
 									id
-                  }
 								}
 								referenceType
 								externalLink
@@ -351,7 +352,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 						}
 					}
 				}
-			}`);
+			}
+		`);
 
 		data.allContentfulPage.nodes.forEach(page => {
 			if (page.title === 'Resources') {
@@ -577,10 +579,39 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		});
 	};
 
+	const generateDownloadableResourcePages = async ({actions, graphql}) => {
+		const {data} = await graphql(`
+		query allDownloadableResource {
+			allContentfulDownloadableResource(filter: {node_locale: {eq: "en-US"}}) {
+			  nodes {
+				id
+				slug
+				heading
+			  }
+			}
+		  }
+		  `);		 
+
+		  data.allContentfulDownloadableResource.nodes.forEach(({id, slug, heading}) => {
+			const path = slug ??
+			`/${slugify(heading, {
+				lower: true,
+				strict: true,
+			})}`;
+
+			actions.createPage({
+				path: path,
+				component: downloadableResourcesTemplate,
+				context: {id, heading},
+			});
+		  })
+	}
+
 	await generateMainPages({actions, graphql});
 	await generateStaticPages({actions, graphql});
+	await generateDownloadableResourcePages({actions, graphql});
 
-	const {createRedirect}= actions
+	const {createRedirect} = actions
 
 	createRedirect({
 		fromPath: '/resources/',
@@ -595,4 +626,31 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		isPermanent: true,
 		redirectInBrowser: true,
 	})
+};
+
+export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({actions, loaders, stage}) => {
+	if (stage === "build-html" || stage === "develop-html") {
+		actions.setWebpackConfig({
+		  module: {
+			rules: [
+				{
+				  test: /react-pdf/,
+				  use: loaders.null()
+				},
+				{
+				  test: /pdfjs-dist/,
+				  use: loaders.null()
+				},
+				{
+				  test: /safer-buffer/,
+				  use: loaders.null()
+				},
+				{
+					test: /canvas/,
+					use: loaders.null()
+				  }
+			  ]
+		  },
+		})
+	  }
 };
