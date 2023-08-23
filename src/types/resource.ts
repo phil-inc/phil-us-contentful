@@ -73,7 +73,16 @@ export type DownloadableAsset = {
 
 export type TDownloadableResource = Pick<
 TResource,
-'slug' | 'id' | 'heading' | 'buttonText' | 'internalLink' | 'externalLink' | 'metaDescription' | 'body' | 'author'
+| 'slug'
+| 'id'
+| 'noindex'
+| 'heading'
+| 'buttonText'
+| 'internalLink'
+| 'externalLink'
+| 'metaDescription'
+| 'body'
+| 'author'
 > & {
 	image: TResource['asset'];
 	downloadableAsset: DownloadableAsset;
