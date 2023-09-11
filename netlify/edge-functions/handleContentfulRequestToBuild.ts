@@ -15,13 +15,12 @@ const hasRequiredOrigin = (origin: string): boolean => {
 	const allowedOrigins = corsHeaders['Access-Control-Allow-Origin'];
 
 	if (allowedOrigins) {
-		return corsHeaders['Access-Control-Allow-Origin'].split(',').some(o => o === origin);
+		return corsHeaders['Access-Control-Allow-Origin'].split(',').some(o => o === origin || o === "*");
 	}
 
 	return false;
 };
 
-// Deprecated
 const withCors = (handler: (request: Request) => Promise<Response>) => async (request: Request) => {
 	if (request.method === 'OPTIONS') {
 		return new Response('OK', {headers: corsHeaders});
@@ -72,6 +71,6 @@ const handleContentfulRequestToBuild = async (request: Request) => {
 	}
 };
 
-export default handleContentfulRequestToBuild;
+export default withCors(handleContentfulRequestToBuild);
 
 export const config: Config = {path: '/api/contentful/apps/phil-preview-ca'};
