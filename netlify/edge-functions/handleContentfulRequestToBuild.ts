@@ -21,6 +21,7 @@ const hasRequiredOrigin = (origin: string): boolean => {
 	return false;
 };
 
+// Deprecated
 const withCors = (handler: (request: Request) => Promise<Response>) => async (request: Request) => {
 	if (request.method === 'OPTIONS') {
 		return new Response('OK', {headers: corsHeaders});
@@ -71,6 +72,6 @@ const handleContentfulRequestToBuild = async (request: Request) => {
 	}
 };
 
-export default withCors(handleContentfulRequestToBuild);
+export default handleContentfulRequestToBuild;
 
 export const config: Config = {path: '/api/contentful/apps/phil-preview-ca'};
