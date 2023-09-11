@@ -3,8 +3,7 @@ import {verifyRequest} from 'https://esm.sh/@contentful/node-apps-toolkit@2.2.0'
 
 const corsHeaders = {
 	'Access-Control-Allow-Origin': Deno.env.get('ALLOWED_ORIGINS_CONTENTFUL_APP') || '',
-	'Access-Control-Allow-Headers':
-		'x-contentful-environment-id,x-contentful-signed-headers,x-contentful-space-id,x-contentful-timestamp,x-contentful-user-id,x-contentful-signature',
+	'Access-Control-Allow-Headers': Deno.env.get('ALLOWED_HEADERS_CONTENTFUL_APP') || '',
 };
 
 const hasRequiredHeaders = (headers: Headers): boolean => {
