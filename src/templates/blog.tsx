@@ -18,7 +18,7 @@ import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
 import ReactPlayer from 'react-player/youtube';
-import {toTitleCase} from 'utils/casing';
+import {headingToTitleCase} from 'utils/casing';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -56,6 +56,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
 type PageTemplateProps = {
 	pageContext: TResource;
 	data: any;
+	location: {pathname: string; origin: string};
 };
 
 const useStyles = createStyles(theme => ({
@@ -122,19 +123,16 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
+const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data, location}) => {
 	const {heading, body, asset, banners, author, noindex, isFaq} = pageContext;
 
 	const {classes, cx} = useStyles();
 
 	const [isMounted, setIsMounted] = React.useState(false);
-	const [origin, setOrigin] = React.useState('https://phil.us');
+	const {origin} = location;
 
 	React.useEffect(() => {
 		setIsMounted(true);
-
-		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
-		setOrigin(origin);
 	}, []);
 
 	// Map for future reference to match content
@@ -346,13 +344,18 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 	const bannersToDisplay = hasBanners ? banners! : (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
+	let headingText = headingToTitleCase(heading);
+	if (location.pathname.includes('/field/')) {
+		headingText = heading;
+	}
+
 	return (
 		<Layout>
 			<Container size='xl' className={classes.inner}>
 				<Grid gutter='xl' align='center' pb={52} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
 						<Title order={1} mb={36}>
-							{toTitleCase(heading)}
+							{headingText}
 						</Title>
 						{Boolean(asset) && (
 							<Container className={classes.floatingImage} size='sm'>

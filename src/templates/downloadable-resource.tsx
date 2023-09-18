@@ -13,7 +13,7 @@ import Asset from 'components/common/Asset/Asset';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {type TAsset} from 'types/asset';
 import PageContext from 'contexts/PageContext';
-import {toTitleCase} from 'utils/casing';
+import {headingToTitleCase} from 'utils/casing';
 
 type HelmetProps = {
 	data: {
@@ -485,7 +485,9 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 					<Grid>
 						<Grid.Col sm={12} md={7}>
 							{section?.length && <Text className={classes.section}>{section}</Text>}
-							<Title className={classes.title}>{toTitleCase(data.contentfulDownloadableResource.heading)}</Title>
+							<Title className={classes.title}>
+								{headingToTitleCase(data.contentfulDownloadableResource.heading)}
+							</Title>
 							<Box className={classes.description}>
 								<Text>{data.contentfulDownloadableResource.description}</Text>
 							</Box>

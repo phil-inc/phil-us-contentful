@@ -17,7 +17,7 @@ import {Link} from 'gatsby';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
-import {toTitleCase} from 'utils/casing';
+import {headingToTitleCase} from 'utils/casing';
 
 type ResourceCardProps = {
 	resource: TResource;
@@ -105,7 +105,9 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleSystemProps> = ({r
 	const {classes} = useStyles();
 	const {link, isExternal} = getLink(resource);
 
-	const heading = resource.subheading?.length ? toTitleCase(resource.subheading) : toTitleCase(resource.heading);
+	const heading: string = resource.subheading?.length
+		? headingToTitleCase(resource.subheading)
+		: headingToTitleCase(resource.heading);
 
 	return (
 		<Paper mb={mb} radius={0} className={classNames(classes.card)}>
