@@ -18,6 +18,7 @@ import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
 import ReactPlayer from 'react-player/youtube';
+import {toTitleCase} from 'utils/casing';
 
 type HelmetProps = {
 	pageContext: TResource;
@@ -351,7 +352,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 				<Grid gutter='xl' align='center' pb={52} pt={0}>
 					<Grid.Col lg={12} md={12} sm={12}>
 						<Title order={1} mb={36}>
-							{heading}
+							{toTitleCase(heading)}
 						</Title>
 						{Boolean(asset) && (
 							<Container className={classes.floatingImage} size='sm'>
