@@ -1,6 +1,7 @@
 import slugify from 'slugify';
 import path from 'path';
 import type {Actions, GatsbyNode} from 'gatsby';
+import fs from 'fs-extra';
 
 import {POSTS_PER_SECTION} from './src/constants/section';
 import {pagination} from './src/utils/pagination';
