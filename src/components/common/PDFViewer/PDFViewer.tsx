@@ -1,10 +1,11 @@
 // Import necessary dependencies
 import React, {useRef, useState, forwardRef} from 'react';
 import {Document, Page} from 'react-pdf';
-import {ActionIcon, Anchor, AspectRatio, Box, Button, Container, Flex, Group, Text, createStyles} from '@mantine/core';
+import {ActionIcon, Anchor, AspectRatio, Box, Button, Container, Flex, Group, Text, createStyles, useMantineTheme} from '@mantine/core';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 import Expanded from '../Expanded/Expanded';
 import {IconArrowBack, IconChevronLeft, IconChevronRight} from '@tabler/icons';
+import { useViewportSize } from '@mantine/hooks';
 
 // Define styles for the PDF viewer
 const useStyles = createStyles(
@@ -18,7 +19,6 @@ const useStyles = createStyles(
 			alignItems: 'center',
 			justifyContent: 'center',
 			padding: '22px 20px',
-
 			[theme.fn.smallerThan('sm')]: {
 				margin: 'auto -16px',
 				minHeight: '35rem',
@@ -105,6 +105,13 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 	const [numPages, setNumPages] = useState<number>(0);
 	const [pageNumber, setPageNumber] = useState(1);
 
+	const theme = useMantineTheme()
+
+	let isMobile= false;
+
+	{const {width} = useViewportSize();
+	isMobile = theme.breakpoints.sm > width;}
+
 	const height = ref?.current?.clientHeight as number;
 	const {classes} = useStyles({pageContainerHeight: height ?? 500, pageContainerWidth: width ?? 595});
 
@@ -166,10 +173,11 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 						}
 						className={classes.pdfPage}
 						pageNumber={pageNumber}
-						renderMode='canvas'
+						renderMode='svg'
 						renderTextLayer={false}
-						renderAnnotationLayer={false}
-						renderForms={false}
+						renderAnnotationLayer={true}
+						renderForms={true}
+						scale={isMobile? 0.6: 1}
 					/>
 					<ActionIcon
 						className={classes.actionButtons}
@@ -194,7 +202,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 					size={36}
 					radius={'50%'}
 					onClick={previousPage}
-					disabled={pageNumber <= 0}
+					disabled={pageNumber <= 1}
 				>
 					<IconChevronLeft size={25} />
 				</ActionIcon>

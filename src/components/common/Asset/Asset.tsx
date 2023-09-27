@@ -1,11 +1,12 @@
 import {AspectRatio} from '@mantine/core';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
-import React, {forwardRef, useEffect, useState} from 'react';
+import React, {Ref, forwardRef, useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 import type {TAsset} from 'types/asset';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import {isVideoContent} from 'utils/isVideoContent';
-import PDFViewer from '../PDFViewer/PDFViewer';
+import ClientSidePDFViewer from '../PDFViewer/ClientSidePDFViewer';
+
 
 type AssetProps = {
 	asset: TAsset;
@@ -18,7 +19,7 @@ type AssetProps = {
  * @param param Asset prop
  * @returns Image/Video asset handler.
  */
-const Asset = forwardRef((props: AssetProps, ref) => {
+const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) => {
 	const {asset, youtubeVideoURL, width} = props;
 	const [playerCompnnent, setPlayerComponent] = useState(<></>);
 
@@ -70,8 +71,8 @@ const Asset = forwardRef((props: AssetProps, ref) => {
 	}
 
 	// Handle PDF content
-	if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
-		return <PDFViewer url={asset.file.url} width={width} ref={ref} />;
+	if (asset.file.contentType === 'application/pdf') {
+		return <ClientSidePDFViewer url={asset.file.url} width={width!} ref={ref} />;
 	}
 
 	const pathToImage = getImage(asset);
