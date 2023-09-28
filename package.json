@@ -55,9 +55,10 @@
 		"json-from-text": "^1.1.0",
 		"marked": "^4.2.12",
 		"mixpanel-browser": "^2.45.0",
+		"pdfjs-dist": "^3.11.174",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-pdf": "^5.0.0",
+		"react-pdf": "^7.4.0",
 		"react-player": "^2.11.0",
 		"react-scroll": "^1.8.8",
 		"slugify": "^1.6.5"
