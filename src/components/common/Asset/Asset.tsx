@@ -5,7 +5,7 @@ import ReactPlayer from 'react-player';
 import type {TAsset} from 'types/asset';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import {isVideoContent} from 'utils/isVideoContent';
-import ClientSidePDFViewer from '../PDFViewer/ClientSidePDFViewer';
+import PDFViewer from '../PDFViewer/PDFViewer';
 
 
 type AssetProps = {
@@ -72,7 +72,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 
 	// Handle PDF content
 	if (asset.file.contentType === 'application/pdf') {
-		return <ClientSidePDFViewer url={asset.file.url} width={width!} ref={ref} />;
+		return <PDFViewer url={asset.file.url} width={width!} ref={ref} />;
 	}
 
 	const pathToImage = getImage(asset);
