@@ -1,15 +1,23 @@
-// Import necessary dependencies
-import React, {useRef, useState, forwardRef} from 'react';
+import React, {useState, forwardRef} from 'react';
 import {Document, Page} from 'react-pdf';
-import {ActionIcon, Anchor, AspectRatio, Box, Button, Container, Flex, Group, Text, createStyles, useMantineTheme} from '@mantine/core';
+import {ActionIcon, Anchor, Box, Button, Container, Group, Text, createStyles, useMantineTheme} from '@mantine/core';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
-import Expanded from '../Expanded/Expanded';
-import {IconArrowBack, IconChevronLeft, IconChevronRight} from '@tabler/icons';
-import { useViewportSize } from '@mantine/hooks';
+import {IconChevronLeft, IconChevronRight} from '@tabler/icons';
+import {useViewportSize} from '@mantine/hooks';
+
+const PADDING = 20;
+const MAX_PAGE_WIDTH = 595;
 
 // Define styles for the PDF viewer
 const useStyles = createStyles(
-	(theme, {pageContainerHeight, pageContainerWidth}: {pageContainerHeight: number; pageContainerWidth: number}) => ({
+	(
+		theme,
+		{
+			pageContainerHeight,
+			pageContainerWidth,
+			padding,
+		}: {pageContainerHeight: number; pageContainerWidth: number; padding: number}
+	) => ({
 		container: {
 			minHeight: '64.5rem',
 			background: '#6A7979',
@@ -18,7 +26,7 @@ const useStyles = createStyles(
 			flexDirection: 'column',
 			alignItems: 'center',
 			justifyContent: 'center',
-			padding: '22px 20px',
+			padding: `22px ${padding}px`,
 			[theme.fn.smallerThan('sm')]: {
 				margin: 'auto -16px',
 				minHeight: '35rem',
@@ -28,21 +36,13 @@ const useStyles = createStyles(
 			display: 'flex',
 			alignItems: 'center',
 			columnGap: 70,
-
-			[theme.fn.smallerThan('sm')]: {
-				// Padding: 20,
-			},
 		},
 		pdfPage: {
 			'>canvas': {
-				maxWidth: '100%',
 				height: 'auto !important',
 			},
 		},
 		pdfDocument: {
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
 			marginTop: 71.5,
 
 			[theme.fn.smallerThan('sm')]: {
@@ -52,12 +52,12 @@ const useStyles = createStyles(
 		loadingContainer: {
 			height: 742,
 			width: '100%',
-			maxWidth: 595,
+			maxWidth: MAX_PAGE_WIDTH,
 		},
 		pageLoadingContainer: {
 			height: pageContainerHeight,
 			width: pageContainerWidth,
-			maxWidth: 595,
+			maxWidth: MAX_PAGE_WIDTH,
 		},
 		actionButtons: {
 			[theme.fn.smallerThan('sm')]: {
@@ -90,7 +90,7 @@ const useStyles = createStyles(
 			fontSize: 14,
 			fontWeight: 500,
 		},
-	}),
+	})
 );
 
 // Define the properties for the PDFViewer component
@@ -101,19 +101,30 @@ type PDFViewerProps = {
 
 // PDFViewer component
 const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref) => {
-	// Define the state variables for the component
+	const wrapperRef = React.useRef();
+
 	const [numPages, setNumPages] = useState<number>(0);
+	const [pdfPageWidth, setPdfPageWidth] = useState<number>(MAX_PAGE_WIDTH);
 	const [pageNumber, setPageNumber] = useState(1);
+	const theme = useMantineTheme();
+	const {width: vw} = useViewportSize();
+	const isMobileView = theme.breakpoints.sm > vw;
 
-	const theme = useMantineTheme()
+	React.useEffect(() => {
+		if (pdfPageWidth > MAX_PAGE_WIDTH || !isMobileView) {
+			setPdfPageWidth(MAX_PAGE_WIDTH);
+			return;
+		}
 
-	let isMobile= false;
-
-	{const {width} = useViewportSize();
-	isMobile = theme.breakpoints.sm > width;}
+		setPdfPageWidth(wrapperRef.current?.clientWidth - PADDING * 2);
+	}, [vw]);
 
 	const height = ref?.current?.clientHeight as number;
-	const {classes} = useStyles({pageContainerHeight: height ?? 500, pageContainerWidth: width ?? 595});
+	const {classes} = useStyles({
+		pageContainerHeight: height ?? 500,
+		pageContainerWidth: width ?? MAX_PAGE_WIDTH,
+		padding: PADDING,
+	});
 
 	// Function to handle the successful loading of a document
 	const onDocumentLoadSuccess = ({numPages}: {numPages: number}) => {
@@ -136,25 +147,26 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 	};
 
 	return (
-		<div className={classes.container}>
+		<div ref={wrapperRef} className={classes.container}>
 			<Document
 				className={classes.pdfDocument}
 				file={url}
 				loading={
 					<Container className={classes.loadingContainer}>
-						<LoadingIndicator size='xl' />
+						<LoadingIndicator size="xl" />
 					</Container>
 				}
 				onLoadSuccess={onDocumentLoadSuccess}
 				onLoadError={error => {
 					console.error('Error while loading document: ', error);
 				}}
+				externalLinkTarget="_blank"
 			>
 				<Box className={classes.pageContainer}>
 					<ActionIcon
 						className={classes.actionButtons}
-						variant='filled'
-						color='dark'
+						variant="filled"
+						color="dark"
 						size={75}
 						radius={'50%'}
 						pr={5}
@@ -164,25 +176,23 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 						<IconChevronLeft size={50} />
 					</ActionIcon>
 					<Page
-						canvasRef={ref}
-						width={width}
+						width={pdfPageWidth}
 						loading={
 							<Container className={classes.pageLoadingContainer}>
-								<LoadingIndicator size='xl' />
+								<LoadingIndicator size="xl" />
 							</Container>
 						}
 						className={classes.pdfPage}
 						pageNumber={pageNumber}
-						renderMode='svg'
+						renderMode="canvas"
 						renderTextLayer={false}
 						renderAnnotationLayer={true}
-						renderForms={true}
-						scale={isMobile? 0.6: 1}
+						renderForms={false}
 					/>
 					<ActionIcon
 						className={classes.actionButtons}
-						variant='filled'
-						color='dark'
+						variant="filled"
+						color="dark"
 						size={75}
 						radius={'50%'}
 						pl={5}
@@ -194,11 +204,11 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 				</Box>
 			</Document>
 
-			<Group position='center' align='center' className={classes.pageNumber} spacing='lg'>
+			<Group position="center" align="center" className={classes.pageNumber} spacing="lg">
 				<ActionIcon
 					className={classes.actionButtonsMobile}
-					variant='filled'
-					color='dark'
+					variant="filled"
+					color="dark"
 					size={36}
 					radius={'50%'}
 					onClick={previousPage}
@@ -206,13 +216,13 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 				>
 					<IconChevronLeft size={25} />
 				</ActionIcon>
-				<Text size={24} color='#fff'>
+				<Text size={24} color="#fff">
 					Page {pageNumber} of {numPages}
 				</Text>
 				<ActionIcon
 					className={classes.actionButtonsMobile}
-					variant='filled'
-					color='dark'
+					variant="filled"
+					color="dark"
 					size={36}
 					radius={'50%'}
 					onClick={nextPage}
@@ -221,9 +231,9 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 					<IconChevronRight size={25} />
 				</ActionIcon>
 			</Group>
-			<Group position='center' align='center' className={classes.downloadButton}>
-				<Anchor variant='text' type='button' href={url} target='_blank'>
-					<Button className={classes.buttonText} px={21} size='md'>
+			<Group position="center" align="center" className={classes.downloadButton}>
+				<Anchor variant="text" type="button" href={url} target="_blank">
+					<Button className={classes.buttonText} px={21} size="md">
 						Download PDF
 					</Button>
 				</Anchor>
