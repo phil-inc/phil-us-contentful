@@ -40,8 +40,6 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 			}
 
 			if (page.title === 'Resources') {
-				resourceSubPages.push(slug);
-
 				const pageObject = {
 					path: slug,
 					component: component,
@@ -420,6 +418,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 					const postsPerPage = 5;
 					const numPages = pagination.numberOfPages(section.references.length, POSTS_PER_SECTION);
 
+					resourceSubPages.push(slugify(section.header, {lower: true, strict: true}))
+					
 					Array.from({length: numPages}).forEach((_, i) => {
 						const pageObject = createPageObject(page);
 
