@@ -6,6 +6,7 @@ import type {TAsset} from 'types/asset';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import {isVideoContent} from 'utils/isVideoContent';
 import PDFViewer from '../PDFViewer/PDFViewer';
+import ClientSidePDFViewer from '../PDFViewer/ClientSidePDFViewer';
 
 
 type AssetProps = {
@@ -71,8 +72,8 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 	}
 
 	// Handle PDF content
-	if (asset.file.contentType === 'application/pdf') {
-		return <PDFViewer url={asset.file.url} width={width!} ref={ref} />;
+	if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
+		return <PDFViewer url={asset.file.url} pageContainerWidth={width!} ref={ref} />;
 	}
 
 	const pathToImage = getImage(asset);
