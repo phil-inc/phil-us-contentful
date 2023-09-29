@@ -312,7 +312,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					<Grid align='center'>
 						<Grid.Col sm={12} md={12} lg={9.76}>
 							<Title className={classes.heading1} order={1}>
-								Resources/{isMobileView && <br />}
+								Resources/{<br style={{display: 'none'}} />}
 								{currentSection.header}
 							</Title>
 						</Grid.Col>

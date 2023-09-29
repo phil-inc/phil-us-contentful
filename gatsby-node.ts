@@ -1,7 +1,6 @@
 import slugify from 'slugify';
 import path from 'path';
 import type {Actions, GatsbyNode} from 'gatsby';
-import fs from 'fs-extra';
 
 import {POSTS_PER_SECTION} from './src/constants/section';
 import {pagination} from './src/utils/pagination';
@@ -16,6 +15,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 	}>;
 
 	
+	const resourceSubPages: string[] = [];
 
 	const careerTemplate = path.resolve(`./src/templates/career.tsx`);
 	const pageTemplate = path.resolve(`./src/templates/page.tsx`);
@@ -41,6 +41,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 			}
 
 			if (page.title === 'Resources') {
+				resourceSubPages.push(slug);
+				
 				const pageObject = {
 					path: slug,
 					component: component,
@@ -681,18 +683,29 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 
 	const {createRedirect} = actions
 
+	const [firstSubPage] = resourceSubPages;
+
+	let redirectPath = "/";
+	if (firstSubPage) {
+		redirectPath = '/resources/' + firstSubPage + redirectPath
+	} 
+
+	console.log(redirectPath, firstSubPage)
+
 	createRedirect({
 		fromPath: '/resources/',
-		toPath: '/resources/white-papers/',
+		toPath: redirectPath,
 		isPermanent: true,
 		redirectInBrowser: true,
+		force: true,
 	})
 
 	createRedirect({
 		fromPath: '/resources',
-		toPath: '/resources/white-papers/',
+		toPath: redirectPath,
 		isPermanent: true,
 		redirectInBrowser: true,
+		force: true,
 	})
 };
 
