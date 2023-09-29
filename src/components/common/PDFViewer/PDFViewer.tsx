@@ -96,19 +96,19 @@ const useStyles = createStyles(
 // Define the properties for the PDFViewer component
 type PDFViewerProps = {
 	url: string;
-	width: number;
+	pageContainerWidth: number;
 };
 
 // PDFViewer component
-const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref) => {
+const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContainerWidth}, ref) => {
 	const wrapperRef = React.useRef();
 
 	const [numPages, setNumPages] = useState<number>(0);
 	const [pdfPageWidth, setPdfPageWidth] = useState<number>(MAX_PAGE_WIDTH);
 	const [pageNumber, setPageNumber] = useState(1);
 	const theme = useMantineTheme();
-	const {width: vw} = useViewportSize();
-	const isMobileView = theme.breakpoints.sm > vw;
+	const {width} = useViewportSize();
+	const isMobileView = theme.breakpoints.sm > width;
 
 	React.useEffect(() => {
 		if (pdfPageWidth > MAX_PAGE_WIDTH || !isMobileView) {
@@ -117,12 +117,12 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, width}, ref)
 		}
 
 		setPdfPageWidth(wrapperRef.current?.clientWidth - PADDING * 2);
-	}, [vw]);
+	}, [width]);
 
 	const height = ref?.current?.clientHeight as number;
 	const {classes} = useStyles({
 		pageContainerHeight: height ?? 500,
-		pageContainerWidth: width ?? MAX_PAGE_WIDTH,
+		pageContainerWidth: pageContainerWidth ?? MAX_PAGE_WIDTH,
 		padding: PADDING,
 	});
 
