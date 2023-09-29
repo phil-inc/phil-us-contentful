@@ -57,18 +57,18 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulRe
 
 	return (
 		<SEO title={computeTitle()}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={computeTitle()} />
-			<meta name='twitter:description' content={computeMetaDescription()} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={computeMetaDescription()} />
-			<meta property='og:title' content={computeTitle()} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={computeMetaDescription()} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={computeTitle()} />
+			<meta name="twitter:description" content={computeMetaDescription()} />
+			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={computeMetaDescription()} />
+			<meta property="og:title" content={computeTitle()} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={computeMetaDescription()} />
+			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={`https://phil.us${location.pathname}}`} />
+			<script charSet="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+			{location.pathname === '/field/' && <meta name="robots" content="noindex" />}
 		</SEO>
 	);
 };
@@ -255,6 +255,14 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		[theme.fn.smallerThan('sm')]: {fontSize: 10.28, padding: '10px 7px'},
 	},
 	faqContainerText: {fontSize: 20, [theme.fn.smallerThan('sm')]: {fontSize: 16}},
+
+	breakSection: {
+		display: 'none',
+
+		[theme.fn.smallerThan('sm')]: {
+			display: 'block',
+		},
+	},
 }));
 
 type ResourcesPageProps = {
@@ -309,21 +317,22 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 			<Expanded id={currentSection.id} py={0}>
 				{/* PAGE HEADER */}
 				<Box>
-					<Grid align='center'>
+					<Grid align="center">
 						<Grid.Col sm={12} md={12} lg={9.76}>
 							<Title className={classes.heading1} order={1}>
-								Resources/{<br style={{display: 'none'}} />}
+								Resources/
+								<br className={classes.breakSection} />
 								{currentSection.header}
 							</Title>
 						</Grid.Col>
 
 						<Grid.Col sm={12} md={12} lg={2.24}>
 							<SearchBox
-								value=''
+								value=""
 								onSubmitCallback={vs => {
 									searchSubmitCallback(vs.searchText, []);
 								}}
-								placeholder='Search...'
+								placeholder="Search..."
 							/>
 						</Grid.Col>
 					</Grid>
@@ -342,7 +351,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									chevron: classes.chevron,
 								}}
 							>
-								<Accordion.Item value='ResourcesType'>
+								<Accordion.Item value="ResourcesType">
 									<Accordion.Control
 										disabled={!isMobileView}
 										onClick={() => {
@@ -358,17 +367,17 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 											{data.contentfulPage.sections
 												.filter(section => !section.isHidden && Boolean(section.header))
 												.map((section, index, array) => {
-													const path
-														= RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
+													const path =
+														RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
 
 													return (
 														<React.Fragment key={path}>
 															<Link to={path} className={classes.textDecorationNone}>
 																<NavLink
 																	active={currentSection.id === section.id}
-																	color='#00827E'
+																	color="#00827E"
 																	py={12}
-																	variant='subtle'
+																	variant="subtle"
 																	classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
 																	pl={0}
 																	key={section.id}
@@ -428,7 +437,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 																{sectionLabelText}
 																<Anchor
 																	href={resource.externalLink}
-																	target='_blank'
+																	target="_blank"
 																	className={classes.textDecorationNone}
 																>
 																	{navLink}
@@ -448,14 +457,14 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 						{/* RESOURCES MAP */}
 						{currentSection.referenceType === 'FAQs' && (
 							<Box className={classes.faqContainer}>
-								<Grid gutter={isMobileView ? 10 : 28} align='center'>
+								<Grid gutter={isMobileView ? 10 : 28} align="center">
 									<Grid.Col sm={12} md={'content'}>
 										<Title order={4} className={classes.faqContainerText}>
 											For Patient FAQs
 										</Title>
 									</Grid.Col>
 									<Grid.Col sm={12} md={'content'}>
-										<Anchor target='_blank' href='https://philhelp.zendesk.com/hc/en-us'>
+										<Anchor target="_blank" href="https://philhelp.zendesk.com/hc/en-us">
 											<Button className={classes.faqContainerButton}>View the entire FAQ</Button>
 										</Anchor>
 									</Grid.Col>
@@ -470,8 +479,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 								</Title>
 							</Box>
 
-							{resources?.length
-								&& resources
+							{resources?.length &&
+								resources
 									.slice(startIndex, endIndex)
 									.map((resource, index) => (
 										<ResourceCard
@@ -485,17 +494,17 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 						{/* PAGINATION CONTROLS */}
 						{numPages > 1 && (
 							<Pagination
-								position='center'
+								position="center"
 								mt={44}
 								classNames={{item: classes.paginationItem}}
 								radius={0}
-								color='#0A0A0A'
+								color="#0A0A0A"
 								total={numPages}
 								page={currentPageNumber}
 								withControls={false}
 								onChange={async pageNumber => {
-									const path
-										= RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
+									const path =
+										RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
 
 									if (pageNumber === 1) {
 										void navigate(path);
@@ -551,7 +560,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 														{sectionLabelText}
 														<Anchor
 															href={resource.externalLink}
-															target='_blank'
+															target="_blank"
 															className={classes.textDecorationNone}
 														>
 															{navLink}
@@ -567,7 +576,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					</Card>
 				)}
 			</Expanded>
-			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={120} px={106}>
+			<Expanded id="resourcesBannerSection" fullWidth background="#F4F4F4" py={120} px={106}>
 				<Grid>
 					{banners.map(bannerSection =>
 						bannerSection.references.map(resource => (
@@ -578,7 +587,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							>
 								<Banner key={resource.id} resource={resource} />
 							</Grid.Col>
-						)),
+						))
 					)}
 				</Grid>
 			</Expanded>
