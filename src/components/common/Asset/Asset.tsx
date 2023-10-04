@@ -77,7 +77,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 	}
 
 	const pathToImage = getImage(asset);
-	return <GatsbyImage image={pathToImage!} alt={altText} />;
+	return <GatsbyImage objectFit='fill'  image={pathToImage!} alt={altText} />;
 });
 
 export default React.memo(Asset);

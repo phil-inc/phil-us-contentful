@@ -231,7 +231,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| undefined,
 			) {
 				return (
-					<List type='unordered' listStyleType='disc' pl={32} mt={16} mb={44}>
+					<List type='unordered' listStyleType='disc' pl={16} mt={16} mb={44}>
 						{children}
 					</List>
 				);

@@ -15,6 +15,7 @@ import {
 	Center,
 	Loader,
 	Container,
+	Stack,
 } from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -27,6 +28,68 @@ import {useId} from '@mantine/hooks';
 import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 import Speaker from 'components/common/Person/Speaker/Speaker';
+import {convertTimeToCustomFormat} from 'utils/date';
+import {TResource} from 'types/resource';
+import {getDescriptionFromRichtext} from 'utils/getDescription';
+import {SEO} from 'layouts/SEO/SEO';
+import {BodyType} from 'types/section';
+import {Person} from 'types/person';
+
+type EventRegistrationProps = {
+	data: {
+		contentfulEventRegistration: {
+			id: string;
+			heading: string;
+			heroImage: TAsset;
+			eventType: string;
+			eventDate: string;
+			bodyContent: BodyType;
+			formHeader: string;
+			hubsportEmbedForm: BodyType;
+			speakersHeader: string;
+			speakersSubHeader: string;
+			attendees: Person[];
+		};
+	};
+};
+
+type HelmetProps = EventRegistrationProps & {
+	pageContext: {
+		id: string;
+		heading: string;
+	};
+	location: {pathname: string};
+};
+
+export const Head: React.FC<HelmetProps> = ({pageContext, location, ...rest}) => {
+	console.log({pageContext, rest});
+
+	// const heroImage = pageContext.asset?.file.url;
+	// const description = pageContext.metaDescription?.length
+	// 	? pageContext.metaDescription
+	// 	: pageContext.body?.raw
+	// 		? getDescriptionFromRichtext(pageContext.body.raw)
+	// 		: '';
+
+	// const slug = pageContext.slug ?? `/${slugify(pageContext.heading, {strict: true, lower: true})}`;
+
+	return (
+		<SEO title={'title'}>
+			<meta name="twitter:card" content="summary_large_image" />
+			{/* <meta name='twitter:title' content={pageContext.heading} />
+			<meta name='twitter:description' content={description} />
+			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name='description' content={description} />
+			<meta property='og:title' content={pageContext.heading} />
+			<meta property='og:type' content={'Page'} />
+			<meta property='og:description' content={description} />
+			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property='og:url' content={`https://phil.us${slug}/`} />
+			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			{pageContext.noindex && <meta name='robots' content='noindex' />} */}
+		</SEO>
+	);
+};
 
 const useStyles = createStyles(theme => ({
 	bodyText: {
@@ -68,12 +131,99 @@ const useStyles = createStyles(theme => ({
 		padding: '44px 32px',
 		background: '#F4F4F4',
 	},
+
+	image: {
+		justifyContent: 'end',
+
+		[theme.fn.smallerThan(1275)]: {
+			justifyContent: 'center',
+		},
+	},
+
+	eventType: {
+		fontSize: 24,
+
+		color: '#0A0A0A',
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 20,
+		},
+	},
+
+	title: {
+		fontSize: 52,
+		color: '#0A0A0A',
+		letterSpacing: -0.95,
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 38,
+		},
+	},
+
+	eventDate: {
+		fontSize: 24,
+		color: '#0A0A0A',
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 20,
+			marginBottom: 40,
+		},
+	},
+
+	formHeader: {
+		fontSize: 22,
+		color: '#0A0A0A',
+		fontFamily: 'Raleway, sans-serif',
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 20,
+		},
+	},
+
+	speakersHeader: {
+		fontSize: 52,
+		color: '#0A0A0A',
+		marginBottom: 40,
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 38,
+		},
+	},
+
+	speakersSubHeader: {
+		fontSize: 24,
+		color: '#0A0A0A',
+		marginBottom: 80,
+
+		[theme.fn.smallerThan('md')]: {
+			fontSize: 18,
+			marginBottom: 40,
+		},
+	},
+
+	container: {
+		marginBottom: '120px',
+		padding: '0',
+
+		[theme.fn.smallerThan('md')]: {
+			marginBottom: 40,
+		},
+	},
+
+	stack: {
+		alignItems: 'center',
+
+		[theme.fn.smallerThan('md')]: {
+			alignItems: 'start',
+		},
+	},
 }));
 
-const EventRegistration = ({data}) => {
-	console.log({data});
-
+const EventRegistration: React.FC<EventRegistrationProps> = props => {
 	const {classes, cx} = useStyles();
+
+	const {data} = props;
+
+	console.log({props});
 
 	const options = {
 		renderNode: {
@@ -135,7 +285,7 @@ const EventRegistration = ({data}) => {
 					| undefined
 			) {
 				return (
-					<List type="unordered" listStyleType="disc" pl={32} mt={16} mb={44}>
+					<List type="unordered" listStyleType="disc" pl={16} mt={16} mb={44}>
 						{children}
 					</List>
 				);
@@ -379,78 +529,110 @@ const EventRegistration = ({data}) => {
 		},
 	};
 
-	const object = parseScript(data.contentfulEventRegistration.hubsportEmbedForm);
+	const object = parseScript(data.contentfulEventRegistration.hubsportEmbedForm as {raw: string});
 	const [formProps] = object;
+
+	const arr = [
+		...data?.contentfulEventRegistration?.attendees,
+		...data?.contentfulEventRegistration?.attendees,
+		...data?.contentfulEventRegistration?.attendees,
+	]?.slice(0, 2);
 
 	return (
 		<>
 			<Layout>
 				<Expanded id={data.contentfulEventRegistration.id} pt={40}>
-					<Container fluid p={0}>
-						<Grid justify="space-between" m={0}>
-							<Grid.Col span={'auto'}>
-								<Text mb={16} size={24}>
+					{/* HEADER/IMAGE CONTAINER */}
+					<Container fluid className={classes.container}>
+						<Grid justify="space-between" m={0} gutter={0}>
+							<Grid.Col xs={12} sm={12} md={'auto'}>
+								<Text mb={16} className={classes.eventType}>
 									{data.contentfulEventRegistration.eventType}
 								</Text>
-								<Title order={1} size={52} mb={28} weight={700}>
+								<Title order={1} mb={28} weight={700} className={classes.title}>
 									{data.contentfulEventRegistration.heading}
 								</Title>
-								{/* <Text>{data.contentfulEventRegistration.eventDate}</Text> */}
-								<Text size={24}>Nov 14, 2023 at 11am PST</Text>
-
-								<h3>{data.contentfulEventRegistration.speakersHeader}</h3>
-								<h4>{data.contentfulEventRegistration.speakersSubHeader}</h4>
+								<Text className={classes.eventDate}>
+									{convertTimeToCustomFormat(
+										data.contentfulEventRegistration.eventDate,
+										"MMM d, yyyy 'at' ha zzz"
+									)}
+								</Text>
 							</Grid.Col>
 
-							<Grid.Col span={'auto'}>
-								<Group position="right">
+							<Grid.Col xs={'auto'}>
+								<Group className={classes.image}>
 									{data.contentfulEventRegistration.heroImage && (
 										<Asset asset={data.contentfulEventRegistration.heroImage} />
 									)}
 								</Group>
 							</Grid.Col>
 						</Grid>
-									</Container>
+					</Container>
 
-						<Container fluid m={0}>
-							<Grid>
-								<Grid.Col span={'auto'}>
-									<Text mb={42} size={24}>
-										{data.contentfulEventRegistration.bodyContent &&
-											renderRichText(data.contentfulEventRegistration.bodyContent, options)}
+					{/* BODY/FORM CONTAINER */}
+					<Container fluid className={classes.container}>
+						<Grid>
+							<Grid.Col
+								xs={12}
+								md={'auto'}
+								order={2}
+								orderXs={2}
+								orderSm={2}
+								orderMd={1}
+								orderLg={1}
+								orderXl={1}
+							>
+								<Text mb={42} size={18}>
+									{data.contentfulEventRegistration.bodyContent &&
+										renderRichText(data.contentfulEventRegistration.bodyContent, options)}
+								</Text>
+							</Grid.Col>
+
+							<Grid.Col
+								xs={12}
+								md={'auto'}
+								order={1}
+								orderXs={1}
+								orderSm={1}
+								orderMd={2}
+								orderLg={2}
+								orderXl={2}
+							>
+								<Box className={classes.formWrapper}>
+									<Text mb={20} weight={700} className={classes.formHeader}>
+										{data.contentfulEventRegistration.formHeader}
 									</Text>
-								</Grid.Col>
+									<HubspotForm portalId={formProps.portalId} formId={formProps.formId} />
+								</Box>
+							</Grid.Col>
+						</Grid>
+					</Container>
 
-								<Grid.Col span={'auto'}>
-									<Box className={classes.formWrapper}>
-										<Text mb={20} size={22} weight={700}>
-											{data.contentfulEventRegistration.formHeader || 'Signup for webinar'}
-										</Text>
-										<HubspotForm portalId={formProps.portalId} formId={formProps.formId} />
-									</Box>
-								</Grid.Col>
-							</Grid>
-						</Container>
-
-						<Box>
-							<Title>{data.contentfulEventRegistration.speakersHeader}</Title>
-							<Text>{data.contentfulEventRegistration.speakersSubHeader}</Text>
-
-							<Container fluid p={0}>
-								<Grid m={0} align='center' justify={'space-around'}>
-									{data?.contentfulEventRegistration?.attendees?.map(attendee => {
+					{/* SPEAKER CONTAINER START */}
+					<Container fluid p={0}>
+						<Stack className={classes.stack} spacing={0}>
+							<Title mb={40} order={2} className={classes.speakersHeader}>
+								{data.contentfulEventRegistration.speakersHeader}
+							</Title>
+							<Text className={classes.speakersSubHeader}>
+								{data.contentfulEventRegistration.speakersSubHeader}
+							</Text>
+						</Stack>
+					</Container>
+					<Container fluid p={0}>
+						<Grid m={0} align="stretch" justify="center" gutter={26}>
+							{arr.map(attendee => {
 								return (
-									<Grid.Col span={'auto'}>
-										<Speaker person={attendee} />
+									<Grid.Col key={attendee.id} xs={12} sm={'auto'} sx={{display: 'flex', justifyContent: 'center'}}>
+										<Speaker person={attendee} length={arr.length} />
 									</Grid.Col>
 								);
 							})}
-									{/* <Grid.Col span={'content'}>
-										<Speaker person={data?.contentfulEventRegistration?.attendees[1]} />
-									</Grid.Col> */}
-								</Grid>
-							</Container>
-						</Box>
+						</Grid>
+					</Container>
+
+					{/* SPEAKER CONTAINER END */}
 				</Expanded>
 			</Layout>
 		</>
@@ -486,7 +668,7 @@ export const query = graphql`
 			}
 			attendees {
 				image {
-					gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+					gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: FULL_WIDTH)
 					title
 					file {
 						contentType

@@ -1,73 +1,69 @@
-import {Container, Grid, Title, Text, Center, Stack, Box, createStyles, AspectRatio, Card} from '@mantine/core';
+import {Container, Grid, Title, Text, Center, Stack, Box, createStyles, AspectRatio, Card, Paper} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
+import ImageContainer from 'components/common/Container/ImageContainer';
 import React from 'react';
 import {TAsset} from 'types/asset';
+import { Person } from 'types/person';
 
 type SpeakerProps = {
-	person: {id: string; name: string; image: TAsset; bio: string; role: string; company: string; type: string};
+	person: Person
+	length: number;
 };
 
-const useStyles = createStyles(() => ({
-	avatar: {
-		width: 200,
-		height: 200,
-	},
-	wrapper: {
+const useStyles = createStyles((theme, {length}: {length: number}) => ({
+	card: {
 		background: '#F5F6F8',
+		height: '100%',
 		maxWidth: 825,
 	},
+
+	avatar: {
+		width: length <= 2 ? '290px !important' : '100% !important',
+        
+        [theme.fn.smallerThan(1390) ]: {
+			width: '100% !important',
+		},
+
+		[theme.fn.smallerThan(768) ]: {
+			width: '100% !important',
+		},
+	},
+
+	wrapper: {
+		background: '#F5F6F8',
+	},
+
 	content: {
-		padding: '50px 7.48%;',
+		padding: length <= 2 ? '32px 42px;' : '50px 42px;',
+
+		[theme.fn.smallerThan('lg')]: {
+			padding: '50px 42px;',
+		},
 	},
 }));
 
-const Speaker: React.FC<SpeakerProps> = ({person}) => {
-	const {classes} = useStyles();
+const Speaker: React.FC<SpeakerProps> = ({person, length}) => {
+	const {classes} = useStyles({length});
 
-	console.log({person});
 	return (
-		<Container fluid p={0}>
+		<Paper radius={0} className={classes.card}>
 			<Grid className={classes.wrapper} justify="center" align="center" m={0} gutter={0}>
-				<Grid.Col span={12}>
-		<AspectRatio ratio={1}  sx={{maxWidth: '100%', width: 290}} >
-
-			    <Asset asset={person.image} />
-		</AspectRatio>
+				<Grid.Col className={classes.avatar} xs={12} sm="content">
+					<ImageContainer fluid>
+						<Asset asset={person.image} />
+					</ImageContainer>
 				</Grid.Col>
-				<Grid.Col span={'auto'} >
-		<Box className={classes.content}>
-			<Title order={5}>{person.name}</Title>
-			<Text mb={30}>
-				{person.role}, {person.company}
-			</Text>
-			<Text>{person.bio}</Text>
-		</Box>
+				<Grid.Col xs={12} sm={'auto'}>
+					<Box className={classes.content}>
+						<Title order={5}>{person.name}</Title>
+						<Text mb={30}>
+							{person.role}, {length > 1 && <br />} {person.company}
+						</Text>
+						<Text>{person.bio}</Text>
+					</Box>
 				</Grid.Col>
 			</Grid>
-		</Container>
-// 		<Card className={classes.wrapper}>
-//             <Grid align='center' justify='center'>
-// <Grid.Col span={'auto'}>
-
-// 			<Card.Section >
-// 				<AspectRatio ratio={1} sx={{minWidth: 290}}>
-// 					<Asset asset={person.image} />
-// 				</AspectRatio>
-// 			</Card.Section>
-// </Grid.Col>
-// <Grid.Col span={'auto'}>
-
-// 			<Box className={classes.content}>
-// 				<Title order={5}>{person.name}</Title>
-// 				<Text mb={30}>
-// 					{person.role}, {person.company}
-// 				</Text>
-// 				<Text>{person.bio}</Text>
-// 			</Box>
-
-// </Grid.Col>
-//             </Grid>
-// 		</Card>
+		</Paper>
 	);
 };
 
