@@ -24,6 +24,7 @@ const HubspotFormModal = ({hubspotEmbed}: {hubspotEmbed: BodyType}) => {
 	const hubspotRef = React.useRef(null);
 	const {classes} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
+	
 	if (hubspotEmbed) {
 		const object = parseScript(hubspotEmbed);
 		const [formProps] = object;

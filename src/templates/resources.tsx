@@ -1,7 +1,7 @@
 import React from 'react';
-import {Layout} from 'layouts/Layout/Layout';
-import type {ContentfulPage} from 'types/page';
-import {SEO} from 'layouts/SEO/SEO';
+import { Layout } from 'layouts/Layout/Layout';
+import type { ContentfulPage } from 'types/page';
+import { SEO } from 'layouts/SEO/SEO';
 import {
 	Accordion,
 	Anchor,
@@ -19,25 +19,26 @@ import {
 	useMantineTheme,
 } from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
-import {Link, graphql, navigate} from 'gatsby';
-import {ResourceCard} from 'components/common/Resources/ResourceCard';
+import { type IReferencedSection, type ISection, ReferenceTypeEnum } from 'types/section';
+import { Link, graphql, navigate } from 'gatsby';
+import { ResourceCard } from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
-import {Banner} from 'components/common/Banner/Banner';
-import {useToggle, useViewportSize} from '@mantine/hooks';
-import {HOME, RESOURCES_PAGE} from 'constants/routes';
+import { Banner } from 'components/common/Banner/Banner';
+import { useToggle, useViewportSize } from '@mantine/hooks';
+import { HOME, RESOURCES_PAGE } from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
-import {searchSubmitCallback} from 'pages/resources/search';
+import { searchSubmitCallback } from 'pages/resources/search';
+import { resourceTemplateQuery } from 'queries/resourcesTemplateQuery';
 
 type HelmetProps = {
 	data: {
 		contentfulPage: ContentfulPage;
 		contentfulReferencedSection: IReferencedSection;
 	};
-	location: {pathname: string};
+	location: { pathname: string };
 };
 
-export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulReferencedSection}, location}) => {
+export const Head: React.FC<HelmetProps> = ({ data: { contentfulPage, contentfulReferencedSection }, location }) => {
 	const heroSection = contentfulPage.sections.find(section => section.sectionType === 'Basic Section') as ISection;
 	const heroImage = heroSection?.asset.file.url;
 
@@ -73,7 +74,7 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulRe
 	);
 };
 
-const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
+const useStyles = createStyles((theme, _params: { isMobileView: boolean }) => ({
 	container: {
 		margin: 0,
 		padding: '0px 100px',
@@ -252,9 +253,9 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		fontSize: 16,
 		fontWeight: 400,
 		padding: '8px 20px',
-		[theme.fn.smallerThan('sm')]: {fontSize: 10.28, padding: '10px 7px'},
+		[theme.fn.smallerThan('sm')]: { fontSize: 10.28, padding: '10px 7px' },
 	},
-	faqContainerText: {fontSize: 20, [theme.fn.smallerThan('sm')]: {fontSize: 16}},
+	faqContainerText: { fontSize: 20, [theme.fn.smallerThan('sm')]: { fontSize: 16 } },
 
 	breakSection: {
 		display: 'none',
@@ -281,12 +282,12 @@ type ResourcesPageProps = {
 
 const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	data,
-	pageContext: {currentPage: currentPageNumber, limit, numPages},
+	pageContext: { currentPage: currentPageNumber, limit, numPages },
 }) => {
-	const {width} = useViewportSize();
+	const { width } = useViewportSize();
 	const theme = useMantineTheme();
 	const isMobileView = theme.breakpoints.md > width;
-	const {classes} = useStyles({isMobileView});
+	const { classes } = useStyles({ isMobileView });
 
 	const currentSection = data.contentfulReferencedSection;
 	const resources = currentSection?.references || [];
@@ -368,7 +369,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 												.filter(section => !section.isHidden && Boolean(section.header))
 												.map((section, index, array) => {
 													const path =
-														RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
+														RESOURCES_PAGE + slugify(section.header, { lower: true, strict: true });
 
 													return (
 														<React.Fragment key={path}>
@@ -378,7 +379,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 																	color="#00827E"
 																	py={12}
 																	variant="subtle"
-																	classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
+																	classNames={{ label: classes.navLabel, root: classes.navLinkRoot }}
 																	pl={0}
 																	key={section.id}
 																	label={section.header}
@@ -404,7 +405,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									{data.contentfulReferencedSection.featuredItems
 										.filter(resource => resource.generateStaticPage)
 										.map((resource, index, array) => {
-											const path = '/' + slugify(resource.heading, {lower: true, strict: true});
+											const path = '/' + slugify(resource.heading, { lower: true, strict: true });
 
 											const sectionLabelText = (
 												<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
@@ -412,7 +413,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 											const navLink = (
 												<NavLink
-													classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
+													classNames={{ label: classes.navLabel, root: classes.navLinkRoot }}
 													p={0}
 													pl={0}
 													key={resource.id}
@@ -496,7 +497,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							<Pagination
 								position="center"
 								mt={44}
-								classNames={{item: classes.paginationItem}}
+								classNames={{ item: classes.paginationItem }}
 								radius={0}
 								color="#0A0A0A"
 								total={numPages}
@@ -504,7 +505,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 								withControls={false}
 								onChange={async pageNumber => {
 									const path =
-										RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
+										RESOURCES_PAGE + slugify(currentSection.header, { lower: true, strict: true }) + '/';
 
 									if (pageNumber === 1) {
 										void navigate(path);
@@ -527,7 +528,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							{data.contentfulReferencedSection.featuredItems
 								.filter(resource => resource.generateStaticPage)
 								.map((resource, index, array) => {
-									const path = '/' + slugify(resource.heading, {lower: true, strict: true});
+									const path = '/' + slugify(resource.heading, { lower: true, strict: true });
 
 									const sectionLabelText = (
 										<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
@@ -535,7 +536,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 									const navLink = (
 										<NavLink
-											classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
+											classNames={{ label: classes.navLabel, root: classes.navLinkRoot }}
 											p={0}
 											pl={0}
 											key={resource.id}
@@ -596,494 +597,538 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 };
 
 export const resourcesQuery = graphql`
-	query getReferencedSection($id: String!) {
-		contentfulReferencedSection(id: {eq: $id}) {
-			id
-			title
-			metaDescription
-			isHidden
-			hideNavigationAnchor
-			hideHeader
-			header
-			sectionType
-			references {
-				... on ContentfulResource {
-					externalLink
-					internalLink {
-						... on ContentfulPage {
-							id
-							title
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulReferencedSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulResource {
-							id
-							heading
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-					}
-					heading
-					subheading
-					hubspotEmbed {
-						raw
-					}
-					isHubspotEmbed
-					isInsertSnippet
-					codeSnippet {
-						codeSnippet
-					}
-					description {
-						id
-						description
-					}
-					buttonText
-					body {
-						raw
-					}
-					author {
-						id
-						name
-						authorTitle
-						bio {
-							raw
-						}
-						avatar {
-							gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-							title
-							file {
-								contentType
-								details {
-									size
-								}
-								url
-							}
-						}
-					}
-					asset {
-						gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
-						id
-						file {
-							contentType
-							url
-						}
-					}
-					id
-				}
-				... on ContentfulDownloadableResource {
-					id
-					heading
-					desc: description
-					metaDescription
-					buttonText
-					internalLink {
-						id
-						... on ContentfulDownloadableResource {
-							slug
-							heading
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-					}
-					image {
-						gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-						title
-						file {
-							contentType
-							details {
-								size
-							}
-							url
-						}
-					}
-					body {
-						raw
-					}
-					downloadableAsset {
-						url
-						publicUrl
-						file {
-							contentType
-							details {
-								size
-							}
-							url
-							fileName
-						}
-						mimeType
-					}
-				}
-			}
-			referenceType
-			externalLink
-			buttonText
-			internalLink {
-				... on ContentfulPage {
-					id
-					title
-					sys {
-						contentType {
-							sys {
-								type
-								id
-							}
-						}
-					}
-				}
-				... on ContentfulReferencedSection {
-					id
-					page {
-						title
-						id
-					}
-					header
-					sys {
-						contentType {
-							sys {
-								type
-								id
-							}
-						}
-					}
-				}
-				... on ContentfulSection {
-					id
-					page {
-						title
-					}
-					header
-					sys {
-						contentType {
-							sys {
-								type
-								id
-							}
-						}
-					}
-				}
-				... on ContentfulResource {
-					id
-					heading
-					sys {
-						contentType {
-							sys {
-								type
-								id
-							}
-						}
-					}
-					isInsertSnippet
-					codeSnippet {
-						codeSnippet
-						id
-					}
-				}
-			}
-			featuredItems {
-				id
-				heading
-				generateStaticPage
-				externalLink
-				internalLink {
-					... on ContentfulPage {
-						id
-						title
-						sys {
-							contentType {
-								sys {
-									type
-									id
-								}
-							}
-						}
-					}
-					... on ContentfulReferencedSection {
-						id
-						page {
-							title
-						}
-						header
-						sys {
-							contentType {
-								sys {
-									type
-									id
-								}
-							}
-						}
-					}
-					... on ContentfulSection {
-						id
-						page {
-							title
-						}
-						header
-						sys {
-							contentType {
-								sys {
-									type
-									id
-								}
-							}
-						}
-					}
-					... on ContentfulResource {
-						id
-						heading
-						sys {
-							contentType {
-								sys {
-									type
-									id
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		contentfulPage(title: {eq: "Resources"}) {
-			id
-			title
-			displayTitle
-			sections {
-				... on ContentfulReferencedSection {
-					id
-					isHidden
-					hideNavigationAnchor
-					hideHeader
-					header
-					sectionType
-					references {
-						... on ContentfulResource {
-							externalLink
-							internalLink {
-								... on ContentfulPage {
-									id
-									title
-									sys {
-										contentType {
-											sys {
-												type
-												id
-											}
-										}
-									}
-								}
-								... on ContentfulReferencedSection {
-									id
-									page {
-										title
-									}
-									header
-									sys {
-										contentType {
-											sys {
-												type
-												id
-											}
-										}
-									}
-								}
-								... on ContentfulSection {
-									id
-									page {
-										title
-									}
-									header
-									sys {
-										contentType {
-											sys {
-												type
-												id
-											}
-										}
-									}
-								}
-								... on ContentfulResource {
-									id
-									heading
-									sys {
-										contentType {
-											sys {
-												type
-												id
-											}
-										}
-									}
-								}
-							}
-							heading
-							subheading
-							hubspotEmbed {
-								raw
-							}
-							isHubspotEmbed
-							isInsertSnippet
-							codeSnippet {
-								codeSnippet
-							}
-							description {
-								id
-								description
-							}
-							buttonText
-							body {
-								raw
-							}
-							author {
-								id
-								name
-								authorTitle
-								bio {
-									raw
-								}
-								avatar {
-									gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-									title
-									file {
-										contentType
-										details {
-											size
-										}
-										url
-									}
-								}
-							}
-							asset {
-								gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
-								id
-								file {
-									contentType
-									url
-								}
-							}
-							id
-						}
-					}
-					referenceType
-					externalLink
-					buttonText
-					internalLink {
-						... on ContentfulPage {
-							id
-							title
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulReferencedSection {
-							id
-							page {
-								title
-								id
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulSection {
-							id
-							page {
-								title
-							}
-							header
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-						}
-						... on ContentfulResource {
-							id
-							heading
-							sys {
-								contentType {
-									sys {
-										type
-										id
-									}
-								}
-							}
-							isInsertSnippet
-							codeSnippet {
-								codeSnippet
-								id
-							}
-						}
-					}
-				}
-				... on ContentfulSection {
-					id
-					header
-					isHidden
-					sectionType
-				}
-			}
-		}
-	}
-`;
+query getReferencedSection($id: String!) {
+    contentfulReferencedSection(id: {eq: $id}) {
+      id
+      title
+      metaDescription
+      isHidden
+      hideNavigationAnchor
+      hideHeader
+      header
+      sectionType
+      references {
+        ... on ContentfulResource {
+          externalLink
+          internalLink {
+            ... on ContentfulPage {
+              id
+              title
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulReferencedSection {
+              id
+              page {
+                title
+              }
+              header
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulSection {
+              id
+              page {
+                title
+              }
+              header
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulResource {
+              id
+              heading
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulEventRegistration {
+              id
+              heading
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+          }
+          heading
+          subheading
+          hubspotEmbed {
+            raw
+          }
+          isHubspotEmbed
+          isInsertSnippet
+          codeSnippet {
+            codeSnippet
+          }
+          description {
+            id
+            description
+          }
+          buttonText
+          body {
+            raw
+          }
+          author {
+            id
+            name
+            authorTitle
+            bio {
+              raw
+            }
+            avatar {
+              gatsbyImageData(
+                resizingBehavior: SCALE
+                placeholder: BLURRED
+                layout: CONSTRAINED
+              )
+              title
+              file {
+                contentType
+                details {
+                  size
+                }
+                url
+              }
+            }
+          }
+          asset {
+            gatsbyImageData(
+              placeholder: BLURRED
+              layout: FULL_WIDTH
+              resizingBehavior: FILL
+            )
+            id
+            file {
+              contentType
+              url
+            }
+          }
+          id
+        }
+        ... on ContentfulDownloadableResource {
+          id
+          heading
+          desc: description
+          metaDescription
+          buttonText
+          internalLink {
+            id
+            ... on ContentfulDownloadableResource {
+              slug
+              heading
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+          }
+          image {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          body {
+            raw
+          }
+          downloadableAsset {
+            url
+            publicUrl
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+              fileName
+            }
+            mimeType
+          }
+        }
+      }
+      referenceType
+      externalLink
+      buttonText
+      internalLink {
+        ... on ContentfulPage {
+          id
+          title
+          sys {
+            contentType {
+              sys {
+                type
+                id
+              }
+            }
+          }
+        }
+        ... on ContentfulReferencedSection {
+          id
+          page {
+            title
+            id
+          }
+          header
+          sys {
+            contentType {
+              sys {
+                type
+                id
+              }
+            }
+          }
+        }
+        ... on ContentfulSection {
+          id
+          page {
+            title
+          }
+          header
+          sys {
+            contentType {
+              sys {
+                type
+                id
+              }
+            }
+          }
+        }
+        ... on ContentfulResource {
+          id
+          heading
+          sys {
+            contentType {
+              sys {
+                type
+                id
+              }
+            }
+          }
+          isInsertSnippet
+          codeSnippet {
+            codeSnippet
+            id
+          }
+        }
+      }
+      featuredItems {
+        id
+        heading
+        generateStaticPage
+        externalLink
+        internalLink {
+          ... on ContentfulPage {
+            id
+            title
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+          ... on ContentfulReferencedSection {
+            id
+            page {
+              title
+            }
+            header
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+          ... on ContentfulSection {
+            id
+            page {
+              title
+            }
+            header
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+          ... on ContentfulResource {
+            id
+            heading
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    contentfulPage(title: {eq: "Resources"}) {
+      id
+      title
+      displayTitle
+      sections {
+        ... on ContentfulReferencedSection {
+          id
+          isHidden
+          hideNavigationAnchor
+          hideHeader
+          header
+          sectionType
+          references {
+            ... on ContentfulResource {
+              externalLink
+              internalLink {
+                ... on ContentfulPage {
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulReferencedSection {
+                  id
+                  page {
+                    title
+                  }
+                  header
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulSection {
+                  id
+                  page {
+                    title
+                  }
+                  header
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulResource {
+                  id
+                  heading
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulEventRegistration {
+                  id
+                  heading
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+              heading
+              subheading
+              hubspotEmbed {
+                raw
+              }
+              isHubspotEmbed
+              isInsertSnippet
+              codeSnippet {
+                codeSnippet
+              }
+              description {
+                id
+                description
+              }
+              buttonText
+              body {
+                raw
+              }
+              author {
+                id
+                name
+                authorTitle
+                bio {
+                  raw
+                }
+                avatar {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+              }
+              asset {
+                gatsbyImageData(
+                  placeholder: BLURRED
+                  layout: FULL_WIDTH
+                  resizingBehavior: FILL
+                )
+                id
+                file {
+                  contentType
+                  url
+                }
+              }
+              id
+            }
+          }
+          referenceType
+          externalLink
+          buttonText
+          internalLink {
+            ... on ContentfulPage {
+              id
+              title
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulReferencedSection {
+              id
+              page {
+                title
+                id
+              }
+              header
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulSection {
+              id
+              page {
+                title
+              }
+              header
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulResource {
+              id
+              heading
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+              isInsertSnippet
+              codeSnippet {
+                codeSnippet
+                id
+              }
+            }
+          }
+        }
+        ... on ContentfulSection {
+          id
+          header
+          isHidden
+          sectionType
+        }
+      }
+    }
+  }
+  `;
 
 export default ResourcesPage;

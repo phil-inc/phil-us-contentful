@@ -1,11 +1,11 @@
 import slugify from 'slugify';
 import path from 'path';
-import type {Actions, GatsbyNode} from 'gatsby';
+import type { Actions, GatsbyNode } from 'gatsby';
 
-import {POSTS_PER_SECTION} from './src/constants/section';
-import {pagination} from './src/utils/pagination';
+import { POSTS_PER_SECTION } from './src/constants/section';
+import { pagination } from './src/utils/pagination';
 
-export const createPages: GatsbyNode['createPages'] = async function ({actions, graphql}) {
+export const createPages: GatsbyNode['createPages'] = async function ({ actions, graphql }) {
 	type GraphqlType = <TData, TVariables = any>(
 		query: string,
 		variables?: TVariables | undefined
@@ -22,10 +22,12 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 	const resourcesTemplate = path.resolve(`./src/templates/resources.tsx`);
 	const downloadableResourcesTemplate = path.resolve(`./src/templates/downloadable-resource.tsx`);
 	const blogTemplate = path.resolve(`./src/templates/blog.tsx`);
-	const generateMainPages = async ({actions, graphql}: {actions: Actions; graphql: GraphqlType}) => {
+	const eventRegistrationTemplate = path.resolve(`./src/templates/eventRegistration.tsx`);
+
+	const generateMainPages = async ({ actions, graphql }: { actions: Actions; graphql: GraphqlType }) => {
 		// Return page
 		const createPageObject = page => {
-			const slug = page.title === 'Home' ? '/' : slugify(page.title, {lower: true, strict: true});
+			const slug = page.title === 'Home' ? '/' : slugify(page.title, { lower: true, strict: true });
 			let component;
 
 			// Choose template
@@ -43,7 +45,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 				const pageObject = {
 					path: slug,
 					component: component,
-					context: {title: page.title},
+					context: { title: page.title },
 				};
 
 				return pageObject;
@@ -58,7 +60,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 			return pageObject;
 		};
 
-		const {data} = await graphql(`
+		const { data } = await graphql(`
 			query getPages {
 				allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
 					nodes {
@@ -418,22 +420,22 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 					const postsPerPage = 5;
 					const numPages = pagination.numberOfPages(section.references.length, POSTS_PER_SECTION);
 
-					resourceSubPages.push(slugify(section.header, {lower: true, strict: true}))
-					
-					Array.from({length: numPages}).forEach((_, i) => {
+					resourceSubPages.push(slugify(section.header, { lower: true, strict: true }))
+
+					Array.from({ length: numPages }).forEach((_, i) => {
 						const pageObject = createPageObject(page);
 
 						const newPageObject = {
 							...pageObject,
 							path:
 								i === 0
-									? slugify(page.title, {lower: true, strict: true}) +
-									  '/' +
-									  slugify(section.header, {lower: true, strict: true})
-									: slugify(page.title, {lower: true, strict: true}) +
-									  '/' +
-									  slugify(section.header, {lower: true, strict: true}) +
-									  `/${i + 1}`,
+									? slugify(page.title, { lower: true, strict: true }) +
+									'/' +
+									slugify(section.header, { lower: true, strict: true })
+									: slugify(page.title, { lower: true, strict: true }) +
+									'/' +
+									slugify(section.header, { lower: true, strict: true }) +
+									`/${i + 1}`,
 							context: {
 								...pageObject.context,
 								id: section.id,
@@ -456,8 +458,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		});
 	};
 
-	const generateStaticPages = async ({actions, graphql}: {actions: Actions; graphql: GraphqlType}) => {
-		const {data} = await graphql(`
+	const generateStaticPages = async ({ actions, graphql }: { actions: Actions; graphql: GraphqlType }) => {
+		const { data } = await graphql(`
 			query allBlogPages {
 				allContentfulResource(
 					filter: {
@@ -606,9 +608,9 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 					})}`;
 
 				if (isBlogPage) {
-					const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
+					const path = `${slugify(resource.relatesTo.page[0].title, { lower: true, strict: true })}/${slugify(
 						resource.relatesTo?.header,
-						{lower: true, strict: true}
+						{ lower: true, strict: true }
 					)}/${slugify(resource.heading, {
 						lower: true,
 						strict: true,
@@ -632,8 +634,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		});
 	};
 
-	const generateDownloadableResourcePages = async ({actions, graphql}) => {
-		const {data} = await graphql(`
+	const generateDownloadableResourcePages = async ({ actions, graphql }) => {
+		const { data } = await graphql(`
 			query allDownloadableResource {
 				allContentfulDownloadableResource(filter: {node_locale: {eq: "en-US"}}) {
 					nodes {
@@ -645,7 +647,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 			}
 		`);
 
-		data.allContentfulDownloadableResource.nodes.forEach(({id, slug, heading}) => {
+		data.allContentfulDownloadableResource.nodes.forEach(({ id, slug, heading }) => {
 			const path =
 				slug ??
 				`/${slugify(heading, {
@@ -656,19 +658,49 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 			actions.createPage({
 				path: path,
 				component: downloadableResourcesTemplate,
-				context: {id, heading},
+				context: { id, heading },
 			});
 		});
 	};
 
-	await generateMainPages({actions, graphql});
-	await generateStaticPages({actions, graphql});
-	await generateDownloadableResourcePages({actions, graphql});
+	const generateEventRegistrationPages = async ({ actions, graphql }) => {
+		const { data } = await graphql(`
+			query  {
+				allContentfulEventRegistration(filter: {node_locale: {eq: "en-US"}}) {
+					nodes {
+						id
+						slug
+						heading	
+					}
+				}
+			}	
+		`);
+
+		data.allContentfulEventRegistration.nodes.forEach(({ id, slug, heading }) => {
+			const path =
+				slug ??
+				`/${slugify(heading, {
+					lower: true,
+					strict: true,
+				})}`;
+
+			actions.createPage({
+				path: path,
+				component: eventRegistrationTemplate,
+				context: { id, heading },
+			});
+		});
+	};
+
+	await generateMainPages({ actions, graphql });
+	await generateStaticPages({ actions, graphql });
+	await generateDownloadableResourcePages({ actions, graphql });
+	await generateEventRegistrationPages({ actions, graphql });
 
 
 	// TODO: Refactor
 	// create redirects for /resources page to the first sub page of resource
-	const {createRedirect} = actions;
+	const { createRedirect } = actions;
 
 	const [firstSubPage] = resourceSubPages;
 
@@ -693,12 +725,12 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 	const pageObject = {
 		path: '/resources',
 		component: resourcesRedirect,
-		context: {redirectPath},
+		context: { redirectPath },
 	};
 	actions.createPage(pageObject);
 };
 
-export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({actions, loaders, stage}) => {
+export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, loaders, stage }) => {
 	if (stage === 'build-html' || stage === 'develop-html') {
 		actions.setWebpackConfig({
 			module: {

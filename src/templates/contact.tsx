@@ -42,8 +42,7 @@ type ContactTemplateProps = {
 };
 
 const ContactTemplate: React.FC<ContactTemplateProps> = ({pageContext}) => {
-	const {id, sections, title} = pageContext;
-	const theme = useMantineTheme();
+	const {sections} = pageContext;
 
 	let basicSectionCount = 0;
 

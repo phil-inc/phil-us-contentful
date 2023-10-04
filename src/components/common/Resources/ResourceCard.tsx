@@ -106,6 +106,8 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleSystemProps> = ({r
 
 	const heading = resource.subheading?.length ? resource.subheading : resource.heading;
 
+	console.log({resource})
+
 	return (
 		<Paper mb={mb} radius={0} className={classNames(classes.card)}>
 			<Grid justify='start' align='start'>

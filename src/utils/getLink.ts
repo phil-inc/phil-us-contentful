@@ -9,14 +9,16 @@ import type {IReferencedSection, ISection} from 'types/section';
  * @returns a link string.
  */
 export const getLink = (section: ISection | IReferencedSection | TResource): {link: string; isExternal: boolean} => {
+	console.log({section})
+	
 	const link: string[] = [];
 	const sanitizeLink = (link: string[]) =>
 		`/${link.filter((piece, index) => !(index === 0 && piece === 'home')).join('/')}`;
 
 	if (section.internalLink) {
 		if (
-			section.internalLink.sys.contentType.sys.id === 'section'
-			|| section.internalLink.sys.contentType.sys.id === 'referencedSection'
+			section.internalLink?.sys?.contentType?.sys?.id === 'section'
+			|| section.internalLink.sys?.contentType?.sys?.id === 'referencedSection'
 		) {
 			if (section.internalLink?.page[0]) {
 				link.push(slugify(section.internalLink.page[0].title, {lower: true, strict: true}));
@@ -24,11 +26,12 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 					`#${slugify(section.internalLink.header ?? section.internalLink.id, {lower: true, strict: true})}`,
 				);
 			}
-		} else if (section.internalLink.sys.contentType.sys.id === 'page') {
-			link.push(slugify(section.internalLink.title, {lower: true, strict: true}));
+		} else if (section.internalLink?.sys?.contentType?.sys?.id === 'page') {
+			link.push(slugify(section.internalLink.title!, {lower: true, strict: true}));
 		} else if (
-			section.internalLink.sys.contentType.sys.id === 'resource'
-			|| section.internalLink.sys.contentType.sys.id === 'downloadableResource'
+			section.internalLink?.sys?.contentType?.sys?.id === 'resource'
+			|| section.internalLink?.sys?.contentType?.sys?.id === 'downloadableResource'
+			|| section.internalLink?.sys?.contentType?.sys?.id === 'eventRegistration'
 		) {
 			const paths = useInternalPaths();
 			const [staticPage] = paths.filter(path => path.title === section.internalLink.heading);
