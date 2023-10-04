@@ -34,13 +34,16 @@ import {getDescriptionFromRichtext} from 'utils/getDescription';
 import {SEO} from 'layouts/SEO/SEO';
 import {BodyType} from 'types/section';
 import {Person} from 'types/person';
+import slugify from 'slugify';
 
 type EventRegistrationProps = {
 	data: {
 		contentfulEventRegistration: {
 			id: string;
+			slug: string;
 			heading: string;
 			heroImage: TAsset;
+			metaDescription: string;
 			eventType: string;
 			eventDate: string;
 			bodyContent: BodyType;
@@ -49,6 +52,7 @@ type EventRegistrationProps = {
 			speakersHeader: string;
 			speakersSubHeader: string;
 			attendees: Person[];
+			noindex: boolean;
 		};
 	};
 };
@@ -61,22 +65,20 @@ type HelmetProps = EventRegistrationProps & {
 	location: {pathname: string};
 };
 
-export const Head: React.FC<HelmetProps> = ({pageContext, location, ...rest}) => {
-	console.log({pageContext, rest});
+export const Head: React.FC<HelmetProps> = ({pageContext, location, data: {contentfulEventRegistration: cer}}) => {
+	const heroImage = cer.heroImage?.file.url;
+	const description = cer.metaDescription?.length
+		? cer.metaDescription
+		: cer.bodyContent?.raw
+			? getDescriptionFromRichtext(cer.bodyContent.raw!)
+			: '';
 
-	// const heroImage = pageContext.asset?.file.url;
-	// const description = pageContext.metaDescription?.length
-	// 	? pageContext.metaDescription
-	// 	: pageContext.body?.raw
-	// 		? getDescriptionFromRichtext(pageContext.body.raw)
-	// 		: '';
-
-	// const slug = pageContext.slug ?? `/${slugify(pageContext.heading, {strict: true, lower: true})}`;
+	const slug = cer.slug ?? `/${slugify(pageContext.heading, {strict: true, lower: true})}`;
 
 	return (
-		<SEO title={'title'}>
+		<SEO title={cer.heading}>
 			<meta name="twitter:card" content="summary_large_image" />
-			{/* <meta name='twitter:title' content={pageContext.heading} />
+			<meta name='twitter:title' content={pageContext.heading} />
 			<meta name='twitter:description' content={description} />
 			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta name='description' content={description} />
@@ -86,7 +88,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location, ...rest}) =>
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${slug}/`} />
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-			{pageContext.noindex && <meta name='robots' content='noindex' />} */}
+			{cer.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
 };
@@ -532,11 +534,7 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 	const object = parseScript(data.contentfulEventRegistration.hubsportEmbedForm as {raw: string});
 	const [formProps] = object;
 
-	const arr = [
-		...data?.contentfulEventRegistration?.attendees,
-		...data?.contentfulEventRegistration?.attendees,
-		...data?.contentfulEventRegistration?.attendees,
-	]?.slice(0, 2);
+	const arr = data?.contentfulEventRegistration?.attendees;
 
 	return (
 		<>
@@ -642,6 +640,7 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 export const query = graphql`
 	query eventRegistration($id: String!) {
 		contentfulEventRegistration(id: {eq: $id}) {
+			slug
 			id
 			noindex
 			eventType
@@ -649,6 +648,8 @@ export const query = graphql`
 			eventDate
 			speakersHeader
 			speakersSubHeader
+			metaDescription
+			formHeader
 			heroImage {
 				gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
 				title
