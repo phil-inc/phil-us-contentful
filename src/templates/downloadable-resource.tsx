@@ -189,7 +189,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -208,7 +207,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -227,7 +225,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -246,7 +243,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -265,7 +261,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				const {uri} = node.data as {uri: string};
@@ -284,7 +279,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -303,7 +297,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -322,7 +315,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -341,7 +333,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -360,7 +351,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -379,7 +369,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return (
@@ -437,7 +426,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return <tr>{children}</tr>;
@@ -452,7 +440,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return <td className={classes.border}>{children}</td>;
@@ -467,7 +454,6 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				| React.ReactElement
 				| React.ReactFragment
 				| React.ReactPortal
-				| undefined
 				| undefined,
 			) {
 				return <th className={cx(classes.tableHeader, classes.border)}>{children}</th>;

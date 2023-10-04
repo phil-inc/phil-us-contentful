@@ -16,7 +16,7 @@ const useStyles = createStyles(
 			pageContainerHeight,
 			pageContainerWidth,
 			padding,
-		}: {pageContainerHeight: number; pageContainerWidth: number; padding: number}
+		}: {pageContainerHeight: number; pageContainerWidth: number; padding: number},
 	) => ({
 		container: {
 			minHeight: '64.5rem',
@@ -90,7 +90,7 @@ const useStyles = createStyles(
 			fontSize: 14,
 			fontWeight: 500,
 		},
-	})
+	}),
 );
 
 // Define the properties for the PDFViewer component
@@ -116,7 +116,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 			return;
 		}
 
-		setPdfPageWidth(wrapperRef.current?.clientWidth - PADDING * 2);
+		setPdfPageWidth(wrapperRef.current?.clientWidth ? wrapperRef.current.clientWidth - PADDING * 2 : 0);
 	}, [width]);
 
 	const height = ref?.current?.clientHeight as number;
@@ -153,20 +153,20 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 				file={url}
 				loading={
 					<Container className={classes.loadingContainer}>
-						<LoadingIndicator size="xl" />
+						<LoadingIndicator size='xl' />
 					</Container>
 				}
 				onLoadSuccess={onDocumentLoadSuccess}
 				onLoadError={error => {
 					console.error('Error while loading document: ', error);
 				}}
-				externalLinkTarget="_blank"
+				externalLinkTarget='_blank'
 			>
 				<Box className={classes.pageContainer}>
 					<ActionIcon
 						className={classes.actionButtons}
-						variant="filled"
-						color="dark"
+						variant='filled'
+						color='dark'
 						size={75}
 						radius={'50%'}
 						pr={5}
@@ -179,20 +179,20 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 						width={pdfPageWidth}
 						loading={
 							<Container className={classes.pageLoadingContainer}>
-								<LoadingIndicator size="xl" />
+								<LoadingIndicator size='xl' />
 							</Container>
 						}
 						className={classes.pdfPage}
 						pageNumber={pageNumber}
-						renderMode="canvas"
+						renderMode='canvas'
 						renderTextLayer={false}
 						renderAnnotationLayer={true}
 						renderForms={false}
 					/>
 					<ActionIcon
 						className={classes.actionButtons}
-						variant="filled"
-						color="dark"
+						variant='filled'
+						color='dark'
 						size={75}
 						radius={'50%'}
 						pl={5}
@@ -204,11 +204,11 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 				</Box>
 			</Document>
 
-			<Group position="center" align="center" className={classes.pageNumber} spacing="lg">
+			<Group position='center' align='center' className={classes.pageNumber} spacing='lg'>
 				<ActionIcon
 					className={classes.actionButtonsMobile}
-					variant="filled"
-					color="dark"
+					variant='filled'
+					color='dark'
 					size={36}
 					radius={'50%'}
 					onClick={previousPage}
@@ -216,13 +216,13 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 				>
 					<IconChevronLeft size={25} />
 				</ActionIcon>
-				<Text size={24} color="#fff">
+				<Text size={24} color='#fff'>
 					Page {pageNumber} of {numPages}
 				</Text>
 				<ActionIcon
 					className={classes.actionButtonsMobile}
-					variant="filled"
-					color="dark"
+					variant='filled'
+					color='dark'
 					size={36}
 					radius={'50%'}
 					onClick={nextPage}
@@ -231,9 +231,9 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 					<IconChevronRight size={25} />
 				</ActionIcon>
 			</Group>
-			<Group position="center" align="center" className={classes.downloadButton}>
-				<Anchor variant="text" type="button" href={url} target="_blank">
-					<Button className={classes.buttonText} px={21} size="md">
+			<Group position='center' align='center' className={classes.downloadButton}>
+				<Anchor variant='text' type='button' href={url} target='_blank'>
+					<Button className={classes.buttonText} px={21} size='md'>
 						Download PDF
 					</Button>
 				</Anchor>

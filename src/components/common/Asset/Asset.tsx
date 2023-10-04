@@ -8,7 +8,6 @@ import {isVideoContent} from 'utils/isVideoContent';
 import PDFViewer from '../PDFViewer/PDFViewer';
 import ClientSidePDFViewer from '../PDFViewer/ClientSidePDFViewer';
 
-
 type AssetProps = {
 	asset: TAsset;
 	youtubeVideoURL?: string;
@@ -77,7 +76,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 	}
 
 	const pathToImage = getImage(asset);
-	return <GatsbyImage objectFit='fill'  image={pathToImage!} alt={altText} />;
+	return <GatsbyImage objectFit='fill' image={pathToImage!} alt={altText} />;
 });
 
 export default React.memo(Asset);

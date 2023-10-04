@@ -1,4 +1,4 @@
-import { TAsset } from "./asset";
+import {type TAsset} from './asset';
 
 export type Person = {
 	id: string;

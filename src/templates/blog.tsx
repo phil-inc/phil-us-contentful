@@ -197,7 +197,16 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 				return null; // Return null during SSR
 			},
-
+			[BLOCKS.EMBEDDED_ASSET](node) {
+				return (
+					<Box
+						className={classes.embededAsset}
+						sx={{maxWidth: isVideoContent(node.data.target.file.contentType as string) ? undefined : 420}}
+					>
+						<Asset asset={node.data.target as TAsset} />
+					</Box>
+				);
+			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
 					<Text component='p' mt={0} size={18}>
@@ -216,7 +225,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type='unordered' listStyleType='disc' pl={16} mt={16} mb={44}>
+					<List type='unordered' listStyleType='disc' pl={32} mt={16} mb={44}>
 						{children}
 					</List>
 				);

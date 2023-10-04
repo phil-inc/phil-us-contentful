@@ -14,8 +14,8 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({portalId, formId}) => {
 
 	const {error, formCreated, loaded} = useHubspotForm({
 		target: `#${uuid}`,
-		portalId: portalId,
-		formId: formId,
+		portalId,
+		formId,
 	});
 
 	React.useEffect(() => {
@@ -27,7 +27,7 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({portalId, formId}) => {
 					mutationsList.forEach(mutation => {
 						if (mutation.type === 'childList') {
 							const fieldsets: NodeList[] = (mutation.target as Element).querySelectorAll(
-								'fieldset div[style*="display: none"]'
+								'fieldset div[style*="display: none"]',
 							) as unknown as NodeList[];
 							fieldsets.forEach(fieldset => {
 								const {parentElement} = fieldset as unknown as HTMLDivElement;
@@ -58,7 +58,7 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({portalId, formId}) => {
 				<div id={uuid}></div>
 			) : (
 				<Center>
-					<Loader mt={120} size="lg" />
+					<Loader mt={120} size='lg' />
 				</Center>
 			)}
 		</>

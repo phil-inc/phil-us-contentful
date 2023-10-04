@@ -9,8 +9,8 @@ import type {IReferencedSection, ISection} from 'types/section';
  * @returns a link string.
  */
 export const getLink = (section: ISection | IReferencedSection | TResource): {link: string; isExternal: boolean} => {
-	console.log({section})
-	
+	console.log({section});
+
 	const link: string[] = [];
 	const sanitizeLink = (link: string[]) =>
 		`/${link.filter((piece, index) => !(index === 0 && piece === 'home')).join('/')}`;

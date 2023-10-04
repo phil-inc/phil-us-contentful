@@ -20,7 +20,7 @@ import {
 import Asset from 'components/common/Asset/Asset';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
-import {TAsset} from 'types/asset';
+import {type TAsset} from 'types/asset';
 import {type Block} from '@contentful/rich-text-types';
 import {parseScript} from 'utils/parseScript';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
@@ -32,8 +32,8 @@ import {convertTimeToCustomFormat} from 'utils/date';
 import {TResource} from 'types/resource';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
 import {SEO} from 'layouts/SEO/SEO';
-import {BodyType} from 'types/section';
-import {Person} from 'types/person';
+import {type BodyType} from 'types/section';
+import {type Person} from 'types/person';
 import slugify from 'slugify';
 
 type EventRegistrationProps = {
@@ -70,14 +70,14 @@ export const Head: React.FC<HelmetProps> = ({pageContext, location, data: {conte
 	const description = cer.metaDescription?.length
 		? cer.metaDescription
 		: cer.bodyContent?.raw
-			? getDescriptionFromRichtext(cer.bodyContent.raw!)
+			? getDescriptionFromRichtext(cer.bodyContent.raw)
 			: '';
 
 	const slug = cer.slug ?? `/${slugify(pageContext.heading, {strict: true, lower: true})}`;
 
 	return (
 		<SEO title={cer.heading}>
-			<meta name="twitter:card" content="summary_large_image" />
+			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={pageContext.heading} />
 			<meta name='twitter:description' content={description} />
 			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
@@ -239,17 +239,16 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.PARAGRAPH](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
-					<Text component="p" mt={0} className={classes.bodyText}>
+					<Text component='p' mt={0} className={classes.bodyText}>
 						{children}
 					</Text>
 				);
@@ -258,17 +257,16 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.OL_LIST](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
-					<List type="ordered" mt={16} mb={32}>
+					<List type='ordered' mt={16} mb={32}>
 						{children}
 					</List>
 				);
@@ -277,17 +275,16 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.UL_LIST](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
-					<List type="unordered" listStyleType="disc" pl={16} mt={16} mb={44}>
+					<List type='unordered' listStyleType='disc' pl={16} mt={16} mb={44}>
 						{children}
 					</List>
 				);
@@ -296,14 +293,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.LIST_ITEM](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
 					<List.Item mt={8} mb={0} pr={20} className={classes.listItem}>
@@ -315,18 +311,17 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[INLINES.HYPERLINK](
 				node: {data: {uri: string}},
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				const {uri} = node.data as {uri: string};
 				return (
-					<Anchor href={uri} target="_blank" className={classes.anchor}>
+					<Anchor href={uri} target='_blank' className={classes.anchor}>
 						{children}
 					</Anchor>
 				);
@@ -334,14 +329,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.HEADING_1](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
 					<Title order={1} mt={40} mb={4}>
@@ -353,14 +347,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.HEADING_2](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
 					<Title order={2} size={24} mt={40} mb={4}>
@@ -372,14 +365,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.HEADING_3](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
 					<Title order={3} size={18} mt={40} mb={4}>
@@ -391,14 +383,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.HEADING_4](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
 					<Title order={4} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
@@ -410,14 +401,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.HEADING_5](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
 					<Title order={5} size={18} style={{fontWeight: 400, fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
@@ -429,14 +419,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.HEADING_6](
 				node: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return (
 					<Title order={6} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
@@ -487,14 +476,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.TABLE_ROW](
 				_: any,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return <tr>{children}</tr>;
 			},
@@ -502,14 +490,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.TABLE_CELL](
 				node: Block,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return <td className={classes.border}>{children}</td>;
 			},
@@ -517,14 +504,13 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 			[BLOCKS.TABLE_HEADER_CELL](
 				node: Block,
 				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-					| undefined
+				| string
+				| number
+				| boolean
+				| React.ReactElement
+				| React.ReactFragment
+				| React.ReactPortal
+				| undefined,
 			) {
 				return <th className={cx(classes.tableHeader, classes.border)}>{children}</th>;
 			},
@@ -542,7 +528,7 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 				<Expanded id={data.contentfulEventRegistration.id} pt={40}>
 					{/* HEADER/IMAGE CONTAINER */}
 					<Container fluid className={classes.container}>
-						<Grid justify="space-between" m={0} gutter={0}>
+						<Grid justify='space-between' m={0} gutter={0}>
 							<Grid.Col xs={12} sm={12} md={'auto'}>
 								<Text mb={16} className={classes.eventType}>
 									{data.contentfulEventRegistration.eventType}
@@ -553,7 +539,7 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 								<Text className={classes.eventDate}>
 									{convertTimeToCustomFormat(
 										data.contentfulEventRegistration.eventDate,
-										"MMM d, yyyy 'at' ha zzz"
+										'MMM d, yyyy \'at\' ha zzz',
 									)}
 								</Text>
 							</Grid.Col>
@@ -582,8 +568,8 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 								orderXl={1}
 							>
 								<Text mb={42} size={18}>
-									{data.contentfulEventRegistration.bodyContent &&
-										renderRichText(data.contentfulEventRegistration.bodyContent, options)}
+									{data.contentfulEventRegistration.bodyContent
+										&& renderRichText(data.contentfulEventRegistration.bodyContent, options)}
 								</Text>
 							</Grid.Col>
 
@@ -619,14 +605,17 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 						</Stack>
 					</Container>
 					<Container fluid p={0}>
-						<Grid m={0} align="stretch" justify="center" gutter={26}>
-							{arr.map(attendee => {
-								return (
-									<Grid.Col key={attendee.id} xs={12} sm={'auto'} sx={{display: 'flex', justifyContent: 'center'}}>
-										<Speaker person={attendee} length={arr.length} />
-									</Grid.Col>
-								);
-							})}
+						<Grid m={0} align='stretch' justify='center' gutter={26}>
+							{arr.map(attendee => (
+								<Grid.Col
+									key={attendee.id}
+									xs={12}
+									sm={'auto'}
+									sx={{display: 'flex', justifyContent: 'center'}}
+								>
+									<Speaker person={attendee} length={arr.length} />
+								</Grid.Col>
+							))}
 						</Grid>
 					</Container>
 
