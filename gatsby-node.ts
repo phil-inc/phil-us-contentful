@@ -1,11 +1,11 @@
 import slugify from 'slugify';
 import path from 'path';
-import type { Actions, GatsbyNode } from 'gatsby';
+import type {Actions, GatsbyNode} from 'gatsby';
 
-import { POSTS_PER_SECTION } from './src/constants/section';
-import { pagination } from './src/utils/pagination';
+import {POSTS_PER_SECTION} from './src/constants/section';
+import {pagination} from './src/utils/pagination';
 
-export const createPages: GatsbyNode['createPages'] = async function ({ actions, graphql }) {
+export const createPages: GatsbyNode['createPages'] = async function ({actions, graphql}) {
 	type GraphqlType = <TData, TVariables = any>(
 		query: string,
 		variables?: TVariables | undefined
@@ -24,10 +24,10 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 	const blogTemplate = path.resolve(`./src/templates/blog.tsx`);
 	const eventRegistrationTemplate = path.resolve(`./src/templates/eventRegistration.tsx`);
 
-	const generateMainPages = async ({ actions, graphql }: { actions: Actions; graphql: GraphqlType }) => {
+	const generateMainPages = async ({actions, graphql}: {actions: Actions; graphql: GraphqlType}) => {
 		// Return page
 		const createPageObject = page => {
-			const slug = page.title === 'Home' ? '/' : slugify(page.title, { lower: true, strict: true });
+			const slug = page.title === 'Home' ? '/' : slugify(page.title, {lower: true, strict: true});
 			let component;
 
 			// Choose template
@@ -45,7 +45,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 				const pageObject = {
 					path: slug,
 					component: component,
-					context: { title: page.title },
+					context: {title: page.title},
 				};
 
 				return pageObject;
@@ -54,351 +54,32 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 			const pageObject = {
 				path: slug,
 				component: component,
-				context: page,
+				context: {id: page.id},
 			};
 
 			return pageObject;
 		};
 
-		const { data } = await graphql(`
+		const {data} = await graphql(`
 			query getPages {
 				allContentfulPage(filter: {node_locale: {eq: "en-US"}}) {
 					nodes {
 						id
 						title
-						displayTitle
-						description
 						sections {
 							... on ContentfulSection {
 								id
-								isHidden
-								youtubeVideoUrl
-								body {
-									raw
-									references {
-										contentful_id
-										__typename
-										description
-										gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-									}
-								}
-								isHubspotEmbed
-								isInsertSnippet
-								codeSnippet {
-									codeSnippet
-								}
-								asset {
-									gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-									title
-									file {
-										contentType
-										details {
-											size
-										}
-										url
-									}
-								}
-								buttonText
 								header
-								sectionType
-								externalLink
-								sys {
-									contentType {
-										sys {
-											id
-										}
-									}
-								}
-								subHeader {
-									subHeader
-								}
-								internalLink {
-									... on ContentfulPage {
-										id
-										title
-										sys {
-											contentType {
-												sys {
-													type
-													id
-												}
-											}
-										}
-									}
-									... on ContentfulReferencedSection {
-										id
-										page {
-											title
-										}
-										header
-										sys {
-											contentType {
-												sys {
-													type
-													id
-												}
-											}
-										}
-									}
-									... on ContentfulSection {
-										id
-										page {
-											title
-										}
-										header
-										sys {
-											contentType {
-												sys {
-													type
-													id
-												}
-											}
-										}
-									}
-									... on ContentfulResource {
-										id
-										heading
-										sys {
-											contentType {
-												sys {
-													type
-													id
-												}
-											}
-										}
-									}
-								}
 							}
 							... on ContentfulReferencedSection {
 								id
-								isHidden
-								hideNavigationAnchor
-								hideHeader
 								header
-								subHeading {
-									id
-									subHeading
-								}
-								sectionType
 								references {
-									... on ContentfulResource {
-										externalLink
-										internalLink {
-											... on ContentfulPage {
-												id
-												title
-												sys {
-													contentType {
-														sys {
-															type
-															id
-														}
-													}
-												}
-											}
-											... on ContentfulReferencedSection {
-												id
-												page {
-													title
-												}
-												header
-												sys {
-													contentType {
-														sys {
-															type
-															id
-														}
-													}
-												}
-											}
-											... on ContentfulSection {
-												id
-												page {
-													title
-												}
-												header
-												sys {
-													contentType {
-														sys {
-															type
-															id
-														}
-													}
-												}
-											}
-											... on ContentfulResource {
-												id
-												heading
-												sys {
-													contentType {
-														sys {
-															type
-															id
-														}
-													}
-												}
-											}
-										}
-										heading
-										subheading
-										hubspotEmbed {
-											raw
-										}
-										isHubspotEmbed
-										isInsertSnippet
-										codeSnippet {
-											codeSnippet
-										}
-										description {
-											id
-											description
-										}
-										buttonText
-										body {
-											raw
-										}
-										author {
-											id
-											name
-											authorTitle
-											bio {
-												raw
-											}
-											avatar {
-												gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-												title
-												file {
-													contentType
-													details {
-														size
-													}
-													url
-												}
-											}
-										}
-										asset {
-											gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH, resizingBehavior: FILL)
-											id
-											file {
-												contentType
-												url
-											}
-										}
-										id
-									}
 									... on ContentfulDownloadableResource {
 										id
-										heading
-										desc: description
-										metaDescription
-										buttonText
-										internalLink {
-											id
-											... on ContentfulDownloadableResource {
-												slug
-												heading
-												sys {
-													contentType {
-														sys {
-															type
-															id
-														}
-													}
-												}
-											}
-										}
-										image {
-											gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-											title
-											file {
-												contentType
-												details {
-													size
-												}
-												url
-											}
-										}
-										body {
-											raw
-										}
-										downloadableAsset {
-											url
-											publicUrl
-											file {
-												contentType
-												details {
-													size
-												}
-												url
-												fileName
-											}
-											mimeType
-										}
-									}
-								}
-								referenceType
-								externalLink
-								buttonText
-								internalLink {
-									... on ContentfulPage {
-										id
-										title
-										sys {
-											contentType {
-												sys {
-													type
-													id
-												}
-											}
-										}
-									}
-									... on ContentfulReferencedSection {
-										id
-										page {
-											title
-											id
-										}
-										header
-										sys {
-											contentType {
-												sys {
-													type
-													id
-												}
-											}
-										}
-									}
-									... on ContentfulSection {
-										id
-										page {
-											title
-										}
-										header
-										sys {
-											contentType {
-												sys {
-													type
-													id
-												}
-											}
-										}
 									}
 									... on ContentfulResource {
 										id
-										heading
-										sys {
-											contentType {
-												sys {
-													type
-													id
-												}
-											}
-										}
-										isInsertSnippet
-										codeSnippet {
-											codeSnippet
-											id
-										}
 									}
 								}
 							}
@@ -420,22 +101,22 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 					const postsPerPage = 5;
 					const numPages = pagination.numberOfPages(section.references.length, POSTS_PER_SECTION);
 
-					resourceSubPages.push(slugify(section.header, { lower: true, strict: true }))
+					resourceSubPages.push(slugify(section.header, {lower: true, strict: true}));
 
-					Array.from({ length: numPages }).forEach((_, i) => {
+					Array.from({length: numPages}).forEach((_, i) => {
 						const pageObject = createPageObject(page);
 
 						const newPageObject = {
 							...pageObject,
 							path:
 								i === 0
-									? slugify(page.title, { lower: true, strict: true }) +
-									'/' +
-									slugify(section.header, { lower: true, strict: true })
-									: slugify(page.title, { lower: true, strict: true }) +
-									'/' +
-									slugify(section.header, { lower: true, strict: true }) +
-									`/${i + 1}`,
+									? slugify(page.title, {lower: true, strict: true}) +
+									  '/' +
+									  slugify(section.header, {lower: true, strict: true})
+									: slugify(page.title, {lower: true, strict: true}) +
+									  '/' +
+									  slugify(section.header, {lower: true, strict: true}) +
+									  `/${i + 1}`,
 							context: {
 								...pageObject.context,
 								id: section.id,
@@ -458,9 +139,9 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 		});
 	};
 
-	const generateStaticPages = async ({ actions, graphql }: { actions: Actions; graphql: GraphqlType }) => {
-		const { data } = await graphql(`
-			query allBlogPages {
+	const generateStaticPages = async ({actions, graphql}: {actions: Actions; graphql: GraphqlType}) => {
+		const {data} = await graphql(`
+			query allStaticPages {
 				allContentfulResource(
 					filter: {
 						node_locale: {eq: "en-US"}
@@ -469,111 +150,9 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 					}
 				) {
 					nodes {
-						banners {
-							id
-							body {
-								raw
-							}
-							buttonText
-							hubspotEmbed {
-								raw
-							}
-							isHubspotEmbed
-							externalLink
-							heading
-						}
-						slug
-						noindex
-						isFaq
-						author {
-							id
-							name
-							authorTitle
-							bio {
-								raw
-							}
-							avatar {
-								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-								title
-								file {
-									contentType
-									details {
-										size
-									}
-									url
-								}
-							}
-						}
-						buttonText
-						heading
 						id
-						subheading
-						description {
-							id
-							description
-						}
-						metaDescription
-						externalLink
-						asset {
-							gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
-							title
-							file {
-								contentType
-								details {
-									size
-								}
-								url
-							}
-						}
-						body {
-							raw
-							references {
-								... on ContentfulAsset {
-									contentful_id
-									__typename
-									description
-									gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-									file {
-										contentType
-										details {
-											size
-										}
-										url
-									}
-									sys {
-										type
-									}
-								}
-								... on ContentfulYoutubeEmbedResource {
-									id
-									contentful_id
-									__typename
-									youtubeVideoUrl
-									title
-									sys {
-										contentType {
-											sys {
-												id
-												type
-											}
-										}
-										type
-									}
-									internal {
-										type
-									}
-								}
-							}
-						}
-						sys {
-							contentType {
-								sys {
-									id
-									type
-								}
-							}
-						}
-						generateStaticPage
+						heading
+						slug
 						relatesTo {
 							... on ContentfulReferencedSection {
 								id
@@ -599,7 +178,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 
 		data.allContentfulResource.nodes.forEach(resource => {
 			try {
-				const isBlogPage = Boolean(resource.relatesTo && resource.relatesTo.page && resource.heading);
+				const isRelatedPage = Boolean(resource.relatesTo && resource.relatesTo.page && resource.heading);
+				
 				const path =
 					resource.slug ??
 					`/${slugify(resource.heading, {
@@ -607,10 +187,12 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 						strict: true,
 					})}`;
 
-				if (isBlogPage) {
-					const path = `${slugify(resource.relatesTo.page[0].title, { lower: true, strict: true })}/${slugify(
+
+
+				if (isRelatedPage) {
+					const path = `${slugify(resource.relatesTo.page[0].title, {lower: true, strict: true})}/${slugify(
 						resource.relatesTo?.header,
-						{ lower: true, strict: true }
+						{lower: true, strict: true}
 					)}/${slugify(resource.heading, {
 						lower: true,
 						strict: true,
@@ -619,14 +201,16 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 					actions.createPage({
 						path: path,
 						component: blogTemplate,
-						context: resource,
+						context: {id: resource.id, heading: resource.heading},
 					});
+
+					return;
 				}
 
 				actions.createPage({
 					path: path,
 					component: blogTemplate,
-					context: resource,
+					context: {id: resource.id, heading: resource.heading},
 				});
 			} catch (error) {
 				console.log('Error creating page: ', resource.heading);
@@ -634,8 +218,8 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 		});
 	};
 
-	const generateDownloadableResourcePages = async ({ actions, graphql }) => {
-		const { data } = await graphql(`
+	const generateDownloadableResourcePages = async ({actions, graphql}) => {
+		const {data} = await graphql(`
 			query allDownloadableResource {
 				allContentfulDownloadableResource(filter: {node_locale: {eq: "en-US"}}) {
 					nodes {
@@ -647,7 +231,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 			}
 		`);
 
-		data.allContentfulDownloadableResource.nodes.forEach(({ id, slug, heading }) => {
+		data.allContentfulDownloadableResource.nodes.forEach(({id, slug, heading}) => {
 			const path =
 				slug ??
 				`/${slugify(heading, {
@@ -658,25 +242,25 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 			actions.createPage({
 				path: path,
 				component: downloadableResourcesTemplate,
-				context: { id, heading },
+				context: {id, heading},
 			});
 		});
 	};
 
-	const generateEventRegistrationPages = async ({ actions, graphql }) => {
-		const { data } = await graphql(`
-			query  {
+	const generateEventRegistrationPages = async ({actions, graphql}) => {
+		const {data} = await graphql(`
+			query {
 				allContentfulEventRegistration(filter: {node_locale: {eq: "en-US"}}) {
 					nodes {
 						id
 						slug
-						heading	
+						heading
 					}
 				}
-			}	
+			}
 		`);
 
-		data.allContentfulEventRegistration.nodes.forEach(({ id, slug, heading }) => {
+		data.allContentfulEventRegistration.nodes.forEach(({id, slug, heading}) => {
 			const path =
 				slug ??
 				`/${slugify(heading, {
@@ -687,20 +271,19 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 			actions.createPage({
 				path: path,
 				component: eventRegistrationTemplate,
-				context: { id, heading },
+				context: {id, heading},
 			});
 		});
 	};
 
-	await generateMainPages({ actions, graphql });
-	await generateStaticPages({ actions, graphql });
-	await generateDownloadableResourcePages({ actions, graphql });
-	await generateEventRegistrationPages({ actions, graphql });
-
+	await generateMainPages({actions, graphql});
+	await generateStaticPages({actions, graphql});
+	await generateDownloadableResourcePages({actions, graphql});
+	await generateEventRegistrationPages({actions, graphql});
 
 	// TODO: Refactor
 	// create redirects for /resources page to the first sub page of resource
-	const { createRedirect } = actions;
+	const {createRedirect} = actions;
 
 	const [firstSubPage] = resourceSubPages;
 
@@ -721,16 +304,16 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 		isPermanent: true,
 	});
 
-	const resourcesRedirect = path.resolve(`./src/templates/resourcesRedirect.tsx`);
-	const pageObject = {
-		path: '/resources',
-		component: resourcesRedirect,
-		context: { redirectPath },
-	};
-	actions.createPage(pageObject);
+	// const resourcesRedirect = path.resolve(`./src/templates/resourcesRedirect.tsx`);
+	// const pageObject = {
+	// 	path: '/resources',
+	// 	component: resourcesRedirect,
+	// 	context: {redirectPath},
+	// };
+	// actions.createPage(pageObject);
 };
 
-export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, loaders, stage }) => {
+export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({actions, loaders, stage}) => {
 	if (stage === 'build-html' || stage === 'develop-html') {
 		actions.setWebpackConfig({
 			module: {

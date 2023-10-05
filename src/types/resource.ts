@@ -84,6 +84,7 @@ TResource,
 | 'body'
 | 'author'
 > & {
+	type: string;
 	image: TResource['asset'];
 	downloadableAsset: DownloadableAsset;
 	description: string;

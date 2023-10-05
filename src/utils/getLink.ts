@@ -9,8 +9,6 @@ import type {IReferencedSection, ISection} from 'types/section';
  * @returns a link string.
  */
 export const getLink = (section: ISection | IReferencedSection | TResource): {link: string; isExternal: boolean} => {
-	console.log({section});
-
 	const link: string[] = [];
 	const sanitizeLink = (link: string[]) =>
 		`/${link.filter((piece, index) => !(index === 0 && piece === 'home')).join('/')}`;
@@ -34,7 +32,7 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 			|| section.internalLink?.sys?.contentType?.sys?.id === 'eventRegistration'
 		) {
 			const paths = useInternalPaths();
-			const [staticPage] = paths.filter(path => path.title === section.internalLink.heading);
+			const [staticPage] = paths.filter(path => path.id === section.internalLink.id);
 
 			// Referencing a internal link but not relating it to a section
 			// can cause issues which is mitigated by # link

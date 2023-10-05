@@ -3,8 +3,19 @@ import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import {Layout} from 'layouts/Layout/Layout';
 import {type Block} from '@contentful/rich-text-types';
 import {SEO} from 'layouts/SEO/SEO';
-import {Anchor, AspectRatio, Box, Button, Grid, List, Text, Title, createStyles, useMantineTheme} from '@mantine/core';
-import Expanded from 'components/common/Expanded/Expanded';
+import {
+	Anchor,
+	AspectRatio,
+	Box,
+	Button,
+	Container,
+	Grid,
+	List,
+	Text,
+	Title,
+	createStyles,
+	useMantineTheme,
+} from '@mantine/core';
 import {graphql} from 'gatsby';
 import {renderBanners} from 'components/common/Banner/Banner';
 import {type TResource, type TDownloadableResource} from 'types/resource';
@@ -12,7 +23,7 @@ import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import Asset from 'components/common/Asset/Asset';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {type TAsset} from 'types/asset';
-import PageContext from 'contexts/PageContext';
+import {isPDFContent} from 'utils/isVideoContent';
 
 type HelmetProps = {
 	data: {
@@ -55,6 +66,23 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulDownloadableResour
 };
 
 const useStyles = createStyles(theme => ({
+	inner: {
+		[theme.fn.smallerThan('sm')]: {
+			padding: '0 16px',
+		},
+	},
+
+	embededAsset: {
+		marginBottom: '32px',
+
+		display: 'flex',
+		justifyContent: 'center',
+	},
+
+	embededAssetPDF: {
+		marginBottom: '32px',
+	},
+
 	section: {
 		fontSize: 24,
 
@@ -70,6 +98,7 @@ const useStyles = createStyles(theme => ({
 			fontSize: 38,
 		},
 	},
+
 	description: {
 		maxWidth: 500,
 		marginTop: 24,
@@ -81,6 +110,7 @@ const useStyles = createStyles(theme => ({
 			fontSize: 16,
 		},
 	},
+
 	bodyText: {
 		fontSize: 18,
 
@@ -89,6 +119,7 @@ const useStyles = createStyles(theme => ({
 			lineHeight: 1.4,
 		},
 	},
+
 	border: {
 		border: '2px solid black',
 		padding: 10,
@@ -102,9 +133,11 @@ const useStyles = createStyles(theme => ({
 	tableHeader: {
 		textAlign: 'start',
 	},
+
 	anchor: {
 		color: '#00827E',
 	},
+
 	listItem: {
 		overflow: 'hidden',
 		fontSize: 24,
@@ -114,49 +147,22 @@ const useStyles = createStyles(theme => ({
 			fontWeight: 700,
 		},
 	},
+
 	buttonText: {
 		fontSize: 14,
 		fontWeight: 500,
 	},
 }));
 
-type Reference = {
-	id?: string;
-};
-
-type ReferenceTypeGroup = {
-	references: Reference[];
-	referenceType: string;
-};
-
-function parseReferenceData(referenceData: ReferenceTypeGroup[]): Map<string, string> {
-	const idToReferenceTypeMap = new Map<string, string>();
-	for (const group of referenceData) {
-		for (const ref of group.references) {
-			if (ref.id) {
-				idToReferenceTypeMap.set(ref.id, group.referenceType);
-			}
-		}
-	}
-
-	return idToReferenceTypeMap;
-}
-
-function getReferenceType(id: string, idToReferenceTypeMap: Map<string, string>): string | undefined {
-	return idToReferenceTypeMap.get(id);
-}
-
 type ResourcesPageProps = {
 	data: {
 		contentfulDownloadableResource: TDownloadableResource;
-		allContentfulReferencedSection: {nodes: ReferenceTypeGroup[]};
 		allContentfulResource: {nodes: TResource[]};
 	};
 	location: Location;
 };
 
 const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
-	const theme = useMantineTheme();
 	const {classes, cx} = useStyles();
 	const ref = React.useRef(null);
 	const canvasRef = React.useRef(null);
@@ -166,16 +172,17 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 		? [data.contentfulDownloadableResource.banner]!
 		: (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
-	const idToReferenceTypeMap = React.useMemo(
-		() => parseReferenceData(data.allContentfulReferencedSection.nodes),
-		[data.allContentfulReferencedSection.nodes],
-	);
-
 	const options = {
 		renderNode: {
 			[BLOCKS.EMBEDDED_ASSET](node: {data: {target: TAsset}}) {
 				return (
-					<Box>
+					<Box
+						className={
+							isPDFContent(node.data.target.file.contentType)
+								? classes.embededAssetPDF
+								: classes.embededAsset
+						}
+					>
 						<Asset ref={canvasRef} asset={node.data.target} />
 					</Box>
 				);
@@ -461,15 +468,15 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 		},
 	};
 
-	const section = getReferenceType(data.contentfulDownloadableResource.id, idToReferenceTypeMap);
-
 	return (
 		<Layout>
-			<Expanded id={data.contentfulDownloadableResource.id} pt={55}>
+			<Container className={classes.inner} size={1800} pb={92} id={data.contentfulDownloadableResource.id} pt={55}>
 				<Box>
 					<Grid>
 						<Grid.Col sm={12} md={7}>
-							{section?.length && <Text className={classes.section}>{section}</Text>}
+							{data?.contentfulDownloadableResource?.type?.length && (
+								<Text className={classes.section}>{data.contentfulDownloadableResource.type}</Text>
+							)}
 							<Title className={classes.title}>{data.contentfulDownloadableResource.heading}</Title>
 							<Box className={classes.description}>
 								<Text>{data.contentfulDownloadableResource.description}</Text>
@@ -501,7 +508,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 					</Text>
 				</Box>
 				<SocialShare />
-			</Expanded>
+			</Container>
 			{renderBanners(bannersToDisplay)}
 		</Layout>
 	);
@@ -511,6 +518,7 @@ export const downloadableResourceQuery = graphql`
 	query getDownloadableResource($id: String) {
 		contentfulDownloadableResource(id: {eq: $id}) {
 			id
+			type
 			noindex
 			heading
 			description
@@ -634,18 +642,6 @@ export const downloadableResourceQuery = graphql`
 					externalLink
 					heading
 				}
-			}
-		}
-		allContentfulReferencedSection(
-			filter: {referenceType: {in: ["White Paper", "FAQs", "Phil Blog", "Case Study", "Upcoming Events"]}}
-		) {
-			nodes {
-				references {
-					... on ContentfulDownloadableResource {
-						id
-					}
-				}
-				referenceType
 			}
 		}
 	}

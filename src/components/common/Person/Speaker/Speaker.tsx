@@ -40,6 +40,10 @@ const useStyles = createStyles((theme, {length}: {length: number}) => ({
 			padding: '50px 42px;',
 		},
 	},
+
+	textColor: {
+		color: '#525252',
+	},
 }));
 
 const Speaker: React.FC<SpeakerProps> = ({person, length}) => {
@@ -56,10 +60,10 @@ const Speaker: React.FC<SpeakerProps> = ({person, length}) => {
 				<Grid.Col xs={12} sm={'auto'}>
 					<Box className={classes.content}>
 						<Title order={5}>{person.name}</Title>
-						<Text mb={30}>
+						<Text mb={30} className={classes.textColor}>
 							{person.role}, {length > 1 && <br />} {person.company}
 						</Text>
-						<Text>{person.bio}</Text>
+						<Text className={classes.textColor}>{person.bio}</Text>
 					</Box>
 				</Grid.Col>
 			</Grid>

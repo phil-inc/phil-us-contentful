@@ -10,7 +10,6 @@ import {
 	Card,
 	Divider,
 	Grid,
-	Group,
 	NavLink,
 	Pagination,
 	Text,
@@ -25,10 +24,9 @@ import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
-import {HOME, RESOURCES_PAGE} from 'constants/routes';
+import {RESOURCES_PAGE} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
 import {searchSubmitCallback} from 'pages/resources/search';
-import {resourceTemplateQuery} from 'queries/resourcesTemplateQuery';
 
 type HelmetProps = {
 	data: {
@@ -295,7 +293,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	const startIndex = (currentPageNumber - 1) * limit;
 	const endIndex = Math.min(startIndex + limit, resources.length);
 
-	const banners = data.contentfulPage.sections.filter(section => {
+	const banners = data?.contentfulPage?.sections?.filter(section => {
 		if (section?.sectionType === 'Referenced Section') {
 			if ((section as IReferencedSection).referenceType === ReferenceTypeEnum.Banner) {
 				return true;

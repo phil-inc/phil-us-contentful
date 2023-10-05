@@ -29,12 +29,14 @@ import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 import Speaker from 'components/common/Person/Speaker/Speaker';
 import {convertTimeToCustomFormat} from 'utils/date';
-import {TResource} from 'types/resource';
+import {type TResource} from 'types/resource';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
 import {SEO} from 'layouts/SEO/SEO';
 import {type BodyType} from 'types/section';
 import {type Person} from 'types/person';
 import slugify from 'slugify';
+import ImageContainer from 'components/common/Container/ImageContainer';
+import {renderBanners} from 'components/common/Banner/Banner';
 
 type EventRegistrationProps = {
 	data: {
@@ -54,6 +56,9 @@ type EventRegistrationProps = {
 			attendees: Person[];
 			noindex: boolean;
 		};
+		allContentfulResource: {
+			nodes: TResource[];
+		};
 	};
 };
 
@@ -65,7 +70,7 @@ type HelmetProps = EventRegistrationProps & {
 	location: {pathname: string};
 };
 
-export const Head: React.FC<HelmetProps> = ({pageContext, location, data: {contentfulEventRegistration: cer}}) => {
+export const Head: React.FC<HelmetProps> = ({pageContext, data: {contentfulEventRegistration: cer}}) => {
 	const heroImage = cer.heroImage?.file.url;
 	const description = cer.metaDescription?.length
 		? cer.metaDescription
@@ -116,9 +121,11 @@ const useStyles = createStyles(theme => ({
 	tableHeader: {
 		textAlign: 'start',
 	},
+
 	anchor: {
 		color: '#00827E',
 	},
+
 	listItem: {
 		overflow: 'hidden',
 		fontSize: 24,
@@ -135,10 +142,12 @@ const useStyles = createStyles(theme => ({
 	},
 
 	image: {
-		justifyContent: 'end',
+		justifyContent: 'center',
+		height: '100%',
 
-		[theme.fn.smallerThan(1275)]: {
-			justifyContent: 'center',
+		'>img': {
+			height: '100%',
+			objectFit: 'cover',
 		},
 	},
 
@@ -182,17 +191,18 @@ const useStyles = createStyles(theme => ({
 	},
 
 	speakersHeader: {
-		fontSize: 52,
+		fontSize: 40,
 		color: '#0A0A0A',
-		marginBottom: 40,
+		marginBottom: 32,
 
 		[theme.fn.smallerThan('md')]: {
-			fontSize: 38,
+			fontSize: 32,
+			marginBottom: 24,
 		},
 	},
 
 	speakersSubHeader: {
-		fontSize: 24,
+		fontSize: 20,
 		color: '#0A0A0A',
 		marginBottom: 80,
 
@@ -220,12 +230,10 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-const EventRegistration: React.FC<EventRegistrationProps> = props => {
+const EventRegistration: React.FC<EventRegistrationProps> = ({data}) => {
 	const {classes, cx} = useStyles();
 
-	const {data} = props;
-
-	console.log({props});
+	const banners = data.allContentfulResource.nodes.map(r => r.banners).flat(1) as TResource[];
 
 	const options = {
 		renderNode: {
@@ -522,6 +530,11 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 
 	const arr = data?.contentfulEventRegistration?.attendees;
 
+	const defaultBanners = data.allContentfulResource.nodes;
+	const hasBanners = Boolean(banners);
+
+	const bannersToDisplay = hasBanners ? banners : (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
+
 	return (
 		<>
 			<Layout>
@@ -596,7 +609,7 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 					{/* SPEAKER CONTAINER START */}
 					<Container fluid p={0}>
 						<Stack className={classes.stack} spacing={0}>
-							<Title mb={40} order={2} className={classes.speakersHeader}>
+							<Title order={2} className={classes.speakersHeader}>
 								{data.contentfulEventRegistration.speakersHeader}
 							</Title>
 							<Text className={classes.speakersSubHeader}>
@@ -618,9 +631,11 @@ const EventRegistration: React.FC<EventRegistrationProps> = props => {
 							))}
 						</Grid>
 					</Container>
-
 					{/* SPEAKER CONTAINER END */}
 				</Expanded>
+
+				{/* Banner */}
+				{bannersToDisplay.length && renderBanners(bannersToDisplay)}
 			</Layout>
 		</>
 	);
@@ -674,6 +689,26 @@ export const query = graphql`
 				name
 				role
 				type
+			}
+		}
+
+		allContentfulResource(filter: {node_locale: {eq: "en-US"}, heading: {eq: "Dummy Resource"}}) {
+			nodes {
+				id
+				heading
+				banners {
+					id
+					body {
+						raw
+					}
+					buttonText
+					hubspotEmbed {
+						raw
+					}
+					isHubspotEmbed
+					externalLink
+					heading
+				}
 			}
 		}
 	}
