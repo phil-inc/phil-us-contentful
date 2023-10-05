@@ -15,8 +15,8 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 
 	if (section.internalLink) {
 		if (
-			section.internalLink.sys.contentType.sys.id === 'section'
-			|| section.internalLink.sys.contentType.sys.id === 'referencedSection'
+			section.internalLink?.sys?.contentType?.sys?.id === 'section'
+			|| section.internalLink.sys?.contentType?.sys?.id === 'referencedSection'
 		) {
 			if (section.internalLink?.page[0]) {
 				link.push(slugify(section.internalLink.page[0].title, {lower: true, strict: true}));
@@ -24,14 +24,15 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 					`#${slugify(section.internalLink.header ?? section.internalLink.id, {lower: true, strict: true})}`,
 				);
 			}
-		} else if (section.internalLink.sys.contentType.sys.id === 'page') {
-			link.push(slugify(section.internalLink.title, {lower: true, strict: true}));
+		} else if (section.internalLink?.sys?.contentType?.sys?.id === 'page') {
+			link.push(slugify(section.internalLink.title!, {lower: true, strict: true}));
 		} else if (
-			section.internalLink.sys.contentType.sys.id === 'resource'
-			|| section.internalLink.sys.contentType.sys.id === 'downloadableResource'
+			section.internalLink?.sys?.contentType?.sys?.id === 'resource'
+			|| section.internalLink?.sys?.contentType?.sys?.id === 'downloadableResource'
+			|| section.internalLink?.sys?.contentType?.sys?.id === 'eventRegistration'
 		) {
 			const paths = useInternalPaths();
-			const [staticPage] = paths.filter(path => path.title === section.internalLink.heading);
+			const [staticPage] = paths.filter(path => path.id === section.internalLink.id);
 
 			// Referencing a internal link but not relating it to a section
 			// can cause issues which is mitigated by # link
