@@ -1,5 +1,6 @@
 import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid, Group, Anchor} from '@mantine/core';
 import classNames from 'classnames';
+import {FIELD_PAGE} from 'constants/page';
 import PageContext from 'contexts/PageContext';
 import {Link} from 'gatsby';
 import type {FC} from 'react';
@@ -49,8 +50,8 @@ export const FAQ: FC<FAQProps> = ({resource}) => {
 	const context = React.useContext(PageContext);
 
 	const {classes} = useStyles({
-		background: context.title === 'Field' ? '#ffffff' : '#f4f4f4',
-		...(context.title === 'Field' && {fontSize: 24}),
+		background: context.title === FIELD_PAGE ? '#ffffff' : '#f4f4f4',
+		...(context.title === FIELD_PAGE && {fontSize: 24}),
 	});
 	const {link, isExternal} = getLink(resource);
 
