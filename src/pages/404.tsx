@@ -72,7 +72,7 @@ const Error = () => {
 						</Link>
 					</div>
 					<Container>
-						<img src='../images/404.svg' width='100%' height='100%' />
+						<img src='https://phil.us/images/404.svg' width='100%' height='100%' />
 					</Container>
 				</SimpleGrid>
 			</Container>

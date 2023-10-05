@@ -86,7 +86,6 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({data: {contentfulPage}})
 	);
 };
 
-// Query Dummy Resource to get default banner
 export const query = graphql`
 	query getPages($id: String!) {
 		contentfulPage(id: {eq: $id}) {

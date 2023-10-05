@@ -2,30 +2,13 @@ import React from 'react';
 import {graphql} from 'gatsby';
 import {Layout} from 'layouts/Layout/Layout';
 import Expanded from 'components/common/Expanded/Expanded';
-import {
-	Title,
-	Text,
-	Grid,
-	Box,
-	AspectRatio,
-	Group,
-	List,
-	Anchor,
-	createStyles,
-	Center,
-	Loader,
-	Container,
-	Stack,
-} from '@mantine/core';
+import {Title, Text, Grid, Box, Group, List, Anchor, createStyles, Container, Stack} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import {type TAsset} from 'types/asset';
 import {type Block} from '@contentful/rich-text-types';
 import {parseScript} from 'utils/parseScript';
-import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
-import {useId} from '@mantine/hooks';
-import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 import Speaker from 'components/common/Person/Speaker/Speaker';
 import {convertTimeToCustomFormat} from 'utils/date';
@@ -35,7 +18,6 @@ import {SEO} from 'layouts/SEO/SEO';
 import {type BodyType} from 'types/section';
 import {type Person} from 'types/person';
 import slugify from 'slugify';
-import ImageContainer from 'components/common/Container/ImageContainer';
 import {renderBanners} from 'components/common/Banner/Banner';
 
 type EventRegistrationProps = {

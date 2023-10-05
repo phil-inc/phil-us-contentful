@@ -178,9 +178,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				return (
 					<Box
 						className={
-							isPDFContent(node.data.target.file.contentType)
-								? classes.embededAssetPDF
-								: classes.embededAsset
+							isPDFContent(node.data.target.file.contentType) ? classes.embededAssetPDF : classes.embededAsset
 						}
 					>
 						<Asset ref={canvasRef} asset={node.data.target} />

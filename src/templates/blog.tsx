@@ -17,6 +17,7 @@ import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
 import ReactPlayer from 'react-player/youtube';
+import ImageContainer from 'components/common/Container/ImageContainer';
 
 type HelmetProps = {
 	data: {
@@ -219,7 +220,9 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 								: classes.embededAsset
 						}
 					>
-						<Asset ref={canvasRef} asset={node.data.target as TAsset} />
+						<ImageContainer fluid ratio={16 / 9}>
+							<Asset ref={canvasRef} asset={node.data.target as TAsset} />
+						</ImageContainer>
 					</Box>
 				);
 			},

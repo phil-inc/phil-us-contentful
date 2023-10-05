@@ -112,7 +112,6 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	);
 };
 
-// Query Dummy Resource to get default banner
 export const query = graphql`
 	query getPages($id: String!) {
 		contentfulPage(id: {eq: $id}) {
