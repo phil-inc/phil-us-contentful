@@ -16,7 +16,7 @@ import {
 	createStyles,
 	useMantineTheme,
 } from '@mantine/core';
-import {graphql} from 'gatsby';
+import {Script, graphql} from 'gatsby';
 import {renderBanners} from 'components/common/Banner/Banner';
 import {type TResource, type TDownloadableResource} from 'types/resource';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
@@ -59,7 +59,13 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulDownloadableResour
 			<meta property='og:description' content={computeMetaDescription()} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			<Script
+				defer
+				strategy='idle'
+				charSet='utf-8'
+				type='text/javascript'
+				src='//js.hsforms.net/forms/embed/v2.js'
+			></Script>
 			{contentfulDownloadableResource.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
