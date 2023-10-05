@@ -28,7 +28,6 @@ const config: GatsbyConfig = {
   },
  adapter: adapter(),
   plugins: [
-    `gatsby-plugin-netlify`,
     'gatsby-plugin-mantine',
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
