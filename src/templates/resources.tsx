@@ -10,7 +10,6 @@ import {
 	Card,
 	Divider,
 	Grid,
-	Group,
 	NavLink,
 	Pagination,
 	Text,
@@ -20,12 +19,12 @@ import {
 } from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
-import {Link, graphql, navigate} from 'gatsby';
+import {Link, Script, graphql, navigate} from 'gatsby';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
 import {useToggle, useViewportSize} from '@mantine/hooks';
-import {HOME, RESOURCES_PAGE} from 'constants/routes';
+import {RESOURCES_PAGE} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
 import {searchSubmitCallback} from 'pages/resources/search';
 
@@ -67,7 +66,13 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulRe
 			<meta property='og:description' content={computeMetaDescription()} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			<Script
+				defer
+				strategy='idle'
+				charSet='utf-8'
+				type='text/javascript'
+				src='//js.hsforms.net/forms/embed/v2.js'
+			></Script>
 			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
@@ -255,6 +260,14 @@ const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
 		[theme.fn.smallerThan('sm')]: {fontSize: 10.28, padding: '10px 7px'},
 	},
 	faqContainerText: {fontSize: 20, [theme.fn.smallerThan('sm')]: {fontSize: 16}},
+
+	breakSection: {
+		display: 'none',
+
+		[theme.fn.smallerThan('sm')]: {
+			display: 'block',
+		},
+	},
 }));
 
 type ResourcesPageProps = {
@@ -286,7 +299,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	const startIndex = (currentPageNumber - 1) * limit;
 	const endIndex = Math.min(startIndex + limit, resources.length);
 
-	const banners = data.contentfulPage.sections.filter(section => {
+	const banners = data?.contentfulPage?.sections?.filter(section => {
 		if (section?.sectionType === 'Referenced Section') {
 			if ((section as IReferencedSection).referenceType === ReferenceTypeEnum.Banner) {
 				return true;
@@ -312,7 +325,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					<Grid align='center'>
 						<Grid.Col sm={12} md={12} lg={9.76}>
 							<Title className={classes.heading1} order={1}>
-								Resources/{isMobileView && <br />}
+								Resources/
+								<br className={classes.breakSection} />
 								{currentSection.header}
 							</Title>
 						</Grid.Col>
@@ -655,6 +669,18 @@ export const resourcesQuery = graphql`
 								}
 							}
 						}
+						... on ContentfulEventRegistration {
+							id
+							heading
+							sys {
+								contentType {
+									sys {
+										type
+										id
+									}
+								}
+							}
+						}
 					}
 					heading
 					subheading
@@ -940,6 +966,18 @@ export const resourcesQuery = graphql`
 									}
 								}
 								... on ContentfulResource {
+									id
+									heading
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
+								... on ContentfulEventRegistration {
 									id
 									heading
 									sys {

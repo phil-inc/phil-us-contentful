@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, AspectRatio} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -8,53 +8,59 @@ import Asset from 'components/common/Asset/Asset';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
 import {graphql} from 'gatsby';
-import {Banner, renderBanners} from 'components/common/Banner/Banner';
-import Expanded from 'components/common/Expanded/Expanded';
+import {renderBanners} from 'components/common/Banner/Banner';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
-import {isPDFContent, isVideoContent} from 'utils/isVideoContent';
+import {isPDFContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
 import ReactPlayer from 'react-player/youtube';
+import ImageContainer from 'components/common/Container/ImageContainer';
 
 type HelmetProps = {
-	pageContext: TResource;
+	data: {
+		contentfulResource: TResource;
+	};
 	location: {pathname: string};
 };
 
-export const Head: React.FC<HelmetProps> = ({pageContext, location}) => {
-	const heroImage = pageContext.asset?.file.url;
-	const description = pageContext.metaDescription?.length
-		? pageContext.metaDescription
-		: pageContext.body?.raw
-			? getDescriptionFromRichtext(pageContext.body.raw)
+export const Head: React.FC<HelmetProps> = ({data: {contentfulResource}, location}) => {
+	const heroImage = contentfulResource.asset?.file.url;
+	const description = contentfulResource.metaDescription?.length
+		? contentfulResource.metaDescription
+		: contentfulResource.body?.raw
+			? getDescriptionFromRichtext(contentfulResource.body.raw)
 			: '';
 
-	const slug = pageContext.slug ?? `/${slugify(pageContext.heading, {strict: true, lower: true})}`;
+	const slug = contentfulResource.slug ?? `/${slugify(contentfulResource.heading, {strict: true, lower: true})}`;
 
 	return (
-		<SEO title={pageContext.heading}>
+		<SEO title={contentfulResource.heading}>
 			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={pageContext.heading} />
+			<meta name='twitter:title' content={contentfulResource.heading} />
 			<meta name='twitter:description' content={description} />
 			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta name='description' content={description} />
-			<meta property='og:title' content={pageContext.heading} />
+			<meta property='og:title' content={contentfulResource.heading} />
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${slug}/`} />
 			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-			{pageContext.noindex && <meta name='robots' content='noindex' />}
+			{contentfulResource.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
 };
 
 type PageTemplateProps = {
-	pageContext: TResource;
-	data: any;
+	data: {
+		contentfulResource: TResource;
+		allContentfulResource: {
+			nodes: TResource[];
+		};
+	};
 };
 
 const useStyles = createStyles(theme => ({
@@ -104,6 +110,13 @@ const useStyles = createStyles(theme => ({
 
 	embededAsset: {
 		marginBottom: '32px',
+
+		display: 'flex',
+		justifyContent: 'center',
+	},
+
+	embededAssetPDF: {
+		marginBottom: '32px',
 	},
 
 	border: {
@@ -121,11 +134,12 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
-	const {heading, body, asset, banners, author, noindex, isFaq} = pageContext;
+const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
+	const {heading, body, asset, banners, author, noindex, isFaq} = data.contentfulResource;
 
 	const {classes, cx} = useStyles();
 
+	const canvasRef = React.useRef(null);
 	const [isMounted, setIsMounted] = React.useState(false);
 	const [origin, setOrigin] = React.useState('https://phil.us');
 
@@ -197,7 +211,21 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 				return null; // Return null during SSR
 			},
-
+			[BLOCKS.EMBEDDED_ASSET](node) {
+				return (
+					<Box
+						className={
+							isPDFContent(node.data.target.file.contentType as string)
+								? classes.embededAssetPDF
+								: classes.embededAsset
+						}
+					>
+						<ImageContainer fluid ratio={16 / 9}>
+							<Asset ref={canvasRef} asset={node.data.target as TAsset} />
+						</ImageContainer>
+					</Box>
+				);
+			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
 					<Text component='p' mt={0} size={18}>
@@ -339,7 +367,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 		},
 	};
 
-	const defaultBanners = data.allContentfulResource.nodes as TResource[];
+	const defaultBanners = data.allContentfulResource.nodes;
 	const hasBanners = Boolean(banners);
 	const hideBanners = noindex ?? isFaq;
 
@@ -375,7 +403,8 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({pageContext, data}) => {
 
 // Query Dummy Resource to get default banner
 export const query = graphql`
-	query dummyResource {
+	query staticPageQuery($id: String!) {
+		# Default banners
 		allContentfulResource(filter: {node_locale: {eq: "en-US"}, heading: {eq: "Dummy Resource"}}) {
 			nodes {
 				id
@@ -392,6 +421,133 @@ export const query = graphql`
 					isHubspotEmbed
 					externalLink
 					heading
+				}
+			}
+		}
+
+		# Blog content
+		contentfulResource(id: {eq: $id}) {
+			banners {
+				id
+				body {
+					raw
+				}
+				buttonText
+				hubspotEmbed {
+					raw
+				}
+				isHubspotEmbed
+				externalLink
+				heading
+			}
+			slug
+			noindex
+			isFaq
+			author {
+				id
+				name
+				authorTitle
+				bio {
+					raw
+				}
+				avatar {
+					gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+					title
+					file {
+						contentType
+						details {
+							size
+						}
+						url
+					}
+				}
+			}
+			buttonText
+			heading
+			id
+			subheading
+			description {
+				id
+				description
+			}
+			metaDescription
+			externalLink
+			asset {
+				gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+				title
+				file {
+					contentType
+					details {
+						size
+					}
+					url
+				}
+			}
+			body {
+				raw
+				references {
+					... on ContentfulAsset {
+						contentful_id
+						__typename
+						description
+						gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+						file {
+							contentType
+							details {
+								size
+							}
+							url
+						}
+						sys {
+							type
+						}
+					}
+					... on ContentfulYoutubeEmbedResource {
+						id
+						contentful_id
+						__typename
+						youtubeVideoUrl
+						title
+						sys {
+							contentType {
+								sys {
+									id
+									type
+								}
+							}
+							type
+						}
+						internal {
+							type
+						}
+					}
+				}
+			}
+			sys {
+				contentType {
+					sys {
+						id
+						type
+					}
+				}
+			}
+			generateStaticPage
+			relatesTo {
+				... on ContentfulReferencedSection {
+					id
+					header
+					page {
+						id
+						title
+					}
+				}
+				... on ContentfulSection {
+					id
+					header
+					page {
+						id
+						title
+					}
 				}
 			}
 		}

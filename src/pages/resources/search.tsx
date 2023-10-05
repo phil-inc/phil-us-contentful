@@ -17,7 +17,7 @@ import {
 } from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
-import {graphql, navigate} from 'gatsby';
+import {Script, graphql, navigate} from 'gatsby';
 import {Banner} from 'components/common/Banner/Banner';
 import {useViewportSize} from '@mantine/hooks';
 import {type TResource} from 'types/resource';
@@ -65,7 +65,13 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 			<meta property='og:description' content={contentfulPage.description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			<Script
+				defer
+				strategy='idle'
+				charSet='utf-8'
+				type='text/javascript'
+				src='//js.hsforms.net/forms/embed/v2.js'
+			></Script>
 			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
