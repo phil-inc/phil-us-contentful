@@ -303,14 +303,6 @@ export const createPages: GatsbyNode['createPages'] = async function ({actions, 
 		toPath: redirectPath,
 		isPermanent: true,
 	});
-
-	// const resourcesRedirect = path.resolve(`./src/templates/resourcesRedirect.tsx`);
-	// const pageObject = {
-	// 	path: '/resources',
-	// 	component: resourcesRedirect,
-	// 	context: {redirectPath},
-	// };
-	// actions.createPage(pageObject);
 };
 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({actions, loaders, stage}) => {
