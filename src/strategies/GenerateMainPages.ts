@@ -5,8 +5,8 @@ import {createPageObject} from '../utils/pageObjectCreator';
 import {type TemplateKey, templateFactory} from '../factories/templateFactory';
 import {RESOURCES} from '../constants/page';
 import type {Actions} from 'gatsby';
-import {type ContentfulPage} from 'types/page';
-import {type IReferencedSection, type ISection} from 'types/section';
+import {type ContentfulPage} from '../types/page';
+import {type IReferencedSection, type ISection} from '../types/section';
 
 type PageSectionActions = {
 	page: ContentfulPage;
@@ -116,13 +116,10 @@ function createResourceSubPage(pageSectionActions: PageSectionActions, pageDetai
 	const pageObject = createPageObject(path, templateFactory('Resources'), {
 		id: section.id,
 		title: section.header,
-		context: {
-			id: section.id,
-			limit: POSTS_PER_SECTION,
-			numPages,
-			skip: index * POSTS_PER_SECTION,
-			currentPage: index + 1,
-		},
+		limit: POSTS_PER_SECTION,
+		numPages,
+		skip: index * POSTS_PER_SECTION,
+		currentPage: index + 1,
 	});
 
 	actions.createPage(pageObject);

@@ -24,6 +24,7 @@ export default async function GenerateStaticPages({
 
 	data.allContentfulResource.nodes.forEach((resource: TResource) => {
 		const isRelatedPage = Boolean(resource.relatesTo?.page && resource.heading);
+
 		const path
 			= resource.slug
 			?? `/${slugify(resource.heading, {
@@ -32,10 +33,10 @@ export default async function GenerateStaticPages({
 			})}`;
 
 		if (isRelatedPage) {
-			const newPath = `${slugify(resource.relatesTo.page.title, {lower: true, strict: true})}/${slugify(
-				resource.relatesTo.header,
-				{lower: true, strict: true},
-			)}/${slugify(resource.heading, {
+			const newPath = `${slugify(resource.relatesTo.page.title || resource.relatesTo.header, {
+				lower: true,
+				strict: true,
+			})}/${slugify(resource.relatesTo.header, {lower: true, strict: true})}/${slugify(resource.heading, {
 				lower: true,
 				strict: true,
 			})}`;

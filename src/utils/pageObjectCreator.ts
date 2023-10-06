@@ -2,13 +2,10 @@ type PageObjectContext = {
 	id: string;
 	title?: string;
 	heading?: string;
-	context?: {
-		id: string;
-		limit: number;
-		numPages: number;
-		skip: number;
-		currentPage: number;
-	};
+	limit?: number;
+	numPages?: number;
+	skip?: number;
+	currentPage?: number;
 };
 
 type PageObject = {
