@@ -8,6 +8,18 @@ import type {Actions} from 'gatsby';
 import {type ContentfulPage} from 'types/page';
 import {type IReferencedSection, type ISection} from 'types/section';
 
+type PageSectionActions = {
+	page: ContentfulPage;
+	section: ISection | IReferencedSection;
+	actions: Actions;
+};
+
+type PageDetails = {
+	headerSlug: string;
+	index: number;
+	numPages: number;
+};
+
 export default async function GenerateMainPages(
 	{
 		actions,
@@ -81,9 +93,9 @@ function handleResourcePage(page: ContentfulPage, resourceSubPages: string[], ac
 
 		const numPages = pagination.numberOfPages((section as IReferencedSection).references.length, POSTS_PER_SECTION);
 
-		Array.from({length: numPages}).forEach((_, i: number) => {
-			createResourceSubPage(page, section, headerSlug, i, numPages, actions);
-		});
+		for (let i = 0; i < numPages; i++) {
+			createResourceSubPage({page, section, actions}, {headerSlug, index: i, numPages});
+		}
 	});
 }
 
@@ -94,20 +106,16 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
 	actions.createPage(pageObject);
 }
 
-function createResourceSubPage(
-	page: ContentfulPage,
-	section: ISection | IReferencedSection,
-	headerSlug: string,
-	index: number,
-	numPages: number,
-	actions: Actions,
-): void {
+function createResourceSubPage(pageSectionActions: PageSectionActions, pageDetails: PageDetails): void {
+	const {page, section, actions} = pageSectionActions;
+	const {headerSlug, index, numPages} = pageDetails;
+
 	const pageSlug = slugify(page.title, {lower: true, strict: true});
 	const path = index === 0 ? `${pageSlug}/${headerSlug}` : `${pageSlug}/${headerSlug}/${index + 1}`;
 
-	const pageObject = createPageObject(path, templateFactory('Resources'), {id: section.id, title: section.header});
-
-	const paginationObject = {
+	const pageObject = createPageObject(path, templateFactory('Resources'), {
+		id: section.id,
+		title: section.header,
 		context: {
 			id: section.id,
 			limit: POSTS_PER_SECTION,
@@ -115,7 +123,7 @@ function createResourceSubPage(
 			skip: index * POSTS_PER_SECTION,
 			currentPage: index + 1,
 		},
-	};
+	});
 
-	actions.createPage(Object.assign(pageObject, paginationObject));
+	actions.createPage(pageObject);
 }
