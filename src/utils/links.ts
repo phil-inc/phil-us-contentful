@@ -19,3 +19,26 @@ export const getPathForSectionAndPage = (pageTitle: string, sectionHeader: strin
 
 	return path || '#';
 };
+
+const URLPatterns = [
+	/youtu.be\/([^#&?]{11})/, // Youtu.be/<id>
+	/\?v=([^#&?]{11})/, // ?v=<id>
+	/&v=([^#&?]{11})/, // &v=<id>
+	/embed\/([^#&?]{11})/, // Embed/<id>
+	/\/v\/([^#&?]{11})/, // /v/<id>
+];
+
+export const getYouTubeId = (url: string): string => {
+	if (typeof url !== 'string') {
+		throw new TypeError('The URL must be a string');
+	}
+
+	for (const pattern of URLPatterns) {
+		const match = url.match(pattern);
+		if (match?.[1]) {
+			return match[1];
+		}
+	}
+
+	return '';
+};
