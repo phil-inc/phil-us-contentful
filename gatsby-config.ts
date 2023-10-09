@@ -12,12 +12,18 @@ dotenv.config({
 // source base
 const srcDirs = fs.readdirSync(path.resolve(__dirname, 'src'));
 
-const rootDirsConfig = {};
+// Add index signature to rootDirsConfig object
+interface RootDirsConfig {
+  [key: string]: string;
+}
 
-srcDirs.forEach(srcDir => {
+const rootDirsConfig: RootDirsConfig = {};
+
+
+
+srcDirs.forEach((srcDir: string) => {
   rootDirsConfig[srcDir] = path.resolve(__dirname, 'src', srcDir);
 });
-
 
 
 // Handle plugins
