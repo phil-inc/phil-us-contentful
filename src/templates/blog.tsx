@@ -4,7 +4,7 @@ import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {TResource} from 'types/resource';
 import {SEO} from 'layouts/SEO/SEO';
-import Asset from 'components/common/Asset/Asset';
+import Asset, {YouTubeEmbed} from 'components/common/Asset/Asset';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
 import {graphql} from 'gatsby';
@@ -16,8 +16,8 @@ import {isPDFContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
-import ReactPlayer from 'react-player/youtube';
 import ImageContainer from 'components/common/Container/ImageContainer';
+import {getYouTubeId} from 'utils/links';
 
 type HelmetProps = {
 	data: {
@@ -188,25 +188,11 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 					url: string;
 				};
 
-				if (isMounted && content && ReactPlayer.canPlay(content.url)) {
-					return (
-						<AspectRatio ratio={16 / 9}>
-							<ReactPlayer
-								width={'100%'}
-								height={'100%'}
-								url={content.url}
-								controls
-								config={{
-									playerVars: {
-										rel: 0,
-										enablejsapi: 1,
-										origin,
-										widget_referrer: origin,
-									},
-								}}
-							/>
-						</AspectRatio>
-					);
+				if (isMounted && content?.url?.length) {
+					const vid = getYouTubeId(content.url);
+					if (vid) {
+						return <YouTubeEmbed videoId={vid} title={content.title} />;
+					}
 				}
 
 				return null; // Return null during SSR

@@ -204,11 +204,7 @@ const useStyles = createStyles(theme => ({
 	},
 
 	stack: {
-		alignItems: 'center',
-
-		[theme.fn.smallerThan('md')]: {
-			alignItems: 'start',
-		},
+		alignItems: 'start',
 	},
 }));
 

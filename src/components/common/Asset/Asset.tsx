@@ -1,12 +1,15 @@
+import React, {forwardRef, Suspense, lazy, type FC} from 'react';
 import {AspectRatio} from '@mantine/core';
 import {GatsbyImage, getImage} from 'gatsby-plugin-image';
-import React, {Ref, forwardRef, useEffect, useState} from 'react';
-import ReactPlayer from 'react-player';
 import type {TAsset} from 'types/asset';
-import {getWindowProperty} from 'utils/getWindowProperty';
 import {isVideoContent} from 'utils/isVideoContent';
-import PDFViewer from '../PDFViewer/PDFViewer';
-import ClientSidePDFViewer from '../PDFViewer/ClientSidePDFViewer';
+import {getYouTubeId} from 'utils/links';
+import loadable from '@loadable/component';
+
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+
+const LiteYouTubeEmbed = loadable(async () => import('react-lite-youtube-embed'));
+const PDFViewer = loadable(async () => import('../PDFViewer/PDFViewer'));
 
 type AssetProps = {
 	asset: TAsset;
@@ -14,69 +17,59 @@ type AssetProps = {
 	width?: number;
 };
 
-/**
- * Handle image/video asset.
- * @param param Asset prop
- * @returns Image/Video asset handler.
- */
+type YouTubeEmbedProps = {
+	videoId: string;
+	title: string;
+};
+
+export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({videoId, title}) => (
+	<AspectRatio ratio={16 / 9}>
+		<LiteYouTubeEmbed
+			id={videoId}
+			adNetwork={true}
+			params='rel=0'
+			rel='0'
+			poster='maxresdefault'
+			title={title}
+			noCookie={true}
+		/>
+	</AspectRatio>
+);
+
 const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) => {
 	const {asset, youtubeVideoURL, width} = props;
-	const [playerCompnnent, setPlayerComponent] = useState(<></>);
 
-	useEffect(() => {
-		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
-		const player = (
-			<ReactPlayer
-				url={youtubeVideoURL}
-				controls
-				width={'100%'}
-				height={'100%'}
-				config={{
-					youtube: {
-						playerVars: {
-							rel: 0,
-							enablejsapi: 1,
-							origin,
-							widget_referrer: origin,
-						},
-					},
-				}}
-			/>
-		);
+	const renderContent = () => {
+		if (youtubeVideoURL?.length) {
+			const vid = getYouTubeId(youtubeVideoURL);
+			return vid && <YouTubeEmbed videoId={vid} title={asset.title || ''} />;
+		}
 
-		setPlayerComponent(player);
-	}, []);
+		if (isVideoContent(asset.file.contentType)) {
+			return (
+				<AspectRatio ratio={16 / 9}>
+					<video src={asset.file.url} width={'99%'} height={'100%'} controls />
+				</AspectRatio>
+			);
+		}
 
-	// Handle youtube embed
-	if (youtubeVideoURL?.length) {
-		return <AspectRatio ratio={16 / 9}>{playerCompnnent}</AspectRatio>;
-	}
+		if (asset.file.contentType === 'image/svg+xml') {
+			return <img src={asset.file.url} alt={asset.title || ''} />;
+		}
 
-	// Handle embeded video content
-	if (isVideoContent(asset.file.contentType)) {
-		const {url} = asset.file;
+		if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
+			return <PDFViewer url={asset.file.url} pageContainerWidth={width!} ref={ref} />;
+		}
 
-		return (
-			<AspectRatio ratio={16 / 9}>
-				<ReactPlayer url={url} width={'100%'} height={'100%'} controls />
-			</AspectRatio>
-		);
-	}
+		if (asset.file.contentType.startsWith('image/')) {
+			const pathToImage = getImage(asset);
+			return <GatsbyImage objectFit='fill' image={pathToImage!} alt={asset.title || ''} />;
+		}
 
-	const altText = asset.title || '';
+		return null;
+	};
 
-	// Handle SVG images
-	if (asset.file.contentType === 'image/svg+xml') {
-		return <img src={asset.file.url} alt={altText} />;
-	}
-
-	// Handle PDF content
-	if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
-		return <PDFViewer url={asset.file.url} pageContainerWidth={width!} ref={ref} />;
-	}
-
-	const pathToImage = getImage(asset);
-	return <GatsbyImage objectFit='fill' image={pathToImage!} alt={altText} />;
+	return <Suspense fallback={<div>Loading...</div>}>{renderContent()}</Suspense>;
 });
 
 export default React.memo(Asset);
