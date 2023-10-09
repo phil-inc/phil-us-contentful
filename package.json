@@ -45,7 +45,7 @@
 		"gatsby-plugin-robots-txt": "^1.8.0",
 		"gatsby-plugin-sass": "^5.23.0",
 		"gatsby-plugin-sharp": "^5.8.0",
-		"gatsby-source-contentful": "^8.7.0",
+		"gatsby-source-contentful": "8.7.0",
 		"gatsby-source-filesystem": "^5.8.0",
 		"gatsby-transformer-inline-svg": "^1.2.0",
 		"gatsby-transformer-json": "^5.7.0",
