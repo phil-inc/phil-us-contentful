@@ -586,6 +586,18 @@ export const resourcesQuery = graphql`
 										}
 									}
 								}
+								... on ContentfulEventRegistration {
+									id
+									heading
+									sys {
+										contentType {
+											sys {
+												type
+												id
+											}
+										}
+									}
+								}
 							}
 							heading
 							subheading
