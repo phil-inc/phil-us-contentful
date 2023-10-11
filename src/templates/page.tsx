@@ -74,8 +74,8 @@ const useStyles = createStyles((theme, {title}: {title: string}) => ({
 const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 	const {classes} = useStyles({title});
-
 	let basicSectionCount = 0;
+	const isEmbedFormTemplate = sections.some(section => Boolean(section?.embedForm?.raw));
 
 	return (
 		<PageContext.Provider value={{title}}>
@@ -105,6 +105,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 							key={section.id + 'mapSectionComponent'}
 							section={section}
 							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
+							isEmbedFormTemplate={isEmbedFormTemplate}
 						/>
 					))}
 			</Layout>
@@ -153,6 +154,11 @@ export const query = graphql`
 					header
 					sectionType
 					externalLink
+					automaticOrder
+					background
+					embedForm {
+						raw
+					}
 					sys {
 						contentType {
 							sys {

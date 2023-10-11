@@ -322,18 +322,24 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section}) => {
 			</Box>
 		) : section.referenceType === 'Code Snippet' ? (
 			<Stack className={classes.codeSnippetStack} justify='flex-start' spacing={0}>
-				<Title className={classes.heading} order={2} size={36}>
-					{section.header}
-				</Title>
-				<Title className={classes.subHeading} order={3} size={20}>
-					{section.subHeading.subHeading}
-				</Title>
+				{Boolean(section.header?.length) && (
+					<Title className={classes.heading} order={2} size={36}>
+						{section.header}
+					</Title>
+				)}
+				{Boolean(section?.subHeading?.subHeading?.length) && (
+					<Title className={classes.subHeading} order={3} size={20}>
+						{section.subHeading.subHeading}
+					</Title>
+				)}
 			</Stack>
 		) : (
 			<Group position='center' mb={28}>
-				<Title order={2} color={textColor}>
-					{section.header}
-				</Title>
+				{Boolean(section.header?.length) && (
+					<Title order={2} color={textColor}>
+						{section.header}
+					</Title>
+				)}
 			</Group>
 		);
 

@@ -1,6 +1,19 @@
 import React from 'react';
 import {BLOCKS} from '@contentful/rich-text-types';
-import {Anchor, Box, Button, Container, createStyles, Divider, Grid, Group, List, Text, Title} from '@mantine/core';
+import {
+	Anchor,
+	Box,
+	Button,
+	Center,
+	Container,
+	createStyles,
+	Divider,
+	Grid,
+	Group,
+	List,
+	Text,
+	Title,
+} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link, Script} from 'gatsby';
@@ -17,55 +30,79 @@ import ContactForm from 'components/ContactPageForm/ContactForm';
 import {useMediaQuery, useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
+import HubspotForm from 'components/common/HubspotForm/HubspotForm';
+import {parseScript} from 'utils/parseScript';
 
-const useStyles = createStyles((theme, {isContact}: {isContact: boolean}) => ({
-	body: {
-		p: {
-			marginTop: 0,
+const useStyles = createStyles(
+	(theme, {isContact, isEmbedForm, index}: {isContact: boolean; isEmbedForm: boolean; index: number}) => ({
+		title: {
+			maxWidth: isEmbedForm ? (index === 0 ? 500 : 600) : '100%',
+			...(isEmbedForm && {fontSize: 40}),
+
+			[theme.fn.smallerThan('lg')]: {
+				maxWidth: '100%',
+			},
 		},
-	},
 
-	container: {
-		padding: '0 100px',
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-			padding: '0 16px',
+		body: {
+			p: {
+				marginTop: 0,
+			},
+			maxWidth: isEmbedForm ? 600 : '100%',
+
+			[theme.fn.smallerThan('lg')]: {
+				maxWidth: '100%',
+			},
 		},
 
-		[theme.fn.smallerThan('md')]: {
-			...(isContact && {marginBottom: 42}),
+		formWrapper: {
+			padding: '44px 32px',
+			background: '#F4F4F4',
 		},
-	},
 
-	section: {
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			display: 'none',
+		container: {
+			padding: '0 100px',
+			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+				padding: '0 16px',
+			},
+
+			[theme.fn.smallerThan('md')]: {
+				...(isContact && {marginBottom: 42}),
+			},
 		},
-	},
 
-	largeSection: {
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			display: 'none',
+		section: {
+			[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+				display: 'none',
+			},
 		},
-	},
 
-	listItem: {
-		fontSize: 18,
-		lineHeight: 27,
-		marginTop: 14,
-		color: theme.colors.primary[0],
-	},
-
-	contactSubheader: {
-		a: {
-			color: '#00827E',
-			textDecoration: 'none',
+		largeSection: {
+			[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+				display: 'none',
+			},
 		},
-	},
-}));
+
+		listItem: {
+			fontSize: 18,
+			lineHeight: 27,
+			marginTop: 14,
+			color: theme.colors.primary[0],
+		},
+
+		contactSubheader: {
+			a: {
+				color: '#00827E',
+				textDecoration: 'none',
+			},
+		},
+	}),
+);
 
 type BasicSectionProps = {
 	section: ISection;
 	index: number;
+	isEmbedFormTemplate: boolean;
 };
 
 /**
@@ -74,7 +111,7 @@ type BasicSectionProps = {
  * @returns BasicSection Component which contains a text column and a image container column
  */
 // eslint-disable-next-line complexity
-const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
+const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormTemplate}) => {
 	const HERO_SECTION_INDEX = 0; // Hero section index is always 0
 	const NUMBER_OF_COLUMNS = 2; // Basic section will always have 2 columns
 	const ORDER_FIRST = 1;
@@ -83,7 +120,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const HEADING_SECOND = 2;
 	const context = React.useContext(PageContext);
 
-	const {classes, theme} = useStyles({isContact: context.title === CONTACT_PAGE});
+	const {classes, theme} = useStyles({
+		isContact: context.title === CONTACT_PAGE,
+		isEmbedForm: isEmbedFormTemplate,
+		index,
+	});
 	const {link, isExternal} = getLink(section);
 
 	const richTextImages = {};
@@ -127,8 +168,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		},
 	};
 
-	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
-	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
+	// Determine if the index is an even column
+	const isEvenColumn = index % NUMBER_OF_COLUMNS === 0;
+	let textColumnOrder = isEvenColumn ? ORDER_FIRST : ORDER_SECOND;
+	let imageColumnOrder = isEvenColumn ? ORDER_SECOND : ORDER_FIRST;
+
+	if (!section.automaticOrder || isEmbedFormTemplate) {
+		textColumnOrder = ORDER_FIRST;
+		imageColumnOrder = ORDER_SECOND;
+	}
 
 	const isMobile = useMediaQuery('(max-width: 576px)', false, {getInitialValueInEffect: false});
 	const isHeroSection = index === HERO_SECTION_INDEX;
@@ -136,6 +184,16 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const ref = React.useRef();
 	const {width} = useViewportSize();
 	const [height, setHeight] = React.useState<number>(790);
+
+	let formId = '';
+	let portalId = '';
+
+	if (section.embedForm) {
+		const [formProps] = parseScript(section.embedForm);
+
+		formId = formProps.formId;
+		portalId = formProps.portalId;
+	}
 
 	React.useEffect(() => {
 		if (ref.current) {
@@ -153,9 +211,16 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 			<>
 				<Grid
 					gutter={handleSpacing(theme, theme.spacing.lg)}
-					align={section.isHubspotEmbed ? 'flex-start' : 'center'}
+					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
 				>
-					<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
+					{/* Text Grid Column */}
+					<Grid.Col
+						orderMd={textColumnOrder}
+						orderSm={1}
+						lg={section.embedForm || !section.automaticOrder || isEmbedFormTemplate ? 7 : 6}
+						md={6}
+						sm={12}
+					>
 						{section.isHubspotEmbed ? (
 							<>
 								<Title order={titleOrdering}>{section.header}</Title>
@@ -193,7 +258,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 							</>
 						) : (
 							<>
-								<Title order={titleOrdering}>{section.header}</Title>
+								<Title className={classes.title} order={titleOrdering}>
+									{section.header}
+								</Title>
 								{Boolean(section.subHeader?.subHeader.length) && (
 									<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
 										{section.subHeader?.subHeader}
@@ -222,24 +289,36 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 							</>
 						)}
 					</Grid.Col>
+
+					{/* Hero Grid Column */}
 					<Grid.Col
 						orderMd={imageColumnOrder}
 						orderSm={2}
-						lg={6}
+						lg={section.embedForm || !section.automaticOrder || isEmbedFormTemplate ? 5 : 6}
 						md={6}
 						sm={12}
 						sx={{height: context.title === CONTACT_PAGE ? height : undefined}}
 					>
-						<ImageContainer
-							containerRef={ref}
-							fluid
-							ratio={section?.youtubeVideoUrl ? 16 / 9 : undefined}
-							background={isVideoContent(section.asset.file.contentType) ? 'white' : undefined}
-							expanded={context.title === CONTACT_PAGE}
-							isVideo={isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)}
-						>
-							<Asset asset={section.asset} youtubeVideoURL={section?.youtubeVideoUrl} />
-						</ImageContainer>
+						{section.embedForm ? (
+							<Box className={classes.formWrapper}>
+								<HubspotForm formId={formId} portalId={portalId} />
+							</Box>
+						) : (
+							<ImageContainer
+								containerRef={ref}
+								fluid
+								ratio={section?.youtubeVideoUrl ? 16 / 9 : undefined}
+								background={
+									isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
+										? 'transparent'
+										: undefined
+								}
+								expanded={context.title === CONTACT_PAGE}
+								isVideo={isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)}
+							>
+								<Asset asset={section.asset} youtubeVideoURL={section?.youtubeVideoUrl} />
+							</ImageContainer>
+						)}
 					</Grid.Col>
 				</Grid>
 				{section.isHubspotEmbed

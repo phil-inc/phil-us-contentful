@@ -6,6 +6,8 @@ type SectionType = 'Basic Section' | 'Referenced Section';
 
 export type BodyType = RenderRichTextData<ContentfulRichTextGatsbyReference>;
 
+export type BackgroundType = 'transparent' | '#F4F4F4';
+
 export type ISection = {
 	id: string;
 	sectionType: SectionType;
@@ -35,6 +37,9 @@ export type ISection = {
 	asset: TAsset;
 	subNavigationSection?: TResource[];
 	isHidden: boolean;
+	embedForm: BodyType;
+	background: BackgroundType;
+	automaticOrder: true;
 };
 
 export enum ResourceBlocksEnum {

@@ -7,6 +7,7 @@ import ReferencedSection from './ReferencedSection';
 type SectionProps = {
 	section: ISection | IReferencedSection;
 	index?: number;
+	isEmbedFormTemplate: boolean;
 };
 
 /**
@@ -14,10 +15,10 @@ type SectionProps = {
  * @param props - {section, index}
  * @returns Section based on reference type.
  */
-const Section: React.FC<SectionProps> = ({section, index}) => {
+const Section: React.FC<SectionProps> = ({section, index, isEmbedFormTemplate}) => {
 	switch (section.sectionType) {
 		case 'Basic Section':
-			return <BasicSection section={section as ISection} index={index!} />;
+			return <BasicSection section={section as ISection} index={index!} isEmbedFormTemplate={isEmbedFormTemplate} />;
 		case 'Referenced Section':
 			return <ReferencedSection section={section as IReferencedSection} />;
 		default:
