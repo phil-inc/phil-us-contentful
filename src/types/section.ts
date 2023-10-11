@@ -6,7 +6,7 @@ type SectionType = 'Basic Section' | 'Referenced Section';
 
 export type BodyType = RenderRichTextData<ContentfulRichTextGatsbyReference>;
 
-export type BackgroundType = 'transparent' | '#F4F4F4';
+export type BackgroundType = 'Default' | 'Grey';
 
 export type ISection = {
 	id: string;

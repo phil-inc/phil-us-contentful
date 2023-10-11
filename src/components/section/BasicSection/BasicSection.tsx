@@ -20,7 +20,7 @@ import {Link, Script} from 'gatsby';
 import {GatsbyImage, getImage, type ImageDataLike} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import slugify from 'slugify';
-import type {ISection} from 'types/section';
+import type {BackgroundType, ISection} from 'types/section';
 import {getLink} from 'utils/getLink';
 import {marked} from 'marked';
 import {isVideoContent} from 'utils/isVideoContent';
@@ -127,7 +127,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	});
 	const {link, isExternal} = getLink(section);
 
-	const richTextImages = {};
+	const richTextImages: Record<string, any> = {};
 
 	// eslint-disable-next-line array-callback-return
 	section.body.references.map((reference: any) => {
@@ -201,12 +201,23 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		}
 	}, [ref.current, width]);
 
+	const sectionBackground = (background: BackgroundType) => {
+		switch (background) {
+			case 'Grey':
+				return '#f4f4f4';
+
+			default:
+				return 'transparent';
+		}
+	};
+
 	return (
 		<Container
 			id={slugify(section.header, {lower: true, strict: true})}
 			fluid
 			className={classes.container}
-			my={context.title === CONTACT_PAGE ? 0 : isMobile ? 32 : 92}
+			my={context.title === CONTACT_PAGE ? 0 : isMobile ? 32 : isEmbedFormTemplate ? 152 : 92}
+			sx={{background: sectionBackground(section.background)}}
 		>
 			<>
 				<Grid
