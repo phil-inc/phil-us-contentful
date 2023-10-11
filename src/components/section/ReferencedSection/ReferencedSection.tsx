@@ -130,7 +130,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 	React.useEffect(() => {
 		try {
 			const isFromSMSIntro = params.get('isFromSMSIntro');
-			if (section.referenceType === 'Stats Card with Arrows' && isFromSMSIntro === 'true' && isProduction) {
+			if (
+				section.referenceType === ReferenceTypeEnum['Stats Card with Arrows']
+				&& isFromSMSIntro === 'true'
+				&& isProduction
+			) {
 				mixpanel.init(process.env.GATSBY_MIXPANEL_TOKEN ?? '');
 				FullStory.init({orgId: process.env.GATSBY_FULLSTORY_ORG_ID ?? ''});
 				mixpanel.track('PhilIntro_SMS_Clicked');

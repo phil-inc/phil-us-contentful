@@ -3,7 +3,7 @@ import {Box, Title, Divider, Stack, Group, createStyles, type TitleOrder} from '
 import {useMantineTheme} from '@mantine/core';
 import {RESOURCE_BLOCKS} from 'constants/section';
 import {handleSpacing} from 'utils/handleSpacing';
-import {type IReferencedSection} from 'types/section';
+import {ReferenceTypeEnum, type IReferencedSection} from 'types/section';
 
 type ReferencedSectionTitleProps = {
 	section: IReferencedSection;
@@ -49,7 +49,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 					<Divider variant='dashed' size={1} className={classes.divider} />
 				</Box>
 			);
-		case section.referenceType === 'Code Snippet':
+		case section.referenceType === ReferenceTypeEnum['Code Snippet']:
 			return (
 				<Stack
 					className={classes.codeSnippetStack}

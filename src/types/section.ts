@@ -77,7 +77,7 @@ export type IReferencedSection = {
 	title: string;
 	metaDescription: string;
 	hideHeader: boolean;
-	referenceType: ReferenceType | ResourceBlocks;
+	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
 	header: string;
 	subHeading: {
 		id: string;

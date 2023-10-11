@@ -18,7 +18,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
+import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {Link, Script, graphql, navigate} from 'gatsby';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
@@ -460,7 +460,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 					</Grid.Col>
 					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
 						{/* RESOURCES MAP */}
-						{currentSection.referenceType === 'FAQs' && (
+						{currentSection.referenceType === ReferenceTypeEnum.FAQs && (
 							<Box className={classes.faqContainer}>
 								<Grid gutter={isMobileView ? 10 : 28} align='center'>
 									<Grid.Col sm={12} md={'content'}>

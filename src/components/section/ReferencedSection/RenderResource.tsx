@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, createStyles, useMantineTheme} from '@mantine/core';
+import {Container, type MantineTheme, createStyles, useMantineTheme} from '@mantine/core';
 import {Article} from 'components/common/Article';
 import Asset from 'components/common/Asset/Asset';
 import {Banner} from 'components/common/Banner/Banner';
@@ -14,7 +14,7 @@ import {Testimonial} from 'components/common/Testimonial';
 import {PrescriberJourney} from 'components/common/prescriberJourney/PrescriberJourney';
 import {StatsCard} from 'components/common/statsCard/StatsCard';
 import {type TResource} from 'types/resource';
-import {type ReferenceType, ReferenceTypeEnum, type ResourceBlocks, ResourceBlocksEnum} from 'types/section';
+import {ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
 
 // Get colors for resources based on resource type
@@ -64,12 +64,112 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
+type ComponentFunctionProps = {
+	resource: TResource;
+	index?: number;
+	arrayLength?: number;
+	theme?: MantineTheme;
+	classes?: ReturnType<typeof useStyles>['classes'];
+	resourceBackground?: string;
+};
+
+type ComponentFunction = (props: ComponentFunctionProps) => JSX.Element | undefined;
+
+const CodeSnippetComponent: ComponentFunction = ({resource}) => <CodeSnippet resource={resource} />;
+
+const ArticleComponent: ComponentFunction = ({resource, index}) => (
+	<Article color={getColor(index!)} resource={resource} />
+);
+
+const TestimonialCompanyComponent: ComponentFunction = ({resource}) => (
+	<Testimonial type='company' resource={resource} />
+);
+
+const TestimonialPersonComponent: ComponentFunction = ({resource}) => <Testimonial type='person' resource={resource} />;
+
+const ResourceCardComponent: ComponentFunction = ({resource}) => <ResourceCard resource={resource} />;
+
+const FeaturedResourceComponent: ComponentFunction = ({theme, resourceBackground, resource}) => (
+	<Featured
+		noDivider={false}
+		pr={handleSpacing(theme!, theme!.spacing.lg)}
+		resourceBackground={resourceBackground}
+		resource={resource}
+	/>
+);
+
+const StatsCardComponent: ComponentFunction = ({resource}) => <StatsCard resource={resource} />;
+
+const StatsCardWithArrowsComponent: ComponentFunction = ({resource, index, arrayLength}) => (
+	<StatsCard resource={resource} arrow={true} index={index === arrayLength! - 1 ? undefined : index} />
+);
+
+const PrescriberJourneyComponent: ComponentFunction = ({resource}) => <PrescriberJourney resource={resource} />;
+
+const ProfileComponent: ComponentFunction = ({resource}) => <Profile resource={resource} />;
+
+const InvestorImageComponent: ComponentFunction = ({resource, classes}) => (
+	<Container className={classes!.investorImage}>
+		<Asset asset={resource.asset!} />
+	</Container>
+);
+
+const PressReleaseComponent: ComponentFunction = ({resource}) => <PressRelease resource={resource} />;
+
+const CardWithImageComponent: ComponentFunction = ({resource}) => <CardWithImage resource={resource} />;
+
+const FAQComponent: ComponentFunction = ({resource}) => <FAQ resource={resource} />;
+
+const ImageCarouselComponent: ComponentFunction = () => <></>;
+
+const BannerComponent: ComponentFunction = ({resource}) => <Banner resource={resource} />;
+
+const getComponent = (
+	referenceType: ReferenceTypeEnum | ResourceBlocksEnum,
+	resource: TResource,
+	index: number,
+	arrayLength: number,
+	theme: MantineTheme,
+	classes: ReturnType<typeof useStyles>['classes'],
+	resourceBackground: string,
+) => {
+	const componentMappings: Record<ReferenceTypeEnum | ResourceBlocksEnum, ComponentFunction> = {
+		[ReferenceTypeEnum['Code Snippet']]: CodeSnippetComponent,
+		[ReferenceTypeEnum.Article]: ArticleComponent,
+		[ReferenceTypeEnum['Customer Story']]: TestimonialCompanyComponent,
+		[ReferenceTypeEnum.Testimonial]: TestimonialPersonComponent,
+		[ResourceBlocksEnum['Phil Blog']]: ResourceCardComponent,
+		[ResourceBlocksEnum['Upcoming Events']]: ResourceCardComponent,
+		[ResourceBlocksEnum['White Paper']]: ResourceCardComponent,
+		[ResourceBlocksEnum['Case Study']]: ResourceCardComponent,
+		[ReferenceTypeEnum['Featured Resource']]: FeaturedResourceComponent,
+		[ReferenceTypeEnum['Info Card']]: FeaturedResourceComponent,
+		[ReferenceTypeEnum.Banner]: BannerComponent,
+		[ReferenceTypeEnum['Stats Card']]: StatsCardComponent,
+		[ReferenceTypeEnum['Stats Card with Arrows']]: StatsCardWithArrowsComponent,
+		[ReferenceTypeEnum['Prescriber Journey']]: PrescriberJourneyComponent,
+		[ReferenceTypeEnum['Team Member']]: ProfileComponent,
+		[ReferenceTypeEnum.Investors]: InvestorImageComponent,
+		[ReferenceTypeEnum['Press Release']]: PressReleaseComponent,
+		[ReferenceTypeEnum.Location]: CardWithImageComponent,
+		[ReferenceTypeEnum.FAQs]: FAQComponent,
+		[ReferenceTypeEnum['Image Carousel']]: ImageCarouselComponent,
+	};
+
+	const componentFunction = componentMappings[referenceType];
+	if (!componentFunction) {
+		return null; // Handle unknown referenceType values
+	}
+
+	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground});
+};
+
 type RenderResourceProps = {
 	sectionHeader: string;
 	resource: TResource;
 	index: number;
 	arrayLength: number;
-	referenceType: ReferenceType | ResourceBlocks;
+	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
 };
 
 const RenderResource: React.FC<RenderResourceProps> = ({
@@ -83,74 +183,7 @@ const RenderResource: React.FC<RenderResourceProps> = ({
 	const [resourceBackground] = getSectionColors(referenceType);
 	const {classes} = useStyles();
 
-	switch (referenceType) {
-		case ReferenceTypeEnum['Code Snippet']:
-			return <CodeSnippet resource={resource} />;
-
-		case ReferenceTypeEnum.Article:
-			return <Article color={getColor(index)} resource={resource} />;
-
-		case ReferenceTypeEnum['Customer Story']:
-		case ReferenceTypeEnum.Testimonial:
-			return (
-				<Testimonial
-					type={referenceType === ReferenceTypeEnum.Testimonial ? 'person' : 'company'}
-					resource={resource}
-				/>
-			);
-
-		case ResourceBlocksEnum['Phil Blog']:
-		case ResourceBlocksEnum['Upcoming Events']:
-		case ResourceBlocksEnum['White Paper']:
-		case ResourceBlocksEnum['Case Study']:
-			return <ResourceCard resource={resource} />;
-
-		case ReferenceTypeEnum['Featured Resource']:
-		case ReferenceTypeEnum['Info Card']:
-			return (
-				<Featured
-					noDivider={referenceType === ReferenceTypeEnum['Info Card']}
-					pr={
-						referenceType === ReferenceTypeEnum['Featured Resource'] ? handleSpacing(theme, theme.spacing.lg) : 0
-					}
-					resourceBackground={resourceBackground}
-					resource={resource}
-				/>
-			);
-
-		case ReferenceTypeEnum.Banner:
-			return <Banner resource={resource} />;
-
-		case ReferenceTypeEnum['Stats Card']:
-			return <StatsCard resource={resource} />;
-		case ReferenceTypeEnum['Stats Card with Arrows']:
-			return <StatsCard resource={resource} arrow={true} index={index === arrayLength - 1 ? undefined : index} />;
-
-		case ReferenceTypeEnum['Prescriber Journey']:
-			return <PrescriberJourney resource={resource} />;
-
-		case ReferenceTypeEnum['Team Member']:
-			return <Profile resource={resource} />;
-
-		case ReferenceTypeEnum.Investors:
-			return (
-				<Container className={classes.investorImage}>
-					<Asset asset={resource.asset!} />
-				</Container>
-			);
-
-		case ReferenceTypeEnum['Press Release']:
-			return <PressRelease resource={resource} />;
-
-		case ReferenceTypeEnum.Location:
-			return <CardWithImage resource={resource} />;
-
-		case ReferenceTypeEnum.FAQs:
-			return <FAQ resource={resource} />;
-
-		default:
-			break;
-	}
+	return getComponent(referenceType, resource, index, arrayLength, theme, classes, resourceBackground);
 };
 
 export default RenderResource;
