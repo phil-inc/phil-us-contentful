@@ -58,7 +58,8 @@ const useStyles = createStyles(theme => ({
 		textDecoration: 'none',
 		color: '#00201F',
 		fontSize: '14px',
-		lineHeight: '40px',
+		lineHeight: 1.55,
+		marginBottom: 20,
 	},
 
 	footerWrapper: {
@@ -98,7 +99,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 	const {classes} = useStyles();
 
 	return (
-		<Grid className={classes.footer} gutter={'xl'}>
+		<Grid className={classes.footer} gutterXl={'lg'} gutter={'md'}>
 			{pages.map(page => {
 				const [firstSection = {header: '#'}] = page.sections;
 
