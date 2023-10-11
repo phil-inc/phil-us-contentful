@@ -21,14 +21,12 @@ type ReferencedSectionBodyProps = {
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, getSpan}) => {
 	const theme = useMantineTheme();
 
+	console.log({rf: section.referenceType});
 	switch (section.referenceType) {
 		case ReferenceTypeEnum['Image Carousel']:
 			return <ResourceCarousel imageCaraouselSection={section} />;
 
-		case ReferenceTypeEnum.Investors:
-		case ReferenceTypeEnum.FAQs:
-		case ReferenceTypeEnum.Banner:
-		case ReferenceTypeEnum['Stats Card with Arrows']:
+		default:
 			return (
 				<Grid
 					grow={
@@ -57,9 +55,6 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					))}
 				</Grid>
 			);
-
-		default:
-			return null;
 	}
 };
 

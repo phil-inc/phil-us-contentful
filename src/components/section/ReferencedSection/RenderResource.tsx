@@ -89,11 +89,11 @@ const TestimonialPersonComponent: ComponentFunction = ({resource}) => <Testimoni
 
 const ResourceCardComponent: ComponentFunction = ({resource}) => <ResourceCard resource={resource} />;
 
-const FeaturedResourceComponent: ComponentFunction = ({theme, resourceBackground, resource}) => (
+const FeaturedResourceComponent: ComponentFunction = ({theme, resource}) => (
 	<Featured
 		noDivider={false}
 		pr={handleSpacing(theme!, theme!.spacing.lg)}
-		resourceBackground={resourceBackground}
+		resourceBackground={'#f4f4f4'}
 		resource={resource}
 	/>
 );
@@ -160,6 +160,8 @@ const getComponent = (
 	if (!componentFunction) {
 		return null; // Handle unknown referenceType values
 	}
+
+	console.log(resourceBackground, resource.heading);
 
 	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground});
 };
