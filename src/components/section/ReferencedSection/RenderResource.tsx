@@ -161,8 +161,6 @@ const getComponent = (
 		return null; // Handle unknown referenceType values
 	}
 
-	console.log(resourceBackground, resource.heading);
-
 	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground});
 };
 

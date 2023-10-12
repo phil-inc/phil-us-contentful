@@ -1,3 +1,4 @@
+import {type ContentfulButton} from 'layouts/Layout/CHeader/CHeader';
 import React from 'react';
 import {type TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
@@ -17,6 +18,7 @@ export type THeaderContext = {
 	opened: boolean;
 	setCollapseRef: React.Dispatch<React.SetStateAction<HTMLDivElement | undefined>>;
 	target: string;
+	buttons: ContentfulButton[];
 };
 
 const HeaderContext = React.createContext({} as THeaderContext);

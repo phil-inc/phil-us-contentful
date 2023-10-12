@@ -1,11 +1,12 @@
 import {HOME, RESOURCES} from 'constants/page';
 import slugify from 'slugify';
 
-export const getPathForSectionAndPage = (pageTitle: string, sectionHeader: string): string => {
+export const getPathForSectionAndPage = (pageTitle: string, sectionHeader: string, slug: string): string => {
 	// Set path based on page and section
 	let path = '';
 	if (pageTitle !== HOME) {
-		const pageSlug = slugify(pageTitle, {lower: true, strict: true});
+		console.log('slug', slug, pageTitle);
+		const pageSlug = slugify(slug, {lower: true, strict: true});
 		path = `/${pageSlug}`;
 	}
 

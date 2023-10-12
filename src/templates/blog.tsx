@@ -7,7 +7,7 @@ import {SEO} from 'layouts/SEO/SEO';
 import Asset, {YouTubeEmbed} from 'components/common/Asset/Asset';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAsset} from 'types/asset';
-import {graphql} from 'gatsby';
+import {Script, graphql} from 'gatsby';
 import {renderBanners} from 'components/common/Banner/Banner';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
@@ -34,7 +34,9 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulResource}, locatio
 			? getDescriptionFromRichtext(contentfulResource.body.raw)
 			: '';
 
-	const slug = contentfulResource.slug ?? `/${slugify(contentfulResource.heading, {strict: true, lower: true})}`;
+	const config = {
+		slug: 'https://phil.us' + location.pathname,
+	};
 
 	return (
 		<SEO title={contentfulResource.heading}>
@@ -47,8 +49,15 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulResource}, locatio
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${slug}/`} />
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			<meta property='og:url' content={config.slug} />
+			<Script
+				defer
+				async
+				strategy='idle'
+				charSet='utf-8'
+				type='text/javascript'
+				src='//js.hsforms.net/forms/embed/v2.js'
+			></Script>
 			{contentfulResource.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);

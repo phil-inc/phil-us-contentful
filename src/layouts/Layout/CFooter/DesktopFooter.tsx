@@ -107,7 +107,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 				if (page.title === 'Home') {
 					path = '/';
 				} else {
-					const slug = slugify(page.title, {lower: true, strict: true});
+					const slug = slugify(page.slug, {lower: true, strict: true});
 
 					if (page.title === RESOURCES) {
 						const sectionSlug = slugify(firstSection.header, {lower: true, strict: true});
@@ -135,7 +135,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 									),
 								)
 								.map((section, index, array) => {
-									const path = getPathForSectionAndPage(page.title, section.header);
+									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 									return (
 										<React.Fragment key={section.id + 'mapFooterSections'}>

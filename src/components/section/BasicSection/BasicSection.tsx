@@ -228,7 +228,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					<Grid.Col
 						orderMd={textColumnOrder}
 						orderSm={1}
-						lg={section.embedForm || !section.automaticOrder || isEmbedFormTemplate ? 7 : 6}
+						lg={section.embedForm || isEmbedFormTemplate ? 7 : 6}
 						md={6}
 						sm={12}
 					>
@@ -305,7 +305,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					<Grid.Col
 						orderMd={imageColumnOrder}
 						orderSm={2}
-						lg={section.embedForm || !section.automaticOrder || isEmbedFormTemplate ? 5 : 6}
+						lg={section.embedForm || isEmbedFormTemplate ? 5 : 6}
 						md={6}
 						sm={12}
 						sx={{height: context.title === CONTACT_PAGE ? height : undefined}}

@@ -21,7 +21,6 @@ type ReferencedSectionBodyProps = {
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, getSpan}) => {
 	const theme = useMantineTheme();
 
-	console.log({rf: section.referenceType});
 	switch (section.referenceType) {
 		case ReferenceTypeEnum['Image Carousel']:
 			return <ResourceCarousel imageCaraouselSection={section} />;

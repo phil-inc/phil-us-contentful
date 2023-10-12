@@ -118,7 +118,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => {
 										),
 									)
 									.map((section, index) => {
-										const path = getPathForSectionAndPage(page.title, section.header);
+										const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 										return (
 											<React.Fragment key={section.id + 'mapFooterSectionsMobile'}>

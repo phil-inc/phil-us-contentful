@@ -73,7 +73,7 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulRe
 				type='text/javascript'
 				src='//js.hsforms.net/forms/embed/v2.js'
 			></Script>
-			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
 };

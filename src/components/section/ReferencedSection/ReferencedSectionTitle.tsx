@@ -35,13 +35,14 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 	const theme = useMantineTheme();
 	const {classes} = useStyles();
 
-	const renderTitle = (size: number, className?: string, order?: TitleOrder) => (
-		<Title className={className} order={order} size={size}>
+	const renderTitle = (size: number | undefined, className?: string, order?: TitleOrder, textColor?: string) => (
+		<Title className={className} order={order} size={size} color={textColor}>
 			{section.header}
 		</Title>
 	);
 
 	switch (true) {
+		// Handle referenced sections in /resources page
 		case RESOURCE_BLOCKS.includes(section.referenceType):
 			return (
 				<Box mb={handleSpacing(theme, theme.spacing.md)}>
@@ -49,6 +50,8 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 					<Divider variant='dashed' size={1} className={classes.divider} />
 				</Box>
 			);
+
+		// Handle referenced sections in code snippet section
 		case section.referenceType === ReferenceTypeEnum['Code Snippet']:
 			return (
 				<Stack
@@ -64,7 +67,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 		default:
 			return (
 				<Group position='center' mb={28}>
-					{Boolean(section.header?.length) && renderTitle(36, undefined, 2)}
+					{Boolean(section.header?.length) && renderTitle(undefined, undefined, 2, textColor)}
 				</Group>
 			);
 	}

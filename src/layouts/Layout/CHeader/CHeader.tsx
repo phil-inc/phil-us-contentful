@@ -107,20 +107,21 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 
 	navLink: {
 		position: 'relative',
-		marginRight: 'calc(1.313rem + 1.5vw)',
+		marginRight: 'calc(1.313rem + 1.2vw)',
 		cursor: 'pointer',
 		textDecoration: 'none',
 
 		'&:last-child': {
 			marginRight: '0px',
 		},
+
+		[theme.fn.smallerThan('xl')]: {
+			marginRight: 'calc(1.313rem)',
+		},
 	},
 
-	patientLoginButton: {
-		'&:hover': {
-			backgroundColor: theme.colors.philBranding[9],
-			color: 'white',
-		},
+	buttons: {
+		marginRight: '0px !important',
 	},
 
 	patientLoginButtonMobile: {
@@ -151,10 +152,21 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 			display: 'none',
 		},
 	},
+	textDecorationNone: {
+		textDecoration: 'none',
+		textDecorationLine: 'none',
+	},
 }));
 
+export type ContentfulButton = {
+	buttonText: string;
+	buttonStyle: string;
+	externalLink: string;
+	internalLink: ContentfulPage;
+};
+
 type CHeaderProps = {
-	allContentfulHeader: {nodes: Array<{logo: TAsset; navigationLinks: ContentfulPage[]}>};
+	allContentfulHeader: {nodes: Array<{logo: TAsset; navigationLinks: ContentfulPage[]; buttons: ContentfulButton[]}>};
 	allContentfulResource: {nodes: Array<Pick<TResource, 'id' | 'heading' | 'relatesTo'>>};
 	sitePage: {id: string; pageContext: {title: string; displayTitle: string}};
 	minimal: boolean;
@@ -169,7 +181,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 	headerTargetBlank,
 }) => {
 	const [header] = allContentfulHeader.nodes;
-	const pages = header.navigationLinks;
+	const {navigationLinks: pages, buttons} = header;
 
 	const {width} = useViewportSize();
 	const {classes} = useStyles({minimal});
@@ -312,6 +324,13 @@ const Navbar: React.FC<CHeaderProps> = ({
 		}
 	}, [width]);
 
+	console.log({allContentfulHeader});
+
+	const buttonConfig = {
+		primary: {variant: 'outline', size: 'md', uppercase: true},
+		secondary: {variant: 'default', size: 'md', uppercase: true},
+	};
+
 	return (
 		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={minimal ? 0 : isBreak ? 0 : 36}>
 			<Container className={classes.inner} fluid>
@@ -369,19 +388,47 @@ const Navbar: React.FC<CHeaderProps> = ({
 											<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 										</List.Item>
 									))}
-								<List.Item data-noindicator='true'>
-									<Anchor href='https://my.phil.us' target='_blank'>
-										<Button
-											size='md'
-											uppercase
-											variant='outline'
-											color='philBranding'
-											className={classes.patientLoginButton}
-										>
-											Patient Login
-										</Button>
-									</Anchor>
-								</List.Item>
+								{buttons.map((button, index) => (
+									<List.Item data-noindicator='true' className={classes.buttons}>
+										{button.internalLink ? (
+											<Box ml={index && 16}>
+												<Link className={classes.textDecorationNone} to={button.internalLink.slug}>
+													<Button
+														size={
+															button.buttonStyle === 'primary'
+																? buttonConfig.primary.size
+																: buttonConfig.secondary.size
+														}
+														uppercase={
+															button.buttonStyle === 'primary'
+																? buttonConfig.primary.uppercase
+																: buttonConfig.secondary.uppercase
+														}
+														variant={
+															button.buttonStyle === 'primary'
+																? buttonConfig.primary.variant
+																: buttonConfig.secondary.variant
+														}
+													>
+														{button.buttonText}
+													</Button>
+												</Link>
+											</Box>
+										) : (
+											<Anchor
+												className={classes.textDecorationNone}
+												sx={{textDecoration: 'none', textDecorationLine: 'none'}}
+												ml={index && 16}
+												href={button.externalLink}
+												target='_blank'
+											>
+												<Button size='md' uppercase variant='outline'>
+													{button.buttonText}
+												</Button>
+											</Anchor>
+										)}
+									</List.Item>
+								))}
 							</List>
 						</>
 					)}
@@ -399,6 +446,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 							setCollapseRef,
 							target,
 							close,
+							buttons,
 						}}
 					>
 						{isBreak ? <CDrawer /> : <CCollapse />}
@@ -416,6 +464,7 @@ const query = graphql`
 				id
 				title
 				navigationLinks {
+					slug
 					id
 					title
 					displayTitle
@@ -450,6 +499,19 @@ const query = graphql`
 							size
 						}
 						url
+					}
+				}
+				buttons {
+					id
+					buttonText
+					buttonStyle
+					externalLink
+					internalLink {
+						... on ContentfulPage {
+							slug
+							id
+							title
+						}
 					}
 				}
 			}
