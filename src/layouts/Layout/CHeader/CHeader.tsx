@@ -324,8 +324,6 @@ const Navbar: React.FC<CHeaderProps> = ({
 		}
 	}, [width]);
 
-	console.log({allContentfulHeader});
-
 	const buttonConfig = {
 		primary: {variant: 'outline', size: 'md', uppercase: true},
 		secondary: {variant: 'default', size: 'md', uppercase: true},

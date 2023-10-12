@@ -5,7 +5,6 @@ export const getPathForSectionAndPage = (pageTitle: string, sectionHeader: strin
 	// Set path based on page and section
 	let path = '';
 	if (pageTitle !== HOME) {
-		console.log('slug', slug, pageTitle);
 		const pageSlug = slugify(slug, {lower: true, strict: true});
 		path = `/${pageSlug}`;
 	}
