@@ -159,6 +159,7 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 }));
 
 export type ContentfulButton = {
+	id: string;
 	buttonText: string;
 	buttonStyle: string;
 	externalLink: string;
@@ -387,7 +388,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 										</List.Item>
 									))}
 								{buttons.map((button, index) => (
-									<List.Item data-noindicator='true' className={classes.buttons}>
+									<List.Item key={button.id} data-noindicator='true' className={classes.buttons}>
 										{button.internalLink ? (
 											<Box ml={index && 16}>
 												<Link className={classes.textDecorationNone} to={button.internalLink.slug}>

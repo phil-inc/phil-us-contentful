@@ -121,11 +121,15 @@ const useStyles = createStyles(theme => ({
 		marginBottom: '32px',
 
 		display: 'flex',
-		justifyContent: 'center',
+		justifyContent: 'start',
 	},
 
 	embededAssetPDF: {
 		marginBottom: '32px',
+	},
+
+	embededAssetWrapper: {
+		maxWidth: 420,
 	},
 
 	border: {
@@ -215,9 +219,13 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 								: classes.embededAsset
 						}
 					>
-						<ImageContainer fluid ratio={16 / 9}>
+						{isPDFContent(node.data.target.file.contentType as string) ? (
 							<Asset ref={canvasRef} asset={node.data.target as TAsset} />
-						</ImageContainer>
+						) : (
+							<Box className={classes.embededAssetWrapper}>
+								<Asset ref={canvasRef} asset={node.data.target as TAsset} />
+							</Box>
+						)}
 					</Box>
 				);
 			},

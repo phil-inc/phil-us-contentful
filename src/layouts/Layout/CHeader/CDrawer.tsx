@@ -329,7 +329,7 @@ const CDrawer: React.FC = () => {
 					.filter((button, index) => index)
 					.map((button, index) =>
 						button.internalLink ? (
-							<Box mt={index && 16}>
+							<Box key={button.id} mt={index && 16}>
 								<Link className={classes.textDecorationNone} to={button.internalLink.slug}>
 									<Button
 										size={

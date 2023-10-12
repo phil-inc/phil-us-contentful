@@ -53,7 +53,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 			philBranding: [
 				'#D5F1F0',
 				'#00827E',
-				'#00827E',
+				'#0A0A0A',
 				'#00827E',
 				'#00827E',
 				'#00827E',
@@ -130,13 +130,13 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 							}),
 
 							...(params.variant === 'default' && {
-								backgroundColor: 'white',
-								color: theme.colors.philBranding[9],
+								backgroundColor: theme.colors.philBranding[2],
+								border: `1px solid ${theme.colors.philBranding[2]}`,
 							}),
 
 							...(params.variant === 'outline' && {
-								backgroundColor: theme.colors.philBranding[9],
-								color: 'white',
+								backgroundColor: params.color === 'dark' ? undefined : theme.colors.philBranding[9],
+								color: params.color === 'dark' ? undefined : 'white',
 							}),
 
 							fontWeight: 900,

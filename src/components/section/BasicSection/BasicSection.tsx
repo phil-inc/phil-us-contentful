@@ -1,4 +1,5 @@
 import React from 'react';
+import {createPortal} from 'react-dom';
 import {BLOCKS} from '@contentful/rich-text-types';
 import {
 	Anchor,
@@ -34,13 +35,27 @@ import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 import {parseScript} from 'utils/parseScript';
 
 const useStyles = createStyles(
-	(theme, {isContact, isEmbedForm, index}: {isContact: boolean; isEmbedForm: boolean; index: number}) => ({
+	(
+		theme,
+		{
+			isContact,
+			isEmbedFormTemplate,
+			index,
+			isEmbedFormSection,
+		}: {isContact: boolean; isEmbedFormTemplate: boolean; index: number; isEmbedFormSection: boolean},
+	) => ({
 		title: {
-			maxWidth: isEmbedForm ? (index === 0 ? 500 : 600) : '100%',
-			...(isEmbedForm && {fontSize: 40}),
+			maxWidth: isEmbedFormTemplate ? (index === 0 ? 500 : 600) : '100%',
+			...(isEmbedFormTemplate && {fontSize: 40}),
 
 			[theme.fn.smallerThan('lg')]: {
 				maxWidth: '100%',
+			},
+		},
+
+		portal: {
+			[theme.fn.smallerThan('md')]: {
+				display: isEmbedFormSection ? 'none' : undefined,
 			},
 		},
 
@@ -48,7 +63,15 @@ const useStyles = createStyles(
 			p: {
 				marginTop: 0,
 			},
-			maxWidth: isEmbedForm ? 600 : '100%',
+			maxWidth: isEmbedFormTemplate ? 600 : '100%',
+
+			[theme.fn.smallerThan('md')]: {
+				...(isEmbedFormSection && {paddingLeft: 0, paddingRight: 0}),
+			},
+
+			[theme.fn.smallerThan('sm')]: {
+				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
+			},
 
 			[theme.fn.smallerThan('lg')]: {
 				maxWidth: '100%',
@@ -58,6 +81,10 @@ const useStyles = createStyles(
 		formWrapper: {
 			padding: '44px 32px',
 			background: '#F4F4F4',
+
+			[theme.fn.smallerThan('sm')]: {
+				padding: '44px 38px',
+			},
 		},
 
 		container: {
@@ -96,6 +123,21 @@ const useStyles = createStyles(
 				textDecoration: 'none',
 			},
 		},
+
+		textGridColumn: {
+			[theme.fn.smallerThan('md')]: {
+				...(isEmbedFormSection && {paddingBottom: 8}),
+			},
+		},
+
+		heroGridColumn: {
+			[theme.fn.smallerThan('md')]: {
+				...(isEmbedFormSection && {paddingLeft: 32, paddingRight: 20}),
+			},
+			[theme.fn.smallerThan('sm')]: {
+				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
+			},
+		},
 	}),
 );
 
@@ -122,9 +164,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 	const {classes, theme} = useStyles({
 		isContact: context.title === CONTACT_PAGE,
-		isEmbedForm: isEmbedFormTemplate,
+		isEmbedFormTemplate,
 		index,
+		isEmbedFormSection: Boolean(section.embedForm),
 	});
+
 	const {link, isExternal} = getLink(section);
 
 	const richTextImages: Record<string, any> = {};
@@ -168,22 +212,25 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		},
 	};
 
+	const heroRef = React.useRef(null);
+
 	// Determine if the index is an even column
 	const isEvenColumn = index % NUMBER_OF_COLUMNS === 0;
 	let textColumnOrder = isEvenColumn ? ORDER_FIRST : ORDER_SECOND;
 	let imageColumnOrder = isEvenColumn ? ORDER_SECOND : ORDER_FIRST;
 
-	if (!section.automaticOrder || isEmbedFormTemplate) {
+	if (!section.automaticOrder) {
 		textColumnOrder = ORDER_FIRST;
 		imageColumnOrder = ORDER_SECOND;
 	}
 
-	const isMobile = useMediaQuery('(max-width: 576px)', false, {getInitialValueInEffect: false});
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 	const ref = React.useRef();
 	const {width} = useViewportSize();
 	const [height, setHeight] = React.useState<number>(790);
+
+	const isMobileView = theme.breakpoints.md > width;
 
 	let formId = '';
 	let portalId = '';
@@ -216,7 +263,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			id={slugify(section.header, {lower: true, strict: true})}
 			fluid
 			className={classes.container}
-			my={context.title === CONTACT_PAGE ? 0 : isMobile ? 32 : isEmbedFormTemplate ? 152 : 92}
+			my={context.title === CONTACT_PAGE ? 0 : isMobileView ? 32 : isEmbedFormTemplate ? 152 : 92}
 			sx={{background: sectionBackground(section.background)}}
 		>
 			<>
@@ -226,8 +273,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				>
 					{/* Text Grid Column */}
 					<Grid.Col
-						orderMd={textColumnOrder}
-						orderSm={1}
+						className={classes.textGridColumn}
+						order={textColumnOrder}
 						lg={section.embedForm || isEmbedFormTemplate ? 7 : 6}
 						md={6}
 						sm={12}
@@ -278,9 +325,24 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									</Text>
 								)}
 								{Boolean(section.body) && (
-									<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
-										{renderRichText(section.body, options)}
-									</Text>
+									<Box className={classes.portal}>
+										{heroRef.current && isMobileView && section.embedForm ? (
+											createPortal(
+												<Text
+													size={18}
+													className={classes.body}
+													mt={handleSpacing(theme, theme.spacing.sm)}
+												>
+													{renderRichText(section.body, options)}
+												</Text>,
+												heroRef.current,
+											)
+										) : (
+											<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
+												{renderRichText(section.body, options)}
+											</Text>
+										)}
+									</Box>
 								)}
 								{Boolean(section.buttonText?.length) && (
 									<Group mt={handleSpacing(theme, theme.spacing.md)}>
@@ -303,8 +365,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 					{/* Hero Grid Column */}
 					<Grid.Col
-						orderMd={imageColumnOrder}
-						orderSm={2}
+						className={classes.heroGridColumn}
+						ref={heroRef}
+						order={imageColumnOrder}
 						lg={section.embedForm || isEmbedFormTemplate ? 5 : 6}
 						md={6}
 						sm={12}
@@ -337,7 +400,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				&& section.codeSnippet
 				&& Boolean(section.codeSnippet.codeSnippet.length)
 				&& isProduction ? (
-						<Script>
+						<Script defer async>
 							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
 						</Script>
 					) : null}
