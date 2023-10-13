@@ -108,6 +108,11 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 			display: 'none',
 		},
 	},
+
+	textDecorationNone: {
+		textDecoration: 'none',
+		textDecorationLine: 'none',
+	},
 }));
 
 /**
@@ -115,9 +120,14 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
  * @component
  */
 const CDrawer: React.FC = () => {
-	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer} = React.useContext(HeaderContext);
+	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer, buttons}
+		= React.useContext(HeaderContext);
 	const {classes} = useStyles({minimal});
 	const theme = useMantineTheme();
+	const buttonConfig = {
+		primary: {variant: 'outline', size: 'md', uppercase: true},
+		secondary: {variant: 'default', size: 'md', uppercase: true},
+	};
 
 	return (
 		<Drawer
@@ -190,7 +200,7 @@ const CDrawer: React.FC = () => {
 											),
 										)
 										.map((section, index, array) => {
-											const path = getPathForSectionAndPage(page.title, section.header);
+											const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 											return (
 												<React.Fragment key={section.id + 'mapHeaderPageSectionsDrawer'}>
@@ -249,7 +259,7 @@ const CDrawer: React.FC = () => {
 																			<Link
 																				key={id + 'mapResourceDrawer'}
 																				to={navigateToPage(
-																					`${slugify(page.title, {
+																					`${slugify(page.slug, {
 																						lower: true,
 																					})}/${slugify(relatesTo.header, {
 																						lower: true,
@@ -315,6 +325,47 @@ const CDrawer: React.FC = () => {
 							</Accordion.Item>
 						))}
 				</Accordion>
+				{buttons
+					.filter((button, index) => index)
+					.map((button, index) =>
+						button.internalLink ? (
+							<Box key={button.id} mt={index && 16}>
+								<Link className={classes.textDecorationNone} to={button.internalLink.slug}>
+									<Button
+										size={
+											button.buttonStyle === 'primary'
+												? buttonConfig.primary.size
+												: buttonConfig.secondary.size
+										}
+										uppercase={
+											button.buttonStyle === 'primary'
+												? buttonConfig.primary.uppercase
+												: buttonConfig.secondary.uppercase
+										}
+										variant={
+											button.buttonStyle === 'primary'
+												? buttonConfig.primary.variant
+												: buttonConfig.secondary.variant
+										}
+										fullWidth
+									>
+										{button.buttonText}
+									</Button>
+								</Link>
+							</Box>
+						) : (
+							<Anchor
+								className={classes.textDecorationNone}
+								mt={index && 16}
+								href={button.externalLink}
+								target='_blank'
+							>
+								<Button size='md' uppercase variant='outline' fullWidth>
+									{button.buttonText}
+								</Button>
+							</Anchor>
+						),
+					)}
 			</ScrollArea>
 		</Drawer>
 	);

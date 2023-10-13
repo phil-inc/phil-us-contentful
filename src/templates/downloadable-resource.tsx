@@ -33,7 +33,10 @@ type HelmetProps = {
 };
 
 export const Head: React.FC<HelmetProps> = ({data: {contentfulDownloadableResource}, location}) => {
-	const heroImage = contentfulDownloadableResource?.image?.file?.url;
+	const config = {
+		slug: 'https://phil.us' + location.pathname,
+		heroImage: contentfulDownloadableResource?.image?.file?.url,
+	};
 
 	const computeTitle = () => {
 		const pageTitle = contentfulDownloadableResource.heading;
@@ -52,13 +55,17 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulDownloadableResour
 			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={computeTitle()} />
 			<meta name='twitter:description' content={computeMetaDescription()} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			{config.heroImage && (
+				<meta name='twitter:image' content={`https:${config.heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />
+			)}
 			<meta name='description' content={computeMetaDescription()} />
 			<meta property='og:title' content={computeTitle()} />
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={computeMetaDescription()} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
+			{config.heroImage && (
+				<meta property='og:image' content={`https:${config.heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />
+			)}
+			<meta property='og:url' content={config.slug} />
 			<Script
 				defer
 				strategy='idle'

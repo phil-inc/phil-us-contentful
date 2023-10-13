@@ -18,7 +18,7 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 			section.internalLink?.sys?.contentType?.sys?.id === 'section'
 			|| section.internalLink.sys?.contentType?.sys?.id === 'referencedSection'
 		) {
-			if (section.internalLink?.page[0]) {
+			if (section.internalLink?.page?.[0]) {
 				link.push(slugify(section.internalLink.page[0].title, {lower: true, strict: true}));
 				link.push(
 					`#${slugify(section.internalLink.header ?? section.internalLink.id, {lower: true, strict: true})}`,
