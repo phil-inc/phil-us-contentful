@@ -12,7 +12,7 @@ import {renderBanners} from 'components/common/Banner/Banner';
 import AuthorBlock from 'components/Blog/AuthorBlock/AuthorBlock';
 import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
-import {isPDFContent} from 'utils/isVideoContent';
+import {isPDFContent, isVideoContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
@@ -221,6 +221,10 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 					>
 						{isPDFContent(node.data.target.file.contentType as string) ? (
 							<Asset ref={canvasRef} asset={node.data.target as TAsset} />
+						) : node?.data?.target?.file?.contentType && isVideoContent(node.data.target.file.contentType as string) ? (
+							<ImageContainer fluid ratio={16 / 9}>
+								<Asset ref={canvasRef} asset={node.data.target as TAsset} />
+							</ImageContainer>
 						) : (
 							<Box className={classes.embededAssetWrapper}>
 								<Asset ref={canvasRef} asset={node.data.target as TAsset} />
