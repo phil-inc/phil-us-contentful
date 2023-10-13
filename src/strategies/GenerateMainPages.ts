@@ -3,7 +3,7 @@ import {pagination} from '../utils/pagination';
 import {POSTS_PER_SECTION} from '../constants/section';
 import {createPageObject} from '../utils/pageObjectCreator';
 import {type TemplateKey, templateFactory} from '../factories/templateFactory';
-import {RESOURCES} from '../constants/page';
+import {HOME, RESOURCES} from '../constants/page';
 import type {Actions} from 'gatsby';
 import {type ContentfulPage} from '../types/page';
 import {type IReferencedSection, type ISection} from '../types/section';
@@ -57,6 +57,7 @@ const getPagesQuery = `
     query getPages {
         allContentfulPage(filter: { node_locale: { eq: "en-US" } }) {
             nodes {
+				slug
                 id
                 title
                 sections {
@@ -100,9 +101,12 @@ function handleResourcePage(page: ContentfulPage, resourceSubPages: string[], ac
 }
 
 function handleRegularPage(page: ContentfulPage, actions: Actions): void {
-	const slug = page.title === 'Home' ? '/' : slugify(page.title, {lower: true, strict: true});
-	const component = templateFactory(page.title as TemplateKey);
-	const pageObject = createPageObject(slug, component, {id: page.id, title: page.title});
+	const config = {
+		slug: page.slug,
+		component: templateFactory(page.title as TemplateKey),
+	};
+
+	const pageObject = createPageObject(config.slug, config.component, {id: page.id, title: page.title});
 	actions.createPage(pageObject);
 }
 
@@ -110,7 +114,7 @@ function createResourceSubPage(pageSectionActions: PageSectionActions, pageDetai
 	const {page, section, actions} = pageSectionActions;
 	const {headerSlug, index, numPages} = pageDetails;
 
-	const pageSlug = slugify(page.title, {lower: true, strict: true});
+	const pageSlug = slugify(page.slug, {lower: true, strict: true});
 	const path = index === 0 ? `${pageSlug}/${headerSlug}` : `${pageSlug}/${headerSlug}/${index + 1}`;
 
 	const pageObject = createPageObject(path, templateFactory('Resources'), {

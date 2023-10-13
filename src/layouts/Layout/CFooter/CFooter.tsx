@@ -132,6 +132,7 @@ const query = graphql`
 				id
 				title
 				navigationLinks {
+					slug
 					id
 					title
 					sys {

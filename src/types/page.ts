@@ -6,4 +6,6 @@ export type ContentfulPage = {
 	sections: Array<ISection | IReferencedSection>;
 	title: string;
 	displayTitle: string;
+	noindex: boolean;
+	slug: string;
 };

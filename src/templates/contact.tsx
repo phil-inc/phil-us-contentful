@@ -22,6 +22,10 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 	const heroImage = heroSection?.asset.file.url;
 	const title = contentfulPage.displayTitle.length ? contentfulPage.displayTitle : contentfulPage.title;
 
+	const config = {
+		slug: 'https://phil.us' + location.pathname,
+	};
+
 	return (
 		<SEO title={title}>
 			<meta name='twitter:card' content='summary_large_image' />
@@ -33,7 +37,7 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={contentfulPage.description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${contentfulPage.title === 'Home' ? '/' : `/${title}`}`} />
+			<meta property='og:url' content={config.slug} />
 			<Script
 				defer
 				strategy='idle'
@@ -41,7 +45,7 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 				type='text/javascript'
 				src='//js.hsforms.net/forms/embed/v2.js'
 			></Script>
-			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
 };
@@ -67,6 +71,7 @@ const ContactTemplate: React.FC<ContactTemplateProps> = ({data: {contentfulPage}
 							key={section.id + 'mapSectionComponent'}
 							section={section}
 							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
+							isEmbedFormTemplate={false}
 						/>
 					))}
 			</Layout>

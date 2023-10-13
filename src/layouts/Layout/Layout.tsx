@@ -53,7 +53,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 			philBranding: [
 				'#D5F1F0',
 				'#00827E',
-				'#00827E',
+				'#0A0A0A',
 				'#00827E',
 				'#00827E',
 				'#00827E',
@@ -108,21 +108,47 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 					root: {
 						borderRadius: '0',
 						padding: '10px 20px',
-						...(params.variant === 'filled' && {backgroundColor: theme.colors.primary[0]}),
-						transition: 'outline 0.2s ease-in-out',
-						outlineOffset: -3,
+						...(params.variant === 'filled' && {
+							backgroundColor: theme.colors.primary[0],
+							color: 'white',
+							transition: 'outline 0.15s ease-in-out',
+							outlineOffset: -3,
+						}),
+
+						...(params.variant === 'default' && {
+							backgroundColor: theme.colors.philBranding[9],
+							color: 'white',
+							border: `1px solid ${theme.colors.philBranding[9]}`,
+							outlineOffset: -3,
+						}),
 
 						'&:hover': {
-							...(params.variant === 'filled' && {backgroundColor: 'transparent'}),
-							...(params.variant === 'filled' && {color: theme.colors.primary[0]}),
-							...(params.variant === 'filled' && {outline: `3px solid ${theme.colors.primary[0]}`}),
+							...(params.variant === 'filled' && {
+								backgroundColor: 'white',
+								color: theme.colors.primary[0],
+								outline: `3px solid ${theme.colors.primary[0]}`,
+							}),
+
+							...(params.variant === 'default' && {
+								backgroundColor: theme.colors.philBranding[2],
+								border: `1px solid ${theme.colors.philBranding[2]}`,
+							}),
+
+							...(params.variant === 'outline' && {
+								backgroundColor: params.color === 'dark' ? undefined : theme.colors.philBranding[9],
+								color: params.color === 'dark' ? undefined : 'white',
+							}),
+
 							fontWeight: 900,
-							outlineOffset: -3,
 						},
 
 						'&:focus:not(:focus-visible)': {
-							...(params.variant === 'filled' && {outline: `3px solid ${theme.colors.primary[0]}`}),
-							outlineOffset: -3,
+							...(params.variant === 'filled' && {
+								outline: `3px solid ${theme.colors.primary[0]}`,
+								outlineOffset: -3,
+								backgroundColor: 'white',
+								color: theme.colors.primary[0],
+							}),
 						},
 					},
 				}),
