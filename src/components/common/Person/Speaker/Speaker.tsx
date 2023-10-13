@@ -12,7 +12,7 @@ type SpeakerProps = {
 
 const useStyles = createStyles((theme, {length}: {length: number}) => ({
 	card: {
-		background: '#F5F6F8',
+		background: '#F4F4F4',
 		height: '100%',
 		maxWidth: 825,
 	},
@@ -30,7 +30,7 @@ const useStyles = createStyles((theme, {length}: {length: number}) => ({
 	},
 
 	wrapper: {
-		background: '#F5F6F8',
+		background: '#F4F4F4',
 	},
 
 	content: {

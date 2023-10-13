@@ -5,10 +5,11 @@ import Section from 'components/section/Section';
 import {SEO} from 'layouts/SEO/SEO';
 import {Box, Container, createStyles, Grid, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import type {ISection} from 'types/section';
+import type {IReferencedSection, ISection} from 'types/section';
 import PageContext from 'contexts/PageContext';
 import {Script, graphql} from 'gatsby';
 import slugify from 'slugify';
+import {HOME} from 'constants/page';
 
 type HelmetProps = {
 	data: {
@@ -22,6 +23,14 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 	const heroImage = heroSection?.asset.file.url;
 	const title = contentfulPage.displayTitle.length ? contentfulPage.displayTitle : contentfulPage.title;
 
+	const config = {
+		slug: contentfulPage.slug,
+	};
+
+	if (!config.slug) {
+		config.slug = contentfulPage.title === HOME ? '/' : `/${slugify(contentfulPage.title, {lower: true})}`;
+	}
+
 	return (
 		<SEO title={title}>
 			<meta name='twitter:card' content='summary_large_image' />
@@ -33,18 +42,22 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={contentfulPage.description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta
-				property='og:url'
-				content={`https://phil.us${
-					contentfulPage.title === 'Home' ? '/' : `/${slugify(contentfulPage.title, {strict: true, lower: true})}/`
-				}`}
-			/>
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
-			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			<meta property='og:url' content={`https://phil.us${config.slug}`} />
 			<Script
+				defer
+				async
+				strategy='idle'
+				charSet='utf-8'
+				type='text/javascript'
+				src='//js.hsforms.net/forms/embed/v2.js'
+			></Script>
+			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
+			<Script
+				defer
+				async
+				strategy='idle'
 				type='text/javascript'
 				src='//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'
-				async
 			></Script>
 		</SEO>
 	);
@@ -74,8 +87,8 @@ const useStyles = createStyles((theme, {title}: {title: string}) => ({
 const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 	const {classes} = useStyles({title});
-
 	let basicSectionCount = 0;
+	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));
 
 	return (
 		<PageContext.Provider value={{title}}>
@@ -105,6 +118,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 							key={section.id + 'mapSectionComponent'}
 							section={section}
 							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
+							isEmbedFormTemplate={isEmbedFormTemplate}
 						/>
 					))}
 			</Layout>
@@ -115,6 +129,8 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 export const query = graphql`
 	query getPages($id: String!) {
 		contentfulPage(id: {eq: $id}) {
+			noindex
+			slug
 			id
 			title
 			displayTitle
@@ -153,6 +169,11 @@ export const query = graphql`
 					header
 					sectionType
 					externalLink
+					automaticOrder
+					background
+					embedForm {
+						raw
+					}
 					sys {
 						contentType {
 							sys {

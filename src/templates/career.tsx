@@ -10,7 +10,8 @@ import {getTitle} from 'utils/getTitle';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import {groupBy} from 'utils/groupBy';
 import {isProduction} from 'utils/isProduction';
-import {graphql} from 'gatsby';
+import {Script, graphql} from 'gatsby';
+import {HOME} from 'constants/page';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
@@ -23,9 +24,13 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 	const heroImage = heroSection?.asset.file.url;
 	const domain = getWindowProperty('location.hostname', 'phil.us');
 
+	const config = {
+		slug: 'https://phil.us' + location.pathname,
+	};
+
 	return (
 		<SEO title={getTitle(contentfulPage.title, contentfulPage.displayTitle)}>
-			{isProduction && domain !== 'phil.us' && <link rel='canonical' href={'https://phil.us' + location.pathname} />}
+			{isProduction && domain !== 'phil.us' && <link rel='canonical' href={config.slug} />}
 			<meta name='twitter:card' content='summary_large_image' />
 			<meta name='twitter:title' content={getTitle(contentfulPage.title, contentfulPage.displayTitle)} />
 			<meta name='twitter:description' content={contentfulPage.description} />
@@ -35,11 +40,9 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 			<meta property='og:type' content={'Page'} />
 			<meta property='og:description' content={contentfulPage.description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta
-				property='og:url'
-				content={`https://phil.us/${slugify(contentfulPage.title, {lower: true, strict: true})}`}
-			/>
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			<meta property='og:url' content={config.slug} />
+			<Script defer async charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></Script>
+			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
 };

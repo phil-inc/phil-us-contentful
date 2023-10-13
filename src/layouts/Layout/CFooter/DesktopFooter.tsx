@@ -58,7 +58,8 @@ const useStyles = createStyles(theme => ({
 		textDecoration: 'none',
 		color: '#00201F',
 		fontSize: '14px',
-		lineHeight: '40px',
+		lineHeight: 1.55,
+		marginBottom: 20,
 	},
 
 	footerWrapper: {
@@ -98,7 +99,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 	const {classes} = useStyles();
 
 	return (
-		<Grid className={classes.footer} gutter={'xl'}>
+		<Grid className={classes.footer} gutterXl={'lg'} gutter={'md'}>
 			{pages.map(page => {
 				const [firstSection = {header: '#'}] = page.sections;
 
@@ -106,7 +107,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 				if (page.title === 'Home') {
 					path = '/';
 				} else {
-					const slug = slugify(page.title, {lower: true, strict: true});
+					const slug = slugify(page.slug, {lower: true, strict: true});
 
 					if (page.title === RESOURCES) {
 						const sectionSlug = slugify(firstSection.header, {lower: true, strict: true});
@@ -134,7 +135,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 									),
 								)
 								.map((section, index, array) => {
-									const path = getPathForSectionAndPage(page.title, section.header);
+									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 									return (
 										<React.Fragment key={section.id + 'mapFooterSections'}>

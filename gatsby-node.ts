@@ -3,41 +3,41 @@ import GenerateMainPages from './src/strategies/GenerateMainPages';
 import GenerateStaticPages from './src/strategies/GenerateStaticPages';
 import GenerateDownloadableResourcePages from './src/strategies/GenerateDownloadableResourcePages';
 import GenerateEventRegistrationPages from './src/strategies/GenerateEventRegistrationPages';
+import {RedirectConfig, RedirectFactory} from './src/factories/redirectFactory';
 
+// redirect configurations
+const redirectConfigurations: Record<string, RedirectConfig> = {
+    resources: {
+        fromPaths: ['/resources/', '/resources'],
+        toPath: (subPages: string[]) => {
+            const [firstSubPage] = subPages;
+            let redirectPath = '/';
+            if (firstSubPage) {
+                redirectPath = '/resources/' + firstSubPage + redirectPath;
+            }
+            return redirectPath;
+        }
+    },
+};
+
+// Gatsby createPages API
 export const createPages: GatsbyNode['createPages'] = async function ({ actions, graphql }) {
+
+    // Handle static html creation
     const [resourceSubPages] = await Promise.all([
-		        new Promise(resolve => GenerateMainPages({ actions, graphql }, resolve)),
+        new Promise(resolve => GenerateMainPages({ actions, graphql }, resolve)),
         GenerateStaticPages({ actions, graphql }),
         GenerateDownloadableResourcePages({ actions, graphql }),
         GenerateEventRegistrationPages({ actions, graphql }),
     ]);
 
-
-    // TODO: Refactor
-    // create redirects for /resources page to the first sub page of resource
-    const { createRedirect } = actions;
-
-    // You might need to adjust this part based on how you've refactored your code to gather resourceSubPages
-    const [firstSubPage] = resourceSubPages as string[];
-
-    let redirectPath = '/';
-    if (firstSubPage) {
-        redirectPath = '/resources/' + firstSubPage + redirectPath;
-    }
-
-    createRedirect({
-        fromPath: '/resources/',
-        toPath: redirectPath,
-        isPermanent: true,
-    });
-
-    createRedirect({
-        fromPath: '/resources',
-        toPath: redirectPath,
-        isPermanent: true,
-    });
+    // Handle redirects
+    const redirectFactory = new RedirectFactory(actions, redirectConfigurations);
+    redirectFactory.createRedirects(resourceSubPages as string[]);
 };
 
+
+// Gatsby onCreateWebpackConfig API
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, loaders, stage }) => {
     if (stage === 'build-html' || stage === 'develop-html') {
         actions.setWebpackConfig({

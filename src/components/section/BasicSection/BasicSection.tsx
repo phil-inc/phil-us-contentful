@@ -1,13 +1,27 @@
 import React from 'react';
+import {createPortal} from 'react-dom';
 import {BLOCKS} from '@contentful/rich-text-types';
-import {Anchor, Box, Button, Container, createStyles, Divider, Grid, Group, List, Text, Title} from '@mantine/core';
+import {
+	Anchor,
+	Box,
+	Button,
+	Center,
+	Container,
+	createStyles,
+	Divider,
+	Grid,
+	Group,
+	List,
+	Text,
+	Title,
+} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link, Script} from 'gatsby';
 import {GatsbyImage, getImage, type ImageDataLike} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import slugify from 'slugify';
-import type {ISection} from 'types/section';
+import type {BackgroundType, ISection} from 'types/section';
 import {getLink} from 'utils/getLink';
 import {marked} from 'marked';
 import {isVideoContent} from 'utils/isVideoContent';
@@ -17,55 +31,120 @@ import ContactForm from 'components/ContactPageForm/ContactForm';
 import {useMediaQuery, useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
+import HubspotForm from 'components/common/HubspotForm/HubspotForm';
+import {parseScript} from 'utils/parseScript';
 
-const useStyles = createStyles((theme, {isContact}: {isContact: boolean}) => ({
-	body: {
-		p: {
-			marginTop: 0,
+const useStyles = createStyles(
+	(
+		theme,
+		{
+			isContact,
+			isEmbedFormTemplate,
+			index,
+			isEmbedFormSection,
+		}: {isContact: boolean; isEmbedFormTemplate: boolean; index: number; isEmbedFormSection: boolean},
+	) => ({
+		title: {
+			maxWidth: isEmbedFormTemplate ? (index === 0 ? 500 : 600) : '100%',
+			...(isEmbedFormTemplate && {fontSize: 40}),
+
+			[theme.fn.smallerThan('lg')]: {
+				maxWidth: '100%',
+			},
 		},
-	},
 
-	container: {
-		padding: '0 100px',
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-			padding: '0 16px',
+		portal: {
+			[theme.fn.smallerThan('md')]: {
+				display: isEmbedFormSection ? 'none' : undefined,
+			},
 		},
 
-		[theme.fn.smallerThan('md')]: {
-			...(isContact && {marginBottom: 42}),
-		},
-	},
+		body: {
+			p: {
+				marginTop: 0,
+			},
+			maxWidth: isEmbedFormTemplate ? 600 : '100%',
 
-	section: {
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			display: 'none',
-		},
-	},
+			[theme.fn.smallerThan('md')]: {
+				...(isEmbedFormSection && {paddingLeft: 0, paddingRight: 0}),
+			},
 
-	largeSection: {
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			display: 'none',
-		},
-	},
+			[theme.fn.smallerThan('sm')]: {
+				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
+			},
 
-	listItem: {
-		fontSize: 18,
-		lineHeight: 27,
-		marginTop: 14,
-		color: theme.colors.primary[0],
-	},
-
-	contactSubheader: {
-		a: {
-			color: '#00827E',
-			textDecoration: 'none',
+			[theme.fn.smallerThan('lg')]: {
+				maxWidth: '100%',
+			},
 		},
-	},
-}));
+
+		formWrapper: {
+			padding: '44px 32px',
+			background: '#F4F4F4',
+
+			[theme.fn.smallerThan('sm')]: {
+				padding: '44px 38px',
+			},
+		},
+
+		container: {
+			padding: '0 100px',
+			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+				padding: '0 16px',
+			},
+
+			[theme.fn.smallerThan('md')]: {
+				...(isContact && {marginBottom: 42}),
+			},
+		},
+
+		section: {
+			[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+				display: 'none',
+			},
+		},
+
+		largeSection: {
+			[`@media (max-width: ${theme.breakpoints.md}px)`]: {
+				display: 'none',
+			},
+		},
+
+		listItem: {
+			fontSize: 18,
+			lineHeight: 27,
+			marginTop: 14,
+			color: theme.colors.primary[0],
+		},
+
+		contactSubheader: {
+			a: {
+				color: '#00827E',
+				textDecoration: 'none',
+			},
+		},
+
+		textGridColumn: {
+			[theme.fn.smallerThan('md')]: {
+				...(isEmbedFormSection && {paddingBottom: 8}),
+			},
+		},
+
+		heroGridColumn: {
+			[theme.fn.smallerThan('md')]: {
+				...(isEmbedFormSection && {paddingLeft: 32, paddingRight: 20}),
+			},
+			[theme.fn.smallerThan('sm')]: {
+				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
+			},
+		},
+	}),
+);
 
 type BasicSectionProps = {
 	section: ISection;
 	index: number;
+	isEmbedFormTemplate: boolean;
 };
 
 /**
@@ -74,7 +153,7 @@ type BasicSectionProps = {
  * @returns BasicSection Component which contains a text column and a image container column
  */
 // eslint-disable-next-line complexity
-const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
+const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormTemplate}) => {
 	const HERO_SECTION_INDEX = 0; // Hero section index is always 0
 	const NUMBER_OF_COLUMNS = 2; // Basic section will always have 2 columns
 	const ORDER_FIRST = 1;
@@ -83,10 +162,16 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 	const HEADING_SECOND = 2;
 	const context = React.useContext(PageContext);
 
-	const {classes, theme} = useStyles({isContact: context.title === CONTACT_PAGE});
+	const {classes, theme} = useStyles({
+		isContact: context.title === CONTACT_PAGE,
+		isEmbedFormTemplate,
+		index,
+		isEmbedFormSection: Boolean(section.embedForm),
+	});
+
 	const {link, isExternal} = getLink(section);
 
-	const richTextImages = {};
+	const richTextImages: Record<string, any> = {};
 
 	// eslint-disable-next-line array-callback-return
 	section.body.references.map((reference: any) => {
@@ -127,15 +212,35 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		},
 	};
 
-	const textColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_SECOND : ORDER_FIRST;
-	const imageColumnOrder = index % NUMBER_OF_COLUMNS ? ORDER_FIRST : ORDER_SECOND;
+	const heroRef = React.useRef(null);
 
-	const isMobile = useMediaQuery('(max-width: 576px)', false, {getInitialValueInEffect: false});
+	// Determine if the index is an even column
+	const isEvenColumn = index % NUMBER_OF_COLUMNS === 0;
+	let textColumnOrder = isEvenColumn ? ORDER_FIRST : ORDER_SECOND;
+	let imageColumnOrder = isEvenColumn ? ORDER_SECOND : ORDER_FIRST;
+
+	if (!section.automaticOrder) {
+		textColumnOrder = ORDER_FIRST;
+		imageColumnOrder = ORDER_SECOND;
+	}
+
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 	const ref = React.useRef();
 	const {width} = useViewportSize();
 	const [height, setHeight] = React.useState<number>(790);
+
+	const isMobileView = theme.breakpoints.md > width;
+
+	let formId = '';
+	let portalId = '';
+
+	if (section.embedForm) {
+		const [formProps] = parseScript(section.embedForm);
+
+		formId = formProps.formId;
+		portalId = formProps.portalId;
+	}
 
 	React.useEffect(() => {
 		if (ref.current) {
@@ -143,19 +248,37 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 		}
 	}, [ref.current, width]);
 
+	const sectionBackground = (background: BackgroundType) => {
+		switch (background) {
+			case 'Grey':
+				return '#f4f4f4';
+
+			default:
+				return 'transparent';
+		}
+	};
+
 	return (
 		<Container
 			id={slugify(section.header, {lower: true, strict: true})}
 			fluid
 			className={classes.container}
-			my={context.title === CONTACT_PAGE ? 0 : isMobile ? 32 : 92}
+			my={context.title === CONTACT_PAGE ? 0 : isMobileView ? 32 : isEmbedFormTemplate ? 152 : 92}
+			sx={{background: sectionBackground(section.background)}}
 		>
 			<>
 				<Grid
 					gutter={handleSpacing(theme, theme.spacing.lg)}
-					align={section.isHubspotEmbed ? 'flex-start' : 'center'}
+					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
 				>
-					<Grid.Col orderMd={textColumnOrder} orderSm={1} lg={6} md={6} sm={12}>
+					{/* Text Grid Column */}
+					<Grid.Col
+						className={classes.textGridColumn}
+						order={textColumnOrder}
+						lg={section.embedForm || isEmbedFormTemplate ? 7 : 6}
+						md={6}
+						sm={12}
+					>
 						{section.isHubspotEmbed ? (
 							<>
 								<Title order={titleOrdering}>{section.header}</Title>
@@ -193,16 +316,33 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 							</>
 						) : (
 							<>
-								<Title order={titleOrdering}>{section.header}</Title>
+								<Title className={classes.title} order={titleOrdering}>
+									{section.header}
+								</Title>
 								{Boolean(section.subHeader?.subHeader.length) && (
 									<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
 										{section.subHeader?.subHeader}
 									</Text>
 								)}
 								{Boolean(section.body) && (
-									<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
-										{renderRichText(section.body, options)}
-									</Text>
+									<Box className={classes.portal}>
+										{heroRef.current && isMobileView && section.embedForm ? (
+											createPortal(
+												<Text
+													size={18}
+													className={classes.body}
+													mt={handleSpacing(theme, theme.spacing.sm)}
+												>
+													{renderRichText(section.body, options)}
+												</Text>,
+												heroRef.current,
+											)
+										) : (
+											<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
+												{renderRichText(section.body, options)}
+											</Text>
+										)}
+									</Box>
 								)}
 								{Boolean(section.buttonText?.length) && (
 									<Group mt={handleSpacing(theme, theme.spacing.md)}>
@@ -222,24 +362,37 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 							</>
 						)}
 					</Grid.Col>
+
+					{/* Hero Grid Column */}
 					<Grid.Col
-						orderMd={imageColumnOrder}
-						orderSm={2}
-						lg={6}
+						className={classes.heroGridColumn}
+						ref={heroRef}
+						order={imageColumnOrder}
+						lg={section.embedForm || isEmbedFormTemplate ? 5 : 6}
 						md={6}
 						sm={12}
 						sx={{height: context.title === CONTACT_PAGE ? height : undefined}}
 					>
-						<ImageContainer
-							containerRef={ref}
-							fluid
-							ratio={section?.youtubeVideoUrl ? 16 / 9 : undefined}
-							background={isVideoContent(section.asset.file.contentType) ? 'white' : undefined}
-							expanded={context.title === CONTACT_PAGE}
-							isVideo={isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)}
-						>
-							<Asset asset={section.asset} youtubeVideoURL={section?.youtubeVideoUrl} />
-						</ImageContainer>
+						{section.embedForm ? (
+							<Box className={classes.formWrapper}>
+								<HubspotForm formId={formId} portalId={portalId} />
+							</Box>
+						) : (
+							<ImageContainer
+								containerRef={ref}
+								fluid
+								ratio={section?.youtubeVideoUrl ? 16 / 9 : undefined}
+								background={
+									isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
+										? 'transparent'
+										: undefined
+								}
+								expanded={context.title === CONTACT_PAGE}
+								isVideo={isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)}
+							>
+								<Asset asset={section.asset} youtubeVideoURL={section?.youtubeVideoUrl} />
+							</ImageContainer>
+						)}
 					</Grid.Col>
 				</Grid>
 				{section.isHubspotEmbed
@@ -247,7 +400,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index}) => {
 				&& section.codeSnippet
 				&& Boolean(section.codeSnippet.codeSnippet.length)
 				&& isProduction ? (
-						<Script>
+						<Script defer async>
 							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
 						</Script>
 					) : null}

@@ -86,7 +86,7 @@ const CCollapse = () => {
 										),
 									)
 									.map((section, index, array) => {
-										const path = getPathForSectionAndPage(page.title, section.header);
+										const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 										return (
 											<React.Fragment key={section.id + 'mapCollapsePages'}>
@@ -115,7 +115,7 @@ const CCollapse = () => {
 																				<Text className={classes.listItems}>
 																					<Link
 																						to={navigateToPage(
-																							`${slugify(page.title, {
+																							`${slugify(page.slug, {
 																								lower: true,
 																							})}/${slugify(relatesTo.header, {
 																								lower: true,

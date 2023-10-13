@@ -1,5 +1,5 @@
 import React from 'react';
-import {graphql} from 'gatsby';
+import {Script, graphql} from 'gatsby';
 import {Layout} from 'layouts/Layout/Layout';
 import Expanded from 'components/common/Expanded/Expanded';
 import {Title, Text, Grid, Box, Group, List, Anchor, createStyles, Container, Stack} from '@mantine/core';
@@ -74,7 +74,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, data: {contentfulEvent
 			<meta property='og:description' content={description} />
 			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
 			<meta property='og:url' content={`https://phil.us${slug}/`} />
-			<script charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></script>
+			<Script defer async charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></Script>
 			{cer.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);

@@ -32,9 +32,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			padding: fluid ? 0 : 50,
 			maxWidth: expanded ? '50vw' : '100%',
 			width: expanded ? '50vw' : '100%',
-			...(expanded && {position: 'absolute'}),
-			...(expanded && {top: '90px'}),
-			...(expanded && {right: '0px'}),
+			...(expanded && {position: 'absolute', top: '90px', right: '0px'}),
 			...(context.title !== CONTACT_PAGE && {height: '100%'}),
 			...(isVideo && {padding: '100px 0'}),
 

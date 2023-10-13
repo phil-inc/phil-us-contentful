@@ -55,15 +55,11 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
-const HubspotForm: React.FC = ({
-	formProps,
-	section,
-	formTag,
-}: {
+const HubspotForm: React.FC<{
 	formProps: TResponse;
-	section: ISection;
-	formTag: string;
-}) => {
+	section?: ISection;
+	formTag?: string;
+}> = ({formProps, section, formTag}) => {
 	const {classes, theme} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	const [isListenerAdded, setIsListenerAdded] = React.useState<boolean>(false);
@@ -84,8 +80,8 @@ const HubspotForm: React.FC = ({
 						// Check if the added or removed nodes belong to a HubSpot form
 						const addedNodes = Array.from(mutation.addedNodes);
 
-						const isHubSpotFormAdded = addedNodes.some((node: Element) => {
-							if (node.className) {
+						const isHubSpotFormAdded = addedNodes.some((node: Node) => {
+							if (node instanceof Element) {
 								return node.className.includes('hs-form') || node.id.includes('hs-form');
 							}
 
@@ -125,7 +121,7 @@ const HubspotForm: React.FC = ({
 		}
 	}, [hasRendered]);
 
-	if (section.isHubspotEmbed) {
+	if (section?.isHubspotEmbed) {
 		let options: {target: string; formId: string; portalId: string} = {
 			target: '#hubspotContactForm',
 			formId: '',
