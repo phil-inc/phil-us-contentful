@@ -19,6 +19,7 @@ export const Head: React.FC = () => <>{isProduction && <LinkedinInsights />}</>;
 
 const useStyles = createStyles(theme => ({
 	wrapper: {
+		maxWidth: '1920px',
 		width: '100vw',
 		overflow: 'hidden',
 		padding: 0,
@@ -46,7 +47,11 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 
 	const themeOverride: MantineThemeOverride = {
 		breakpoints: {
+			xs: 500,
+			sm: 800,
 			md: 1275,
+			lg: 1300,
+			xl: 1400,
 		},
 		colors: {
 			primary: ['#00201F', '#031A19', '#051515', '#061211', '#060F0F', '#060D0C', '#060B0B'],

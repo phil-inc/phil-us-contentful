@@ -398,11 +398,6 @@ const Navbar: React.FC<CHeaderProps> = ({
 																? buttonConfig.primary.size
 																: buttonConfig.secondary.size
 														}
-														uppercase={
-															button.buttonStyle === 'primary'
-																? buttonConfig.primary.uppercase
-																: buttonConfig.secondary.uppercase
-														}
 														variant={
 															button.buttonStyle === 'primary'
 																? buttonConfig.primary.variant
@@ -421,7 +416,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 												href={button.externalLink}
 												target='_blank'
 											>
-												<Button size='md' uppercase variant='outline'>
+												<Button size='md' variant='outline'>
 													{button.buttonText}
 												</Button>
 											</Anchor>

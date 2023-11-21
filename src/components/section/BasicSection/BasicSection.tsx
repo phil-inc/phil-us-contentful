@@ -1,20 +1,7 @@
 import React from 'react';
 import {createPortal} from 'react-dom';
-import {BLOCKS} from '@contentful/rich-text-types';
-import {
-	Anchor,
-	Box,
-	Button,
-	Center,
-	Container,
-	createStyles,
-	Divider,
-	Grid,
-	Group,
-	List,
-	Text,
-	Title,
-} from '@mantine/core';
+import {BLOCKS, INLINES} from '@contentful/rich-text-types';
+import {Anchor, Box, Button, Container, createStyles, Divider, Grid, Group, List, Text, Title} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link, Script} from 'gatsby';
@@ -28,7 +15,7 @@ import {isVideoContent} from 'utils/isVideoContent';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
 import ContactForm from 'components/ContactPageForm/ContactForm';
-import {useMediaQuery, useViewportSize} from '@mantine/hooks';
+import {useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
@@ -45,8 +32,8 @@ const useStyles = createStyles(
 		}: {isContact: boolean; isEmbedFormTemplate: boolean; index: number; isEmbedFormSection: boolean},
 	) => ({
 		title: {
-			maxWidth: isEmbedFormTemplate ? (index === 0 ? 500 : 600) : '100%',
-			...(isEmbedFormTemplate && {fontSize: 40}),
+			maxWidth: isEmbedFormTemplate ? (index === 0 ? 500 : '100%') : '100%',
+			...(isEmbedFormTemplate && {fontSize: index === 0 ? 52 : 40}),
 
 			[theme.fn.smallerThan('lg')]: {
 				maxWidth: '100%',
@@ -63,7 +50,7 @@ const useStyles = createStyles(
 			p: {
 				marginTop: 0,
 			},
-			maxWidth: isEmbedFormTemplate ? 600 : '100%',
+			maxWidth: '100%',
 
 			[theme.fn.smallerThan('md')]: {
 				...(isEmbedFormSection && {paddingLeft: 0, paddingRight: 0}),
@@ -197,16 +184,31 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				return <Text>{children}</Text>;
 			},
 			[BLOCKS.UL_LIST](node, children) {
-				return <List type='unordered'>{children}</List>;
+				return (
+					<List type='unordered' mb={20} pl={8}>
+						{children}
+					</List>
+				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
-				return <List type='ordered'>{children}</List>;
+				return (
+					<List type='ordered' mb={20} pl={8}>
+						{children}
+					</List>
+				);
 			},
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
 					<List.Item>
 						<Text className={classes.listItem}>{children}</Text>
 					</List.Item>
+				);
+			},
+			[INLINES.HYPERLINK](node, children) {
+				return (
+					<Anchor href={node.data.uri as string} target='_blank'>
+						{children}
+					</Anchor>
 				);
 			},
 		},
@@ -268,7 +270,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		>
 			<>
 				<Grid
-					gutter={handleSpacing(theme, theme.spacing.lg)}
+					gutter={isEmbedFormTemplate ? 105 : handleSpacing(theme, theme.spacing.lg)}
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
 				>
 					{/* Text Grid Column */}
