@@ -29,7 +29,7 @@ const useStyles = createStyles(
 			isEmbedFormTemplate,
 			index,
 			isEmbedFormSection,
-		}: {isContact: boolean; isEmbedFormTemplate: boolean; index: number; isEmbedFormSection: boolean}
+		}: {isContact: boolean; isEmbedFormTemplate: boolean; index: number; isEmbedFormSection: boolean},
 	) => ({
 		title: {
 			maxWidth: isEmbedFormTemplate ? (index === 0 ? 500 : '100%') : '100%',
@@ -125,7 +125,7 @@ const useStyles = createStyles(
 				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
 			},
 		},
-	})
+	}),
 );
 
 type BasicSectionProps = {
@@ -185,14 +185,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type="unordered" mb={20} pl={8}>
+					<List type='unordered' mb={20} pl={8}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type="ordered" mb={20} pl={8}>
+					<List type='ordered' mb={20} pl={8}>
 						{children}
 					</List>
 				);
@@ -206,7 +206,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[INLINES.HYPERLINK](node, children) {
 				return (
-					<Anchor href={node.data.uri as string} target="_blank">
+					<Anchor href={node.data.uri as string} target='_blank'>
 						{children}
 					</Anchor>
 				);
@@ -302,7 +302,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								)}
 								<Divider
 									size={1}
-									variant="dashed"
+									variant='dashed'
 									mt={handleSpacing(theme, theme.spacing.sm)}
 									mb={handleSpacing(theme, theme.spacing.md)}
 								/>
@@ -316,7 +316,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									{section.header}
 								</Title>
 								{Boolean(section.subHeader?.subHeader.length) && (
-									<Text size={18} weight="bold" mt={handleSpacing(theme, theme.spacing.sm)}>
+									<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
 										{section.subHeader?.subHeader}
 									</Text>
 								)}
@@ -331,7 +331,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 												>
 													{renderRichText(section.body, options)}
 												</Text>,
-												heroRef.current
+												heroRef.current,
 											)
 										) : (
 											<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
@@ -343,7 +343,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								{Boolean(section.buttonText?.length) && (
 									<Group mt={handleSpacing(theme, theme.spacing.md)}>
 										{isExternal ? (
-											<Anchor href={link} target="_blank">
+											<Anchor href={link} target='_blank'>
 												<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>
 													{section.buttonText}
 												</Button>
@@ -391,15 +391,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						)}
 					</Grid.Col>
 				</Grid>
-				{section.isHubspotEmbed &&
-				section.isInsertSnippet &&
-				section.codeSnippet &&
-				Boolean(section.codeSnippet.codeSnippet.length) &&
-				isProduction ? (
-					<Script defer async>
-						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-					</Script>
-				) : null}
+				{section.isHubspotEmbed
+				&& section.isInsertSnippet
+				&& section.codeSnippet
+				&& Boolean(section.codeSnippet.codeSnippet.length)
+				&& isProduction ? (
+						<Script defer async>
+							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+						</Script>
+					) : null}
 			</>
 		</Container>
 	);

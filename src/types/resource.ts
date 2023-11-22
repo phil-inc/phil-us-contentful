@@ -30,6 +30,7 @@ export type TResource = {
 	buttonText?: string;
 	externalLink?: string;
 	internalLink: {
+		slug?: string;
 		id: string;
 		page: Array<{title: string}>;
 		header?: string;
