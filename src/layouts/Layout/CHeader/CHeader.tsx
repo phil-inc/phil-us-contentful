@@ -25,6 +25,7 @@ import CDrawer from './CDrawer';
 import {type TResource} from 'types/resource';
 import HeaderContext from 'contexts/HeaderProvider';
 import CCollapse from './CCollapse';
+import {getLink} from 'utils/getLink';
 
 export const HEADER_HEIGHT = 90;
 
@@ -387,42 +388,45 @@ const Navbar: React.FC<CHeaderProps> = ({
 											<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 										</List.Item>
 									))}
-								{buttons.map((button, index) => (
-									<List.Item key={button.id} data-noindicator='true' className={classes.buttons}>
-										{button.internalLink ? (
-											<Box ml={index && 16}>
-												<Link className={classes.textDecorationNone} to={button.internalLink.slug}>
-													<Button
-														size={
-															button.buttonStyle === 'primary'
-																? buttonConfig.primary.size
-																: buttonConfig.secondary.size
-														}
-														variant={
-															button.buttonStyle === 'primary'
-																? buttonConfig.primary.variant
-																: buttonConfig.secondary.variant
-														}
-													>
+								{buttons.map((button, index) =>
+									// TODO: use sys
+									 (
+										<List.Item key={button.id} data-noindicator='true' className={classes.buttons}>
+											{button.internalLink ? (
+												<Box ml={index && 16}>
+													<Link className={classes.textDecorationNone} to={`/${button.internalLink.slug}`}>
+														<Button
+															size={
+																button.buttonStyle === 'primary'
+																	? buttonConfig.primary.size
+																	: buttonConfig.secondary.size
+															}
+															variant={
+																button.buttonStyle === 'primary'
+																	? buttonConfig.primary.variant
+																	: buttonConfig.secondary.variant
+															}
+														>
+															{button.buttonText}
+														</Button>
+													</Link>
+												</Box>
+											) : (
+												<Anchor
+													className={classes.textDecorationNone}
+													sx={{textDecoration: 'none', textDecorationLine: 'none'}}
+													ml={index && 16}
+													href={button.externalLink}
+													target='_blank'
+												>
+													<Button size='md' variant='outline'>
 														{button.buttonText}
 													</Button>
-												</Link>
-											</Box>
-										) : (
-											<Anchor
-												className={classes.textDecorationNone}
-												sx={{textDecoration: 'none', textDecorationLine: 'none'}}
-												ml={index && 16}
-												href={button.externalLink}
-												target='_blank'
-											>
-												<Button size='md' variant='outline'>
-													{button.buttonText}
-												</Button>
-											</Anchor>
-										)}
-									</List.Item>
-								))}
+												</Anchor>
+											)}
+										</List.Item>
+									),
+								)}
 							</List>
 						</>
 					)}
