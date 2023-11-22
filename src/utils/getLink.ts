@@ -25,7 +25,12 @@ export const getLink = (section: ISection | IReferencedSection | TResource): {li
 				);
 			}
 		} else if (section.internalLink?.sys?.contentType?.sys?.id === 'page') {
-			link.push(slugify(section.internalLink.title!, {lower: true, strict: true}));
+			link.push(
+				slugify((section as IReferencedSection)?.internalLink?.slug ?? section.internalLink.title!, {
+					lower: true,
+					strict: true,
+				}),
+			);
 		} else if (
 			section.internalLink?.sys?.contentType?.sys?.id === 'resource'
 			|| section.internalLink?.sys?.contentType?.sys?.id === 'downloadableResource'

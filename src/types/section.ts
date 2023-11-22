@@ -86,6 +86,7 @@ export type IReferencedSection = {
 	references: TResource[];
 	buttonText?: string;
 	internalLink: {
+		slug?: string;
 		id: string;
 		page?: Array<{title: string}>;
 		header?: string;
