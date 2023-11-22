@@ -257,6 +257,7 @@ export const query = graphql`
 							externalLink
 							internalLink {
 								... on ContentfulPage {
+									slug
 									id
 									title
 									sys {
