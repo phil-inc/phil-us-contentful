@@ -11,7 +11,7 @@ type ReferencedSectionTitleProps = {
 	textColor: string;
 };
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles(() => ({
 	divider: {
 		maxWidth: '35%',
 		marginTop: '10px',
@@ -35,9 +35,15 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 	const theme = useMantineTheme();
 	const {classes} = useStyles();
 
-	const renderTitle = (size: number | undefined, className?: string, order?: TitleOrder, textColor?: string) => (
+	const renderTitle = (
+		text: string,
+		size: number | undefined,
+		className?: string,
+		order?: TitleOrder,
+		textColor?: string,
+	) => (
 		<Title className={className} order={order} size={size} color={textColor}>
-			{section.header}
+			{text}
 		</Title>
 	);
 
@@ -46,7 +52,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 		case RESOURCE_BLOCKS.includes(section.referenceType):
 			return (
 				<Box mb={handleSpacing(theme, theme.spacing.md)}>
-					{renderTitle(35, undefined, 3)}
+					{renderTitle(section.header, 35, undefined, 3, undefined)}
 					<Divider variant='dashed' size={1} className={classes.divider} />
 				</Box>
 			);
@@ -60,14 +66,15 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 					spacing={0}
 					mb={isEmbedFormTemplate ? 48 : undefined}
 				>
-					{Boolean(section.header?.length) && renderTitle(36, classes.heading, 2)}
-					{Boolean(section?.subHeading?.subHeading?.length) && renderTitle(20, classes.subHeading, 3)}
+					{Boolean(section.header?.length) && renderTitle(section.header, 36, classes.heading, 2, undefined)}
+					{Boolean(section?.subHeading?.subHeading?.length)
+						&& renderTitle(section.subHeading.subHeading, 20, classes.subHeading, 3, undefined)}
 				</Stack>
 			);
 		default:
 			return (
 				<Group position='center' mb={28}>
-					{Boolean(section.header?.length) && renderTitle(undefined, undefined, 2, textColor)}
+					{Boolean(section.header?.length) && renderTitle(section.header, undefined, undefined, 2, textColor)}
 				</Group>
 			);
 	}
