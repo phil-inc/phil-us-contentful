@@ -147,21 +147,56 @@ const useStyles = createStyles(theme => ({
 	},
 }));
 
+// Utility functions for content type checks
+const isPDF = (contentType: string) => isPDFContent(contentType);
+const isVideo = (contentType: string) => isVideoContent(contentType);
+
+// Separate components for each content type
+type ContentProps = {
+	asset: TAsset;
+	canvasRef: React.RefObject<HTMLCanvasElement>;
+	classes: Record<string, string>;
+};
+
+const PDFContent: React.FC<ContentProps> = ({asset, canvasRef}) => <Asset ref={canvasRef} asset={asset} />;
+
+const VideoContent: React.FC<ContentProps> = ({asset, canvasRef}) => (
+	<ImageContainer fluid ratio={16 / 9}>
+		<Asset ref={canvasRef} asset={asset} />
+	</ImageContainer>
+);
+
+const DefaultContent: React.FC<ContentProps> = ({asset, canvasRef, classes}) => (
+	<Box className={classes.embededAssetWrapper}>
+		<Asset ref={canvasRef} asset={asset} />
+	</Box>
+);
+
+type ContentRendererProps = {
+	node: Block;
+	classes: Record<string, string>;
+};
+
+const ContentRenderer: React.FC<ContentRendererProps> = ({node, classes}) => {
+	const canvasRef = React.useRef<HTMLCanvasElement>(null);
+	const asset = node?.data?.target as TAsset;
+	const contentType: string = node?.data?.target?.file?.contentType as string;
+
+	if (isPDF(contentType)) {
+		return <PDFContent asset={asset} canvasRef={canvasRef} classes={classes} />;
+	}
+
+	if (isVideo(contentType)) {
+		return <VideoContent asset={asset} canvasRef={canvasRef} classes={classes} />;
+	}
+
+	return <DefaultContent asset={asset} canvasRef={canvasRef} classes={classes} />;
+};
+
 const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {heading, body, asset, banners, author, noindex, isFaq} = data.contentfulResource;
 
 	const {classes, cx} = useStyles();
-
-	const canvasRef = React.useRef(null);
-	const [isMounted, setIsMounted] = React.useState(false);
-	const [origin, setOrigin] = React.useState('https://phil.us');
-
-	React.useEffect(() => {
-		setIsMounted(true);
-
-		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
-		setOrigin(origin);
-	}, []);
 
 	// Map for future reference to match content
 	const richTextImages: Record<string, {image: any; alt: string}> = {};
@@ -195,13 +230,13 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	const options = {
 		renderNode: {
-			[BLOCKS.EMBEDDED_ENTRY](node, children) {
+			[BLOCKS.EMBEDDED_ENTRY](node: Block, children) {
 				const content: {title: string; url: string} = youtubeEmbeds[node?.data?.target?.contentful_id] as {
 					title: string;
 					url: string;
 				};
 
-				if (isMounted && content?.url?.length) {
+				if (content?.url?.length) {
 					const vid = getYouTubeId(content.url);
 					if (vid) {
 						return <YouTubeEmbed videoId={vid} title={content.title} />;
@@ -210,7 +245,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 				return null; // Return null during SSR
 			},
-			[BLOCKS.EMBEDDED_ASSET](node) {
+			[BLOCKS.EMBEDDED_ASSET](node: Block) {
 				return (
 					<Box
 						className={
@@ -219,22 +254,11 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 								: classes.embededAsset
 						}
 					>
-						{isPDFContent(node.data.target.file.contentType as string) ? (
-							<Asset ref={canvasRef} asset={node.data.target as TAsset} />
-						) : node?.data?.target?.file?.contentType
-						  && isVideoContent(node.data.target.file.contentType as string) ? (
-								<ImageContainer fluid ratio={16 / 9}>
-									<Asset ref={canvasRef} asset={node.data.target as TAsset} />
-								</ImageContainer>
-							) : (
-								<Box className={classes.embededAssetWrapper}>
-									<Asset ref={canvasRef} asset={node.data.target as TAsset} />
-								</Box>
-							)}
+						<ContentRenderer node={node} classes={classes} />
 					</Box>
 				);
 			},
-			[BLOCKS.PARAGRAPH](node, children) {
+			[BLOCKS.PARAGRAPH](node: Block, children) {
 				return (
 					<Text component='p' mt={0} size={18}>
 						{children}
@@ -242,7 +266,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.OL_LIST](node, children) {
+			[BLOCKS.OL_LIST](node: Block, children) {
 				return (
 					<List type='ordered' mt={16} mb={32}>
 						{children}
@@ -250,7 +274,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.UL_LIST](node, children) {
+			[BLOCKS.UL_LIST](node: Block, children) {
 				return (
 					<List type='unordered' listStyleType='disc' pl={32} mt={16} mb={44}>
 						{children}
@@ -258,7 +282,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.LIST_ITEM](node, children) {
+			[BLOCKS.LIST_ITEM](node: Block, children) {
 				return (
 					<List.Item mt={8} mb={0} pr={20} className={classes.listItem}>
 						{children}
@@ -266,7 +290,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[INLINES.HYPERLINK](node, children) {
+			[INLINES.HYPERLINK](node: Block, children) {
 				const {uri} = node.data as {uri: string};
 				return (
 					<Anchor href={uri} target='_blank' className={classes.anchor}>
@@ -274,7 +298,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 					</Anchor>
 				);
 			},
-			[BLOCKS.HEADING_1](node, children) {
+			[BLOCKS.HEADING_1](node: Block, children) {
 				return (
 					<Title order={1} mt={40} mb={4}>
 						{children}
@@ -282,7 +306,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_2](node, children) {
+			[BLOCKS.HEADING_2](node: Block, children) {
 				return (
 					<Title order={2} size={24} mt={40} mb={4}>
 						{children}
@@ -290,7 +314,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_3](node, children) {
+			[BLOCKS.HEADING_3](node: Block, children) {
 				return (
 					<Title order={3} size={18} mt={40} mb={4}>
 						{children}
@@ -298,7 +322,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_4](node, children) {
+			[BLOCKS.HEADING_4](node: Block, children) {
 				return (
 					<Title order={4} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
 						{children}
@@ -306,7 +330,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_5](node, children) {
+			[BLOCKS.HEADING_5](node: Block, children) {
 				return (
 					<Title order={5} size={18} style={{fontWeight: 400, fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
 						{children}
@@ -314,7 +338,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_6](node, children) {
+			[BLOCKS.HEADING_6](node: Block, children) {
 				return (
 					<Title order={6} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
 						{children}
@@ -361,7 +385,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				return null; // Return null if no rows present
 			},
 
-			[BLOCKS.TABLE_ROW](node, children) {
+			[BLOCKS.TABLE_ROW](node: Block, children) {
 				return <tr>{children}</tr>;
 			},
 
