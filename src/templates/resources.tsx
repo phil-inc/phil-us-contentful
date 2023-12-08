@@ -469,7 +469,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 										</Title>
 									</Grid.Col>
 									<Grid.Col sm={12} md={'content'}>
-										<Anchor target='_blank' href='https://philhelp.zendesk.com/hc/en-us'>
+										<Anchor target='_blank' href={`${process.env.GATSBY_ZENDESK_PATIENT_FAQ_LINK}`}>
 											<Button className={classes.faqContainerButton}>View the entire FAQ</Button>
 										</Anchor>
 									</Grid.Col>
