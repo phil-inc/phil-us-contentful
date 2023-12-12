@@ -201,7 +201,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
 							<Grid.Col key={badge.file.url + 'mapBadge'} span={6}>
 								<Box sx={{maxWidth: 120}}>
 									<ImageContainer background='transparent' fluid>
-										<Asset asset={badge} />
+										<Asset asset={badge} objectFit='contain' />
 									</ImageContainer>
 								</Box>
 							</Grid.Col>
