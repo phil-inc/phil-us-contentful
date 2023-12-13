@@ -184,7 +184,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => {
 						<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
 							<Box sx={{maxWidth: 120}}>
 								<ImageContainer background='transparent' fluid>
-									<Asset asset={badge} />
+									<Asset objectFit='contain' asset={badge} />
 								</ImageContainer>
 							</Box>
 						</Grid.Col>
