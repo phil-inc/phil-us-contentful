@@ -1,6 +1,6 @@
-import React, {forwardRef, Suspense, lazy, type FC} from 'react';
-import {AspectRatio} from '@mantine/core';
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
+import React, {forwardRef, Suspense, type FC} from 'react';
+import {AspectRatio, Image} from '@mantine/core';
+import {GatsbyImage, type GatsbyImageProps, getImage} from 'gatsby-plugin-image';
 import type {TAsset} from 'types/asset';
 import {isVideoContent} from 'utils/isVideoContent';
 import {getYouTubeId} from 'utils/links';
@@ -15,6 +15,7 @@ type AssetProps = {
 	asset: TAsset;
 	youtubeVideoURL?: string;
 	width?: number;
+	objectFit?: GatsbyImageProps['objectFit'];
 };
 
 type YouTubeEmbedProps = {
@@ -37,7 +38,7 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({videoId, title}) => (
 );
 
 const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) => {
-	const {asset, youtubeVideoURL, width} = props;
+	const {asset, youtubeVideoURL, width, objectFit} = props;
 
 	const renderContent = () => {
 		if (youtubeVideoURL?.length) {
@@ -54,7 +55,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 		}
 
 		if (asset.file.contentType === 'image/svg+xml') {
-			return <img src={asset.file.url} alt={asset.title || ''} />;
+			return <img style={{objectFit}} src={asset.file.url} alt={asset.title || ''} />;
 		}
 
 		if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
