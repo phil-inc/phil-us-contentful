@@ -1,7 +1,4 @@
-import ClearbitScripts from 'analytics/ClearbitScripts';
-import {Script} from 'gatsby';
 import React from 'react';
-import {isProduction} from 'utils/isProduction';
 
 type SEOProps = {
 	title: string;
@@ -12,6 +9,5 @@ export const SEO: React.FC<SEOProps> = ({title, children}) => (
 	<>
 		<title>{title}</title>
 		{children}
-		{isProduction && <ClearbitScripts />}
 	</>
 );
