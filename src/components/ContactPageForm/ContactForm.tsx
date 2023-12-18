@@ -178,7 +178,7 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 
 			<Grid gutter={'sm'}>
 				<Grid.Col span={6}>
-					<Anchor style={{textDecoration: 'none'}} href='https://my.phil.us' target='_blank'>
+					<Anchor style={{textDecoration: 'none'}} href='https://philhelp.zendesk.com/hc/en-us/p/faq' target='_blank'>
 						<Button variant='outline' color='dark' fullWidth>
 							Patient/Caregiver
 						</Button>
