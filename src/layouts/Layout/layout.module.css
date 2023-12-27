@@ -1,0 +1,21 @@
+/* Styles.module.css */
+
+/* Block: wrapper */
+.wrapper {
+    max-width: 1920px;
+    width: 100vw;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* Block: inner-wrapper */
+.inner-wrapper {
+    width: 100%;
+    padding: 100px;
+}
+
+@media (max-width: 1275px) { /* Adjust this to your theme's 'md' breakpoint */
+    .inner-wrapper {
+        padding: 0 /* Replace with your theme's 'sm' spacing value */;
+    }
+}

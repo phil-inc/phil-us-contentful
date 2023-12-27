@@ -1,5 +1,5 @@
 import React from 'react';
-import {Anchor, Button, Grid, createStyles, Center, Loader, Text} from '@mantine/core';
+import {Anchor, Button, Grid, Center, Loader, Text, useMantineTheme} from '@mantine/core';
 import type {ISection} from 'types/section';
 import {parseScript} from 'utils/parseScript';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
@@ -8,59 +8,13 @@ import type {TResponse} from 'extract-json-from-string';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
 
-const useStyles = createStyles(theme => ({
-	body: {
-		p: {
-			marginTop: 0,
-		},
-	},
-
-	container: {
-		padding: '0 100px',
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-			padding: '0 16px',
-		},
-	},
-
-	section: {
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			display: 'none',
-		},
-	},
-
-	largeSection: {
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			display: 'none',
-		},
-	},
-
-	listItem: {
-		fontSize: 18,
-		lineHeight: 27,
-		marginTop: 14,
-		color: theme.colors.primary[0],
-	},
-
-	contactSubheader: {
-		a: {
-			color: '#00827E',
-			textDecoration: 'none',
-		},
-	},
-
-	hubspotContactForm: {
-		'&[data-hs-forms-root="true"]': {
-			minHeight: 0,
-		},
-	},
-}));
+import * as classes from './contactForm.module.css';
 
 const HubspotForm: React.FC<{
 	formProps: TResponse;
 	section?: ISection;
 	formTag?: string;
 }> = ({formProps, section, formTag}) => {
-	const {classes, theme} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 	const [isListenerAdded, setIsListenerAdded] = React.useState<boolean>(false);
 
@@ -156,7 +110,7 @@ const HubspotForm: React.FC<{
 		<div className={classes.hubspotContactForm} id='hubspotContactForm'></div>
 	) : (
 		<Center>
-			<Loader mt={handleSpacing(theme, theme.spacing.xl)} size='lg' />
+			<Loader mt={0} size='lg' />
 		</Center>
 	);
 };
@@ -178,7 +132,11 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 
 			<Grid gutter={'sm'}>
 				<Grid.Col span={6}>
-					<Anchor style={{textDecoration: 'none'}} href='https://philhelp.zendesk.com/hc/en-us/p/faq' target='_blank'>
+					<Anchor
+						style={{textDecoration: 'none'}}
+						href='https://philhelp.zendesk.com/hc/en-us/p/faq'
+						target='_blank'
+					>
 						<Button variant='outline' color='dark' fullWidth>
 							Patient/Caregiver
 						</Button>

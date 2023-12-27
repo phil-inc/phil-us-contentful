@@ -38,6 +38,7 @@ const config: GatsbyConfig = {
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-inline-svg`,
+    `gatsby-plugin-postcss`,
     {
       resolve: `gatsby-plugin-advanced-sitemap-patch`,
       options: {

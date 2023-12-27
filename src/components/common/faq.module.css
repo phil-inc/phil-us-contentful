@@ -1,0 +1,34 @@
+/* Styles.css */
+
+.FAQWrapper {
+    position: relative;
+    overflow: hidden;
+    padding: 30px 60px;
+    background: /* Replace with actual background value or variable */;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.FAQWrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 12px;
+    background: linear-gradient(to left, #FFF 50%, #EDBE3D 0%);
+}
+
+.title {
+    text-decoration: none;
+    color: #00201F;
+    font-size: /* Replace with actual font size value or variable */;
+}
+
+.title:hover {
+    color: #EDBE3D;
+}

@@ -1,4 +1,4 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, createStyles, Grid} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, Grid} from '@mantine/core';
 import classNames from 'classnames';
 import {GatsbyImage, getImage, StaticImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -9,29 +9,7 @@ import type {TResource} from 'types/resource';
 import Asset from './Asset/Asset';
 import ImageContainer from './Container/ImageContainer';
 
-const useStyles = createStyles(theme => ({
-	card: {
-		position: 'relative',
-		overflow: 'hidden',
-		fontFamily: 'Raleway',
-		fontSize: '26px',
-		height: '100%',
-		display: 'flex',
-	},
-	author: {
-		fontFamily: 'Lato',
-		fontWeight: 700,
-		fontSize: 16,
-	},
-	designation: {
-		fontFamily: 'Lato',
-		fontSize: '16px',
-	},
-	testimonialImage: {
-		width: '100%',
-		height: '100%',
-	},
-}));
+import * as classes from './testimonial.module.css';
 
 type TestimonialProps = {
 	type?: 'person' | 'company';
@@ -39,7 +17,6 @@ type TestimonialProps = {
 };
 
 export const Testimonial: FC<TestimonialProps> = ({resource, type = 'company'}) => {
-	const {classes} = useStyles();
 	const isPerson = type === 'person';
 
 	return (

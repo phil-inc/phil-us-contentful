@@ -1,0 +1,110 @@
+/* Styles.css */
+
+/* Burger */
+.burger {
+    /* Default styles for 'burger' */
+}
+
+@media (min-width: 769px) { /* md breakpoint */
+    .burger {
+        display: none !important;
+    }
+}
+
+/* DrawerWrapper */
+.drawerWrapper {
+    padding: /* Replace with 'theme.spacing.sm + 10px 100px' value */ !important;
+}
+
+@media (max-width: 768px) { /* sm breakpoint */
+    .drawerWrapper {
+        padding: /* Replace with 'theme.spacing.sm + 10px 100px' value */ !important;
+        padding-top: 0px !important;
+    }
+}
+
+@media (max-width: 480px) { /* xs breakpoint */
+    .drawerWrapper {
+        padding: /* Replace with 'theme.spacing.sm + 10px 16px' value */ !important;
+        padding-top: 0px !important;
+    }
+}
+
+/* Drawer */
+.drawer {
+    /* Default styles for 'drawer' */
+}
+
+@media (min-width: 769px) { /* md breakpoint */
+    .drawer {
+        display: none;
+    }
+}
+
+/* DrawerHeader */
+.drawerHeader {
+    margin-bottom: 0;
+}
+
+/* DrawerTitle */
+.drawerTitle {
+    width: 100%;
+    margin: 0;
+}
+
+/* AccordionControl */
+.accordionControl {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* AccordionContent */
+.accordionContent {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* PatientLoginButton */
+.patientLoginButton:hover {
+    background-color: /* Replace with 'theme.colors.philBranding[9]' value */;
+    color: white;
+}
+
+/* PatientLoginButtonMobile */
+.patientLoginButtonMobile:hover {
+    background-color: /* Replace with 'theme.colors.philBranding[9]' value */;
+    color: white;
+}
+
+@media (min-width: 769px) { /* md breakpoint */
+    .patientLoginButtonMobile {
+        display: none;
+    }
+}
+
+/* Logo */
+.logo {
+    max-width: 125px;
+    max-height: 90px;
+    width: 100%;
+}
+
+@media (max-width: 768px) { /* sm breakpoint */
+    .logo {
+        width: 100px;
+        margin-right: 25px;
+    }
+}
+
+/* HideOnLarge */
+@media (min-width: 769px) { /* md breakpoint */
+    .hideOnLarge {
+        display: none;
+    }
+}
+
+/* TextDecorationNone */
+.textDecorationNone {
+    text-decoration: none;
+    text-decoration-line: none;
+}

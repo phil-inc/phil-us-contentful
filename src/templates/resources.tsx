@@ -14,7 +14,6 @@ import {
 	Pagination,
 	Text,
 	Title,
-	createStyles,
 	useMantineTheme,
 } from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
@@ -27,6 +26,8 @@ import {useToggle, useViewportSize} from '@mantine/hooks';
 import {RESOURCES_PAGE} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
 import {searchSubmitCallback} from 'pages/resources/search';
+
+import classes from './resources.module.css';
 
 type HelmetProps = {
 	data: {
@@ -78,198 +79,6 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulRe
 	);
 };
 
-const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
-	container: {
-		margin: 0,
-		padding: '0px 100px',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '42px 100px',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: '42px 16px',
-		},
-	},
-
-	cardContainer: {
-		padding: 70,
-		background: '#F4F4F4',
-
-		'> div': {
-			marginBottom: 44,
-		},
-
-		'> :last-child': {
-			marginBottom: 0,
-		},
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '28px 18px',
-		},
-	},
-
-	navigationList: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-	},
-
-	featuredItemsList: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	featuredItemsNavLinksContainer: {
-		'> div': {
-			padding: '16px 0',
-
-			'&[role|="separator"]': {
-				padding: 0,
-			},
-		},
-
-		'div:first-of-type': {
-			paddingTop: 0,
-		},
-
-		'> div:last-child': {
-			paddingBottom: 0,
-		},
-	},
-
-	featuredItemsListMobile: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-		display: 'none',
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'block',
-		},
-	},
-
-	navLabel: {
-		fontSize: 16,
-		fontWeight: 700,
-	},
-
-	featuredItemSectionLabel: {
-		fontSize: 12,
-		fontWeight: 700,
-		color: '#9a9a9a',
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 16,
-		},
-	},
-
-	navLinkRoot: {
-		backgroundColor: 'transparent',
-
-		':hover': {
-			backgroundColor: 'transparent !important',
-			color: '#00827E',
-		},
-	},
-
-	paginationItem: {
-		height: 40,
-		width: 40,
-
-		'&[data-active]': {
-			background: '#0A0A0A',
-		},
-	},
-
-	textDecorationNone: {
-		textDecoration: 'none',
-		color: 'white',
-	},
-
-	heading1: {
-		fontSize: 48,
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 32,
-		},
-	},
-
-	sectionNavLinksContainer: {
-		'a:first-of-type > button': {
-			paddingTop: 0,
-		},
-
-		'> a:last-child > button': {
-			paddingBottom: 0,
-		},
-	},
-
-	accordionContent: {
-		padding: 0,
-	},
-
-	accordionControl: {
-		padding: 0,
-		borderBottom: '0 !important',
-		backgroundColor: 'transparent !important',
-		cursor: _params.isMobileView ? 'pointer' : 'default !important',
-		marginBottom: 0,
-
-		color: '#0A0A0A !important',
-
-		'&[data-active]': {
-			marginBottom: 24,
-		},
-
-		':disabled': {
-			opacity: 1,
-		},
-	},
-
-	chevron: {
-		svg: {
-			height: 24,
-			width: 24,
-		},
-	},
-
-	currentSectionHeader: {
-		display: 'none',
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'block',
-		},
-	},
-
-	searchInput: {
-		borderRadius: 0,
-	},
-
-	faqContainer: {
-		padding: '16px 24px',
-		background: '#F4F4F4',
-		marginBottom: 38,
-	},
-	faqContainerButton: {
-		fontSize: 16,
-		fontWeight: 400,
-		padding: '8px 20px',
-		[theme.fn.smallerThan('sm')]: {fontSize: 10.28, padding: '10px 7px'},
-	},
-	faqContainerText: {fontSize: 20, [theme.fn.smallerThan('sm')]: {fontSize: 16}},
-
-	breakSection: {
-		display: 'none',
-
-		[theme.fn.smallerThan('sm')]: {
-			display: 'block',
-		},
-	},
-}));
-
 type ResourcesPageProps = {
 	data: {
 		contentfulReferencedSection: IReferencedSection;
@@ -290,8 +99,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 }) => {
 	const {width} = useViewportSize();
 	const theme = useMantineTheme();
-	const isMobileView = theme.breakpoints.md > width;
-	const {classes} = useStyles({isMobileView});
+	const isMobileView = false;
 
 	const currentSection = data.contentfulReferencedSection;
 	const resources = currentSection?.references || [];
@@ -323,15 +131,15 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 				{/* PAGE HEADER */}
 				<Box>
 					<Grid align='center'>
-						<Grid.Col sm={12} md={12} lg={9.76}>
+						<Grid.Col span={{sm: 12, md: 12, lg: 9.76}}>
 							<Title className={classes.heading1} order={1}>
 								Resources/
-								<br className={classes.breakSection} />
+								<br className={classes['break-section']} />
 								{currentSection.header}
 							</Title>
 						</Grid.Col>
 
-						<Grid.Col sm={12} md={12} lg={2.24}>
+						<Grid.Col span={{sm: 12, md: 12, lg: 2.24}}>
 							<SearchBox
 								value=''
 								onSubmitCallback={vs => {
@@ -344,15 +152,15 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 				</Box>
 
 				<Grid mt={36} mb={20}>
-					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={3}>
+					<Grid.Col py={isMobileView ? 0 : undefined} span={{sm: 12, lg: 3}}>
 						{/* RESOURCE TYPE NAV LINKS */}
-						<Card className={classes.navigationList} mb={isMobileView ? 20 : 36}>
+						<Card className={classes['navigation-list']} mb={isMobileView ? 20 : 36}>
 							<Accordion
 								value={value}
 								chevronSize={isMobileView ? 24 : 0}
 								classNames={{
-									content: classes.accordionContent,
-									control: classes.accordionControl,
+									content: classes['accordion-content'],
+									control: classes['accordion-control'],
 									chevron: classes.chevron,
 								}}
 							>
@@ -368,7 +176,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 										</Title>
 									</Accordion.Control>
 									<Accordion.Panel>
-										<Box className={classes.sectionNavLinksContainer}>
+										<Box className={classes['section-nav-links-container']}>
 											{data.contentfulPage.sections
 												.filter(section => !section.isHidden && Boolean(section.header))
 												.map((section, index, array) => {
@@ -377,13 +185,16 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 													return (
 														<React.Fragment key={path}>
-															<Link to={path} className={classes.textDecorationNone}>
+															<Link to={path} className={classes['text-decoration-none']}>
 																<NavLink
 																	active={currentSection.id === section.id}
 																	color='#00827E'
 																	py={12}
 																	variant='subtle'
-																	classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
+																	classNames={{
+																		label: classes['nav-label'],
+																		root: classes['nav-link-root'],
+																	}}
 																	pl={0}
 																	key={section.id}
 																	label={section.header}
@@ -458,17 +269,17 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							</Card>
 						)}
 					</Grid.Col>
-					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
+					<Grid.Col py={isMobileView ? 0 : undefined} span={{sm: 12, lg: 9}}>
 						{/* RESOURCES MAP */}
 						{currentSection.referenceType === ReferenceTypeEnum.FAQs && (
 							<Box className={classes.faqContainer}>
 								<Grid gutter={isMobileView ? 10 : 28} align='center'>
-									<Grid.Col sm={12} md={'content'}>
+									<Grid.Col span={{sm: 12, md: 'content'}}>
 										<Title order={4} className={classes.faqContainerText}>
 											For Patient FAQs
 										</Title>
 									</Grid.Col>
-									<Grid.Col sm={12} md={'content'}>
+									<Grid.Col span={{sm: 12, md: 'content'}}>
 										<Anchor target='_blank' href={`${process.env.GATSBY_ZENDESK_PATIENT_FAQ_LINK}`}>
 											<Button className={classes.faqContainerButton}>View the entire FAQ</Button>
 										</Anchor>
@@ -496,16 +307,16 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									))}
 						</Box>
 
-						{/* PAGINATION CONTROLS */}
+						{/* PAGINATION CONTROLS TODO: update component props */}
 						{numPages > 1 && (
 							<Pagination
-								position='center'
+								// Position='center'
 								mt={44}
-								classNames={{item: classes.paginationItem}}
+								// ClassNames={{item: classes.paginationItem}}
 								radius={0}
 								color='#0A0A0A'
 								total={numPages}
-								page={currentPageNumber}
+								// Page={currentPageNumber}
 								withControls={false}
 								onChange={async pageNumber => {
 									const path
@@ -587,8 +398,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 						bannerSection.references.map(resource => (
 							<Grid.Col
 								key={resource.id + resource.heading}
-								sm={12}
-								lg={bannerSection.references?.length > 1 ? 6 : 12}
+								span={{sm: 12, lg: bannerSection.references?.length > 1 ? 6 : 12}}
 							>
 								<Banner key={resource.id} resource={resource} />
 							</Grid.Col>

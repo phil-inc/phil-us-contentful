@@ -1,0 +1,156 @@
+/* Styles.module.css */
+
+/* Block: title */
+.title {
+    max-width: 100%;
+}
+
+.title--embed-form-template-first {
+    max-width: 500px;
+    font-size: 52px;
+}
+
+.title--embed-form-template {
+    font-size: 40px;
+}
+
+@media (max-width: 1300px) {
+    .title {
+        max-width: 100%;
+    }
+}
+
+/* Block: portal */
+.portal {
+    /* default styles */
+}
+
+@media (max-width: 1275px) {
+    .portal--embed-form-section {
+        display: none;
+    }
+}
+
+/* Block: body */
+.body p {
+    margin-top: 0;
+}
+
+.body {
+    max-width: 100%;
+}
+
+@media (max-width: 1275px) {
+    .body--embed-form-section {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 800px) {
+    .body--embed-form-section {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .body {
+        max-width: 100%;
+    }
+}
+
+/* Block: form-wrapper */
+.form-wrapper {
+    padding: 44px 32px;
+    background: #F4F4F4;
+}
+
+@media (max-width: 800px) {
+    .form-wrapper {
+        padding: 44px 38px;
+    }
+}
+
+/* Block: container */
+.container {
+    padding: 0 100px;
+}
+
+@media (max-width: 800px) {
+    .container {
+        padding: 0 16px;
+    }
+}
+
+@media (max-width: 1275px) {
+    .container--contact {
+        margin-bottom: 42px;
+    }
+}
+
+/* Block: section */
+.section {
+    /* default styles */
+}
+
+@media (max-width: 1275px) {
+    .section {
+        display: none;
+    }
+}
+
+/* Block: large-section */
+.large-section {
+    /* default styles */
+}
+
+@media (max-width: 1275px) {
+    .large-section {
+        display: none;
+    }
+}
+
+/* Block: list-item */
+.list-item {
+    font-size: 18px;
+    line-height: 27px;
+    margin-top: 14px;
+    color: /* primary color value from theme */;
+}
+
+/* Block: contact-subheader */
+.contact-subheader a {
+    color: #00827E;
+    text-decoration: none;
+}
+
+/* Block: text-grid-column */
+.text-grid-column {
+    /* default styles */
+}
+
+@media (max-width: 1275px) {
+    .text-grid-column--embed-form-section {
+        padding-bottom: 8px;
+    }
+}
+
+/* Block: hero-grid-column */
+.hero-grid-column {
+    /* default styles */
+}
+
+@media (max-width: 1275px) {
+    .hero-grid-column--embed-form-section {
+        padding-left: 32px;
+        padding-right: 20px;
+    }
+}
+
+@media (max-width: 800px) {
+    .hero-grid-column--embed-form-section {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}

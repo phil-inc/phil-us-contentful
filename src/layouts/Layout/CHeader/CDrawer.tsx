@@ -9,7 +9,6 @@ import {
 	ScrollArea,
 	Accordion,
 	Table,
-	createStyles,
 	useMantineTheme,
 } from '@mantine/core';
 import {IconChevronDown} from '@tabler/icons';
@@ -27,93 +26,7 @@ import {COMPANY_PAGE, PATIENTS_PAGE} from 'constants/page';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {CAREERS} from 'constants/routes';
 
-const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
-	burger: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none !important',
-		},
-	},
-
-	drawerWrapper: {
-		padding: `${theme.spacing.sm + 10}px 100px  !important`,
-
-		[theme.fn.smallerThan('md')]: {
-			padding: `${theme.spacing.sm + 10}px 100px  !important`,
-			paddingTop: '0px !important',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: `${theme.spacing.sm + 10}px 16px  !important`,
-			paddingTop: '0px !important',
-		},
-	},
-
-	drawer: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	drawerHeader: {
-		marginBottom: 0,
-	},
-
-	drawerTitle: {
-		width: '100%',
-		margin: 0,
-	},
-
-	accordionControl: {
-		paddingLeft: 0,
-		paddingRight: 0,
-	},
-
-	accordionContent: {
-		paddingLeft: 0,
-		paddingRight: 0,
-	},
-
-	patientLoginButton: {
-		'&:hover': {
-			backgroundColor: theme.colors.philBranding[9],
-			color: 'white',
-		},
-	},
-
-	patientLoginButtonMobile: {
-		'&:hover': {
-			backgroundColor: theme.colors.philBranding[9],
-			color: 'white',
-		},
-
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	logo: {
-		maxWidth: 125,
-		maxHeight: 90,
-
-		width: '100%',
-
-		[theme.fn.smallerThan('md')]: {
-			width: 100,
-			marginRight: 25,
-		},
-	},
-
-	hideOnLarge: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	textDecorationNone: {
-		textDecoration: 'none',
-		textDecorationLine: 'none',
-	},
-}));
+import * as classes from './drawer.module.css';
 
 /**
  * Represents a custom drawer component.
@@ -122,7 +35,6 @@ const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
 const CDrawer: React.FC = () => {
 	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer, buttons}
 		= React.useContext(HeaderContext);
-	const {classes} = useStyles({minimal});
 	const theme = useMantineTheme();
 	const buttonConfig = {
 		primary: {variant: 'outline', size: 'md', uppercase: true},

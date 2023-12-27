@@ -1,0 +1,240 @@
+/* Styles.module.css */
+
+/* Block: container */
+.container {
+    margin: 0;
+    padding: 0px 100px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 42px 100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 42px 16px;
+    }
+}
+
+/* Block: card-container */
+.card-container {
+    padding: 70px;
+    background: #F4F4F4;
+}
+
+.card-container__item {
+    margin-bottom: 44px;
+}
+
+.card-container__item--last {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        padding: 28px 18px;
+    }
+}
+
+/* Block: navigation-list */
+.navigation-list {
+    background: #F4F4F4;
+    padding: 36px 34px;
+}
+
+/* Block: featured-items-list */
+.featured-items-list {
+    background: #F4F4F4;
+    padding: 36px 34px;
+}
+
+@media (max-width: 768px) {
+    .featured-items-list {
+        display: none;
+    }
+}
+
+/* Block: featured-items-nav-links-container */
+.featured-items-nav-links-container__item {
+    padding: 16px 0;
+}
+
+.featured-items-nav-links-container__item--separator {
+    padding: 0;
+}
+
+.featured-items-nav-links-container__first-item {
+    padding-top: 0;
+}
+
+.featured-items-nav-links-container__last-item {
+    padding-bottom: 0;
+}
+
+/* Block: featured-items-list-mobile */
+.featured-items-list-mobile {
+    background: #F4F4F4;
+    padding: 36px 34px;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .featured-items-list-mobile {
+        display: block;
+    }
+}
+
+/* Block: nav-label */
+.nav-label {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Block: featured-item-section-label */
+.featured-item-section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9a9a9a;
+}
+
+@media (max-width: 768px) {
+    .featured-item-section-label {
+        font-size: 16px;
+    }
+}
+
+/* Block: nav-link-root */
+.nav-link-root {
+    background-color: transparent;
+}
+
+.nav-link-root:hover {
+    background-color: transparent !important;
+    color: #00827E;
+}
+
+/* Block: pagination-item */
+.pagination-item {
+    height: 40px;
+    width: 40px;
+}
+
+.pagination-item[data-active] {
+    background: #0A0A0A;
+}
+
+/* Block: text-decoration-none */
+.text-decoration-none {
+    text-decoration: none;
+    color: white;
+}
+
+/* Block: heading1 */
+.heading1 {
+    font-size: 48px;
+}
+
+@media (max-width: 768px) {
+    .heading1 {
+        font-size: 32px;
+    }
+}
+
+/* Block: section-nav-links-container */
+.section-nav-links-container {
+    padding-top: 0;
+}
+
+.section-nav-links-container__last-link > button {
+    padding-bottom: 0;
+}
+
+/* Block: accordion-content */
+.accordion-content {
+    padding: 0;
+}
+
+/* Block: accordion-control */
+.accordion-control {
+    padding: 0;
+    border-bottom: 0 !important;
+    background-color: transparent !important;
+    cursor: default;
+    margin-bottom: 0;
+    color: #0A0A0A !important;
+}
+
+.accordion-control__active {
+    margin-bottom: 24px;
+}
+
+.accordion-control__disabled {
+    opacity: 1;
+}
+
+/* Block: chevron */
+.chevron svg {
+    height: 24px;
+    width: 24px;
+}
+
+/* Block: current-section-header */
+.current-section-header {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .current-section-header {
+        display: block;
+    }
+}
+
+/* Block: search-input */
+.search-input {
+    border-radius: 0;
+}
+
+/* Block: faq-container */
+.faq-container {
+    padding: 16px 24px;
+    background: #F4F4F4;
+    margin-bottom: 38px;
+}
+
+/* Block: faq-container-button */
+.faq-container-button {
+    font-size: 16px;
+    font-weight: 400;
+    padding: 8px 20px;
+}
+
+@media (max-width: 576px) {
+    .faq-container-button {
+        font-size: 10.28px;
+        padding: 10px 7px;
+    }
+}
+
+/* Block: faq-container-text */
+.faq-container-text {
+    font-size: 20px;
+}
+
+@media (max-width: 576px) {
+    .faq-container-text {
+        font-size: 16px;
+    }
+}
+
+/* Block: break-section */
+.break-section {
+    display: none;
+}
+
+@media (max-width: 576px) {
+    .break-section {
+        display: block;
+    }
+}

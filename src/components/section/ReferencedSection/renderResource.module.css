@@ -1,0 +1,12 @@
+/* Styles.css */
+
+.investorImage {
+    width: 300px;
+}
+
+/* Replace '768px' with the actual breakpoint value for 'md' from your theme settings */
+@media (max-width: 768px) {
+    .investorImage {
+        width: fit-content;
+    }
+}

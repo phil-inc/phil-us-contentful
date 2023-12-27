@@ -1,7 +1,5 @@
 import React from 'react';
-import type {ButtonStylesParams, MantineTheme, MantineThemeOverride} from '@mantine/core';
-import {Box} from '@mantine/core';
-import {createStyles} from '@mantine/core';
+import {Box, Button, createTheme} from '@mantine/core';
 import {MantineProvider, Container} from '@mantine/core';
 import CHeader from './CHeader/CHeader';
 import {isIndex} from 'hooks/isIndex';
@@ -13,28 +11,11 @@ import LinkedinInsights from 'analytics/LinkedinInsights';
 import 'assets/css/index.css';
 import ZoominfoAnalytics from 'analytics/ZoominfoAnalytics';
 
+import * as classes from './layout.module.css';
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 export const Head: React.FC = () => <>{isProduction && <LinkedinInsights />}</>;
-
-const useStyles = createStyles(theme => ({
-	wrapper: {
-		maxWidth: '1920px',
-		width: '100vw',
-		overflow: 'hidden',
-		padding: 0,
-	},
-
-	innerWrapper: {
-		width: '100%',
-		padding: 100,
-
-		// Dynamic media queries, define breakpoints in theme, use anywhere
-		[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-			padding: `0 ${theme.spacing.sm}px`,
-		},
-	},
-}));
 
 type LayoutProps = {
 	children: React.ReactNode;
@@ -43,18 +24,15 @@ type LayoutProps = {
 };
 
 export function Layout({children, minimal = false, headerTargetBlank = false}: LayoutProps) {
-	const {classes} = useStyles();
-
-	const themeOverride: MantineThemeOverride = {
+	const theme = createTheme({
 		breakpoints: {
-			xs: 500,
-			sm: 800,
-			md: 1275,
-			lg: 1300,
-			xl: 1400,
+			xs: '500px',
+			sm: '800px',
+			md: '1275px',
+			lg: '1300px',
+			xl: '1400px',
 		},
 		colors: {
-			primary: ['#00201F', '#031A19', '#051515', '#061211', '#060F0F', '#060D0C', '#060B0B'],
 			philBranding: [
 				'#D5F1F0',
 				'#00827E',
@@ -70,7 +48,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 		},
 		primaryColor: 'philBranding',
 		headings: {
-			fontWeight: 700,
+			fontWeight: '700',
 			sizes: {
 				h1: {
 					fontSize: isIndex() ? 'min(85px, calc(3rem + 1.927vw))' : 'min(calc(2rem + 1.197vw), 85px)',
@@ -97,90 +75,107 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 			},
 			fontFamily: 'Raleway',
 		},
-		fontFamily: 'Lato',
+		fontFamily: 'Lato, sans-serif',
 
 		spacing: {
-			xs: 8,
-			sm: 16,
-			md: 32,
-			lg: 64,
-			xl: 128,
+			xs: '8px',
+			sm: '16px',
+			md: '32px',
+			lg: '64px',
+			xl: '128px',
 		},
 
 		components: {
-			Button: {
-				styles: (theme, params: ButtonStylesParams) => ({
-					root: {
-						borderRadius: '0',
-						padding: '10px 20px',
-						...(params.variant === 'filled' && {
-							backgroundColor: theme.colors.primary[0],
-							color: 'white',
-							transition: 'outline 0.15s ease-in-out',
-							outlineOffset: -3,
-						}),
-
-						...(params.variant === 'default' && {
+			Button: Button.extend({
+				defaultProps: {
+					style(theme) {
+						return {
+							borderRadius: '0',
+							padding: '10px 20px',
 							backgroundColor: theme.colors.philBranding[9],
 							color: 'white',
 							border: `1px solid ${theme.colors.philBranding[9]}`,
 							outlineOffset: -3,
-						}),
-
-						'&:hover': {
-							...(params.variant === 'filled' && {
-								backgroundColor: 'white',
-								color: theme.colors.primary[0],
-								outline: `3px solid ${theme.colors.primary[0]}`,
-							}),
-
-							...(params.variant === 'default' && {
+							'&:hover': {
 								backgroundColor: theme.colors.philBranding[2],
 								border: `1px solid ${theme.colors.philBranding[2]}`,
-							}),
-
-							...(params.variant === 'outline' && {
-								backgroundColor: params.color === 'dark' ? undefined : theme.colors.philBranding[9],
-								color: params.color === 'dark' ? undefined : 'white',
-							}),
-
-							fontWeight: 900,
-						},
-
-						'&:focus:not(:focus-visible)': {
-							...(params.variant === 'filled' && {
+								fontWeight: 900,
+							},
+							'&:focus:not(:focus-visible)': {
 								outline: `3px solid ${theme.colors.primary[0]}`,
 								outlineOffset: -3,
 								backgroundColor: 'white',
 								color: theme.colors.primary[0],
-							}),
-						},
+							},
+						};
 					},
-				}),
-			},
+				},
+			}),
 		},
-	};
+
+		// Components: {
+		// 	Button: {
+		// 		styles: (theme, params: ButtonStylesParams) => ({
+		// 			root: {
+		// 				borderRadius: '0',
+		// 				padding: '10px 20px',
+		// 				...(params.variant === 'filled' && {
+		// 					backgroundColor: theme.colors.primary[0],
+		// 					color: 'white',
+		// 					transition: 'outline 0.15s ease-in-out',
+		// 					outlineOffset: -3,
+		// 				}),
+
+		// 				...(params.variant === 'default' && {
+		// 					backgroundColor: theme.colors.philBranding[9],
+		// 					color: 'white',
+		// 					border: `1px solid ${theme.colors.philBranding[9]}`,
+		// 					outlineOffset: -3,
+		// 				}),
+
+		// 				'&:hover': {
+		// 					...(params.variant === 'filled' && {
+		// 						backgroundColor: 'white',
+		// 						color: theme.colors.primary[0],
+		// 						outline: `3px solid ${theme.colors.primary[0]}`,
+		// 					}),
+
+		// 					...(params.variant === 'default' && {
+		// 						backgroundColor: theme.colors.philBranding[2],
+		// 						border: `1px solid ${theme.colors.philBranding[2]}`,
+		// 					}),
+
+		// 					...(params.variant === 'outline' && {
+		// 						backgroundColor: params.color === 'dark' ? undefined : theme.colors.philBranding[9],
+		// 						color: params.color === 'dark' ? undefined : 'white',
+		// 					}),
+
+		// 					fontWeight: 900,
+		// 				},
+
+		// 				'&:focus:not(:focus-visible)': {
+		// 					...(params.variant === 'filled' && {
+		// 						outline: `3px solid ${theme.colors.primary[0]}`,
+		// 						outlineOffset: -3,
+		// 						backgroundColor: 'white',
+		// 						color: theme.colors.primary[0],
+		// 					}),
+		// 				},
+		// 			},
+		// 		}),
+		// 	},
+		// },
+	});
 
 	return (
 		<>
-			<MantineProvider
-				theme={{
-					globalStyles: (theme: MantineTheme) => ({
-						body: {
-							color: theme.colors.primary[0],
-						},
-					}),
-					...themeOverride,
-				}}
-				withGlobalStyles
-				withNormalizeCSS
-			>
+			<MantineProvider theme={theme} classNamesPrefix='phil'>
 				<HubspotProvider>
 					<Container fluid className={classes.wrapper}>
 						{isProduction && <ZoominfoAnalytics />}
 						<CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />
-						<Box>{children}</Box>
-						<CFooter minimal={minimal} />
+						{/* <Box>{children}</Box> */}
+						{/* <CFooter minimal={minimal} /> */}
 					</Container>
 				</HubspotProvider>
 			</MantineProvider>

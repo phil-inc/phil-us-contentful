@@ -1,0 +1,88 @@
+/* Styles.css */
+
+.card {
+    position: relative;
+    overflow: hidden;
+    padding-left: 18px;
+    background: #FFF;
+    height: 100%;
+    padding: 40px 60px;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 10px;
+    background: #00827E 0% 0% no-repeat padding-box;
+}
+
+/* Replace '768px' with the actual breakpoint for 'md' */
+@media (max-width: 768px) {
+    .card {
+        padding: 0px;
+    }
+}
+
+.center {
+    display: grid;
+    align-items: center;
+}
+
+.textDecorationNone {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.box {
+    /* Default styles (if any) go here */
+}
+
+@media (max-width: 768px) {
+    .box {
+        padding: 26px 20px;
+        padding-left: 36px;
+    }
+}
+
+.title {
+    font-size: 28px;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 20px;
+    }
+}
+
+.body {
+    margin-top: 8px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .body {
+        margin-top: 8px;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+}
+
+.button {
+    font-size: 16px;
+    padding: 11px 20px;
+    font-weight: 400;
+    height: 40px;
+}
+
+@media (max-width: 768px) {
+    .button {
+        font-size: 10.28px;
+        padding: 7px 12px;
+        height: 26px;
+    }
+}

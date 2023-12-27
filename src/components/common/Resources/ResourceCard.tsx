@@ -1,15 +1,4 @@
-import {
-	Paper,
-	Title,
-	Button,
-	Text,
-	createStyles,
-	Grid,
-	Box,
-	Anchor,
-	Group,
-	type MantineStyleSystemProps,
-} from '@mantine/core';
+import {Paper, Title, Button, Text, Grid, Box, Anchor, Group, type MantineStyleProps} from '@mantine/core';
 import classNames from 'classnames';
 import React from 'react';
 import type {FC} from 'react';
@@ -18,90 +7,14 @@ import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
 
+import * as classes from './resourceCard.module.css';
+
 type ResourceCardProps = {
 	resource: TResource;
 	isFaq?: boolean;
 };
 
-const useStyles = createStyles(theme => ({
-	card: {
-		position: 'relative',
-		overflow: 'hidden',
-		paddingLeft: 18,
-		background: '#FFF',
-		height: '100%',
-		padding: '40px 60px',
-
-		'&::before': {
-			content: '""',
-			position: 'absolute',
-			top: 0,
-			bottom: 0,
-			left: 0,
-			width: 10,
-			background: '#00827E 0% 0% no-repeat padding-box',
-		},
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '0px',
-		},
-	},
-
-	center: {
-		display: 'grid',
-		alignItems: 'center',
-	},
-
-	textDecorationNone: {
-		color: 'inherit',
-		textDecoration: 'none',
-		cursor: 'pointer',
-	},
-
-	box: {
-		[theme.fn.smallerThan('md')]: {
-			padding: '26px 20px',
-			paddingLeft: 36,
-		},
-	},
-
-	title: {
-		fontSize: 28,
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 20,
-		},
-	},
-
-	body: {
-		marginTop: 8,
-		marginBottom: 20,
-		fontSize: 18,
-
-		[theme.fn.smallerThan('md')]: {
-			marginTop: 8,
-			marginBottom: 12,
-
-			fontSize: 14,
-		},
-	},
-
-	button: {
-		fontSize: 16,
-		padding: '11px 20px',
-		fontWeight: 400,
-		height: 40,
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 10.28,
-			padding: '7px 12px',
-			height: 26,
-		},
-	},
-}));
-
-export const ResourceCard: FC<ResourceCardProps & MantineStyleSystemProps> = ({resource, mb = 0, isFaq = false}) => {
-	const {classes} = useStyles();
+export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({resource, mb = 0, isFaq = false}) => {
 	const {link, isExternal} = getLink(resource);
 
 	const heading = resource.subheading?.length ? resource.subheading : resource.heading;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Group, Anchor, createStyles, Accordion} from '@mantine/core';
+import {Button, Group, Anchor, Accordion} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {Link} from 'gatsby';
 import {type IReferencedSection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
@@ -16,97 +16,7 @@ import ReferencedSectionTitle from './ReferencedSectionTitle';
 import ReferencedSectionBody from './ReferencedSectionBody';
 import {getSectionColors} from './RenderResource';
 
-const useStyles = createStyles(theme => ({
-	investorImage: {
-		width: '300px',
-
-		[theme.fn.smallerThan('md')]: {
-			width: 'fit-content',
-		},
-	},
-	chevron: {
-		svg: {
-			width: 40,
-			height: 40,
-		},
-	},
-
-	label: {
-		div: {
-			justifyContent: 'start',
-			marginBottom: 0,
-			overflowWrap: 'anywhere',
-
-			h2: {
-				fontFamily: 'Raleway, sans-serif',
-				fontSize: 'min(55px, calc(1.5rem + 0.31vw))',
-			},
-		},
-	},
-
-	control: {
-		padding: 20,
-		paddingLeft: 100,
-		paddingRight: 100,
-		borderBottom: '0px !important',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: 20,
-			paddingLeft: 20,
-			paddingRight: 20,
-		},
-	},
-
-	content: {
-		paddingLeft: 105,
-		paddingRight: 105,
-
-		[theme.fn.smallerThan('md')]: {
-			paddingLeft: 20,
-			paddingRight: 20,
-		},
-	},
-
-	item: {
-		background: '#F4F4F4',
-
-		'&[data-active]': {
-			background: '#F4F4F4',
-		},
-	},
-
-	heading: {
-		lineHeight: '1.2',
-		color: '#000000',
-
-		[theme.fn.smallerThan('md')]: {
-			textAlign: 'center',
-			marginBottom: 10,
-			paddingLeft: 20,
-			paddingRight: 20,
-		},
-	},
-
-	subHeading: {
-		fontFamily: 'Lato, sans-serif',
-		fontWeight: 400,
-		color: '#01201F',
-
-		[theme.fn.smallerThan('md')]: {
-			textAlign: 'center',
-			paddingLeft: 34,
-			paddingRight: 34,
-		},
-	},
-
-	codeSnippetStack: {
-		alignItems: 'flex-start',
-
-		[theme.fn.smallerThan('md')]: {
-			alignItems: 'center',
-		},
-	},
-}));
+import * as classes from './referencedSection.module.css';
 
 type ReferencedSectionProps = {
 	section: IReferencedSection;

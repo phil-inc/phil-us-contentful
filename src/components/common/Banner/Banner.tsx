@@ -1,17 +1,4 @@
-import {
-	Paper,
-	Container,
-	Center,
-	Title,
-	Divider,
-	Button,
-	Text,
-	createStyles,
-	Group,
-	Grid,
-	Anchor,
-	Modal,
-} from '@mantine/core';
+import {Paper, Container, Center, Title, Divider, Button, Text, Group, Grid, Anchor, Modal} from '@mantine/core';
 import classNames from 'classnames';
 import {Link, Script} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
@@ -23,38 +10,7 @@ import {isProduction} from 'utils/isProduction';
 import HubspotFormModal from '../HubspotFormModal';
 import Expanded from '../Expanded/Expanded';
 
-const useStyles = createStyles(theme => ({
-	card: {
-		position: 'relative',
-		overflow: 'hidden',
-		padding: 16,
-		width: '100%',
-		maxWidth: 1725,
-		margin: '0 auto',
-
-		'&::before': {
-			content: '""',
-			position: 'absolute',
-			top: 0,
-			bottom: 0,
-			left: 0,
-			width: 6,
-			background: '#5ABEA4 0% 0% no-repeat padding-box',
-		},
-
-		[theme.fn.smallerThan('md')]: {
-			padding: 32,
-		},
-	},
-
-	gridColumn: {
-		padding: '64px 32px 52px',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '64px 16px 10px',
-		},
-	},
-}));
+import * as classes from './banner.module.css';
 
 type BannerProps = {
 	resource: TResource;
@@ -66,7 +22,6 @@ type BannerProps = {
  * @returns Banner Component
  */
 export const Banner: FC<BannerProps> = ({resource}) => {
-	const {classes} = useStyles();
 	const {heading, body, buttonText, externalLink, isHubspotEmbed, hubspotEmbed} = resource;
 	const {link, isExternal} = getLink(resource);
 	const [openHubspotModal, setopenHubspotModal] = useState(false);

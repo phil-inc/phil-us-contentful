@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, type MantineTheme, createStyles, useMantineTheme} from '@mantine/core';
+import {Container, type MantineTheme, useMantineTheme} from '@mantine/core';
 import {Article} from 'components/common/Article';
 import Asset from 'components/common/Asset/Asset';
 import {Banner} from 'components/common/Banner/Banner';
@@ -16,6 +16,8 @@ import {StatsCard} from 'components/common/statsCard/StatsCard';
 import {type TResource} from 'types/resource';
 import {ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
+
+import * as classes from './renderResource.module.css';
 
 // Get colors for resources based on resource type
 export const getSectionColors = (referenceType: string) => {
@@ -54,22 +56,12 @@ const getColor = (index: number) => {
 	return 'yellow';
 };
 
-const useStyles = createStyles(theme => ({
-	investorImage: {
-		width: '300px',
-
-		[theme.fn.smallerThan('md')]: {
-			width: 'fit-content',
-		},
-	},
-}));
-
 type ComponentFunctionProps = {
 	resource: TResource;
 	index?: number;
 	arrayLength?: number;
 	theme?: MantineTheme;
-	classes?: ReturnType<typeof useStyles>['classes'];
+	classes?: any;
 	resourceBackground?: string;
 };
 
@@ -109,7 +101,7 @@ const PrescriberJourneyComponent: ComponentFunction = ({resource}) => <Prescribe
 const ProfileComponent: ComponentFunction = ({resource}) => <Profile resource={resource} />;
 
 const InvestorImageComponent: ComponentFunction = ({resource, classes}) => (
-	<Container className={classes!.investorImage}>
+	<Container className={classes.investorImage}>
 		<Asset asset={resource.asset!} />
 	</Container>
 );
@@ -130,7 +122,7 @@ const getComponent = (
 	index: number,
 	arrayLength: number,
 	theme: MantineTheme,
-	classes: ReturnType<typeof useStyles>['classes'],
+	classes: any,
 	resourceBackground: string,
 ) => {
 	const componentMappings: Record<ReferenceTypeEnum | ResourceBlocksEnum, ComponentFunction> = {
@@ -181,7 +173,6 @@ const RenderResource: React.FC<RenderResourceProps> = ({
 }) => {
 	const theme = useMantineTheme();
 	const [resourceBackground] = getSectionColors(referenceType);
-	const {classes} = useStyles();
 
 	return getComponent(referenceType, resource, index, arrayLength, theme, classes, resourceBackground);
 };

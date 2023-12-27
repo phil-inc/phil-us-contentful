@@ -1,0 +1,55 @@
+/* Styles.module.css */
+
+/* Block: image-container */
+.image-container {
+    background: /* background value here */;
+    padding: 50px; /* Default padding, adjust if 'fluid' is true */
+    max-width: 100%;
+    width: 100%;
+}
+
+.image-container--expanded {
+    max-width: 50vw;
+    width: 50vw;
+    position: absolute;
+    top: 90px;
+    right: 0px;
+}
+
+.image-container--not-contact-page {
+    height: 100%;
+}
+
+.image-container--video {
+    padding: 100px 0;
+}
+
+@media (max-width: /* lg breakpoint value */) {
+    .image-container {
+        max-width: 100%;
+        width: 100%;
+        margin-top: 0;
+        margin-right: 0;
+    }
+
+    .image-container--video {
+        padding: 0;
+    }
+}
+
+@media (max-width: /* md breakpoint value */) {
+    .image-container {
+        position: static;
+    }
+}
+
+/* Block: center */
+.center {
+    display: grid;
+    place-items: center;
+}
+
+/* Block: object-fit-contain */
+.object-fit-contain img {
+    object-fit: contain;
+}

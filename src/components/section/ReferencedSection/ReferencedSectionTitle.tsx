@@ -1,9 +1,11 @@
 import React from 'react';
-import {Box, Title, Divider, Stack, Group, createStyles, type TitleOrder} from '@mantine/core';
+import {Box, Title, Divider, Stack, Group, type TitleOrder} from '@mantine/core';
 import {useMantineTheme} from '@mantine/core';
 import {RESOURCE_BLOCKS} from 'constants/section';
 import {handleSpacing} from 'utils/handleSpacing';
 import {ReferenceTypeEnum, type IReferencedSection} from 'types/section';
+
+import * as classes from './referencedSectionTitle.module.css';
 
 type ReferencedSectionTitleProps = {
 	section: IReferencedSection;
@@ -11,29 +13,8 @@ type ReferencedSectionTitleProps = {
 	textColor: string;
 };
 
-const useStyles = createStyles(() => ({
-	divider: {
-		maxWidth: '35%',
-		marginTop: '10px',
-		marginBottom: '64px',
-	},
-	heading: {
-		lineHeight: '1.2',
-		color: '#000000',
-	},
-	subHeading: {
-		fontFamily: 'Lato, sans-serif',
-		fontWeight: 400,
-		color: '#01201F',
-	},
-	codeSnippetStack: {
-		alignItems: 'flex-start',
-	},
-}));
-
 const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section, isEmbedFormTemplate, textColor}) => {
 	const theme = useMantineTheme();
-	const {classes} = useStyles();
 
 	const renderTitle = (
 		text: string,

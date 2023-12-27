@@ -1,7 +1,7 @@
 import React from 'react';
 import {createPortal} from 'react-dom';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
-import {Anchor, Box, Button, Container, createStyles, Divider, Grid, Group, List, Text, Title} from '@mantine/core';
+import {Anchor, Box, Button, Container, Divider, Grid, Group, List, Text, Title} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link, Script} from 'gatsby';
@@ -21,112 +21,7 @@ import {CONTACT_PAGE} from 'constants/page';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 import {parseScript} from 'utils/parseScript';
 
-const useStyles = createStyles(
-	(
-		theme,
-		{
-			isContact,
-			isEmbedFormTemplate,
-			index,
-			isEmbedFormSection,
-		}: {isContact: boolean; isEmbedFormTemplate: boolean; index: number; isEmbedFormSection: boolean},
-	) => ({
-		title: {
-			maxWidth: isEmbedFormTemplate ? (index === 0 ? 500 : '100%') : '100%',
-			...(isEmbedFormTemplate && {fontSize: index === 0 ? 52 : 40}),
-
-			[theme.fn.smallerThan('lg')]: {
-				maxWidth: '100%',
-			},
-		},
-
-		portal: {
-			[theme.fn.smallerThan('md')]: {
-				display: isEmbedFormSection ? 'none' : undefined,
-			},
-		},
-
-		body: {
-			p: {
-				marginTop: 0,
-			},
-			maxWidth: '100%',
-
-			[theme.fn.smallerThan('md')]: {
-				...(isEmbedFormSection && {paddingLeft: 0, paddingRight: 0}),
-			},
-
-			[theme.fn.smallerThan('sm')]: {
-				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
-			},
-
-			[theme.fn.smallerThan('lg')]: {
-				maxWidth: '100%',
-			},
-		},
-
-		formWrapper: {
-			padding: '44px 32px',
-			background: '#F4F4F4',
-
-			[theme.fn.smallerThan('sm')]: {
-				padding: '44px 38px',
-			},
-		},
-
-		container: {
-			padding: '0 100px',
-			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-				padding: '0 16px',
-			},
-
-			[theme.fn.smallerThan('md')]: {
-				...(isContact && {marginBottom: 42}),
-			},
-		},
-
-		section: {
-			[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-				display: 'none',
-			},
-		},
-
-		largeSection: {
-			[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-				display: 'none',
-			},
-		},
-
-		listItem: {
-			fontSize: 18,
-			lineHeight: 27,
-			marginTop: 14,
-			color: theme.colors.primary[0],
-		},
-
-		contactSubheader: {
-			a: {
-				color: '#00827E',
-				textDecoration: 'none',
-			},
-		},
-
-		textGridColumn: {
-			[theme.fn.smallerThan('md')]: {
-				...(isEmbedFormSection && {paddingBottom: 8}),
-			},
-		},
-
-		heroGridColumn: {
-			[theme.fn.smallerThan('md')]: {
-				...(isEmbedFormSection && {paddingLeft: 32, paddingRight: 20}),
-			},
-			[theme.fn.smallerThan('sm')]: {
-				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
-			},
-		},
-	}),
-);
+import classes from './basicSection.module.css';
 
 type BasicSectionProps = {
 	section: ISection;
@@ -148,13 +43,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const HEADING_FIRST = 1;
 	const HEADING_SECOND = 2;
 	const context = React.useContext(PageContext);
-
-	const {classes, theme} = useStyles({
-		isContact: context.title === CONTACT_PAGE,
-		isEmbedFormTemplate,
-		index,
-		isEmbedFormSection: Boolean(section.embedForm),
-	});
 
 	const {link, isExternal} = getLink(section);
 
@@ -405,4 +293,4 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	);
 };
 
-export default React.memo(BasicSection);
+export default BasicSection;

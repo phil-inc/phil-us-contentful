@@ -3,13 +3,15 @@ import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {SEO} from 'layouts/SEO/SEO';
-import {Box, Container, createStyles, Grid, Title} from '@mantine/core';
+import {Box, Container, Grid, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import type {IReferencedSection, ISection} from 'types/section';
 import PageContext from 'contexts/PageContext';
 import {Script, graphql} from 'gatsby';
 import slugify from 'slugify';
 import {HOME} from 'constants/page';
+
+import classes from './page.module.css';
 
 type HelmetProps = {
 	data: {
@@ -69,24 +71,8 @@ type PageTemplateProps = {
 	};
 };
 
-const useStyles = createStyles((theme, {title}: {title: string}) => ({
-	container: {
-		margin: 0,
-		padding: '0px 100px',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: title === 'Field' ? '0px 100px' : '42px 100px',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: title === 'Field' ? '0px 16px' : '42px 16px',
-		},
-	},
-}));
-
 const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
-	const {classes} = useStyles({title});
 	let basicSectionCount = 0;
 	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));
 
@@ -105,7 +91,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 					</Expanded>
 				)}
 				{title === 'Field' && (
-					<Container className={classes.container}>
+					<Container className={classes['container--field']}>
 						<Title order={1} mb={30}>
 							FAQ
 						</Title>
