@@ -1,79 +1,82 @@
 label {
-    font-weight: bold;
-    color: #00201f;
-    font-family: 'Lato';
-    font-size: 14px;
-    font-style: normal;
+	font-weight: bold;
+	color: #00201f;
+	font-family: 'Lato';
+	font-size: 14px;
+	font-style: normal;
 }
 
 .input {
-    margin-top: 6px;
+	margin-top: 6px;
 }
 
-input,select,textarea{
-    width: 100%;
-    border: solid 1px #6a7979;
-    padding: 8px;
+input,
+select,
+textarea {
+	width: 100%;
+	border: solid 1px #6a7979;
+	padding: 8px;
 }
 
 .hs-input {
-    width: 100% !important;
+	width: 100% !important;
 }
 
 fieldset {
-    width: 100%;
-    max-width: 100% !important;
-    margin-bottom: 18px !important;
+	width: 100%;
+	max-width: 100% !important;
+	margin-bottom: 18px !important;
 }
 
-fieldset:has(.hs-form-field[style*="display: none"]){
-    display: none;
+fieldset:has(.hs-form-field[style*='display: none']) {
+	display: none;
 }
 
 textarea {
-    height: 14em;
+	height: 14em;
 }
 
 .hs-submit {
-    margin-top: 24px;
-    display: inline-block;
+	margin-top: 24px;
+	display: inline-block;
 }
 
-input[type=submit] {
-    background-color: #00201F;
-    color: #fff;
-    font-weight: 600;
-    position: relative;
-    line-height: 1;
-    font-family: Lato;
-    -webkit-tap-highlight-color: transparent;
-    display: inline-block;
-    width: auto;
-    font-size: 14px;
-    height: 36px;
-    padding: 10px 40px;
-    transition: outline 0.2s ease-out;
+
+input[type='submit'] {
+	background-color: #00201f;
+	color: #fff;
+	font-weight: 600;
+	position: relative;
+	line-height: 1;
+	font-family: Lato;
+	-webkit-tap-highlight-color: transparent;
+	display: inline-block;
+	width: auto;
+	font-size: 14px;
+	height: 36px;
+	padding: 10px 40px;
+	transition: outline 0.2s ease-out;
 }
 
-input[type=submit]:hover {
-    outline: 3px solid #00201F;
-    background-color: transparent;
-    color: #00201F;
-    font-weight: 900;
+input[type='submit']:hover {
+	outline: 3px solid #00201f;
+	background-color: transparent;
+	color: #00201f;
+	font-weight: 900;
 }
 
-.hs-error-msgs{
-    margin: 0 !important;
-    padding: 6px 0;
-    list-style: none;
+.hs-error-msgs {
+	margin: 0 !important;
+	padding: 6px 0;
+	list-style: none;
 }
 
 .hs-error-msg {
-    color: #d0021b;
-    font-size: 14px;
-    font-weight: normal;
+	color: #d0021b;
+	font-size: 14px;
+	font-weight: normal;
 }
 
 .hs_error_rollup {
-    display: none;
+	display: none;
 }

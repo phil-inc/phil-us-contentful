@@ -2,20 +2,47 @@
 
 /* Block: wrapper */
 .wrapper {
-    max-width: 1920px;
-    width: 100vw;
-    overflow: hidden;
-    padding: 0;
+	max-width: 1920px;
+	width: 100vw;
+	overflow: hidden;
+	padding: 0;
 }
 
 /* Block: inner-wrapper */
 .inner-wrapper {
-    width: 100%;
-    padding: 100px;
+	width: 100%;
+	padding: 100px;
 }
 
-@media (max-width: 1275px) { /* Adjust this to your theme's 'md' breakpoint */
-    .inner-wrapper {
-        padding: 0 /* Replace with your theme's 'sm' spacing value */;
-    }
+@media (max-width: 1275px) {
+	/* Adjust this to your theme's 'md' breakpoint */
+	.inner-wrapper {
+		padding: 0 /* Replace with your theme's 'sm' spacing value */;
+	}
+}
+
+.root {
+	&[data-variant='philDefault'] {
+		background-color: #00201f;
+		color: #fff;
+		font-weight: 600;
+		position: relative;
+		line-height: 1;
+		font-family: Lato;
+		-webkit-tap-highlight-color: transparent;
+		display: inline-block;
+		width: auto;
+		font-size: 14px;
+		height: 36px;
+		padding: 10px 20px;
+		transition: outline 0.2s ease-out;
+        border-radius: 0;
+
+		&:hover {
+			outline: 3px solid #00201f;
+			background-color: transparent;
+			color: #00201f;
+			font-weight: 900;
+		}
+	}
 }

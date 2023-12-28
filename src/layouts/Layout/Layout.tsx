@@ -1,7 +1,7 @@
 import React from 'react';
 import {AppShell, Box, Button, Grid, Group, createTheme} from '@mantine/core';
 import {MantineProvider, Container} from '@mantine/core';
-import CHeader, { HEADER_HEIGHT } from './CHeader/CHeader';
+import CHeader, {HEADER_HEIGHT} from './CHeader/CHeader';
 import {isIndex} from 'hooks/isIndex';
 import {HubspotProvider} from '@aaronhayes/react-use-hubspot-form';
 import CFooter from './CFooter/CFooter';
@@ -43,7 +43,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 				'#00827E',
 				'#00827E',
 				'#00827E',
-				'#00827E',
+				'#00201F',
 			],
 		},
 		primaryColor: 'philBranding',
@@ -87,29 +87,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 
 		components: {
 			Button: Button.extend({
-				defaultProps: {
-					style(theme) {
-						return {
-							borderRadius: '0',
-							padding: '10px 20px',
-							backgroundColor: theme.colors.philBranding[9],
-							color: 'white',
-							border: `1px solid ${theme.colors.philBranding[9]}`,
-							outlineOffset: -3,
-							'&:hover': {
-								backgroundColor: theme.colors.philBranding[2],
-								border: `1px solid ${theme.colors.philBranding[2]}`,
-								fontWeight: 900,
-							},
-							'&:focus:not(:focus-visible)': {
-								outline: `3px solid ${theme.colors.philBranding[0]}`,
-								outlineOffset: -3,
-								backgroundColor: 'white',
-								color: theme.colors.philBranding[0],
-							},
-						};
-					},
-				},
+				classNames: classes,
 			}),
 		},
 
@@ -170,13 +148,15 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 	return (
 		<>
 			<MantineProvider theme={theme} classNamesPrefix='phil'>
-				 <HubspotProvider>
-					<AppShell header={{
-						height: HEADER_HEIGHT,
-					}}>
+				<HubspotProvider>
+					<AppShell
+						header={{
+							height: HEADER_HEIGHT,
+						}}
+					>
 						{isProduction && <ZoominfoAnalytics />}
 						<CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />
-						{/* <Box>{children}</Box> */}
+						<Box>{children}</Box>
 						{/* <CFooter minimal={minimal} /> */}
 					</AppShell>
 				</HubspotProvider>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createPortal} from 'react-dom';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
-import {Anchor, Box, Button, Container, Divider, Grid, Group, List, Text, Title} from '@mantine/core';
+import {Anchor, Box, Button, Container, Divider, Grid, Group, List, Text, Title, useMantineTheme} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link, Script} from 'gatsby';
@@ -21,7 +21,7 @@ import {CONTACT_PAGE} from 'constants/page';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 import {parseScript} from 'utils/parseScript';
 
-import classes from './basicSection.module.css';
+import * as classes from './basicSection.module.css';
 
 type BasicSectionProps = {
 	section: ISection;
@@ -43,6 +43,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const HEADING_FIRST = 1;
 	const HEADING_SECOND = 2;
 	const context = React.useContext(PageContext);
+
+	const theme = useMantineTheme();
 
 	const {link, isExternal} = getLink(section);
 
@@ -69,7 +71,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				);
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text>{children}</Text>;
+				return (
+					<Text c={theme.colors.philBranding[9]} size='lg'>
+						{children}
+					</Text>
+				);
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
@@ -88,7 +94,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
 					<List.Item>
-						<Text className={classes.listItem}>{children}</Text>
+						<Text size='lg' className={classes.listItem}>
+							{children}
+						</Text>
 					</List.Item>
 				);
 			},
@@ -120,7 +128,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const {width} = useViewportSize();
 	const [height, setHeight] = React.useState<number>(790);
 
-	const isMobileView = theme.breakpoints.md > width;
+	// TODO: handle mobile view
+	const isMobileView = false;
 
 	let formId = '';
 	let portalId = '';
@@ -154,7 +163,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			fluid
 			className={classes.container}
 			my={context.title === CONTACT_PAGE ? 0 : isMobileView ? 32 : isEmbedFormTemplate ? 152 : 92}
-			sx={{background: sectionBackground(section.background)}}
+			// Sx={{background: sectionBackground(section.background)}}
 		>
 			<>
 				<Grid
@@ -162,7 +171,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
 				>
 					{/* Text Grid Column */}
-					<Grid.Col className={classes.textGridColumn} order={textColumnOrder} lg={6} md={6} sm={12}>
+					<Grid.Col className={classes.textGridColumn} order={textColumnOrder} span={{lg: 6, md: 6, sm: 12}}>
 						{section.isHubspotEmbed ? (
 							<>
 								<Title order={titleOrdering}>{section.header}</Title>
@@ -204,7 +213,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									{section.header}
 								</Title>
 								{Boolean(section.subHeader?.subHeader.length) && (
-									<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
+									<Text fw='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
 										{section.subHeader?.subHeader}
 									</Text>
 								)}
@@ -212,17 +221,16 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									<Box className={classes.portal}>
 										{heroRef.current && isMobileView && section.embedForm ? (
 											createPortal(
-												<Text
-													size={18}
-													className={classes.body}
-													mt={handleSpacing(theme, theme.spacing.sm)}
-												>
-													{renderRichText(section.body, options)}
-												</Text>,
+												// <Text
+												// 	size={theme.fontSizes.md}
+												// 	className={classes.body}
+												// 	mt={handleSpacing(theme, theme.spacing.sm)}
+												// >
+												renderRichText(section.body, options),
 												heroRef.current,
 											)
 										) : (
-											<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
+											<Text className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
 												{renderRichText(section.body, options)}
 											</Text>
 										)}
@@ -232,13 +240,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									<Group mt={handleSpacing(theme, theme.spacing.md)}>
 										{isExternal ? (
 											<Anchor href={link} target='_blank'>
-												<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>
+												<Button variant='philDefault' style={{paddingBottom: '2px', paddingTop: '2px'}}>
 													{section.buttonText}
 												</Button>
 											</Anchor>
 										) : (
 											<Link to={link}>
-												<Button>{section.buttonText}</Button>
+												<Button variant='philDefault'>{section.buttonText}</Button>
 											</Link>
 										)}
 									</Group>
@@ -252,10 +260,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						className={classes.heroGridColumn}
 						ref={heroRef}
 						order={imageColumnOrder}
-						lg={6}
-						md={6}
-						sm={12}
-						sx={{height: context.title === CONTACT_PAGE ? height : undefined}}
+						span={{lg: 6, md: 6, sm: 12}}
+						style={{height: context.title === CONTACT_PAGE ? height : undefined}}
 					>
 						{section.embedForm ? (
 							<Box className={classes.formWrapper}>

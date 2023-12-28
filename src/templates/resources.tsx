@@ -27,7 +27,7 @@ import {RESOURCES_PAGE} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
 import {searchSubmitCallback} from 'pages/resources/search';
 
-import * as  classes from './resources.module.css';
+import * as classes from './resources.module.css';
 
 type HelmetProps = {
 	data: {
