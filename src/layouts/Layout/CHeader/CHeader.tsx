@@ -1,6 +1,4 @@
 import {
-	createStyles,
-	Header,
 	Container,
 	Group,
 	Text,
@@ -10,6 +8,8 @@ import {
 	Box,
 	Anchor,
 	Button,
+	AppShellHeader,
+	AppShell,
 } from '@mantine/core';
 import {useClickOutside, useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
@@ -27,137 +27,9 @@ import HeaderContext from 'contexts/HeaderProvider';
 import CCollapse from './CCollapse';
 import {getLink} from 'utils/getLink';
 
+import * as classes from './header.module.css';
+
 export const HEADER_HEIGHT = 90;
-
-const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
-	inner: {
-		padding: minimal ? '0 32px' : '0 100px',
-		height: HEADER_HEIGHT,
-		display: 'flex',
-		alignItems: 'center',
-		...(minimal && {maxWidth: 1440}),
-
-		'&::after': {
-			content: '""',
-			clear: 'both',
-			display: 'table',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: minimal ? '0 32px' : '0 16px',
-		},
-	},
-
-	burger: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none !important',
-		},
-	},
-
-	collapse: {
-		position: 'absolute',
-		top: 90,
-		left: 0,
-		zIndex: 2,
-		opacity: 1,
-		width: '100%',
-	},
-
-	navbar: {
-		position: 'relative',
-		height: '90px',
-		width: '100vw',
-		background: '#fff',
-		display: 'flex',
-		alignItems: 'center',
-		overflow: 'hidden',
-
-		ul: {
-			position: 'relative',
-			display: 'flex',
-
-			li: {
-				position: 'relative',
-				listStyleType: 'none',
-				height: '120px',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				textDecoration: 'none',
-			},
-		},
-	},
-
-	indicator: {
-		position: 'absolute',
-		bottom: '-5px',
-		left: '25px',
-		width: '0px',
-		height: '0px',
-		borderLeft: '20px solid transparent',
-		borderRight: '20px solid transparent',
-		borderBottom: '20px solid #00827e',
-		transition: 'transform 0.5s',
-	},
-
-	navLinksWrapper: {
-		[theme.fn.smallerThan('md')]: {
-			display: 'none !important',
-		},
-	},
-
-	navLink: {
-		position: 'relative',
-		marginRight: 'calc(1.313rem + 1.2vw)',
-		cursor: 'pointer',
-		textDecoration: 'none',
-
-		'&:last-child': {
-			marginRight: '0px',
-		},
-
-		[theme.fn.smallerThan('xl')]: {
-			marginRight: 'calc(1.313rem)',
-		},
-	},
-
-	buttons: {
-		marginRight: '0px !important',
-	},
-
-	patientLoginButtonMobile: {
-		'&:hover': {
-			backgroundColor: theme.colors.philBranding[9],
-			color: 'white',
-		},
-
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	logo: {
-		maxWidth: 125,
-		maxHeight: 90,
-
-		width: '100%',
-
-		[theme.fn.smallerThan('md')]: {
-			width: 100,
-			marginRight: 25,
-		},
-	},
-
-	hideOnLarge: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-	textDecorationNone: {
-		textDecoration: 'none',
-		textDecorationLine: 'none',
-	},
-}));
 
 export type ContentfulButton = {
 	id: string;
@@ -186,7 +58,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 	const {navigationLinks: pages, buttons} = header;
 
 	const {width} = useViewportSize();
-	const {classes} = useStyles({minimal});
+	// const {classes} = useStyles({minimal});
 
 	const [navRef, setNavRef] = React.useState<HTMLUListElement>();
 	const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement>();
@@ -211,7 +83,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 			close();
 		},
 		null,
-		[navRef!, collapseRef!],
+		[navRef!, collapseRef!]
 	);
 
 	const onNavLinkClick = event => {
@@ -332,124 +204,117 @@ const Navbar: React.FC<CHeaderProps> = ({
 	};
 
 	return (
-		<Header height={HEADER_HEIGHT} sx={{borderBottom: 0}} mb={minimal ? 0 : isBreak ? 0 : 36}>
-			<Container className={classes.inner} fluid>
-				<Group position='apart' noWrap align='center' className={classNames(classes.navbar, 'navbar')}>
-					{!minimal && (
-						<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
-							<Button
-								size='sm'
-								uppercase
-								variant='outline'
-								px={4}
-								color='philBranding'
-								className={classes.patientLoginButtonMobile}
-							>
-								Patient Login
-							</Button>
-						</Anchor>
-					)}
+		<AppShell.Header className={classes.inner} style={{borderBottom: 0}} mb={minimal ? 0 : isBreak ? 0 : 36}>
+			<Group align="center" justify="space-between" className={classNames(classes.navbar, 'navbar')}>
+				{!minimal && (
+					<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
+						<Button
+							size="sm"
+							variant="outline"
+							px={4}
+							color="philBranding"
+							className={classes.patientLoginButtonMobile}
+						>
+							Patient Login
+						</Button>
+					</Anchor>
+				)}
 
-					<Box className={classes.logo}>
-						{headerTargetBlank ? (
-							<Anchor href='https://phil.us' target='_blank'>
-								<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
-									<Asset asset={header.logo} />
-								</ImageContainer>
-							</Anchor>
-						) : (
-							<Link to='/'>
-								<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
-									<Asset asset={header.logo} />
-								</ImageContainer>
-							</Link>
-						)}
-					</Box>
-					{!minimal && (
-						<>
-							<Burger
-								name='BurgerButton'
-								opened={isDrawer}
-								onClick={() => {
-									toggleDrawer();
-								}}
-								className={classes.burger}
-							/>
-							<List ref={setNavRef} className={classes.navLinksWrapper}>
-								<div className={classes.indicator}></div>
-								{pages
-									.filter(page => page.title !== 'Home')
-									.map(page => (
-										<List.Item
-											key={page.id + 'mapHeaderPages'}
-											className={classes.navLink}
-											onClick={onNavLinkClick}
-										>
-											<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
-										</List.Item>
-									))}
-								{buttons.map((button, index) => (
-									// TODO: use sys
-									<List.Item key={button.id} data-noindicator='true' className={classes.buttons}>
-										{button.internalLink ? (
-											<Box ml={index && 16}>
-												<Link className={classes.textDecorationNone} to={`/${button.internalLink.slug}`}>
-													<Button
-														size={
-															button.buttonStyle === 'primary'
-																? buttonConfig.primary.size
-																: buttonConfig.secondary.size
-														}
-														variant={
-															button.buttonStyle === 'primary'
-																? buttonConfig.primary.variant
-																: buttonConfig.secondary.variant
-														}
-													>
-														{button.buttonText}
-													</Button>
-												</Link>
-											</Box>
-										) : (
-											<Anchor
-												className={classes.textDecorationNone}
-												sx={{textDecoration: 'none', textDecorationLine: 'none'}}
-												ml={index && 16}
-												href={button.externalLink}
-												target='_blank'
-											>
-												<Button size='md' variant='outline'>
-													{button.buttonText}
-												</Button>
-											</Anchor>
-										)}
+				<Box className={classes.logo}>
+					{headerTargetBlank ? (
+						<Anchor href="https://phil.us" target="_blank">
+								<Asset asset={header.logo} objectFit='contain'/>
+						</Anchor>
+					) : (
+						<Link to="/">
+								<Asset asset={header.logo} objectFit='contain' />
+						</Link>
+					)}
+				</Box>
+				{!minimal && (
+					<>
+						<Burger
+							name="BurgerButton"
+							opened={isDrawer}
+							onClick={() => {
+								toggleDrawer();
+							}}
+							className={classes.burger}
+						/>
+						<List id="navLinkkkk" ref={setNavRef} className={classes.navLinksWrapper}>
+							<div className={classes.indicator}></div>
+							{pages
+								.filter(page => page.title !== 'Home')
+								.map(page => (
+									<List.Item
+										key={page.id + 'mapHeaderPages'}
+										className={classes.navLink}
+										onClick={onNavLinkClick}
+									>
+										<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 									</List.Item>
 								))}
-							</List>
-						</>
-					)}
-				</Group>
-				{!minimal && (
-					<HeaderContext.Provider
-						value={{
-							minimal,
-							allContentfulResource,
-							header,
-							isDrawer,
-							pages,
-							toggleDrawer,
-							opened,
-							setCollapseRef,
-							target,
-							close,
-							buttons,
-						}}
-					>
-						{isBreak ? <CDrawer /> : <CCollapse />}
-					</HeaderContext.Provider>
+							{buttons.map((button, index) => (
+								// TODO: use sys
+								<List.Item key={button.id} data-noindicator="true" className={classes.buttons}>
+									{button.internalLink ? (
+										<Box ml={index && 16}>
+											<Link className={classes.textDecorationNone} to={`/${button.internalLink.slug}`}>
+												<Button
+													size={
+														button.buttonStyle === 'primary'
+															? buttonConfig.primary.size
+															: buttonConfig.secondary.size
+													}
+													variant={
+														button.buttonStyle === 'primary'
+															? buttonConfig.primary.variant
+															: buttonConfig.secondary.variant
+													}
+												>
+													{button.buttonText}
+												</Button>
+											</Link>
+										</Box>
+									) : (
+										<Anchor
+											className={classes.textDecorationNone}
+											sx={{textDecoration: 'none', textDecorationLine: 'none'}}
+											ml={index && 16}
+											href={button.externalLink}
+											target="_blank"
+										>
+											<Button size="md" variant="outline">
+												{button.buttonText}
+											</Button>
+										</Anchor>
+									)}
+								</List.Item>
+							))}
+						</List>
+					</>
 				)}
-			</Container>
-		</Header>
+			</Group>
+			{!minimal && (
+				<HeaderContext.Provider
+					value={{
+						minimal,
+						allContentfulResource,
+						header,
+						isDrawer,
+						pages,
+						toggleDrawer,
+						opened,
+						setCollapseRef,
+						target,
+						close,
+						buttons,
+					}}
+				>
+					{isBreak ? <CDrawer /> : <CCollapse />}
+				</HeaderContext.Provider>
+			)}
+		</AppShell.Header>
 	);
 };
 

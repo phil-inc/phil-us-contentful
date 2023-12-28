@@ -1,7 +1,7 @@
 import React from 'react';
-import {Box, Button, createTheme} from '@mantine/core';
+import {AppShell, Box, Button, Grid, Group, createTheme} from '@mantine/core';
 import {MantineProvider, Container} from '@mantine/core';
-import CHeader from './CHeader/CHeader';
+import CHeader, { HEADER_HEIGHT } from './CHeader/CHeader';
 import {isIndex} from 'hooks/isIndex';
 import {HubspotProvider} from '@aaronhayes/react-use-hubspot-form';
 import CFooter from './CFooter/CFooter';
@@ -10,7 +10,7 @@ import LinkedinInsights from 'analytics/LinkedinInsights';
 // Import css overrides here
 import 'assets/css/index.css';
 import ZoominfoAnalytics from 'analytics/ZoominfoAnalytics';
-
+import '@mantine/core/styles.css';
 import * as classes from './layout.module.css';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -102,10 +102,10 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 								fontWeight: 900,
 							},
 							'&:focus:not(:focus-visible)': {
-								outline: `3px solid ${theme.colors.primary[0]}`,
+								outline: `3px solid ${theme.colors.philBranding[0]}`,
 								outlineOffset: -3,
 								backgroundColor: 'white',
-								color: theme.colors.primary[0],
+								color: theme.colors.philBranding[0],
 							},
 						};
 					},
@@ -170,13 +170,15 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 	return (
 		<>
 			<MantineProvider theme={theme} classNamesPrefix='phil'>
-				<HubspotProvider>
-					<Container fluid className={classes.wrapper}>
+				 <HubspotProvider>
+					<AppShell header={{
+						height: HEADER_HEIGHT,
+					}}>
 						{isProduction && <ZoominfoAnalytics />}
 						<CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />
 						{/* <Box>{children}</Box> */}
 						{/* <CFooter minimal={minimal} /> */}
-					</Container>
+					</AppShell>
 				</HubspotProvider>
 			</MantineProvider>
 		</>

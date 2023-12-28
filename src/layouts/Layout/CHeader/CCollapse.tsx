@@ -1,4 +1,4 @@
-import {Text, Collapse, Container, List, Grid, Divider, Anchor, createStyles} from '@mantine/core';
+import {Text, Collapse, Container, List, Grid, Divider, Anchor} from '@mantine/core';
 import {COMPANY_PAGE, PATIENTS_PAGE} from 'constants/page';
 import HeaderContext from 'contexts/HeaderProvider';
 import {Link} from 'gatsby';
@@ -10,102 +10,51 @@ import {type IReferencedSection} from 'types/section';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {CAREERS} from 'constants/routes';
 
-const useStyles = createStyles((theme, {minimal}: {minimal: boolean}) => ({
-	collapse: {
-		position: 'absolute',
-		top: 90,
-		left: 0,
-		zIndex: 2,
-		opacity: 1,
-		width: '100%',
-	},
-
-	container: {
-		width: '100vw',
-		overflow: 'hidden',
-		background: '#00827E',
-	},
-
-	listHeading: {
-		color: 'white',
-		fontSize: '16px',
-		letterSpacing: '0.4px',
-		lineHeight: '27px',
-		marginBottom: '11px',
-		fontFamily: 'Lato',
-		fontWeight: 700,
-		textDecoration: 'none',
-	},
-
-	listItems: {
-		color: 'white',
-		fontSize: '12px',
-		letterSpacing: 0,
-		lineHeight: '35px',
-		margin: '8px 0',
-		fontFamily: 'Lato',
-		fontWeight: 400,
-	},
-
-	textDecorationNone: {
-		textDecoration: 'none',
-		color: 'inherit',
-	},
-}));
+import * as classes from './collapse.module.css';
 
 /**
  * Represents a custom collapse component to be used in the top navbar.
  * @component
  */
 const CCollapse = () => {
-	const {allContentfulResource, opened, target, minimal, pages, setCollapseRef, close}
-		= React.useContext(HeaderContext);
-	const {classes} = useStyles({minimal});
+	const {allContentfulResource, opened, target, minimal, pages, setCollapseRef, close} =
+		React.useContext(HeaderContext);
+	// const {classes} = useStyles({minimal});
 
 	return (
 		<Collapse
 			in={opened}
 			className={classes.collapse}
 			transitionDuration={150}
-			transitionTimingFunction='ease-out'
+			transitionTimingFunction="ease-out"
 			animateOpacity={false}
 			ref={setCollapseRef}
 		>
 			<Container className={classes.container} fluid>
-				<List listStyleType='none' size='xl' styles={{itemWrapper: {width: '100%'}}}>
-					<Grid px={98} py={78} columns={100}>
-						{pages
-							.filter(page => page.title === target)
-							.map(page =>
-								page.sections
-									.filter(section =>
-										Boolean(
-											section.header?.length
-												&& !section.isHidden
-												&& !(section as IReferencedSection)?.hideNavigationAnchor,
-										),
+				<Grid px={98} py={78} justify="space-between">
+					{pages
+						.filter(page => page.title === target)
+						.map(page =>
+							page.sections
+								.filter(section =>
+									Boolean(
+										section.header?.length &&
+											!section.isHidden &&
+											!(section as IReferencedSection)?.hideNavigationAnchor
 									)
-									.map((section, index, array) => {
-										const path = getPathForSectionAndPage(page.title, section.header, page.slug);
+								)
+								.map((section, index, array) => {
+									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
-										return (
-											<React.Fragment key={section.id + 'mapCollapsePages'}>
-												<Grid.Col
-													span={
-														[PATIENTS_PAGE, COMPANY_PAGE].includes(page.title)
-															? Math.floor(100 / (array.length + 1))
-															: Math.floor(100 / array.length)
-													}
-												>
-													<List.Item onClick={close}>
-														<Text className={classes.listHeading}>
-															<Link to={path} className={classes.textDecorationNone}>
-																{section.header}
-															</Link>
-														</Text>
+									return (
+										<React.Fragment key={section.id + 'mapCollapsePages'}>
+											<Grid.Col span="auto">
+												<Link onClick={close} to={path} className={classes.listHeading}>
+													{section.header}
+												</Link>
 
-														<Divider />
-														<List listStyleType='none'>
+												<Divider />
+												{/* <List listStyleType='none'>
 															{allContentfulResource.nodes
 																.filter(resource => resource.relatesTo)
 																.map(
@@ -129,52 +78,38 @@ const CCollapse = () => {
 																			</List.Item>
 																		),
 																)}
-														</List>
-													</List.Item>
+														</List> */}
+											</Grid.Col>
+
+											{/* Add Patient Login Button to header nav collapse */}
+											{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
+												<Grid.Col span="auto">
+													<Anchor
+														href="https://my.phil.us/"
+														target="_blank"
+														className={classes.listHeading}
+														onClick={close}
+													>
+														<span className={classes.listHeading}>Patient Log In</span>
+													</Anchor>
+													<Divider />
 												</Grid.Col>
+											)}
 
-												{/* Add Patient Login Button to header nav collapse */}
-												{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
-													<Grid.Col span={Math.floor(100 / (array.length + 1))}>
-														<List.Item onClick={close}>
-															<Text className={classes.listHeading}>
-																<Anchor
-																	href='https://my.phil.us/'
-																	target='_blank'
-																	className={classes.textDecorationNone}
-																	style={{textDecoration: 'none'}}
-																>
-																	Patient Log In
-																</Anchor>
-															</Text>
-															<Divider />
-														</List.Item>
-													</Grid.Col>
-												)}
-
-												{/* Add Careers Button to header nav collapse under company */}
-												{page.title === COMPANY_PAGE && index === getFinalIndex(page) && (
-													<Grid.Col span={Math.floor(100 / (array.length + 1))}>
-														<List.Item onClick={close}>
-															<Text className={classes.listHeading}>
-																<Link
-																	to={CAREERS}
-																	className={classes.textDecorationNone}
-																	style={{textDecoration: 'none'}}
-																>
-																	Careers
-																</Link>
-															</Text>
-															<Divider />
-														</List.Item>
-													</Grid.Col>
-												)}
-											</React.Fragment>
-										);
-									}),
-							)}
-					</Grid>
-				</List>
+											{/* Add Careers Button to header nav collapse under company */}
+											{page.title === COMPANY_PAGE && index === getFinalIndex(page) && (
+												<Grid.Col span="auto">
+													<Link to={CAREERS} onClick={close} className={classes.listHeading}>
+														Careers
+													</Link>
+													<Divider />
+												</Grid.Col>
+											)}
+										</React.Fragment>
+									);
+								})
+						)}
+				</Grid>
 			</Container>
 		</Collapse>
 	);
