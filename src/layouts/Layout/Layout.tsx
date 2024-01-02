@@ -26,11 +26,11 @@ type LayoutProps = {
 export function Layout({children, minimal = false, headerTargetBlank = false}: LayoutProps) {
 	const theme = createTheme({
 		breakpoints: {
-			xs: '500px',
-			sm: '800px',
-			md: '1275px',
-			lg: '1300px',
-			xl: '1400px',
+			xs: '40em',
+			sm: '48em',
+			md: '64em',
+			lg: '80em',
+			xl: '96em',
 		},
 		colors: {
 			philBranding: [
@@ -73,7 +73,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 					lineHeight: '1.3',
 				},
 			},
-			fontFamily: 'Raleway',
+			fontFamily: 'Raleway, sans-serif',
 		},
 		fontFamily: 'Lato, sans-serif',
 

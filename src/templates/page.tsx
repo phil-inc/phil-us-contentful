@@ -11,7 +11,7 @@ import {Script, graphql} from 'gatsby';
 import slugify from 'slugify';
 import {HOME} from 'constants/page';
 
-import classes from './page.module.css';
+import * as classes from './page.module.css';
 
 type HelmetProps = {
 	data: {
@@ -91,7 +91,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 					</Expanded>
 				)}
 				{title === 'Field' && (
-					<Container className={classes['container--field']}>
+					<Container className={classes.container}>
 						<Title order={1} mb={30}>
 							FAQ
 						</Title>

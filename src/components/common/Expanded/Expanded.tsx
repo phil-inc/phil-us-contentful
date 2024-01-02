@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container} from '@mantine/core';
+import {Container, MantineSpacing, MantineStyleProps, StyleProp} from '@mantine/core';
 import {handleSpacing} from 'utils/handleSpacing';
 import PageContext from 'contexts/PageContext';
 
@@ -11,11 +11,11 @@ type ExpandedProps = {
 	background?: string;
 	minHeight?: number | string;
 	noMargin?: boolean;
-	py?: number;
-	px?: number;
-	pt?: number;
-	pb?: number;
-	mb?: number;
+	py?: StyleProp<MantineSpacing>;
+	px?: StyleProp<MantineSpacing>;
+	pt?: StyleProp<MantineSpacing>;
+	pb?: StyleProp<MantineSpacing>;
+	mb?: StyleProp<MantineSpacing>;
 	fullWidth?: boolean;
 };
 
@@ -41,6 +41,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 
 	return (
 		<Container
+			style={{background, minHeight}}
 			id={id}
 			fluid
 			className={classes.container}

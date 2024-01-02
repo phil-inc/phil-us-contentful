@@ -41,7 +41,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 						<Grid.Col
 							p={section.referenceType === ReferenceTypeEnum.Investors ? 0 : undefined}
 							key={resource.id + 'mapReferencedSectionResource'}
-							{...getSpan(section.referenceType)}
+							span={getSpan(section.referenceType)}
 						>
 							<RenderResource
 								arrayLength={array.length}

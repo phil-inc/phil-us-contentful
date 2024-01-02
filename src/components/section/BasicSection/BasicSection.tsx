@@ -21,6 +21,7 @@ import {CONTACT_PAGE} from 'constants/page';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 import {parseScript} from 'utils/parseScript';
 
+import cx from 'clsx';
 import * as classes from './basicSection.module.css';
 
 type BasicSectionProps = {
@@ -72,21 +73,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
-					<Text c={theme.colors.philBranding[9]} size='lg'>
+					<Text c={theme.colors.philBranding[9]} size="lg">
 						{children}
 					</Text>
 				);
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type='unordered' mb={20} pl={8}>
+					<List type="unordered" mb={20} pl={8}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type='ordered' mb={20} pl={8}>
+					<List type="ordered" mb={20} pl={8}>
 						{children}
 					</List>
 				);
@@ -94,7 +95,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
 					<List.Item>
-						<Text size='lg' className={classes.listItem}>
+						<Text id="asdasd" size="lg" className={classes.listItem}>
 							{children}
 						</Text>
 					</List.Item>
@@ -102,7 +103,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[INLINES.HYPERLINK](node, children) {
 				return (
-					<Anchor href={node.data.uri as string} target='_blank'>
+					<Anchor href={node.data.uri as string} target="_blank">
 						{children}
 					</Anchor>
 				);
@@ -171,7 +172,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
 				>
 					{/* Text Grid Column */}
-					<Grid.Col className={classes.textGridColumn} order={textColumnOrder} span={{lg: 6, md: 6, sm: 12}}>
+					<Grid.Col
+						className={isEmbedFormTemplate ? classes.textGridColumn : undefined}
+						order={textColumnOrder}
+						span={{lg: 6, md: 6, sm: 12}}
+					>
 						{section.isHubspotEmbed ? (
 							<>
 								<Title order={titleOrdering}>{section.header}</Title>
@@ -199,7 +204,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								)}
 								<Divider
 									size={1}
-									variant='dashed'
+									variant="dashed"
 									mt={handleSpacing(theme, theme.spacing.sm)}
 									mb={handleSpacing(theme, theme.spacing.md)}
 								/>
@@ -209,11 +214,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							</>
 						) : (
 							<>
-								<Title className={classes.title} order={titleOrdering}>
+								<Title
+									className={cx(
+										classes.title,
+										isEmbedFormTemplate
+											? index == 0
+												? cx(classes.embedFormTemplate, classes.firstIndex)
+												: classes.embedFormTemplate
+											: undefined
+									)}
+									order={titleOrdering}
+								>
 									{section.header}
 								</Title>
 								{Boolean(section.subHeader?.subHeader.length) && (
-									<Text fw='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
+									<Text fw="bold" mt={handleSpacing(theme, theme.spacing.sm)}>
 										{section.subHeader?.subHeader}
 									</Text>
 								)}
@@ -221,16 +236,17 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									<Box className={classes.portal}>
 										{heroRef.current && isMobileView && section.embedForm ? (
 											createPortal(
-												// <Text
-												// 	size={theme.fontSizes.md}
-												// 	className={classes.body}
-												// 	mt={handleSpacing(theme, theme.spacing.sm)}
-												// >
-												renderRichText(section.body, options),
-												heroRef.current,
+												<Text
+													size={theme.fontSizes.md}
+													className={classes.body}
+													mt={handleSpacing(theme, theme.spacing.sm)}
+												>
+												{renderRichText(section.body, options)}
+												</Text>,
+												heroRef.current
 											)
 										) : (
-											<Text className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
+											<Text data-isEmbedFormTemplate={isEmbedFormTemplate} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
 												{renderRichText(section.body, options)}
 											</Text>
 										)}
@@ -239,14 +255,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								{Boolean(section.buttonText?.length) && (
 									<Group mt={handleSpacing(theme, theme.spacing.md)}>
 										{isExternal ? (
-											<Anchor href={link} target='_blank'>
-												<Button variant='philDefault' style={{paddingBottom: '2px', paddingTop: '2px'}}>
+											<Anchor href={link} target="_blank">
+												<Button variant="philDefault" style={{paddingBottom: '2px', paddingTop: '2px'}}>
 													{section.buttonText}
 												</Button>
 											</Anchor>
 										) : (
 											<Link to={link}>
-												<Button variant='philDefault'>{section.buttonText}</Button>
+												<Button variant="philDefault">{section.buttonText}</Button>
 											</Link>
 										)}
 									</Group>
@@ -257,7 +273,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 					{/* Hero Grid Column */}
 					<Grid.Col
-						className={classes.heroGridColumn}
+						className={isEmbedFormTemplate ? cx(classes.heroGridColumn, classes.embedFormTemplate) : undefined}
 						ref={heroRef}
 						order={imageColumnOrder}
 						span={{lg: 6, md: 6, sm: 12}}
@@ -285,15 +301,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						)}
 					</Grid.Col>
 				</Grid>
-				{section.isHubspotEmbed
-				&& section.isInsertSnippet
-				&& section.codeSnippet
-				&& Boolean(section.codeSnippet.codeSnippet.length)
-				&& isProduction ? (
-						<Script defer async>
-							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-						</Script>
-					) : null}
+				{section.isHubspotEmbed &&
+				section.isInsertSnippet &&
+				section.codeSnippet &&
+				Boolean(section.codeSnippet.codeSnippet.length) &&
+				isProduction ? (
+					<Script defer async>
+						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+					</Script>
+				) : null}
 			</>
 		</Container>
 	);

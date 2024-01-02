@@ -23,7 +23,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 		order?: TitleOrder,
 		textColor?: string,
 	) => (
-		<Title className={className} order={order} size={size} color={textColor}>
+		<Title className={className} order={order} size={size} c={textColor}>
 			{text}
 		</Title>
 	);
@@ -44,7 +44,8 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 				<Stack
 					className={classes.codeSnippetStack}
 					justify='flex-start'
-					spacing={0}
+					// TODO: handle code snippet block
+					// spacing={0}
 					mb={isEmbedFormTemplate ? 48 : undefined}
 				>
 					{Boolean(section.header?.length) && renderTitle(section.header, 36, classes.heading, 2, undefined)}
@@ -54,7 +55,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 			);
 		default:
 			return (
-				<Group position='center' mb={28}>
+				<Group justify='center' mb={28}>
 					{Boolean(section.header?.length) && renderTitle(section.header, undefined, undefined, 2, textColor)}
 				</Group>
 			);

@@ -62,21 +62,21 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 	};
 
 	return (
-		<Paper radius={0} className={classNames(classes.card)}>
+		<Paper radius={0} style={{background: resourceBackground}} className={classes.card}>
 			<Grid justify='center' style={{height: '100%'}} mt={0}>
-				<Grid.Col lg={5} sm={6} md={6} p={0} pl={8}>
+				<Grid.Col span={{base: 12, lg:5, sm:6, md:6}} p={0} pl={8}>
 					{resource.asset && (
 						<ImageContainer fluid>
 							<Asset asset={resource.asset} />
 						</ImageContainer>
 					)}
 				</Grid.Col>
-				<Grid.Col lg={7} sm={6} md={6} className={classes.center}>
-					<Box pl={theme.spacing.sm} pr={60} sx={{overflow: 'hidden'}}>
+				<Grid.Col span={{base: 12, lg:7, sm:6, md:6}} className={classes.center}>
+					<Box pl={theme.spacing.sm} pr={60} style={{overflow: 'hidden'}}>
 						{resource.heading && (
 							<>
 								{isExternal ? (
-									<Anchor href={link} target='_blank' underline={false} className={classes.textDecorationNone}>
+									<Anchor href={link} target='_blank' underline="never" className={classes.textDecorationNone}>
 										<Title order={3} mt='md'>
 											{resource.heading}
 										</Title>
@@ -93,12 +93,12 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 						<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
 
 						{resource?.description?.description?.length ? (
-							<Text size={18} mt='sm' mb={20} lineClamp={2}>
+							<Text size="18px" lh={"27.7px"} mt='sm' mb={20} lineClamp={2}>
 								{resource.description.description}
 							</Text>
 						) : (
 							resource.body && (
-								<Text size={18} mt='sm' mb={20} lineClamp={2}>
+								<Text size="18px" lh={"27.7px"} mt='sm' mb={20} lineClamp={2}>
 									{renderRichText(resource.body, options)}
 								</Text>
 							)

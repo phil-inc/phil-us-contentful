@@ -2,7 +2,8 @@
     padding: 0 100px; /* Default padding */
     display: flex;
     align-items: center;
-    /* If minimal is true, you need to add 'max-width: 1440px;' in your JavaScript */
+    position: static !important;
+    /* TODO: If minimal is true, you need to add 'max-width: 1440px;' in your JavaScript */
 }
 
 .inner::after {

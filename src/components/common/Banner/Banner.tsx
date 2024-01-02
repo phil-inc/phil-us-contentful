@@ -30,7 +30,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 		<>
 			<Paper radius={0} className={classes.card}>
 				<Grid align={'center'}>
-					<Grid.Col className={classes.gridColumn} lg={10} sm={12}>
+					<Grid.Col className={classes.gridColumn} span={{lg: 10, sm: 12}}>
 						<Container m={0}>
 							<Title order={3}>{heading}</Title>
 							<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={10} />
@@ -43,7 +43,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 					</Grid.Col>
 					{Boolean(buttonText?.length)
 						&& (isHubspotEmbed ? (
-							<Grid.Col lg={2} sm={12}>
+							<Grid.Col span={{lg: 2, sm:12}}>
 								<Modal
 									size='ls'
 									p={0}
@@ -79,7 +79,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 							</Grid.Col>
 						) : (
 							Boolean(externalLink?.length) && (
-								<Grid.Col lg={2} sm={12}>
+								<Grid.Col span={{lg: 2, sm: 12}}>
 									<Container>
 										{isExternal ? (
 											<Anchor href={link} target='_blank'>

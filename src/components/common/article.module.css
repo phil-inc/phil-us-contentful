@@ -1,6 +1,3 @@
-/* Styles.module.css */
-
-/* Block: card */
 .card {
     position: relative;
     overflow: hidden;
@@ -23,29 +20,29 @@
 }
 
 /* Modifier: blue */
-.card--blue::before {
+.blue::before {
     background: #29A5B4 0% 0% no-repeat padding-box;
 }
 
 /* Modifier: yellow */
-.card--yellow::before {
+.yellow::before {
     background: #EDBE3D 0% 0% no-repeat padding-box;
 }
 
 /* Modifier: none */
-.card--none::before {
+.none::before {
     width: 0;
 }
 
 /* Block: image-wrapper */
-.image-wrapper {
+.imageWrapper {
     max-width: 425px;
     max-height: 425px;
     padding: 0;
 }
 
 /* Modifier: full-height */
-.full-height {
+.fullHeight {
     height: 100%;
 }
 

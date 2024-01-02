@@ -59,9 +59,9 @@ export const Article: FC<ArticleProps> = ({color, resource}) => {
 
 	return (
 		<Paper radius={0} className={classNames(classes.card, getColorStyle())}>
-			<Stack align='flex-start' justify='space-between' className={classes['full-height']}>
+			<Stack align='flex-start' justify='space-between' className={classes.fullHeight}>
 				<Box className={classes.fullWidth}>
-					<Container className={classes['image-wrapper']} mb={45}>
+					<Container className={classes.imageWrapper} mb={45}>
 						<ImageContainer fluid>
 							<AspectRatio ratio={1}>
 								<Asset asset={asset!} />

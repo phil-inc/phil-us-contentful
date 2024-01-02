@@ -54,7 +54,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 		}
 	}, []);
 
-	// Get grid span based on resource type
+	// TODO: Refactor Get grid span based on resource type
 	const getSpan = (referenceType: string): {xl: number; lg: number; md: number; sm: number; xs?: number} => {
 		switch (referenceType) {
 			case ReferenceTypeEnum.Testimonial:
@@ -92,6 +92,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 
 	const [background, textColor] = getSectionColors(section.referenceType);
 
+	console.log({background})
+
 	return (
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
@@ -99,7 +101,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 			pt={
 				context.title === FIELD_PAGE || section.referenceType === ReferenceTypeEnum['Code Snippet']
 					? 0
-					: handleSpacing(theme, 92)
+					: handleSpacing(theme, "92px")
 			}
 			pb={
 				section.referenceType === ResourceBlocksEnum['Phil Blog']
@@ -108,7 +110,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 				|| section.referenceType === ResourceBlocksEnum['Upcoming Events']
 				|| context.title === FIELD_PAGE
 					? 0
-					: handleSpacing(theme, 92)
+					: handleSpacing(theme, "92px")
 			}
 			fullWidth={section.referenceType === ReferenceTypeEnum['Image Carousel']}
 			py={section.referenceType === ReferenceTypeEnum.Banner ? 120 : undefined}
@@ -157,7 +159,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 
 			{/* bottom buttons */}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group position='center' mt={handleSpacing(theme, theme.spacing.lg)}>
+				<Group justify='center' mt={handleSpacing(theme, theme.spacing.lg)}>
 					{isExternal ? (
 						<Anchor href={link} target='_blank'>
 							<Button color={'dark'}>{section.buttonText}</Button>
