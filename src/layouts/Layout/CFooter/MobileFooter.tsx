@@ -14,6 +14,7 @@ import {type ContentfulPage} from 'types/page';
 import {type IReferencedSection} from 'types/section';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {getPathForSectionAndPage} from 'utils/links';
+import * as classes from './mobileFooter.module.css';
 
 type TMobileFooter = {
 	pages: ContentfulPage[];
@@ -23,79 +24,7 @@ type TMobileFooter = {
 	};
 };
 
-const useStyles = createStyles(theme => ({
-	footer: {
-		[theme.fn.smallerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	inner: {
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
-
-		[theme.fn.smallerThan('sm')]: {
-			flexDirection: 'column',
-		},
-	},
-
-	links: {
-		color: 'white',
-		fontSize: 12,
-	},
-
-	footLinkHeader: {
-		fontFamily: 'Lato',
-		fontWeight: 700,
-		margin: '10px 0',
-		textDecoration: 'none',
-		color: '#00201F',
-	},
-
-	footerLink: {
-		textDecoration: 'none',
-		color: '#00201F',
-		fontSize: '14px',
-		lineHeight: '40px',
-	},
-
-	footerWrapper: {
-		padding: '85px 175px',
-		backgroundImage: `url("${footerBackground as string}")`,
-		backgroundRepeat: 'no-repeat',
-		backgroundPosition: 'bottom -420px right -220px',
-
-		[theme.fn.smallerThan('lg')]: {
-			padding: '40px ',
-			backgroundPosition: 'bottom -522px right -561px',
-		},
-	},
-	burger: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none !important',
-		},
-	},
-	drawer: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	drawerTitle: {
-		width: '100%',
-		margin: 0,
-	},
-
-	textDecorationNone: {
-		textDecoration: 'none',
-		color: 'white',
-	},
-}));
-
 const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => {
-	const {classes} = useStyles();
 
 	return (
 		<Box className={classes.drawer}>

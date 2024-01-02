@@ -1,0 +1,29 @@
+.card {
+  position: relative;
+  overflow: hidden;
+  padding-left: 18px;
+  background: #F4F4F4;
+  height: 100%;
+  display: flex;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: #5ABEA4 0% 0% no-repeat padding-box;
+}
+
+.center {
+  display: grid;
+  align-items: center;
+}
+
+.textDecorationNone {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}

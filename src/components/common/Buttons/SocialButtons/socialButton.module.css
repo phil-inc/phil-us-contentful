@@ -1,0 +1,26 @@
+.socialButton {
+  color: #01201F;
+  background: #f4f4f4;
+}
+
+.socialButton:hover {
+  /* Since CSS cannot evaluate JavaScript conditions like 'clipboard.copied',
+     you need to set a default style for the hover state.
+     The following is a placeholder; adjust as necessary. */
+  color: #FFF;
+  background: #000;
+}
+
+.socialIcon {
+  /* TODO The 'hovered' variable cannot be evaluated in static CSS.
+     You need to handle this with JavaScript or use a CSS class toggle.
+     Below is a placeholder for the default state; adjust as necessary. */
+  fill: #01201F;
+  stroke-width: 0;
+}
+
+/* If you need to change the 'fill' of .socialIcon on hover,
+   you can add a rule like this: */
+.socialIcon:hover {
+  fill: #fff;
+}

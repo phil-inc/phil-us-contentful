@@ -1,10 +1,12 @@
 import React from 'react';
-import {ActionIcon, Anchor, createStyles, Tooltip} from '@mantine/core';
+import {ActionIcon, Anchor,  Tooltip} from '@mantine/core';
 import {useClipboard, useHover, useTimeout} from '@mantine/hooks';
 import type {TablerIcon} from '@tabler/icons';
 import {ESocialShare} from 'types/social';
 import {getShareLink} from 'utils/socialShare';
 import {getWindowProperty} from 'utils/getWindowProperty';
+
+import * as classes from './socialButton.module.css';
 
 type TSocialButton = {
 	type: ESocialShare;
@@ -20,24 +22,6 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	}, 100);
 	const [href, setHref] = React.useState<string>();
 
-	const useStyles = createStyles(() => ({
-		socialButton: {
-			color: '#01201F',
-			background: '#f4f4f4',
-
-			':hover': {
-				color: clipboard.copied ? '#FFF' : '#FFF',
-				background: clipboard.copied ? '#11827D' : '#000',
-			},
-		},
-
-		socialIcon: {
-			fill: hovered ? '#fff' : '#01201F',
-			strokeWidth: '0',
-		},
-	}));
-
-	const {classes} = useStyles();
 
 	const isCopyLink = type === ESocialShare.CopyLink;
 

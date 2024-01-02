@@ -1,0 +1,143 @@
+.bodyText {
+  font-size: 18px;
+}
+
+/* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
+@media (max-width: 576px) {
+  .bodyText {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
+
+.border {
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.tableHeader {
+  text-align: start;
+}
+
+.anchor {
+  color: #00827E;
+}
+
+.listItem {
+  overflow: hidden;
+  font-size: 24px;
+}
+
+.listItem::marker {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.formWrapper {
+  padding: 44px 32px;
+  background: #F4F4F4;
+}
+
+.image {
+  justify-content: center;
+  height: 100%;
+}
+
+.image > img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.eventType {
+  font-size: 24px;
+  color: #0A0A0A;
+}
+
+/* Assuming 'md' breakpoint is 768px - adjust as per your theme's breakpoints */
+@media (max-width: 768px) {
+  .eventType {
+    font-size: 20px;
+  }
+}
+
+.title {
+  font-size: 52px;
+  color: #0A0A0A;
+  letter-spacing: -0.95px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 38px;
+  }
+}
+
+.eventDate {
+  font-size: 24px;
+  color: #0A0A0A;
+}
+
+@media (max-width: 768px) {
+  .eventDate {
+    font-size: 20px;
+    margin-bottom: 40px;
+  }
+}
+
+.formHeader {
+  font-size: 22px;
+  color: #0A0A0A;
+  font-family: 'Raleway, sans-serif';
+}
+
+@media (max-width: 768px) {
+  .formHeader {
+    font-size: 20px;
+  }
+}
+
+.speakersHeader {
+  font-size: 40px;
+  color: #0A0A0A;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .speakersHeader {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+}
+
+.speakersSubHeader {
+  font-size: 20px;
+  color: #0A0A0A;
+  margin-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+  .speakersSubHeader {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+}
+
+.container {
+  margin-bottom: 120px;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-bottom: 40px;
+  }
+}
+
+.stack {
+  align-items: start;
+}

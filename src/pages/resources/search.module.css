@@ -1,0 +1,87 @@
+.cardContainer {
+  padding: 70px;
+  background: #F4F4F4;
+  margin-bottom: 44px;
+}
+
+.cardContainer > div {
+  margin-bottom: 44px;
+}
+
+.cardContainer > :last-child {
+  margin-bottom: 0;
+}
+
+/* Assuming 'md' breakpoint is 768px - adjust as per your theme's breakpoints */
+@media (max-width: 768px) {
+  .cardContainer {
+    padding: 28px 18px;
+  }
+
+  .heading1 {
+    font-size: 32px;
+  }
+
+  .divider {
+    margin: 40px auto;
+  }
+
+  .emptyStateContainer {
+    margin-bottom: 42px;
+  }
+}
+
+.paginationItem {
+  height: 40px;
+  width: 40px;
+}
+
+.paginationItem[data-active] {
+  background: #0A0A0A;
+}
+
+.heading1 {
+  font-size: 48px;
+}
+
+.searchTermDisplay {
+  font-family: 'Lato, sans-serif';
+  font-size: 18px;
+  color: #0A0A0A;
+  line-height: 27px;
+}
+
+.badgeRoot {
+  border-color: #D7DCDC;
+  padding: 0;
+  height: 26px;
+}
+
+.badgeInner {
+  color: #525252;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0.625rem 0.5rem;
+  padding-right: 4px;
+  text-transform: none;
+}
+
+.badgeRightSection {
+  margin-left: 0;
+  padding-right: 10px;
+}
+
+.clearAll {
+  color: #00827E;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.divider {
+  margin-top: 22px;
+  margin-bottom: 47px;
+}
+
+.emptyStateContainer {
+  margin-bottom: 175px;
+}

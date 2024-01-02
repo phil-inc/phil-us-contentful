@@ -1,48 +1,16 @@
 import React from 'react';
-import {Text, Divider, Box, Title, Grid, Avatar, Group, createStyles, Anchor} from '@mantine/core';
+import {Text, Divider, Box, Title, Grid, Avatar, Group, Anchor} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import type {TAuthor} from 'types/resource';
 import Asset from 'components/common/Asset/Asset';
-
-const useStyles = createStyles(() => ({
-	authorHeading: {
-		fontWeight: 'bold',
-		fontSize: 30,
-		margin: 0,
-	},
-
-	authorName: {
-		fontWeight: 'bold',
-		fontSize: 20,
-		margin: 0,
-	},
-
-	authorTitle: {
-		color: '#6B7979',
-		fontSize: 16,
-		margin: 0,
-		marginBottom: 12,
-	},
-
-	authorBio: {
-		fontSize: 18,
-		margin: 0,
-		marginBottom: 12,
-	},
-
-	anchor: {
-		color: '#00827E',
-	},
-}));
+import * as classes from './authorBlock.module.css';
 
 type TAuthorBlock = {
 	author: TAuthor;
 };
 
 const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
-	const {classes} = useStyles();
-
 	const options = {
 		renderNode: {
 			[BLOCKS.PARAGRAPH](node, children) {

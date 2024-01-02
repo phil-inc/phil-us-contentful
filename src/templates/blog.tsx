@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, AspectRatio} from '@mantine/core';
+import {Grid, Title, Text, Container, Box, Anchor, List, AspectRatio} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {TResource} from 'types/resource';
@@ -18,6 +18,8 @@ import {getWindowProperty} from 'utils/getWindowProperty';
 import slugify from 'slugify';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getYouTubeId} from 'utils/links';
+import * as classes from './blog.module.css';
+import cx from 'clsx';
 
 type HelmetProps = {
 	data: {
@@ -72,80 +74,7 @@ type PageTemplateProps = {
 	};
 };
 
-const useStyles = createStyles(theme => ({
-	body: {
-		p: {
-			marginTop: 0,
-		},
-	},
-	anchor: {
-		color: '#00827E',
-	},
 
-	inner: {
-		padding: '0 100px',
-
-		'&::after': {
-			content: '""',
-			clear: 'both',
-			display: 'table',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: '0 16px',
-		},
-	},
-
-	listItem: {
-		overflow: 'hidden',
-		fontSize: 24,
-
-		'::marker': {
-			fontSize: 16,
-			fontWeight: 700,
-		},
-	},
-
-	floatingImage: {
-		float: 'right',
-		padding: '30px 40px',
-
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-			float: 'none',
-			display: 'flex',
-			placeContent: 'center',
-		},
-	},
-
-	embededAsset: {
-		marginBottom: '32px',
-
-		display: 'flex',
-		justifyContent: 'start',
-	},
-
-	embededAssetPDF: {
-		marginBottom: '32px',
-	},
-
-	embededAssetWrapper: {
-		maxWidth: 420,
-	},
-
-	border: {
-		border: '2px solid black',
-		padding: 10,
-	},
-
-	table: {
-		borderCollapse: 'collapse',
-		borderSpacing: 0,
-	},
-
-	tableHeader: {
-		textAlign: 'start',
-	},
-}));
 
 // Utility functions for content type checks
 const isPDF = (contentType: string) => isPDFContent(contentType);
@@ -195,8 +124,6 @@ const ContentRenderer: React.FC<ContentRendererProps> = ({node, classes}) => {
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {heading, body, asset, banners, author, noindex, isFaq} = data.contentfulResource;
-
-	const {classes, cx} = useStyles();
 
 	// Map for future reference to match content
 	const richTextImages: Record<string, {image: any; alt: string}> = {};

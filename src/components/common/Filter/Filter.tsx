@@ -1,71 +1,11 @@
-import {Accordion, Box, Card, Checkbox, Divider, Title, createStyles, useMantineTheme} from '@mantine/core';
+import {Accordion, Box, Card, Checkbox, Divider, Title, useMantineTheme} from '@mantine/core';
 import {useDebouncedState, useToggle, useViewportSize} from '@mantine/hooks';
 import React from 'react';
 import SearchBox from '../SearchBox/SearchBox';
 import {generateSearchParams} from 'utils/search';
 import {navigate} from 'gatsby';
 import {searchSubmitCallback} from 'pages/resources/search';
-
-const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
-	navigationList: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-	},
-
-	sectionNavLinksContainer: {
-		'a:first-of-type > button': {
-			paddingTop: 0,
-		},
-
-		'> a:last-child > button': {
-			paddingBottom: 0,
-		},
-	},
-
-	accordionContent: {
-		padding: 0,
-	},
-
-	accordionControl: {
-		padding: 0,
-		borderBottom: '0 !important',
-		backgroundColor: 'transparent !important',
-		cursor: _params.isMobileView ? 'pointer' : 'default !important',
-		marginBottom: 0,
-
-		color: '#0A0A0A !important',
-
-		'&[data-active]': {
-			marginBottom: 24,
-		},
-
-		':disabled': {
-			opacity: 1,
-		},
-	},
-
-	chevron: {
-		svg: {
-			height: 24,
-			width: 24,
-		},
-	},
-
-	checkboxRoot: {
-		padding: '12px 0 12px 0',
-	},
-
-	checkboxLabel: {
-		paddingLeft: 8,
-		fontSize: 16,
-	},
-
-	checkboxLabelChecked: {
-		paddingLeft: 8,
-		fontSize: 16,
-		color: '#00827E',
-	},
-}));
+import * as classes from './filter.module.css';
 
 type FilterType = {
 	values: string[];
@@ -76,7 +16,8 @@ type FilterType = {
 const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryParam}) => {
 	const {width} = useViewportSize();
 	const theme = useMantineTheme();
-	const isMobileView = theme.breakpoints.md > width;
+	// TODO: handle mobile view
+	const isMobileView = false;
 	const {classes} = useStyles({isMobileView});
 	const [value, toggle] = useToggle(['ResourcesType', null]);
 

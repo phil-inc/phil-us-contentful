@@ -1,0 +1,45 @@
+.card {
+  background: #F4F4F4;
+  height: 100%;
+  max-width: 825px;
+}
+
+/* Default styles for .avatar */
+.avatar {
+  /* Replace with a default width or handle conditionally via JavaScript */
+  width: 100% !important; /* Default value */
+}
+
+/* Assuming specific breakpoints for your theme */
+@media (max-width: 1390px) {
+  .avatar {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .avatar {
+    width: 100% !important;
+  }
+}
+
+.wrapper {
+  background: #F4F4F4;
+}
+
+/* Default styles for .content */
+.content {
+  /* Replace with a default padding or handle conditionally via JavaScript */
+  padding: 50px 42px; /* Default value */
+}
+
+/* Assuming 'lg' breakpoint is 992px - adjust as per your theme's breakpoints */
+@media (max-width: 992px) {
+  .content {
+    padding: 50px 42px;
+  }
+}
+
+.textColor {
+  color: #525252;
+}

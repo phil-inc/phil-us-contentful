@@ -19,8 +19,8 @@ const Section: React.FC<SectionProps> = ({section, index, isEmbedFormTemplate}) 
 	switch (section.sectionType) {
 		case 'Basic Section':
 			return <BasicSection section={section as ISection} index={index!} isEmbedFormTemplate={isEmbedFormTemplate} />;
-		// Case 'Referenced Section':
-		// 	return <ReferencedSection section={section as IReferencedSection} isEmbedFormTemplate={isEmbedFormTemplate} />;
+		case 'Referenced Section':
+			return <ReferencedSection section={section as IReferencedSection} isEmbedFormTemplate={isEmbedFormTemplate} />;
 		default:
 			return <></>;
 	}

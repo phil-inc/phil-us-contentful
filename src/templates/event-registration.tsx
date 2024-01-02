@@ -2,7 +2,7 @@ import React from 'react';
 import {Script, graphql} from 'gatsby';
 import {Layout} from 'layouts/Layout/Layout';
 import Expanded from 'components/common/Expanded/Expanded';
-import {Title, Text, Grid, Box, Group, List, Anchor, createStyles, Container, Stack} from '@mantine/core';
+import {Title, Text, Grid, Box, Group, List, Anchor, Container, Stack} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
@@ -19,6 +19,9 @@ import {type BodyType} from 'types/section';
 import {type Person} from 'types/person';
 import slugify from 'slugify';
 import {renderBanners} from 'components/common/Banner/Banner';
+
+import cx from 'clsx';
+import * as classes from './eventRegistration.module.css';
 
 type EventRegistrationProps = {
 	data: {
@@ -80,136 +83,8 @@ export const Head: React.FC<HelmetProps> = ({pageContext, data: {contentfulEvent
 	);
 };
 
-const useStyles = createStyles(theme => ({
-	bodyText: {
-		fontSize: 18,
-
-		[theme.fn.smallerThan('sm')]: {
-			fontSize: 16,
-			lineHeight: 1.4,
-		},
-	},
-
-	border: {
-		border: '2px solid black',
-		padding: 10,
-	},
-
-	table: {
-		borderCollapse: 'collapse',
-		borderSpacing: 0,
-	},
-
-	tableHeader: {
-		textAlign: 'start',
-	},
-
-	anchor: {
-		color: '#00827E',
-	},
-
-	listItem: {
-		overflow: 'hidden',
-		fontSize: 24,
-
-		'::marker': {
-			fontSize: 16,
-			fontWeight: 700,
-		},
-	},
-
-	formWrapper: {
-		padding: '44px 32px',
-		background: '#F4F4F4',
-	},
-
-	image: {
-		justifyContent: 'center',
-		height: '100%',
-
-		'>img': {
-			height: '100%',
-			objectFit: 'cover',
-		},
-	},
-
-	eventType: {
-		fontSize: 24,
-
-		color: '#0A0A0A',
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 20,
-		},
-	},
-
-	title: {
-		fontSize: 52,
-		color: '#0A0A0A',
-		letterSpacing: -0.95,
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 38,
-		},
-	},
-
-	eventDate: {
-		fontSize: 24,
-		color: '#0A0A0A',
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 20,
-			marginBottom: 40,
-		},
-	},
-
-	formHeader: {
-		fontSize: 22,
-		color: '#0A0A0A',
-		fontFamily: 'Raleway, sans-serif',
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 20,
-		},
-	},
-
-	speakersHeader: {
-		fontSize: 40,
-		color: '#0A0A0A',
-		marginBottom: 32,
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 32,
-			marginBottom: 24,
-		},
-	},
-
-	speakersSubHeader: {
-		fontSize: 20,
-		color: '#0A0A0A',
-		marginBottom: 80,
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 18,
-			marginBottom: 40,
-		},
-	},
-
-	container: {
-		marginBottom: '120px',
-		padding: '0',
-
-		[theme.fn.smallerThan('md')]: {
-			marginBottom: 40,
-		},
-	},
-
-	stack: {
-		alignItems: 'start',
-	},
-}));
 
 const EventRegistration: React.FC<EventRegistrationProps> = ({data}) => {
-	const {classes, cx} = useStyles();
 
 	const banners = data.allContentfulResource.nodes.map(r => r.banners).flat(1) as TResource[];
 

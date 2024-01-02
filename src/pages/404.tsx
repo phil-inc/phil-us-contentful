@@ -1,8 +1,9 @@
-import {createStyles, Container, Title, Text, Button, SimpleGrid} from '@mantine/core';
+import {Container, Title, Text, Button, SimpleGrid} from '@mantine/core';
 import {Link, Script} from 'gatsby';
 import {Layout} from 'layouts/Layout/Layout';
 import {SEO} from 'layouts/SEO/SEO';
 import React from 'react';
+import * as classes from './404.module.css';
 
 export const Head: React.FC = () => (
 	<SEO title={'Page not found'}>
@@ -16,41 +17,7 @@ export const Head: React.FC = () => (
 	</SEO>
 );
 
-const useStyles = createStyles(theme => ({
-	root: {
-		paddingTop: 80,
-		paddingBottom: 80,
-	},
 
-	title: {
-		fontWeight: 900,
-		fontSize: 34,
-		marginBottom: theme.spacing.md,
-		fontFamily: 'Raleway, sans-serif',
-
-		[theme.fn.smallerThan('sm')]: {
-			fontSize: 32,
-		},
-	},
-
-	control: {
-		[theme.fn.smallerThan('sm')]: {
-			width: '100%',
-		},
-	},
-
-	mobileImage: {
-		[theme.fn.largerThan('sm')]: {
-			display: 'none',
-		},
-	},
-
-	desktopImage: {
-		[theme.fn.smallerThan('sm')]: {
-			display: 'none',
-		},
-	},
-}));
 
 const Error = () => {
 	const {classes} = useStyles();

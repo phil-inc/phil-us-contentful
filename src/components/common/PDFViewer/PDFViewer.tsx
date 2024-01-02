@@ -1,97 +1,16 @@
 import React, {useState, forwardRef} from 'react';
 import {Document, Page} from 'react-pdf';
-import {ActionIcon, Anchor, Box, Button, Container, Group, Text, createStyles, useMantineTheme} from '@mantine/core';
+import {ActionIcon, Anchor, Box, Button, Container, Group, Text, useMantineTheme} from '@mantine/core';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 import {IconChevronLeft, IconChevronRight} from '@tabler/icons';
 import {useViewportSize} from '@mantine/hooks';
 
+import * as classes from './pdfViewer.module.css';
+
 const PADDING = 20;
 const MAX_PAGE_WIDTH = 595;
 
-// Define styles for the PDF viewer
-const useStyles = createStyles(
-	(
-		theme,
-		{
-			pageContainerHeight,
-			pageContainerWidth,
-			padding,
-		}: {pageContainerHeight: number; pageContainerWidth: number; padding: number},
-	) => ({
-		container: {
-			minHeight: '64.5rem',
-			background: '#6A7979',
-			margin: '100px -100px',
-			display: 'flex',
-			flexDirection: 'column',
-			alignItems: 'center',
-			justifyContent: 'center',
-			padding: `22px ${padding}px`,
-			[theme.fn.smallerThan('sm')]: {
-				margin: 'auto -16px',
-				minHeight: '35rem',
-			},
-		},
-		pageContainer: {
-			display: 'flex',
-			alignItems: 'center',
-			columnGap: 70,
-		},
-		pdfPage: {
-			'>canvas': {
-				height: 'auto !important',
-			},
-		},
-		pdfDocument: {
-			marginTop: 71.5,
 
-			[theme.fn.smallerThan('sm')]: {
-				marginTop: 0,
-			},
-		},
-		loadingContainer: {
-			height: 742,
-			width: '100%',
-			maxWidth: MAX_PAGE_WIDTH,
-		},
-		pageLoadingContainer: {
-			height: pageContainerHeight,
-			width: pageContainerWidth,
-			maxWidth: MAX_PAGE_WIDTH,
-		},
-		actionButtons: {
-			[theme.fn.smallerThan('sm')]: {
-				display: 'none',
-			},
-		},
-
-		actionButtonsMobile: {
-			[theme.fn.largerThan('sm')]: {
-				display: 'none',
-			},
-		},
-		pageNumber: {
-			marginTop: 30,
-
-			[theme.fn.smallerThan('sm')]: {
-				marginTop: 20,
-			},
-		},
-
-		downloadButton: {
-			marginTop: 30,
-
-			[theme.fn.smallerThan('sm')]: {
-				marginTop: 20,
-			},
-		},
-
-		buttonText: {
-			fontSize: 14,
-			fontWeight: 500,
-		},
-	}),
-);
 
 // Define the properties for the PDFViewer component
 type PDFViewerProps = {
@@ -108,7 +27,9 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 	const [pageNumber, setPageNumber] = useState(1);
 	const theme = useMantineTheme();
 	const {width} = useViewportSize();
-	const isMobileView = theme.breakpoints.sm > width;
+
+	// TODO: handle mobile view
+	const isMobileView = false;
 
 	React.useEffect(() => {
 		if (pdfPageWidth > MAX_PAGE_WIDTH || !isMobileView) {
@@ -120,11 +41,11 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 	}, [width]);
 
 	const height = ref?.current?.clientHeight as number;
-	const {classes} = useStyles({
-		pageContainerHeight: height ?? 500,
-		pageContainerWidth: pageContainerWidth ?? MAX_PAGE_WIDTH,
-		padding: PADDING,
-	});
+	// const {classes} = useStyles({
+	// 	pageContainerHeight: height ?? 500,
+	// 	pageContainerWidth: pageContainerWidth ?? MAX_PAGE_WIDTH,
+	// 	padding: PADDING,
+	// });
 
 	// Function to handle the successful loading of a document
 	const onDocumentLoadSuccess = ({numPages}: {numPages: number}) => {

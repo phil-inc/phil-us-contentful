@@ -1,0 +1,52 @@
+.navigationList {
+  background: #F4F4F4;
+  padding: 36px 34px;
+}
+
+.sectionNavLinksContainer a:first-of-type > button {
+  padding-top: 0;
+}
+
+.sectionNavLinksContainer > a:last-child > button {
+  padding-bottom: 0;
+}
+
+.accordionContent {
+  padding: 0;
+}
+
+.accordionControl {
+  padding: 0;
+  border-bottom: 0 !important;
+  background-color: transparent !important;
+  cursor: default !important; /* Default value, adjust based on 'isMobileView' */
+  margin-bottom: 0;
+  color: #0A0A0A !important;
+}
+
+.accordionControl[data-active] {
+  margin-bottom: 24px;
+}
+
+.accordionControl:disabled {
+  opacity: 1;
+}
+
+.chevron svg {
+  height: 24px;
+  width: 24px;
+}
+
+.checkboxRoot {
+  padding: 12px 0;
+}
+
+.checkboxLabel,
+.checkboxLabelChecked {
+  padding-left: 8px;
+  font-size: 16px;
+}
+
+.checkboxLabelChecked {
+  color: #00827E;
+}

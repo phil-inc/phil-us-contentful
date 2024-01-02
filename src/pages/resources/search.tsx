@@ -12,7 +12,6 @@ import {
 	Pagination,
 	Text,
 	Title,
-	createStyles,
 	useMantineTheme,
 } from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
@@ -30,6 +29,7 @@ import {crossIcon} from 'assets/images';
 import {generateSearchParams} from 'utils/search';
 import LoadingIndicator from 'components/common/LoadingIndicator/LoadingIndicator';
 import {RESOURCES_PAGE} from 'constants/routes';
+import * as classes from './search.module.css';
 
 export const searchSubmitCallback = (searchText: string, filterOptions: string[]) => {
 	if (!searchText.length) {
@@ -77,93 +77,6 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 	);
 };
 
-const useStyles = createStyles(theme => ({
-	cardContainer: {
-		padding: 70,
-		background: '#F4F4F4',
-		marginBottom: 44,
-
-		'> div': {
-			marginBottom: 44,
-		},
-
-		'> :last-child': {
-			marginBottom: 0,
-		},
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '28px 18px',
-		},
-	},
-
-	paginationItem: {
-		height: 40,
-		width: 40,
-
-		'&[data-active]': {
-			background: '#0A0A0A',
-		},
-	},
-
-	heading1: {
-		fontSize: 48,
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 32,
-		},
-	},
-
-	searchTermDisplay: {
-		fontFamily: 'Lato, sans-serif',
-		fontSize: 18,
-		color: '#0A0A0A',
-		lineHeight: '27px',
-	},
-
-	badgeRoot: {
-		borderColor: '#D7DCDC',
-		padding: 0,
-		height: 26,
-	},
-
-	badgeInner: {
-		color: '#525252',
-		fontSize: 14,
-		fontWeight: 400,
-		padding: '0.625rem 0.5rem',
-		paddingRight: 4,
-		textTransform: 'none',
-	},
-
-	badgeRightSection: {
-		marginLeft: 0,
-		paddingRight: 10,
-	},
-
-	clearAll: {
-		color: '#00827E',
-		fontSize: 14,
-		cursor: 'pointer',
-	},
-
-	divider: {
-		marginTop: 22,
-		marginBottom: 47,
-
-		[theme.fn.smallerThan('md')]: {
-			margin: '40px auto',
-		},
-	},
-
-	emptyStateContainer: {
-		marginBottom: 175,
-
-		[theme.fn.smallerThan('md')]: {
-			marginBottom: 42,
-		},
-	},
-}));
-
 type ResourcesSearchProps = {
 	data: {
 		allContentfulResource: {nodes: TResource[]};
@@ -189,8 +102,6 @@ type SearchBodyType = {
 };
 
 const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryParam}) => {
-	const {classes} = useStyles();
-
 	return (
 		<Box className={classes.emptyStateContainer}>
 			<Text size={18} color='#0A0A0A'>

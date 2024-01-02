@@ -13,7 +13,6 @@ import {
 	List,
 	Text,
 	Title,
-	createStyles,
 	useMantineTheme,
 } from '@mantine/core';
 import {Script, graphql} from 'gatsby';
@@ -24,6 +23,8 @@ import Asset from 'components/common/Asset/Asset';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import {type TAsset} from 'types/asset';
 import {isPDFContent} from 'utils/isVideoContent';
+import cx from 'clsx';
+import * as classes from './downloadableResource.module.css';
 
 type HelmetProps = {
 	data: {
@@ -78,95 +79,6 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulDownloadableResour
 	);
 };
 
-const useStyles = createStyles(theme => ({
-	inner: {
-		[theme.fn.smallerThan('sm')]: {
-			padding: '0 16px',
-		},
-	},
-
-	embededAsset: {
-		marginBottom: '32px',
-
-		display: 'flex',
-		justifyContent: 'center',
-	},
-
-	embededAssetPDF: {
-		marginBottom: '32px',
-	},
-
-	section: {
-		fontSize: 24,
-
-		[theme.fn.smallerThan('sm')]: {
-			fontSize: 20,
-		},
-	},
-
-	title: {
-		fontSize: 52,
-
-		[theme.fn.smallerThan('sm')]: {
-			fontSize: 38,
-		},
-	},
-
-	description: {
-		maxWidth: 500,
-		marginTop: 24,
-		marginBottom: 45,
-		fontSize: 18,
-		[theme.fn.smallerThan('sm')]: {
-			marginTop: 20,
-			marginBottom: 20,
-			fontSize: 16,
-		},
-	},
-
-	bodyText: {
-		fontSize: 18,
-
-		[theme.fn.smallerThan('sm')]: {
-			fontSize: 16,
-			lineHeight: 1.4,
-		},
-	},
-
-	border: {
-		border: '2px solid black',
-		padding: 10,
-	},
-
-	table: {
-		borderCollapse: 'collapse',
-		borderSpacing: 0,
-	},
-
-	tableHeader: {
-		textAlign: 'start',
-	},
-
-	anchor: {
-		color: '#00827E',
-	},
-
-	listItem: {
-		overflow: 'hidden',
-		fontSize: 24,
-
-		'::marker': {
-			fontSize: 16,
-			fontWeight: 700,
-		},
-	},
-
-	buttonText: {
-		fontSize: 14,
-		fontWeight: 500,
-	},
-}));
-
 type ResourcesPageProps = {
 	data: {
 		contentfulDownloadableResource: TDownloadableResource;
@@ -176,7 +88,6 @@ type ResourcesPageProps = {
 };
 
 const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
-	const {classes, cx} = useStyles();
 	const ref = React.useRef(null);
 	const canvasRef = React.useRef(null);
 	const defaultBanners = data.allContentfulResource.nodes;

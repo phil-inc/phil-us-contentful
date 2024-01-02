@@ -1,0 +1,97 @@
+.container {
+  min-height: 64.5rem;
+  background: #6A7979;
+  margin: 100px -100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Replace 'padding' with a static value or handle it via JavaScript */
+  padding: 22px 20px; /* Example using a static value */
+}
+
+/* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
+@media (max-width: 576px) {
+  .container {
+    margin: auto -16px;
+    min-height: 35rem;
+  }
+}
+
+.pageContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 70px;
+}
+
+.pdfPage > canvas {
+  height: auto !important;
+}
+
+.pdfDocument {
+  margin-top: 71.5px;
+}
+
+@media (max-width: 576px) {
+  .pdfDocument {
+    margin-top: 0;
+  }
+}
+
+.loadingContainer {
+  height: 742px;
+  width: 100%;
+  max-width: 595px; /* MAX_PAGE_WIDTH */
+}
+
+.pageLoadingContainer {
+  /* Replace 'pageContainerHeight' and 'pageContainerWidth' with static values or handle via JavaScript */
+  height: /* pageContainerHeight value here */;
+  width: /* pageContainerWidth value here */;
+  max-width: 595px; /* MAX_PAGE_WIDTH */
+}
+
+.actionButtons {
+  /* Default styling for actionButtons goes here */
+}
+
+@media (max-width: 576px) {
+  .actionButtons {
+    display: none;
+  }
+}
+
+.actionButtonsMobile {
+  /* Default styling for actionButtonsMobile goes here */
+}
+
+@media (min-width: 577px) {
+  .actionButtonsMobile {
+    display: none;
+  }
+}
+
+.pageNumber {
+  margin-top: 30px;
+}
+
+@media (max-width: 576px) {
+  .pageNumber {
+    margin-top: 20px;
+  }
+}
+
+.downloadButton {
+  margin-top: 30px;
+}
+
+@media (max-width: 576px) {
+  .downloadButton {
+    margin-top: 20px;
+  }
+}
+
+.buttonText {
+  font-size: 14px;
+  font-weight: 500;
+}

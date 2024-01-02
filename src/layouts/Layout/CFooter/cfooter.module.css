@@ -1,0 +1,92 @@
+.footer {
+  /* Default styling for footer goes here */
+}
+
+/* Assuming 'md' breakpoint is 768px - adjust as per your theme's breakpoints */
+@media (max-width: 768px) {
+  .footer {
+    display: none;
+  }
+}
+
+.inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Replace 'theme.spacing.md' with the actual value from your theme */
+  padding: /* theme.spacing.md value here */;
+}
+
+/* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
+@media (max-width: 576px) {
+  .inner {
+    flex-direction: column;
+  }
+}
+
+.links {
+  color: white;
+  font-size: 12px;
+}
+
+.footLinkHeader {
+  font-family: 'Lato';
+  font-weight: 700;
+  margin: 10px 0;
+  text-decoration: none;
+  color: #00201F;
+}
+
+.footerLink {
+  text-decoration: none;
+  color: #00201F;
+  font-size: 14px;
+  line-height: 40px;
+}
+
+.footerWrapper {
+  padding: 85px 175px;
+  /* TODO: Replace 'footerBackground' with the actual URL of the image */
+  /* background-image: url("/* footerBackground URL here"); */
+  background-repeat: no-repeat;
+  background-position: bottom -420px right -220px;
+}
+
+/* Assuming 'lg' breakpoint is 992px - adjust as per your theme's breakpoints */
+@media (max-width: 992px) {
+  .footerWrapper {
+    padding: 40px;
+    background-position: bottom -522px right -561px;
+  }
+}
+
+.burger {
+  /* Default styling for burger goes here */
+}
+
+/* Assuming 'md' breakpoint is 768px */
+@media (min-width: 769px) {
+  .burger {
+    display: none !important;
+  }
+}
+
+.drawer {
+  /* Default styling for drawer goes here */
+}
+
+@media (min-width: 769px) {
+  .drawer {
+    display: none;
+  }
+}
+
+.drawerTitle {
+  width: 100%;
+  margin: 0;
+}
+
+.textDecorationNone {
+  text-decoration: none;
+  color: white;
+}

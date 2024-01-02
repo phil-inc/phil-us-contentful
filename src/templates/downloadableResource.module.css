@@ -1,0 +1,99 @@
+.inner {
+  /* Default styles, if any, go here */
+}
+
+/* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
+@media (max-width: 576px) {
+  .inner {
+    padding: 0 16px;
+  }
+}
+
+.embededAsset {
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.embededAssetPDF {
+  margin-bottom: 32px;
+}
+
+.section {
+  font-size: 24px;
+}
+
+@media (max-width: 576px) {
+  .section {
+    font-size: 20px;
+  }
+}
+
+.title {
+  font-size: 52px;
+}
+
+@media (max-width: 576px) {
+  .title {
+    font-size: 38px;
+  }
+}
+
+.description {
+  max-width: 500px;
+  margin-top: 24px;
+  margin-bottom: 45px;
+  font-size: 18px;
+}
+
+@media (max-width: 576px) {
+  .description {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+}
+
+.bodyText {
+  font-size: 18px;
+}
+
+@media (max-width: 576px) {
+  .bodyText {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
+
+.border {
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.tableHeader {
+  text-align: start;
+}
+
+.anchor {
+  color: #00827E;
+}
+
+.listItem {
+  overflow: hidden;
+  font-size: 24px;
+}
+
+.listItem::marker {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.buttonText {
+  font-size: 14px;
+  font-weight: 500;
+}

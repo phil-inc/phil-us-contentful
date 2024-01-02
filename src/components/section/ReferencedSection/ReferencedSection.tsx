@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Group, Anchor, Accordion} from '@mantine/core';
+import {Button, Group, Anchor, Accordion, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {Link} from 'gatsby';
 import {type IReferencedSection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
@@ -34,8 +34,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
 	const {link, isExternal} = getLink(section);
-	const {classes, theme} = useStyles();
 	const context = React.useContext(PageContext);
+	const theme = useMantineTheme();
 
 	React.useEffect(() => {
 		try {

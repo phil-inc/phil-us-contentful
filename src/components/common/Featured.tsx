@@ -1,4 +1,4 @@
-import {Paper, Title, Divider, Text, createStyles, Grid, Box, Anchor} from '@mantine/core';
+import {Paper, Title, Divider, Text,  Grid, Box, Anchor, useMantineTheme} from '@mantine/core';
 import classNames from 'classnames';
 import type {FC} from 'react';
 import {Link} from 'gatsby';
@@ -10,6 +10,8 @@ import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
 import ImageContainer from './Container/ImageContainer';
 import Asset from './Asset/Asset';
 
+import * as classes from './featured.module.css';
+
 type FeaturedProps = {
 	resource: TResource;
 	noDivider?: boolean;
@@ -18,39 +20,9 @@ type FeaturedProps = {
 };
 
 export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resourceBackground = '#F4F4F4', pr = 0}) => {
-	const useStyles = createStyles(theme => ({
-		card: {
-			position: 'relative',
-			overflow: 'hidden',
-			paddingLeft: 18,
-			background: resourceBackground,
-			height: '100%',
-			display: 'flex',
+	
 
-			'&::before': {
-				content: '""',
-				position: 'absolute',
-				top: 0,
-				bottom: 0,
-				left: 0,
-				width: 6,
-				background: '#5ABEA4 0% 0% no-repeat padding-box',
-			},
-		},
-
-		center: {
-			display: 'grid',
-			alignItems: 'center',
-		},
-
-		textDecorationNone: {
-			color: 'inherit',
-			textDecoration: 'none',
-			cursor: 'pointer',
-		},
-	}));
-
-	const {classes, theme} = useStyles();
+	const theme = useMantineTheme();
 	const {link, isExternal} = getLink(resource);
 
 	const options = {

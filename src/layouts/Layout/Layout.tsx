@@ -157,7 +157,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 						{isProduction && <ZoominfoAnalytics />}
 						<CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />
 						<Box>{children}</Box>
-						{/* <CFooter minimal={minimal} /> */}
+						<CFooter minimal={minimal} />
 					</AppShell>
 				</HubspotProvider>
 			</MantineProvider>

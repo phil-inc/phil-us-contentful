@@ -1,4 +1,4 @@
-import {Grid, Box, Divider, List, Anchor, Group, Text, createStyles} from '@mantine/core';
+import {Grid, Box, Divider, List, Anchor, Group, Text} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {COMPANY_PAGE, HCP_PAGE, PATIENTS_PAGE, RESOURCES} from 'constants/page';
@@ -15,6 +15,8 @@ import {type IReferencedSection} from 'types/section';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {CAREERS} from 'constants/routes';
 
+import * as classes from './desktopFooter.module.css';
+
 type TDesktopFooter = {
 	pages: ContentfulPage[];
 	footer: {
@@ -23,80 +25,9 @@ type TDesktopFooter = {
 	};
 };
 
-const useStyles = createStyles(theme => ({
-	footer: {
-		[theme.fn.smallerThan('md')]: {
-			display: 'none',
-		},
-	},
 
-	inner: {
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
-
-		[theme.fn.smallerThan('sm')]: {
-			flexDirection: 'column',
-		},
-	},
-
-	links: {
-		color: 'white',
-		fontSize: 12,
-	},
-
-	footLinkHeader: {
-		fontFamily: 'Lato',
-		fontWeight: 700,
-		margin: '10px 0',
-		textDecoration: 'none',
-		color: '#00201F',
-	},
-
-	footerLink: {
-		textDecoration: 'none',
-		color: '#00201F',
-		fontSize: '14px',
-		lineHeight: 1.55,
-		marginBottom: 20,
-	},
-
-	footerWrapper: {
-		padding: '85px 175px',
-		backgroundImage: `url("${footerBackground as string}")`,
-		backgroundRepeat: 'no-repeat',
-		backgroundPosition: 'bottom -420px right -220px',
-
-		[theme.fn.smallerThan('lg')]: {
-			padding: '40px ',
-			backgroundPosition: 'bottom -522px right -561px',
-		},
-	},
-	burger: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none !important',
-		},
-	},
-	drawer: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	drawerTitle: {
-		width: '100%',
-		margin: 0,
-	},
-
-	textDecorationNone: {
-		textDecoration: 'none',
-		color: 'white',
-	},
-}));
 
 const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => {
-	const {classes} = useStyles();
 
 	return (
 		<Grid className={classes.footer} gutterXl={'lg'} gutter={'md'}>

@@ -1,0 +1,40 @@
+.card {
+  position: relative;
+  overflow: hidden;
+  background: #F4F4F4;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: #5ABEA4 0% 0% no-repeat padding-box;
+}
+
+.image {
+  height: 50%;
+  width: 100%;
+  background: #00827E;
+}
+
+.mobileCarousel {
+  display: none;
+}
+
+/* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
+@media (max-width: 576px) {
+  .mobileCarousel {
+    display: block;
+  }
+
+  .carousel {
+    display: none;
+  }
+}
+
+.carousel {
+  /* Default styling for carousel goes here */
+}

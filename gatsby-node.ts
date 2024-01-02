@@ -26,9 +26,9 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
     // Handle static html creation
     const [resourceSubPages] = await Promise.all([
         new Promise(resolve => GenerateMainPages({ actions, graphql }, resolve)),
-        // GenerateStaticPages({ actions, graphql }),
-        // GenerateDownloadableResourcePages({ actions, graphql }),
-        // GenerateEventRegistrationPages({ actions, graphql }),
+        GenerateStaticPages({ actions, graphql }),
+        GenerateDownloadableResourcePages({ actions, graphql }),
+        GenerateEventRegistrationPages({ actions, graphql }),
     ]);
 
     // Handle redirects

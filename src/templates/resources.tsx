@@ -97,8 +97,6 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	data,
 	pageContext: {currentPage: currentPageNumber, limit, numPages},
 }) => {
-	const {width} = useViewportSize();
-	const theme = useMantineTheme();
 	const isMobileView = false;
 
 	const currentSection = data.contentfulReferencedSection;

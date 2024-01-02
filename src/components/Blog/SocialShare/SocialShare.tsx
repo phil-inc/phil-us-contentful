@@ -1,4 +1,4 @@
-import {createStyles, Group, Text} from '@mantine/core';
+import {Group, Text} from '@mantine/core';
 import {useHover} from '@mantine/hooks';
 import React from 'react';
 import {ESocialShare} from 'types/social';
@@ -8,14 +8,10 @@ import {LinkIcon} from '../../common/Buttons/SocialButtons/LinkIcon';
 import SocialButton from '../../common/Buttons/SocialButtons/SocialButton';
 import {TwitterIcon} from '../../common/Buttons/SocialButtons/TwitterIcon';
 
-const useStyles = createStyles(() => ({
-	'font-lato': {
-		fontFamily: 'Lato, sans-serif',
-	},
-}));
+
+import * as classes from './socialShare.module.css';
 
 const SocialShare: React.FC = () => {
-	const {classes} = useStyles();
 
 	return (
 		<Group position='left' spacing='sm'>
