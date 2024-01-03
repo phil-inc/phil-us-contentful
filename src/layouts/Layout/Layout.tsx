@@ -51,14 +51,13 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 			fontWeight: '700',
 			sizes: {
 				h1: {
-					fontSize: isIndex() ? 'min(85px, calc(3rem + 1.927vw))' : 'min(calc(2rem + 1.197vw), 85px)',
+					fontSize: '60px',
 				},
 				h2: {
-					fontSize: 'min(55px, calc(2rem + 1.197vw))',
+					fontSize: '40px',
 				},
 				h3: {
-					fontSize: 'min(35px, calc(1rem + 0.989vw))',
-					lineHeight: '1.3',
+					fontSize: '28px',
 				},
 				h4: {
 					fontSize: 'min(30px, calc(1rem + 0.989vw))',

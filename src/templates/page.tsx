@@ -35,31 +35,31 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 
 	return (
 		<SEO title={title}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={title} />
-			<meta name='twitter:description' content={contentfulPage.description} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={contentfulPage.description} />
-			<meta property='og:title' content={title} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={contentfulPage.description} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${config.slug}`} />
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={title} />
+			<meta name="twitter:description" content={contentfulPage.description} />
+			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={contentfulPage.description} />
+			<meta property="og:title" content={title} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={contentfulPage.description} />
+			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={`https://phil.us${config.slug}`} />
 			<Script
 				defer
 				async
-				strategy='idle'
-				charSet='utf-8'
-				type='text/javascript'
-				src='//js.hsforms.net/forms/embed/v2.js'
+				strategy="idle"
+				charSet="utf-8"
+				type="text/javascript"
+				src="//js.hsforms.net/forms/embed/v2.js"
 			></Script>
-			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
+			{contentfulPage.noindex && <meta name="robots" content="noindex" />}
 			<Script
 				defer
 				async
-				strategy='idle'
-				type='text/javascript'
-				src='//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'
+				strategy="idle"
+				type="text/javascript"
+				src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
 			></Script>
 		</SEO>
 	);
@@ -76,12 +76,14 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	let basicSectionCount = 0;
 	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));
 
+	console.log({data});
+
 	return (
 		<PageContext.Provider value={{title}}>
 			<Layout minimal={false}>
 				{title === 'Resources' && (
 					<Expanded id={id} py={0}>
-						<Grid align='center' justify='space-between'>
+						<Grid align="center" justify="space-between">
 							<Grid.Col span={12}>
 								<Box>
 									<Title order={1}>Resources</Title>
@@ -226,6 +228,37 @@ export const query = graphql`
 							}
 						}
 					}
+					mediaItem {
+						name
+						media {
+							gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+							title
+							file {
+								contentType
+								details {
+									size
+								}
+								url
+							}
+						}
+						id
+					}
+					stylingOptions {
+						background
+						id
+						name
+					}
+					v2Flag
+					renderOptions {
+						name
+						id
+						layoutOptions {
+							id
+							name
+							numberOfColumns
+							shouldRenderCarousel
+						}
+					}
 				}
 				... on ContentfulReferencedSection {
 					id
@@ -240,6 +273,7 @@ export const query = graphql`
 					sectionType
 					references {
 						... on ContentfulResource {
+							id
 							externalLink
 							internalLink {
 								... on ContentfulPage {
@@ -355,7 +389,13 @@ export const query = graphql`
 									url
 								}
 							}
-							id
+
+							stylingOptions {
+								background
+								extraColor
+								id
+								name
+							}
 						}
 						... on ContentfulDownloadableResource {
 							id
@@ -472,10 +512,28 @@ export const query = graphql`
 							}
 						}
 					}
+
+					stylingOptions {
+						background
+						extraColor
+						id
+						name
+					}
+					v2flag
+					renderOptions {
+						name
+						id
+						layoutOptions {
+							id
+							name
+							numberOfColumns
+							shouldRenderCarousel
+						}
+					}
 				}
 			}
 		}
 	}
 `;
 
-export default React.memo(PageTemplate);
+export default PageTemplate;

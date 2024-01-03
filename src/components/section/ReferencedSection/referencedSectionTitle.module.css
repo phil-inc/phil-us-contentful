@@ -9,12 +9,15 @@
     color: #000000;
 }
 
-.subHeading {
-    font-family: Lato, sans-serif;
-    font-weight: 400;
-    color: #01201F;
-}
-
 .codeSnippetStack {
     align-items: flex-start;
+}
+
+.subHeading {
+	color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
+	font-family: Lato;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 150%; /* 27px */
 }

@@ -1,99 +1,110 @@
 .title {
-    max-width: 100%;
+	&[data-isEmbedFormTemplate='true'] {
+		font-size: 40px;
 
-    &.embedFormTemplate {
-        font-size: 40px;
-
-        &.firstIndex {
-            max-width: 500px;
-            font-size: 52px;
-        }
-    }
+		&[data-index='0'] {
+			max-width: 500px;
+		}
+	}
 }
 
 .container {
-    padding: 0 16px;
-}
+	padding: 100px 16px;
 
-@media (min-width: $phil-breakpoint-sm) {
-    .container {
-        padding: 0 100px;
-    }
+	&[data-index='0'] {
+		padding-top: 160px;
+		padding-bottom: 160px;
+	}
+
+	&[data-context='Contact'] {
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
+
+	&[data-isMobileView='true'] {
+		padding-top: 32px;
+		padding-bottom: 32px;
+	}
+
+	&[data-isEmbedFormTemplate='true'] {
+		padding-top: 152px;
+		padding-bottom: 152px;
+	}
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding-left: 100px;
+		padding-right: 100px;
+	}
 }
 
 .listItem {
-    margin-top: 14px;
-    color: #00201F;
-    line-height: 27px;
-    font-size: 18px;
+	margin-top: 14px;
+	color: #00201f;
+	line-height: 27px;
+	font-size: 18px;
 }
 
 .textGridColumn {
-    padding-bottom: 8px;
+	padding-bottom: 8px;
 
-    @media (min-width: $phil-breakpoint-sm) {
-        padding-bottom: auto;
-    }
+	@media (min-width: $phil-breakpoint-sm) {
+		padding-bottom: auto;
+	}
 }
 
-.contactSubheader {}
+.contactSubheader {
+}
 
 .portal {
+	/* display: none; */
 
-    /* display: none; */
-
-    @media (min-width: $phil-breakpoint-md) {
-        display: block;
-    }
+	@media (min-width: $phil-breakpoint-md) {
+		display: block;
+	}
 }
 
 .body {
-    font-size: 18px;
-    max-width: 100%;
+	font-size: 18px;
+	max-width: 100%;
 
-    &[data-isEmbedFormTemplate='true'] {
-        padding-left: 16px;
-        padding-right: 16px;
+	&[data-isEmbedFormTemplate='true'] {
+		padding-left: 16px;
+		padding-right: 16px;
 
-        @media (min-width: $phil-breakpoint-sm) {
-            padding-left: 0px;
-            padding-right: 0px;        
-        }
+		@media (min-width: $phil-breakpoint-sm) {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
 
-        @media (min-width: $phil-breakpoint-md) {
-            padding-left: unset;
-            padding-right: unset;        
-        }
-    }
-
+		@media (min-width: $phil-breakpoint-md) {
+			padding-left: unset;
+			padding-right: unset;
+		}
+	}
 }
 
 .heroGridColumn {
+	&[data-isEmbedFormTemplate='true'] {
+		padding-left: 16px;
+		padding-right: 16px;
 
-    &.embedFormTemplate {
-        padding-left: 16px;
-        padding-right: 16px;
+		@media (min-width: $phil-breakpoint-sm) {
+			padding-left: 32px;
+			padding-right: 32px;
+		}
 
-        @media (min-width: $phil-breakpoint-sm) {
-            padding-left: 32px;
-            padding-right: 32px;        
-        }
-
-        @media (min-width: $phil-breakpoint-md) {
-            padding-left: 0px;
-            padding-right: 0px;        
-        }
-    }
-
-    
+		@media (min-width: $phil-breakpoint-md) {
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+	}
 }
 
 .formWrapper {
-    padding: 44px 38px;
-    background: #F4F4F4;
+	padding: 44px 38px;
+	background: #f4f4f4;
 
-    @media (min-width: $phil-breakpoint-sm) {
-        padding: 44px 32px;
-    }
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 44px 32px;
+	}
 }
-

@@ -8,6 +8,26 @@ export type BodyType = RenderRichTextData<ContentfulRichTextGatsbyReference>;
 
 export type BackgroundType = 'Default' | 'Grey';
 
+export type StylingOptions = {
+	id: string;
+	name: string;
+	background: string;
+	extraColor: string;
+};
+
+export type LayoutOptions = {
+	id: string;
+	name: string;
+	numberOfColumns: number;
+	shouldRenderCarousel: boolean;
+};
+
+export type RenderOptions = {
+	id: string;
+	name: string;
+	layoutOptions: LayoutOptions;
+};
+
 export type ISection = {
 	id: string;
 	sectionType: SectionType;
@@ -40,6 +60,20 @@ export type ISection = {
 	embedForm: BodyType;
 	background: BackgroundType;
 	automaticOrder: true;
+
+	mediaItem: {
+		id: string;
+		name: string;
+		media: TAsset;
+		youtubeVideoUrl: string;
+		emdedForm: BodyType;
+	};
+
+	stylingOptions: StylingOptions;
+
+	renderOptions: RenderOptions;
+
+	v2Flag: boolean;
 };
 
 export enum ResourceBlocksEnum {
@@ -68,11 +102,13 @@ export enum ReferenceTypeEnum {
 	'Investors' = 'Investors',
 	'Stats Card with Arrows' = 'Stats Card with Arrows',
 	'Code Snippet' = 'Code Snippet',
+	'Card' = 'Card',
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
 
 export type IReferencedSection = {
+	[x: string]: any;
 	id: string;
 	title: string;
 	metaDescription: string;
@@ -105,4 +141,6 @@ export type IReferencedSection = {
 	isHidden: boolean;
 	hideNavigationAnchor: boolean;
 	featuredItems: Array<Pick<TResource, 'generateStaticPage' | 'id' | 'heading' | 'externalLink' | 'internalLink'>>;
+
+	stylingOptions?: StylingOptions;
 };

@@ -1,4 +1,4 @@
-import {AspectRatio, Container} from '@mantine/core';
+import {AspectRatio, Container, rem} from '@mantine/core';
 import React from 'react';
 
 import * as classes from './imageContainer.module.css';
@@ -13,6 +13,7 @@ type ImageContainerProps = {
 	contain?: boolean;
 	containerRef?: React.MutableRefObject<undefined>;
 	isVideo?: boolean;
+	cover?: boolean;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -25,24 +26,28 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	containerRef,
 	isVideo,
 }) => {
-	
 	const context = React.useContext(PageContext);
-	
-	return (
-	<Container ref={containerRef} fluid className={classes.imageContainer}>
-		<AspectRatio
-			className={contain ? classes.objectFitContent : undefined}
-			style={{width: '100%', height: '100%'}}
-			ratio={ratio}
-			data-fluid={fluid}
-			data-background={background}
-			data-expanded={expanded}
-			data-video={isVideo}
-			data-context={context.title}
-		>
-			{children}
-		</AspectRatio>
-	</Container>
-)};
 
-export default React.memo(ImageContainer);
+	return (
+		<Container
+			ref={containerRef}
+			fluid={fluid}
+			data-video={isVideo}
+			data-expanded={expanded}
+			data-context={context.title}
+			className={classes.imageContainer}
+		>
+			<AspectRatio
+				className={classes.aspectRatio}
+				data-contain={contain}
+				ratio={ratio}
+				maw={isVideo ? undefined : 335}
+				mx={'auto'}
+			>
+				{children}
+			</AspectRatio>
+		</Container>
+	);
+};
+
+export default ImageContainer;

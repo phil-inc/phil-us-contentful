@@ -33,9 +33,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 						|| section.referenceType === ReferenceTypeEnum.FAQs
 					}
 					columns={GRID_COLUMNS}
-					gutter={section.referenceType === ReferenceTypeEnum['Stats Card with Arrows'] ? 20 : theme.spacing.md}
-					m={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
-					mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
+					gutter={36}
+					// m={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
+					// mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
+					mt={80}
 				>
 					{section.references.map((resource, index, array) => (
 						<Grid.Col

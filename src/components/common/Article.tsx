@@ -24,7 +24,7 @@ import Asset from './Asset/Asset';
 import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
 import ImageContainer from './Container/ImageContainer';
 
-import * as classes from './article.module.css';
+import * as classes from './card.module.css';
 
 type ArticleProps = {
 	color: 'blue' | 'yellow' | 'green' | 'none';

@@ -51,7 +51,7 @@
 .navbar ul li {
     position: relative;
     list-style-type: none;
-    height: 120px;
+    /* height: 120px; */
     display: flex;
     align-items: center;
     justify-content: center;

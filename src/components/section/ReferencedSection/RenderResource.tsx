@@ -18,6 +18,7 @@ import {ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
 
 import * as classes from './renderResource.module.css';
+import { CCard } from 'components/common/CCard';
 
 // Get colors for resources based on resource type
 export const getSectionColors = (referenceType: string) => {
@@ -71,6 +72,10 @@ const CodeSnippetComponent: ComponentFunction = ({resource}) => <CodeSnippet res
 
 const ArticleComponent: ComponentFunction = ({resource, index}) => (
 	<Article color={getColor(index!)} resource={resource} />
+);
+
+const CardComponent: ComponentFunction = ({resource, index}) => (
+	<CCard resource={resource} />
 );
 
 const TestimonialCompanyComponent: ComponentFunction = ({resource}) => (
@@ -146,6 +151,8 @@ const getComponent = (
 		[ReferenceTypeEnum.Location]: CardWithImageComponent,
 		[ReferenceTypeEnum.FAQs]: FAQComponent,
 		[ReferenceTypeEnum['Image Carousel']]: ImageCarouselComponent,
+
+		[ReferenceTypeEnum.Card]: CardComponent,
 	};
 
 	const componentFunction = componentMappings[referenceType];

@@ -23,6 +23,7 @@ import {parseScript} from 'utils/parseScript';
 
 import cx from 'clsx';
 import * as classes from './basicSection.module.css';
+import {getColorFromStylingOptions} from 'utils/stylingOptions';
 
 type BasicSectionProps = {
 	section: ISection;
@@ -158,13 +159,22 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		}
 	};
 
+	console.log({section});
+
 	return (
 		<Container
 			id={slugify(section.header, {lower: true, strict: true})}
 			fluid
 			className={classes.container}
-			my={context.title === CONTACT_PAGE ? 0 : isMobileView ? 32 : isEmbedFormTemplate ? 152 : 92}
-			// Sx={{background: sectionBackground(section.background)}}
+			data-index={index}
+			data-isMobileView={isMobileView}
+			data-context={context.title}
+			data-isEmbedFormTemplate={isEmbedFormTemplate}
+			style={{
+				background: section.v2Flag
+					? getColorFromStylingOptions(section.stylingOptions.background)
+					: sectionBackground(section.background),
+			}}
 		>
 			<>
 				<Grid
@@ -215,15 +225,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						) : (
 							<>
 								<Title
-									className={cx(
-										classes.title,
-										isEmbedFormTemplate
-											? index == 0
-												? cx(classes.embedFormTemplate, classes.firstIndex)
-												: classes.embedFormTemplate
-											: undefined
-									)}
+									className={classes.title}
 									order={titleOrdering}
+									data-index={index}
+									data-isEmbedFormTemplate={isEmbedFormTemplate}
 								>
 									{section.header}
 								</Title>
@@ -241,19 +246,23 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 													className={classes.body}
 													mt={handleSpacing(theme, theme.spacing.sm)}
 												>
-												{renderRichText(section.body, options)}
+													{renderRichText(section.body, options)}
 												</Text>,
 												heroRef.current
 											)
 										) : (
-											<Text data-isEmbedFormTemplate={isEmbedFormTemplate} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
+											<Text
+												data-isEmbedFormTemplate={isEmbedFormTemplate}
+												className={classes.body}
+												mt={handleSpacing(theme, theme.spacing.sm)}
+											>
 												{renderRichText(section.body, options)}
 											</Text>
 										)}
 									</Box>
 								)}
 								{Boolean(section.buttonText?.length) && (
-									<Group mt={handleSpacing(theme, theme.spacing.md)}>
+									<Group mt={40}>
 										{isExternal ? (
 											<Anchor href={link} target="_blank">
 												<Button variant="philDefault" style={{paddingBottom: '2px', paddingTop: '2px'}}>
@@ -272,12 +281,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					</Grid.Col>
 
 					{/* Hero Grid Column */}
+					{/* TODO:: Handle in css */}
 					<Grid.Col
-						className={isEmbedFormTemplate ? cx(classes.heroGridColumn, classes.embedFormTemplate) : undefined}
+						className={cx(classes.heroGridColumn, classes.embedFormTemplate)}
 						ref={heroRef}
 						order={imageColumnOrder}
 						span={{lg: 6, md: 6, sm: 12}}
 						style={{height: context.title === CONTACT_PAGE ? height : undefined}}
+						data-isEmbedFormTemplate={isEmbedFormTemplate}
 					>
 						{section.embedForm ? (
 							<Box className={classes.formWrapper}>
@@ -287,16 +298,40 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							<ImageContainer
 								containerRef={ref}
 								fluid
-								ratio={section?.youtubeVideoUrl ? 16 / 9 : undefined}
+								contain
+								ratio={
+									section.v2Flag
+										? section.mediaItem.youtubeVideoUrl
+											? 16 / 9
+											: undefined
+										: section?.youtubeVideoUrl
+										? 16 / 9
+										: undefined
+								}
 								background={
-									isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
+									section.v2Flag
+										? isVideoContent(section.mediaItem.media.file.contentType) ||
+										  Boolean(section?.mediaItem.youtubeVideoUrl)
+											? 'transparent'
+											: undefined
+										: isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
 										? 'transparent'
 										: undefined
 								}
 								expanded={context.title === CONTACT_PAGE}
-								isVideo={isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)}
+								isVideo={
+									section.v2Flag
+										? isVideoContent(section.mediaItem.media.file.contentType) ||
+										  Boolean(section?.mediaItem.youtubeVideoUrl)
+										: isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
+								}
 							>
-								<Asset asset={section.asset} youtubeVideoURL={section?.youtubeVideoUrl} />
+								<Asset
+									asset={section.v2Flag ? section.mediaItem.media : section.asset}
+									youtubeVideoURL={
+										section.v2Flag ? section.mediaItem.youtubeVideoUrl : section?.youtubeVideoUrl
+									}
+								/>
 							</ImageContainer>
 						)}
 					</Grid.Col>

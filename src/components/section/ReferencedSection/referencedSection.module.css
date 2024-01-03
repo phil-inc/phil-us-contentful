@@ -1,99 +1,95 @@
 .investorImage {
-    width: 300px;
+	width: 300px;
 }
 
 /* Replace '768px' with the actual breakpoint value for 'md' from your theme settings */
 @media (max-width: 768px) {
-    .investorImage {
-        width: fit-content;
-    }
+	.investorImage {
+		width: fit-content;
+	}
 }
 
 .chevron svg {
-    width: 40px;
-    height: 40px;
+	width: 40px;
+	height: 40px;
 }
 
 .label div {
-    justify-content: start;
-    margin-bottom: 0;
-    overflow-wrap: anywhere;
+	justify-content: start;
+	margin-bottom: 0;
+	overflow-wrap: anywhere;
 }
 
 .label div h2 {
-    font-family: 'Raleway, sans-serif';
-    font-size: min(55px, calc(1.5rem + 0.31vw));
+	font-family: 'Raleway, sans-serif';
+	font-size: min(55px, calc(1.5rem + 0.31vw));
 }
 
 .control {
-    padding: 20px;
-    padding-left: 100px;
-    padding-right: 100px;
-    border-bottom: 0px !important;
+	padding: 20px;
+	padding-left: 100px;
+	padding-right: 100px;
+	border-bottom: 0px !important;
 }
 
 @media (max-width: 768px) {
-    .control {
-        padding: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+	.control {
+		padding: 20px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
 }
 
 .content {
-    padding-left: 105px;
-    padding-right: 105px;
+	padding-left: 105px;
+	padding-right: 105px;
 }
 
 @media (max-width: 768px) {
-    .content {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+	.content {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
 }
 
 .item {
-    background: #F4F4F4;
+	background: #f4f4f4;
 }
 
 .item[data-active] {
-    background: #F4F4F4;
+	background: #f4f4f4;
 }
 
 .heading {
-    line-height: 1.2;
-    color: #000000;
+	line-height: 1.2;
+	color: #000000;
 }
 
 @media (max-width: 768px) {
-    .heading {
-        text-align: center;
-        margin-bottom: 10px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+	.heading {
+		text-align: center;
+		margin-bottom: 10px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
 }
 
-.subHeading {
-    font-family: 'Lato, sans-serif';
-    font-weight: 400;
-    color: #01201F;
-}
+
 
 @media (max-width: 768px) {
-    .subHeading {
-        text-align: center;
-        padding-left: 34px;
-        padding-right: 34px;
-    }
+	.subHeading {
+		text-align: center;
+		padding-left: 34px;
+		padding-right: 34px;
+	}
 }
 
 .codeSnippetStack {
-    align-items: flex-start;
+	align-items: flex-start;
 }
 
 @media (max-width: 768px) {
-    .codeSnippetStack {
-        align-items: center;
-    }
+	.codeSnippetStack {
+		align-items: center;
+	}
 }

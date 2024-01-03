@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Group, Anchor, Accordion, useMantineTheme} from '@mantine/core';
+import {Button, Group, Anchor, Accordion, useMantineTheme, Text} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {Link} from 'gatsby';
 import {type IReferencedSection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
@@ -17,6 +17,7 @@ import ReferencedSectionBody from './ReferencedSectionBody';
 import {getSectionColors} from './RenderResource';
 
 import * as classes from './referencedSection.module.css';
+import {getColorFromStylingOptions} from 'utils/stylingOptions';
 
 type ReferencedSectionProps = {
 	section: IReferencedSection;
@@ -41,9 +42,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 		try {
 			const isFromSMSIntro = params.get('isFromSMSIntro');
 			if (
-				section.referenceType === ReferenceTypeEnum['Stats Card with Arrows']
-				&& isFromSMSIntro === 'true'
-				&& isProduction
+				section.referenceType === ReferenceTypeEnum['Stats Card with Arrows'] &&
+				isFromSMSIntro === 'true' &&
+				isProduction
 			) {
 				mixpanel.init(process.env.GATSBY_MIXPANEL_TOKEN ?? '');
 				FullStory.init({orgId: process.env.GATSBY_FULLSTORY_ORG_ID ?? ''});
@@ -92,25 +93,23 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 
 	const [background, textColor] = getSectionColors(section.referenceType);
 
-	console.log({background})
-
 	return (
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
-			background={background}
+			background={section.v2flag ? getColorFromStylingOptions(section?.stylingOptions?.background) : background}
 			pt={
 				context.title === FIELD_PAGE || section.referenceType === ReferenceTypeEnum['Code Snippet']
 					? 0
-					: handleSpacing(theme, "92px")
+					: handleSpacing(theme, '92px')
 			}
 			pb={
-				section.referenceType === ResourceBlocksEnum['Phil Blog']
-				|| section.referenceType === ResourceBlocksEnum['Case Study']
-				|| section.referenceType === ResourceBlocksEnum['White Paper']
-				|| section.referenceType === ResourceBlocksEnum['Upcoming Events']
-				|| context.title === FIELD_PAGE
+				section.referenceType === ResourceBlocksEnum['Phil Blog'] ||
+				section.referenceType === ResourceBlocksEnum['Case Study'] ||
+				section.referenceType === ResourceBlocksEnum['White Paper'] ||
+				section.referenceType === ResourceBlocksEnum['Upcoming Events'] ||
+				context.title === FIELD_PAGE
 					? 0
-					: handleSpacing(theme, "92px")
+					: handleSpacing(theme, '92px')
 			}
 			fullWidth={section.referenceType === ReferenceTypeEnum['Image Carousel']}
 			py={section.referenceType === ReferenceTypeEnum.Banner ? 120 : undefined}
@@ -118,9 +117,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 		>
 			{context.title === FIELD_PAGE ? (
 				<Accordion
-					variant='separated'
-					radius='xs'
-					chevronPosition='left'
+					variant="separated"
+					radius="xs"
+					chevronPosition="left"
 					mb={24}
 					chevronSize={44}
 					classNames={{
@@ -153,15 +152,17 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 							textColor={textColor}
 						/>
 					)}
+
+					
 					<ReferencedSectionBody getSpan={getSpan} section={section} />
 				</>
 			)}
 
 			{/* bottom buttons */}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group justify='center' mt={handleSpacing(theme, theme.spacing.lg)}>
+				<Group justify="center" mt={handleSpacing(theme, theme.spacing.lg)}>
 					{isExternal ? (
-						<Anchor href={link} target='_blank'>
+						<Anchor href={link} target="_blank">
 							<Button color={'dark'}>{section.buttonText}</Button>
 						</Anchor>
 					) : (
