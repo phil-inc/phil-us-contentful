@@ -8,6 +8,14 @@ export type BodyType = RenderRichTextData<ContentfulRichTextGatsbyReference>;
 
 export type BackgroundType = 'Default' | 'Grey';
 
+export type MediaItem = {
+	id: string;
+	name?: string;
+	media?: TAsset;
+	youtubeLink?: string;
+	emdedForm?: BodyType;
+};
+
 export type StylingOptions = {
 	id: string;
 	name: string;

@@ -66,6 +66,7 @@
 .body {
 	font-size: 18px;
 	max-width: 100%;
+	margin-top: 40px;
 
 	&[data-isEmbedFormTemplate='true'] {
 		padding-left: 16px;

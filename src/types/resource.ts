@@ -1,5 +1,5 @@
 import type {TAsset} from './asset';
-import type {BodyType, StylingOptions} from './section';
+import type {BodyType, MediaItem, StylingOptions} from './section';
 
 export type TLink = {
 	link: string;
@@ -64,6 +64,7 @@ export type TResource = {
 	slug?: string; // Populates only for static pages
 
 	stylingOptions: StylingOptions;
+	media: MediaItem;
 };
 
 export type DownloadableAsset = {

@@ -15,7 +15,6 @@ type FooterProps = {
 };
 
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
-
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
 

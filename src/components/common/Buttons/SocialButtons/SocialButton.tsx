@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActionIcon, Anchor,  Tooltip} from '@mantine/core';
+import {ActionIcon, Anchor, Tooltip} from '@mantine/core';
 import {useClipboard, useHover, useTimeout} from '@mantine/hooks';
 import type {TablerIcon} from '@tabler/icons';
 import {ESocialShare} from 'types/social';
@@ -21,7 +21,6 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 		clipboard.reset();
 	}, 100);
 	const [href, setHref] = React.useState<string>();
-
 
 	const isCopyLink = type === ESocialShare.CopyLink;
 

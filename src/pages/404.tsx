@@ -17,8 +17,6 @@ export const Head: React.FC = () => (
 	</SEO>
 );
 
-
-
 const Error = () => {
 	const {classes} = useStyles();
 

@@ -74,8 +74,6 @@ type PageTemplateProps = {
 	};
 };
 
-
-
 // Utility functions for content type checks
 const isPDF = (contentType: string) => isPDFContent(contentType);
 const isVideo = (contentType: string) => isVideoContent(contentType);

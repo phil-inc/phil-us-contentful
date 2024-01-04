@@ -3,18 +3,7 @@ import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import {Layout} from 'layouts/Layout/Layout';
 import {type Block} from '@contentful/rich-text-types';
 import {SEO} from 'layouts/SEO/SEO';
-import {
-	Anchor,
-	AspectRatio,
-	Box,
-	Button,
-	Container,
-	Grid,
-	List,
-	Text,
-	Title,
-	useMantineTheme,
-} from '@mantine/core';
+import {Anchor, AspectRatio, Box, Button, Container, Grid, List, Text, Title, useMantineTheme} from '@mantine/core';
 import {Script, graphql} from 'gatsby';
 import {renderBanners} from 'components/common/Banner/Banner';
 import {type TResource, type TDownloadableResource} from 'types/resource';

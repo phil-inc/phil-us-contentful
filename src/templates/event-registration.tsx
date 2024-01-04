@@ -83,9 +83,7 @@ export const Head: React.FC<HelmetProps> = ({pageContext, data: {contentfulEvent
 	);
 };
 
-
 const EventRegistration: React.FC<EventRegistrationProps> = ({data}) => {
-
 	const banners = data.allContentfulResource.nodes.map(r => r.banners).flat(1) as TResource[];
 
 	const options = {

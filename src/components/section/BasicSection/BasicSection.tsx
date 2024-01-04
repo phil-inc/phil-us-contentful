@@ -72,23 +72,51 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					/>
 				);
 			},
+
+			// TODO: Refactor this
+			[BLOCKS.EMBEDDED_ENTRY](node, children) {
+				if (node?.data?.target) {
+					const {target} = node.data;
+
+					const button = (
+						<Button mt={40} variant='philDefault'>
+							{node.data.target.buttonText}
+						</Button>
+					);
+
+					if (target?.internalLink) {
+						const {link} = getLink(target.internalLink);
+
+						return <Link to={link}>{button}</Link>;
+					}
+
+					return (
+						<Anchor href={target.link.externalUrl} target='_blank' referrerPolicy='no-referrer'>
+							{button}
+						</Anchor>
+					);
+				}
+
+				return null;
+			},
+
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
-					<Text c={theme.colors.philBranding[9]} size="lg">
+					<Text data-isEmbedFormTemplate={isEmbedFormTemplate} className={classes.body}>
 						{children}
 					</Text>
 				);
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type="unordered" mb={20} pl={8}>
+					<List type='unordered' mb={20} pl={8}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type="ordered" mb={20} pl={8}>
+					<List type='ordered' mb={20} pl={8}>
 						{children}
 					</List>
 				);
@@ -96,7 +124,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
 					<List.Item>
-						<Text id="asdasd" size="lg" className={classes.listItem}>
+						<Text size='lg' className={classes.listItem}>
 							{children}
 						</Text>
 					</List.Item>
@@ -104,7 +132,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[INLINES.HYPERLINK](node, children) {
 				return (
-					<Anchor href={node.data.uri as string} target="_blank">
+					<Anchor href={node.data.uri as string} target='_blank'>
 						{children}
 					</Anchor>
 				);
@@ -214,7 +242,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								)}
 								<Divider
 									size={1}
-									variant="dashed"
+									variant='dashed'
 									mt={handleSpacing(theme, theme.spacing.sm)}
 									mb={handleSpacing(theme, theme.spacing.md)}
 								/>
@@ -233,45 +261,29 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									{section.header}
 								</Title>
 								{Boolean(section.subHeader?.subHeader.length) && (
-									<Text fw="bold" mt={handleSpacing(theme, theme.spacing.sm)}>
+									<Text fw='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
 										{section.subHeader?.subHeader}
 									</Text>
 								)}
 								{Boolean(section.body) && (
 									<Box className={classes.portal}>
-										{heroRef.current && isMobileView && section.embedForm ? (
-											createPortal(
-												<Text
-													size={theme.fontSizes.md}
-													className={classes.body}
-													mt={handleSpacing(theme, theme.spacing.sm)}
-												>
-													{renderRichText(section.body, options)}
-												</Text>,
-												heroRef.current
-											)
-										) : (
-											<Text
-												data-isEmbedFormTemplate={isEmbedFormTemplate}
-												className={classes.body}
-												mt={handleSpacing(theme, theme.spacing.sm)}
-											>
-												{renderRichText(section.body, options)}
-											</Text>
-										)}
+										{heroRef.current && isMobileView && section.embedForm
+											? createPortal(renderRichText(section.body, options), heroRef.current)
+											: renderRichText(section.body, options)}
 									</Box>
 								)}
+								{/* {TODO: Remove this and move to rendering with body} */}
 								{Boolean(section.buttonText?.length) && (
 									<Group mt={40}>
 										{isExternal ? (
-											<Anchor href={link} target="_blank">
-												<Button variant="philDefault" style={{paddingBottom: '2px', paddingTop: '2px'}}>
+											<Anchor href={link} target='_blank'>
+												<Button variant='philDefault' style={{paddingBottom: '2px', paddingTop: '2px'}}>
 													{section.buttonText}
 												</Button>
 											</Anchor>
 										) : (
 											<Link to={link}>
-												<Button variant="philDefault">{section.buttonText}</Button>
+												<Button variant='philDefault'>{section.buttonText}</Button>
 											</Link>
 										)}
 									</Group>
@@ -305,29 +317,30 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 											? 16 / 9
 											: undefined
 										: section?.youtubeVideoUrl
-										? 16 / 9
-										: undefined
+											? 16 / 9
+											: undefined
 								}
 								background={
 									section.v2Flag
-										? isVideoContent(section.mediaItem.media.file.contentType) ||
-										  Boolean(section?.mediaItem.youtubeVideoUrl)
+										? isVideoContent(section.mediaItem.media.file.contentType)
+										  || Boolean(section?.mediaItem.youtubeVideoUrl)
 											? 'transparent'
 											: undefined
 										: isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
-										? 'transparent'
-										: undefined
+											? 'transparent'
+											: undefined
 								}
 								expanded={context.title === CONTACT_PAGE}
 								isVideo={
 									section.v2Flag
-										? isVideoContent(section.mediaItem.media.file.contentType) ||
-										  Boolean(section?.mediaItem.youtubeVideoUrl)
+										? isVideoContent(section.mediaItem.media.file.contentType)
+										  || Boolean(section?.mediaItem.youtubeVideoUrl)
 										: isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
 								}
 							>
 								<Asset
 									asset={section.v2Flag ? section.mediaItem.media : section.asset}
+									objectFit='contain'
 									youtubeVideoURL={
 										section.v2Flag ? section.mediaItem.youtubeVideoUrl : section?.youtubeVideoUrl
 									}
@@ -336,15 +349,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						)}
 					</Grid.Col>
 				</Grid>
-				{section.isHubspotEmbed &&
-				section.isInsertSnippet &&
-				section.codeSnippet &&
-				Boolean(section.codeSnippet.codeSnippet.length) &&
-				isProduction ? (
-					<Script defer async>
-						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-					</Script>
-				) : null}
+				{section.isHubspotEmbed
+				&& section.isInsertSnippet
+				&& section.codeSnippet
+				&& Boolean(section.codeSnippet.codeSnippet.length)
+				&& isProduction ? (
+						<Script defer async>
+							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+						</Script>
+					) : null}
 			</>
 		</Container>
 	);

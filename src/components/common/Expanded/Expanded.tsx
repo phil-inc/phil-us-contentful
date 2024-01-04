@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, MantineSpacing, MantineStyleProps, StyleProp} from '@mantine/core';
+import {Container, type MantineSpacing, MantineStyleProps, type StyleProp} from '@mantine/core';
 import {handleSpacing} from 'utils/handleSpacing';
 import PageContext from 'contexts/PageContext';
 

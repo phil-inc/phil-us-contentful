@@ -15,7 +15,6 @@ type ResourceCarouselProps = {
 };
 
 export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSection}) => {
-
 	const theme = useMantineTheme();
 	const {width} = useViewportSize();
 
@@ -55,7 +54,7 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 				withIndicators
 				dragFree
 				loop
-				// styles={{
+				// Styles={{
 				// 	controls: {
 				// 		position: 'relative',
 				// 		marginTop: theme.spacing.lg,
@@ -98,7 +97,7 @@ export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSecti
 				withIndicators
 				dragFree
 				loop
-				// styles={{
+				// Styles={{
 				// 	controls: {
 				// 		position: 'relative',
 				// 		marginTop: theme.spacing.lg,

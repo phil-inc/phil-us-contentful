@@ -31,8 +31,8 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 	return (
 		<Group h={'100%'} gap={0}>
 			<Box
-				component="span"
-				h="100%"
+				component='span'
+				h='100%'
 				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
 			></Box>
@@ -40,20 +40,20 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 				radius={0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.background)}}
 				className={classes.paper}
-				data-hasAsset={!!asset}
+				data-hasAsset={Boolean(asset)}
 			>
-				<Group wrap="nowrap" gap={0} h={'100%'}>
+				<Group wrap='nowrap' gap={0} h={'100%'}>
 					{asset && (
 						<ImageContainer fluid cover>
-							<Asset asset={asset!} />
+							<Asset asset={asset} />
 						</ImageContainer>
 					)}
 					<Stack
 						className={classes.stack}
-						data-hasAsset={!!asset}
-						align="flex-start"
-						justify="space-between"
-						h="100%"
+						data-hasAsset={Boolean(asset)}
+						align='flex-start'
+						justify='space-between'
+						h='100%'
 					>
 						<Title order={3}>{heading}</Title>
 
@@ -65,7 +65,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 						{!asset ? (
 							isExternal ? (
-								<Anchor href={link} target="_blank">
+								<Anchor href={link} target='_blank'>
 									<Button color={'dark'}>{buttonText}</Button>
 								</Anchor>
 							) : (

@@ -34,7 +34,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					}
 					columns={GRID_COLUMNS}
 					gutter={36}
-					// m={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
+					// M={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
 					// mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
 					mt={80}
 				>

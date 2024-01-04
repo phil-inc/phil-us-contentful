@@ -94,10 +94,18 @@ export const query = graphql`
 					body {
 						raw
 						references {
-							contentful_id
-							__typename
-							description
-							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+							... on ContentfulButton {
+								id
+								__typename
+								buttonText
+								buttonStyle
+								v2flag
+								link {
+									linkLabel
+									name
+									externalUrl
+								}
+							}
 						}
 					}
 					isHubspotEmbed

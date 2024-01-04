@@ -9,13 +9,16 @@ type CodeSnippetType = {
 };
 
 const CodeSnippet: React.FC<CodeSnippetType> = React.memo(({resource}) => {
-	const snippet = extractString(resource.body as {raw: string});
+	let snippet = '';
+	const media = resource?.media;
 
-	return (
-		<Box mt={30}>
-			<ParseContent content={snippet} />
-		</Box>
-	);
+	if (media?.emdedForm && media.emdedForm.raw !== '') {
+		snippet = extractString(media.emdedForm as {raw: string});
+	} else {
+		snippet = extractString(resource.body as {raw: string});
+	}
+
+	return <ParseContent content={snippet} />;
 });
 
 export default CodeSnippet;

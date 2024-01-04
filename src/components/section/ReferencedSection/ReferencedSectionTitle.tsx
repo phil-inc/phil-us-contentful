@@ -16,23 +16,18 @@ type ReferencedSectionTitleProps = {
 const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section, isEmbedFormTemplate, textColor}) => {
 	const theme = useMantineTheme();
 
-	const renderTitle = (
-		text: string,
-		size: number | undefined,
-		className?: string,
-		order?: TitleOrder,
-		textColor?: string
-	) => (
-		<Stack>
-			<Title className={className} order={order} size={size} c={textColor}>
-				{text}
-			</Title>
-			{section.subHeading && (
+	const renderTitle = (text: string, order?: TitleOrder, className?: string) => (
+		<Title className={className} order={order}>
+			{text}
+		</Title>
+		// <Stack>
+
+		/* {section.subHeading && (
 				<Group justify="center" mt={40}>
 					<Text className={classes.subHeading}>{section.subHeading.subHeading}</Text>
 				</Group>
-			)}
-		</Stack>
+			)} */
+		// </Stack>
 	);
 
 	switch (true) {
@@ -40,8 +35,8 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 		case RESOURCE_BLOCKS.includes(section.referenceType):
 			return (
 				<Box mb={handleSpacing(theme, theme.spacing.md)}>
-					{renderTitle(section.header, 35, undefined, 3, undefined)}
-					<Divider variant="dashed" size={1} className={classes.divider} />
+					{renderTitle(section.header, 3, undefined)}
+					<Divider variant='dashed' size={1} className={classes.divider} />
 				</Box>
 			);
 
@@ -50,20 +45,20 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 			return (
 				<Stack
 					className={classes.codeSnippetStack}
-					justify="flex-start"
+					justify='flex-start'
 					// TODO: handle code snippet block
 					// spacing={0}
 					mb={isEmbedFormTemplate ? 48 : undefined}
 				>
-					{Boolean(section.header?.length) && renderTitle(section.header, 36, classes.heading, 2, undefined)}
-					{Boolean(section?.subHeading?.subHeading?.length) &&
-						renderTitle(section.subHeading.subHeading, 20, classes.subHeading, 3, undefined)}
+					{Boolean(section.header?.length) && renderTitle(section.header, 2, classes.heading)}
+					{Boolean(section.subHeading?.subHeading?.length)
+						&& renderTitle(section.subHeading.subHeading, 3, classes.subHeading)}
 				</Stack>
 			);
 		default:
 			return (
-				<Group justify="center">
-					{Boolean(section.header?.length) && renderTitle(section.header, undefined, undefined, 2, textColor)}
+				<Group justify='center'>
+					{Boolean(section.header?.length) && renderTitle(section.header, 2, classes.textColor)}
 				</Group>
 			);
 	}

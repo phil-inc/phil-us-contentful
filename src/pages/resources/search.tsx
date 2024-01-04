@@ -2,18 +2,7 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import {SEO} from 'layouts/SEO/SEO';
-import {
-	ActionIcon,
-	Badge,
-	Box,
-	Divider,
-	Grid,
-	Image,
-	Pagination,
-	Text,
-	Title,
-	useMantineTheme,
-} from '@mantine/core';
+import {ActionIcon, Badge, Box, Divider, Grid, Image, Pagination, Text, Title, useMantineTheme} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {Script, graphql, navigate} from 'gatsby';
@@ -101,22 +90,20 @@ type SearchBodyType = {
 	filterQueryParam: string[];
 };
 
-const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryParam}) => {
-	return (
-		<Box className={classes.emptyStateContainer}>
-			<Text size={18} color='#0A0A0A'>
+const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryParam}) => (
+	<Box className={classes.emptyStateContainer}>
+		<Text size={18} color='#0A0A0A'>
 				0 items found for "{searchQueryParam}"
-			</Text>
-			<Divider mt={22} mb={47} />
-			<Title color='#0A0A0A' order={2} size={28} mb={8}>
+		</Text>
+		<Divider mt={22} mb={47} />
+		<Title color='#0A0A0A' order={2} size={28} mb={8}>
 				Search No Result
-			</Title>
-			<Text size={18} color='#0A0A0A'>
+		</Title>
+		<Text size={18} color='#0A0A0A'>
 				We're sorry. We cannot find any matches for your search term.
-			</Text>
-		</Box>
-	);
-};
+		</Text>
+	</Box>
+);
 
 const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQueryParam, filterQueryParam}) => {
 	const {classes} = useStyles();

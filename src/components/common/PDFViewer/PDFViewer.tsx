@@ -10,8 +10,6 @@ import * as classes from './pdfViewer.module.css';
 const PADDING = 20;
 const MAX_PAGE_WIDTH = 595;
 
-
-
 // Define the properties for the PDFViewer component
 type PDFViewerProps = {
 	url: string;
@@ -41,7 +39,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 	}, [width]);
 
 	const height = ref?.current?.clientHeight as number;
-	// const {classes} = useStyles({
+	// Const {classes} = useStyles({
 	// 	pageContainerHeight: height ?? 500,
 	// 	pageContainerWidth: pageContainerWidth ?? MAX_PAGE_WIDTH,
 	// 	padding: PADDING,

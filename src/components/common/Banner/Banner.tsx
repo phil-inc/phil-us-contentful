@@ -43,7 +43,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 					</Grid.Col>
 					{Boolean(buttonText?.length)
 						&& (isHubspotEmbed ? (
-							<Grid.Col span={{lg: 2, sm:12}}>
+							<Grid.Col span={{lg: 2, sm: 12}}>
 								<Modal
 									size='ls'
 									p={0}
