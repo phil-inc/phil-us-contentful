@@ -50,7 +50,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					)}
 					<Stack
 						className={classes.stack}
-						data-hasAsset={Boolean(asset)}
+						data-has-asset={Boolean(asset)}
 						align='flex-start'
 						justify='space-between'
 						h='100%'

@@ -35,7 +35,7 @@
 .stack {
     padding: 64px 0;
 
-    &[data-hasAsset = 'true'] {
+    &[data-has-asset = 'true'] {
         padding: 64px 32px;
     }
 }

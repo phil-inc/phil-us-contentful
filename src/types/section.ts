@@ -110,7 +110,9 @@ export enum ReferenceTypeEnum {
 	'Investors' = 'Investors',
 	'Stats Card with Arrows' = 'Stats Card with Arrows',
 	'Code Snippet' = 'Code Snippet',
+
 	'Card' = 'Card',
+	'Stepper Cards' = 'Stepper Cards',
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
