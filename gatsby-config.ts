@@ -34,7 +34,6 @@ const config: GatsbyConfig = {
   },
  adapter: adapter(),
   plugins: [
-    'gatsby-plugin-mantine',
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-inline-svg`,
