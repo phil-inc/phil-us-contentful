@@ -78,7 +78,7 @@ const ArticleComponent: ComponentFunction = ({resource, index}) => (
 const CardComponent: ComponentFunction = ({resource, index}) => <CCard resource={resource} />;
 
 const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength}) => (
-	<StepperCard resource={resource} index={index} arrayLength={arrayLength} />
+	<StepperCard resource={resource} index={index!} arrayLength={arrayLength!} />
 );
 
 const TestimonialCompanyComponent: ComponentFunction = ({resource}) => (

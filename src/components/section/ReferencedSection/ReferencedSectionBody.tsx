@@ -23,6 +23,10 @@ type ReferencedSectionBodyProps = {
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, getSpan}) => {
 	const theme = useMantineTheme();
 
+	console.log({section});
+
+	const span = 12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
+
 	switch (section.referenceType) {
 		case ReferenceTypeEnum['Image Carousel']:
 			return <ResourceCarousel imageCaraouselSection={section} />;
@@ -32,23 +36,23 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			return (
 				<Grid
 					grow={
-						section.referenceType === ReferenceTypeEnum.Investors
-						|| section.referenceType === ReferenceTypeEnum.FAQs 
+						section.referenceType === ReferenceTypeEnum.Investors ||
+						section.referenceType === ReferenceTypeEnum.FAQs
 					}
-					columns={GRID_COLUMNS}
+					// columns={GRID_COLUMNS}
 					gutter={section.referenceType === ReferenceTypeEnum['Stepper Cards'] ? 0 : 36}
 					// M={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
 					// mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
 					mt={80}
-					justify='center'
-					align='stretch'
+					justify="center"
+					align="stretch"
 				>
 					{section.references.map((resource, index, array) => (
 						<Grid.Col
 							className={classes.column}
 							p={section.referenceType === ReferenceTypeEnum.Investors ? 0 : undefined}
 							key={resource.id + 'mapReferencedSectionResource'}
-							span={getSpan(section.referenceType)}
+							span={section.v2flag ? {base: span} : getSpan(section.referenceType)}
 							data-reference-type={section.referenceType}
 						>
 							<RenderResource

@@ -1,26 +1,40 @@
-/* Styles.css */
+.paper {
+	max-width: 363px;
+	padding: 64px 34px;
+	height: 100%;
+}
 
-.card {
-    position: relative;
-    overflow: hidden;
-    font-family: 'Raleway', sans-serif;
-    font-size: 26px;
-    height: 100%;
-    display: flex;
+.body {
+	color: var(--Phil-Rebrand-Neutral-Gunmetal, #525252);
+	font-family: Lato, sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 140%;
+}
+
+.avatarPlaceholder {
+	color: white;
 }
 
 .author {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
+	color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
+	font-family: Raleway, sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 160%;
 }
 
-.designation {
-    font-family: 'Lato', sans-serif;
-    font-size: 16px;
+.authorTitle {
+	color: var(--Phil-Rebrand-Neutral-Gunmetal, #525252);
+	font-family: Lato, sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%;
 }
 
-.testimonialImage {
-    width: 100%;
-    height: 100%;
+.phil-Avatar-placeholder {
+    background-color: #0a0a0a !important;
 }

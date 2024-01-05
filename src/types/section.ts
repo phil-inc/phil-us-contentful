@@ -153,4 +153,5 @@ export type IReferencedSection = {
 	featuredItems: Array<Pick<TResource, 'generateStaticPage' | 'id' | 'heading' | 'externalLink' | 'internalLink'>>;
 
 	stylingOptions?: StylingOptions;
+	renderOptions?: RenderOptions;
 };

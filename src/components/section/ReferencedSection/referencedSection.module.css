@@ -93,7 +93,8 @@
 }
 
 .column {
-	&[data-reference-type='Stepper Cards'] {
+	&[data-reference-type='Stepper Cards'],
+	&[data-reference-type='Testimonial'] {
 		max-width: fit-content;
 	}
 }
