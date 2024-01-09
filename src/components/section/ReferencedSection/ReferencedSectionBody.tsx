@@ -1,8 +1,7 @@
 import React from 'react';
-import {Grid, useMantineTheme} from '@mantine/core';
+import {Grid} from '@mantine/core';
 import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
 import {type IReferencedSection, ReferenceTypeEnum} from 'types/section';
-import {TResource} from 'types/resource';
 import RenderResource from './RenderResource';
 
 const GRID_COLUMNS = 100;
@@ -21,11 +20,9 @@ type ReferencedSectionBodyProps = {
 };
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, getSpan}) => {
-	const theme = useMantineTheme();
-
-	console.log({section});
-
 	const span = 12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
+
+	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
 
 	switch (section.referenceType) {
 		case ReferenceTypeEnum['Image Carousel']:
@@ -43,7 +40,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					gutter={section.referenceType === ReferenceTypeEnum['Stepper Cards'] ? 0 : 36}
 					// M={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
 					// mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
-					mt={80}
+					mt={addMargin ? 80 : 0}
 					justify="center"
 					align="stretch"
 				>

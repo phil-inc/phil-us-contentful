@@ -1,7 +1,6 @@
 import React from 'react';
 import {type TResource} from 'types/resource';
 import {extractString} from 'utils/parseScript';
-import {Box} from '@mantine/core';
 import {ParseContent} from './ParseContent';
 
 type CodeSnippetType = {

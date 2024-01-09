@@ -40,6 +40,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 		},
 	};
 
+	// TODO: improve this
 	if (resource?.sys?.contentType?.sys?.id === 'mediaItem') {
 
 		return (
@@ -96,11 +97,11 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 						{!asset && !resource.isFaq && buttonText?.length ? (
 							isExternal ? (
 								<Anchor href={link} target="_blank">
-									<Button color={'dark'}>{buttonText}</Button>
+									<Button variant='philDefault'>{buttonText}</Button>
 								</Anchor>
 							) : (
 								<Link to={link}>
-									<Button color={'dark'}>{buttonText}</Button>
+									<Button variant='philDefault'>{buttonText}</Button>
 								</Link>
 							)
 						) : null}

@@ -155,11 +155,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 				<Group justify="center" mt={handleSpacing(theme, theme.spacing.lg)}>
 					{isExternal ? (
 						<Anchor href={link} target="_blank">
-							<Button color={'dark'}>{section.buttonText}</Button>
+							<Button variant='philDefault'>{section.buttonText}</Button>
 						</Anchor>
 					) : (
 						<Link to={link}>
-							<Button color={'dark'}>{section.buttonText}</Button>
+							<Button variant='philDefault'>{section.buttonText}</Button>
 						</Link>
 					)}
 				</Group>
