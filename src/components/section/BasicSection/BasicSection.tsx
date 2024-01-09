@@ -78,6 +78,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				if (node?.data?.target) {
 					const {target} = node.data;
 
+					console.log({target})
+
 					const button = (
 						<Button mt={40} variant='philDefault'>
 							{node.data.target.buttonText}
@@ -294,6 +296,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 					{/* Hero Grid Column */}
 					{/* TODO:: Handle in css */}
+					{/* TODO: Refactor v2Flags and links */}
 					<Grid.Col
 						className={cx(classes.heroGridColumn, classes.embedFormTemplate)}
 						ref={heroRef}
@@ -313,7 +316,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								contain
 								ratio={
 									section.v2Flag
-										? section.mediaItem.youtubeVideoUrl
+										? section.mediaItem.youtubeLink
 											? 16 / 9
 											: undefined
 										: section?.youtubeVideoUrl
@@ -322,27 +325,27 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								}
 								background={
 									section.v2Flag
-										? isVideoContent(section.mediaItem.media.file.contentType)
+										? isVideoContent(section?.mediaItem?.media?.file?.contentType)
 										  || Boolean(section?.mediaItem.youtubeVideoUrl)
 											? 'transparent'
 											: undefined
-										: isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
+										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
 											? 'transparent'
 											: undefined
 								}
 								expanded={context.title === CONTACT_PAGE}
 								isVideo={
 									section.v2Flag
-										? isVideoContent(section.mediaItem.media.file.contentType)
-										  || Boolean(section?.mediaItem.youtubeVideoUrl)
-										: isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
+										? isVideoContent(section?.mediaItem?.media?.file?.contentType)
+										  || Boolean(section?.mediaItem?.youtubeLink)
+										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
 								}
 							>
 								<Asset
-									asset={section.v2Flag ? section.mediaItem.media : section.asset}
+									asset={section.v2Flag ? section.mediaItem : section.asset}
 									objectFit='contain'
 									youtubeVideoURL={
-										section.v2Flag ? section.mediaItem.youtubeVideoUrl : section?.youtubeVideoUrl
+										section.v2Flag ? section.mediaItem.youtubeLink : section?.youtubeVideoUrl
 									}
 								/>
 							</ImageContainer>

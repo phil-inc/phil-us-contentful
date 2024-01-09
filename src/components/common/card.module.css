@@ -4,9 +4,16 @@
 	height: 100%;
 	line-height: 27px;
 
-    &[data-hasAsset="true"] {
-        padding: 0;
-    }
+	&[data-hasAsset='true'] {
+		padding: 0;
+		width: 100%;
+	}
+}
+
+.before {
+	&[data-has-asset='true'] {
+		display: none;
+	}
 }
 
 .imageWrapper {
@@ -33,9 +40,13 @@
 }
 
 .stack {
-    padding: 64px 0;
+	/* padding: 64px 0; */
 
-    &[data-has-asset = 'true'] {
-        padding: 64px 32px;
-    }
+	&[data-has-asset='true'] {
+		padding: 64px 32px;
+	}
+
+	&[data-is-faq='true'] {
+		padding: 0;
+	}
 }

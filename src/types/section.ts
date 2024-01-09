@@ -73,7 +73,7 @@ export type ISection = {
 		id: string;
 		name: string;
 		media: TAsset;
-		youtubeVideoUrl: string;
+		youtubeLink: string;
 		emdedForm: BodyType;
 	};
 
@@ -113,6 +113,7 @@ export enum ReferenceTypeEnum {
 
 	'Card' = 'Card',
 	'Stepper Cards' = 'Stepper Cards',
+	'Brand Outcome Card' = 'Brand Outcome Card',
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;

@@ -7,12 +7,13 @@ import {getYouTubeId} from 'utils/links';
 import loadable from '@loadable/component';
 
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import {MediaItem} from 'types/section';
 
 const LiteYouTubeEmbed = loadable(async () => import('react-lite-youtube-embed'));
 const PDFViewer = loadable(async () => import('../PDFViewer/PDFViewer'));
 
 type AssetProps = {
-	asset: TAsset;
+	asset: TAsset | MediaItem;
 	youtubeVideoURL?: string;
 	width?: number;
 	objectFit?: GatsbyImageProps['objectFit'];
@@ -28,9 +29,9 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({videoId, title}) => (
 		<LiteYouTubeEmbed
 			id={videoId}
 			adNetwork={true}
-			params='rel=0'
-			rel='0'
-			poster='maxresdefault'
+			params="rel=0"
+			rel="0"
+			poster="maxresdefault"
 			title={title}
 			noCookie={true}
 		/>
@@ -38,33 +39,54 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({videoId, title}) => (
 );
 
 const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) => {
-	const {asset, youtubeVideoURL, width, objectFit} = props;
+	const {asset, youtubeVideoURL: youtubeURL, width, objectFit} = props;
+
+	let media = asset;
+	let url = '';
+	let title = '';
+	let contentType = '';
+	let youtubeVideoURL = youtubeURL;
+
+	// TODO: handle this better
+	if (asset?.media) {
+		media = asset?.media;
+		url = asset?.media?.file?.url ?? '';
+		title = asset?.name ?? '';
+		contentType = asset?.media?.file?.contentType ?? '';
+	} else if (asset?.youtubeLink) {
+		youtubeVideoURL = asset?.youtubeLink ?? '';
+		console.log({youtubeVideoURL});
+	} else {
+		url = asset?.file?.url ?? '';
+		title = asset?.title ?? '';
+		contentType = asset?.file?.contentType ?? '';
+	}
 
 	const renderContent = () => {
 		if (youtubeVideoURL?.length) {
 			const vid = getYouTubeId(youtubeVideoURL);
-			return vid && <YouTubeEmbed videoId={vid} title={asset.title || ''} />;
+			return vid && <YouTubeEmbed videoId={vid} title={title} />;
 		}
 
-		if (isVideoContent(asset.file.contentType)) {
+		if (isVideoContent(contentType)) {
 			return (
 				<AspectRatio ratio={16 / 9}>
-					<video src={asset.file.url} width={'99%'} height={'100%'} controls />
+					<video src={url} width={'99%'} height={'100%'} controls />
 				</AspectRatio>
 			);
 		}
 
-		if (asset.file.contentType === 'image/svg+xml') {
-			return <img style={{objectFit}} src={asset.file.url} alt={asset.title || ''} />;
+		if (contentType === 'image/svg+xml') {
+			return <img style={{objectFit}} src={url} alt={title} />;
 		}
 
-		if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
-			return <PDFViewer url={asset.file.url} pageContainerWidth={width!} ref={ref} />;
+		if (contentType === 'application/pdf' && typeof window !== 'undefined') {
+			return <PDFViewer url={url} pageContainerWidth={width!} ref={ref} />;
 		}
 
-		if (asset.file.contentType.startsWith('image/')) {
+		if (contentType?.startsWith('image/')) {
 			const pathToImage = getImage(asset);
-			return <GatsbyImage objectFit='fill' image={pathToImage!} alt={asset.title || ''} />;
+			return <GatsbyImage objectFit="fill" image={pathToImage!} alt={title} />;
 		}
 
 		return null;
@@ -73,4 +95,4 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 	return <Suspense fallback={<div>Loading...</div>}>{renderContent()}</Suspense>;
 });
 
-export default React.memo(Asset);
+export default Asset;

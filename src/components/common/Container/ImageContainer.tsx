@@ -1,4 +1,4 @@
-import {AspectRatio, Container, rem} from '@mantine/core';
+import {AspectRatio, Container, MantineSize, MantineSpacing, StyleProp, rem} from '@mantine/core';
 import React from 'react';
 
 import * as classes from './imageContainer.module.css';
@@ -14,6 +14,8 @@ type ImageContainerProps = {
 	containerRef?: React.MutableRefObject<undefined>;
 	isVideo?: boolean;
 	cover?: boolean;
+	mx?: StyleProp<React.CSSProperties['margin']>;
+	maw?: MantineSpacing;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -25,6 +27,8 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	contain = false,
 	containerRef,
 	isVideo,
+	mx = 'auto',
+	maw = 335,
 }) => {
 	const context = React.useContext(PageContext);
 
@@ -36,14 +40,9 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			data-expanded={expanded}
 			data-context={context.title}
 			className={classes.imageContainer}
+			maw={isVideo ? undefined : maw}
 		>
-			<AspectRatio
-				className={classes.aspectRatio}
-				data-contain={contain}
-				ratio={ratio}
-				maw={isVideo ? undefined : 335}
-				mx={'auto'}
-			>
+			<AspectRatio className={classes.aspectRatio} data-contain={contain} ratio={ratio} mx={mx}>
 				{children}
 			</AspectRatio>
 		</Container>

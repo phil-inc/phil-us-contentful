@@ -1,4 +1,8 @@
 export const isVideoContent = (contentType: string) => {
+	if (!contentType) {
+		return false;
+	}
+	
 	const [mime] = contentType.split('/');
 
 	if (mime === 'video') {

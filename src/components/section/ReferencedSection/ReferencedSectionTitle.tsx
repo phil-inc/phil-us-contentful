@@ -42,13 +42,12 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 
 		// Handle referenced sections in code snippet section
 		case section.referenceType === ReferenceTypeEnum['Code Snippet']:
+		case section.referenceType === ReferenceTypeEnum['Brand Outcome Card']:
 			return (
 				<Stack
 					className={classes.codeSnippetStack}
-					justify='flex-start'
-					// TODO: handle code snippet block
-					// spacing={0}
 					mb={isEmbedFormTemplate ? 48 : undefined}
+					data-reference-type={section.referenceType}
 				>
 					{Boolean(section.header?.length) && renderTitle(section.header, 2, classes.heading)}
 					{Boolean(section.subHeading?.subHeading?.length)

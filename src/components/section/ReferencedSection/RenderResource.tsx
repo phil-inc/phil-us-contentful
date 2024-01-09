@@ -20,6 +20,7 @@ import {handleSpacing} from 'utils/handleSpacing';
 import * as classes from './renderResource.module.css';
 import {CCard} from 'components/common/CCard';
 import StepperCard from 'components/common/Card/StepperCard/StepperCard';
+import { BrandOutcomeCard } from 'components/brandOutcomeCard/BrandOutcomeCard';
 
 // Get colors for resources based on resource type
 export const getSectionColors = (referenceType: string) => {
@@ -99,6 +100,7 @@ const FeaturedResourceComponent: ComponentFunction = ({theme, resource}) => (
 );
 
 const StatsCardComponent: ComponentFunction = ({resource}) => <StatsCard resource={resource} />;
+const BrandOutcomeCardComponent: ComponentFunction = ({resource}) => <BrandOutcomeCard resource={resource} />;
 
 const StatsCardWithArrowsComponent: ComponentFunction = ({resource, index, arrayLength}) => (
 	<StatsCard resource={resource} arrow={true} index={index === arrayLength! - 1 ? undefined : index} />
@@ -144,19 +146,20 @@ const getComponent = (
 		[ReferenceTypeEnum['Featured Resource']]: FeaturedResourceComponent,
 		[ReferenceTypeEnum['Info Card']]: FeaturedResourceComponent,
 		[ReferenceTypeEnum.Banner]: BannerComponent,
-		[ReferenceTypeEnum['Stats Card']]: StatsCardComponent,
 		[ReferenceTypeEnum['Stats Card with Arrows']]: StatsCardWithArrowsComponent,
 		[ReferenceTypeEnum['Prescriber Journey']]: PrescriberJourneyComponent,
 		[ReferenceTypeEnum['Team Member']]: ProfileComponent,
 		[ReferenceTypeEnum.Investors]: InvestorImageComponent,
 		[ReferenceTypeEnum['Press Release']]: PressReleaseComponent,
 		[ReferenceTypeEnum.Location]: CardWithImageComponent,
-		[ReferenceTypeEnum.FAQs]: FAQComponent,
 		[ReferenceTypeEnum['Image Carousel']]: ImageCarouselComponent,
 
 		[ReferenceTypeEnum.Card]: CardComponent,
 		[ReferenceTypeEnum['Code Snippet']]: CodeSnippetComponent,
 		[ReferenceTypeEnum['Stepper Cards']]: StepperCardComponent,
+		[ReferenceTypeEnum.FAQs]: FAQComponent,
+		[ReferenceTypeEnum['Stats Card']]: StatsCardComponent,
+		[ReferenceTypeEnum['Brand Outcome Card']]: BrandOutcomeCardComponent,
 	};
 
 	const componentFunction = componentMappings[referenceType];

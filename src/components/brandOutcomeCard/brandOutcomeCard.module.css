@@ -1,0 +1,26 @@
+.paper {
+    padding: 64px 38px;
+    width: calc(100% - 12px);
+	height: 100%;
+}
+
+.title {
+	color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
+	text-align: center;
+	font-variant-numeric: lining-nums proportional-nums;
+	font-family: Raleway, sans-serif;
+	font-size: 92px;
+	font-style: normal;
+	font-weight: 700;
+	letter-spacing: -5.52px;
+    line-height: 1;
+}
+
+.description {
+	color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
+	font-family: Raleway, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}

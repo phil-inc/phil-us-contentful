@@ -36,6 +36,7 @@
 
 .aspectRatio {
 	height: 100%;
+	margin: 0px;
 
 	img {
 		width: 100%;
