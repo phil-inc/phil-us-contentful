@@ -29,7 +29,6 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			return <ResourceCarousel imageCaraouselSection={section} />;
 
 		default:
-			// TODO: Manage columns from layout options
 			return (
 				<Grid
 					grow={

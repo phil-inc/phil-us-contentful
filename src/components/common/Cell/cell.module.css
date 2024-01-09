@@ -1,0 +1,16 @@
+.cellHeaderWrapper {
+	padding: 32px;
+}
+
+.cellHeader {
+	color: var(--Phil-Rebrand-Neutral-Pure, #fff);
+	font-family: Raleway, sans-serif;
+	font-size: 28px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+}
+
+.cellDetails {
+	padding: 32px;
+}

@@ -21,6 +21,7 @@ import * as classes from './renderResource.module.css';
 import {CCard} from 'components/common/CCard';
 import StepperCard from 'components/common/Card/StepperCard/StepperCard';
 import { BrandOutcomeCard } from 'components/brandOutcomeCard/BrandOutcomeCard';
+import Cell from 'components/common/Cell/Cell';
 
 // Get colors for resources based on resource type
 export const getSectionColors = (referenceType: string) => {
@@ -71,6 +72,8 @@ type ComponentFunctionProps = {
 type ComponentFunction = (props: ComponentFunctionProps) => JSX.Element | undefined;
 
 const CodeSnippetComponent: ComponentFunction = ({resource}) => <CodeSnippet resource={resource} />;
+
+const CellComponent: ComponentFunction = ({resource}) => <Cell resource={resource} />;
 
 const ArticleComponent: ComponentFunction = ({resource, index}) => (
 	<Article color={getColor(index!)} resource={resource} />
@@ -160,6 +163,7 @@ const getComponent = (
 		[ReferenceTypeEnum.FAQs]: FAQComponent,
 		[ReferenceTypeEnum['Stats Card']]: StatsCardComponent,
 		[ReferenceTypeEnum['Brand Outcome Card']]: BrandOutcomeCardComponent,
+		[ReferenceTypeEnum['Cell']]: CellComponent,
 	};
 
 	const componentFunction = componentMappings[referenceType];

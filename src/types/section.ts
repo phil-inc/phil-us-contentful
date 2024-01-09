@@ -111,9 +111,11 @@ export enum ReferenceTypeEnum {
 	'Stats Card with Arrows' = 'Stats Card with Arrows',
 	'Code Snippet' = 'Code Snippet',
 
+	// v2 components
 	'Card' = 'Card',
 	'Stepper Cards' = 'Stepper Cards',
 	'Brand Outcome Card' = 'Brand Outcome Card',
+	'Cell' = 'Cell',
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
