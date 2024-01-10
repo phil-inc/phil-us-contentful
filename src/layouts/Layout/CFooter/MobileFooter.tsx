@@ -40,8 +40,8 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 								.filter(section =>
 									Boolean(
 										section.header?.length
-												&& !section.isHidden
-												&& !(section as IReferencedSection)?.hideNavigationAnchor,
+											&& !section.isHidden
+											&& !(section as IReferencedSection)?.hideNavigationAnchor,
 									),
 								)
 								.map((section, index) => {
@@ -102,7 +102,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 		</Accordion>
 		<Box>
 			<Text size={'lg'} className={classes.footLinkHeader}>
-					Newsletter
+				Newsletter
 			</Text>
 			<Divider my={10} color='#6A7979' />
 			<HubspotNewsletter />

@@ -52,16 +52,19 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 			sizes: {
 				h1: {
 					fontSize: '60px',
+					lineHeight: '1',
 				},
 				h2: {
 					fontSize: '40px',
+					lineHeight: '1',
 				},
 				h3: {
 					fontSize: '28px',
+					lineHeight: '1',
 				},
 				h4: {
-					fontSize: 'min(30px, calc(1rem + 0.989vw))',
-					lineHeight: '1.3',
+					fontSize: '20px',
+					lineHeight: '1',
 				},
 				h5: {
 					fontSize: 'min(24px, calc(1rem + 0.989vw))',

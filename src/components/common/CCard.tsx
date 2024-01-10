@@ -20,6 +20,89 @@ type ArticleProps = {
 export const CCard: FC<ArticleProps> = ({resource}) => {
 	const {body, heading, asset, buttonText} = resource;
 
+	const options = {
+		renderNode: {
+			[BLOCKS.EMBEDDED_ASSET](node) {
+				return 'image here';
+
+				// Const imageData = richTextImages[node.data.target.sys.id];
+				// const image = getImage(imageData.image as ImageDataLike);
+				// return (
+				// 	<GatsbyImage
+				// 		style={{marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`}}
+				// 		image={image!}
+				// 		alt={''}
+				// 	/>
+				// );
+			},
+
+			// TODO: Refactor this
+			[BLOCKS.EMBEDDED_ENTRY](node, children) {
+				console.log({node, children}, 'yo hai');
+
+				if (node?.data?.target) {
+					const {target} = node.data;
+
+					if (target.__typename === 'ContentfulMediaItem') {
+						return (
+							<ImageContainer fluid maw={128}>
+								<Asset objectFit='contain' asset={target} />
+							</ImageContainer>
+						);
+					}
+
+					const button = <Button variant='philDefault'>{node.data.target.buttonText}</Button>;
+
+					if (target?.internalLink) {
+						const {link} = getLink(target.internalLink);
+
+						return <Link to={link}>{button}</Link>;
+					}
+
+					return (
+						<Anchor href={target?.link?.externalUrl} target='_blank' referrerPolicy='no-referrer'>
+							{button}
+						</Anchor>
+					);
+				}
+
+				return null;
+			},
+			[BLOCKS.PARAGRAPH](node, children) {
+				return <Text className={classes.paragraph}>{children}</Text>;
+			},
+
+			[BLOCKS.HEADING_1](node, children) {
+				return (
+					<Title order={1} data-is-faq={resource.isFaq}>
+						{children}
+					</Title>
+				);
+			},
+			[BLOCKS.HEADING_2](node, children) {
+				return (
+					<Title order={2} data-is-faq={resource.isFaq}>
+						{children}
+					</Title>
+				);
+			},
+			[BLOCKS.HEADING_3](node, children) {
+				return (
+					<Title order={3} data-is-faq={resource.isFaq}>
+						{children}
+					</Title>
+				);
+			},
+			[BLOCKS.HEADING_4](node, children) {
+				return (
+					<Title order={4} data-is-faq={resource.isFaq}>
+						{children}
+					</Title>
+				);
+			},
+		},
+	};
+
 	// TODO: handle any
 	let media: any = asset;
 	if (resource?.media) {
@@ -32,20 +115,11 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 	const {link, isExternal} = getLink(resource);
 
-	const options = {
-		renderNode: {
-			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text className={classes.paragraph}>{children}</Text>;
-			},
-		},
-	};
-
 	// TODO: improve this
 	if (resource?.sys?.contentType?.sys?.id === 'mediaItem') {
-
 		return (
 			<ImageContainer fluid contain maw={900} ratio={16 / 9}>
-				<Asset objectFit="cover" asset={media} />
+				<Asset objectFit='contain' asset={media} />
 			</ImageContainer>
 		);
 	}
@@ -55,12 +129,12 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 	return (
 		<Group h={'100%'} gap={0}>
 			<Box
-				component="span"
-				h="100%"
+				component='span'
+				h='100%'
 				className={classes.before}
 				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
-				data-has-asset={!!media}
+				data-has-asset={Boolean(media)}
 			></Box>
 			<Paper
 				radius={0}
@@ -68,23 +142,26 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 				className={classes.paper}
 				data-hasAsset={Boolean(media)}
 			>
-				<Group wrap="nowrap" gap={0} h={'100%'} preventGrowOverflow>
+				<Group wrap='nowrap' h={'100%'} gap={0} preventGrowOverflow align='start'>
 					{media && !resource.isFaq && (
+						// TODO: check regression with 1/2 ratio images
 						<ImageContainer fluid contain mx={'0px'}>
-							<Asset objectFit="cover" asset={media} />
+							<Asset objectFit='cover' asset={media} />
 						</ImageContainer>
 					)}
 					<Stack
 						className={classes.stack}
 						data-has-asset={Boolean(media)}
 						data-is-faq={resource.isFaq}
-						align="flex-start"
-						h="100%"
+						align='flex-start'
+						// H="100%"
 						gap={0}
 					>
-						<Title order={3} mb={40}>
-							{heading}
-						</Title>
+						{/* {!!heading && (
+							<Title data-is-faq={resource.isFaq} order={3} className={classes.title}>
+								{heading}
+							</Title>
+						)} */}
 
 						{!resource.isFaq ? (
 							resource?.description?.description?.length ? (
@@ -96,7 +173,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 						{!asset && !resource.isFaq && buttonText?.length ? (
 							isExternal ? (
-								<Anchor href={link} target="_blank">
+								<Anchor href={link} target='_blank'>
 									<Button variant='philDefault'>{buttonText}</Button>
 								</Anchor>
 							) : (

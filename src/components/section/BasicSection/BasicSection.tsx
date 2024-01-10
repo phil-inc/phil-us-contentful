@@ -78,8 +78,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				if (node?.data?.target) {
 					const {target} = node.data;
 
-					console.log({target})
-
 					const button = (
 						<Button mt={40} variant='philDefault'>
 							{node.data.target.buttonText}
@@ -132,6 +130,30 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					</List.Item>
 				);
 			},
+			[BLOCKS.HEADING_1](node, children) {
+				return (
+					<Title order={1} className={classes.title}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_2](node, children) {
+				return (
+					<Title order={2} className={classes.title}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_3](node, children) {
+				return (
+					<Title order={3} className={classes.title}>
+						{children}
+					</Title>
+				);
+			},
+
 			[INLINES.HYPERLINK](node, children) {
 				return (
 					<Anchor href={node.data.uri as string} target='_blank'>
@@ -188,8 +210,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				return 'transparent';
 		}
 	};
-
-	console.log({section});
 
 	return (
 		<Container
@@ -254,19 +274,19 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							</>
 						) : (
 							<>
-								<Title
+								{/* <Title
 									className={classes.title}
 									order={titleOrdering}
 									data-index={index}
 									data-isEmbedFormTemplate={isEmbedFormTemplate}
 								>
 									{section.header}
-								</Title>
-								{Boolean(section.subHeader?.subHeader.length) && (
+								</Title> */}
+								{/* {Boolean(section.subHeader?.subHeader.length) && (
 									<Text fw='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
 										{section.subHeader?.subHeader}
 									</Text>
-								)}
+								)} */}
 								{Boolean(section.body) && (
 									<Box className={classes.portal}>
 										{heroRef.current && isMobileView && section.embedForm
@@ -344,9 +364,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								<Asset
 									asset={section.v2Flag ? section.mediaItem : section.asset}
 									objectFit='contain'
-									youtubeVideoURL={
-										section.v2Flag ? section.mediaItem.youtubeLink : section?.youtubeVideoUrl
-									}
+									youtubeVideoURL={section.v2Flag ? section.mediaItem.youtubeLink : section?.youtubeVideoUrl}
 								/>
 							</ImageContainer>
 						)}

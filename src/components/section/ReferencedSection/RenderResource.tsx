@@ -20,7 +20,7 @@ import {handleSpacing} from 'utils/handleSpacing';
 import * as classes from './renderResource.module.css';
 import {CCard} from 'components/common/CCard';
 import StepperCard from 'components/common/Card/StepperCard/StepperCard';
-import { BrandOutcomeCard } from 'components/brandOutcomeCard/BrandOutcomeCard';
+import {BrandOutcomeCard} from 'components/brandOutcomeCard/BrandOutcomeCard';
 import Cell from 'components/common/Cell/Cell';
 
 // Get colors for resources based on resource type
@@ -86,10 +86,10 @@ const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength})
 );
 
 const TestimonialCompanyComponent: ComponentFunction = ({resource}) => (
-	<Testimonial type="company" resource={resource} />
+	<Testimonial type='company' resource={resource} />
 );
 
-const TestimonialPersonComponent: ComponentFunction = ({resource}) => <Testimonial type="person" resource={resource} />;
+const TestimonialPersonComponent: ComponentFunction = ({resource}) => <Testimonial type='person' resource={resource} />;
 
 const ResourceCardComponent: ComponentFunction = ({resource}) => <ResourceCard resource={resource} />;
 
@@ -136,7 +136,7 @@ const getComponent = (
 	arrayLength: number,
 	theme: MantineTheme,
 	classes: any,
-	resourceBackground: string
+	resourceBackground: string,
 ) => {
 	const componentMappings: Record<ReferenceTypeEnum | ResourceBlocksEnum, ComponentFunction> = {
 		[ReferenceTypeEnum.Article]: ArticleComponent,
@@ -163,7 +163,7 @@ const getComponent = (
 		[ReferenceTypeEnum.FAQs]: FAQComponent,
 		[ReferenceTypeEnum['Stats Card']]: StatsCardComponent,
 		[ReferenceTypeEnum['Brand Outcome Card']]: BrandOutcomeCardComponent,
-		[ReferenceTypeEnum['Cell']]: CellComponent,
+		[ReferenceTypeEnum.Cell]: CellComponent,
 	};
 
 	const componentFunction = componentMappings[referenceType];

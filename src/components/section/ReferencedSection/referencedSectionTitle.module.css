@@ -9,7 +9,7 @@
 	color: #000000;
 }
 
-.codeSnippetStack {
+.stack {
 	align-items: center;
 
 	&[data-reference-type='Code Snippet'] {

@@ -1,7 +1,7 @@
 import {Box, Group, Paper, Stack, Text, Title} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
-import {TResource} from 'types/resource';
+import {type TResource} from 'types/resource';
 import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
 
 import * as classes from './stepperCard.module.css';
@@ -9,8 +9,8 @@ import {getColorFromStylingOptions} from 'utils/stylingOptions';
 
 type StepperCardProps = {
 	resource: TResource;
-    arrayLength: number;
-    index: number;
+	arrayLength: number;
+	index: number;
 };
 
 const StepperCard: React.FC<StepperCardProps> = ({resource, index, arrayLength}) => {
@@ -54,12 +54,12 @@ const StepperCard: React.FC<StepperCardProps> = ({resource, index, arrayLength})
 		<Paper
 			style={{background: getColorFromStylingOptions(resource.stylingOptions.background)}}
 			className={classes.paper}
-            data-last-child={index === arrayLength - 1}
+			data-last-child={index === arrayLength - 1}
 		>
-				<Title className={classes.heading} order={3}>
-					{resource.heading}
-				</Title>
-				<Box mt={32}>{resource.body && renderRichText(resource.body, options)}</Box>
+			<Title className={classes.heading} order={3}>
+				{resource.heading}
+			</Title>
+			<Box mt={32}>{resource.body && renderRichText(resource.body, options)}</Box>
 		</Paper>
 	);
 };

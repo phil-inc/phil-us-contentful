@@ -93,14 +93,14 @@ type SearchBodyType = {
 const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryParam}) => (
 	<Box className={classes.emptyStateContainer}>
 		<Text size={18} color='#0A0A0A'>
-				0 items found for "{searchQueryParam}"
+			0 items found for "{searchQueryParam}"
 		</Text>
 		<Divider mt={22} mb={47} />
 		<Title color='#0A0A0A' order={2} size={28} mb={8}>
-				Search No Result
+			Search No Result
 		</Title>
 		<Text size={18} color='#0A0A0A'>
-				We're sorry. We cannot find any matches for your search term.
+			We're sorry. We cannot find any matches for your search term.
 		</Text>
 	</Box>
 );

@@ -2,7 +2,7 @@
 	padding: 0px;
 	width: 100%;
 	height: 100%;
-	margin: 0px;
+	margin: 0px !important;
 
 	&[data-fluid='true'] {
 		padding: 0px;

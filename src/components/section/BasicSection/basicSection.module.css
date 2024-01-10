@@ -52,12 +52,7 @@
 	}
 }
 
-.contactSubheader {
-}
-
 .portal {
-	/* display: none; */
-
 	@media (min-width: $phil-breakpoint-md) {
 		display: block;
 	}

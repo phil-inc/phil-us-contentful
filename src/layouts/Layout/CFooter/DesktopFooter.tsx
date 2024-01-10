@@ -57,8 +57,8 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 							.filter(section =>
 								Boolean(
 									section.header?.length
-											&& !section.isHidden
-											&& !(section as IReferencedSection)?.hideNavigationAnchor,
+										&& !section.isHidden
+										&& !(section as IReferencedSection)?.hideNavigationAnchor,
 								),
 							)
 							.map((section, index, array) => {
@@ -101,10 +101,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 											<Group mt={18}>
 												<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
 													<div>
-														<StaticImage
-															src='../../../assets/images/linkedin.svg'
-															alt='LinkedIn Icon'
-														/>
+														<StaticImage src='../../../assets/images/linkedin.svg' alt='LinkedIn Icon' />
 													</div>
 												</Anchor>
 											</Group>
@@ -119,7 +116,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 		<Grid.Col span={3}>
 			<Box sx={{width: '80%'}}>
 				<Text size={'lg'} mt={0} className={classes.footLinkHeader}>
-						Newsletter
+					Newsletter
 				</Text>
 				<Divider my={10} color='#6A7979' />
 				<HubspotNewsletter />

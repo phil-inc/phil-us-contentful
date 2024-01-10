@@ -7,7 +7,7 @@ import {getYouTubeId} from 'utils/links';
 import loadable from '@loadable/component';
 
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
-import {MediaItem} from 'types/section';
+import {type MediaItem} from 'types/section';
 
 const LiteYouTubeEmbed = loadable(async () => import('react-lite-youtube-embed'));
 const PDFViewer = loadable(async () => import('../PDFViewer/PDFViewer'));
@@ -29,9 +29,9 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({videoId, title}) => (
 		<LiteYouTubeEmbed
 			id={videoId}
 			adNetwork={true}
-			params="rel=0"
-			rel="0"
-			poster="maxresdefault"
+			params='rel=0'
+			rel='0'
+			poster='maxresdefault'
 			title={title}
 			noCookie={true}
 		/>
@@ -55,7 +55,6 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 		contentType = asset?.media?.file?.contentType ?? '';
 	} else if (asset?.youtubeLink) {
 		youtubeVideoURL = asset?.youtubeLink ?? '';
-		console.log({youtubeVideoURL});
 	} else {
 		url = asset?.file?.url ?? '';
 		title = asset?.title ?? '';
@@ -85,8 +84,8 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 		}
 
 		if (contentType?.startsWith('image/')) {
-			const pathToImage = getImage(asset);
-			return <GatsbyImage objectFit="fill" image={pathToImage!} alt={title} />;
+			const pathToImage = getImage(media);
+			return <GatsbyImage objectFit='fill' image={pathToImage!} alt={title} />;
 		}
 
 		return null;

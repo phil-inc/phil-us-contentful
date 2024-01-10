@@ -36,11 +36,19 @@
 	line-height: 120%; /* 19.2px */
 	font-size: 16px;
 	color: #525252;
-	margin-bottom: 32px;
+	/* margin-bottom: 32px; */
 }
 
 .stack {
-	/* padding: 64px 0; */
+	> * {
+		&:not(:first-child) {
+			margin-top: 32px;
+		}
+
+		&:nth-child(2):is(h4) {
+			margin-top: 8px;
+		}
+	}
 
 	&[data-has-asset='true'] {
 		padding: 64px 32px;
@@ -48,5 +56,12 @@
 
 	&[data-is-faq='true'] {
 		padding: 0;
+		height: fit-content;
+	}
+}
+
+.title {
+	&[data-is-faq='true'] {
+		margin-bottom: 0px;
 	}
 }

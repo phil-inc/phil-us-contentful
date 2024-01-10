@@ -13,7 +13,7 @@ import * as classes from './socialShare.module.css';
 const SocialShare: React.FC = () => (
 	<Group position='left' spacing='sm'>
 		<Text className={classes['font-lato']} size={16} m={0} color='#6B7979'>
-				Share this article on:
+			Share this article on:
 		</Text>
 		<Group spacing='sm'>
 			<SocialButton type={ESocialShare.Facebook} icon={FacebookIcon as React.FC} />

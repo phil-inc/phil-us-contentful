@@ -31,17 +31,13 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 		default:
 			return (
 				<Grid
-					grow={
-						section.referenceType === ReferenceTypeEnum.Investors ||
-						section.referenceType === ReferenceTypeEnum.FAQs
-					}
-					// columns={GRID_COLUMNS}
+					grow
 					gutter={section.referenceType === ReferenceTypeEnum['Stepper Cards'] ? 0 : 36}
 					// M={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
 					// mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
 					mt={addMargin ? 80 : 0}
-					justify="center"
-					align="stretch"
+					justify='center'
+					align='stretch'
 				>
 					{section.references.map((resource, index, array) => (
 						<Grid.Col

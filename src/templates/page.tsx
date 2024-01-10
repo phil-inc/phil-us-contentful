@@ -35,31 +35,31 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 
 	return (
 		<SEO title={title}>
-			<meta name="twitter:card" content="summary_large_image" />
-			<meta name="twitter:title" content={title} />
-			<meta name="twitter:description" content={contentfulPage.description} />
-			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name="description" content={contentfulPage.description} />
-			<meta property="og:title" content={title} />
-			<meta property="og:type" content={'Page'} />
-			<meta property="og:description" content={contentfulPage.description} />
-			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property="og:url" content={`https://phil.us${config.slug}`} />
+			<meta name='twitter:card' content='summary_large_image' />
+			<meta name='twitter:title' content={title} />
+			<meta name='twitter:description' content={contentfulPage.description} />
+			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name='description' content={contentfulPage.description} />
+			<meta property='og:title' content={title} />
+			<meta property='og:type' content={'Page'} />
+			<meta property='og:description' content={contentfulPage.description} />
+			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property='og:url' content={`https://phil.us${config.slug}`} />
 			<Script
 				defer
 				async
-				strategy="idle"
-				charSet="utf-8"
-				type="text/javascript"
-				src="//js.hsforms.net/forms/embed/v2.js"
+				strategy='idle'
+				charSet='utf-8'
+				type='text/javascript'
+				src='//js.hsforms.net/forms/embed/v2.js'
 			></Script>
-			{contentfulPage.noindex && <meta name="robots" content="noindex" />}
+			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
 			<Script
 				defer
 				async
-				strategy="idle"
-				type="text/javascript"
-				src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
+				strategy='idle'
+				type='text/javascript'
+				src='//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'
 			></Script>
 		</SEO>
 	);
@@ -83,7 +83,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 			<Layout minimal={false}>
 				{title === 'Resources' && (
 					<Expanded id={id} py={0}>
-						<Grid align="center" justify="space-between">
+						<Grid align='center' justify='space-between'>
 							<Grid.Col span={12}>
 								<Box>
 									<Title order={1}>Resources</Title>
@@ -391,6 +391,66 @@ export const query = graphql`
 							buttonText
 							body {
 								raw
+								references {
+									__typename
+									... on ContentfulAsset {
+										id
+										contentful_id
+										description
+										gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+										file {
+											contentType
+											details {
+												size
+											}
+											url
+										}
+										sys {
+											type
+										}
+									}
+									... on ContentfulButton {
+										id
+										contentful_id
+										buttonText
+										buttonStyle
+										link {
+											linkLabel
+											name
+											externalUrl
+										}
+										v2flag
+									}
+									... on ContentfulMediaItem {
+										sys {
+											contentType {
+												sys {
+													id
+													type
+												}
+											}
+										}
+										contentful_id
+										name
+										name
+										media {
+											gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+											title
+											file {
+												contentType
+												details {
+													size
+												}
+												url
+											}
+										}
+										youtubeLink
+										embedCode {
+											raw
+										}
+										id
+									}
+								}
 							}
 							author {
 								id
