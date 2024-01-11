@@ -50,9 +50,17 @@
 	@media (min-width: $phil-breakpoint-sm) {
 		padding-bottom: auto;
 	}
+
+	& > p:last-child:empty {
+		display: none;
+	}
 }
 
 .portal {
+	& > p:last-child:empty {
+		display: none;
+	}
+
 	@media (min-width: $phil-breakpoint-md) {
 		display: block;
 	}

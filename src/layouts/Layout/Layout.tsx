@@ -89,67 +89,14 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 
 		components: {
 			Button: Button.extend({
-				classNames: classes,
+				classNames: {root: classes.root},
 			}),
 		},
-
-		// Components: {
-		// 	Button: {
-		// 		styles: (theme, params: ButtonStylesParams) => ({
-		// 			root: {
-		// 				borderRadius: '0',
-		// 				padding: '10px 20px',
-		// 				...(params.variant === 'filled' && {
-		// 					backgroundColor: theme.colors.primary[0],
-		// 					color: 'white',
-		// 					transition: 'outline 0.15s ease-in-out',
-		// 					outlineOffset: -3,
-		// 				}),
-
-		// 				...(params.variant === 'default' && {
-		// 					backgroundColor: theme.colors.philBranding[9],
-		// 					color: 'white',
-		// 					border: `1px solid ${theme.colors.philBranding[9]}`,
-		// 					outlineOffset: -3,
-		// 				}),
-
-		// 				'&:hover': {
-		// 					...(params.variant === 'filled' && {
-		// 						backgroundColor: 'white',
-		// 						color: theme.colors.primary[0],
-		// 						outline: `3px solid ${theme.colors.primary[0]}`,
-		// 					}),
-
-		// 					...(params.variant === 'default' && {
-		// 						backgroundColor: theme.colors.philBranding[2],
-		// 						border: `1px solid ${theme.colors.philBranding[2]}`,
-		// 					}),
-
-		// 					...(params.variant === 'outline' && {
-		// 						backgroundColor: params.color === 'dark' ? undefined : theme.colors.philBranding[9],
-		// 						color: params.color === 'dark' ? undefined : 'white',
-		// 					}),
-
-		// 					fontWeight: 900,
-		// 				},
-
-		// 				'&:focus:not(:focus-visible)': {
-		// 					...(params.variant === 'filled' && {
-		// 						outline: `3px solid ${theme.colors.primary[0]}`,
-		// 						outlineOffset: -3,
-		// 						backgroundColor: 'white',
-		// 						color: theme.colors.primary[0],
-		// 					}),
-		// 				},
-		// 			},
-		// 		}),
-		// 	},
-		// },
 	});
 
 	return (
 		<>
-			<MantineProvider theme={theme} classNamesPrefix='phil'>
+			<MantineProvider theme={theme} classNamesPrefix="phil">
 				<HubspotProvider>
 					<AppShell
 						header={{

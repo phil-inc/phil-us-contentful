@@ -13,6 +13,7 @@ import * as classes from './card.module.css';
 import {getColorFromStylingOptions} from 'utils/stylingOptions';
 import {TAsset} from 'types/asset';
 
+import {Options} from '@contentful/rich-text-react-renderer';
 type ArticleProps = {
 	resource: TResource;
 };
@@ -20,7 +21,7 @@ type ArticleProps = {
 export const CCard: FC<ArticleProps> = ({resource}) => {
 	const {body, heading, asset, buttonText} = resource;
 
-	const options = {
+	const options: Options = {
 		renderNode: {
 			[BLOCKS.EMBEDDED_ASSET](node) {
 				return 'image here';
@@ -38,29 +39,27 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 			// TODO: Refactor this
 			[BLOCKS.EMBEDDED_ENTRY](node, children) {
-				console.log({node, children}, 'yo hai');
-
 				if (node?.data?.target) {
 					const {target} = node.data;
 
 					if (target.__typename === 'ContentfulMediaItem') {
 						return (
 							<ImageContainer fluid maw={128}>
-								<Asset objectFit='contain' asset={target} />
+								<Asset objectFit="contain" asset={target} />
 							</ImageContainer>
 						);
 					}
 
-					const button = <Button variant='philDefault'>{node.data.target.buttonText}</Button>;
+					const button = <Button variant="philDefault">{node.data.target.buttonText}</Button>;
 
-					if (target?.internalLink) {
-						const {link} = getLink(target.internalLink);
+					if (target?.link?.internalContent) {
+						const {link} = getLink(target, true);
 
 						return <Link to={link}>{button}</Link>;
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl} target='_blank' referrerPolicy='no-referrer'>
+						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
 							{button}
 						</Anchor>
 					);
@@ -119,7 +118,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 	if (resource?.sys?.contentType?.sys?.id === 'mediaItem') {
 		return (
 			<ImageContainer fluid contain maw={900} ratio={16 / 9}>
-				<Asset objectFit='contain' asset={media} />
+				<Asset objectFit="contain" asset={media} />
 			</ImageContainer>
 		);
 	}
@@ -129,8 +128,8 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 	return (
 		<Group h={'100%'} gap={0}>
 			<Box
-				component='span'
-				h='100%'
+				component="span"
+				h="100%"
 				className={classes.before}
 				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
@@ -142,43 +141,32 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 				className={classes.paper}
 				data-hasAsset={Boolean(media)}
 			>
-				<Group wrap='nowrap' h={'100%'} gap={0} preventGrowOverflow align='start'>
+				{/* TODO: convert to grid */}
+				<Group wrap="nowrap" h={'100%'} gap={0} preventGrowOverflow align="start">
 					{media && !resource.isFaq && (
 						// TODO: check regression with 1/2 ratio images
 						<ImageContainer fluid contain mx={'0px'}>
-							<Asset objectFit='cover' asset={media} />
+							<Asset objectFit="cover" asset={media} />
 						</ImageContainer>
 					)}
 					<Stack
 						className={classes.stack}
 						data-has-asset={Boolean(media)}
 						data-is-faq={resource.isFaq}
-						align='flex-start'
-						// H="100%"
+						align="flex-start"
+						h="100%"
 						gap={0}
 					>
-						{/* {!!heading && (
-							<Title data-is-faq={resource.isFaq} order={3} className={classes.title}>
-								{heading}
-							</Title>
-						)} */}
-
-						{!resource.isFaq ? (
-							resource?.description?.description?.length ? (
-								<Text className={classes.description}>{resource.description.description}</Text>
-							) : (
-								body && renderRichText(body, options)
-							)
-						) : null}
+						{!resource.isFaq && body && renderRichText(body, options)}
 
 						{!asset && !resource.isFaq && buttonText?.length ? (
 							isExternal ? (
-								<Anchor href={link} target='_blank'>
-									<Button variant='philDefault'>{buttonText}</Button>
+								<Anchor href={link} target="_blank">
+									<Button variant="philDefault">{buttonText}</Button>
 								</Anchor>
 							) : (
 								<Link to={link}>
-									<Button variant='philDefault'>{buttonText}</Button>
+									<Button variant="philDefault">{buttonText}</Button>
 								</Link>
 							)
 						) : null}

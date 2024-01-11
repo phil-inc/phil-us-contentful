@@ -29,7 +29,7 @@
 		font-family: Lato;
 		-webkit-tap-highlight-color: transparent;
 		display: inline-block;
-		width: auto;
+		width: 100%;
 		font-size: 14px;
 		height: 36px;
 		padding: 10px 20px;
@@ -42,5 +42,10 @@
 			color: #00201f;
 			font-weight: 900;
 		}
+
+		@media (min-width: $phil-breakpoint-sm) {
+			width: auto;
+		}
+
 	}
 }

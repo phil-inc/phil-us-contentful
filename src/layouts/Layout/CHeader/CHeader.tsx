@@ -37,6 +37,14 @@ export type ContentfulButton = {
 	buttonStyle: string;
 	externalLink: string;
 	internalLink: ContentfulPage;
+	v2flag: boolean;
+	link: {
+		__typename: string;
+		internalContent: {};
+		externalUrl : string;
+		name: string;
+		id: string;
+	};
 };
 
 type CHeaderProps = {

@@ -1,7 +1,20 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {createPortal} from 'react-dom';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
-import {Anchor, Box, Button, Container, Divider, Grid, Group, List, Text, Title, useMantineTheme} from '@mantine/core';
+import {
+	Anchor,
+	Box,
+	Button,
+	Container,
+	Divider,
+	Grid,
+	Group,
+	List,
+	Portal,
+	Text,
+	Title,
+	useMantineTheme,
+} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link, Script} from 'gatsby';
@@ -15,7 +28,7 @@ import {isVideoContent} from 'utils/isVideoContent';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
 import ContactForm from 'components/ContactPageForm/ContactForm';
-import {useViewportSize} from '@mantine/hooks';
+import {useId, useMediaQuery, useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
@@ -48,9 +61,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 	const theme = useMantineTheme();
 
-	const {link, isExternal} = getLink(section);
-
 	const richTextImages: Record<string, any> = {};
+
+	const uuid = useId();
+	const {width} = useViewportSize();
+	const isDesktop = useMediaQuery('(min-width: 48em)');
 
 	// eslint-disable-next-line array-callback-return
 	section.body.references.map((reference: any) => {
@@ -79,19 +94,25 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					const {target} = node.data;
 
 					const button = (
-						<Button mt={40} variant='philDefault'>
+						<Button mt={40} variant="philDefault">
 							{node.data.target.buttonText}
 						</Button>
 					);
 
-					if (target?.internalLink) {
-						const {link} = getLink(target.internalLink);
+					if (target?.link?.internalContent) {
+						const {link} = getLink(target, true);
 
-						return <Link to={link}>{button}</Link>;
+						return !isDesktop ? (
+							<Portal target={`#${uuid}`}>
+								<Link to={link}>{button}</Link>
+							</Portal>
+						) : (
+							button
+						);
 					}
 
 					return (
-						<Anchor href={target.link.externalUrl} target='_blank' referrerPolicy='no-referrer'>
+						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
 							{button}
 						</Anchor>
 					);
@@ -109,14 +130,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type='unordered' mb={20} pl={8}>
+					<List type="unordered" mb={20} pl={8}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type='ordered' mb={20} pl={8}>
+					<List type="ordered" mb={20} pl={8}>
 						{children}
 					</List>
 				);
@@ -124,7 +145,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
 					<List.Item>
-						<Text size='lg' className={classes.listItem}>
+						<Text size="lg" className={classes.listItem}>
 							{children}
 						</Text>
 					</List.Item>
@@ -156,7 +177,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 			[INLINES.HYPERLINK](node, children) {
 				return (
-					<Anchor href={node.data.uri as string} target='_blank'>
+					<Anchor href={node.data.uri as string} target="_blank">
 						{children}
 					</Anchor>
 				);
@@ -179,11 +200,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 	const ref = React.useRef();
-	const {width} = useViewportSize();
 	const [height, setHeight] = React.useState<number>(790);
 
 	// TODO: handle mobile view
-	const isMobileView = false;
+	const isMobileView = !isDesktop;
 
 	let formId = '';
 	let portalId = '';
@@ -264,7 +284,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								)}
 								<Divider
 									size={1}
-									variant='dashed'
+									variant="dashed"
 									mt={handleSpacing(theme, theme.spacing.sm)}
 									mb={handleSpacing(theme, theme.spacing.md)}
 								/>
@@ -293,22 +313,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 											? createPortal(renderRichText(section.body, options), heroRef.current)
 											: renderRichText(section.body, options)}
 									</Box>
-								)}
-								{/* {TODO: Remove this and move to rendering with body} */}
-								{Boolean(section.buttonText?.length) && (
-									<Group mt={40}>
-										{isExternal ? (
-											<Anchor href={link} target='_blank'>
-												<Button variant='philDefault' style={{paddingBottom: '2px', paddingTop: '2px'}}>
-													{section.buttonText}
-												</Button>
-											</Anchor>
-										) : (
-											<Link to={link}>
-												<Button variant='philDefault'>{section.buttonText}</Button>
-											</Link>
-										)}
-									</Group>
 								)}
 							</>
 						)}
@@ -340,45 +344,48 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 											? 16 / 9
 											: undefined
 										: section?.youtubeVideoUrl
-											? 16 / 9
-											: undefined
+										? 16 / 9
+										: undefined
 								}
 								background={
 									section.v2Flag
-										? isVideoContent(section?.mediaItem?.media?.file?.contentType)
-										  || Boolean(section?.mediaItem.youtubeVideoUrl)
+										? isVideoContent(section?.mediaItem?.media?.file?.contentType) ||
+										  Boolean(section?.mediaItem.youtubeVideoUrl)
 											? 'transparent'
 											: undefined
 										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
-											? 'transparent'
-											: undefined
+										? 'transparent'
+										: undefined
 								}
 								expanded={context.title === CONTACT_PAGE}
 								isVideo={
 									section.v2Flag
-										? isVideoContent(section?.mediaItem?.media?.file?.contentType)
-										  || Boolean(section?.mediaItem?.youtubeLink)
+										? isVideoContent(section?.mediaItem?.media?.file?.contentType) ||
+										  Boolean(section?.mediaItem?.youtubeLink)
 										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
 								}
 							>
 								<Asset
 									asset={section.v2Flag ? section.mediaItem : section.asset}
-									objectFit='contain'
+									objectFit="contain"
 									youtubeVideoURL={section.v2Flag ? section.mediaItem.youtubeLink : section?.youtubeVideoUrl}
 								/>
 							</ImageContainer>
 						)}
 					</Grid.Col>
 				</Grid>
-				{section.isHubspotEmbed
-				&& section.isInsertSnippet
-				&& section.codeSnippet
-				&& Boolean(section.codeSnippet.codeSnippet.length)
-				&& isProduction ? (
-						<Script defer async>
-							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-						</Script>
-					) : null}
+
+				<Box mt={40} id={uuid}></Box>
+
+				{section.isHubspotEmbed &&
+				section.isInsertSnippet &&
+				section.codeSnippet &&
+				Boolean(section.codeSnippet.codeSnippet.length) &&
+				isProduction ? (
+					<Script defer async>
+						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+					</Script>
+				) : null}
 			</>
 		</Container>
 	);
