@@ -1,6 +1,10 @@
 .paper {
 	padding: 64px 34px;
 	height: 100%;
+
+	@media (min-width: $phil-breakpoint-md) {
+		max-width: 365px;
+	}
 }
 
 .body {
@@ -35,5 +39,5 @@
 }
 
 .phil-Avatar-placeholder {
-    background-color: #0a0a0a !important;
+	background-color: #0a0a0a !important;
 }
