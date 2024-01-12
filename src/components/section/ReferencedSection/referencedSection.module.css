@@ -93,10 +93,12 @@
 }
 
 .column {
+	
 	&[data-reference-type='Stepper Cards'],
 	&[data-reference-type='Testimonial'] {
 		max-width: fit-content;
 	}
+
 }
 
 .subHeading {
@@ -112,5 +114,17 @@
 
 	&[data-reference-type='Stepper Cards'] {
 		display: flex;
+	}
+}
+
+.grid {
+	
+	
+	&[data-add-margin='true'] {
+		margin-top: 40px;
+
+		@media (min-width: $phil-breakpoint-sm){
+			margin-top: 80px;
+		}
 	}
 }

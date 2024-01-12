@@ -16,6 +16,8 @@ type ImageContainerProps = {
 	cover?: boolean;
 	mx?: StyleProp<React.CSSProperties['margin']>;
 	maw?: MantineSpacing;
+	card?: boolean;
+	flexStart?: boolean;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -28,7 +30,9 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	containerRef,
 	isVideo,
 	mx = 'auto',
+	card = false,
 	maw = 335,
+	flexStart = false,
 }) => {
 	const context = React.useContext(PageContext);
 
@@ -39,8 +43,10 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			data-video={isVideo}
 			data-expanded={expanded}
 			data-context={context.title}
+			data-card={card}
+			data-flex-start={flexStart}
 			className={classes.imageContainer}
-			maw={isVideo ? undefined : maw}
+			maw={maw}
 		>
 			<AspectRatio className={classes.aspectRatio} data-contain={contain} ratio={ratio} mx={mx}>
 				{children}

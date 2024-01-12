@@ -56,4 +56,4 @@ const Expanded: React.FC<ExpandedProps> = ({
 	);
 };
 
-export default React.memo(Expanded);
+export default Expanded;

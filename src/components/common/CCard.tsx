@@ -1,4 +1,4 @@
-import {Paper, Container, Title, Button, Text, Box, Stack, Anchor, Group, AspectRatio} from '@mantine/core';
+import {Paper, Container, Title, Button, Text, Box, Stack, Anchor, Group, AspectRatio, Grid} from '@mantine/core';
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
@@ -142,36 +142,43 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 				data-hasAsset={Boolean(media)}
 			>
 				{/* TODO: convert to grid */}
-				<Group wrap="nowrap" h={'100%'} gap={0} preventGrowOverflow align="start">
-					{media && !resource.isFaq && (
-						// TODO: check regression with 1/2 ratio images
-						<ImageContainer fluid contain mx={'0px'}>
-							<Asset objectFit="cover" asset={media} />
-						</ImageContainer>
-					)}
-					<Stack
-						className={classes.stack}
-						data-has-asset={Boolean(media)}
-						data-is-faq={resource.isFaq}
-						align="flex-start"
-						h="100%"
-						gap={0}
-					>
-						{!resource.isFaq && body && renderRichText(body, options)}
+				{/* <Group wrap="nowrap" h={'100%'} gap={0} preventGrowOverflow align="start"></Group> */}
 
-						{!asset && !resource.isFaq && buttonText?.length ? (
-							isExternal ? (
-								<Anchor href={link} target="_blank">
-									<Button variant="philDefault">{buttonText}</Button>
-								</Anchor>
-							) : (
-								<Link to={link}>
-									<Button variant="philDefault">{buttonText}</Button>
-								</Link>
-							)
-						) : null}
-					</Stack>
-				</Group>
+				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
+					{media && !resource.isFaq && (
+						<Grid.Col span={{base: 12 , md: 3}}>
+							{/* // TODO: check regression with 1/2 ratio images */}
+							<ImageContainer fluid contain card  mx={0}>
+								<Asset objectFit="cover" asset={media} />
+							</ImageContainer>
+						</Grid.Col>
+					)}
+
+					<Grid.Col span={{base: 'auto'}}>
+						<Stack
+							className={classes.stack}
+							data-has-asset={Boolean(media)}
+							data-is-faq={resource.isFaq}
+							align="flex-start"
+							h="100%"
+							gap={0}
+						>
+							{!resource.isFaq && body && renderRichText(body, options)}
+
+							{!asset && !resource.isFaq && buttonText?.length ? (
+								isExternal ? (
+									<Anchor href={link} target="_blank">
+										<Button variant="philDefault">{buttonText}</Button>
+									</Anchor>
+								) : (
+									<Link to={link}>
+										<Button variant="philDefault">{buttonText}</Button>
+									</Link>
+								)
+							) : null}
+						</Stack>
+					</Grid.Col>
+				</Grid>
 			</Paper>
 		</Group>
 	);

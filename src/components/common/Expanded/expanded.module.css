@@ -3,27 +3,9 @@
     min-height: 100%;
     max-width: 100%;
     width: 100vw;
-    padding: 100px 100px;
-}
+    padding: 60px 20px;
 
-/* Assuming 'md' and 'sm' are predefined breakpoints in your theme.
-   Replace '768px' and '576px' with the actual values for 'md' and 'sm' respectively. */
-@media (max-width: 768px) {
-    .container {
-        padding: 42px 100px; /* Default padding for 'md' */
-    }
-
-    .container--field-md {
-        padding: 0px 100px; /* Padding for 'Field' title at 'md' breakpoint */
-    }
-}
-
-@media (max-width: 576px) {
-    .container {
-        padding: 42px 16px; /* Default padding for 'sm' */
-    }
-
-    .container--field-sm {
-        padding: 0px 16px; /* Padding for 'Field' title at 'sm' breakpoint */
+    @media (min-width: $phil-breakpoint-sm) {
+        padding: 100px;
     }
 }

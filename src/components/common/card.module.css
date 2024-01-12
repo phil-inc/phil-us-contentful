@@ -1,5 +1,5 @@
 .paper {
-	padding: 64px 32px;
+	padding: 34px 24px;
 	width: calc(100% - 12px);
 	height: 100%;
 	line-height: 27px;
@@ -7,6 +7,10 @@
 	&[data-hasAsset='true'] {
 		padding: 0;
 		width: 100%;
+	}
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 64px 32px;
 	}
 }
 
@@ -40,9 +44,14 @@
 }
 
 .stack {
+	
 	> * {
 		&:not(:first-child) {
-			margin-top: 32px;
+			margin-top: 36px;
+
+			@media (min-width: $phil-breakpoint-sm) {
+				margin-top: 40px;
+			}
 		}
 
 		&:nth-child(2):is(h4) {
@@ -50,8 +59,16 @@
 		}
 	}
 
+	& > p:last-child:empty {
+		display: none;
+	}
+
 	&[data-has-asset='true'] {
-		padding: 64px 32px;
+		padding: 40px 24px;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			padding: 64px 64px;
+		}
 	}
 
 	&[data-is-faq='true'] {
@@ -64,4 +81,8 @@
 	&[data-is-faq='true'] {
 		margin-bottom: 0px;
 	}
+}
+
+.gridInner, .gridRoot {
+	height: 100%;
 }

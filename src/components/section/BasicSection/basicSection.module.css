@@ -9,21 +9,18 @@
 }
 
 .container {
-	padding: 100px 16px;
+	padding: 60px 20px;
 
 	&[data-index='0'] {
-		padding-top: 160px;
-		padding-bottom: 160px;
+		@media (min-width: $phil-breakpoint-sm) {
+			padding-top: 160px;
+			padding-bottom: 160px;
+		}
 	}
 
 	&[data-context='Contact'] {
 		padding-top: 0px;
 		padding-bottom: 0px;
-	}
-
-	&[data-isMobileView='true'] {
-		padding-top: 32px;
-		padding-bottom: 32px;
 	}
 
 	&[data-isEmbedFormTemplate='true'] {

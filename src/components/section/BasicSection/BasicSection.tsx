@@ -248,8 +248,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		>
 			<>
 				<Grid
-					gutter={handleSpacing(theme, theme.spacing.lg)}
+					// gutter={40}
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
+					justify='flex-start'
 				>
 					{/* Text Grid Column */}
 					<Grid.Col
@@ -336,7 +337,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						) : (
 							<ImageContainer
 								containerRef={ref}
-								fluid
 								contain
 								ratio={
 									section.v2Flag
@@ -364,6 +364,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 										  Boolean(section?.mediaItem?.youtubeLink)
 										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
 								}
+								
 							>
 								<Asset
 									asset={section.v2Flag ? section.mediaItem : section.asset}
@@ -375,7 +376,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					</Grid.Col>
 				</Grid>
 
-				<Box mt={40} id={uuid}></Box>
+				<Box className={classes.portalBox} id={uuid}></Box>
 
 				{section.isHubspotEmbed &&
 				section.isInsertSnippet &&

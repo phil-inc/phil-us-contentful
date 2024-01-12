@@ -10,10 +10,14 @@
 }
 
 .stack {
-	align-items: center;
+	align-items: flex-start;
 
 	&[data-reference-type='Code Snippet'] {
 		align-items: start;
+	}
+
+	@media (min-width: $phil-breakpoint-sm) {
+		align-items: center;
 	}
 }
 

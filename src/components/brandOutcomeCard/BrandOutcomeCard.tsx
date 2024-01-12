@@ -39,7 +39,7 @@ export const BrandOutcomeCard: FC<StatsCardProps> = ({resource}) => {
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
 			></Box>
 			<Paper className={classes.paper}>
-				<Stack justify='center' align='start' gap={40}>
+				<Stack justify='center' align='start' className={classes.stack} gap={40}>
 					{resource.heading && <Title className={classes.title}>{resource.heading}</Title>}
 
 					{resource.body && <Text className={classes.description}>{renderRichText(resource.body, options)}</Text>}
