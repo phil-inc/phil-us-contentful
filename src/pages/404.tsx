@@ -18,7 +18,7 @@ export const Head: React.FC = () => (
 );
 
 const Error = () => {
-	const {classes} = useStyles();
+	// const {classes} = useStyles();
 
 	return (
 		<Layout>

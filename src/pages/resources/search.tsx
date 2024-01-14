@@ -2,12 +2,11 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import {SEO} from 'layouts/SEO/SEO';
-import {ActionIcon, Badge, Box, Divider, Grid, Image, Pagination, Text, Title, useMantineTheme} from '@mantine/core';
+import {ActionIcon, Badge, Box, Divider, Grid, Image, Pagination, Text, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {Script, graphql, navigate} from 'gatsby';
 import {Banner} from 'components/common/Banner/Banner';
-import {useViewportSize} from '@mantine/hooks';
 import {type TResource} from 'types/resource';
 import * as JsSearch from 'js-search';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
@@ -106,7 +105,6 @@ const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryPara
 );
 
 const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQueryParam, filterQueryParam}) => {
-	const {classes} = useStyles();
 	const [paginationState, setPaginationState] = React.useState<PaginationState>({});
 	const availableSectionHeaders = React.useMemo(() => sections.map(section => section.header), [sections]);
 	const badgeRef = React.useRef(null);
@@ -278,10 +276,8 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 };
 
 const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
-	const {width} = useViewportSize();
-	const theme = useMantineTheme();
-	const isMobileView = theme.breakpoints.md > width;
-	const {classes} = useStyles();
+	// TODO: handle mobile view
+	const isMobileView = false;
 
 	const {sections} = data.contentfulPage;
 	const resources = React.useMemo(

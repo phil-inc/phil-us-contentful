@@ -1,0 +1,58 @@
+.content {
+	height: 100%;
+	padding: 72px 105px;
+}
+
+.contentGrid {
+	background: #f4f4f4;
+}
+
+.title {
+	line-height: 1.2;
+	font-size: 28px;
+}
+
+.normalText {
+	line-height: 29px;
+	font-size: 24px;
+	margin-bottom: 64px;
+}
+
+.step {
+	flex-direction: column;
+	justify-content: center;
+	align-items: center; /* replaced 'placeItems' with 'align-items' and 'justify-content' for standard CSS */
+}
+
+.stepBody {
+	margin: 0 auto;
+	margin-top: 8px;
+}
+
+.stepIcon {
+	border-color: #9e9e9e;
+	font-size: 20px;
+}
+
+.stepIcon[data-progress='true'] {
+	background: #00827e;
+	color: #ffffff;
+}
+
+.inputLabel {
+	color: #9e9e9e;
+	font-size: 20px;
+}
+
+.separator {
+	margin: -30px;
+	margin-top: -50px;
+	background-color: #9e9e9e;
+}
+
+.image {
+	height: 124px;
+	width: 124px;
+	margin-bottom: 44px;
+	margin-top: 90px;
+}

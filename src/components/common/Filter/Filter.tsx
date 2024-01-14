@@ -18,7 +18,7 @@ const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryPara
 	const theme = useMantineTheme();
 	// TODO: handle mobile view
 	const isMobileView = false;
-	const {classes} = useStyles({isMobileView});
+	// const {classes} = useStyles({isMobileView});
 	const [value, toggle] = useToggle(['ResourcesType', null]);
 
 	const [checkboxState, setCheckboxState] = React.useState<Record<string, boolean>>({});

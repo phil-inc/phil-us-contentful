@@ -76,8 +76,6 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	let basicSectionCount = 0;
 	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));
 
-	console.log({data});
-
 	return (
 		<PageContext.Provider value={{title}}>
 			<Layout minimal={false}>

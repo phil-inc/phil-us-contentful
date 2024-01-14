@@ -1,0 +1,23 @@
+.root {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    width: 100%;
+    max-width: 1440px;
+    display: flex;
+    align-items: center; /* replaced 'placeItems' with 'align-items' for standard CSS */
+    justify-content: center;
+}
+
+.innerGrid {
+    margin: 0;
+    max-width: 1440px;
+    width: 100%;
+    background: #F4F4F4;
+}
+
+.image {
+    max-width: 110px;
+    width: 100%;
+}
+
+/* Media query for 'smallerThan' 'md' breakpoint */
