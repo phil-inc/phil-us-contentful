@@ -1,93 +1,44 @@
-/* Default styles for .footer */
-.footer {
-  /* Default styles, if any, go here */
-}
-
-/* Assuming 'md' breakpoint is 768px - adjust as per your theme's breakpoints */
-@media (max-width: 768px) {
-  .footer {
-    display: none;
-  }
-}
-
-.inner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* Replace 'theme.spacing.md' with the actual value from your theme */
-  padding: /* theme.spacing.md value here */;
-}
-
-/* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
-@media (max-width: 576px) {
-  .inner {
-    flex-direction: column;
-  }
-}
-
-.links {
-  color: white;
-  font-size: 12px;
-}
-
-.footLinkHeader {
-  font-family: 'Lato';
-  font-weight: 700;
-  margin: 10px 0;
-  text-decoration: none;
-  color: #00201F;
-}
-
-.footerLink {
-  text-decoration: none;
-  color: #00201F;
-  font-size: 14px;
-  line-height: 40px;
-}
-
 .footerWrapper {
-  padding: 85px 175px;
-  /* TODO: Replace 'footerBackground' with the actual URL of the background image */
-  /* background-image: url("/* footerBackground URL here"); */
-  background-repeat: no-repeat;
-  background-position: bottom -420px right -220px;
+	@media (min-width: $phil-breakpoint-md) {
+		display: none;
+	}
 }
 
-/* Assuming 'lg' breakpoint is 992px - adjust as per your theme's breakpoints */
-@media (max-width: 992px) {
-  .footerWrapper {
-    padding: 40px;
-    background-position: bottom -522px right -561px;
-  }
+.label {
+	line-height: 1.55 !important;
+	font-size: 18px !important;
+	font-weight: bold !important;
+	padding: 0 !important;
 }
 
-.burger {
-  /* Default styling for burger goes here */
+.footerSection {
+	line-height: 40px !important;
 }
 
-/* Assuming 'md' breakpoint is 768px */
-@media (min-width: 769px) {
-  .burger {
-    display: none !important;
-  }
+.content {
+	padding: 0 !important;
 }
 
-.drawer {
-  /* Default styling for drawer goes here */
+.item {
+	border: none !important;
 }
 
-@media (min-width: 769px) {
-  .drawer {
-    display: none;
-  }
+.control {
+	border-bottom: 1px solid #6a7979 !important;
+	padding: 32px 0 !important;
 }
 
-.drawerTitle {
-  width: 100%;
-  margin: 0;
+.chevron {
+	width: 24px !important;
 }
 
-.textDecorationNone {
-  text-decoration: none;
-  color: white;
+.footerLink,
+.link {
+	color: black !important;
+	text-decoration: none !important;
+}
+
+.divider {
+	border-bottom: 1px solid #6a7979 !important;
+	margin-bottom: 20px;
 }

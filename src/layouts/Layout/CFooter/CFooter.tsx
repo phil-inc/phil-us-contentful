@@ -18,6 +18,35 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
 
+	const links = [
+		{
+			label: '© Phil, Inc.',
+		},
+		{
+			label: 'Terms of Use',
+			link: '/terms',
+		},
+		{
+			label: 'Privacy Policy',
+			link: '/privacy',
+		},
+		{
+			label: 'HIPAA Notice',
+			link: '/hipaa',
+		},
+	];
+
+	const renderFooterItem = (item, key) =>
+		item.link ? (
+			<Link key={key} to={item.link} className={classes.links}>
+				{item.label}
+			</Link>
+		) : (
+			<Text key={key} component='span' className={classes.texts} unstyled>
+				{item.label}
+			</Text>
+		);
+
 	return (
 		<>
 			{!minimal && (
@@ -31,22 +60,14 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 			)}
 
 			{/* Bottom Footer */}
-			<Container fluid style={{background: '#00827E'}} py={14}>
+			<Container fluid className={classes.bottomFooter}>
 				<Center>
-					<Text className={classes.links}>
-						© Phil, Inc. |{' '}
-						<Link to='/terms' className={classes.textDecorationNone}>
-							Terms of Use
-						</Link>{' '}
-						|{' '}
-						<Link to='/privacy' className={classes.textDecorationNone}>
-							Privacy Policy
-						</Link>{' '}
-						|{' '}
-						<Link to='/hipaa' className={classes.textDecorationNone}>
-							HIPAA Notice
-						</Link>
-					</Text>
+					{links.map((item, index) => (
+						<React.Fragment key={index}>
+							{renderFooterItem(item, index)}
+							{index < links.length - 1 && <span className={classes.divider}> | </span>}
+						</React.Fragment>
+					))}
 				</Center>
 			</Container>
 		</>
@@ -123,4 +144,4 @@ const CFooter: React.FC<{minimal: boolean}> = ({minimal = false}) => (
 	<StaticQuery query={query} render={props => <Footer minimal={minimal} {...props} />} />
 );
 
-export default React.memo(CFooter);
+export default CFooter;

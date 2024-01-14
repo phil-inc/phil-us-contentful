@@ -1,6 +1,5 @@
-import {Box, Text, Accordion, List, Anchor, Group, Divider, Grid, createStyles} from '@mantine/core';
+import {Box, Text, Accordion, List, Anchor, Group, Divider, Grid} from '@mantine/core';
 import {IconChevronDown} from '@tabler/icons';
-import {footerBackground} from 'assets/images';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
@@ -25,24 +24,30 @@ type TMobileFooter = {
 };
 
 const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
-	<Box className={classes.drawer}>
-		<Accordion styles={{content: {padding: 0}}} chevron={<IconChevronDown size={24} />} mb={15}>
+	<Box className={classes.footerWrapper}>
+		<Accordion
+			classNames={{
+				content: classes.content,
+				item: classes.item,
+				label: classes.label,
+				control: classes.control,
+				chevron: classes.chevron,
+			}}
+			chevron={<IconChevronDown size={24} />}
+			mb={15}
+		>
 			{pages.map(page => (
 				<Accordion.Item key={page.id + 'mapFooterPagesMobile'} value={page.title}>
-					<Accordion.Control px={0}>
-						<Text weight='bold' size={18}>
-							{page.title}
-						</Text>
-					</Accordion.Control>
+					<Accordion.Control>{page.title}</Accordion.Control>
 					<Accordion.Panel>
 						<List mb={16} listStyleType={'none'}>
 							{page.sections
 								.filter(section =>
 									Boolean(
-										section.header?.length
-											&& !section.isHidden
-											&& !(section as IReferencedSection)?.hideNavigationAnchor,
-									),
+										section.header?.length &&
+											!section.isHidden &&
+											!(section as IReferencedSection)?.hideNavigationAnchor
+									)
 								)
 								.map((section, index) => {
 									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
@@ -50,8 +55,8 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 									return (
 										<React.Fragment key={section.id + 'mapFooterSectionsMobile'}>
 											<List.Item>
-												<Link to={path} style={{textDecoration: 'none'}}>
-													<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
+												<Link to={path} className={classes.footerLink}>
+													<Text className={classes.footerSection}>{section.header.replace(':', '')}</Text>
 												</Link>
 											</List.Item>
 
@@ -59,9 +64,10 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 											{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
 												<List.Item>
 													<Anchor
-														href='https://my.phil.us/'
-														target='_blank'
-														style={{textDecoration: 'none'}}
+														href="https://my.phil.us/"
+														target="_blank"
+														referrerPolicy="no-referrer"
+														className={classes.link}
 													>
 														<Text className={classes.footerLink}>Patient Log In</Text>
 													</Anchor>
@@ -81,11 +87,11 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 											{page.title === 'Contact' && index === page.sections.length - 1 && (
 												<List.Item>
 													<Group>
-														<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+														<Anchor href="https://www.linkedin.com/company/phil-inc-" target="_blank">
 															<div>
 																<StaticImage
-																	src='../../../assets/images/linkedin.svg'
-																	alt='LinkedIn Icon'
+																	src="../../../assets/images/linkedin.svg"
+																	alt="LinkedIn Icon"
 																/>
 															</div>
 														</Anchor>
@@ -99,19 +105,21 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 					</Accordion.Panel>
 				</Accordion.Item>
 			))}
+
 		</Accordion>
+
 		<Box>
-			<Text size={'lg'} className={classes.footLinkHeader}>
+			<Text my={32} className={classes.label} unstyled>
 				Newsletter
 			</Text>
-			<Divider my={10} color='#6A7979' />
+			<Divider className={classes.divider} />
 			<HubspotNewsletter />
-			<Grid mt={60} align={'center'} justify='center'>
+			<Grid mt={60} align={'center'} justify="center">
 				{footer.badge.map(badge => (
 					<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
-						<Box sx={{maxWidth: 120}}>
-							<ImageContainer background='transparent' fluid>
-								<Asset objectFit='contain' asset={badge} />
+						<Box maw={120}>
+							<ImageContainer fluid>
+								<Asset objectFit="contain" asset={badge} />
 							</ImageContainer>
 						</Box>
 					</Grid.Col>
