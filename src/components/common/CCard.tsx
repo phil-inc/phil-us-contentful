@@ -1,4 +1,4 @@
-import {Paper, Container, Title, Button, Text, Box, Stack, Anchor, Group, AspectRatio, Grid} from '@mantine/core';
+import {Paper, Container, Title, Button, Text, Box, Stack, Anchor, Group, AspectRatio, Grid, Center} from '@mantine/core';
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
@@ -14,6 +14,7 @@ import {getColorFromStylingOptions} from 'utils/stylingOptions';
 import {TAsset} from 'types/asset';
 
 import {Options} from '@contentful/rich-text-react-renderer';
+import {isVideoContent} from 'utils/isVideoContent';
 type ArticleProps = {
 	resource: TResource;
 };
@@ -117,9 +118,17 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 	// TODO: improve this
 	if (resource?.sys?.contentType?.sys?.id === 'mediaItem') {
 		return (
-			<ImageContainer fluid contain maw={900} ratio={16 / 9}>
-				<Asset objectFit="contain" asset={media} />
-			</ImageContainer>
+			<Center>
+				<ImageContainer
+					isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
+					fluid
+					contain
+					maw={900}
+					ratio={16 / 9}
+				>
+					<Asset objectFit="contain" asset={media} />
+				</ImageContainer>
+			</Center>
 		);
 	}
 
@@ -146,15 +155,21 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12 , md: 3}}>
+						<Grid.Col span={{base: 12, md: 3}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
-							<ImageContainer fluid contain card  mx={0}>
+							<ImageContainer
+								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
+								fluid
+								contain
+								card
+								mx={0}
+							>
 								<Asset objectFit="cover" asset={media} />
 							</ImageContainer>
 						</Grid.Col>
 					)}
 
-					<Grid.Col span={{base: 'auto'}}>
+					<Grid.Col span={{base: 12, md: 9}}>
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}

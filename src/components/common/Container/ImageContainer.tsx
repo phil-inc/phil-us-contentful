@@ -28,7 +28,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	expanded = false,
 	contain = false,
 	containerRef,
-	isVideo,
+	isVideo = false,
 	mx = 'auto',
 	card = false,
 	maw = 335,

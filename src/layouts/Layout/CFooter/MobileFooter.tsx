@@ -105,27 +105,19 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 					</Accordion.Panel>
 				</Accordion.Item>
 			))}
-
 		</Accordion>
 
-		<Box>
-			<Text my={32} className={classes.label} unstyled>
-				Newsletter
-			</Text>
-			<Divider className={classes.divider} />
-			<HubspotNewsletter />
-			<Grid mt={60} align={'center'} justify="center">
-				{footer.badge.map(badge => (
-					<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
-						<Box maw={120}>
-							<ImageContainer fluid>
-								<Asset objectFit="contain" asset={badge} />
-							</ImageContainer>
-						</Box>
-					</Grid.Col>
-				))}
-			</Grid>
-		</Box>
+		<Grid mt={60} align={'center'} justify="center">
+			{footer.badge.map(badge => (
+				<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
+					<Box maw={120}>
+						<ImageContainer fluid>
+							<Asset objectFit="contain" asset={badge} />
+						</ImageContainer>
+					</Box>
+				</Grid.Col>
+			))}
+		</Grid>
 	</Box>
 );
 

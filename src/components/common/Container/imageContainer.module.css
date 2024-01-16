@@ -28,11 +28,10 @@
 		right: 0px;
 	}
 
-	&[data-video='true'] {
-		margin: 0 auto;
-		
-		@media (min-width: $phil-breakpoint-sm) {
+	&[data-video='true'] {		
+		@media (min-width: $phil-breakpoint-md) {
 			max-width: 88.77% !important;
+			width: 88.77%;
 		}
 	}
 
@@ -40,7 +39,7 @@
 		height: 100%;
 	}
 
-	@media (min-width: $phil-breakpoint-sm) {
+	@media (min-width: $phil-breakpoint-md) {
 		position: static;
 		max-width: 335px !important;
 	}

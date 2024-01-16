@@ -1,7 +1,5 @@
 .footerWrapper {
-	@media (min-width: $phil-breakpoint-md) {
-		display: none;
-	}
+		padding: 0px;
 }
 
 .label {

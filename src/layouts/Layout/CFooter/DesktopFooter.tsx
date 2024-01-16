@@ -1,4 +1,4 @@
-import {Grid, Box, Divider, List, Anchor, Group, Text} from '@mantine/core';
+import {Grid, Box, Divider, List, Anchor, Group, Text, SimpleGrid} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {COMPANY_PAGE, HCP_PAGE, PATIENTS_PAGE, RESOURCES} from 'constants/page';
@@ -26,7 +26,7 @@ type TDesktopFooter = {
 };
 
 const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
-	<Grid className={classes.footer} gutterXl={'lg'} gutter={'md'}>
+	<SimpleGrid className={classes.footer} cols={{base: 4, sm: 2, md: 3, lg: 4}} verticalSpacing={80} spacing={40}>
 		{pages.map(page => {
 			const [firstSection = {header: '#'}] = page.sections;
 
@@ -45,39 +45,38 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 			}
 
 			return (
-				<Grid.Col key={page.id + 'mapFooterPages'} span={3}>
-					<Box sx={{width: '80%'}}>
-						<Link to={path} style={{textDecoration: 'none'}}>
-							<Text span size={'lg'} className={classes.footLinkHeader}>
+				<Box key={page.id + 'mapFooterPages'} className={classes.column}>
+					<Box style={{width: '80%'}}>
+						<Link to={path} className={classes.link}>
+							<Text className={classes.header} unstyled>
 								{page.title}
 							</Text>
 						</Link>
-						<Divider my={10} color='#6A7979' />
-						{page.sections
-							.filter(section =>
-								Boolean(
-									section.header?.length
-										&& !section.isHidden
-										&& !(section as IReferencedSection)?.hideNavigationAnchor,
-								),
-							)
-							.map((section, index, array) => {
-								const path = getPathForSectionAndPage(page.title, section.header, page.slug);
+						<List listStyleType="none" spacing={24}>
+							{page.sections
+								.filter(section =>
+									Boolean(
+										section.header?.length &&
+											!section.isHidden &&
+											!(section as IReferencedSection)?.hideNavigationAnchor
+									)
+								)
+								.map((section, index, array) => {
+									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
-								return (
-									<React.Fragment key={section.id + 'mapFooterSections'}>
-										<List listStyleType='none'>
+									return (
+										<React.Fragment key={section.id + 'mapFooterSections'}>
 											<List.Item>
-												<Link to={path} style={{textDecoration: 'none'}}>
-													<Text className={classes.footerLink}>{section.header.replace(':', '')}</Text>
+												<Link to={path} className={classes.link}>
+													<Text unstyled>{section.header.replace(':', '')}</Text>
 												</Link>
 											</List.Item>
 
 											{/* Careers on accordian on company page */}
 											{page.title === COMPANY_PAGE && index === getFinalIndex(page) && (
 												<List.Item>
-													<Link to={CAREERS} style={{textDecoration: 'none'}}>
-														<Text className={classes.footerLink}>Careers</Text>
+													<Link to={CAREERS} className={classes.link}>
+														<Text unstyled>Careers</Text>
 													</Link>
 												</List.Item>
 											)}
@@ -86,54 +85,46 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 											{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
 												<List.Item>
 													<Anchor
-														href='https://my.phil.us/'
-														target='_blank'
-														style={{textDecoration: 'none'}}
+														className={classes.link}
+														href="https://my.phil.us/"
+														target="_blank"
+														referrerPolicy="no-referrer"
+														underline='never'
+														unstyled
 													>
-														<Text className={classes.footerLink}>Patient Log In</Text>
+														<Text unstyled>Patient Log In</Text>
 													</Anchor>
 												</List.Item>
 											)}
-										</List>
-
-										{/* Contact section mapping extra elements */}
-										{page.title === 'Contact' && (
-											<Group mt={18}>
-												<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
-													<div>
-														<StaticImage src='../../../assets/images/linkedin.svg' alt='LinkedIn Icon' />
-													</div>
-												</Anchor>
-											</Group>
-										)}
-									</React.Fragment>
-								);
-							})}
+										</React.Fragment>
+									);
+								})}
+						</List>
 					</Box>
-				</Grid.Col>
+				</Box>
 			);
 		})}
-		<Grid.Col span={3}>
-			<Box sx={{width: '80%'}}>
-				<Text size={'lg'} mt={0} className={classes.footLinkHeader}>
-					Newsletter
+		<Box className={classes.column}>
+			<Box style={{width: '80%'}}>
+				<Text unstyled className={classes.header}>
+					Connect with us
 				</Text>
-				<Divider my={10} color='#6A7979' />
-				<HubspotNewsletter />
-				<Grid mt={60} align={'center'} justify='center'>
-					{footer.badge.map(badge => (
-						<Grid.Col key={badge.file.url + 'mapBadge'} span={6}>
-							<Box sx={{maxWidth: 120}}>
-								<ImageContainer background='transparent' fluid>
-									<Asset asset={badge} objectFit='contain' />
-								</ImageContainer>
-							</Box>
-						</Grid.Col>
-					))}
-				</Grid>
+				<Group mt={18}>
+					<Anchor
+						href="https://www.linkedin.com/company/phil-inc-"
+						target="_blank"
+						referrerPolicy="no-referrer"
+						className={classes.link}
+					>
+						<StaticImage src="../../../assets/images/linkedin.svg" alt="LinkedIn Icon" />
+						<Text unstyled span data-manual-entry={true} className={classes.link}>
+							Linkedin
+						</Text>
+					</Anchor>
+				</Group>
 			</Box>
-		</Grid.Col>
-	</Grid>
+		</Box>
+	</SimpleGrid>
 );
 
 export default DesktopFooter;

@@ -4,8 +4,6 @@ import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
 import {type IReferencedSection, ReferenceTypeEnum} from 'types/section';
 import RenderResource from './RenderResource';
 
-const GRID_COLUMNS = 100;
-
 import * as classes from './referencedSection.module.css';
 
 type ReferencedSectionBodyProps = {
@@ -45,7 +43,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 							className={classes.column}
 							p={section.referenceType === ReferenceTypeEnum.Investors ? 0 : undefined}
 							key={resource.id + 'mapReferencedSectionResource'}
-							span={section.v2flag ? {base: 12, md: span} : getSpan(section.referenceType)}
+							span={
+								section.v2flag ? {base: 12, md: span} : getSpan(section.referenceType)
+							}
 							data-reference-type={section.referenceType}
 						>
 							<RenderResource

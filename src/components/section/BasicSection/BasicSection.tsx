@@ -250,7 +250,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				<Grid
 					// gutter={40}
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
-					justify='flex-start'
+					justify="flex-start"
 				>
 					{/* Text Grid Column */}
 					<Grid.Col
@@ -318,7 +318,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							</>
 						)}
 					</Grid.Col>
-
 					{/* Hero Grid Column */}
 					{/* TODO:: Handle in css */}
 					{/* TODO: Refactor v2Flags and links */}
@@ -350,7 +349,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								background={
 									section.v2Flag
 										? isVideoContent(section?.mediaItem?.media?.file?.contentType) ||
-										  Boolean(section?.mediaItem.youtubeVideoUrl)
+										  Boolean(section?.mediaItem?.youtubeLink)
 											? 'transparent'
 											: undefined
 										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
@@ -364,7 +363,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 										  Boolean(section?.mediaItem?.youtubeLink)
 										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
 								}
-								
 							>
 								<Asset
 									asset={section.v2Flag ? section.mediaItem : section.asset}

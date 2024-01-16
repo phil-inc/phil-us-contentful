@@ -1,5 +1,5 @@
-import React from 'react';
-import {Text, Container, Center} from '@mantine/core';
+import React, {useCallback, useMemo} from 'react';
+import {Text, Container, Center, SimpleGrid, Group, Box, Divider} from '@mantine/core';
 import {footerBackground} from 'assets/images';
 import {graphql, Link, StaticQuery} from 'gatsby';
 import type {TAsset} from 'types/asset';
@@ -7,6 +7,10 @@ import type {ContentfulPage} from 'types/page';
 import MobileFooter from './MobileFooter';
 import DesktopFooter from './DesktopFooter';
 import * as classes from './cfooter.module.css';
+import ImageContainer from 'components/common/Container/ImageContainer';
+import Asset from 'components/common/Asset/Asset';
+import {useMediaQuery} from '@mantine/hooks';
+import isMobileView from 'hooks/isDesktop';
 
 type FooterProps = {
 	allContentfulFooter: {nodes: Array<{badge: TAsset[]; navigationLinks: ContentfulPage[]}>};
@@ -17,10 +21,11 @@ type FooterProps = {
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
+	const isMobile = isMobileView();
 
 	const links = [
 		{
-			label: '© Phil, Inc.',
+			label: !isMobile ? 'Copyright 2023, Phil Inc.' : '© Phil, Inc.',
 		},
 		{
 			label: 'Terms of Use',
@@ -36,39 +41,60 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 		},
 	];
 
-	const renderFooterItem = (item, key) =>
-		item.link ? (
-			<Link key={key} to={item.link} className={classes.links}>
-				{item.label}
-			</Link>
-		) : (
-			<Text key={key} component='span' className={classes.texts} unstyled>
+	const renderFooterItem = (item, key) => {
+		if (item.link) {
+			return (
+				<Link key={key} to={item.link} className={classes.links}>
+					{item.label}
+				</Link>
+			);
+		}
+
+		return (
+			<Text key={key} fw={400} component="span" className={classes.texts} unstyled>
 				{item.label}
 			</Text>
 		);
+	};
+
+	const children = links.map((item, index) => (
+		<React.Fragment key={index}>
+			{renderFooterItem(item, index)}
+			{index < links.length - 1 && isMobile && <span className={classes.pipe}> | </span>}
+		</React.Fragment>
+	));
 
 	return (
 		<>
 			{!minimal && (
-				<Container fluid className={classes.footerWrapper}>
-					{/* Desktop View */}
-					<DesktopFooter pages={pages} footer={footer} />
-
-					{/* Mobile View */}
-					<MobileFooter footer={footer} pages={pages} />
+				<Container fluid p={{base: 16, sm: 100}}>
+					{isMobile ? (
+						<MobileFooter footer={footer} pages={pages} />
+					) : (
+						<DesktopFooter pages={pages} footer={footer} />
+					)}
 				</Container>
 			)}
 
 			{/* Bottom Footer */}
-			<Container fluid className={classes.bottomFooter}>
-				<Center>
-					{links.map((item, index) => (
-						<React.Fragment key={index}>
-							{renderFooterItem(item, index)}
-							{index < links.length - 1 && <span className={classes.divider}> | </span>}
-						</React.Fragment>
-					))}
-				</Center>
+			{!isMobile && <Divider className={classes.divider} mx={100} />}
+
+			<Container fluid py={{base: 8, sm: 32}} px={{base: 16, sm: 100}} className={classes.bottomFooter}>
+				<Group gap={isMobile ? 2 : 0} justify={isMobile ? 'center' : 'space-between'}>
+					{!isMobile && (
+						<Group gap={18}>
+							{footer.badge.map(badge => (
+								<Box className={classes.badge}>
+									<ImageContainer background="transparent" fluid>
+										<Asset asset={badge} objectFit="contain" />
+									</ImageContainer>
+								</Box>
+							))}
+						</Group>
+					)}
+
+					{isMobile ? children : <Box>{children}</Box>}
+				</Group>
 			</Container>
 		</>
 	);
