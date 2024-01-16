@@ -169,7 +169,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 						</Grid.Col>
 					)}
 
-					<Grid.Col span={{base: 12, md: 9}}>
+					<Grid.Col span='auto'>
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
