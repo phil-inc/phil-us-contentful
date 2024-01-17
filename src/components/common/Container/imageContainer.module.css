@@ -7,7 +7,7 @@
 
 	&[data-flex-start='true'] {
 		margin: 0 !important;
-		
+
 		&[data-video='true'] {
 			margin: 0 !important;
 		}
@@ -15,6 +15,8 @@
 
 	&[data-card='true'] {
 		margin: 0;
+
+		max-width: 100% !important;
 	}
 
 	&[data-fluid='true'] {
@@ -30,7 +32,7 @@
 		right: 0px;
 	}
 
-	&[data-video='true'] {		
+	&[data-video='true'] {
 		@media (min-width: $phil-breakpoint-md) {
 			max-width: 88.77% !important;
 			width: 88.77%;

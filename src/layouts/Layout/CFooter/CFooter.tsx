@@ -93,7 +93,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 						</Group>
 					)}
 
-					{isMobile ? children : <Box>{children}</Box>}
+					{isMobile ? children : <Box className={classes.textsWrapper}>{children}</Box>}
 				</Group>
 			</Container>
 		</>

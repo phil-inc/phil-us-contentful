@@ -1,24 +1,3 @@
-/* TODO: Refactor */
-.wrapper {
-	max-width: 1920px;
-	width: 100vw;
-	overflow: hidden;
-	padding: 0;
-}
-
-/* Block: inner-wrapper */
-.inner-wrapper {
-	width: 100%;
-	padding: 100px;
-}
-
-@media (max-width: 1275px) {
-	/* Adjust this to your theme's 'md' breakpoint */
-	.inner-wrapper {
-		padding: 0 /* Replace with your theme's 'sm' spacing value */;
-	}
-}
-
 .root {
 	&[data-variant='philDefault'] {
 		background-color: #000;
@@ -30,7 +9,7 @@
 		-webkit-tap-highlight-color: transparent;
 		display: inline-block;
 		width: 100%;
-		font-size: 14px;
+		font-size: 16px;
 		height: 36px;
 		padding: 10px 20px;
 		transition: outline 0.15s ease-out;
@@ -51,28 +30,28 @@
 	}
 
 	&[data-variant='header-primary'] {
-		/* background-color: var(--Phil-Rebrand-Green-Foliage, #00827E); */
-		color: #fff;
+		color: var(--Phil-Rebrand-Green-Foliage, #00827e);
 		font-weight: 600;
 		position: relative;
-		line-height: 1;
 		font-family: Lato;
 		-webkit-tap-highlight-color: transparent;
 		display: inline-block;
 		width: 100%;
-		font-size: 14px;
 		height: 36px;
 		padding: 10px 20px;
 		transition: outline 0.15s ease-out;
 		border-radius: 0;
 		overflow: visible;
+		outline: 3px solid var(--Phil-Rebrand-Green-Foliage, #00827e);
+		outline-offset: -3px;
+		background-color: transparent;
+		font-size: 16px;
+		font-style: normal;
+		line-height: 16px; /* 100% */
 
 		&:hover {
-			outline: 3px solid var(--Phil-Rebrand-Green-Foliage, #00827E);
-			outline-offset: -3px;
-			background-color: transparent;
-			color: var(--Phil-Rebrand-Green-Foliage, #00827E);
-			font-weight: 900;
+			background: var(--Phil-Rebrand-Green-Foliage, #00827e);
+			color: #fff;
 		}
 
 		@media (min-width: $phil-breakpoint-sm) {
@@ -81,7 +60,7 @@
 	}
 
 	&[data-variant='header-secondary'] {
-		background-color: var(--Phil-Rebrand-Green-Foliage, #00827E);
+		background-color: var(--Phil-Rebrand-Green-Foliage, #00827e);
 		color: #fff;
 		font-weight: 600;
 		position: relative;
@@ -90,7 +69,7 @@
 		-webkit-tap-highlight-color: transparent;
 		display: inline-block;
 		width: 100%;
-		font-size: 14px;
+		font-size: 16px;
 		height: 36px;
 		padding: 10px 20px;
 		transition: outline 0.15s ease-out;
@@ -98,10 +77,10 @@
 		overflow: visible;
 
 		&:hover {
-			outline: 3px solid var(--Phil-Rebrand-Green-Foliage, #00827E);
+			outline: 3px solid var(--Phil-Rebrand-Green-Foliage, #00827e);
 			outline-offset: -3px;
 			background-color: transparent;
-			color: var(--Phil-Rebrand-Green-Foliage, #00827E);
+			color: var(--Phil-Rebrand-Green-Foliage, #00827e);
 			font-weight: 900;
 		}
 

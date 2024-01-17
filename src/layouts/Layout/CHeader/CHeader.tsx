@@ -207,9 +207,11 @@ const Navbar: React.FC<CHeaderProps> = ({
 	}, [width]);
 
 	const buttonConfig = {
-		primary: {variant: 'hp', size: 'md', uppercase: true},
+		primary: {variant: 'header-primary', size: 'md', uppercase: true},
 		secondary: {variant: 'header-secondary', size: 'md', uppercase: true},
 	};
+
+	console.log({buttons})
 
 	return (
 		<AppShell.Header

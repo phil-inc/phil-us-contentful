@@ -1,4 +1,17 @@
-import {Paper, Container, Title, Button, Text, Box, Stack, Anchor, Group, AspectRatio, Grid, Center} from '@mantine/core';
+import {
+	Paper,
+	Container,
+	Title,
+	Button,
+	Text,
+	Box,
+	Stack,
+	Anchor,
+	Group,
+	AspectRatio,
+	Grid,
+	Center,
+} from '@mantine/core';
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
@@ -155,7 +168,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, md: 4}}>
+						<Grid.Col span={{base: 12, md: 3, lg: 3, xl: 2}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
@@ -169,16 +182,15 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 						</Grid.Col>
 					)}
 
-					<Grid.Col span='auto'>
+					<Grid.Col span="auto">
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq}
 							align="flex-start"
-							justify='center'
+							justify="center"
 							h="100%"
 							gap={0}
-
 						>
 							{!resource.isFaq && body && renderRichText(body, options)}
 
