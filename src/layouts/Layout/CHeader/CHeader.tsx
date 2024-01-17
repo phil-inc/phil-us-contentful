@@ -41,7 +41,7 @@ export type ContentfulButton = {
 	link: {
 		__typename: string;
 		internalContent: {};
-		externalUrl : string;
+		externalUrl: string;
 		name: string;
 		id: string;
 	};
@@ -91,7 +91,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 			close();
 		},
 		null,
-		[navRef!, collapseRef!],
+		[navRef!, collapseRef!]
 	);
 
 	const onNavLinkClick = event => {
@@ -207,20 +207,25 @@ const Navbar: React.FC<CHeaderProps> = ({
 	}, [width]);
 
 	const buttonConfig = {
-		primary: {variant: 'outline', size: 'md', uppercase: true},
-		secondary: {variant: 'default', size: 'md', uppercase: true},
+		primary: {variant: 'hp', size: 'md', uppercase: true},
+		secondary: {variant: 'header-secondary', size: 'md', uppercase: true},
 	};
 
 	return (
-		<AppShell.Header className={classes.inner} style={{borderBottom: 0}} mb={minimal ? 0 : isBreak ? 0 : 36}>
-			<Group align='center' justify='space-between' className={classNames(classes.navbar, 'navbar')}>
+		<AppShell.Header
+			className={classes.inner}
+			style={{borderBottom: 0}}
+			data-minimal={minimal}
+			data-isBreak={isBreak}
+		>
+			<Group align="center" justify="space-between" className={classNames(classes.navbar, 'navbar')}>
 				{!minimal && (
-					<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+					<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
 						<Button
-							size='sm'
-							variant='outline'
+							size="sm"
+							variant="outline"
 							px={4}
-							color='philBranding'
+							color="philBranding"
 							className={classes.patientLoginButtonMobile}
 						>
 							Patient Login
@@ -230,26 +235,26 @@ const Navbar: React.FC<CHeaderProps> = ({
 
 				<Box className={classes.logo}>
 					{headerTargetBlank ? (
-						<Anchor href='https://phil.us' target='_blank'>
-							<Asset asset={header.logo} objectFit='contain' />
+						<Anchor href="https://phil.us" target="_blank">
+							<Asset asset={header.logo} objectFit="contain" />
 						</Anchor>
 					) : (
-						<Link to='/'>
-							<Asset asset={header.logo} objectFit='contain' />
+						<Link to="/">
+							<Asset asset={header.logo} objectFit="contain" />
 						</Link>
 					)}
 				</Box>
 				{!minimal && (
 					<>
 						<Burger
-							name='BurgerButton'
+							name="BurgerButton"
 							opened={isDrawer}
 							onClick={() => {
 								toggleDrawer();
 							}}
 							className={classes.burger}
 						/>
-						<List id='navLinkkkk' ref={setNavRef} className={classes.navLinksWrapper}>
+						<List ref={setNavRef} className={classes.navLinksWrapper}>
 							<div className={classes.indicator}></div>
 							{pages
 								.filter(page => page.title !== 'Home')
@@ -264,18 +269,18 @@ const Navbar: React.FC<CHeaderProps> = ({
 								))}
 							{buttons.map((button, index) => (
 								// TODO: use sys
-								<List.Item key={button.id} data-noindicator='true' className={classes.buttons}>
+								<List.Item key={button.id} data-noindicator="true" className={classes.buttons}>
 									{button.internalLink ? (
 										<Box ml={index && 16}>
 											<Link className={classes.textDecorationNone} to={`/${button.internalLink.slug}`}>
 												<Button
 													size={
-														button.buttonStyle === 'primary'
+														button.buttonStyle === 'Primary'
 															? buttonConfig.primary.size
 															: buttonConfig.secondary.size
 													}
 													variant={
-														button.buttonStyle === 'primary'
+														button.buttonStyle === 'Primary'
 															? buttonConfig.primary.variant
 															: buttonConfig.secondary.variant
 													}
@@ -287,12 +292,23 @@ const Navbar: React.FC<CHeaderProps> = ({
 									) : (
 										<Anchor
 											className={classes.textDecorationNone}
-											sx={{textDecoration: 'none', textDecorationLine: 'none'}}
+											style={{textDecoration: 'none', textDecorationLine: 'none'}}
 											ml={index && 16}
 											href={button.externalLink}
-											target='_blank'
+											target="_blank"
 										>
-											<Button size='md' variant='outline'>
+											<Button
+												size={
+													button.buttonStyle === 'Primary'
+														? buttonConfig.primary.size
+														: buttonConfig.secondary.size
+												}
+												variant={
+													button.buttonStyle === 'Primary'
+														? buttonConfig.primary.variant
+														: buttonConfig.secondary.variant
+												}
+											>
 												{button.buttonText}
 											</Button>
 										</Anchor>

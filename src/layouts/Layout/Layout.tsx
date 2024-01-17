@@ -89,7 +89,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 
 		components: {
 			Button: Button.extend({
-				classNames: {root: classes.root},
+				classNames: {root: classes.root, label: classes.label},
 			}),
 		},
 	});

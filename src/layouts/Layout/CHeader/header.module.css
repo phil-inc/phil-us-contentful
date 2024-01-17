@@ -1,142 +1,127 @@
 .inner {
-    padding: 0 100px; /* Default padding */
-    display: flex;
-    align-items: center;
-    position: static !important;
-    /* TODO: If minimal is true, you need to add 'max-width: 1440px;' in your JavaScript */
-}
-
-.inner::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
-/* Adjust padding for .inner based on 'minimal' in your JavaScript */
-@media (max-width: 480px) { /* 'sm' breakpoint */
-    .inner {
-        padding: 0 16px; /* Adjust based on 'minimal' */
-    }
+	padding: 0 100px;
+	display: flex;
+	align-items: center;
+	position: static !important;
 }
 
 .burger {
-    /* Default styles for burger */
-}
-
-@media (min-width: 769px) { /* 'md' breakpoint */
-    .burger {
-        display: none !important;
-    }
+	@media (min-width: $phil-breakpoint-md) {
+		display: none !important;
+	}
 }
 
 .collapse {
-    position: absolute;
-    top: 90px;
-    left: 0;
-    z-index: 2;
-    opacity: 1;
-    width: 100%;
+	position: absolute;
+	top: 90px;
+	left: 0;
+	z-index: 2;
+	opacity: 1;
+	width: 100%;
 }
 
 .navbar {
-    position: relative;
-    height: 90px;
-    width: 100vw;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
+	position: relative;
+	height: 90px;
+	width: 100vw;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	overflow-y: hidden;
 }
 
 .navbar ul li {
-    position: relative;
-    list-style-type: none;
-    /* height: 120px; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
+	position: relative;
+	list-style-type: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
 }
 
 .indicator {
-    position: absolute;
-    bottom: -25px;
-    left: 25px;
-    width: 0px;
-    height: 0px;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid #00827e;
-    transition: transform 0.5s;
+	position: absolute;
+	bottom: -25px;
+	left: 25px;
+	width: 0px;
+	height: 0px;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-bottom: 20px solid #00827e;
+	transition: transform 0.5s;
 }
 
 .navLinksWrapper {
-    display: flex;
+	display: flex;
 }
 
-@media (max-width: 1024px) { /* 'md' breakpoint */
-    .navLinksWrapper {
-        display: none !important;
-    }
+.navLinksWrapper {
+	@media (max-width: 1024px) {
+		display: none !important;
+	}
 }
 
 .navLink {
-    position: relative;
-    margin-right: calc(1.313rem + 1.2vw);
-    cursor: pointer;
-    text-decoration: none;
+	position: relative;
+	margin-right: calc(1.313rem + 1.2vw);
+	cursor: pointer;
+	text-decoration: none;
 }
 
 .navLink:last-child {
-    margin-right: 0px;
+	margin-right: 0px;
 }
 
-@media (max-width: 1440px) { /* 'xl' breakpoint */
-    .navLink {
-        margin-right: calc(1.313rem);
-    }
+@media (max-width: 1440px) {
+	/* 'xl' breakpoint */
+	.navLink {
+		margin-right: calc(1.313rem);
+	}
 }
 
 .buttons {
-    margin-right: 0px !important;
+	margin-right: 0px !important;
 }
 
 .patientLoginButtonMobile:hover {
-    /* Hover styles */
-    /* Replace with actual background color from theme.colors.philBranding[9] */
-    color: white;
+	/* Hover styles */
+	/* Replace with actual background color from theme.colors.philBranding[9] */
+	color: white;
 }
 
-@media (min-width: 769px) { /* 'md' breakpoint */
-    .patientLoginButtonMobile {
-        display: none;
-    }
+@media (min-width: 769px) {
+	/* 'md' breakpoint */
+	.patientLoginButtonMobile {
+		display: none;
+	}
 }
 
 .logo {
-    max-width: 125px;
-    max-height: 90px;
-    width: 100%;
+	max-width: 125px;
+	max-height: 90px;
+	width: 100%;
 }
 
-@media (max-width: 768px) { /* 'md' breakpoint */
-    .logo {
-        width: 100px;
-        margin-right: 25px;
-    }
+@media (max-width: 768px) {
+	/* 'md' breakpoint */
+	.logo {
+		width: 100px;
+		margin-right: 25px;
+	}
 }
 
 .hideOnLarge {
-    display: none !important;
+	display: none !important;
 }
 
-@media (min-width: 769px) { /* 'md' breakpoint */
-    .hideOnLarge {
-        display: none;
-    }
+@media (min-width: 769px) {
+	/* 'md' breakpoint */
+	.hideOnLarge {
+		display: none;
+	}
 }
 
 .textDecorationNone {
-    text-decoration: none;
-    text-decoration-line: none;
+	text-decoration: none;
+	text-decoration-line: none;
 }

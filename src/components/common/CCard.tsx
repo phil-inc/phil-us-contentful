@@ -45,7 +45,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 					if (target.__typename === 'ContentfulMediaItem') {
 						return (
-							<ImageContainer fluid maw={128}>
+							<ImageContainer flexStart fluid maw={128}>
 								<Asset objectFit="contain" asset={target} />
 							</ImageContainer>
 						);
@@ -145,9 +145,9 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 				data-has-asset={Boolean(media)}
 			></Box>
 			<Paper
-				radius={0}
-				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.background)}}
 				className={classes.paper}
+				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.background)}}
+				radius={0}
 				data-hasAsset={Boolean(media)}
 			>
 				{/* TODO: convert to grid */}
@@ -155,7 +155,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, md: 3}}>
+						<Grid.Col span={{base: 12, md: 4}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
@@ -175,8 +175,10 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq}
 							align="flex-start"
+							justify='center'
 							h="100%"
 							gap={0}
+
 						>
 							{!resource.isFaq && body && renderRichText(body, options)}
 

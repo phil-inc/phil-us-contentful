@@ -21,7 +21,7 @@
 
 .root {
 	&[data-variant='philDefault'] {
-		background-color: #00201f;
+		background-color: #000;
 		color: #fff;
 		font-weight: 600;
 		position: relative;
@@ -33,11 +33,13 @@
 		font-size: 14px;
 		height: 36px;
 		padding: 10px 20px;
-		transition: outline 0.2s ease-out;
-        border-radius: 0;
+		transition: outline 0.15s ease-out;
+		border-radius: 0;
+		overflow: visible;
 
 		&:hover {
 			outline: 3px solid #00201f;
+			outline-offset: -3px;
 			background-color: transparent;
 			color: #00201f;
 			font-weight: 900;
@@ -46,6 +48,69 @@
 		@media (min-width: $phil-breakpoint-sm) {
 			width: auto;
 		}
-
 	}
+
+	&[data-variant='header-primary'] {
+		/* background-color: var(--Phil-Rebrand-Green-Foliage, #00827E); */
+		color: #fff;
+		font-weight: 600;
+		position: relative;
+		line-height: 1;
+		font-family: Lato;
+		-webkit-tap-highlight-color: transparent;
+		display: inline-block;
+		width: 100%;
+		font-size: 14px;
+		height: 36px;
+		padding: 10px 20px;
+		transition: outline 0.15s ease-out;
+		border-radius: 0;
+		overflow: visible;
+
+		&:hover {
+			outline: 3px solid var(--Phil-Rebrand-Green-Foliage, #00827E);
+			outline-offset: -3px;
+			background-color: transparent;
+			color: var(--Phil-Rebrand-Green-Foliage, #00827E);
+			font-weight: 900;
+		}
+
+		@media (min-width: $phil-breakpoint-sm) {
+			width: auto;
+		}
+	}
+
+	&[data-variant='header-secondary'] {
+		background-color: var(--Phil-Rebrand-Green-Foliage, #00827E);
+		color: #fff;
+		font-weight: 600;
+		position: relative;
+		line-height: 1;
+		font-family: Lato;
+		-webkit-tap-highlight-color: transparent;
+		display: inline-block;
+		width: 100%;
+		font-size: 14px;
+		height: 36px;
+		padding: 10px 20px;
+		transition: outline 0.15s ease-out;
+		border-radius: 0;
+		overflow: visible;
+
+		&:hover {
+			outline: 3px solid var(--Phil-Rebrand-Green-Foliage, #00827E);
+			outline-offset: -3px;
+			background-color: transparent;
+			color: var(--Phil-Rebrand-Green-Foliage, #00827E);
+			font-weight: 900;
+		}
+
+		@media (min-width: $phil-breakpoint-sm) {
+			width: auto;
+		}
+	}
+}
+
+.label {
+	overflow: visible;
 }

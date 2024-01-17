@@ -11,6 +11,10 @@
 
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 64px 32px;
+
+		&[data-hasAsset='false'] {
+			padding: 0;
+		}
 	}
 }
 
@@ -44,7 +48,8 @@
 }
 
 .stack {
-	
+	padding: 64px 32px !important;
+
 	> * {
 		&:not(:first-child) {
 			margin-top: 36px;
@@ -83,6 +88,7 @@
 	}
 }
 
-.gridInner, .gridRoot {
+.gridInner,
+.gridRoot {
 	height: 100%;
 }

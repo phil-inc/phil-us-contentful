@@ -3,9 +3,11 @@
 	width: 100%;
 	height: 100%;
 	margin: 0;
-	max-width: 100% !important;
+	max-width: 100%;
 
-	&[data-flex-start] {
+	&[data-flex-start='true'] {
+		margin: 0 !important;
+		
 		&[data-video='true'] {
 			margin: 0 !important;
 		}
@@ -41,7 +43,7 @@
 
 	@media (min-width: $phil-breakpoint-md) {
 		position: static;
-		max-width: 335px !important;
+		max-width: 335px;
 	}
 }
 
