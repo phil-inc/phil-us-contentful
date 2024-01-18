@@ -55,7 +55,6 @@ const CDrawer: React.FC = () => {
 				toggleDrawer(false);
 			}}
 			withCloseButton={false}
-			// title={}
 			size="100%"
 			transitionProps={{transition: 'fade'}}
 		>

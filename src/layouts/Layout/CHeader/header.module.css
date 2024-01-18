@@ -10,7 +10,7 @@
 }
 
 .burger {
-	@media (min-width: $phil-breakpoint-md) {
+	@media (min-width: $phil-breakpoint-lg) {
 		display: none !important;
 	}
 }
@@ -56,17 +56,29 @@
 }
 
 .navLinksWrapper {
-	display: flex;
+	display: none;
+
+	@media (min-width: $phil-breakpoint-lg) {
+		display: flex;
+	}
 }
 
 .navLink {
 	position: relative;
-	margin-right: calc(1.313rem + 1.2vw);
+	margin-right: 36px;
 	cursor: pointer;
 	text-decoration: none;
 
 	&:last-child {
 		margin-right: 0px;
+	}
+
+	@media (min-width: $phil-breakpoint-lg) {
+		margin-right: 20px;
+	}
+
+	@media (min-width: $phil-breakpoint-xl) {
+		margin-right: 36px;
 	}
 }
 
