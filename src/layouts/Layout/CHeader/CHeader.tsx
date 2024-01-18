@@ -211,11 +211,9 @@ const Navbar: React.FC<CHeaderProps> = ({
 		secondary: {variant: 'header-secondary', size: 'md', uppercase: true},
 	};
 
-	console.log({buttons})
-
 	return (
 		<AppShell.Header
-			className={classes.inner}
+			className={classes.header}
 			style={{borderBottom: 0}}
 			data-minimal={minimal}
 			data-isBreak={isBreak}
@@ -337,7 +335,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 						buttons,
 					}}
 				>
-					{isBreak ? <CDrawer /> : <CCollapse />}
+					{isDrawer ? <CDrawer /> : <CCollapse />}
 				</HeaderContext.Provider>
 			)}
 		</AppShell.Header>

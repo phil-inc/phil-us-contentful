@@ -10,6 +10,7 @@ import {
 	Accordion,
 	Table,
 	useMantineTheme,
+	List,
 } from '@mantine/core';
 import {IconChevronDown} from '@tabler/icons';
 import Asset from 'components/common/Asset/Asset';
@@ -33,252 +34,187 @@ import * as classes from './drawer.module.css';
  * @component
  */
 const CDrawer: React.FC = () => {
-	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer, buttons}
-		= React.useContext(HeaderContext);
+	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer, buttons} =
+		React.useContext(HeaderContext);
 	const theme = useMantineTheme();
+	// const buttonConfig = {
+	// 	primary: {variant: 'outline', size: 'md', uppercase: true},
+	// 	secondary: {variant: 'default', size: 'md', uppercase: true},
+	// };
+
 	const buttonConfig = {
-		primary: {variant: 'outline', size: 'md', uppercase: true},
-		secondary: {variant: 'default', size: 'md', uppercase: true},
+		primary: {variant: 'header-primary', size: 'md', uppercase: true},
+		secondary: {variant: 'header-secondary', size: 'md', uppercase: true},
 	};
 
 	return (
 		<Drawer
-			className={classes.drawer}
-			classNames={{
-				title: classes.drawerTitle,
-				drawer: classes.drawerWrapper,
-				header: classes.drawerHeader,
-			}}
+			classNames={{header: classes.drawerHeader, body: classes.drawerBody}}
 			opened={isDrawer}
 			onClose={() => {
 				toggleDrawer(false);
 			}}
 			withCloseButton={false}
-			title={
-				<Group position='apart' noWrap align='center' mt={9}>
-					<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
-						<Button
-							size='sm'
-							uppercase
-							variant='outline'
-							px={4}
-							color='philBranding'
-							className={classes.patientLoginButtonMobile}
-						>
-							Patient Login
-						</Button>
-					</Anchor>
-					<Box className={classes.logo}>
-						<Link to='/'>
-							<ImageContainer ratio={125 / 90} contain fluid background='transparent'>
-								<Asset asset={header.logo} />
-							</ImageContainer>
-						</Link>
-					</Box>
-					<Burger
-						opened={true}
-						onClick={() => {
-							toggleDrawer();
-						}}
-						className={classes.burger}
-					/>
-				</Group>
-			}
-			size='full'
-			transition='fade'
+			// title={}
+			size="100%"
+			transitionProps={{transition: 'fade'}}
 		>
-			<ScrollArea style={{height: 'calc(100vh - 100px)'}} type='never'>
-				<Accordion
-					mb={16}
-					classNames={{control: classes.accordionControl, content: classes.accordionContent}}
-					chevron={<IconChevronDown size={24} />}
-				>
-					{pages
-						.filter(page => page.title !== 'Home')
-						.map(page => (
-							<Accordion.Item key={page.id + 'mapHeaderPagesDrawer'} value={page.title}>
-								<Accordion.Control>
-									<Text weight='bold' size={18}>
-										{page.title}
-									</Text>
-								</Accordion.Control>
-								<Accordion.Panel>
+			<Group justify="space-between" wrap="nowrap" align="center" mb="sm">
+				<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
+					<Button
+						size="sm"
+						radius={0}
+						variant={
+							buttons?.[0].buttonStyle === 'Primary' ? buttonConfig.primary.variant : buttonConfig.secondary.variant
+						}
+						px={4}
+						className={classes.patientLoginButtonMobile}
+					>
+						Patient Login
+					</Button>
+				</Anchor>
+
+				<Box className={classes.logo}>
+					<Link to="/">
+						<Asset asset={header.logo} objectFit="contain" />
+					</Link>
+				</Box>
+
+				<Burger
+					opened={true}
+					onClick={() => {
+						toggleDrawer();
+					}}
+					className={classes.burger}
+				/>
+			</Group>
+
+			<Accordion
+				mb={16}
+				classNames={{
+					control: classes.control,
+					content: classes.content,
+					label: classes.label,
+					chevron: classes.chevron,
+					item: classes.item,
+				}}
+				chevron={<IconChevronDown size={24} />}
+			>
+				{pages
+					.filter(page => page.title !== 'Home')
+					.map(page => (
+						<Accordion.Item key={page.id + 'mapHeaderPagesDrawer'} value={page.title}>
+							<Accordion.Control>{page.title}</Accordion.Control>
+							<Accordion.Panel>
+								<List spacing={0} listStyleType="none" mb="sm" classNames={{item: classes.listItem}}>
 									{page.sections
 										.filter(section =>
 											Boolean(
-												section.header?.length
-													&& !section.isHidden
-													&& !(section as IReferencedSection)?.hideNavigationAnchor,
-											),
+												section.header?.length &&
+													!section.isHidden &&
+													!(section as IReferencedSection)?.hideNavigationAnchor
+											)
 										)
 										.map((section, index, array) => {
 											const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 											return (
 												<React.Fragment key={section.id + 'mapHeaderPageSectionsDrawer'}>
-													<Table mb={16}>
-														<thead>
-															<tr>
-																{/* All sections except for the first */}
+													<List.Item py="xs">
+														{/* All sections except for the first */}
 
-																<th style={{paddingLeft: 0, paddingRight: 0}}>
-																	{page.title === document.title && page.title !== 'Resources' ? (
-																		<ScrollToElement
-																			to={path}
-																			spy={true}
-																			smooth={true}
-																			style={{
-																				textDecoration: 'none',
-																				cursor: 'pointer',
-																			}}
-																		>
-																			<Text
-																				size={16}
-																				weight={400}
-																				color={theme.colors.primary[0]}
-																				onClick={() => {
-																					toggleDrawer(false);
-																				}}
-																			>
-																				{section.header}
-																			</Text>
-																		</ScrollToElement>
-																	) : (
-																		<Link to={path} style={{textDecoration: 'none'}}>
-																			<Text
-																				size={16}
-																				weight={400}
-																				color={theme.colors.primary[0]}
-																				onClick={() => {
-																					toggleDrawer(false);
-																				}}
-																			>
-																				{section.header}
-																			</Text>
-																		</Link>
-																	)}
-																</th>
-															</tr>
-														</thead>
-
-														{/* Blog pages attached to a section */}
-														<tbody>
-															{allContentfulResource.nodes
-																.filter(resource => resource.relatesTo)
-																.map(
-																	({id, heading, relatesTo}) =>
-																		section.id === relatesTo.id && (
-																			<Link
-																				key={id + 'mapResourceDrawer'}
-																				to={navigateToPage(
-																					`${slugify(page.slug, {
-																						lower: true,
-																					})}/${slugify(relatesTo.header, {
-																						lower: true,
-																					})}/${slugify(heading, {lower: true})}`,
-																				)}
-																				style={{textDecoration: 'none'}}
-																			>
-																				<Text
-																					size={14}
-																					weight={400}
-																					color={theme.colors.primary[0]}
-																					mt={24}
-																				>
-																					{heading}
-																				</Text>
-																			</Link>
-																		),
-																)}
-														</tbody>
-													</Table>
+														{page.title === document.title && page.title !== 'Resources' ? (
+															<ScrollToElement
+																to={path}
+																spy={true}
+																smooth={true}
+																style={{
+																	textDecoration: 'none',
+																	cursor: 'pointer',
+																}}
+															>
+																{section.header}
+															</ScrollToElement>
+														) : (
+															<Link to={path} className={classes.link}>
+																{section.header}
+															</Link>
+														)}
+													</List.Item>
 
 													{/* Add Patient Login to mobile drawer under patiens accordian */}
 													{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
-														<Table mb={16}>
-															<thead>
-																<tr>
-																	<th style={{paddingLeft: 0, paddingRight: 0}}>
-																		<Anchor
-																			href='https://my.phil.us/'
-																			target='_blank'
-																			style={{textDecoration: 'none'}}
-																		>
-																			<Text size={16} weight={400} color={theme.colors.primary[0]}>
-																				Patient Log In
-																			</Text>
-																		</Anchor>
-																	</th>
-																</tr>
-															</thead>
-														</Table>
+														<List.Item py="xs">
+															<Anchor
+																href="https://my.phil.us/"
+																target="_blank"
+																className={classes.link}
+															>
+																Patient Log In
+															</Anchor>
+														</List.Item>
 													)}
 
 													{/* Add Careers mobile drawer under company accordian */}
 													{page.title === COMPANY_PAGE && index === getFinalIndex(page) && (
-														<Table mb={16}>
-															<thead>
-																<tr>
-																	<th style={{paddingLeft: 0, paddingRight: 0}}>
-																		<Link to={CAREERS} style={{textDecoration: 'none'}}>
-																			<Text size={16} weight={400} color={theme.colors.primary[0]}>
-																				Careers
-																			</Text>
-																		</Link>
-																	</th>
-																</tr>
-															</thead>
-														</Table>
+														<List.Item>
+															<Link to={CAREERS} style={{textDecoration: 'none'}}>
+																<Text size={'16px'} fw={'400'}>
+																	Careers
+																</Text>
+															</Link>
+														</List.Item>
 													)}
 												</React.Fragment>
 											);
 										})}
-								</Accordion.Panel>
-							</Accordion.Item>
-						))}
-				</Accordion>
-				{buttons
-					.filter((button, index) => index)
-					.map((button, index) =>
-						button.internalLink ? (
-							<Box key={button.id} mt={index && 16}>
-								<Link className={classes.textDecorationNone} to={button.internalLink.slug}>
-									<Button
-										size={
-											button.buttonStyle === 'primary'
-												? buttonConfig.primary.size
-												: buttonConfig.secondary.size
-										}
-										uppercase={
-											button.buttonStyle === 'primary'
-												? buttonConfig.primary.uppercase
-												: buttonConfig.secondary.uppercase
-										}
-										variant={
-											button.buttonStyle === 'primary'
-												? buttonConfig.primary.variant
-												: buttonConfig.secondary.variant
-										}
-										fullWidth
-									>
-										{button.buttonText}
-									</Button>
-								</Link>
-							</Box>
-						) : (
-							<Anchor
-								className={classes.textDecorationNone}
-								mt={index && 16}
-								href={button.externalLink}
-								target='_blank'
-							>
-								<Button size='md' uppercase variant='outline' fullWidth>
+								</List>
+							</Accordion.Panel>
+						</Accordion.Item>
+					))}
+			</Accordion>
+
+			{buttons
+				.filter((button, index) => index)
+				.map((button, index) =>
+					button.internalLink ? (
+						<Box key={button.id} mt={index && 16}>
+							<Link className={classes.link} to={button.internalLink.slug}>
+								<Button
+									size={
+										button.buttonStyle === 'Primary' ? buttonConfig.primary.size : buttonConfig.secondary.size
+									}
+									variant={
+										button.buttonStyle === 'Primary'
+											? buttonConfig.primary.variant
+											: buttonConfig.secondary.variant
+									}
+									fullWidth
+								>
 									{button.buttonText}
 								</Button>
-							</Anchor>
-						),
-					)}
-			</ScrollArea>
+							</Link>
+						</Box>
+					) : (
+						<Anchor
+							className={classes.link}
+							mt={index && 16}
+							href={button.externalLink}
+							target="_blank"
+							underline="never"
+						>
+							<Button
+								className={classes.link}
+								size="md"
+								radius={0}
+								variant={buttonConfig.secondary.variant}
+								fullWidth
+							>
+								{button.buttonText}
+							</Button>
+						</Anchor>
+					)
+				)}
 		</Drawer>
 	);
 };

@@ -1,8 +1,12 @@
-.inner {
-	padding: 0 100px;
+.header {
+	padding: 20px;
 	display: flex;
 	align-items: center;
 	position: static !important;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 0px 100px;
+	}
 }
 
 .burger {
@@ -55,27 +59,14 @@
 	display: flex;
 }
 
-.navLinksWrapper {
-	@media (max-width: 1024px) {
-		display: none !important;
-	}
-}
-
 .navLink {
 	position: relative;
 	margin-right: calc(1.313rem + 1.2vw);
 	cursor: pointer;
 	text-decoration: none;
-}
 
-.navLink:last-child {
-	margin-right: 0px;
-}
-
-@media (max-width: 1440px) {
-	/* 'xl' breakpoint */
-	.navLink {
-		margin-right: calc(1.313rem);
+	&:last-child {
+		margin-right: 0px;
 	}
 }
 
@@ -89,36 +80,14 @@
 	color: white;
 }
 
-@media (min-width: 769px) {
-	/* 'md' breakpoint */
-	.patientLoginButtonMobile {
-		display: none;
-	}
-}
-
 .logo {
 	max-width: 125px;
 	max-height: 90px;
 	width: 100%;
 }
 
-@media (max-width: 768px) {
-	/* 'md' breakpoint */
-	.logo {
-		width: 100px;
-		margin-right: 25px;
-	}
-}
-
 .hideOnLarge {
 	display: none !important;
-}
-
-@media (min-width: 769px) {
-	/* 'md' breakpoint */
-	.hideOnLarge {
-		display: none;
-	}
 }
 
 .textDecorationNone {

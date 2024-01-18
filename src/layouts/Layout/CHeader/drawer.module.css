@@ -1,110 +1,52 @@
-/* Styles.css */
-
-/* Burger */
-.burger {
-    /* Default styles for 'burger' */
-}
-
-@media (min-width: 769px) { /* md breakpoint */
-    .burger {
-        display: none !important;
-    }
-}
-
-/* DrawerWrapper */
-.drawerWrapper {
-    padding: /* Replace with 'theme.spacing.sm + 10px 100px' value */ !important;
-}
-
-@media (max-width: 768px) { /* sm breakpoint */
-    .drawerWrapper {
-        padding: /* Replace with 'theme.spacing.sm + 10px 100px' value */ !important;
-        padding-top: 0px !important;
-    }
-}
-
-@media (max-width: 480px) { /* xs breakpoint */
-    .drawerWrapper {
-        padding: /* Replace with 'theme.spacing.sm + 10px 16px' value */ !important;
-        padding-top: 0px !important;
-    }
-}
-
-/* Drawer */
-.drawer {
-    /* Default styles for 'drawer' */
-}
-
-@media (min-width: 769px) { /* md breakpoint */
-    .drawer {
-        display: none;
-    }
-}
-
-/* DrawerHeader */
-.drawerHeader {
-    margin-bottom: 0;
-}
-
-/* DrawerTitle */
-.drawerTitle {
-    width: 100%;
-    margin: 0;
-}
-
-/* AccordionControl */
-.accordionControl {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* AccordionContent */
-.accordionContent {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* PatientLoginButton */
-.patientLoginButton:hover {
-    background-color: /* Replace with 'theme.colors.philBranding[9]' value */;
-    color: white;
-}
-
-/* PatientLoginButtonMobile */
-.patientLoginButtonMobile:hover {
-    background-color: /* Replace with 'theme.colors.philBranding[9]' value */;
-    color: white;
-}
-
-@media (min-width: 769px) { /* md breakpoint */
-    .patientLoginButtonMobile {
-        display: none;
-    }
-}
-
-/* Logo */
 .logo {
-    max-width: 125px;
-    max-height: 90px;
-    width: 100%;
+    width: 125px !important;
 }
 
-@media (max-width: 768px) { /* sm breakpoint */
-    .logo {
-        width: 100px;
-        margin-right: 25px;
-    }
+.drawerHeader {
+	padding: 20px !important;
 }
 
-/* HideOnLarge */
-@media (min-width: 769px) { /* md breakpoint */
-    .hideOnLarge {
-        display: none;
-    }
+.drawerBody {
+	padding: 20px !important;
 }
 
-/* TextDecorationNone */
-.textDecorationNone {
-    text-decoration: none;
-    text-decoration-line: none;
+.control {
+	padding: 32px 0 !important;
+    border: 0px !important;
+    border-bottom: 1px solid black !important;
+}
+
+.label {
+	font-family: Lato, sans-serif;
+	font-weight: 700 !important;
+	font-size: 18px;
+    padding: 0px !important;
+}
+
+.content {
+    padding: 0 !important;
+}
+
+.chevron {
+    width: 24px !important;
+}
+
+.item {
+    border-bottom: 0 !important;
+}
+
+.listItem {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.tableHeader {
+    font-family: Lato, sans-serif;
+    font-weight: 400 !important;
+    font-size: 14px;
+    padding: 0px !important;
+}
+
+.link {
+    text-decoration: none !important;
+    color: var(--Phil-Rebrand-Neutral-Pitch, #0A0A0A) !important;
 }
