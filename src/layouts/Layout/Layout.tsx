@@ -9,8 +9,10 @@ import LinkedinInsights from 'analytics/LinkedinInsights';
 
 // Import css overrides here
 import 'assets/css/index.css';
-import ZoominfoAnalytics from 'analytics/ZoominfoAnalytics';
 import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
+
+import ZoominfoAnalytics from 'analytics/ZoominfoAnalytics';
 import * as classes from './layout.module.css';
 
 const isProduction = process.env.NODE_ENV === 'production';

@@ -124,3 +124,19 @@
 		}
 	}
 }
+
+.carouselContainer {
+	> div {
+		&:not(:last-child) {
+			padding-right: 36px;
+		}
+	}
+}
+
+.root {
+	width: 95%;
+	
+	&[data-has-media-item='true'] {
+		width: 100%;
+	}
+}
