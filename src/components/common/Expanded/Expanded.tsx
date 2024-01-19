@@ -36,6 +36,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 	pb,
 	px,
 	fullWidth = false,
+	...rest
 }) => {
 	const context = React.useContext(PageContext);
 
@@ -50,6 +51,7 @@ const Expanded: React.FC<ExpandedProps> = ({
 			pb={pb}
 			mb={mb}
 			px={px ? px : fullWidth ? 0 : undefined}
+			{...rest}
 		>
 			{children}
 		</Container>

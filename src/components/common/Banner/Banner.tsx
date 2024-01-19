@@ -33,19 +33,19 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 					<Grid.Col className={classes.gridColumn} span={{lg: 10, sm: 12}}>
 						<Container m={0}>
 							<Title order={3}>{heading}</Title>
-							<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={10} />
+							<Divider variant="dashed" size={1} style={{maxWidth: 404}} my={10} />
 							{body && (
-								<Text size='md' mt='sm' mb={11}>
+								<Text size="md" mt="sm" mb={11}>
 									{renderRichText(body)}
 								</Text>
 							)}
 						</Container>
 					</Grid.Col>
-					{Boolean(buttonText?.length)
-						&& (isHubspotEmbed ? (
+					{Boolean(buttonText?.length) &&
+						(isHubspotEmbed ? (
 							<Grid.Col span={{lg: 2, sm: 12}}>
 								<Modal
-									size='ls'
+									size="ls"
 									p={0}
 									opened={openHubspotModal}
 									onClose={() => {
@@ -53,22 +53,22 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 									}}
 								>
 									<HubspotFormModal hubspotEmbed={hubspotEmbed!} />
-									{resource.isHubspotEmbed
-									&& resource.isInsertSnippet
-									&& resource.codeSnippet
-									&& Boolean(resource.codeSnippet.codeSnippet.length)
-									&& isProduction ? (
-											<Script>
-												{resource.codeSnippet.codeSnippet
-													.trim()
-													.replace('<script>', '')
-													.replace('</script>', '')}
-											</Script>
-										) : null}
+									{resource.isHubspotEmbed &&
+									resource.isInsertSnippet &&
+									resource.codeSnippet &&
+									Boolean(resource.codeSnippet.codeSnippet.length) &&
+									isProduction ? (
+										<Script>
+											{resource.codeSnippet.codeSnippet
+												.trim()
+												.replace('<script>', '')
+												.replace('</script>', '')}
+										</Script>
+									) : null}
 								</Modal>
 								<Container>
 									<Button
-										color={'dark'}
+										variant="philDefault"
 										onClick={() => {
 											setopenHubspotModal(true);
 										}}
@@ -82,12 +82,12 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 								<Grid.Col span={{lg: 2, sm: 12}}>
 									<Container>
 										{isExternal ? (
-											<Anchor href={link} target='_blank'>
-												<Button color={'dark'}>{buttonText}</Button>
+											<Anchor href={link} target="_blank">
+												<Button variant="philDefault">{buttonText}</Button>
 											</Anchor>
 										) : (
 											<Link to={link}>
-												<Button color={'dark'}>{buttonText}</Button>
+												<Button variant="philDefault">{buttonText}</Button>
 											</Link>
 										)}
 									</Container>
@@ -101,7 +101,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 };
 
 export const bannerFactory = (resource: TResource) => (
-	<Expanded key={resource.id} id={resource.id} fullWidth background='#F4F4F4' py={120} px={106}>
+	<Expanded key={resource.id} id={resource.id} fullWidth background="#F4F4F4" py={120} px={106}>
 		<Banner resource={resource} />
 	</Expanded>
 );

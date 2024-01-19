@@ -5,6 +5,10 @@
     width: 100vw;
     padding: 60px 20px;
 
+    &[data-banner='true'] {
+        padding: 42px 16px !important;
+    }
+
     @media (min-width: $phil-breakpoint-sm) {
         padding: 100px;
     }

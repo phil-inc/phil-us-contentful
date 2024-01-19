@@ -14,18 +14,18 @@ type ResourceCardProps = {
 	isFaq?: boolean;
 };
 
-export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({resource, mb = 0, isFaq = false}) => {
+export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({resource, isFaq = false}) => {
 	const {link, isExternal} = getLink(resource);
 
 	const heading = resource.subheading?.length ? resource.subheading : resource.heading;
 
 	return (
-		<Paper mb={mb} radius={0} className={classNames(classes.card)}>
-			<Grid justify='start' align='start'>
-				<Grid.Col className={classes.center}>
+		<Paper radius={0} className={classes.card}>
+			<Grid justify="start" align="start">
+				<Grid.Col>
 					<Box className={classes.box}>
 						{heading && isExternal ? (
-							<Anchor href={link} target='_blank' underline={false} className={classes.textDecorationNone}>
+							<Anchor href={link} target="_blank" underline="never">
 								<Title order={3} className={classes.title}>
 									{heading}
 								</Title>
@@ -39,18 +39,22 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({resourc
 						)}
 						{resource.body && (
 							<Text className={classes.body} lineClamp={2}>
-								{getDescriptionFromRichtext(resource.body.raw)}
+								{getDescriptionFromRichtext(resource?.body?.raw)}
 							</Text>
 						)}
 						{resource.buttonText && (
 							<Group>
 								{isExternal ? (
-									<Anchor href={link} target='_blank'>
-										<Button className={classes.button}>{resource.buttonText}</Button>
+									<Anchor href={link} underline="never" target="_blank" >
+										<Button variant="philDefault" className={classes.button}>
+											{resource.buttonText}
+										</Button>
 									</Anchor>
 								) : (
 									<Link to={link}>
-										<Button className={classes.button}>{resource.buttonText}</Button>
+										<Button variant="philDefault" className={classes.button}>
+											{resource.buttonText}
+										</Button>
 									</Link>
 								)}
 							</Group>
