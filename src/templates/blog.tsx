@@ -74,10 +74,6 @@ type PageTemplateProps = {
 	};
 };
 
-// Utility functions for content type checks
-const isPDF = (contentType: string) => isPDFContent(contentType);
-const isVideo = (contentType: string) => isVideoContent(contentType);
-
 // Separate components for each content type
 type ContentProps = {
 	asset: TAsset;
@@ -109,11 +105,11 @@ const ContentRenderer: React.FC<ContentRendererProps> = ({node, classes}) => {
 	const asset = node?.data?.target as TAsset;
 	const contentType: string = node?.data?.target?.file?.contentType as string;
 
-	if (isPDF(contentType)) {
+	if (isPDFContent(contentType)) {
 		return <PDFContent asset={asset} canvasRef={canvasRef} classes={classes} />;
 	}
 
-	if (isVideo(contentType)) {
+	if (isVideoContent(contentType)) {
 		return <VideoContent asset={asset} canvasRef={canvasRef} classes={classes} />;
 	}
 
@@ -124,39 +120,31 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {heading, body, asset, banners, author, noindex, isFaq} = data.contentfulResource;
 
 	// Map for future reference to match content
-	const richTextImages: Record<string, {image: any; alt: string}> = {};
 	const youtubeEmbeds = new Map<string, {title: string; url: string}>();
 
-	if (body && Boolean(body.references)) {
-		// Rich text image map
-		body.references
-			.filter(reference => reference?.sys?.contentType?.sys?.id !== 'youtubeEmbedResource')
-			.map((reference: any) => {
-				richTextImages[reference.contentful_id] = {
-					image: reference.gatsbyImageData as unknown,
-					alt: reference.title as string,
-				};
+	if (body?.references) {
+		body.references.forEach(reference => {
+			const contentTypeID = reference?.sys?.contentType?.sys?.id;
+			const contentfulID = reference?.contentful_id;
+			if (!contentfulID) {
+				return;
+			}
 
-				return true;
-			});
-
-		// Youtube embed map
-		body.references
-			.filter(reference => reference?.sys?.contentType?.sys?.id === 'youtubeEmbedResource')
-			.map((reference: any) => {
-				youtubeEmbeds[reference.contentful_id] = {
-					title: reference?.title as string,
-					url: reference?.youtubeVideoUrl as string,
-				};
-
-				return true;
-			});
+			switch (contentTypeID) {
+				case 'youtubeEmbedResource':
+					youtubeEmbeds.set(contentfulID, {
+						title: reference.title as string,
+						url: reference.youtubeVideoUrl as string,
+					});
+					break;
+			}
+		});
 	}
 
 	const options = {
 		renderNode: {
 			[BLOCKS.EMBEDDED_ENTRY](node: Block, children) {
-				const content: {title: string; url: string} = youtubeEmbeds[node?.data?.target?.contentful_id] as {
+				const content: {title: string; url: string} = youtubeEmbeds.get(node?.data?.target?.contentful_id) as {
 					title: string;
 					url: string;
 				};
@@ -168,7 +156,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 					}
 				}
 
-				return null; // Return null during SSR
+				return null; // Return null during build time
 			},
 			[BLOCKS.EMBEDDED_ASSET](node: Block) {
 				return (
@@ -184,11 +172,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 			[BLOCKS.PARAGRAPH](node: Block, children) {
-				return (
-					<Text component='p' mt={0} size={18}>
-						{children}
-					</Text>
-				);
+				return <Text className={classes.paragraph}>{children}</Text>;
 			},
 
 			[BLOCKS.OL_LIST](node: Block, children) {
@@ -218,14 +202,14 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 			[INLINES.HYPERLINK](node: Block, children) {
 				const {uri} = node.data as {uri: string};
 				return (
-					<Anchor href={uri} target='_blank' className={classes.anchor}>
+					<Anchor href={uri} target='_blank' referrerPolicy='no-referrer' className={classes.anchor}>
 						{children}
 					</Anchor>
 				);
 			},
 			[BLOCKS.HEADING_1](node: Block, children) {
 				return (
-					<Title order={1} mt={40} mb={4}>
+					<Title order={1} className={classes.heading}>
 						{children}
 					</Title>
 				);
@@ -233,7 +217,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 			[BLOCKS.HEADING_2](node: Block, children) {
 				return (
-					<Title order={2} size={24} mt={40} mb={4}>
+					<Title order={2} className={cx(classes.heading, classes.heading2)}>
 						{children}
 					</Title>
 				);
@@ -241,7 +225,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 			[BLOCKS.HEADING_3](node: Block, children) {
 				return (
-					<Title order={3} size={18} mt={40} mb={4}>
+					<Title order={3} className={cx(classes.heading, classes.heading3)}>
 						{children}
 					</Title>
 				);
@@ -249,7 +233,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 			[BLOCKS.HEADING_4](node: Block, children) {
 				return (
-					<Title order={4} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
+					<Title order={4} className={cx(classes.heading, classes.heading4)}>
 						{children}
 					</Title>
 				);
@@ -257,7 +241,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 			[BLOCKS.HEADING_5](node: Block, children) {
 				return (
-					<Title order={5} size={18} style={{fontWeight: 400, fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
+					<Title order={5} className={cx(classes.heading, classes.heading5)}>
 						{children}
 					</Title>
 				);
@@ -265,7 +249,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 			[BLOCKS.HEADING_6](node: Block, children) {
 				return (
-					<Title order={6} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
+					<Title order={6} className={cx(classes.heading, classes.heading6)}>
 						{children}
 					</Title>
 				);
@@ -332,9 +316,9 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	return (
 		<Layout>
-			<Container size='xl' className={classes.inner}>
+			<Container size='xl' className={classes.wrapper}>
 				<Grid gutter='xl' align='center' pb={52} pt={0}>
-					<Grid.Col lg={12} md={12} sm={12}>
+					<Grid.Col span={{base: 12, sm: 12}}>
 						<Title order={1} mb={36}>
 							{heading}
 						</Title>
@@ -343,7 +327,8 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 								<Asset asset={asset!} />
 							</Container>
 						)}
-						<Text mb={42}>{body && renderRichText(body, options)}</Text>
+
+						<Box mb={42}>{body && renderRichText(body, options)}</Box>
 
 						{!noindex && <SocialShare />}
 
@@ -511,4 +496,4 @@ export const query = graphql`
 	}
 `;
 
-export default React.memo(BlogTemplate);
+export default BlogTemplate;

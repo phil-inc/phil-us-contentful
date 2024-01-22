@@ -26,7 +26,7 @@ import * as classes from './card.module.css';
 import {getColorFromStylingOptions} from 'utils/stylingOptions';
 import {TAsset} from 'types/asset';
 
-import {Options} from '@contentful/rich-text-react-renderer';
+import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
 type ArticleProps = {
 	resource: TResource;
@@ -59,12 +59,12 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					if (target.__typename === 'ContentfulMediaItem') {
 						return (
 							<ImageContainer flexStart fluid maw={128}>
-								<Asset objectFit="contain" asset={target} />
+								<Asset objectFit='contain' asset={target} />
 							</ImageContainer>
 						);
 					}
 
-					const button = <Button variant="philDefault">{node.data.target.buttonText}</Button>;
+					const button = <Button variant='philDefault'>{node.data.target.buttonText}</Button>;
 
 					if (target?.link?.internalContent) {
 						const {link} = getLink(target, true);
@@ -73,7 +73,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
+						<Anchor href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
 							{button}
 						</Anchor>
 					);
@@ -139,7 +139,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					maw={900}
 					ratio={16 / 9}
 				>
-					<Asset objectFit="contain" asset={media} />
+					<Asset objectFit='contain' asset={media} />
 				</ImageContainer>
 			</Center>
 		);
@@ -150,8 +150,8 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 	return (
 		<Group h={'100%'} gap={0}>
 			<Box
-				component="span"
-				h="100%"
+				component='span'
+				h='100%'
 				className={classes.before}
 				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
@@ -177,31 +177,31 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 								card
 								mx={0}
 							>
-								<Asset objectFit="cover" asset={media} />
+								<Asset objectFit='cover' asset={media} />
 							</ImageContainer>
 						</Grid.Col>
 					)}
 
-					<Grid.Col span="auto">
+					<Grid.Col span='auto'>
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq}
-							align="flex-start"
-							justify="center"
-							h="100%"
+							align='flex-start'
+							justify='center'
+							h='100%'
 							gap={0}
 						>
 							{!resource.isFaq && body && renderRichText(body, options)}
 
 							{!asset && !resource.isFaq && buttonText?.length ? (
 								isExternal ? (
-									<Anchor href={link} target="_blank">
-										<Button variant="philDefault">{buttonText}</Button>
+									<Anchor href={link} target='_blank'>
+										<Button variant='philDefault'>{buttonText}</Button>
 									</Anchor>
 								) : (
 									<Link to={link}>
-										<Button variant="philDefault">{buttonText}</Button>
+										<Button variant='philDefault'>{buttonText}</Button>
 									</Link>
 								)
 							) : null}

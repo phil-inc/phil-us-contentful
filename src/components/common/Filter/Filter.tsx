@@ -18,7 +18,7 @@ const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryPara
 	const theme = useMantineTheme();
 	// TODO: handle mobile view
 	const isMobileView = false;
-	// const {classes} = useStyles({isMobileView});
+	// Const {classes} = useStyles({isMobileView});
 	const [value, toggle] = useToggle(['ResourcesType', null]);
 
 	const [checkboxState, setCheckboxState] = React.useState<Record<string, boolean>>({});
@@ -58,6 +58,7 @@ const Filter: React.FC<FilterType> = ({values, searchQueryParam, filterQueryPara
 					value={value}
 					chevronSize={24}
 					classNames={{
+						item: classes.item,
 						content: classes.accordionContent,
 						control: classes.accordionControl,
 						chevron: classes.chevron,

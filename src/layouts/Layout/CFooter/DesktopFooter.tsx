@@ -52,14 +52,14 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 								{page.title}
 							</Text>
 						</Link>
-						<List listStyleType="none" spacing={24}>
+						<List listStyleType='none' spacing={24}>
 							{page.sections
 								.filter(section =>
 									Boolean(
-										section.header?.length &&
-											!section.isHidden &&
-											!(section as IReferencedSection)?.hideNavigationAnchor
-									)
+										section.header?.length
+											&& !section.isHidden
+											&& !(section as IReferencedSection)?.hideNavigationAnchor,
+									),
 								)
 								.map((section, index, array) => {
 									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
@@ -86,9 +86,9 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 												<List.Item>
 													<Anchor
 														className={classes.link}
-														href="https://my.phil.us/"
-														target="_blank"
-														referrerPolicy="no-referrer"
+														href='https://my.phil.us/'
+														target='_blank'
+														referrerPolicy='no-referrer'
 														underline='never'
 														unstyled
 													>
@@ -111,12 +111,12 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 				</Text>
 				<Group mt={18}>
 					<Anchor
-						href="https://www.linkedin.com/company/phil-inc-"
-						target="_blank"
-						referrerPolicy="no-referrer"
+						href='https://www.linkedin.com/company/phil-inc-'
+						target='_blank'
+						referrerPolicy='no-referrer'
 						className={classes.link}
 					>
-						<StaticImage src="../../../assets/images/linkedin.svg" alt="LinkedIn Icon" />
+						<StaticImage src='../../../assets/images/linkedin.svg' alt='LinkedIn Icon' />
 						<Text unstyled span data-manual-entry={true} className={classes.link}>
 							Linkedin
 						</Text>

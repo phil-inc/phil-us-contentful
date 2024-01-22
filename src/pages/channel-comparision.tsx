@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-	Anchor,
-	AspectRatio,
-	Box,
-	Container,
-	Grid,
-	Group,
-	Image,
-	useMantineTheme,
-} from '@mantine/core';
+import {Anchor, AspectRatio, Box, Container, Grid, Group, Image, useMantineTheme} from '@mantine/core';
 import {SEO} from 'layouts/SEO/SEO';
 import {Layout} from 'layouts/Layout/Layout';
 import {getCustomizedReport} from 'assets/images';
@@ -21,26 +12,26 @@ import Done from 'components/ChannelComparision/Done';
 import {StaticImage} from 'gatsby-plugin-image';
 
 export const Head: React.FC = () => (
-	<SEO title="Channel Comparision">
+	<SEO title='Channel Comparision'>
 		<meta
-			name="description"
-			content="Learn how you can optimize your patient access strategy to improve adherence and gross-to-net"
+			name='description'
+			content='Learn how you can optimize your patient access strategy to improve adherence and gross-to-net'
 		/>
-		<meta property="og:title" content="Channel Comparision" />
-		<meta property="og:type" content="Page" />
+		<meta property='og:title' content='Channel Comparision' />
+		<meta property='og:type' content='Page' />
 		<meta
-			property="og:description"
-			content="Learn how you can optimize your patient access strategy to improve adherence and gross-to-net"
+			property='og:description'
+			content='Learn how you can optimize your patient access strategy to improve adherence and gross-to-net'
 		/>
-		<meta property="og:url" content="https://phil.us/channel-comparision/" />
+		<meta property='og:url' content='https://phil.us/channel-comparision/' />
 	</SEO>
 );
 
 import * as classes from './channelComparision.module.css';
 
 const ChannelComparisionPage = () => {
-	const formattedDateTime =
-		new Date().toLocaleString('en-US', {hour12: false}).replace(/[,/: ]+/g, '_') + '_' + String(Date.now());
+	const formattedDateTime
+		= new Date().toLocaleString('en-US', {hour12: false}).replace(/[,/: ]+/g, '_') + '_' + String(Date.now());
 
 	const form = useForm<FormValues>({
 		initialValues: {
@@ -91,7 +82,7 @@ const ChannelComparisionPage = () => {
 	return (
 		<Layout minimal headerTargetBlank={true}>
 			<Container className={classes.root} py={0}>
-				<Grid className={classes.innerGrid} justify="center">
+				<Grid className={classes.innerGrid} justify='center'>
 					<ChannelComparisionContext.Provider value={{stepper, form}}>
 						{step === 0 && <EmailCollection />}
 						{step === 1 && <Information />}
@@ -108,22 +99,22 @@ const ChannelComparisionPage = () => {
 			<Container className={classes.root} py={0}>
 				<Grid className={classes.innerGrid} sx={{background: '#fff'}}>
 					<Grid.Col span={5} p={0} py={32}>
-						<Group justify="left" align={'center'}>
+						<Group justify='left' align={'center'}>
 							<Box p={0} m={0}>
 								Connect on
 							</Box>{' '}
-							<Anchor href="https://www.linkedin.com/company/phil-inc-" target="_blank">
-								<StaticImage src="../assets/images/linkedin-whitebg.svg" alt="LinkedIn Icon" />
+							<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+								<StaticImage src='../assets/images/linkedin-whitebg.svg' alt='LinkedIn Icon' />
 							</Anchor>
 						</Group>
 					</Grid.Col>
 					<Grid.Col span={7} p={0} py={32}>
-						<Group justify="right">
+						<Group justify='right'>
 							<AspectRatio ratio={1} className={classes.image}>
-								<Image src="https://images.ctfassets.net/2h91ja0efsni/35go8TPfye2RQRi5tBOwnY/aa25c2e80e7a2da5f6195606e075b37d/aicpasvg.svg" />
+								<Image src='https://images.ctfassets.net/2h91ja0efsni/35go8TPfye2RQRi5tBOwnY/aa25c2e80e7a2da5f6195606e075b37d/aicpasvg.svg' />
 							</AspectRatio>
 							<AspectRatio ratio={1} className={classes.image}>
-								<Image src="https://images.ctfassets.net/2h91ja0efsni/yZzZQ61D5fUVPiX4ioZnd/623274c0cf3ce4b4eec6f28ba3ee6761/HIPAA-mulberry.svg" />
+								<Image src='https://images.ctfassets.net/2h91ja0efsni/yZzZQ61D5fUVPiX4ioZnd/623274c0cf3ce4b4eec6f28ba3ee6761/HIPAA-mulberry.svg' />
 							</AspectRatio>
 						</Group>
 					</Grid.Col>

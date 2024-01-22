@@ -34,10 +34,10 @@ import * as classes from './drawer.module.css';
  * @component
  */
 const CDrawer: React.FC = () => {
-	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer, buttons} =
-		React.useContext(HeaderContext);
+	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer, buttons}
+		= React.useContext(HeaderContext);
 	const theme = useMantineTheme();
-	// const buttonConfig = {
+	// Const buttonConfig = {
 	// 	primary: {variant: 'outline', size: 'md', uppercase: true},
 	// 	secondary: {variant: 'default', size: 'md', uppercase: true},
 	// };
@@ -55,16 +55,18 @@ const CDrawer: React.FC = () => {
 				toggleDrawer(false);
 			}}
 			withCloseButton={false}
-			size="100%"
+			size='100%'
 			transitionProps={{transition: 'fade'}}
 		>
-			<Group justify="space-between" wrap="nowrap" align="center" mb="sm">
-				<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
+			<Group justify='space-between' wrap='nowrap' align='center' mb='sm'>
+				<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
 					<Button
-						size="sm"
+						size='sm'
 						radius={0}
 						variant={
-							buttons?.[0].buttonStyle === 'Primary' ? buttonConfig.primary.variant : buttonConfig.secondary.variant
+							buttons?.[0].buttonStyle === 'Primary'
+								? buttonConfig.primary.variant
+								: buttonConfig.secondary.variant
 						}
 						px={4}
 						className={classes.patientLoginButtonMobile}
@@ -74,8 +76,8 @@ const CDrawer: React.FC = () => {
 				</Anchor>
 
 				<Box className={classes.logo}>
-					<Link to="/">
-						<Asset asset={header.logo} objectFit="contain" />
+					<Link to='/'>
+						<Asset asset={header.logo} objectFit='contain' />
 					</Link>
 				</Box>
 
@@ -105,21 +107,21 @@ const CDrawer: React.FC = () => {
 						<Accordion.Item key={page.id + 'mapHeaderPagesDrawer'} value={page.title}>
 							<Accordion.Control>{page.title}</Accordion.Control>
 							<Accordion.Panel>
-								<List spacing={0} listStyleType="none" mb="sm" classNames={{item: classes.listItem}}>
+								<List spacing={0} listStyleType='none' mb='sm' classNames={{item: classes.listItem}}>
 									{page.sections
 										.filter(section =>
 											Boolean(
-												section.header?.length &&
-													!section.isHidden &&
-													!(section as IReferencedSection)?.hideNavigationAnchor
-											)
+												section.header?.length
+													&& !section.isHidden
+													&& !(section as IReferencedSection)?.hideNavigationAnchor,
+											),
 										)
 										.map((section, index, array) => {
 											const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 											return (
 												<React.Fragment key={section.id + 'mapHeaderPageSectionsDrawer'}>
-													<List.Item py="xs">
+													<List.Item py='xs'>
 														{/* All sections except for the first */}
 
 														{page.title === document.title && page.title !== 'Resources' ? (
@@ -143,10 +145,10 @@ const CDrawer: React.FC = () => {
 
 													{/* Add Patient Login to mobile drawer under patiens accordian */}
 													{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
-														<List.Item py="xs">
+														<List.Item py='xs'>
 															<Anchor
-																href="https://my.phil.us/"
-																target="_blank"
+																href='https://my.phil.us/'
+																target='_blank'
 																className={classes.link}
 															>
 																Patient Log In
@@ -199,12 +201,12 @@ const CDrawer: React.FC = () => {
 							className={classes.link}
 							mt={index && 16}
 							href={button.externalLink}
-							target="_blank"
-							underline="never"
+							target='_blank'
+							underline='never'
 						>
 							<Button
 								className={classes.link}
-								size="md"
+								size='md'
 								radius={0}
 								variant={buttonConfig.secondary.variant}
 								fullWidth
@@ -212,7 +214,7 @@ const CDrawer: React.FC = () => {
 								{button.buttonText}
 							</Button>
 						</Anchor>
-					)
+					),
 				)}
 		</Drawer>
 	);

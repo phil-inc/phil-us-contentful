@@ -51,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 		}
 
 		return (
-			<Text key={key} fw={400} component="span" className={classes.texts} unstyled>
+			<Text key={key} fw={400} component='span' className={classes.texts} unstyled>
 				{item.label}
 			</Text>
 		);
@@ -85,8 +85,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 						<Group gap={18}>
 							{footer.badge.map(badge => (
 								<Box className={classes.badge}>
-									<ImageContainer background="transparent" fluid>
-										<Asset asset={badge} objectFit="contain" />
+									<ImageContainer background='transparent' fluid>
+										<Asset asset={badge} objectFit='contain' />
 									</ImageContainer>
 								</Box>
 							))}

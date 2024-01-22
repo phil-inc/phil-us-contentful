@@ -44,10 +44,10 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 							{page.sections
 								.filter(section =>
 									Boolean(
-										section.header?.length &&
-											!section.isHidden &&
-											!(section as IReferencedSection)?.hideNavigationAnchor
-									)
+										section.header?.length
+											&& !section.isHidden
+											&& !(section as IReferencedSection)?.hideNavigationAnchor,
+									),
 								)
 								.map((section, index) => {
 									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
@@ -64,9 +64,9 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 											{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
 												<List.Item>
 													<Anchor
-														href="https://my.phil.us/"
-														target="_blank"
-														referrerPolicy="no-referrer"
+														href='https://my.phil.us/'
+														target='_blank'
+														referrerPolicy='no-referrer'
 														className={classes.link}
 													>
 														<Text className={classes.footerLink}>Patient Log In</Text>
@@ -87,11 +87,11 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 											{page.title === 'Contact' && index === page.sections.length - 1 && (
 												<List.Item>
 													<Group>
-														<Anchor href="https://www.linkedin.com/company/phil-inc-" target="_blank">
+														<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
 															<div>
 																<StaticImage
-																	src="../../../assets/images/linkedin.svg"
-																	alt="LinkedIn Icon"
+																	src='../../../assets/images/linkedin.svg'
+																	alt='LinkedIn Icon'
 																/>
 															</div>
 														</Anchor>
@@ -107,12 +107,12 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 			))}
 		</Accordion>
 
-		<Grid mt={60} align={'center'} justify="center">
+		<Grid mt={60} align={'center'} justify='center'>
 			{footer.badge.map(badge => (
 				<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
 					<Box maw={120}>
 						<ImageContainer fluid>
-							<Asset objectFit="contain" asset={badge} />
+							<Asset objectFit='contain' asset={badge} />
 						</ImageContainer>
 					</Box>
 				</Grid.Col>

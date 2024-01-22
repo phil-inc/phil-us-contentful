@@ -16,7 +16,7 @@ const Done = () => {
 	}, []);
 
 	return (
-		<Grid.Col ref={targetRef} span="auto" className={classes.contentGrid} order={{lg: 1, md: 1, sm: 1, xl: 2, xs: 2}}>
+		<Grid.Col ref={targetRef} span='auto' className={classes.contentGrid} order={{lg: 1, md: 1, sm: 1, xl: 2, xs: 2}}>
 			<Box className={classes.content}>
 				<Stepper
 					active={stepper.step}
@@ -29,13 +29,13 @@ const Done = () => {
 						stepIcon: classes.stepIcon,
 					}}
 				>
-					<Stepper.Step label="Email" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label="Information" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label="Done" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label='Email' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 				</Stepper>
 
 				<AspectRatio ratio={1} className={classes.image}>
-					<Image src={channelComparisionCheck as string} alt="Check icon" />
+					<Image src={channelComparisionCheck as string} alt='Check icon' />
 				</AspectRatio>
 
 				<Title className={classes.title} order={1} mb={20}>
@@ -45,7 +45,7 @@ const Done = () => {
 				<Text className={classes.normalText}>
 					We’ve got all your details and we will be sending your reports soon on your email address.
 				</Text>
-				<Link to="/resources/">
+				<Link to='/resources/'>
 					<Button>Patient Access Resources</Button>
 				</Link>
 			</Box>

@@ -38,7 +38,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					slideSize={{base: '95%', sm: `${100 / columns}%`}}
 					slidesToScroll={isMobile ? 1 : columns}
 					data-has-media-item={section.references.some(
-						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false
+						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false,
 					)}
 				>
 					{section.references.map((resource, index, array) => (
@@ -62,10 +62,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			grow
 			className={classes.grid}
 			gutter={section.referenceType === ReferenceTypeEnum['Stepper Cards'] ? 0 : 36}
-			justify="center"
-			align="stretch"
+			justify='center'
+			align='stretch'
 			data-add-margin={addMargin}
-			// mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
+			// Mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
 			// M={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
 		>
 			{section.references.map((resource, index, array) => (

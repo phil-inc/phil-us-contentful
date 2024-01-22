@@ -21,11 +21,11 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({resourc
 
 	return (
 		<Paper radius={0} className={classes.card}>
-			<Grid justify="start" align="start">
+			<Grid justify='start' align='start'>
 				<Grid.Col>
 					<Box className={classes.box}>
 						{heading && isExternal ? (
-							<Anchor href={link} target="_blank" underline="never">
+							<Anchor href={link} target='_blank' underline='never'>
 								<Title order={3} className={classes.title}>
 									{heading}
 								</Title>
@@ -45,14 +45,14 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({resourc
 						{resource.buttonText && (
 							<Group>
 								{isExternal ? (
-									<Anchor href={link} underline="never" target="_blank" >
-										<Button variant="philDefault" className={classes.button}>
+									<Anchor href={link} underline='never' target='_blank'>
+										<Button variant='philDefault' className={classes.button}>
 											{resource.buttonText}
 										</Button>
 									</Anchor>
 								) : (
 									<Link to={link}>
-										<Button variant="philDefault" className={classes.button}>
+										<Button variant='philDefault' className={classes.button}>
 											{resource.buttonText}
 										</Button>
 									</Link>

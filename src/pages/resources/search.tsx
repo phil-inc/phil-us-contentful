@@ -2,7 +2,7 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import {SEO} from 'layouts/SEO/SEO';
-import {ActionIcon, Badge, Box, Divider, Grid, Image, Pagination, Text, Title} from '@mantine/core';
+import {ActionIcon, Badge, Box, Divider, Grid, Group, Image, Pagination, SimpleGrid, Text, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {Script, graphql, navigate} from 'gatsby';
@@ -18,6 +18,7 @@ import {generateSearchParams} from 'utils/search';
 import LoadingIndicator from 'components/common/LoadingIndicator/LoadingIndicator';
 import {RESOURCES_PAGE} from 'constants/routes';
 import * as classes from './search.module.css';
+import useMobileView from 'hooks/isDesktop';
 
 export const searchSubmitCallback = (searchText: string, filterOptions: string[]) => {
 	if (!searchText.length) {
@@ -91,14 +92,14 @@ type SearchBodyType = {
 
 const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryParam}) => (
 	<Box className={classes.emptyStateContainer}>
-		<Text size={18} color='#0A0A0A'>
+		<Text fs={'18px'} c='#0A0A0A'>
 			0 items found for "{searchQueryParam}"
 		</Text>
 		<Divider mt={22} mb={47} />
-		<Title color='#0A0A0A' order={2} size={28} mb={8}>
+		<Title c='#0A0A0A' order={2} size={28} mb={8}>
 			Search No Result
 		</Title>
-		<Text size={18} color='#0A0A0A'>
+		<Text fs={'18px'} color='#0A0A0A'>
 			We're sorry. We cannot find any matches for your search term.
 		</Text>
 	</Box>
@@ -142,46 +143,47 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 
 				void navigate('/resources/search/' + path);
 			}}
-			size={10}
+			size={9}
 			radius='xl'
 			variant='transparent'
 		>
-			<Image src={crossIcon as string} width={9} />
+			<img src={crossIcon as string} width={9} />
 		</ActionIcon>
 	);
 
 	return searchResults.length ? (
 		<>
 			<Box mb={badgeRef.current ? 36 : 26}>
-				<Text mb={4} className={classes.searchTermDisplay}>
+				<Text mb={4} className={classes.searchResultHeader}>
 					Showing results for "{searchQueryParam}"
 				</Text>
 
 				{Boolean(badges.length) && (
-					<Grid ref={badgeRef} gutter={12}>
-						<Grid.Col md={'content'}>
-							<Text size={14}>Filtered By:</Text>
+					<Grid ref={badgeRef} gutter={12} align='end'>
+						<Grid.Col span={{md: 'content'}}>
+							<Text className={classes.filterHeading}>Filtered By:</Text>
 						</Grid.Col>
 
-						<Grid.Col md={'content'}>
-							{badges.map((badge, index, original) => (
-								<Badge
-									key={badge + index.toString()}
-									mr={index + 1 >= original.length ? 0 : 12}
-									classNames={{
-										inner: classes.badgeInner,
-										root: classes.badgeRoot,
-										rightSection: classes.badgeRightSection,
-									}}
-									variant='outline'
-									rightSection={<RemoveButton badge={badge} />}
-								>
-									{badge}
-								</Badge>
-							))}
+						<Grid.Col span={{md: 'content'}}>
+							<Group gap={0}>
+								{badges.map((badge, index, original) => (
+									<Badge
+										key={badge + index.toString()}
+										mr={index + 1 >= original.length ? 0 : 12}
+										classNames={{
+											root: classes.badgeRoot,
+											section: classes.badgeSection,
+										}}
+										variant='outline'
+										rightSection={<RemoveButton badge={badge} />}
+									>
+										{badge}
+									</Badge>
+								))}
+							</Group>
 						</Grid.Col>
 
-						<Grid.Col md={'content'}>
+						<Grid.Col span={{md: 'content'}}>
 							<Text
 								className={classes.clearAll}
 								onClick={() => {
@@ -211,8 +213,13 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 
 						return true;
 					})
-					.map((section, index) => (
-						<Box key={section.id + index.toString()} id={section.id} className={classes.cardContainer}>
+					.map((section, index, array) => (
+						<Box
+							key={section.id + index.toString()}
+							id={section.id}
+							data-last-item={index === array.length - 1}
+							className={classes.cardContainer}
+						>
 							{/* Section Header */}
 							<Box mb={28}>
 								<Title order={2} m={0} size={32}>
@@ -240,13 +247,12 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 							{/* PAGINATION CONTROLS */}
 							{paginationState[section.id] && (
 								<Pagination
-									position='center'
 									mt={44}
-									classNames={{item: classes.paginationItem}}
+									classNames={{root: classes.root, control: classes.control}}
 									radius={0}
 									color='#0A0A0A'
 									total={paginationState[section.id].numPages}
-									page={paginationState[section.id]?.currentPage ?? 1}
+									value={paginationState[section.id]?.currentPage ?? 1}
 									withControls={false}
 									onChange={async pageNumber => {
 										setPaginationState(p => ({
@@ -276,8 +282,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 };
 
 const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
-	// TODO: handle mobile view
-	const isMobileView = false;
+	const isMobileView = useMobileView();
 
 	const {sections} = data.contentfulPage;
 	const resources = React.useMemo(
@@ -356,7 +361,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 
 	return (
 		<Layout>
-			<Expanded id='ResourcesContainer' py={0}>
+			<Expanded mt={36} id='ResourcesContainer' py={0}>
 				{/* PAGE HEADER */}
 				<Box>
 					<Title className={classes.heading1} order={1}>
@@ -366,7 +371,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 
 				<Grid mt={36} mb={20}>
 					{/* Filter Column */}
-					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={3}>
+					<Grid.Col py={isMobileView ? 0 : undefined} span={{base: 12, sm: 12, lg: 3}}>
 						<Filter
 							values={availableSectionHeaders}
 							searchQueryParam={searchQueryParam ?? ''}
@@ -375,7 +380,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 					</Grid.Col>
 
 					{/* Sections Column */}
-					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
+					<Grid.Col py={isMobileView ? 0 : undefined} span={'auto'}>
 						{isLoading ? (
 							<LoadingIndicator size={'lg'} />
 						) : (
@@ -389,14 +394,21 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 					</Grid.Col>
 				</Grid>
 			</Expanded>
-			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={120} px={106}>
+			<Expanded
+				id='resourcesBannerSection'
+				data-banner={true}
+				data-v1={true}
+				fullWidth
+				background='#F4F4F4'
+				py={120}
+				px={106}
+			>
 				<Grid>
 					{banners.map(bannerSection =>
 						bannerSection.references.map((resource, index) => (
 							<Grid.Col
 								key={resource.id + index.toString()}
-								sm={12}
-								lg={bannerSection.references?.length > 1 ? 6 : 12}
+								span={{sm: 12, lg: bannerSection.references?.length > 1 ? 6 : 12}}
 							>
 								<Banner resource={resource} />
 							</Grid.Col>

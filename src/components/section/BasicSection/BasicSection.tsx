@@ -94,7 +94,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					const {target} = node.data;
 
 					const button = (
-						<Button mt={40} variant="philDefault">
+						<Button mt={40} variant='philDefault'>
 							{node.data.target.buttonText}
 						</Button>
 					);
@@ -112,7 +112,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
+						<Anchor href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
 							{button}
 						</Anchor>
 					);
@@ -130,14 +130,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type="unordered" mb={20} pl={8}>
+					<List type='unordered' mb={20} pl={8}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type="ordered" mb={20} pl={8}>
+					<List type='ordered' mb={20} pl={8}>
 						{children}
 					</List>
 				);
@@ -145,7 +145,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
 					<List.Item>
-						<Text size="lg" className={classes.listItem}>
+						<Text size='lg' className={classes.listItem}>
 							{children}
 						</Text>
 					</List.Item>
@@ -177,7 +177,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 			[INLINES.HYPERLINK](node, children) {
 				return (
-					<Anchor href={node.data.uri as string} target="_blank">
+					<Anchor href={node.data.uri as string} target='_blank'>
 						{children}
 					</Anchor>
 				);
@@ -248,9 +248,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		>
 			<>
 				<Grid
-					// gutter={40}
+					// Gutter={40}
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
-					justify="flex-start"
+					justify='flex-start'
 				>
 					{/* Text Grid Column */}
 					<Grid.Col
@@ -285,7 +285,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								)}
 								<Divider
 									size={1}
-									variant="dashed"
+									variant='dashed'
 									mt={handleSpacing(theme, theme.spacing.sm)}
 									mb={handleSpacing(theme, theme.spacing.md)}
 								/>
@@ -343,30 +343,30 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 											? 16 / 9
 											: undefined
 										: section?.youtubeVideoUrl
-										? 16 / 9
-										: undefined
+											? 16 / 9
+											: undefined
 								}
 								background={
 									section.v2Flag
-										? isVideoContent(section?.mediaItem?.media?.file?.contentType) ||
-										  Boolean(section?.mediaItem?.youtubeLink)
+										? isVideoContent(section?.mediaItem?.media?.file?.contentType)
+										  || Boolean(section?.mediaItem?.youtubeLink)
 											? 'transparent'
 											: undefined
 										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
-										? 'transparent'
-										: undefined
+											? 'transparent'
+											: undefined
 								}
 								expanded={context.title === CONTACT_PAGE}
 								isVideo={
 									section.v2Flag
-										? isVideoContent(section?.mediaItem?.media?.file?.contentType) ||
-										  Boolean(section?.mediaItem?.youtubeLink)
+										? isVideoContent(section?.mediaItem?.media?.file?.contentType)
+										  || Boolean(section?.mediaItem?.youtubeLink)
 										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
 								}
 							>
 								<Asset
 									asset={section.v2Flag ? section.mediaItem : section.asset}
-									objectFit="contain"
+									objectFit='contain'
 									youtubeVideoURL={section.v2Flag ? section.mediaItem.youtubeLink : section?.youtubeVideoUrl}
 								/>
 							</ImageContainer>
@@ -376,15 +376,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 				<Box className={classes.portalBox} id={uuid}></Box>
 
-				{section.isHubspotEmbed &&
-				section.isInsertSnippet &&
-				section.codeSnippet &&
-				Boolean(section.codeSnippet.codeSnippet.length) &&
-				isProduction ? (
-					<Script defer async>
-						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-					</Script>
-				) : null}
+				{section.isHubspotEmbed
+				&& section.isInsertSnippet
+				&& section.codeSnippet
+				&& Boolean(section.codeSnippet.codeSnippet.length)
+				&& isProduction ? (
+						<Script defer async>
+							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+						</Script>
+					) : null}
 			</>
 		</Container>
 	);

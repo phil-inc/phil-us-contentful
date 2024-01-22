@@ -17,10 +17,10 @@ export const Head: React.FC = () => (
 	</SEO>
 );
 
-const Error = () => {
-	// const {classes} = useStyles();
+const Error = () =>
+// Const {classes} = useStyles();
 
-	return (
+	 (
 		<Layout>
 			<Container className={classes.root}>
 				<SimpleGrid spacing={80} cols={2} breakpoints={[{maxWidth: 'sm', cols: 1, spacing: 40}]}>
@@ -43,6 +43,4 @@ const Error = () => {
 			</Container>
 		</Layout>
 	);
-};
-
 export default React.memo(Error);

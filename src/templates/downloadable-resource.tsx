@@ -82,7 +82,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 	const defaultBanners = data.allContentfulResource.nodes;
 	const hasBanners = Boolean(data.contentfulDownloadableResource.banner);
 	const bannersToDisplay = hasBanners
-		? [data.contentfulDownloadableResource.banner]!
+		? [data.contentfulDownloadableResource.banner]
 		: (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
 	const options = {
