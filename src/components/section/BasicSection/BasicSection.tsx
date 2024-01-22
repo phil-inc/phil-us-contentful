@@ -8,6 +8,7 @@ import {
 	Container,
 	Divider,
 	Grid,
+	Group,
 	List,
 	Portal,
 	Text,
@@ -270,7 +271,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				<Grid
 					// Gutter={40}
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
-					justify="flex-start"
+					justify="flex"
 				>
 					{/* Text Grid Column */}
 					<Grid.Col
@@ -329,24 +330,26 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						order={imageColumnOrder}
 						span={{lg: 6, md: 6, sm: 12}}
 						style={{height: context.title === CONTACT_PAGE ? height : undefined}}
-						data-isEmbedFormTemplate={isEmbedFormTemplate}
+						data-is-embed-form-template={isEmbedFormTemplate}
 					>
-						{section.embedForm ? (
-							<Box className={classes.formWrapper}>
-								<HubspotForm formId={formId} portalId={portalId} />
-							</Box>
-						) : (
-							<ImageContainer
-								containerRef={ref}
-								contain
-								ratio={calculateAspectRatio()}
-								background={determineBackground()}
-								expanded={context.title === CONTACT_PAGE}
-								isVideo={isVideo()}
-							>
-								<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
-							</ImageContainer>
-						)}
+						<Group justify='center' gap={0}>
+							{section.embedForm ? (
+								<Box className={classes.formWrapper}>
+									<HubspotForm formId={formId} portalId={portalId} />
+								</Box>
+							) : (
+								<ImageContainer
+									containerRef={ref}
+									contain
+									ratio={calculateAspectRatio()}
+									background={determineBackground()}
+									expanded={context.title === CONTACT_PAGE}
+									isVideo={isVideo()}
+								>
+									<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
+								</ImageContainer>
+							)}
+						</Group>
 					</Grid.Col>
 				</Grid>
 
