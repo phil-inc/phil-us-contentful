@@ -225,6 +225,33 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		}
 	};
 
+	const isSectionV2 = section.v2Flag;
+	const hasYoutubeLink = isSectionV2 ? Boolean(section.mediaItem.youtubeLink) : Boolean(section.youtubeVideoUrl);
+	const mediaItemOrAsset = isSectionV2 ? section.mediaItem : section.asset;
+	const youtubeVideoUrl = isSectionV2 ? section.mediaItem.youtubeLink : section.youtubeVideoUrl;
+
+	const calculateAspectRatio = () => {
+		return hasYoutubeLink ? 16 / 9 : undefined;
+	};
+
+	const determineBackground = () => {
+		if (isSectionV2) {
+			return isVideoContent(section?.mediaItem?.media?.file?.contentType) || hasYoutubeLink
+				? 'transparent'
+				: undefined;
+		} else {
+			return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink ? 'transparent' : undefined;
+		}
+	};
+
+	const isVideo = () => {
+		if (isSectionV2) {
+			return isVideoContent(section?.mediaItem?.media?.file?.contentType) || hasYoutubeLink;
+		} else {
+			return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink;
+		}
+	};
+
 	return (
 		<Container
 			id={slugify(section.header, {lower: true, strict: true})}
@@ -262,7 +289,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								)}
 								{context.title === CONTACT_PAGE && (
 									<>
-										<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+										<Title order={3} data-context={context.title} className={classes.title}>
 											Start a conversation
 										</Title>
 										{Boolean(section.subHeader?.subHeader.length) && (
@@ -277,31 +304,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 										)}
 									</>
 								)}
-								<Divider
-									size={1}
-									variant="dashed"
-									mt={handleSpacing(theme, theme.spacing.sm)}
-									mb={handleSpacing(theme, theme.spacing.md)}
-								/>
+								<Divider size={1} variant="dashed" className={classes.divider} />
 								<Box>
 									<ContactForm section={section} />
 								</Box>
 							</>
 						) : (
 							<>
-								{/* <Title
-									className={classes.title}
-									order={titleOrdering}
-									data-index={index}
-									data-isEmbedFormTemplate={isEmbedFormTemplate}
-								>
-									{section.header}
-								</Title> */}
-								{/* {Boolean(section.subHeader?.subHeader.length) && (
-									<Text fw='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
-										{section.subHeader?.subHeader}
-									</Text>
-								)} */}
 								{Boolean(section.body) && (
 									<Box className={classes.portal}>
 										{heroRef.current && isMobileView && section.embedForm
@@ -331,38 +340,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							<ImageContainer
 								containerRef={ref}
 								contain
-								ratio={
-									section.v2Flag
-										? section.mediaItem.youtubeLink
-											? 16 / 9
-											: undefined
-										: section?.youtubeVideoUrl
-										? 16 / 9
-										: undefined
-								}
-								background={
-									section.v2Flag
-										? isVideoContent(section?.mediaItem?.media?.file?.contentType) ||
-										  Boolean(section?.mediaItem?.youtubeLink)
-											? 'transparent'
-											: undefined
-										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
-										? 'transparent'
-										: undefined
-								}
+								maw={'100%'}
+								ratio={calculateAspectRatio()}
+								background={determineBackground()}
 								expanded={context.title === CONTACT_PAGE}
-								isVideo={
-									section.v2Flag
-										? isVideoContent(section?.mediaItem?.media?.file?.contentType) ||
-										  Boolean(section?.mediaItem?.youtubeLink)
-										: isVideoContent(section?.asset?.file?.contentType) || Boolean(section?.youtubeVideoUrl)
-								}
+								isVideo={isVideo()}
 							>
-								<Asset
-									asset={section.v2Flag ? section.mediaItem : section.asset}
-									objectFit="contain"
-									youtubeVideoURL={section.v2Flag ? section.mediaItem.youtubeLink : section?.youtubeVideoUrl}
-								/>
+								<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
 							</ImageContainer>
 						)}
 					</Grid.Col>

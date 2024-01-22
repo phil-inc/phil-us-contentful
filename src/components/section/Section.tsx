@@ -26,4 +26,4 @@ const Section: React.FC<SectionProps> = ({section, index, isEmbedFormTemplate}) 
 	}
 };
 
-export default React.memo(Section);
+export default Section;

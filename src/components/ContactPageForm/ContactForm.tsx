@@ -107,10 +107,10 @@ const HubspotForm: React.FC<{
 	}
 
 	return hasRendered ? (
-		<div className={classes.hubspotContactForm} id='hubspotContactForm'></div>
+		<div className={classes.hubspotContactForm} id="hubspotContactForm"></div>
 	) : (
 		<Center>
-			<Loader mt={0} size='lg' />
+			<Loader mt={0} size="lg" />
 		</Center>
 	);
 };
@@ -132,20 +132,17 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 
 			<Grid gutter={'sm'}>
 				<Grid.Col span={6}>
-					<Anchor
-						style={{textDecoration: 'none'}}
-						href='https://philhelp.zendesk.com/hc/en-us/p/faq'
-						target='_blank'
-					>
-						<Button variant='outline' color='dark' fullWidth>
+					<Anchor href="https://philhelp.zendesk.com/hc/en-us/p/faq" target="_blank" underline="never">
+						<Button radius={0} variant="outline" color="dark" fullWidth>
 							Patient/Caregiver
 						</Button>
 					</Anchor>
 				</Grid.Col>
 				<Grid.Col span={6}>
 					<Button
-						variant='outline'
-						color='dark'
+						radius={0}
+						variant="outline"
+						color="dark"
 						onClick={() => {
 							setFormTag('HCP'.toLowerCase());
 						}}
@@ -156,8 +153,9 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 				</Grid.Col>
 				<Grid.Col span={6}>
 					<Button
-						variant='outline'
-						color='dark'
+						radius={0}
+						variant="outline"
+						color="dark"
 						onClick={() => {
 							setFormTag('Manufacturer'.toLowerCase());
 						}}
@@ -168,8 +166,9 @@ const ContactForm: React.FC<{section: ISection}> = ({section}) => {
 				</Grid.Col>
 				<Grid.Col span={6}>
 					<Button
-						variant='outline'
-						color='dark'
+						radius={0}
+						variant="outline"
+						color="dark"
 						onClick={() => {
 							setFormTag('Other'.toLowerCase());
 						}}
