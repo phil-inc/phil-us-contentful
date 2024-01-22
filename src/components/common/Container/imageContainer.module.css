@@ -48,10 +48,6 @@
 		height: 100%;
 	}
 
-	/* &[data-context='Contact'] {
-		max-width: 335px;
-	} */
-
 	@media (min-width: $phil-breakpoint-md) {
 		position: static;
 		max-width: 335px;
