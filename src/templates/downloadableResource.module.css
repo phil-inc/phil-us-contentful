@@ -1,99 +1,93 @@
 .inner {
-  /* Default styles, if any, go here */
+	padding: 0 16px;
+	padding-bottom: 92px;
+	padding-top: 55px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 100px;
+	}
 }
 
-/* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
-@media (max-width: 576px) {
-  .inner {
-    padding: 0 16px;
-  }
+.button {
+	overflow: visible !important;
 }
 
 .embededAsset {
-  margin-bottom: 32px;
-  display: flex;
-  justify-content: center;
-}
+	margin-bottom: 32px;
 
-.embededAssetPDF {
-  margin-bottom: 32px;
+	&[data-is-pdf='false'] {
+		display: flex;
+		justify-content: center;
+	}
 }
 
 .section {
-  font-size: 24px;
-}
+	font-size: 20px;
 
-@media (max-width: 576px) {
-  .section {
-    font-size: 20px;
-  }
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 24px;
+	}
 }
 
 .title {
-  font-size: 52px;
-}
+	font-size: 38px;
 
-@media (max-width: 576px) {
-  .title {
-    font-size: 38px;
-  }
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 52px;
+	}
 }
 
 .description {
-  max-width: 500px;
-  margin-top: 24px;
-  margin-bottom: 45px;
-  font-size: 18px;
-}
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 16px;
 
-@media (max-width: 576px) {
-  .description {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 16px;
-  }
+	@media (min-width: $phil-breakpoint-sm) {
+		max-width: 500px;
+		margin-top: 24px;
+		margin-bottom: 45px;
+		font-size: 18px;
+	}
 }
 
 .bodyText {
-  font-size: 18px;
-}
+	font-size: 16px;
+	line-height: 1.4;
 
-@media (max-width: 576px) {
-  .bodyText {
-    font-size: 16px;
-    line-height: 1.4;
-  }
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 18px;
+	}
 }
 
 .border {
-  border: 2px solid black;
-  padding: 10px;
+	border: 2px solid black;
+	padding: 10px;
 }
 
 .table {
-  border-collapse: collapse;
-  border-spacing: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 .tableHeader {
-  text-align: start;
+	text-align: start;
 }
 
 .anchor {
-  color: #00827E;
+	color: #00827e;
 }
 
 .listItem {
-  overflow: hidden;
-  font-size: 24px;
+	overflow: hidden;
+	font-size: 24px;
 }
 
 .listItem::marker {
-  font-size: 16px;
-  font-weight: 700;
+	font-size: 16px;
+	font-weight: 700;
 }
 
 .buttonText {
-  font-size: 14px;
-  font-weight: 500;
+	font-size: 14px;
+	font-weight: 500;
 }

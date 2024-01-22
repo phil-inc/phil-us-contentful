@@ -6,6 +6,7 @@ import {IconChevronLeft, IconChevronRight} from '@tabler/icons';
 import {useViewportSize} from '@mantine/hooks';
 
 import * as classes from './pdfViewer.module.css';
+import useDeviceType from 'hooks/useView';
 
 const PADDING = 20;
 const MAX_PAGE_WIDTH = 595;
@@ -23,20 +24,19 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 	const [numPages, setNumPages] = useState<number>(0);
 	const [pdfPageWidth, setPdfPageWidth] = useState<number>(MAX_PAGE_WIDTH);
 	const [pageNumber, setPageNumber] = useState(1);
-	const theme = useMantineTheme();
-	const {width} = useViewportSize();
 
-	// TODO: handle mobile view
-	const isMobileView = false;
+	const isMobileDevice = useDeviceType();
+	const isTabletDevice = useDeviceType('md');
+	const isSmallDevice = isMobileDevice || isTabletDevice;
 
 	React.useEffect(() => {
-		if (pdfPageWidth > MAX_PAGE_WIDTH || !isMobileView) {
+		if (pdfPageWidth > MAX_PAGE_WIDTH || !isSmallDevice) {
 			setPdfPageWidth(MAX_PAGE_WIDTH);
 			return;
 		}
 
 		setPdfPageWidth(wrapperRef.current?.clientWidth ? wrapperRef.current.clientWidth - PADDING * 2 : 0);
-	}, [width]);
+	}, [isSmallDevice]);
 
 	const height = ref?.current?.clientHeight as number;
 	// Const {classes} = useStyles({
@@ -71,88 +71,93 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 				className={classes.pdfDocument}
 				file={url}
 				loading={
-					<Container className={classes.loadingContainer}>
-						<LoadingIndicator size='xl' />
+					<Container fluid>
+						<LoadingIndicator size="xl" />
 					</Container>
 				}
 				onLoadSuccess={onDocumentLoadSuccess}
 				onLoadError={error => {
 					console.error('Error while loading document: ', error);
 				}}
-				externalLinkTarget='_blank'
+				externalLinkTarget="_blank"
 			>
 				<Box className={classes.pageContainer}>
-					<ActionIcon
-						className={classes.actionButtons}
-						variant='filled'
-						color='dark'
-						size={75}
-						radius={'50%'}
-						pr={5}
-						onClick={previousPage}
-						disabled={pageNumber <= 1}
-					>
-						<IconChevronLeft size={50} />
-					</ActionIcon>
+					{!isSmallDevice && (
+						<ActionIcon
+							className={classes.actionButtons}
+							variant="filled"
+							color="dark"
+							size={75}
+							radius={'50%'}
+							pr={5}
+							onClick={previousPage}
+							disabled={pageNumber <= 1}
+						>
+							<IconChevronLeft size={50} />
+						</ActionIcon>
+					)}
 					<Page
 						width={pdfPageWidth}
 						loading={
-							<Container className={classes.pageLoadingContainer}>
-								<LoadingIndicator size='xl' />
+							<Container fluid style={{width: pdfPageWidth}} className={classes.pageLoadingContainer}>
+								<LoadingIndicator size="xl" />
 							</Container>
 						}
 						className={classes.pdfPage}
 						pageNumber={pageNumber}
-						renderMode='canvas'
+						renderMode="canvas"
 						renderTextLayer={false}
 						renderAnnotationLayer={true}
 						renderForms={false}
 					/>
+					{!isSmallDevice && (
+						<ActionIcon
+							className={classes.actionButtons}
+							variant="filled"
+							color="dark"
+							size={75}
+							radius={'50%'}
+							pl={5}
+							onClick={nextPage}
+							disabled={pageNumber >= numPages}
+						>
+							<IconChevronRight size={50} />
+						</ActionIcon>
+					)}
+				</Box>
+			</Document>
+			{isSmallDevice && (
+				<Group justify="center" align="center" className={classes.pageNumber} gap="lg">
 					<ActionIcon
-						className={classes.actionButtons}
-						variant='filled'
-						color='dark'
-						size={75}
+						className={classes.actionButtonsMobile}
+						variant="filled"
+						color="dark"
+						size={36}
 						radius={'50%'}
-						pl={5}
+						onClick={previousPage}
+						disabled={pageNumber <= 1}
+					>
+						<IconChevronLeft size={25} />
+					</ActionIcon>
+					<Text fs={'24px'} c="#fff">
+						Page {pageNumber} of {numPages}
+					</Text>
+					<ActionIcon
+						className={classes.actionButtonsMobile}
+						variant="filled"
+						color="dark"
+						size={36}
+						radius={'50%'}
 						onClick={nextPage}
 						disabled={pageNumber >= numPages}
 					>
-						<IconChevronRight size={50} />
+						<IconChevronRight size={25} />
 					</ActionIcon>
-				</Box>
-			</Document>
-
-			<Group position='center' align='center' className={classes.pageNumber} spacing='lg'>
-				<ActionIcon
-					className={classes.actionButtonsMobile}
-					variant='filled'
-					color='dark'
-					size={36}
-					radius={'50%'}
-					onClick={previousPage}
-					disabled={pageNumber <= 1}
-				>
-					<IconChevronLeft size={25} />
-				</ActionIcon>
-				<Text size={24} color='#fff'>
-					Page {pageNumber} of {numPages}
-				</Text>
-				<ActionIcon
-					className={classes.actionButtonsMobile}
-					variant='filled'
-					color='dark'
-					size={36}
-					radius={'50%'}
-					onClick={nextPage}
-					disabled={pageNumber >= numPages}
-				>
-					<IconChevronRight size={25} />
-				</ActionIcon>
-			</Group>
-			<Group position='center' align='center' className={classes.downloadButton}>
-				<Anchor variant='text' type='button' href={url} target='_blank'>
-					<Button className={classes.buttonText} px={21} size='md'>
+				</Group>
+			)}
+			<Group justify="center" align="center" className={classes.downloadButton}>
+				<Anchor variant="text" referrerPolicy='no-referrer' type="button" href={url} target="_blank">
+					<Button className={classes.buttonText} variant="philDefault" px={21} size="md">
 						Download PDF
 					</Button>
 				</Anchor>

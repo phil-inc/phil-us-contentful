@@ -1,5 +1,5 @@
 export const getColorFromStylingOptions = (color: string | undefined) => {
-	if (color === undefined) {
+	if (!color) {
 		return 'transparent';
 	}
 

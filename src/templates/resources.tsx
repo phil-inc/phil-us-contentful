@@ -30,7 +30,7 @@ import SearchBox from 'components/common/SearchBox/SearchBox';
 import {searchSubmitCallback} from 'pages/resources/search';
 
 import * as classes from './resources.module.css';
-import useMobileView from 'hooks/isDesktop';
+import useDeviceType from 'hooks/useView';
 
 type HelmetProps = {
 	data: {
@@ -100,7 +100,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	data,
 	pageContext: {currentPage: currentPageNumber, limit, numPages},
 }) => {
-	const isMobileView = useMobileView();
+	const isMobileView = useDeviceType();
 	const mobileBoxRef = React.useRef(null);
 	const desktopBoxRef = React.useRef(null);
 

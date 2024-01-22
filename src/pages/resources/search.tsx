@@ -18,7 +18,7 @@ import {generateSearchParams} from 'utils/search';
 import LoadingIndicator from 'components/common/LoadingIndicator/LoadingIndicator';
 import {RESOURCES_PAGE} from 'constants/routes';
 import * as classes from './search.module.css';
-import useMobileView from 'hooks/isDesktop';
+import useDeviceType from 'hooks/useView';
 
 export const searchSubmitCallback = (searchText: string, filterOptions: string[]) => {
 	if (!searchText.length) {
@@ -282,7 +282,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 };
 
 const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
-	const isMobileView = useMobileView();
+	const isMobileView = useDeviceType();
 
 	const {sections} = data.contentfulPage;
 	const resources = React.useMemo(

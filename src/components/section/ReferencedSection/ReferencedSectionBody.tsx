@@ -6,7 +6,7 @@ import RenderResource from './RenderResource';
 
 import * as classes from './referencedSection.module.css';
 import {Carousel} from '@mantine/carousel';
-import useMobileView from 'hooks/isDesktop';
+import useDeviceType from 'hooks/useView';
 
 type ReferencedSectionBodyProps = {
 	section: IReferencedSection;
@@ -24,7 +24,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 
 	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
 
-	const isMobile = useMobileView();
+	const isMobile = useDeviceType();
 
 	if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
 		const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;

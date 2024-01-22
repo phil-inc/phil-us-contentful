@@ -10,7 +10,7 @@ import * as classes from './cfooter.module.css';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import Asset from 'components/common/Asset/Asset';
 import {useMediaQuery} from '@mantine/hooks';
-import isMobileView from 'hooks/isDesktop';
+import isMobileView from 'hooks/useView';
 
 type FooterProps = {
 	allContentfulFooter: {nodes: Array<{badge: TAsset[]; navigationLinks: ContentfulPage[]}>};
