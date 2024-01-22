@@ -1,8 +1,6 @@
-import {Container, Grid, Title, Text, Center, Stack, Box, AspectRatio, Card, Paper} from '@mantine/core';
+import {Grid, Title, Text, Box, Paper} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
-import ImageContainer from 'components/common/Container/ImageContainer';
 import React from 'react';
-import {TAsset} from 'types/asset';
 import {type Person} from 'types/person';
 
 import * as classes from './speaker.module.css';
@@ -14,13 +12,11 @@ type SpeakerProps = {
 
 const Speaker: React.FC<SpeakerProps> = ({person, length}) => (
 	<Paper radius={0} className={classes.card}>
-		<Grid className={classes.wrapper} justify='center' align='center' m={0} gutter={0}>
-			<Grid.Col className={classes.avatar} xs={12} sm='content'>
-				<ImageContainer fluid>
+		<Grid className={classes.wrapper} justify="center" align="center" m={0} gutter={0}>
+			<Grid.Col className={classes.avatar} span={{xs: 12, md: 'content'}}>
 					<Asset asset={person.image} />
-				</ImageContainer>
 			</Grid.Col>
-			<Grid.Col xs={12} sm={'auto'}>
+			<Grid.Col span={{xs: 12, md: 'auto'}}>
 				<Box className={classes.content}>
 					<Title order={5}>{person.name}</Title>
 					<Text mb={30} className={classes.textColor}>

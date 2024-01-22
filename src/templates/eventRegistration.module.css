@@ -1,143 +1,129 @@
 .bodyText {
-  font-size: 18px;
+	font-size: 18px;
 }
 
 /* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
 @media (max-width: 576px) {
-  .bodyText {
-    font-size: 16px;
-    line-height: 1.4;
-  }
+	.bodyText {
+		font-size: 16px;
+		line-height: 1.4;
+	}
 }
 
 .border {
-  border: 2px solid black;
-  padding: 10px;
+	border: 2px solid black;
+	padding: 10px;
 }
 
 .table {
-  border-collapse: collapse;
-  border-spacing: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 .tableHeader {
-  text-align: start;
+	text-align: start;
 }
 
 .anchor {
-  color: #00827E;
+	color: #00827e;
 }
 
 .listItem {
-  overflow: hidden;
-  font-size: 24px;
+	overflow: hidden;
+	font-size: 24px;
 }
 
 .listItem::marker {
-  font-size: 16px;
-  font-weight: 700;
+	font-size: 16px;
+	font-weight: 700;
 }
 
 .formWrapper {
-  padding: 44px 32px;
-  background: #F4F4F4;
+	padding: 44px 32px;
+	background: #f4f4f4;
 }
 
 .image {
-  justify-content: center;
-  height: 100%;
-}
+	justify-content: center;
 
-.image > img {
-  height: 100%;
-  object-fit: cover;
+	img {
+		max-width: 500px;
+		max-height: 500px;
+		object-fit: cover;
+	}
 }
 
 .eventType {
-  font-size: 24px;
-  color: #0A0A0A;
-}
+	color: #0a0a0a;
+	font-size: 20px;
 
-/* Assuming 'md' breakpoint is 768px - adjust as per your theme's breakpoints */
-@media (max-width: 768px) {
-  .eventType {
-    font-size: 20px;
-  }
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 24px;
+	}
 }
 
 .title {
-  font-size: 52px;
-  color: #0A0A0A;
-  letter-spacing: -0.95px;
-}
+	color: #0a0a0a;
+	letter-spacing: -0.95px;
+	font-size: 38px;
 
-@media (max-width: 768px) {
-  .title {
-    font-size: 38px;
-  }
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 52px;
+	}
 }
 
 .eventDate {
-  font-size: 24px;
-  color: #0A0A0A;
-}
+	color: #0a0a0a;
+	font-size: 20px;
 
-@media (max-width: 768px) {
-  .eventDate {
-    font-size: 20px;
-    margin-bottom: 40px;
-  }
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 24px;
+		margin-bottom: 40px;
+	}
 }
 
 .formHeader {
-  font-size: 22px;
-  color: #0A0A0A;
-  font-family: 'Raleway, sans-serif';
-}
+	font-size: 20px;
+	color: #0a0a0a;
+	font-family: 'Raleway, sans-serif';
 
-@media (max-width: 768px) {
-  .formHeader {
-    font-size: 20px;
-  }
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 22px;
+	}
 }
 
 .speakersHeader {
-  font-size: 40px;
-  color: #0A0A0A;
-  margin-bottom: 32px;
-}
+	color: #0a0a0a;
+	font-size: 32px;
+	margin-bottom: 24px;
 
-@media (max-width: 768px) {
-  .speakersHeader {
-    font-size: 32px;
-    margin-bottom: 24px;
-  }
+	@media (min-width: $phil-breakpoint-md) {
+		margin-bottom: 32px;
+		font-size: 40px;
+	}
 }
 
 .speakersSubHeader {
-  font-size: 20px;
-  color: #0A0A0A;
-  margin-bottom: 80px;
-}
+	font-size: 18px;
+	margin-bottom: 40px;
+	color: #0a0a0a;
 
-@media (max-width: 768px) {
-  .speakersSubHeader {
-    font-size: 18px;
-    margin-bottom: 40px;
-  }
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 20px;
+		margin-bottom: 80px;
+	}
 }
 
 .container {
-  margin-bottom: 120px;
-  padding: 0;
-}
+	padding: 0;
 
-@media (max-width: 768px) {
-  .container {
-    margin-bottom: 40px;
-  }
+	margin-bottom: 40px;
+
+	@media (min-width: $phil-breakpoint-md) {
+		margin-bottom: 120px;
+	}
 }
 
 .stack {
-  align-items: start;
+	align-items: start;
 }

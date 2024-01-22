@@ -1,4 +1,4 @@
-import {AspectRatio, Container, MantineSize, type MantineSpacing, type StyleProp, rem} from '@mantine/core';
+import {AspectRatio, Container, type MantineSpacing, type StyleProp} from '@mantine/core';
 import React from 'react';
 
 import * as classes from './imageContainer.module.css';
