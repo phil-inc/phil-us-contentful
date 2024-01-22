@@ -97,7 +97,7 @@ export function Layout({children, minimal = false, headerTargetBlank = false}: L
 
 	return (
 		<>
-			<MantineProvider theme={theme} classNamesPrefix='phil'>
+			<MantineProvider theme={theme} defaultColorScheme='light' classNamesPrefix='phil'>
 				<HubspotProvider>
 					<AppShell
 						header={{
