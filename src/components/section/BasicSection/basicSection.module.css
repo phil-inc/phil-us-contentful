@@ -1,5 +1,5 @@
 .title {
-	&[data-isEmbedFormTemplate='true'] {
+	&[data-is-embed-form-template='true'] {
 		font-size: 40px;
 
 		&[data-index='0'] {
@@ -23,7 +23,7 @@
 		padding-bottom: 0px;
 	}
 
-	&[data-isEmbedFormTemplate='true'] {
+	&[data-is-embed-form-template='true'] {
 		padding-top: 152px;
 		padding-bottom: 152px;
 	}
@@ -35,7 +35,10 @@
 }
 
 .listItem {
-	margin-top: 14px;
+	p {
+		margin-top: 14px;
+	}
+
 	color: #00201f;
 	line-height: 27px;
 	font-size: 18px;
@@ -68,7 +71,7 @@
 	max-width: 100%;
 	margin-top: 40px;
 
-	&[data-isEmbedFormTemplate='true'] {
+	&[data-is-embed-form-template='true'] {
 		padding-left: 16px;
 		padding-right: 16px;
 
@@ -85,7 +88,7 @@
 }
 
 .heroGridColumn {
-	&[data-isEmbedFormTemplate='true'] {
+	&[data-is-embed-form-template='true'] {
 		padding-left: 16px;
 		padding-right: 16px;
 
