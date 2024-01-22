@@ -33,6 +33,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	card = false,
 	maw = 335,
 	flexStart = false,
+	...rest
 }) => {
 	const context = React.useContext(PageContext);
 
@@ -47,6 +48,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			data-flex-start={flexStart}
 			className={classes.imageContainer}
 			maw={maw}
+			{...rest}
 		>
 			<AspectRatio className={classes.aspectRatio} data-contain={contain} ratio={ratio} mx={mx}>
 				{children}

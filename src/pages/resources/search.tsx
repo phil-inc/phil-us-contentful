@@ -2,7 +2,7 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import {SEO} from 'layouts/SEO/SEO';
-import {ActionIcon, Badge, Box, Divider, Grid, Group, Image, Pagination, SimpleGrid, Text, Title} from '@mantine/core';
+import {ActionIcon, Badge, Box, Divider, Grid, Group, Pagination, Text, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {Script, graphql, navigate} from 'gatsby';

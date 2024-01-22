@@ -1,10 +1,8 @@
-/* Styles.css */
-
 .FAQWrapper {
     position: relative;
     overflow: hidden;
     padding: 30px 60px;
-    background: /* Replace with actual background value or variable */;
+    /* background: ; */
     font-family: 'Raleway', sans-serif;
     font-weight: 700;
     display: flex;
@@ -26,7 +24,7 @@
 .title {
     text-decoration: none;
     color: #00201F;
-    font-size: /* Replace with actual font size value or variable */;
+    /* font-size:; */
 }
 
 .title:hover {

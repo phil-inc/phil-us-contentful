@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {createPortal} from 'react-dom';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import {
@@ -8,7 +8,6 @@ import {
 	Container,
 	Divider,
 	Grid,
-	Group,
 	List,
 	Portal,
 	Text,
@@ -340,7 +339,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							<ImageContainer
 								containerRef={ref}
 								contain
-								maw={'100%'}
 								ratio={calculateAspectRatio()}
 								background={determineBackground()}
 								expanded={context.title === CONTACT_PAGE}

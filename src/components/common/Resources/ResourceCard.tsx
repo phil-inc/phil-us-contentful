@@ -1,5 +1,4 @@
 import {Paper, Title, Button, Text, Grid, Box, Anchor, Group, type MantineStyleProps} from '@mantine/core';
-import classNames from 'classnames';
 import React from 'react';
 import type {FC} from 'react';
 import {Link} from 'gatsby';

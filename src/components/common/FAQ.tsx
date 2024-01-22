@@ -29,7 +29,7 @@ export const FAQ: FC<FAQProps> = ({resource}) => {
 			<Group align='center'>
 				<Group>
 					{isExternal ? (
-						<Anchor href={link} target='_blank' className={classes.title} underline={false}>
+						<Anchor href={link} target='_blank' className={classes.title} underline='never'>
 							<Title order={4} className={classes.title}>
 								{resource.heading}
 							</Title>

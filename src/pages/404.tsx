@@ -13,7 +13,7 @@ export const Head: React.FC = () => (
 				'Page you are trying to open does not exist. You may have mistyped the address, or the page has been moved to another URL. If you think this is an error contact support.'
 			}
 		/>
-		<Script strategy='idle' charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></Script>
+		<Script async defer strategy='idle' charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></Script>
 	</SEO>
 );
 

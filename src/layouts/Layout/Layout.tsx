@@ -1,16 +1,15 @@
 import React from 'react';
-import {AppShell, Box, Button, Grid, Group, createTheme} from '@mantine/core';
-import {MantineProvider, Container} from '@mantine/core';
+import {AppShell, Box, Button, createTheme} from '@mantine/core';
+import {MantineProvider} from '@mantine/core';
 import CHeader, {HEADER_HEIGHT} from './CHeader/CHeader';
-import {isIndex} from 'hooks/isIndex';
 import {HubspotProvider} from '@aaronhayes/react-use-hubspot-form';
 import CFooter from './CFooter/CFooter';
 import LinkedinInsights from 'analytics/LinkedinInsights';
 
 // Import css overrides here
-import 'assets/css/index.css';
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
+import 'assets/css/index.css';
 
 import ZoominfoAnalytics from 'analytics/ZoominfoAnalytics';
 import * as classes from './layout.module.css';
