@@ -25,7 +25,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 
 	const links = [
 		{
-			label: !isMobile ? 'Copyright 2023, Phil Inc.' : '© Phil, Inc.',
+			label: !isMobile && !minimal ? 'Copyright 2023, Phil Inc.' : '© Phil, Inc.',
 		},
 		{
 			label: 'Terms of Use',
@@ -51,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 		}
 
 		return (
-			<Text key={key} fw={400} component='span' className={classes.texts} unstyled>
+			<Text key={key} fw={400} component="span" className={classes.texts} unstyled>
 				{item.label}
 			</Text>
 		);
@@ -60,7 +60,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 	const children = links.map((item, index) => (
 		<React.Fragment key={index}>
 			{renderFooterItem(item, index)}
-			{index < links.length - 1 && isMobile && <span className={classes.pipe}> | </span>}
+			{index < links.length - 1 && (isMobile || minimal) && <span className={classes.pipe}> | </span>}
 		</React.Fragment>
 	));
 
@@ -77,23 +77,23 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 			)}
 
 			{/* Bottom Footer */}
-			{!isMobile && <Divider className={classes.divider} mx={100} />}
+			{(!isMobile && !minimal) && <Divider className={classes.divider} mx={100} />}
 
-			<Container fluid py={{base: 8, sm: 32}} px={{base: 16, sm: 100}} className={classes.bottomFooter}>
-				<Group gap={isMobile ? 2 : 0} justify={isMobile ? 'center' : 'space-between'}>
-					{!isMobile && (
-						<Group gap={18}>
+			<Container data-minimal={minimal} fluid className={classes.bottomFooter}>
+				<Group gap={isMobile ? 2 : 0} justify={isMobile || minimal ? 'center' : 'space-between'}>
+					{!isMobile && !minimal && (
+						<Group gap={9}>
 							{footer.badge.map(badge => (
 								<Box className={classes.badge}>
-									<ImageContainer background='transparent' fluid>
-										<Asset asset={badge} objectFit='contain' />
+									<ImageContainer background="transparent" fluid>
+										<Asset asset={badge} objectFit="contain" />
 									</ImageContainer>
 								</Box>
 							))}
 						</Group>
 					)}
 
-					{isMobile ? children : <Box className={classes.textsWrapper}>{children}</Box>}
+					{isMobile || minimal ? children : <Box className={classes.textsWrapper}>{children}</Box>}
 				</Group>
 			</Container>
 		</>

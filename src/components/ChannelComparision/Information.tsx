@@ -114,17 +114,17 @@ const Information = () => {
 		<Grid.Col
 			ref={targetRef}
 			p={0}
-			span='auto'
+			span="auto"
 			className={classes.contentGrid}
-			order={{lg: 1, md: 1, sm: 1, xl: 2, xs: 2}}
+			order={{base: 2, lg: 1, md: 1, sm: 1}}
 		>
 			<Box className={classes.content}>
 				<Button
 					className={classes.backButton}
 					pl={0}
 					mb={32}
-					variant='subtle'
-					leftIcon={<IconArrowLeft />}
+					variant="subtle"
+					leftSection={<IconArrowLeft />}
 					onClick={stepper.prevStep}
 				>
 					Go back to edit
@@ -140,23 +140,18 @@ const Information = () => {
 						stepBody: classes.stepBody,
 						separator: classes.separator,
 						stepIcon: classes.stepIcon,
+						stepCompletedIcon: classes.stepCompletedIcon,
 					}}
 				>
-					<Stepper.Step label='Email' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label="Email" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label="Information" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+					<Stepper.Step label="Done" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 				</Stepper>
 				<form onSubmit={form.onSubmit(onSubmit)}>
 					<Title order={2} size={28} mb={16}>
 						Details
 					</Title>
-					<SimpleGrid
-						cols={2}
-						breakpoints={[
-							{maxWidth: 'md', cols: 1, spacing: 'xs', verticalSpacing: 1},
-							{maxWidth: 'xs', cols: 1, spacing: 'xs', verticalSpacing: 1},
-						]}
-					>
+					<SimpleGrid cols={{base: 1, sm: 2 }} verticalSpacing={1} spacing="xs">
 						<TextInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -164,7 +159,7 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
-							label='Your Name*'
+							label="Your Name*"
 							radius={0}
 							required
 							withAsterisk={false}
@@ -178,7 +173,7 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
-							label='Title*'
+							label="Title*"
 							radius={0}
 							required
 							withAsterisk={false}
@@ -187,13 +182,7 @@ const Information = () => {
 						/>
 					</SimpleGrid>
 
-					<SimpleGrid
-						cols={2}
-						// Breakpoints={[
-						// 	{maxWidth: 'md', cols: 1, spacing: 'xs', verticalSpacing: 1},
-						// 	{maxWidth: 'xs', cols: 1, spacing: 'xs', verticalSpacing: 1},
-						// ]}
-					>
+					<SimpleGrid cols={{base: 1, sm: 2}} verticalSpacing={1} spacing="xs">
 						<TextInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -201,7 +190,7 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
-							label='Brand'
+							label="Brand"
 							radius={0}
 							mb={48}
 							{...form.getInputProps('brand')}
@@ -213,7 +202,7 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
-							label='Company*'
+							label="Company*"
 							radius={0}
 							required
 							withAsterisk={false}
@@ -222,7 +211,7 @@ const Information = () => {
 						/>
 					</SimpleGrid>
 
-					<Group justify='apart' grow gap={40}>
+					<Group justify="apart" grow gap={40}>
 						<NumberInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -232,7 +221,7 @@ const Information = () => {
 							}}
 							required
 							withAsterisk={false}
-							label='What is your brand’s WAC*'
+							label="What is your brand’s WAC*"
 							min={0}
 							radius={0}
 							mb={48}
@@ -240,7 +229,7 @@ const Information = () => {
 						/>
 					</Group>
 
-					<Group justify='apart' grow gap={40}>
+					<Group justify="apart" grow gap={40}>
 						<NumberInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -251,14 +240,14 @@ const Information = () => {
 							required
 							withAsterisk={false}
 							min={0}
-							label='Average number of fills per patient*'
+							label="Average number of fills per patient*"
 							radius={0}
 							mb={48}
 							{...form.getInputProps('fillPerPatient')}
 						/>
 					</Group>
 
-					<Group justify='apart' grow gap={40}>
+					<Group justify="apart" grow gap={40}>
 						<NumberInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -268,7 +257,7 @@ const Information = () => {
 							}}
 							required
 							withAsterisk={false}
-							label='Approximately what % of dispenses utilize an uncovered coupon? (put 0 if unknown):*'
+							label="Approximately what % of dispenses utilize an uncovered coupon? (put 0 if unknown):*"
 							radius={0}
 							max={100}
 							min={0}
@@ -277,7 +266,7 @@ const Information = () => {
 						/>
 					</Group>
 
-					<Group justify='apart' grow gap={40}>
+					<Group justify="apart" grow gap={40}>
 						<NumberInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -287,7 +276,7 @@ const Information = () => {
 							}}
 							max={100}
 							min={0}
-							label='Percentage of formulary coverage (approximate)?'
+							label="Percentage of formulary coverage (approximate)?"
 							radius={0}
 							mb={48}
 							{...form.getInputProps('percentFormulatoryCoverage')}
@@ -295,17 +284,10 @@ const Information = () => {
 					</Group>
 
 					<Stack gap={0}>
-						<Text size={20} color='#525252'>
+						<Text size={'20px'} c="#525252">
 							Manufacturer-sponsored copay offer ($)*
 						</Text>
-						<SimpleGrid
-							cols={3}
-							// Breakpoints={[
-							// 	{maxWidth: 'md', cols: 2, spacing: 'xs', verticalSpacing: 1},
-							// 	{maxWidth: 'sm', cols: 2, spacing: 'xs', verticalSpacing: 1},
-							// 	{maxWidth: 'xs', cols: 1, spacing: 'xs', verticalSpacing: 1},
-							// ]}
-						>
+						<SimpleGrid cols={{base: 3, ms: 2, sm: 2, xs: 1}} verticalSpacing={{base: 1}} spacing="xs">
 							<NumberInput
 								classNames={{
 									root: classes.rootWrapper,
@@ -313,7 +295,7 @@ const Information = () => {
 									label: classes.inputLabel,
 									required: classes.inputLabel,
 								}}
-								label='Covered*'
+								label="Covered*"
 								required
 								withAsterisk={false}
 								radius={0}
@@ -330,7 +312,7 @@ const Information = () => {
 								}}
 								required
 								withAsterisk={false}
-								label='Uncovered*'
+								label="Uncovered*"
 								min={0}
 								radius={0}
 								mb={48}
@@ -345,7 +327,7 @@ const Information = () => {
 								}}
 								required
 								withAsterisk={false}
-								label='Cash*'
+								label="Cash*"
 								min={0}
 								radius={0}
 								mb={48}
@@ -354,39 +336,41 @@ const Information = () => {
 						</SimpleGrid>
 					</Stack>
 
-					<Group justify='apart' grow gap={40} mb={20}>
+					<Group justify="apart" grow gap={40} mb={20}>
 						<Radio.Group
 							classNames={{root: classes.radioGroup, label: classes.inputLabel, required: classes.inputLabel}}
-							name='primaryPharmacy'
-							label='What is your primary pharmacy?*'
+							name="primaryPharmacy"
+							label="What is your primary pharmacy?*"
 							withAsterisk={false}
 							{...form.getInputProps('primaryPharmacy')}
 						>
-							<Radio
-								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
-								required
-								icon={IconCheck as React.FC}
-								label='Retail'
-								value='Retail Pharmacy'
-							/>
-							<Radio
-								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
-								required
-								icon={IconCheck as React.FC}
-								label='Specialty'
-								value='Specialty Pharmacy'
-							/>
-							<Radio
-								classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
-								required
-								icon={IconCheck as React.FC}
-								label='Digital'
-								value='Digital Pharmacy'
-							/>
+							<Group mt={8}>
+								<Radio
+									classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
+									required
+									icon={IconCheck as React.FC}
+									label="Retail"
+									value="Retail Pharmacy"
+								/>
+								<Radio
+									classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
+									required
+									icon={IconCheck as React.FC}
+									label="Specialty"
+									value="Specialty Pharmacy"
+								/>
+								<Radio
+									classNames={{radio: classes.radioButton, icon: classes.radioIcon, label: classes.radioLabel}}
+									required
+									icon={IconCheck as React.FC}
+									label="Digital"
+									value="Digital Pharmacy"
+								/>
+							</Group>
 						</Radio.Group>
 					</Group>
 
-					<Group justify='apart' grow gap={40}>
+					<Group justify="apart" grow gap={40}>
 						<Textarea
 							classNames={{
 								root: classes.rootWrapper,
@@ -394,7 +378,7 @@ const Information = () => {
 								label: classes.inputLabel,
 								required: classes.inputLabel,
 							}}
-							label='Current program concerns or pain points?'
+							label="Current program concerns or pain points?"
 							radius={0}
 							mb={48}
 							autosize
@@ -404,11 +388,11 @@ const Information = () => {
 						/>
 					</Group>
 
-					<Button type='submit' loading={loading} loaderPosition='right' mb={8}>
+					<Button variant='philDefault' type="submit" loading={loading} mb={8}>
 						Get my customized report
 					</Button>
 					{isSubmitError && (
-						<Text size={16} color='red'>
+						<Text size={'16px'} c="red">
 							Error submitting form, please try again!
 						</Text>
 					)}
@@ -417,8 +401,8 @@ const Information = () => {
 					className={classes.backButton}
 					pl={0}
 					mt={32}
-					variant='subtle'
-					leftIcon={<IconArrowLeft />}
+					variant="subtle"
+					leftSection={<IconArrowLeft />}
 					onClick={stepper.prevStep}
 				>
 					Go back to edit

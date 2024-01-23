@@ -15,21 +15,27 @@
 	font-family: Lato, sans-serif;
 	font-size: 12px;
 	text-decoration: none;
-	line-height: 150%; /* 21px */
+	line-height: 150%;
 
 	@media (min-width: $phil-breakpoint-sm) {
-		color: #000;
-		font-size: 14px;
-		font-weight: 700;
-		/* margin-left: 32px; */
+		&[data-minimal='false'] {
+			color: #000;
+			font-size: 14px;
+			font-weight: 700;
+		}
 	}
 }
 
 .bottomFooter {
 	background: #00827e;
+	padding: 14px 32px;
 
 	@media (min-width: $phil-breakpoint-sm) {
-		background: white;
+		padding: 14px 32px;
+		
+		&[data-minimal='false'] {
+			background: white;
+		}
 	}
 }
 
@@ -42,9 +48,12 @@
 	padding: 0px 2px;
 	color: white;
 	display: block;
+	font-size: 12px;
 
 	@media (min-width: $phil-breakpoint-sm) {
-		display: none;
+		&[data-minimal='false'] {
+			display: none;
+		}
 	}
 }
 

@@ -1,23 +1,37 @@
 .root {
-    padding-top: 80px;
-    padding-bottom: 80px;
-    width: 100%;
-    max-width: 1440px;
-    display: flex;
-    align-items: center; /* replaced 'placeItems' with 'align-items' for standard CSS */
-    justify-content: center;
+	padding-top: 80px;
+	padding-bottom: 80px;
+	width: 100%;
+	max-width: 1440px;
 }
 
-.innerGrid {
-    margin: 0;
-    max-width: 1440px;
-    width: 100%;
-    background: #F4F4F4;
+.grid {
+	max-width: 1440px;
+	width: 100%;
+	background: #f4f4f4;
+}
+
+.footer {
+	max-width: 1440px;
+	width: 100%;
 }
 
 .image {
-    max-width: 110px;
-    width: 100%;
+	max-width: 110px;
+	width: 100%;
 }
 
-/* Media query for 'smallerThan' 'md' breakpoint */
+.container {
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.badge {
+	width: 60px;
+	height: 60px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		width: 110px;
+		height: 110px;
+	}
+}

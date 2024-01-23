@@ -6,7 +6,6 @@ import CFooter from './CFooter/CFooter';
 import LinkedinInsights from 'analytics/LinkedinInsights';
 
 // Import css overrides here
-// import '@mantine/core/styles.css';
 import 'assets/css/index.css';
 
 import ZoominfoAnalytics from 'analytics/ZoominfoAnalytics';
