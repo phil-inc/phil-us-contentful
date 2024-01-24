@@ -13,7 +13,9 @@ const CareerArticle = ({title, url, location}: CareerArticleProps) => (
 	<Grid align="center" gutter="sm" justify="end">
 		<Grid.Col span={{xs: 12, sm: 9, lg: 9}}>
 			<Box>
-				<Text unstyled className={classes.title}>{title}</Text>
+				<Text unstyled className={classes.title}>
+					{title}
+				</Text>
 				<Text unstyled className={classes.location}>
 					{location}
 				</Text>

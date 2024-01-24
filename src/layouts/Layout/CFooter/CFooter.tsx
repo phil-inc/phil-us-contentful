@@ -21,7 +21,7 @@ type FooterProps = {
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
-	const isMobile = isMobileView();
+	const isMobile = isMobileView('sm');
 
 	const links = [
 		{
@@ -44,14 +44,14 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 	const renderFooterItem = (item, key) => {
 		if (item.link) {
 			return (
-				<Link key={key} to={item.link} className={classes.links}>
+				<Link data-minimal={minimal} key={key} to={item.link} className={classes.links}>
 					{item.label}
 				</Link>
 			);
 		}
 
 		return (
-			<Text key={key} fw={400} component="span" className={classes.texts} unstyled>
+			<Text data-minimal={minimal} key={key} fw={400} component="span" className={classes.texts} unstyled>
 				{item.label}
 			</Text>
 		);

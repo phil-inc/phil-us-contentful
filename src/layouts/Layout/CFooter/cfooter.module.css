@@ -35,6 +35,8 @@
 		
 		&[data-minimal='false'] {
 			background: white;
+			color: black;
+			padding: 30px 100px;
 		}
 	}
 }

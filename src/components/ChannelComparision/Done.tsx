@@ -32,7 +32,7 @@ const Done = () => {
 					We’ve got all your details and we will be sending your reports soon on your email address.
 				</Text>
 				<Link to="/resources/">
-					<Button w='auto' variant="philDefault">
+					<Button w="auto" variant="philDefault">
 						Patient Access Resources
 					</Button>
 				</Link>

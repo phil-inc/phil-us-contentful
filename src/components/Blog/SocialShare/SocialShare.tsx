@@ -11,11 +11,11 @@ import {TwitterIcon} from '../../common/Buttons/SocialButtons/TwitterIcon';
 import * as classes from './socialShare.module.css';
 
 const SocialShare: React.FC = () => (
-	<Group justify='left' gap='sm'>
-		<Text className={classes['font-lato']} fs={'16px'} m={0} c='#6B7979'>
+	<Group justify="left" gap="sm">
+		<Text className={classes['font-lato']} fs={'16px'} m={0} c="#6B7979">
 			Share this article on:
 		</Text>
-		<Group gap='sm'>
+		<Group gap="sm">
 			<SocialButton type={ESocialShare.Facebook} icon={FacebookIcon as React.FC} />
 			<SocialButton type={ESocialShare.Linkedin} icon={LinkedinIcon as React.FC} />
 			<SocialButton type={ESocialShare.Twitter} icon={TwitterIcon as React.FC} />

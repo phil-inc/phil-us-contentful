@@ -1,7 +1,7 @@
 import {Stepper} from '@mantine/core';
 import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
 import React from 'react';
-import * as classes from './stepper.module.css'
+import * as classes from './stepper.module.css';
 
 type StepperProps = {};
 

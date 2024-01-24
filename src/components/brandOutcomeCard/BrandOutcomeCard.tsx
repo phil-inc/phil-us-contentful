@@ -31,15 +31,15 @@ export const BrandOutcomeCard: FC<StatsCardProps> = ({resource}) => {
 	};
 
 	return (
-		<Group h='100%' gap={0}>
+		<Group h="100%" gap={0}>
 			<Box
-				component='span'
-				h='100%'
+				component="span"
+				h="100%"
 				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
 			></Box>
 			<Paper className={classes.paper}>
-				<Stack justify='center' align='start' className={classes.stack} gap={40}>
+				<Stack justify="center" align="start" className={classes.stack} gap={40}>
 					{resource.heading && <Title className={classes.title}>{resource.heading}</Title>}
 
 					{resource.body && <Text className={classes.description}>{renderRichText(resource.body, options)}</Text>}
