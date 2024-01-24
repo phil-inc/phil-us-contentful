@@ -3,10 +3,8 @@ import {
 	Grid,
 	Box,
 	Title,
-	Stepper,
 	TextInput,
 	Button,
-	Image,
 	Text,
 	Group,
 	Stack,
@@ -22,10 +20,11 @@ import {CHANNEL_COMPARISION_API, HUBSPOT_CHANNEL_COMPARISION_URL} from 'constant
 import {useScrollIntoView} from '@mantine/hooks';
 
 import * as classes from './information.module.css';
+import CStepper from './CStepper';
 
 const Information = () => {
-	const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>();
 	const {stepper, form} = React.useContext(ChannelComparisionContext);
+	const {scrollIntoView, targetRef} = useScrollIntoView<HTMLDivElement>();
 	const url = CHANNEL_COMPARISION_API;
 	const [loading, setLoading] = React.useState(false);
 	const [hutk, setHutk] = React.useState<string>('');
@@ -130,28 +129,13 @@ const Information = () => {
 					Go back to edit
 				</Button>
 
-				<Stepper
-					active={stepper.step}
-					iconSize={48}
-					mb={48}
-					color={'philBranding'}
-					classNames={{
-						step: classes.step,
-						stepBody: classes.stepBody,
-						separator: classes.separator,
-						stepIcon: classes.stepIcon,
-						stepCompletedIcon: classes.stepCompletedIcon,
-					}}
-				>
-					<Stepper.Step label="Email" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label="Information" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-					<Stepper.Step label="Done" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-				</Stepper>
+				<CStepper />
+
 				<form onSubmit={form.onSubmit(onSubmit)}>
 					<Title order={2} size={28} mb={16}>
 						Details
 					</Title>
-					<SimpleGrid cols={{base: 1, sm: 2 }} verticalSpacing={1} spacing="xs">
+					<SimpleGrid cols={{base: 1, sm: 2}} verticalSpacing={1} spacing="xs">
 						<TextInput
 							classNames={{
 								root: classes.rootWrapper,
@@ -287,7 +271,7 @@ const Information = () => {
 						<Text size={'20px'} c="#525252">
 							Manufacturer-sponsored copay offer ($)*
 						</Text>
-						<SimpleGrid cols={{base: 3, ms: 2, sm: 2, xs: 1}} verticalSpacing={{base: 1}} spacing="xs">
+						<SimpleGrid cols={{base: 1, sm: 3, xs: 1}} verticalSpacing={{base: 1}} spacing="xs">
 							<NumberInput
 								classNames={{
 									root: classes.rootWrapper,
@@ -388,7 +372,7 @@ const Information = () => {
 						/>
 					</Group>
 
-					<Button variant='philDefault' type="submit" loading={loading} mb={8}>
+					<Button variant="philDefault" type="submit" loading={loading} w={'auto'} mb={8}>
 						Get my customized report
 					</Button>
 					{isSubmitError && (
