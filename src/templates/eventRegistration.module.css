@@ -1,12 +1,9 @@
 .bodyText {
-	font-size: 18px;
-}
+	font-size: 16px;
+	line-height: 1.4;
 
-/* Assuming 'sm' breakpoint is 576px - adjust as per your theme's breakpoints */
-@media (max-width: 576px) {
-	.bodyText {
-		font-size: 16px;
-		line-height: 1.4;
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 18px;
 	}
 }
 
@@ -85,7 +82,7 @@
 .formHeader {
 	font-size: 20px;
 	color: #0a0a0a;
-	font-family: 'Raleway, sans-serif';
+	font-family: Raleway, sans-serif;
 
 	@media (min-width: $phil-breakpoint-md) {
 		font-size: 22px;

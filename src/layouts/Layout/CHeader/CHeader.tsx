@@ -1,16 +1,4 @@
-import {
-	Container,
-	Group,
-	Text,
-	List,
-	Burger,
-	useMantineTheme,
-	Box,
-	Anchor,
-	Button,
-	AppShellHeader,
-	AppShell,
-} from '@mantine/core';
+import {Group, Text, List, Burger, useMantineTheme, Box, Anchor, Button, AppShell} from '@mantine/core';
 import {useClickOutside, useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
 import {graphql, Link} from 'gatsby';
@@ -19,13 +7,11 @@ import {StaticQuery} from 'gatsby';
 import type {ContentfulPage} from 'types/page';
 import slugify from 'slugify';
 import type {TAsset} from 'types/asset';
-import ImageContainer from 'components/common/Container/ImageContainer';
 import Asset from 'components/common/Asset/Asset';
 import CDrawer from './CDrawer';
 import {type TResource} from 'types/resource';
 import HeaderContext from 'contexts/HeaderProvider';
 import CCollapse from './CCollapse';
-import {getLink} from 'utils/getLink';
 
 import * as classes from './header.module.css';
 
@@ -58,7 +44,6 @@ type CHeaderProps = {
 const Navbar: React.FC<CHeaderProps> = ({
 	allContentfulHeader,
 	allContentfulResource,
-	sitePage,
 	minimal,
 	headerTargetBlank,
 }) => {
@@ -66,7 +51,6 @@ const Navbar: React.FC<CHeaderProps> = ({
 	const {navigationLinks: pages, buttons} = header;
 
 	const {width} = useViewportSize();
-	// Const {classes} = useStyles({minimal});
 
 	const [navRef, setNavRef] = React.useState<HTMLUListElement>();
 	const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement>();
@@ -80,7 +64,6 @@ const Navbar: React.FC<CHeaderProps> = ({
 	const [isDrawer, toggleDrawer] = useToggle();
 
 	const theme = useMantineTheme();
-	const isBreak = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
 
 	const [target, setTarget] = useState<string>('');
 
@@ -91,7 +74,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 			close();
 		},
 		null,
-		[navRef!, collapseRef!],
+		[navRef!, collapseRef!]
 	);
 
 	const onNavLinkClick = event => {
@@ -132,13 +115,14 @@ const Navbar: React.FC<CHeaderProps> = ({
 				}
 
 				const titleToMatch = li.innerText.trim();
+
 				const [currentPage] = pages.filter(page => page.title === titleToMatch);
 
 				// Initial set active
 				if (
 					location.pathname === '/'
 						? false
-						: location.pathname.includes(`/${slugify(currentPage.title, {lower: true, strict: true})}`)
+						: location.pathname.startsWith(`/${slugify(currentPage.title, {lower: true, strict: true})}/`)
 				) {
 					setActivePageLI(li);
 					li.classList.add('active');
@@ -212,20 +196,15 @@ const Navbar: React.FC<CHeaderProps> = ({
 	};
 
 	return (
-		<AppShell.Header
-			className={classes.header}
-			style={{borderBottom: 0}}
-			data-minimal={minimal}
-			data-isBreak={isBreak}
-		>
-			<Group align='center' justify='space-between' className={classNames(classes.navbar, 'navbar')}>
+		<AppShell.Header className={classes.header} style={{borderBottom: 0}}>
+			<Group align="center" justify="space-between" className={classNames(classes.navbar, 'navbar')}>
 				{!minimal && (
-					<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
+					<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
 						<Button
-							size='sm'
-							variant='outline'
+							size="sm"
+							variant="outline"
 							px={4}
-							color='philBranding'
+							color="philBranding"
 							className={classes.patientLoginButtonMobile}
 						>
 							Patient Login
@@ -235,19 +214,19 @@ const Navbar: React.FC<CHeaderProps> = ({
 
 				<Box className={classes.logo}>
 					{headerTargetBlank ? (
-						<Anchor href='https://phil.us' target='_blank'>
-							<Asset asset={header.logo} objectFit='contain' />
+						<Anchor href="https://phil.us" target="_blank">
+							<Asset asset={header.logo} objectFit="contain" />
 						</Anchor>
 					) : (
-						<Link to='/'>
-							<Asset asset={header.logo} objectFit='contain' />
+						<Link to="/">
+							<Asset asset={header.logo} objectFit="contain" />
 						</Link>
 					)}
 				</Box>
 				{!minimal && (
 					<>
 						<Burger
-							name='BurgerButton'
+							name="BurgerButton"
 							opened={isDrawer}
 							onClick={() => {
 								toggleDrawer();
@@ -269,7 +248,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 								))}
 							{buttons.map((button, index) => (
 								// TODO: use sys
-								<List.Item key={button.id} data-noindicator='true' className={classes.buttons}>
+								<List.Item key={button.id} data-noindicator="true" className={classes.buttons}>
 									{button.internalLink ? (
 										<Box ml={index && 16}>
 											<Link className={classes.textDecorationNone} to={`/${button.internalLink.slug}`}>
@@ -295,7 +274,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 											style={{textDecoration: 'none', textDecorationLine: 'none'}}
 											ml={index && 16}
 											href={button.externalLink}
-											target='_blank'
+											target="_blank"
 										>
 											<Button
 												size={
