@@ -25,4 +25,11 @@
 
 .anchor {
   color: #00827E;
+  text-decoration: none;
+}
+
+.text {
+  font-size: 18px;
+  line-height: 1.55;
+  font-family: Lato, sans-serif;
 }

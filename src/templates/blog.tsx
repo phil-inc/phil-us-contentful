@@ -317,9 +317,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	return (
 		<Layout>
 			<Container size='xl' className={classes.wrapper}>
-				<Grid gutter='xl' align='center' pb={52} pt={0}>
-					<Grid.Col span={{base: 12, sm: 12}}>
-						<Title order={1} mb={36}>
+						<Title order={1} mb={36} className={classes.title}>
 							{heading}
 						</Title>
 						{Boolean(asset) && (
@@ -333,8 +331,6 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 						{!noindex && <SocialShare />}
 
 						{Boolean(author) && <AuthorBlock author={author!} />}
-					</Grid.Col>
-				</Grid>
 			</Container>
 
 			{/* Bottom Banners */}

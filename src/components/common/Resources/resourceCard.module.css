@@ -5,6 +5,7 @@
 	background: #fff;
 	height: 100%;
 	padding: 26px 36px 20px;
+	margin-bottom: 44px;
 
 	&::before {
 		content: '';
