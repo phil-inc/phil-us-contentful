@@ -44,6 +44,31 @@ export type TResource = {
 			};
 		};
 	};
+
+	hyperlink?: {
+		contentful_id: string;
+		id: string;
+		externalLink?: string;
+		linkLabel: string;
+		name: string;
+
+		internalContent: {
+			slug?: string;
+			id: string;
+			page: Array<{title: string}>;
+			header?: string;
+			heading?: string;
+			title?: string;
+			sys: {
+				contentType: {
+					sys: {
+						id: string;
+					};
+				};
+			};
+		};
+	};
+
 	author?: TAuthor;
 	designation?: string;
 	isHubspotEmbed?: boolean;
@@ -76,17 +101,17 @@ export type DownloadableAsset = {
 };
 
 export type TDownloadableResource = Pick<
-TResource,
-| 'slug'
-| 'id'
-| 'noindex'
-| 'heading'
-| 'buttonText'
-| 'internalLink'
-| 'externalLink'
-| 'metaDescription'
-| 'body'
-| 'author'
+	TResource,
+	| 'slug'
+	| 'id'
+	| 'noindex'
+	| 'heading'
+	| 'buttonText'
+	| 'internalLink'
+	| 'externalLink'
+	| 'metaDescription'
+	| 'body'
+	| 'author'
 > & {
 	type: string;
 	image: TResource['asset'];

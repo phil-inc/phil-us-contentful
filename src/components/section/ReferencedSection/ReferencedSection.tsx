@@ -38,7 +38,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 	const context = React.useContext(PageContext);
 	const theme = useMantineTheme();
 
-	const subHeadingRef = React.useRef<HTMLDivElement>(null);
+	console.log({section})
 
 	React.useEffect(() => {
 		try {
