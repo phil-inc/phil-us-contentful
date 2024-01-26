@@ -1,26 +1,36 @@
 .socialButton {
-  color: #01201F;
-  background: #f4f4f4;
+	color: #01201f;
+	background: #f4f4f4;
+
+	&[data-copied='true'] {
+		&[data-hovered='true'] {
+			background: #11827d;
+
+			> svg {
+				fill: #fff !important;
+			}
+		}
+	}
+
+	> svg {
+		fill: #01201f;
+		stroke-width: 0;
+	}
+
+	&:hover {
+		color: #fff;
+		background: #000;
+
+		> svg {
+			fill: #fff;
+		}
+	}
 }
 
-.socialButton:hover {
-  /* Since CSS cannot evaluate JavaScript conditions like 'clipboard.copied',
-     you need to set a default style for the hover state.
-     The following is a placeholder; adjust as necessary. */
-  color: #FFF;
-  background: #000;
-}
+.tooltip {
+	background: #01201f;
 
-.socialIcon {
-  /* TODO The 'hovered' variable cannot be evaluated in static CSS.
-     You need to handle this with JavaScript or use a CSS class toggle.
-     Below is a placeholder for the default state; adjust as necessary. */
-  fill: #01201F;
-  stroke-width: 0;
-}
-
-/* If you need to change the 'fill' of .socialIcon on hover,
-   you can add a rule like this: */
-.socialIcon:hover {
-  fill: #fff;
+	&[data-copied='true'] {
+		background: #11827d;
+	}
 }

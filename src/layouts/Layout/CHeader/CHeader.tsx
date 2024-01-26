@@ -1,5 +1,5 @@
-import {Group, Text, List, Burger, useMantineTheme, Box, Anchor, Button, AppShell} from '@mantine/core';
-import {useClickOutside, useDisclosure, useMediaQuery, useToggle, useViewportSize} from '@mantine/hooks';
+import {Group, Text, List, Burger, Box, Anchor, Button, AppShell} from '@mantine/core';
+import {useClickOutside, useDisclosure, useToggle, useViewportSize} from '@mantine/hooks';
 import classNames from 'classnames';
 import {graphql, Link} from 'gatsby';
 import React, {useState} from 'react';
@@ -63,7 +63,6 @@ const Navbar: React.FC<CHeaderProps> = ({
 
 	const [isDrawer, toggleDrawer] = useToggle();
 
-	const theme = useMantineTheme();
 
 	const [target, setTarget] = useState<string>('');
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {ActionIcon, Anchor, Tooltip} from '@mantine/core';
-import {useClipboard, useHover, useTimeout} from '@mantine/hooks';
+import {useClipboard, useHover} from '@mantine/hooks';
 import type {TablerIcon} from '@tabler/icons';
 import {ESocialShare} from 'types/social';
 import {getShareLink} from 'utils/socialShare';
@@ -15,12 +15,10 @@ type TSocialButton = {
 };
 
 const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabel, type}) => {
-	const {hovered, ref} = useHover();
 	const clipboard = useClipboard({timeout: 5000});
-	const {start: clearClipboard} = useTimeout(() => {
-		clipboard.reset();
-	}, 100);
 	const [href, setHref] = React.useState<string>();
+
+	const {hovered, ref} = useHover();
 
 	const isCopyLink = type === ESocialShare.CopyLink;
 
@@ -45,12 +43,6 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	};
 
 	React.useEffect(() => {
-		if (!hovered && clipboard.copied) {
-			clearClipboard();
-		}
-	}, [hovered]);
-
-	React.useEffect(() => {
 		const url: string = getWindowProperty('location.href', 'phil.us');
 		setHref(url);
 	}, []);
@@ -58,12 +50,16 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	return (
 		<Anchor
 			href={isCopyLink ? undefined : getShareLink(type, href)}
-			target='_blank'
+			target="_blank"
 			onClick={isCopyLink ? onClick : undefined}
+			underline="never"
+			referrerPolicy="no-referrer"
 		>
 			<Tooltip
-				opened={clipboard.copied}
-				color={clipboard.copied ? '#11827D' : '#01201F'}
+				className={classes.tooltip}
+				opened={clipboard.copied || hovered}
+				disabled={!hovered || !clipboard.copied}
+				data-copied={clipboard.copied}
 				label={computedLabel}
 				withArrow
 				arrowSize={10}
@@ -71,10 +67,12 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 			>
 				<ActionIcon
 					ref={ref}
-					component='div'
+					data-copied={clipboard.copied}
+					data-hovered={hovered}
+					component="div"
 					size={40}
-					variant='filled'
-					radius='xl'
+					variant="filled"
+					radius="xl"
 					className={classes.socialButton}
 				>
 					<IconComponent className={classes.socialIcon} size={16} />

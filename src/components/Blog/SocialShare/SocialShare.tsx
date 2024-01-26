@@ -1,5 +1,4 @@
 import {Group, Text} from '@mantine/core';
-import {useHover} from '@mantine/hooks';
 import React from 'react';
 import {ESocialShare} from 'types/social';
 import {FacebookIcon} from '../../common/Buttons/SocialButtons/FacebookIcon';
@@ -12,7 +11,7 @@ import * as classes from './socialShare.module.css';
 
 const SocialShare: React.FC = () => (
 	<Group justify="left" gap="sm">
-		<Text className={classes['font-lato']} fs={'16px'} m={0} c="#6B7979">
+		<Text className={classes.text}>
 			Share this article on:
 		</Text>
 		<Group gap="sm">
