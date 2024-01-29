@@ -91,8 +91,8 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 					</Expanded>
 				)}
 				{title === 'Field' && (
-					<Container className={classes.container}>
-						<Title order={1} mb={30}>
+					<Container className={classes.container} fluid>
+						<Title order={1} mb={30} className={classes.heading}>
 							FAQ
 						</Title>
 					</Container>

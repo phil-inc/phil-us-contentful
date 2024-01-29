@@ -1,7 +1,5 @@
 import React from 'react';
-import {Container, type MantineSpacing, MantineStyleProps, type StyleProp} from '@mantine/core';
-import {handleSpacing} from 'utils/handleSpacing';
-import PageContext from 'contexts/PageContext';
+import {Container, type MantineSpacing, type StyleProp} from '@mantine/core';
 
 import * as classes from './expanded.module.css';
 
@@ -38,8 +36,6 @@ const Expanded: React.FC<ExpandedProps> = ({
 	fullWidth = false,
 	...rest
 }) => {
-	const context = React.useContext(PageContext);
-
 	return (
 		<Container
 			style={{background, minHeight}}

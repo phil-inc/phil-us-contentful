@@ -1,9 +1,15 @@
 .container {
-    padding: 0px 16px;
+	padding: 0px 16px;
+
+	@media (min-width: $phil-breakpoint-md) {
+		padding: 0px 100px;
+	}
 }
 
-@media (min-width: $phil-breakpoint-md) {
-    .container {
-        padding: 0px 100px;
-    }
+.heading {
+    margin-top: 36px;
+    
+	@media (min-width: $phil-breakpoint-md) {
+        font-size: 50px;
+	}
 }

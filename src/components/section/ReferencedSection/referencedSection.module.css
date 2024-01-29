@@ -1,28 +1,14 @@
-.investorImage {
-	width: 300px;
-}
+.chevron {
+	margin-left: 0;
 
-/* Replace '768px' with the actual breakpoint value for 'md' from your theme settings */
-@media (max-width: 768px) {
-	.investorImage {
-		width: fit-content;
+	> svg {
+		width: 40px !important;
+		height: 40px !important;
 	}
 }
 
-.chevron svg {
-	width: 40px;
-	height: 40px;
-}
-
-.label div {
-	justify-content: start;
-	margin-bottom: 0;
-	overflow-wrap: anywhere;
-}
-
-.label div h2 {
-	font-family: 'Raleway, sans-serif';
-	font-size: min(55px, calc(1.5rem + 0.31vw));
+.label {
+	padding: 0;
 }
 
 .control {
@@ -58,6 +44,8 @@
 
 .item[data-active] {
 	background: #f4f4f4;
+
+	border: none;
 }
 
 .heading {
@@ -123,6 +111,10 @@
 			margin-top: 80px;
 		}
 	}
+
+	&[data-context='Field'] {
+		margin-top: 0;
+	}
 }
 
 .carouselContainer {
@@ -135,7 +127,7 @@
 
 .root {
 	width: 95%;
-	
+
 	&[data-has-media-item='true'] {
 		width: 100%;
 	}

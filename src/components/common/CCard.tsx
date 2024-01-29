@@ -15,7 +15,7 @@ import {
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
-import React from 'react';
+import React, {useContext} from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import Asset from './Asset/Asset';
@@ -28,12 +28,15 @@ import {TAsset} from 'types/asset';
 
 import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
+import {isContext} from 'vm';
+import PageContext from 'contexts/PageContext';
 type ArticleProps = {
 	resource: TResource;
 };
 
 export const CCard: FC<ArticleProps> = ({resource}) => {
 	const {body, heading, asset, buttonText} = resource;
+	const context = useContext(PageContext);
 
 	const options: Options = {
 		renderNode: {
@@ -59,12 +62,12 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					if (target.__typename === 'ContentfulMediaItem') {
 						return (
 							<ImageContainer flexStart fluid maw={128}>
-								<Asset objectFit='contain' asset={target} />
+								<Asset objectFit="contain" asset={target} />
 							</ImageContainer>
 						);
 					}
 
-					const button = <Button variant='philDefault'>{node.data.target.buttonText}</Button>;
+					const button = <Button variant="philDefault">{node.data.target.buttonText}</Button>;
 
 					if (target?.link?.internalContent) {
 						const {link} = getLink(target, true);
@@ -73,7 +76,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
+						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
 							{button}
 						</Anchor>
 					);
@@ -139,7 +142,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					maw={900}
 					ratio={16 / 9}
 				>
-					<Asset objectFit='contain' asset={media} />
+					<Asset objectFit="contain" asset={media} />
 				</ImageContainer>
 			</Center>
 		);
@@ -148,10 +151,11 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 	// TODO: Add hover animation + anchor tags
 	// REFACTOR:: handle different styles better: isFaq, Asset
 	return (
-		<Group h={'100%'} gap={0}>
+		// TODO: Add anchor links to cards
+		<Group h={'100%'} gap={0} data-is-faq={resource.isFaq} className={classes.group}>
 			<Box
-				component='span'
-				h='100%'
+				component="span"
+				h="100%"
 				className={classes.before}
 				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
@@ -163,9 +167,6 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 				radius={0}
 				data-hasAsset={Boolean(media)}
 			>
-				{/* TODO: convert to grid */}
-				{/* <Group wrap="nowrap" h={'100%'} gap={0} preventGrowOverflow align="start"></Group> */}
-
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
 						<Grid.Col span={{base: 12, md: 3, lg: 3, xl: 2}}>
@@ -177,31 +178,38 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 								card
 								mx={0}
 							>
-								<Asset objectFit='cover' asset={media} />
+								<Asset objectFit="cover" asset={media} />
 							</ImageContainer>
 						</Grid.Col>
 					)}
 
-					<Grid.Col span='auto'>
+					<Grid.Col span="auto">
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq}
-							align='flex-start'
-							justify='center'
-							h='100%'
+							data-context={context.title}
+							align="flex-start"
+							justify="center"
+							h="100%"
 							gap={0}
 						>
+							{resource.isFaq && (
+								<Title order={3} className={classes.faqHeading}>
+									{resource.heading}
+								</Title>
+							)}
+
 							{!resource.isFaq && body && renderRichText(body, options)}
 
 							{!asset && !resource.isFaq && buttonText?.length ? (
 								isExternal ? (
-									<Anchor href={link} target='_blank'>
-										<Button variant='philDefault'>{buttonText}</Button>
+									<Anchor href={link} target="_blank">
+										<Button variant="philDefault">{buttonText}</Button>
 									</Anchor>
 								) : (
 									<Link to={link}>
-										<Button variant='philDefault'>{buttonText}</Button>
+										<Button variant="philDefault">{buttonText}</Button>
 									</Link>
 								)
 							) : null}

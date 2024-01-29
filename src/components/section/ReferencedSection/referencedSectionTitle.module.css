@@ -7,6 +7,12 @@
 .heading {
 	line-height: 1.2;
 	color: #000000;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		&[data-context='Field'] {
+			font-size: 30px;
+		}
+	}
 }
 
 .stack {
@@ -18,6 +24,10 @@
 
 	@media (min-width: $phil-breakpoint-sm) {
 		align-items: center;
+
+		&[data-context='Field'] {
+			align-items: start;
+		}
 	}
 }
 

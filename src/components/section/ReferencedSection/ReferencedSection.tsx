@@ -100,6 +100,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={section.v2flag ? getColorFromStylingOptions(section?.stylingOptions?.background) : background}
 			fullWidth={section.referenceType === ReferenceTypeEnum['Image Carousel']}
+			data-context={context.title}
 		>
 			{context.title === FIELD_PAGE ? (
 				<Accordion

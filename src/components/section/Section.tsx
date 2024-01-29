@@ -1,5 +1,4 @@
 import React from 'react';
-import PageContext from 'contexts/PageContext';
 import type {IReferencedSection, ISection} from 'types/section';
 import BasicSection from './BasicSection/BasicSection';
 import ReferencedSection from './ReferencedSection/ReferencedSection';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Box, Center, Grid} from '@mantine/core';
 import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
 import {type IReferencedSection, ReferenceTypeEnum} from 'types/section';
@@ -7,6 +7,7 @@ import RenderResource from './RenderResource';
 import * as classes from './referencedSection.module.css';
 import {Carousel} from '@mantine/carousel';
 import useDeviceType from 'hooks/useView';
+import PageContext from 'contexts/PageContext';
 
 type ReferencedSectionBodyProps = {
 	section: IReferencedSection;
@@ -24,7 +25,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 
 	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
 
-	const isMobile = useDeviceType();
+	const isMobile = useDeviceType('xs');
+
+	const {title} = useContext(PageContext);
 
 	if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
 		const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
@@ -65,6 +68,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			justify='center'
 			align='stretch'
 			data-add-margin={addMargin}
+			data-context={title}
 			// Mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
 			// M={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
 		>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Box, Title, Divider, Stack, Group, type TitleOrder, Text} from '@mantine/core';
 import {useMantineTheme} from '@mantine/core';
 import {RESOURCE_BLOCKS} from 'constants/section';
@@ -6,6 +6,8 @@ import {handleSpacing} from 'utils/handleSpacing';
 import {ReferenceTypeEnum, type IReferencedSection} from 'types/section';
 
 import * as classes from './referencedSectionTitle.module.css';
+import { usePageContext } from 'react-pdf';
+import PageContext from 'contexts/PageContext';
 
 type ReferencedSectionTitleProps = {
 	section: IReferencedSection;
@@ -15,9 +17,10 @@ type ReferencedSectionTitleProps = {
 
 const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section, isEmbedFormTemplate, textColor}) => {
 	const theme = useMantineTheme();
+	const {title} = useContext(PageContext);
 
 	const renderTitle = (text: string, order?: TitleOrder, className?: string) => (
-		<Title className={className} order={order}>
+		<Title data-context={title} className={className} order={order}>
 			{text}
 		</Title>
 	);
@@ -54,6 +57,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 					className={classes.stack}
 					mb={isEmbedFormTemplate ? 48 : undefined}
 					data-reference-type={section.referenceType}
+					data-context={title}
 				>
 					{Boolean(section.header?.length) && renderTitle(section.header, 2, classes.heading)}
 					{Boolean(section.subHeading?.subHeading?.length)
