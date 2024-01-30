@@ -1,0 +1,33 @@
+.newsletter {
+	> form {
+		display: flex;
+        align-items: flex-start;
+        justify-content: center;
+
+		> div {
+			/* input box */
+			> div {
+				margin-top: 0px !important;
+			}
+
+			/* input label */
+			> label {
+				display: none !important;
+			}
+
+			/* input legend */
+			> legend {
+				display: none !important;
+			}
+
+			margin: 0 !important;
+		}
+
+		input[type='submit'] {
+            margin-left: 16px;
+            padding: 13.5px 40px;
+            height: 100%;
+            border: 1px solid transparent;
+		}
+	}
+}

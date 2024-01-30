@@ -1,9 +1,8 @@
 import React from 'react';
-import {Anchor, Button, Grid, Center, Loader, Text, useMantineTheme} from '@mantine/core';
+import {Anchor, Button, Grid, Center, Loader, Text} from '@mantine/core';
 import type {ISection} from 'types/section';
 import {parseScript} from 'utils/parseScript';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
-import {handleSpacing} from 'utils/handleSpacing';
 import type {TResponse} from 'extract-json-from-string';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';

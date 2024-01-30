@@ -120,6 +120,10 @@ export enum ReferenceTypeEnum {
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
 
+export type Metadata = {
+	tags: {id: string; name: string}[];
+};
+
 export type IReferencedSection = {
 	[x: string]: any;
 	id: string;
@@ -133,6 +137,7 @@ export type IReferencedSection = {
 		subHeading: string;
 	};
 	references: TResource[];
+	metadata?: Metadata;
 	buttonText?: string;
 	internalLink: {
 		slug?: string;

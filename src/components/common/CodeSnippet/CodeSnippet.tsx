@@ -1,7 +1,11 @@
 import React from 'react';
 import {type TResource} from 'types/resource';
-import {extractString} from 'utils/parseScript';
+import {extractString, parseScript} from 'utils/parseScript';
 import {ParseContent} from './ParseContent';
+import HubspotForm from '../HubspotForm/HubspotForm';
+
+import * as classes from './codeSnippet.module.css';
+import {Group, Title} from '@mantine/core';
 
 type CodeSnippetType = {
 	resource: TResource;
@@ -10,6 +14,25 @@ type CodeSnippetType = {
 const CodeSnippet: React.FC<CodeSnippetType> = React.memo(({resource}) => {
 	let snippet = '';
 	const media = resource?.media;
+
+	const isNewsletterComponent = resource.metadata?.tags.some(tag => tag.name === 'Newsletter Component');
+
+	// TODO: resource can be mediaitem
+	if (isNewsletterComponent && resource?.embedCode) {
+		const [formProps] = parseScript(resource.embedCode);
+
+		const formId = formProps.formId;
+		const portalId = formProps.portalId;
+
+		return (
+			<>
+				<Group justify='center'>
+					<Title order={2} size={'28px'}>Get latest updates</Title>
+					<HubspotForm formId={formId} portalId={portalId} classname={classes.newsletter} />
+				</Group>
+			</>
+		);
+	}
 
 	// TODO: Handle this better
 	if (resource?.sys?.contentType?.sys?.id === 'mediaItem') {

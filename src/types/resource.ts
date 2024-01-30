@@ -1,5 +1,5 @@
 import type {TAsset} from './asset';
-import type {BodyType, MediaItem, StylingOptions} from './section';
+import type {BodyType, MediaItem, Metadata, StylingOptions} from './section';
 
 export type TLink = {
 	link: string;
@@ -20,6 +20,7 @@ export type TResource = {
 	heading: string;
 	subheading: string;
 	noindex?: boolean;
+	metadata?: Metadata;
 	description: {
 		id: string;
 		description: string;

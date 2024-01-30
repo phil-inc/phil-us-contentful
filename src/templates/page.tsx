@@ -5,13 +5,16 @@ import Section from 'components/section/Section';
 import {SEO} from 'layouts/SEO/SEO';
 import {Box, Container, Grid, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import type {IReferencedSection, ISection} from 'types/section';
+import type {ISection} from 'types/section';
 import PageContext from 'contexts/PageContext';
 import {Script, graphql} from 'gatsby';
 import slugify from 'slugify';
 import {HOME} from 'constants/page';
 
 import * as classes from './page.module.css';
+import {parseScript} from 'utils/parseScript';
+import {TResponse} from 'extract-json-from-string';
+import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 
 type HelmetProps = {
 	data: {
@@ -75,6 +78,13 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
 	let basicSectionCount = 0;
 	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));
+
+	// const formScript =
+	// 	'<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script> <script> hbspt.forms.create({ region: "na1", portalId: "20880193", formId: "adf259e8-bb50-4f9e-b2e5-d3bbc0cf4e77" }); </script> ';
+
+	// const object: any = parseScript({raw: formScript});
+
+	// const [formProps] = object as TResponse[];
 
 	return (
 		<PageContext.Provider value={{title}}>
@@ -355,6 +365,12 @@ export const query = graphql`
 						subHeading
 					}
 					sectionType
+					metadata {
+						tags {
+							name
+							id
+						}
+					}
 					references {
 						... on ContentfulResource {
 							id
@@ -742,6 +758,12 @@ export const query = graphql`
 							}
 						}
 						... on ContentfulMediaItem {
+							metadata {
+								tags {
+									name
+									id
+								}
+							}
 							sys {
 								contentType {
 									sys {

@@ -1,14 +1,16 @@
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import React from 'react';
 import {useId} from '@mantine/hooks';
-import {Center, Loader} from '@mantine/core';
+import {Box, Center, Loader} from '@mantine/core';
+import classNames from 'classnames';
 
 type HubSpotFormProps = {
 	portalId: string;
 	formId: string;
+	classname?: string;
 };
 
-const HubSpotForm: React.FC<HubSpotFormProps> = ({portalId, formId}) => {
+const HubSpotForm: React.FC<HubSpotFormProps> = ({portalId, formId, classname = ""}) => {
 	const uuid = useId();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 
@@ -55,7 +57,7 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({portalId, formId}) => {
 	return (
 		<>
 			{hasRendered ? (
-				<div id={uuid}></div>
+				<Box className={classname} id={uuid}></Box>
 			) : (
 				<Center>
 					<Loader mt={120} size='lg' />
