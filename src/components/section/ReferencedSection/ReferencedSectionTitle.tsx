@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import {Box, Title, Divider, Stack, Group, type TitleOrder, Text} from '@mantine/core';
+import {Box, Title, Divider, Stack, type TitleOrder} from '@mantine/core';
 import {useMantineTheme} from '@mantine/core';
 import {RESOURCE_BLOCKS} from 'constants/section';
 import {handleSpacing} from 'utils/handleSpacing';
-import {ReferenceTypeEnum, type IReferencedSection} from 'types/section';
+import {type IReferencedSection} from 'types/section';
 
 import * as classes from './referencedSectionTitle.module.css';
-import { usePageContext } from 'react-pdf';
 import PageContext from 'contexts/PageContext';
 
 type ReferencedSectionTitleProps = {

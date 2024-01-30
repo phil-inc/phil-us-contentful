@@ -165,7 +165,9 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 				className={classes.paper}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.background)}}
 				radius={0}
-				data-hasAsset={Boolean(media)}
+				data-has-asset={Boolean(media)}
+				data-context={context.title}
+				data-is-faq={resource.isFaq}
 			>
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (

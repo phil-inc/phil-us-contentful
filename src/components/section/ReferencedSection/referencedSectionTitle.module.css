@@ -8,6 +8,10 @@
 	line-height: 1.2;
 	color: #000000;
 
+	&[data-context='Field'] {
+		font-size: 25px;
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		&[data-context='Field'] {
 			font-size: 30px;

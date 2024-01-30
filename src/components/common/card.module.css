@@ -13,7 +13,13 @@
 	height: 100%;
 	line-height: 27px;
 
-	&[data-hasAsset='true'] {
+	&[data-is-faq='true'] {
+		&[data-context='Field'] {
+			padding: 0;
+		}
+	}
+
+	&[data-has-asset='true'] {
 		padding: 0;
 		width: 100%;
 	}
@@ -21,7 +27,7 @@
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 64px 32px;
 
-		&[data-hasAsset='false'] {
+		&[data-has-asset='false'] {
 			padding: 0;
 		}
 	}

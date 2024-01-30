@@ -8,6 +8,7 @@
 
 .heading {
     margin-top: 36px;
+	font-size: 40px;
     
 	@media (min-width: $phil-breakpoint-md) {
         font-size: 50px;
