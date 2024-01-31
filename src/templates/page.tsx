@@ -109,12 +109,13 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				)}
 				{sections
 					.filter(section => !section.isHidden)
-					.map(section => (
+					.map((section, index, array) => (
 						<Section
 							key={section.id + 'mapSectionComponent'}
 							section={section}
 							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
 							isEmbedFormTemplate={isEmbedFormTemplate}
+							isPreviousBackgroundPure={array[index-1]?.stylingOptions?.background === '#FFFFFF'}
 						/>
 					))}
 			</Layout>

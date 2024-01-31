@@ -1,13 +1,27 @@
+.box {
+	@media (min-width: $phil-breakpoint-sm) {
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		gap: 28px;
+	}
+}
+
 .newsletter {
 	> form {
-		display: flex;
-        align-items: flex-start;
-        justify-content: center;
+		margin-top: 32px;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+			width: 100%;
+		}
 
 		> div {
 			/* input box */
 			> div {
-				margin-top: 0px !important;
+				margin: 0px !important;
 			}
 
 			/* input label */
@@ -24,10 +38,23 @@
 		}
 
 		input[type='submit'] {
-            margin-left: 16px;
-            padding: 13.5px 40px;
-            height: 100%;
-            border: 1px solid transparent;
+			max-width: 100%;
+			width: 100%;
+			border: 1px solid transparent;
+			margin-top: 32px;
+				
+			@media (min-width: $phil-breakpoint-sm) {
+				margin: 0;
+				margin-left: 16px;
+				padding: 13.5px 40px;
+				height: 100%;
+			}
+		}
+
+		input[type='email'] {
+			@media (min-width: $phil-breakpoint-sm) {
+				width: 400px !important;
+			}
 		}
 	}
 }

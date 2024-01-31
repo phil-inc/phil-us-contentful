@@ -22,6 +22,7 @@ import {getColorFromStylingOptions} from 'utils/stylingOptions';
 type ReferencedSectionProps = {
 	section: IReferencedSection;
 	isEmbedFormTemplate: boolean;
+	isPreviousBackgroundPure: boolean;
 };
 
 /**
@@ -30,7 +31,7 @@ type ReferencedSectionProps = {
  * @returns Referenced Resources
  */
 
-const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFormTemplate}) => {
+const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFormTemplate, isPreviousBackgroundPure}) => {
 	const params = new URLSearchParams(getWindowProperty('location.search', {}));
 	const GRID_COLUMNS = 100;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
@@ -38,15 +39,15 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 	const context = React.useContext(PageContext);
 	const theme = useMantineTheme();
 
-	console.log({section})
+	console.log({section});
 
 	React.useEffect(() => {
 		try {
 			const isFromSMSIntro = params.get('isFromSMSIntro');
 			if (
-				section.referenceType === ReferenceTypeEnum['Stats Card with Arrows']
-				&& isFromSMSIntro === 'true'
-				&& isProduction
+				section.referenceType === ReferenceTypeEnum['Stats Card with Arrows'] &&
+				isFromSMSIntro === 'true' &&
+				isProduction
 			) {
 				mixpanel.init(process.env.GATSBY_MIXPANEL_TOKEN ?? '');
 				FullStory.init({orgId: process.env.GATSBY_FULLSTORY_ORG_ID ?? ''});
@@ -95,18 +96,24 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 
 	const [background, textColor] = getSectionColors(section.referenceType);
 
+	const isNewsLetterComponent = section.references.some(ref =>
+		ref?.metadata?.tags?.some(tag => tag.name === 'Newsletter Component')
+	);
+
 	return (
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
 			background={section.v2flag ? getColorFromStylingOptions(section?.stylingOptions?.background) : background}
 			fullWidth={section.referenceType === ReferenceTypeEnum['Image Carousel']}
 			data-context={context.title}
+			data-is-newsletter-component={isNewsLetterComponent}
+			data-disable-border-top={!isPreviousBackgroundPure}
 		>
 			{context.title === FIELD_PAGE ? (
 				<Accordion
-					variant='separated'
-					radius='xs'
-					chevronPosition='left'
+					variant="separated"
+					radius="xs"
+					chevronPosition="left"
 					mb={24}
 					chevronSize={44}
 					classNames={{
@@ -132,7 +139,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 				</Accordion>
 			) : (
 				<>
-					{Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
+					{!isNewsLetterComponent && Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
 						<ReferencedSectionTitle
 							section={section}
 							isEmbedFormTemplate={isEmbedFormTemplate}
@@ -145,21 +152,21 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 			)}
 
 			{section.subHeading && (
-				<Group className={classes.subHeading} data-reference-type={section.referenceType} justify='center'>
+				<Group className={classes.subHeading} data-reference-type={section.referenceType} justify="center">
 					<Text>{section.subHeading.subHeading}</Text>
 				</Group>
 			)}
 
 			{/* bottom buttons */}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group justify='center' mt={handleSpacing(theme, theme.spacing.lg)}>
+				<Group justify="center" mt={handleSpacing(theme, theme.spacing.lg)}>
 					{isExternal ? (
-						<Anchor href={link} target='_blank'>
-							<Button variant='philDefault'>{section.buttonText}</Button>
+						<Anchor href={link} target="_blank">
+							<Button variant="philDefault">{section.buttonText}</Button>
 						</Anchor>
 					) : (
 						<Link to={link}>
-							<Button variant='philDefault'>{section.buttonText}</Button>
+							<Button variant="philDefault">{section.buttonText}</Button>
 						</Link>
 					)}
 				</Group>

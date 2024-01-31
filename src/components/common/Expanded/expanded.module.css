@@ -2,7 +2,7 @@
 	background: #fff;
 	min-height: 100%;
 	max-width: 100%;
-	width: 100vw;
+	width: 100%;
 	padding: 60px 20px;
 
 	&[data-context='Field'] {
@@ -19,10 +19,34 @@
 		}
 	}
 
+	&[data-is-newsletter-component='true'] {
+		box-sizing: content-box;
+
+		width: auto;
+
+		margin-left: 16px;
+		margin-right: 16px;
+		padding: 60px 0;
+
+		border-top: 2px solid var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
+		border-bottom: 2px solid var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
+
+		@media (min-width: $phil-breakpoint-sm) {
+			margin-left: 100px;
+			margin-right: 100px;
+
+			padding: 100px 0;
+		}
+	}
+
+	&[data-disable-border-top='true'] {
+		border-top: none;
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 100px;
-	
-		&[data-context='Field']{
+
+		&[data-context='Field'] {
 			padding: 0 100px;
 		}
 	}

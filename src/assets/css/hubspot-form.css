@@ -39,8 +39,8 @@ textarea {
 .hs-submit {
 	margin-top: 24px;
 	display: inline-block;
+	width: 100%;
 }
-
 
 input[type='submit'] {
 	background-color: #00201f;
@@ -60,6 +60,7 @@ input[type='submit'] {
 
 input[type='submit']:hover {
 	outline: 3px solid #00201f;
+	outline-offset: -3px;
 	background-color: transparent;
 	color: #00201f;
 	font-weight: 900;
@@ -79,4 +80,9 @@ input[type='submit']:hover {
 
 .hs_error_rollup {
 	display: none;
+}
+
+.actions {
+	width: 100%;
+	max-width: 100%;
 }
