@@ -113,6 +113,7 @@
 .formWrapper {
 	padding: 44px 38px;
 	background: #f4f4f4;
+	width: 100%;
 
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 44px 32px;
