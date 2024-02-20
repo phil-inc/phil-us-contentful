@@ -75,6 +75,8 @@ export const getLink = (
 				const paths = useInternalPaths();
 				const staticPage = paths.find(path => path.id === section?.link?.internalContent?.id);
 
+				console.log({staticPage}, 'from here', staticPage?.path ?? '#');
+
 				// Referencing a internal link but not relating it to a section
 				// can cause issues which is mitigated by # link
 				return {link: staticPage?.path ?? '#', isExternal: false};

@@ -10,7 +10,7 @@ type HubSpotFormProps = {
 	classname?: string;
 };
 
-const HubSpotForm: React.FC<HubSpotFormProps> = ({portalId, formId, classname = ""}) => {
+const HubSpotForm: React.FC<HubSpotFormProps> = ({portalId, formId, classname = ''}) => {
 	const uuid = useId();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 

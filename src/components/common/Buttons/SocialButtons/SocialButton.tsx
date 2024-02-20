@@ -50,10 +50,10 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 	return (
 		<Anchor
 			href={isCopyLink ? undefined : getShareLink(type, href)}
-			target="_blank"
+			target='_blank'
 			onClick={isCopyLink ? onClick : undefined}
-			underline="never"
-			referrerPolicy="no-referrer"
+			underline='never'
+			referrerPolicy='no-referrer'
 		>
 			<Tooltip
 				className={classes.tooltip}
@@ -69,10 +69,10 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 					ref={ref}
 					data-copied={clipboard.copied}
 					data-hovered={hovered}
-					component="div"
+					component='div'
 					size={40}
-					variant="filled"
-					radius="xl"
+					variant='filled'
+					radius='xl'
 					className={classes.socialButton}
 				>
 					<IconComponent className={classes.socialIcon} size={16} />

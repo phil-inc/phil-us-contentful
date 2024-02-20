@@ -20,7 +20,13 @@ const Section: React.FC<SectionProps> = ({section, index, isEmbedFormTemplate, i
 		case 'Basic Section':
 			return <BasicSection section={section as ISection} index={index!} isEmbedFormTemplate={isEmbedFormTemplate} />;
 		case 'Referenced Section':
-			return <ReferencedSection section={section as IReferencedSection} isEmbedFormTemplate={isEmbedFormTemplate} isPreviousBackgroundPure={isPreviousBackgroundPure}/>;
+			return (
+				<ReferencedSection
+					section={section as IReferencedSection}
+					isEmbedFormTemplate={isEmbedFormTemplate}
+					isPreviousBackgroundPure={isPreviousBackgroundPure}
+				/>
+			);
 		default:
 			return <></>;
 	}

@@ -41,12 +41,7 @@ type CHeaderProps = {
 	headerTargetBlank: boolean;
 };
 
-const Navbar: React.FC<CHeaderProps> = ({
-	allContentfulHeader,
-	allContentfulResource,
-	minimal,
-	headerTargetBlank,
-}) => {
+const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResource, minimal, headerTargetBlank}) => {
 	const [header] = allContentfulHeader.nodes;
 	const {navigationLinks: pages, buttons} = header;
 
@@ -63,7 +58,6 @@ const Navbar: React.FC<CHeaderProps> = ({
 
 	const [isDrawer, toggleDrawer] = useToggle();
 
-
 	const [target, setTarget] = useState<string>('');
 
 	const [activePageLI, setActivePageLI] = useState<HTMLLIElement>();
@@ -73,7 +67,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 			close();
 		},
 		null,
-		[navRef!, collapseRef!]
+		[navRef!, collapseRef!],
 	);
 
 	const onNavLinkClick = event => {
@@ -196,14 +190,14 @@ const Navbar: React.FC<CHeaderProps> = ({
 
 	return (
 		<AppShell.Header className={classes.header} style={{borderBottom: 0}}>
-			<Group align="center" justify="space-between" className={classNames(classes.navbar, 'navbar')}>
+			<Group align='center' justify='space-between' className={classNames(classes.navbar, 'navbar')}>
 				{!minimal && (
-					<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
+					<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
 						<Button
-							size="sm"
-							variant="outline"
+							size='sm'
+							variant='outline'
 							px={4}
-							color="philBranding"
+							color='philBranding'
 							className={classes.patientLoginButtonMobile}
 						>
 							Patient Login
@@ -213,19 +207,19 @@ const Navbar: React.FC<CHeaderProps> = ({
 
 				<Box className={classes.logo}>
 					{headerTargetBlank ? (
-						<Anchor href="https://phil.us" target="_blank">
-							<Asset asset={header.logo} objectFit="contain" />
+						<Anchor href='https://phil.us' target='_blank'>
+							<Asset asset={header.logo} objectFit='contain' />
 						</Anchor>
 					) : (
-						<Link to="/">
-							<Asset asset={header.logo} objectFit="contain" />
+						<Link to='/'>
+							<Asset asset={header.logo} objectFit='contain' />
 						</Link>
 					)}
 				</Box>
 				{!minimal && (
 					<>
 						<Burger
-							name="BurgerButton"
+							name='BurgerButton'
 							opened={isDrawer}
 							onClick={() => {
 								toggleDrawer();
@@ -247,7 +241,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 								))}
 							{buttons.map((button, index) => (
 								// TODO: use sys
-								<List.Item key={button.id} data-noindicator="true" className={classes.buttons}>
+								<List.Item key={button.id} data-noindicator='true' className={classes.buttons}>
 									{button.internalLink ? (
 										<Box ml={index && 16}>
 											<Link className={classes.textDecorationNone} to={`/${button.internalLink.slug}`}>
@@ -273,7 +267,7 @@ const Navbar: React.FC<CHeaderProps> = ({
 											style={{textDecoration: 'none', textDecorationLine: 'none'}}
 											ml={index && 16}
 											href={button.externalLink}
-											target="_blank"
+											target='_blank'
 										>
 											<Button
 												size={

@@ -28,24 +28,24 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 
 	return (
 		<SEO title={title}>
-			<meta name="twitter:card" content="summary_large_image" />
-			<meta name="twitter:title" content={title} />
-			<meta name="twitter:description" content={contentfulPage.description} />
-			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name="description" content={contentfulPage.description} />
-			<meta property="og:title" content={title} />
-			<meta property="og:type" content={'Page'} />
-			<meta property="og:description" content={contentfulPage.description} />
-			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property="og:url" content={config.slug} />
+			<meta name='twitter:card' content='summary_large_image' />
+			<meta name='twitter:title' content={title} />
+			<meta name='twitter:description' content={contentfulPage.description} />
+			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name='description' content={contentfulPage.description} />
+			<meta property='og:title' content={title} />
+			<meta property='og:type' content={'Page'} />
+			<meta property='og:description' content={contentfulPage.description} />
+			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property='og:url' content={config.slug} />
 			<Script
 				defer
-				strategy="idle"
-				charSet="utf-8"
-				type="text/javascript"
-				src="//js.hsforms.net/forms/embed/v2.js"
+				strategy='idle'
+				charSet='utf-8'
+				type='text/javascript'
+				src='//js.hsforms.net/forms/embed/v2.js'
 			></Script>
-			{contentfulPage.noindex && <meta name="robots" content="noindex" />}
+			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
 		</SEO>
 	);
 };

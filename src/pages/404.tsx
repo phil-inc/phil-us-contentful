@@ -10,7 +10,7 @@ import {notFoundIcon} from 'assets/images';
 export const Head: React.FC = () => (
 	<SEO title={'Page not found'}>
 		<meta
-			name="description"
+			name='description'
 			content={
 				'Page you are trying to open does not exist. You may have mistyped the address, or the page has been moved to another URL. If you think this is an error contact support.'
 			}
@@ -18,10 +18,10 @@ export const Head: React.FC = () => (
 		<Script
 			async
 			defer
-			strategy="idle"
-			charSet="utf-8"
-			type="text/javascript"
-			src="//js.hsforms.net/forms/embed/v2.js"
+			strategy='idle'
+			charSet='utf-8'
+			type='text/javascript'
+			src='//js.hsforms.net/forms/embed/v2.js'
 		></Script>
 	</SEO>
 );
@@ -32,17 +32,17 @@ const Error = () => (
 			<Grid>
 				<Grid.Col span={{base: 12, sm: 6}} order={{base: 2, sm: 1}}>
 					<Title className={classes.title}>Something is not right...</Title>
-					<Text c="dimmed" size="lg" mb={32}>
+					<Text c='dimmed' size='lg' mb={32}>
 						Page you are trying to open does not exist. You may have mistyped the address, or the page has been
 						moved to another URL. If you think this is an error contact support.
 					</Text>
-					<Link to="/">
-						<Button variant="philDefault" color={'dark'} size="md">
+					<Link to='/'>
+						<Button variant='philDefault' color={'dark'} size='md'>
 							Get back to home page
 						</Button>
 					</Link>
 				</Grid.Col>
-				<Grid.Col span="auto" order={{base: 1, sm: 2}}>
+				<Grid.Col span='auto' order={{base: 1, sm: 2}}>
 					<img src={notFoundIcon} />
 				</Grid.Col>
 			</Grid>

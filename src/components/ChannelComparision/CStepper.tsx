@@ -3,7 +3,7 @@ import {ChannelComparisionContext} from 'contexts/ChannelComparisionContext';
 import React from 'react';
 import * as classes from './stepper.module.css';
 
-type StepperProps = {};
+type StepperProps = Record<string, unknown>;
 
 const CStepper: React.FC<StepperProps> = ({}) => {
 	const {stepper, form} = React.useContext(ChannelComparisionContext);
@@ -22,9 +22,9 @@ const CStepper: React.FC<StepperProps> = ({}) => {
 				stepCompletedIcon: classes.stepCompletedIcon,
 			}}
 		>
-			<Stepper.Step label="Email" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-			<Stepper.Step label="Information" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
-			<Stepper.Step label="Done" allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+			<Stepper.Step label='Email' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+			<Stepper.Step label='Information' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
+			<Stepper.Step label='Done' allowStepClick={false} allowStepSelect={false}></Stepper.Step>
 		</Stepper>
 	);
 };

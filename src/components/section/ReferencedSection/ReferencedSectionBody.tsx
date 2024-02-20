@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {Box, Center, Grid} from '@mantine/core';
 import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
 import {type IReferencedSection, ReferenceTypeEnum} from 'types/section';
@@ -8,6 +8,7 @@ import * as classes from './referencedSection.module.css';
 import {Carousel} from '@mantine/carousel';
 import useDeviceType from 'hooks/useView';
 import PageContext from 'contexts/PageContext';
+import {IconChevronLeft, IconChevronRight} from '@tabler/icons';
 
 type ReferencedSectionBodyProps = {
 	section: IReferencedSection;
@@ -21,6 +22,8 @@ type ReferencedSectionBodyProps = {
 };
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, getSpan}) => {
+	console.log({section});
+
 	const span = 12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
 
 	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
@@ -35,10 +38,19 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 		return (
 			<Center>
 				<Carousel
-					classNames={{root: classes.root, container: classes.carouselContainer}}
+					classNames={{
+						root: classes.root,
+						container: classes.carouselContainer,
+						controls: classes.controls,
+						control: classes.control,
+						viewport: classes.viewport,
+					}}
 					mt={80}
 					slideGap={30}
-					slideSize={{base: '95%', sm: `${100 / columns}%`}}
+					draggable={false}
+					previousControlIcon={<IconChevronLeft size={24} />}
+					nextControlIcon={<IconChevronRight size={24} />}
+					slideSize={{base: '33.3%', sm: `${100 / columns}%`}}
 					slidesToScroll={isMobile ? 1 : columns}
 					data-has-media-item={section.references.some(
 						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false,

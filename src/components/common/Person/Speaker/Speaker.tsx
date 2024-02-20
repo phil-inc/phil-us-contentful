@@ -12,9 +12,9 @@ type SpeakerProps = {
 
 const Speaker: React.FC<SpeakerProps> = ({person, length}) => (
 	<Paper radius={0} className={classes.card}>
-		<Grid className={classes.wrapper} justify="center" align="center" m={0} gutter={0}>
+		<Grid className={classes.wrapper} justify='center' align='center' m={0} gutter={0}>
 			<Grid.Col className={classes.avatar} span={{xs: 12, md: 'content'}}>
-					<Asset asset={person.image} />
+				<Asset asset={person.image} />
 			</Grid.Col>
 			<Grid.Col span={{xs: 12, md: 'auto'}}>
 				<Box className={classes.content}>

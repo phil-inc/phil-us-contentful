@@ -115,3 +115,22 @@
 	font-size: 24px;
 	line-height: 1.3;
 }
+
+.entryLink {
+	color: inherit;
+	text-decoration: none;
+}
+
+.buttonLabel {
+	white-space: unset;
+	text-align: start;
+}
+
+.buttonRoot {
+	width: 100% !important;
+	height: fit-content !important;
+}
+
+.internalLink {
+	width: 65%;
+}

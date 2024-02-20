@@ -35,23 +35,21 @@ const Expanded: React.FC<ExpandedProps> = ({
 	px,
 	fullWidth = false,
 	...rest
-}) => {
-	return (
-		<Container
-			style={{background, minHeight}}
-			id={id}
-			fluid
-			className={classes.container}
-			py={py}
-			pt={pt}
-			pb={pb}
-			mb={mb}
-			px={px ? px : fullWidth ? 0 : undefined}
-			{...rest}
-		>
-			{children}
-		</Container>
-	);
-};
+}) => (
+	<Container
+		style={{background, minHeight}}
+		id={id}
+		fluid
+		className={classes.container}
+		py={py}
+		pt={pt}
+		pb={pb}
+		mb={mb}
+		px={px ? px : fullWidth ? 0 : undefined}
+		{...rest}
+	>
+		{children}
+	</Container>
+);
 
 export default Expanded;

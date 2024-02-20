@@ -16,18 +16,18 @@ import * as classes from './channelComparision.module.css';
 import useDeviceType from 'hooks/useView';
 
 export const Head: React.FC = () => (
-	<SEO title="Channel Comparision">
+	<SEO title='Channel Comparision'>
 		<meta
-			name="description"
-			content="Learn how you can optimize your patient access strategy to improve adherence and gross-to-net"
+			name='description'
+			content='Learn how you can optimize your patient access strategy to improve adherence and gross-to-net'
 		/>
-		<meta property="og:title" content="Channel Comparision" />
-		<meta property="og:type" content="Page" />
+		<meta property='og:title' content='Channel Comparision' />
+		<meta property='og:type' content='Page' />
 		<meta
-			property="og:description"
-			content="Learn how you can optimize your patient access strategy to improve adherence and gross-to-net"
+			property='og:description'
+			content='Learn how you can optimize your patient access strategy to improve adherence and gross-to-net'
 		/>
-		<meta property="og:url" content="https://phil.us/channel-comparision/" />
+		<meta property='og:url' content='https://phil.us/channel-comparision/' />
 	</SEO>
 );
 
@@ -52,8 +52,8 @@ const ChannelComparisionPage = () => {
 
 	const isMobileDevice = useDeviceType('xs');
 
-	const formattedDateTime =
-		new Date().toLocaleString('en-US', {hour12: false}).replace(/[,/: ]+/g, '_') + '_' + String(Date.now());
+	const formattedDateTime
+		= new Date().toLocaleString('en-US', {hour12: false}).replace(/[,/: ]+/g, '_') + '_' + String(Date.now());
 
 	const form = useForm<FormValues>({
 		initialValues: {
@@ -104,7 +104,7 @@ const ChannelComparisionPage = () => {
 	return (
 		<Layout minimal headerTargetBlank={true}>
 			<Container className={classes.root} py={0}>
-				<Grid gutter={0} className={classes.grid} justify="center">
+				<Grid gutter={0} className={classes.grid} justify='center'>
 					<ChannelComparisionContext.Provider value={{stepper, form}}>
 						{step === 0 && <EmailCollection />}
 						{step === 1 && <Information />}
@@ -113,32 +113,32 @@ const ChannelComparisionPage = () => {
 
 					{!isMobileDevice && (
 						<Grid.Col span={{base: 12, sm: 6}} p={0} order={1}>
-							<Image src={getCustomizedReport as string} fit="cover" />
+							<Image src={getCustomizedReport as string} fit='cover' />
 						</Grid.Col>
 					)}
 				</Grid>
 
 				<Grid gutter={0} className={classes.footer}>
-					<Grid.Col span="auto" p={0} py={32}>
-						<Group justify="left" gap={16} align={'center'}>
+					<Grid.Col span='auto' p={0} py={32}>
+						<Group justify='left' gap={16} align={'center'}>
 							<Box p={0} m={0}>
 								Connect on
 							</Box>{' '}
-							<Anchor href="https://www.linkedin.com/company/phil-inc-" target="_blank">
-								<StaticImage src="../assets/images/linkedin-whitebg.svg" loading="lazy" alt="LinkedIn Icon" />
+							<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+								<StaticImage src='../assets/images/linkedin-whitebg.svg' loading='lazy' alt='LinkedIn Icon' />
 							</Anchor>
 						</Group>
 					</Grid.Col>
 					<Grid.Col span={7} p={0} py={32}>
-						<Group justify="right">
+						<Group justify='right'>
 							{badges.map((image, index) => (
 								<GatsbyImage
-									loading="lazy"
+									loading='lazy'
 									className={classes.badge}
-									objectFit="contain"
+									objectFit='contain'
 									image={image}
 									key={index}
-									alt=""
+									alt=''
 								/>
 							))}
 						</Group>

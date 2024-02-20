@@ -72,21 +72,21 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 				file={url}
 				loading={
 					<Container fluid>
-						<LoadingIndicator size="xl" />
+						<LoadingIndicator size='xl' />
 					</Container>
 				}
 				onLoadSuccess={onDocumentLoadSuccess}
 				onLoadError={error => {
 					console.error('Error while loading document: ', error);
 				}}
-				externalLinkTarget="_blank"
+				externalLinkTarget='_blank'
 			>
 				<Box className={classes.pageContainer}>
 					{!isSmallDevice && (
 						<ActionIcon
 							className={classes.actionButtons}
-							variant="filled"
-							color="dark"
+							variant='filled'
+							color='dark'
 							size={75}
 							radius={'50%'}
 							pr={5}
@@ -100,12 +100,12 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 						width={pdfPageWidth}
 						loading={
 							<Container fluid style={{width: pdfPageWidth}} className={classes.pageLoadingContainer}>
-								<LoadingIndicator size="xl" />
+								<LoadingIndicator size='xl' />
 							</Container>
 						}
 						className={classes.pdfPage}
 						pageNumber={pageNumber}
-						renderMode="canvas"
+						renderMode='canvas'
 						renderTextLayer={false}
 						renderAnnotationLayer={true}
 						renderForms={false}
@@ -113,8 +113,8 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 					{!isSmallDevice && (
 						<ActionIcon
 							className={classes.actionButtons}
-							variant="filled"
-							color="dark"
+							variant='filled'
+							color='dark'
 							size={75}
 							radius={'50%'}
 							pl={5}
@@ -127,11 +127,11 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 				</Box>
 			</Document>
 			{isSmallDevice && (
-				<Group justify="center" align="center" className={classes.pageNumber} gap="lg">
+				<Group justify='center' align='center' className={classes.pageNumber} gap='lg'>
 					<ActionIcon
 						className={classes.actionButtonsMobile}
-						variant="filled"
-						color="dark"
+						variant='filled'
+						color='dark'
 						size={36}
 						radius={'50%'}
 						onClick={previousPage}
@@ -139,13 +139,13 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 					>
 						<IconChevronLeft size={25} />
 					</ActionIcon>
-					<Text fs={'24px'} c="#fff">
+					<Text fs={'24px'} c='#fff'>
 						Page {pageNumber} of {numPages}
 					</Text>
 					<ActionIcon
 						className={classes.actionButtonsMobile}
-						variant="filled"
-						color="dark"
+						variant='filled'
+						color='dark'
 						size={36}
 						radius={'50%'}
 						onClick={nextPage}
@@ -155,9 +155,9 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 					</ActionIcon>
 				</Group>
 			)}
-			<Group justify="center" align="center" className={classes.downloadButton}>
-				<Anchor variant="text" referrerPolicy='no-referrer' type="button" href={url} target="_blank">
-					<Button className={classes.buttonText} variant="philDefault" px={21} size="md">
+			<Group justify='center' align='center' className={classes.downloadButton}>
+				<Anchor variant='text' referrerPolicy='no-referrer' type='button' href={url} target='_blank'>
+					<Button className={classes.buttonText} variant='philDefault' px={21} size='md'>
 						Download PDF
 					</Button>
 				</Anchor>

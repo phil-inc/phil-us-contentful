@@ -12,7 +12,7 @@ const EmailCollection = () => {
 			<Box className={classes.content}>
 				<Title className={classes.title} order={1} mb={20}>
 					{'Learn how you can optimize your '}
-					<Text className={classes.title} component="span" c={'#00827E'}>
+					<Text className={classes.title} component='span' c={'#00827E'}>
 						patient access strategy to improve adherence and gross-to-net
 					</Text>
 				</Title>
@@ -26,20 +26,20 @@ const EmailCollection = () => {
 						stepper.nextStep();
 					})}
 				>
-					<Title className={classes.question} order={2} size={28} c="#0A0A0A" mb={16}>
+					<Title className={classes.question} order={2} size={28} c='#0A0A0A' mb={16}>
 						Where should we send the <span style={{whiteSpace: 'nowrap'}}>report?*</span>
 					</Title>
 					<TextInput
 						classNames={{label: classes.inputLabel, required: classes.inputLabel}}
-						label="Email Address*"
-						type="email"
+						label='Email Address*'
+						type='email'
 						radius={0}
 						required
 						withAsterisk={false}
 						mb={48}
 						{...form.getInputProps('email')}
 					/>
-					<Button className={classes.button} variant="philDefault" type="submit">
+					<Button className={classes.button} variant='philDefault' type='submit'>
 						Continue
 					</Button>
 				</form>

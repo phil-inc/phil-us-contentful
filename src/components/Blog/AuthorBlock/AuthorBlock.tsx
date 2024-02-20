@@ -14,11 +14,7 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 	const options = {
 		renderNode: {
 			[BLOCKS.PARAGRAPH](node, children) {
-				return (
-					<Text className={classes.text}>
-						{children}
-					</Text>
-				);
+				return <Text className={classes.text}>{children}</Text>;
 			},
 
 			[INLINES.HYPERLINK](node, children) {
@@ -26,10 +22,10 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 				return (
 					<Anchor
 						href={uri}
-						target="_blank"
+						target='_blank'
 						className={classes.anchor}
-						underline="never"
-						referrerPolicy="no-referrer"
+						underline='never'
+						referrerPolicy='no-referrer'
 					>
 						{children}
 					</Anchor>
@@ -56,7 +52,7 @@ const AuthorBlock: React.FC<TAuthorBlock> = ({author}) => {
 							<Box>
 								<Text className={classes.authorName}>{author.name}</Text>
 								<Text className={classes.authorTitle}>{author.authorTitle}</Text>
-								<Text className={classes.authorBio} size={'16px'} m={0} mb={12} c="#01201F">
+								<Text className={classes.authorBio} size={'16px'} m={0} mb={12} c='#01201F'>
 									{Boolean(author.bio) && renderRichText(author.bio, options)}
 								</Text>
 							</Box>

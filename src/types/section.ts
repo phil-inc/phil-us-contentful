@@ -121,7 +121,7 @@ export enum ReferenceTypeEnum {
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
 
 export type Metadata = {
-	tags: {id: string; name: string}[];
+	tags: Array<{id: string; name: string}>;
 };
 
 export type IReferencedSection = {

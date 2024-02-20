@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {Box, Title, Divider, Stack, type TitleOrder} from '@mantine/core';
 import {useMantineTheme} from '@mantine/core';
 import {RESOURCE_BLOCKS} from 'constants/section';

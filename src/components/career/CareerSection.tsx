@@ -22,7 +22,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 			<Grid
 				gutter={handleSpacing(theme, theme.spacing.lg)}
 				pb={handleSpacing(theme, theme.spacing.xl)}
-				align="flex-start"
+				align='flex-start'
 			>
 				<Grid.Col order={{sm: 1}} span={{lg: 6, md: 6, sm: 12}}>
 					<Box className={classes.center}>
@@ -35,16 +35,16 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 						</Group>
 						{isLoading && (
 							<Center h={200}>
-								<Loader color="dark" size="xl" type="dots" />
+								<Loader color='dark' size='xl' type='dots' />
 							</Center>
 						)}
-						{!isLoading &&
-							Object.keys(careers).map((job, index) => (
+						{!isLoading
+							&& Object.keys(careers).map((job, index) => (
 								<Box key={job} mt={index === 1 ? 21 : 0} mb={theme.spacing.lg}>
 									<Title order={3} className={classes.jobTitle}>
 										{job}
 									</Title>
-									<Divider variant="dashed" size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
+									<Divider variant='dashed' size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
 									{careers[job].map(listing => (
 										<Box key={listing.url} mb={theme.spacing.md}>
 											<CareerArticle title={listing.title} url={listing.url} location={listing.location} />

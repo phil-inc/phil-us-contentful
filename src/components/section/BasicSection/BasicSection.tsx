@@ -94,7 +94,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					const {target} = node.data;
 
 					const button = (
-						<Button mt={40} variant="philDefault">
+						<Button mt={40} variant='philDefault'>
 							{node.data.target.buttonText}
 						</Button>
 					);
@@ -107,12 +107,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								<Link to={link}>{button}</Link>
 							</Portal>
 						) : (
-							button
+							<Link to={link}>{button}</Link>
 						);
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
+						<Anchor href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
 							{button}
 						</Anchor>
 					);
@@ -130,14 +130,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type="unordered" mb={20} pl={8}>
+					<List type='unordered' mb={20} pl={8}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type="ordered" mb={20} pl={8}>
+					<List type='ordered' mb={20} pl={8}>
 						{children}
 					</List>
 				);
@@ -171,7 +171,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 			[INLINES.HYPERLINK](node, children) {
 				return (
-					<Anchor href={node.data.uri as string} target="_blank">
+					<Anchor href={node.data.uri as string} target='_blank'>
 						{children}
 					</Anchor>
 				);
@@ -230,26 +230,24 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const mediaItemOrAsset = isSectionV2 ? section.mediaItem : section.asset;
 	const youtubeVideoUrl = isSectionV2 ? section.mediaItem.youtubeLink : section.youtubeVideoUrl;
 
-	const calculateAspectRatio = () => {
-		return hasYoutubeLink ? 16 / 9 : undefined;
-	};
+	const calculateAspectRatio = () => hasYoutubeLink ? 16 / 9 : undefined;
 
 	const determineBackground = () => {
 		if (isSectionV2) {
 			return isVideoContent(section?.mediaItem?.media?.file?.contentType) || hasYoutubeLink
 				? 'transparent'
 				: undefined;
-		} else {
-			return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink ? 'transparent' : undefined;
 		}
+
+		return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink ? 'transparent' : undefined;
 	};
 
 	const isVideo = () => {
 		if (isSectionV2) {
 			return isVideoContent(section?.mediaItem?.media?.file?.contentType) || hasYoutubeLink;
-		} else {
-			return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink;
 		}
+
+		return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink;
 	};
 
 	return (
@@ -271,7 +269,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				<Grid
 					// Gutter={40}
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
-					justify="flex"
+					justify='flex'
 				>
 					{/* Text Grid Column */}
 					<Grid.Col
@@ -304,7 +302,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 										)}
 									</>
 								)}
-								<Divider size={1} variant="dashed" className={classes.divider} />
+								<Divider size={1} variant='dashed' className={classes.divider} />
 								<Box>
 									<ContactForm section={section} />
 								</Box>
@@ -346,7 +344,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									expanded={context.title === CONTACT_PAGE}
 									isVideo={isVideo()}
 								>
-									<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
+									<Asset asset={mediaItemOrAsset} objectFit='contain' youtubeVideoURL={youtubeVideoUrl} />
 								</ImageContainer>
 							)}
 						</Group>
@@ -355,15 +353,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 				<Box className={classes.portalBox} id={uuid}></Box>
 
-				{section.isHubspotEmbed &&
-				section.isInsertSnippet &&
-				section.codeSnippet &&
-				Boolean(section.codeSnippet.codeSnippet.length) &&
-				isProduction ? (
-					<Script defer async>
-						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-					</Script>
-				) : null}
+				{section.isHubspotEmbed
+				&& section.isInsertSnippet
+				&& section.codeSnippet
+				&& Boolean(section.codeSnippet.codeSnippet.length)
+				&& isProduction ? (
+						<Script defer async>
+							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+						</Script>
+					) : null}
 			</>
 		</Container>
 	);

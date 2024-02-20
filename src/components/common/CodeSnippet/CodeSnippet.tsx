@@ -21,8 +21,8 @@ const CodeSnippet: React.FC<CodeSnippetType> = React.memo(({resource}) => {
 	if (isNewsletterComponent && resource?.embedCode) {
 		const [formProps] = parseScript(resource.embedCode);
 
-		const formId = formProps.formId;
-		const portalId = formProps.portalId;
+		const {formId} = formProps;
+		const {portalId} = formProps;
 
 		return (
 			<>

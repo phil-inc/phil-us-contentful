@@ -51,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 		}
 
 		return (
-			<Text data-minimal={minimal} key={key} fw={400} component="span" className={classes.texts} unstyled>
+			<Text data-minimal={minimal} key={key} fw={400} component='span' className={classes.texts} unstyled>
 				{item.label}
 			</Text>
 		);
@@ -77,7 +77,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 			)}
 
 			{/* Bottom Footer */}
-			{(!isMobile && !minimal) && <Divider className={classes.divider} mx={100} />}
+			{!isMobile && !minimal && <Divider className={classes.divider} mx={100} />}
 
 			<Container data-minimal={minimal} fluid className={classes.bottomFooter}>
 				<Group gap={isMobile ? 2 : 0} justify={isMobile || minimal ? 'center' : 'space-between'}>
@@ -85,8 +85,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 						<Group gap={9}>
 							{footer.badge.map(badge => (
 								<Box className={classes.badge}>
-									<ImageContainer background="transparent" fluid>
-										<Asset asset={badge} objectFit="contain" />
+									<ImageContainer background='transparent' fluid>
+										<Asset asset={badge} objectFit='contain' />
 									</ImageContainer>
 								</Box>
 							))}

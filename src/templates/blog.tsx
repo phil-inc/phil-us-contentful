@@ -21,6 +21,8 @@ import {getYouTubeId} from 'utils/links';
 import * as classes from './blog.module.css';
 import cx from 'clsx';
 
+import {type Options} from '@contentful/rich-text-react-renderer';
+
 type HelmetProps = {
 	data: {
 		contentfulResource: TResource;
@@ -143,6 +145,10 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	const options = {
 		renderNode: {
+			[INLINES.ENTRY_HYPERLINK](node: Block, children) {
+				return <>{children}</>;
+			},
+
 			[BLOCKS.EMBEDDED_ENTRY](node: Block, children) {
 				const content: {title: string; url: string} = youtubeEmbeds.get(node?.data?.target?.contentful_id) as {
 					title: string;
@@ -317,20 +323,20 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	return (
 		<Layout>
 			<Container size='xl' className={classes.wrapper}>
-						<Title order={1} mb={36} className={classes.title}>
-							{heading}
-						</Title>
-						{Boolean(asset) && (
-							<Container className={classes.floatingImage} size='sm'>
-								<Asset asset={asset!} />
-							</Container>
-						)}
+				<Title order={1} mb={36} className={classes.title}>
+					{heading}
+				</Title>
+				{Boolean(asset) && (
+					<Container className={classes.floatingImage} size='sm'>
+						<Asset asset={asset!} />
+					</Container>
+				)}
 
-						<Box mb={42}>{body && renderRichText(body, options)}</Box>
+				<Box mb={42}>{body && renderRichText(body, options)}</Box>
 
-						{!noindex && <SocialShare />}
+				{!noindex && <SocialShare />}
 
-						{Boolean(author) && <AuthorBlock author={author!} />}
+				{Boolean(author) && <AuthorBlock author={author!} />}
 			</Container>
 
 			{/* Bottom Banners */}

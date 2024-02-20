@@ -10,7 +10,7 @@ type CareerArticleProps = {
 };
 
 const CareerArticle = ({title, url, location}: CareerArticleProps) => (
-	<Grid align="center" gutter="sm" justify="end">
+	<Grid align='center' gutter='sm' justify='end'>
 		<Grid.Col span={{xs: 12, sm: 9, lg: 9}}>
 			<Box>
 				<Text unstyled className={classes.title}>
@@ -22,8 +22,8 @@ const CareerArticle = ({title, url, location}: CareerArticleProps) => (
 			</Box>
 		</Grid.Col>
 		<Grid.Col span={{xs: 12, sm: 2, lg: 3}} offset={{sm: 1, lg: 0}}>
-			<Anchor href={url} target="_blank" referrerPolicy="no-referrer">
-				<Button variant="philDefault">View details</Button>
+			<Anchor href={url} target='_blank' referrerPolicy='no-referrer'>
+				<Button variant='philDefault'>View details</Button>
 			</Anchor>
 		</Grid.Col>
 	</Grid>
