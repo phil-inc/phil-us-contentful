@@ -22,8 +22,6 @@ type ReferencedSectionBodyProps = {
 };
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, getSpan}) => {
-	console.log({section});
-
 	const span = 12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
 
 	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;

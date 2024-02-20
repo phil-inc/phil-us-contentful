@@ -814,6 +814,7 @@ export const query = graphql`
 					buttonText
 					internalLink {
 						... on ContentfulPage {
+							slug
 							id
 							title
 							sys {

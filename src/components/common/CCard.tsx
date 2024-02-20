@@ -30,6 +30,7 @@ import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
 import {isContext} from 'vm';
 import PageContext from 'contexts/PageContext';
+import { get } from 'http';
 type ArticleProps = {
 	resource: TResource;
 };
@@ -41,8 +42,10 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 	const options: Options = {
 		renderNode: {
 			[INLINES.ENTRY_HYPERLINK](node, children) {
+				const {link} = getLink(node.data.target);
+				
 				return (
-					<Link className={classes.entryLink} to={node.data.target.slug}>
+					<Link className={classes.entryLink} to={link}>
 						{children}
 					</Link>
 				);
@@ -86,8 +89,6 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 					if (target?.link?.internalContent) {
 						const {link} = getLink(target, true);
-
-						console.log({target});
 
 						return (
 							<Link className={classes.internalLink} to={link}>
@@ -217,13 +218,13 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 							h='100%'
 							gap={0}
 						>
-							{resource.isFaq && (
+							{/* {resource.isFaq && (
 								<Title order={3} className={classes.faqHeading}>
 									{resource.heading}
 								</Title>
-							)}
+							)} */}
 
-							{!resource.isFaq && body && renderRichText(body, options)}
+							{body && renderRichText(body, options)}
 
 							{!asset && !resource.isFaq && buttonText?.length ? (
 								isExternal ? (
