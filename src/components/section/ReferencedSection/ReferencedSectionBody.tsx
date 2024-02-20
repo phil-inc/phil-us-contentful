@@ -41,14 +41,13 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 						container: classes.carouselContainer,
 						controls: classes.controls,
 						control: classes.control,
-						viewport: classes.viewport,
 					}}
 					mt={80}
 					slideGap={30}
 					draggable={false}
 					previousControlIcon={<IconChevronLeft size={24} />}
 					nextControlIcon={<IconChevronRight size={24} />}
-					slideSize={{base: '33.3%', sm: `${100 / columns}%`}}
+					slideSize={{base: '98%', sm: `${100 / columns}%`}}
 					slidesToScroll={isMobile ? 1 : columns}
 					data-has-media-item={section.references.some(
 						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false,

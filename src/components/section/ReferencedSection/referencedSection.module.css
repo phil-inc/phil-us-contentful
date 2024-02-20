@@ -132,6 +132,12 @@
 	&[data-has-media-item='true'] {
 		width: 100%;
 	}
+
+	&[data-has-media-item='false'] {
+		.phil-Carousel-viewport {
+			width: fit-content;
+		}
+	}
 }
 
 .controls {
@@ -142,10 +148,6 @@
 	> button:nth-child(2) {
 		margin-right: -46px;
 	}
-}
-
-.viewport {
-	width: fit-content;
 }
 
 .control {
