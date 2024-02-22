@@ -75,7 +75,7 @@
 
 .body {
 	font-size: 18px;
-	margin-top: 40px;
+	margin-top: 24px;
 	max-width: 98.5%;
 	
 	&[data-index= '0'] {
