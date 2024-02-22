@@ -21,6 +21,7 @@
 
 .stack {
 	align-items: flex-start;
+	gap: 20px;
 
 	&[data-reference-type='Code Snippet'] {
 		align-items: start;

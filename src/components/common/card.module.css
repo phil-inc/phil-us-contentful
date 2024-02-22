@@ -63,6 +63,7 @@
 
 .stack {
 	padding: 64px 32px !important;
+	justify-content: start;
 
 	> * {
 		&:not(:first-child) {
@@ -93,6 +94,7 @@
 	&[data-is-faq='true'] {
 		padding: 0;
 		height: fit-content;
+		justify-content: center;
 
 		&[data-context='Field'] {
 			padding: 30px 60px !important;

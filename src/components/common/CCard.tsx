@@ -198,10 +198,9 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
-							data-is-faq={resource.isFaq}
+							data-is-faq={resource.isFaq || resource.body.references?.some(ref => ref.isFaq)} 
 							data-context={context.title}
 							align="flex-start"
-							justify="center"
 							h="100%"
 							gap={0}
 						>

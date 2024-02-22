@@ -43,6 +43,7 @@
 .listItem {
 	p {
 		margin-top: 14px;
+		max-width: 100% !important;
 	}
 
 	color: #00201f;
@@ -74,9 +75,14 @@
 
 .body {
 	font-size: 18px;
-	max-width: 84.5%;
 	margin-top: 40px;
+	max-width: 98.5%;
+	
+	&[data-index= '0'] {
+		max-width: 84.5%;
+	}
 
+	
 	&[data-is-embed-form-template='true'] {
 		padding-left: 16px;
 		padding-right: 16px;

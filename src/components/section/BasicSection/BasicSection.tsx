@@ -123,7 +123,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
-					<Text data-is-embed-form-template={isEmbedFormTemplate} className={classes.body}>
+					<Text data-index={index} data-is-embed-form-template={isEmbedFormTemplate} className={classes.body}>
 						{children}
 					</Text>
 				);
@@ -258,7 +258,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			data-index={index}
 			data-isMobileView={isMobileView}
 			data-context={context.title}
-			data-isEmbedFormTemplate={isEmbedFormTemplate}
+			data-is-embed-form-template={isEmbedFormTemplate}
 			style={{
 				background: section.v2Flag
 					? getColorFromStylingOptions(section.stylingOptions.background)
@@ -275,7 +275,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					<Grid.Col
 						className={isEmbedFormTemplate ? classes.textGridColumn : undefined}
 						order={textColumnOrder}
-						span={{base: 12, md: 7}}
+						// offset={textColumnOrder === 2 ? {base: 0, md: 1} : undefined}
+						span={{base: 12, md: 6}}
 					>
 						{section.isHubspotEmbed ? (
 							<>
@@ -326,11 +327,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						className={cx(classes.heroGridColumn, classes.embedFormTemplate)}
 						ref={heroRef}
 						order={imageColumnOrder}
-						span={{base: 12, md: 5}}
+						span={{base: 12, md: 6}}
+						// offset={imageColumnOrder === 2 ? {base: 0, md: 1} : undefined}
 						style={{height: context.title === CONTACT_PAGE ? height : undefined}}
 						data-is-embed-form-template={isEmbedFormTemplate}
 					>
-						<Group justify="center" gap={0}>
+						<Group justify={isVideo() ? 'start' : "center"} gap={0}>
 							{section.embedForm ? (
 								<Box className={classes.formWrapper}>
 									<HubspotForm formId={formId} portalId={portalId} />
@@ -343,6 +345,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									background={determineBackground()}
 									expanded={context.title === CONTACT_PAGE}
 									isVideo={isVideo()}
+									maw={400}
 								>
 									<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
 								</ImageContainer>
