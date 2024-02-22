@@ -182,7 +182,7 @@ type RenderResourceProps = {
 	index: number;
 	arrayLength: number;
 	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
-	isEmployeeTag?: boolean;
+	isEmployeeTag: boolean;
 };
 
 const RenderResource: React.FC<RenderResourceProps> = ({

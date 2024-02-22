@@ -31,7 +31,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 
 	const {title} = useContext(PageContext);
 
-	const isEmployeeTag = section.metadata?.tags?.some(({name}) => name === EMPLOYEE_SPOTLIGHT_TAG);
+	const isEmployeeTag = section.metadata?.tags?.some((tag) => tag.name === EMPLOYEE_SPOTLIGHT_TAG);
 
 	if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
 		const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
@@ -64,6 +64,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 								referenceType={section.referenceType}
 								resource={resource}
 								sectionHeader={section.header}
+								isEmployeeTag={!!isEmployeeTag}
 							/>
 						</Carousel.Slide>
 					))}
@@ -99,7 +100,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 						referenceType={section.referenceType}
 						resource={resource}
 						sectionHeader={section.header}
-						isEmployeeTag={isEmployeeTag}
+						isEmployeeTag={!!isEmployeeTag}
 					/>
 				</Grid.Col>
 			))}
