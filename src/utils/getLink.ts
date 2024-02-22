@@ -22,6 +22,14 @@ export const getLink = (
 			section.internalLink?.sys?.contentType?.sys?.id === 'section' ||
 			section.internalLink.sys?.contentType?.sys?.id === 'referencedSection'
 		) {
+			const paths = useInternalPaths();
+			const staticPage = paths.find(path => path.id === section?.internalLink?.id);
+
+			// can happen only for resources pages
+			if (staticPage) {
+				return {link: staticPage.path, isExternal: false};
+			}
+
 			if (section.internalLink?.page?.[0]) {
 				link.push(slugify(section.internalLink.page[0].title, {lower: true, strict: true}));
 				link.push(
