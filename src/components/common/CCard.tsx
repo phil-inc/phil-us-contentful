@@ -180,7 +180,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 			>
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, md: 3, lg: 3, xl: 2}}>
+						<Grid.Col span={{base: 12, md: 4, xl: 3}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
