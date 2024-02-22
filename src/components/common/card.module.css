@@ -1,5 +1,5 @@
 .group {
-	&[data-is-faq='true'] {
+	[data-is-faq='true'] {
 		&:hover {
 			color: #edbe3d;
 			cursor: pointer;

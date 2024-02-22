@@ -153,12 +153,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 				</>
 			)}
 
-			{section.subHeading && (
-				<Group className={classes.subHeading} data-reference-type={section.referenceType} justify='center'>
-					<Text>{section.subHeading.subHeading}</Text>
-				</Group>
-			)}
-
 			{/* bottom buttons */}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
 				<Group justify='center' mt={handleSpacing(theme, theme.spacing.lg)}>

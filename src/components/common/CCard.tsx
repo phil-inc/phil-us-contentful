@@ -19,7 +19,7 @@ import React, {useContext} from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import Asset from './Asset/Asset';
-import {BLOCKS, INLINES} from '@contentful/rich-text-types';
+import {BLOCKS, INLINES, Block, Inline} from '@contentful/rich-text-types';
 import ImageContainer from './Container/ImageContainer';
 
 import * as classes from './card.module.css';
@@ -30,7 +30,7 @@ import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
 import {isContext} from 'vm';
 import PageContext from 'contexts/PageContext';
-import { get } from 'http';
+import {get} from 'http';
 type ArticleProps = {
 	resource: TResource;
 };
@@ -43,26 +43,13 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 		renderNode: {
 			[INLINES.ENTRY_HYPERLINK](node, children) {
 				const {link} = getLink(node.data.target);
-				
+				const isFaq = node.data.target.isFaq;
+
 				return (
-					<Link className={classes.entryLink} to={link}>
+					<Link className={classes.entryLink} data-is-faq={isFaq} to={link}>
 						{children}
 					</Link>
 				);
-			},
-
-			[BLOCKS.EMBEDDED_ASSET](node) {
-				return 'image here';
-
-				// Const imageData = richTextImages[node.data.target.sys.id];
-				// const image = getImage(imageData.image as ImageDataLike);
-				// return (
-				// 	<GatsbyImage
-				// 		style={{marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`}}
-				// 		image={image!}
-				// 		alt={''}
-				// 	/>
-				// );
 			},
 
 			// TODO: Refactor this
@@ -73,7 +60,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					if (target.__typename === 'ContentfulMediaItem') {
 						return (
 							<ImageContainer flexStart fluid maw={128}>
-								<Asset objectFit='contain' asset={target} />
+								<Asset objectFit="contain" asset={target} />
 							</ImageContainer>
 						);
 					}
@@ -81,7 +68,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					const button = (
 						<Button
 							classNames={{root: classes.buttonRoot, inner: classes.buttonInner, label: classes.buttonLabel}}
-							variant='philDefault'
+							variant="philDefault"
 						>
 							{node.data.target.buttonText}
 						</Button>
@@ -98,7 +85,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
+						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
 							{button}
 						</Anchor>
 					);
@@ -111,32 +98,16 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 			},
 
 			[BLOCKS.HEADING_1](node, children) {
-				return (
-					<Title order={1} data-is-faq={resource.isFaq}>
-						{children}
-					</Title>
-				);
+				return <Title order={1}>{children}</Title>;
 			},
 			[BLOCKS.HEADING_2](node, children) {
-				return (
-					<Title order={2} data-is-faq={resource.isFaq}>
-						{children}
-					</Title>
-				);
+				return <Title order={2}>{children}</Title>;
 			},
 			[BLOCKS.HEADING_3](node, children) {
-				return (
-					<Title order={3} data-is-faq={resource.isFaq}>
-						{children}
-					</Title>
-				);
+				return <Title order={3}>{children}</Title>;
 			},
 			[BLOCKS.HEADING_4](node, children) {
-				return (
-					<Title order={4} data-is-faq={resource.isFaq}>
-						{children}
-					</Title>
-				);
+				return <Title order={4}>{children}</Title>;
 			},
 		},
 	};
@@ -164,7 +135,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 					maw={900}
 					ratio={16 / 9}
 				>
-					<Asset objectFit='contain' asset={media} />
+					<Asset objectFit="contain" asset={media} />
 				</ImageContainer>
 			</Center>
 		);
@@ -176,8 +147,8 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 		// TODO: Add anchor links to cards
 		<Group h={'100%'} gap={0} data-is-faq={resource.isFaq} className={classes.group}>
 			<Box
-				component='span'
-				h='100%'
+				component="span"
+				h="100%"
 				className={classes.before}
 				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
@@ -202,20 +173,20 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 								card
 								mx={0}
 							>
-								<Asset objectFit='cover' asset={media} />
+								<Asset objectFit="cover" asset={media} />
 							</ImageContainer>
 						</Grid.Col>
 					)}
 
-					<Grid.Col span='auto'>
+					<Grid.Col span="auto">
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq}
 							data-context={context.title}
-							align='flex-start'
-							justify='center'
-							h='100%'
+							align="flex-start"
+							justify="center"
+							h="100%"
 							gap={0}
 						>
 							{/* {resource.isFaq && (
@@ -228,12 +199,12 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 
 							{!asset && !resource.isFaq && buttonText?.length ? (
 								isExternal ? (
-									<Anchor href={link} target='_blank'>
-										<Button variant='philDefault'>{buttonText}</Button>
+									<Anchor href={link} target="_blank">
+										<Button variant="philDefault">{buttonText}</Button>
 									</Anchor>
 								) : (
 									<Link to={link}>
-										<Button variant='philDefault'>{buttonText}</Button>
+										<Button variant="philDefault">{buttonText}</Button>
 									</Link>
 								)
 							) : null}

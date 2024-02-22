@@ -74,7 +74,7 @@
 
 .body {
 	font-size: 18px;
-	max-width: 100%;
+	max-width: 84.5%;
 	margin-top: 40px;
 
 	&[data-is-embed-form-template='true'] {
