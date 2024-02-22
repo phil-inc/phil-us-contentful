@@ -67,11 +67,7 @@
 
 	> * {
 		&:not(:first-child) {
-			margin-top: 36px;
-
-			@media (min-width: $phil-breakpoint-sm) {
-				margin-top: 40px;
-			}
+			margin-top: 32px;
 		}
 
 		&:nth-child(2):is(h4) {

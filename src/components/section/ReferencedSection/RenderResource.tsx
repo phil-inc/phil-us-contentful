@@ -67,6 +67,7 @@ type ComponentFunctionProps = {
 	theme?: MantineTheme;
 	classes?: any;
 	resourceBackground?: string;
+	isEmployeeTag?: boolean;
 };
 
 type ComponentFunction = (props: ComponentFunctionProps) => JSX.Element | undefined;
@@ -79,7 +80,7 @@ const ArticleComponent: ComponentFunction = ({resource, index}) => (
 	<Article color={getColor(index!)} resource={resource} />
 );
 
-const CardComponent: ComponentFunction = ({resource, index}) => <CCard resource={resource} />;
+const CardComponent: ComponentFunction = ({resource, isEmployeeTag}) => <CCard resource={resource} isEmployeeTag={isEmployeeTag} />;
 
 const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength}) => (
 	<StepperCard resource={resource} index={index!} arrayLength={arrayLength!} />
@@ -137,6 +138,7 @@ const getComponent = (
 	theme: MantineTheme,
 	classes: any,
 	resourceBackground: string,
+	isEmployeeTag?: boolean
 ) => {
 	const componentMappings: Record<ReferenceTypeEnum | ResourceBlocksEnum, ComponentFunction> = {
 		[ReferenceTypeEnum.Article]: ArticleComponent,
@@ -171,7 +173,7 @@ const getComponent = (
 		return null; // Handle unknown referenceType values
 	}
 
-	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground});
+	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground, isEmployeeTag});
 };
 
 type RenderResourceProps = {
@@ -180,6 +182,7 @@ type RenderResourceProps = {
 	index: number;
 	arrayLength: number;
 	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
+	isEmployeeTag?: boolean;
 };
 
 const RenderResource: React.FC<RenderResourceProps> = ({
@@ -188,11 +191,12 @@ const RenderResource: React.FC<RenderResourceProps> = ({
 	index,
 	arrayLength,
 	referenceType,
+	isEmployeeTag,
 }) => {
 	const theme = useMantineTheme();
 	const [resourceBackground] = getSectionColors(referenceType);
 
-	return getComponent(referenceType, resource, index, arrayLength, theme, classes, resourceBackground);
+	return getComponent(referenceType, resource, index, arrayLength, theme, classes, resourceBackground, isEmployeeTag);
 };
 
 export default RenderResource;

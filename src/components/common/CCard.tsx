@@ -1,17 +1,4 @@
-import {
-	Paper,
-	Container,
-	Title,
-	Button,
-	Text,
-	Box,
-	Stack,
-	Anchor,
-	Group,
-	AspectRatio,
-	Grid,
-	Center,
-} from '@mantine/core';
+import {Paper, Title, Button, Text, Box, Stack, Anchor, Group, Grid, Center} from '@mantine/core';
 import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
@@ -19,23 +6,21 @@ import React, {useContext} from 'react';
 import type {TResource} from 'types/resource';
 import {getLink} from 'utils/getLink';
 import Asset from './Asset/Asset';
-import {BLOCKS, INLINES, Block, Inline} from '@contentful/rich-text-types';
+import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import ImageContainer from './Container/ImageContainer';
 
 import * as classes from './card.module.css';
 import {getColorFromStylingOptions} from 'utils/stylingOptions';
-import {TAsset} from 'types/asset';
 
 import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
-import {isContext} from 'vm';
 import PageContext from 'contexts/PageContext';
-import {get} from 'http';
 type ArticleProps = {
 	resource: TResource;
+	isEmployeeTag?: boolean;
 };
 
-export const CCard: FC<ArticleProps> = ({resource}) => {
+export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 	const {body, heading, asset, buttonText} = resource;
 	const context = useContext(PageContext);
 
@@ -180,7 +165,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 			>
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, md: 4, xl: 3}}>
+						<Grid.Col span={{base: 12, md: 6}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
@@ -189,7 +174,7 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 								card
 								mx={0}
 							>
-								<Asset objectFit="cover" asset={media} />
+								<Asset objectFit="contain" asset={media} />
 							</ImageContainer>
 						</Grid.Col>
 					)}
@@ -198,18 +183,12 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
-							data-is-faq={resource.isFaq || resource.body.references?.some(ref => ref.isFaq)} 
+							data-is-faq={resource.isFaq || resource.body.references?.some(ref => ref.isFaq)}
 							data-context={context.title}
 							align="flex-start"
 							h="100%"
 							gap={0}
 						>
-							{/* {resource.isFaq && (
-								<Title order={3} className={classes.faqHeading}>
-									{resource.heading}
-								</Title>
-							)} */}
-
 							{body && renderRichText(body, options)}
 
 							{!asset && !resource.isFaq && buttonText?.length ? (

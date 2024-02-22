@@ -9,6 +9,7 @@ import {Carousel} from '@mantine/carousel';
 import useDeviceType from 'hooks/useView';
 import PageContext from 'contexts/PageContext';
 import {IconChevronLeft, IconChevronRight} from '@tabler/icons';
+import {EMPLOYEE_SPOTLIGHT_TAG} from 'constants/identifiers';
 
 type ReferencedSectionBodyProps = {
 	section: IReferencedSection;
@@ -30,6 +31,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 
 	const {title} = useContext(PageContext);
 
+	const isEmployeeTag = section.metadata?.tags?.some(({name}) => name === EMPLOYEE_SPOTLIGHT_TAG);
+
 	if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
 		const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
 
@@ -50,7 +53,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					slideSize={{base: '98%', sm: `${100 / columns}%`}}
 					slidesToScroll={isMobile ? 1 : columns}
 					data-has-media-item={section.references.some(
-						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false,
+						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false
 					)}
 				>
 					{section.references.map((resource, index, array) => (
@@ -74,8 +77,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			grow
 			className={classes.grid}
 			gutter={section.referenceType === ReferenceTypeEnum['Stepper Cards'] ? 0 : 36}
-			justify='center'
-			align='stretch'
+			justify="center"
+			align="stretch"
 			data-add-margin={addMargin}
 			data-context={title}
 			data-is-stepper-card={section.referenceType === ReferenceTypeEnum['Stepper Cards']}
@@ -96,6 +99,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 						referenceType={section.referenceType}
 						resource={resource}
 						sectionHeader={section.header}
+						isEmployeeTag={isEmployeeTag}
 					/>
 				</Grid.Col>
 			))}
