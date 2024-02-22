@@ -123,7 +123,6 @@
 	}
 }
 
-
 .breakSection {
 	display: block;
 
@@ -135,4 +134,27 @@
 .paginationControl {
 	height: 40px;
 	width: 40px;
+}
+
+.faqContainer {
+	padding: 16px 24px;
+	background: rgb(244, 244, 244);
+	margin-bottom: 38px;
+}
+
+.faqLabel {
+	font-size: 16px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 20px;
+	}
+}
+
+.faqButton {
+	font-size: 10.28px !important;
+	width: fit-content !important;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 16px !important;
+	}
 }

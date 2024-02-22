@@ -266,13 +266,13 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							<Box className={classes.faqContainer}>
 								<Grid gutter={isMobileView ? 10 : 28} align='center'>
 									<Grid.Col span={{sm: 12, md: 'content'}}>
-										<Title order={4} className={classes.faqContainerText}>
+										<Title order={4} className={classes.faqLabel}>
 											For Patient FAQs
 										</Title>
 									</Grid.Col>
 									<Grid.Col span={{sm: 12, md: 'content'}}>
 										<Anchor target='_blank' href={`${process.env.GATSBY_ZENDESK_PATIENT_FAQ_LINK}`}>
-											<Button className={classes.faqContainerButton}>View the entire FAQ</Button>
+											<Button variant='philDefault' fullWidth={false} className={classes.faqButton}>View the entire FAQ</Button>
 										</Anchor>
 									</Grid.Col>
 								</Grid>

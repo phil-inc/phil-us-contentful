@@ -98,16 +98,32 @@ export const CCard: FC<ArticleProps> = ({resource}) => {
 			},
 
 			[BLOCKS.HEADING_1](node, children) {
-				return <Title order={1}>{children}</Title>;
+				return (
+					<Title order={1} lh={'normal'}>
+						{children}
+					</Title>
+				);
 			},
 			[BLOCKS.HEADING_2](node, children) {
-				return <Title order={2}>{children}</Title>;
+				return (
+					<Title order={2} lh={'normal'}>
+						{children}
+					</Title>
+				);
 			},
 			[BLOCKS.HEADING_3](node, children) {
-				return <Title order={3}>{children}</Title>;
+				return (
+					<Title order={3} lh={'normal'}>
+						{children}
+					</Title>
+				);
 			},
 			[BLOCKS.HEADING_4](node, children) {
-				return <Title order={4}>{children}</Title>;
+				return (
+					<Title order={4} lh={'normal'}>
+						{children}
+					</Title>
+				);
 			},
 		},
 	};
