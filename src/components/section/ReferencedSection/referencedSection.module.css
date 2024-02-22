@@ -90,7 +90,7 @@
 
 .subHeading {
 	display: none;
-	margin-top: 80px;
+	margin-top: 44px;
 
 	color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
 	font-family: Lato, sans-serif;
@@ -110,6 +110,10 @@
 
 		@media (min-width: $phil-breakpoint-sm) {
 			margin-top: 80px;
+
+			&[data-is-stepper-card='true'] {
+				margin-top: 40px;
+			}
 		}
 	}
 

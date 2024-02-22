@@ -78,6 +78,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			align='stretch'
 			data-add-margin={addMargin}
 			data-context={title}
+			data-is-stepper-card={section.referenceType === ReferenceTypeEnum['Stepper Cards']}
 			// Mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
 			// M={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
 		>
