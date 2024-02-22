@@ -115,7 +115,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 							section={section}
 							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
 							isEmbedFormTemplate={isEmbedFormTemplate}
-							isPreviousBackgroundPure={array[index - 1]?.stylingOptions?.background === '#FFFFFF'}
+							isPreviousBackgroundPure={!!array[index - 1]?.stylingOptions?.background.includes('#FFFFFF')}
 						/>
 					))}
 			</Layout>
