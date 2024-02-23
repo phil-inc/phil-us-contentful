@@ -67,7 +67,7 @@ export const theme = createTheme({
 
 	components: {
 		Button: Button.extend({
-			classNames: {root: classes.root, label: classes.label},
+			classNames: {root: classes.root, label: classes.label, loader: classes.loader},
 		}),
 	},
 });

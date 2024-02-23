@@ -1,5 +1,5 @@
 import {Paper, Title, Button, Text, Box, Stack, Anchor, Group, Grid, Center} from '@mantine/core';
-import {Link} from 'gatsby';
+import {Link, navigate} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
 import React, {useContext} from 'react';
@@ -23,6 +23,7 @@ type ArticleProps = {
 export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 	const {body, heading, asset, buttonText} = resource;
 	const context = useContext(PageContext);
+	// const showButton = !asset && !resource.isFaq && buttonText?.length;
 
 	const options: Options = {
 		renderNode: {
@@ -123,8 +124,6 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 		media = resource;
 	}
 
-	const {link, isExternal} = getLink(resource);
-
 	// TODO: improve this
 	if (resource?.sys?.contentType?.sys?.id === 'mediaItem') {
 		return (
@@ -185,13 +184,13 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq || resource.body.references?.some(ref => ref.isFaq)}
 							data-context={context.title}
-							align="flex-start"
+							// data-show-button={showButton}
 							h="100%"
 							gap={0}
 						>
 							{body && renderRichText(body, options)}
 
-							{!asset && !resource.isFaq && buttonText?.length ? (
+							{/* {showButton ? (
 								isExternal ? (
 									<Anchor href={link} target="_blank">
 										<Button variant="philDefault">{buttonText}</Button>
@@ -201,7 +200,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 										<Button variant="philDefault">{buttonText}</Button>
 									</Link>
 								)
-							) : null}
+							) : null} */}
 						</Stack>
 					</Grid.Col>
 				</Grid>

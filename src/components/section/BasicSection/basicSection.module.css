@@ -134,3 +134,9 @@
 	margin-top: 16px;
 	margin-bottom: 32px;
 }
+
+.internalLink {
+	display: block;
+	width: fit-content;
+	height: 0;
+}

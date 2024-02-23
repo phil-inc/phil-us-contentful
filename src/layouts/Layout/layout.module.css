@@ -92,4 +92,10 @@
 
 .label {
 	overflow: visible;
+	white-space: unset;
+	text-align: start;
+}
+
+.loader {
+	pointer-events: none;
 }

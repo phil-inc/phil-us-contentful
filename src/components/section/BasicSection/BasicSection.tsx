@@ -11,6 +11,7 @@ import {
 	Group,
 	List,
 	Portal,
+	Stack,
 	Text,
 	Title,
 	useMantineTheme,
@@ -104,10 +105,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 						return !isDesktop ? (
 							<Portal target={`#${uuid}`}>
-								<Link to={link}>{button}</Link>
+								<Link className={classes.internalLink} to={link}>{button}</Link>
 							</Portal>
 						) : (
-							<Link to={link}>{button}</Link>
+							<Link className={classes.internalLink} to={link}>{button}</Link>
 						);
 					}
 
@@ -311,11 +312,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						) : (
 							<>
 								{Boolean(section.body) && (
-									<Box className={classes.portal}>
+									<Stack className={classes.portal}>
 										{heroRef.current && isMobileView && section.embedForm
 											? createPortal(renderRichText(section.body, options), heroRef.current)
 											: renderRichText(section.body, options)}
-									</Box>
+									</Stack>
 								)}
 							</>
 						)}
