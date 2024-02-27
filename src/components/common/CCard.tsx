@@ -184,23 +184,10 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq || resource.body.references?.some(ref => ref.isFaq)}
 							data-context={context.title}
-							// Data-show-button={showButton}
 							h='100%'
 							gap={0}
 						>
 							{body && renderRichText(body, options)}
-
-							{/* {showButton ? (
-								isExternal ? (
-									<Anchor href={link} target="_blank">
-										<Button variant="philDefault">{buttonText}</Button>
-									</Anchor>
-								) : (
-									<Link to={link}>
-										<Button variant="philDefault">{buttonText}</Button>
-									</Link>
-								)
-							) : null} */}
 						</Stack>
 					</Grid.Col>
 				</Grid>
