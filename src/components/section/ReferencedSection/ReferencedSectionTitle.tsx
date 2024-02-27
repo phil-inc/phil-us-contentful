@@ -31,7 +31,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 			return (
 				<Box mb={handleSpacing(theme, theme.spacing.md)}>
 					{renderTitle(section.header, 3, undefined)}
-					<Divider variant="dashed" size={1} className={classes.divider} />
+					<Divider variant='dashed' size={1} className={classes.divider} />
 				</Box>
 			);
 
@@ -60,10 +60,10 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 					data-context={title}
 				>
 					{Boolean(section.header?.length) && renderTitle(section.header, 2, classes.heading)}
-					{Boolean(section.subHeading?.subHeading?.length) &&
-						title !== PATIENTS_PAGE &&
-						section.referenceType !== ReferenceTypeEnum['Stepper Cards'] &&
-						renderTitle(section.subHeading.subHeading, 3, classes.subHeading)}
+					{Boolean(section.subHeading?.subHeading?.length)
+						&& title !== PATIENTS_PAGE
+						&& section.referenceType !== ReferenceTypeEnum['Stepper Cards']
+						&& renderTitle(section.subHeading.subHeading, 3, classes.subHeading)}
 				</Stack>
 			);
 	}

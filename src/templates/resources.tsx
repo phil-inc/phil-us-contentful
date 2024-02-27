@@ -272,7 +272,9 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									</Grid.Col>
 									<Grid.Col span={{sm: 12, md: 'content'}}>
 										<Anchor target='_blank' href={`${process.env.GATSBY_ZENDESK_PATIENT_FAQ_LINK}`}>
-											<Button variant='philDefault' fullWidth={false} className={classes.faqButton}>View the entire FAQ</Button>
+											<Button variant='philDefault' fullWidth={false} className={classes.faqButton}>
+												View the entire FAQ
+											</Button>
 										</Anchor>
 									</Grid.Col>
 								</Grid>

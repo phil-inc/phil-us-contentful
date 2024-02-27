@@ -23,13 +23,13 @@ type ArticleProps = {
 export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 	const {body, heading, asset, buttonText} = resource;
 	const context = useContext(PageContext);
-	// const showButton = !asset && !resource.isFaq && buttonText?.length;
+	// Const showButton = !asset && !resource.isFaq && buttonText?.length;
 
 	const options: Options = {
 		renderNode: {
 			[INLINES.ENTRY_HYPERLINK](node, children) {
 				const {link} = getLink(node.data.target);
-				const isFaq = node.data.target.isFaq;
+				const {isFaq} = node.data.target;
 
 				return (
 					<Link className={classes.entryLink} data-is-faq={isFaq} to={link}>
@@ -46,7 +46,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 					if (target.__typename === 'ContentfulMediaItem') {
 						return (
 							<ImageContainer flexStart fluid maw={128}>
-								<Asset objectFit="contain" asset={target} />
+								<Asset objectFit='contain' asset={target} />
 							</ImageContainer>
 						);
 					}
@@ -54,7 +54,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 					const button = (
 						<Button
 							classNames={{root: classes.buttonRoot, inner: classes.buttonInner, label: classes.buttonLabel}}
-							variant="philDefault"
+							variant='philDefault'
 						>
 							{node.data.target.buttonText}
 						</Button>
@@ -71,7 +71,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
+						<Anchor href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
 							{button}
 						</Anchor>
 					);
@@ -135,7 +135,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 					maw={900}
 					ratio={16 / 9}
 				>
-					<Asset objectFit="contain" asset={media} />
+					<Asset objectFit='contain' asset={media} />
 				</ImageContainer>
 			</Center>
 		);
@@ -147,8 +147,8 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 		// TODO: Add anchor links to cards
 		<Group h={'100%'} gap={0} data-is-faq={resource.isFaq} className={classes.group}>
 			<Box
-				component="span"
-				h="100%"
+				component='span'
+				h='100%'
 				className={classes.before}
 				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
 				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
@@ -173,19 +173,19 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 								card
 								mx={0}
 							>
-								<Asset objectFit="cover" asset={media} />
+								<Asset objectFit='cover' asset={media} />
 							</ImageContainer>
 						</Grid.Col>
 					)}
 
-					<Grid.Col span="auto">
+					<Grid.Col span='auto'>
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq || resource.body.references?.some(ref => ref.isFaq)}
 							data-context={context.title}
-							// data-show-button={showButton}
-							h="100%"
+							// Data-show-button={showButton}
+							h='100%'
 							gap={0}
 						>
 							{body && renderRichText(body, options)}

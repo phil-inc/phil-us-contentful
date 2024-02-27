@@ -45,9 +45,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 		try {
 			const isFromSMSIntro = params.get('isFromSMSIntro');
 			if (
-				section.referenceType === ReferenceTypeEnum['Stats Card with Arrows'] &&
-				isFromSMSIntro === 'true' &&
-				isProduction
+				section.referenceType === ReferenceTypeEnum['Stats Card with Arrows']
+				&& isFromSMSIntro === 'true'
+				&& isProduction
 			) {
 				mixpanel.init(process.env.GATSBY_MIXPANEL_TOKEN ?? '');
 				FullStory.init({orgId: process.env.GATSBY_FULLSTORY_ORG_ID ?? ''});
@@ -97,7 +97,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 	const [background, textColor] = getSectionColors(section.referenceType);
 
 	const isNewsLetterComponent = section.references.some(ref =>
-		ref?.metadata?.tags?.some(tag => tag.name === 'Newsletter Component')
+		ref?.metadata?.tags?.some(tag => tag.name === 'Newsletter Component'),
 	);
 
 	const isFaqSection = section.references.some(ref => ref?.body?.references?.some(reff => reff?.isFaq));
@@ -113,9 +113,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 		>
 			{context.title === FIELD_PAGE ? (
 				<Accordion
-					variant="separated"
-					radius="xs"
-					chevronPosition="left"
+					variant='separated'
+					radius='xs'
+					chevronPosition='left'
 					mb={24}
 					chevronSize={44}
 					classNames={{
@@ -153,24 +153,24 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 				</>
 			)}
 
-			{section.subHeading &&
-				section.referenceType === ReferenceTypeEnum['Stepper Cards'] &&
-				context.title === PATIENTS_PAGE && (
-					<Group className={classes.subHeading} data-reference-type={section.referenceType} justify="center">
-						<Text>{section.subHeading.subHeading}</Text>
-					</Group>
-				)}
+			{section.subHeading
+				&& section.referenceType === ReferenceTypeEnum['Stepper Cards']
+				&& context.title === PATIENTS_PAGE && (
+				<Group className={classes.subHeading} data-reference-type={section.referenceType} justify='center'>
+					<Text>{section.subHeading.subHeading}</Text>
+				</Group>
+			)}
 
 			{/* bottom buttons */}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group justify="center" mt={isFaqSection ? 80 : 44}>
+				<Group justify='center' mt={isFaqSection ? 80 : 44}>
 					{isExternal ? (
-						<Anchor href={link} target="_blank">
-							<Button variant="philDefault">{section.buttonText}</Button>
+						<Anchor href={link} target='_blank'>
+							<Button variant='philDefault'>{section.buttonText}</Button>
 						</Anchor>
 					) : (
 						<Link to={link}>
-							<Button variant="philDefault">{section.buttonText}</Button>
+							<Button variant='philDefault'>{section.buttonText}</Button>
 						</Link>
 					)}
 				</Group>

@@ -28,10 +28,11 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
 
 	const isMobile = useDeviceType('xs');
+	const isTablet = useDeviceType('sm');
 
 	const {title} = useContext(PageContext);
 
-	const isEmployeeTag = section.metadata?.tags?.some((tag) => tag.name === EMPLOYEE_SPOTLIGHT_TAG);
+	const isEmployeeTag = section.metadata?.tags?.some(tag => tag.name === EMPLOYEE_SPOTLIGHT_TAG);
 
 	if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
 		const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
@@ -46,14 +47,15 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 						control: classes.control,
 					}}
 					mt={80}
-					slideGap={30}
+					slideGap={{base: 16, sm: 0, md: 32}}
+					includeGapInSize={false}
 					draggable={false}
 					previousControlIcon={<IconChevronLeft size={24} />}
 					nextControlIcon={<IconChevronRight size={24} />}
-					slideSize={{base: '98%', sm: `${100 / columns}%`}}
-					slidesToScroll={isMobile ? 1 : columns}
+					slideSize={{base: '94%', sm: `${95 / columns}%`}}
+					slidesToScroll={isMobile || isTablet ? 1 : columns}
 					data-has-media-item={section.references.some(
-						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false
+						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false,
 					)}
 				>
 					{section.references.map((resource, index, array) => (
@@ -64,7 +66,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 								referenceType={section.referenceType}
 								resource={resource}
 								sectionHeader={section.header}
-								isEmployeeTag={!!isEmployeeTag}
+								isEmployeeTag={Boolean(isEmployeeTag)}
 							/>
 						</Carousel.Slide>
 					))}
@@ -78,8 +80,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			grow
 			className={classes.grid}
 			gutter={section.referenceType === ReferenceTypeEnum['Stepper Cards'] ? 0 : 36}
-			justify="center"
-			align="stretch"
+			justify='center'
+			align='stretch'
 			data-add-margin={addMargin}
 			data-context={title}
 			data-is-stepper-card={section.referenceType === ReferenceTypeEnum['Stepper Cards']}
@@ -100,7 +102,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 						referenceType={section.referenceType}
 						resource={resource}
 						sectionHeader={section.header}
-						isEmployeeTag={!!isEmployeeTag}
+						isEmployeeTag={Boolean(isEmployeeTag)}
 					/>
 				</Grid.Col>
 			))}

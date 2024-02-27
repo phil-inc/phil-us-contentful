@@ -123,16 +123,10 @@
 }
 
 .carouselContainer {
-	width: calc(100vw - 46px);
+	width: calc(99vw - 150px);
 
 	@media (min-width: $phil-breakpoint-sm) {
 		width: 100%;
-	}
-	
-	> div {
-		&:not(:last-child) {
-			padding-right: 36px;
-		}
 	}
 }
 

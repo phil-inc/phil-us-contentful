@@ -11,7 +11,7 @@ import type {IReferencedSection, ISection} from 'types/section';
  */
 export const getLink = (
 	section: ISection | IReferencedSection | TResource | ContentfulButton,
-	v2 = false
+	v2 = false,
 ): {link: string; isExternal: boolean} => {
 	const link: string[] = [];
 	const sanitizeLink = (link: string[]) =>
@@ -19,13 +19,13 @@ export const getLink = (
 
 	if (section.internalLink) {
 		if (
-			section.internalLink?.sys?.contentType?.sys?.id === 'section' ||
-			section.internalLink.sys?.contentType?.sys?.id === 'referencedSection'
+			section.internalLink?.sys?.contentType?.sys?.id === 'section'
+			|| section.internalLink.sys?.contentType?.sys?.id === 'referencedSection'
 		) {
 			const paths = useInternalPaths();
 			const staticPage = paths.find(path => path.id === section?.internalLink?.id);
 
-			// can happen only for resources pages
+			// Can happen only for resources pages
 			if (staticPage) {
 				return {link: staticPage.path, isExternal: false};
 			}
@@ -33,7 +33,7 @@ export const getLink = (
 			if (section.internalLink?.page?.[0]) {
 				link.push(slugify(section.internalLink.page[0].title, {lower: true, strict: true}));
 				link.push(
-					`#${slugify(section.internalLink.header ?? section.internalLink.id, {lower: true, strict: true})}`
+					`#${slugify(section.internalLink.header ?? section.internalLink.id, {lower: true, strict: true})}`,
 				);
 			}
 		} else if (section.internalLink?.sys?.contentType?.sys?.id === 'page') {
@@ -41,12 +41,12 @@ export const getLink = (
 				slugify((section as IReferencedSection)?.internalLink?.slug ?? section.internalLink.title!, {
 					lower: true,
 					strict: true,
-				})
+				}),
 			);
 		} else if (
-			section.internalLink?.sys?.contentType?.sys?.id === 'resource' ||
-			section.internalLink?.sys?.contentType?.sys?.id === 'downloadableResource' ||
-			section.internalLink?.sys?.contentType?.sys?.id === 'eventRegistration'
+			section.internalLink?.sys?.contentType?.sys?.id === 'resource'
+			|| section.internalLink?.sys?.contentType?.sys?.id === 'downloadableResource'
+			|| section.internalLink?.sys?.contentType?.sys?.id === 'eventRegistration'
 		) {
 			const paths = useInternalPaths();
 			const [staticPage] = paths.filter(path => path.id === section.internalLink.id);

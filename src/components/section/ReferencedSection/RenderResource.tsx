@@ -80,7 +80,9 @@ const ArticleComponent: ComponentFunction = ({resource, index}) => (
 	<Article color={getColor(index!)} resource={resource} />
 );
 
-const CardComponent: ComponentFunction = ({resource, isEmployeeTag}) => <CCard resource={resource} isEmployeeTag={isEmployeeTag} />;
+const CardComponent: ComponentFunction = ({resource, isEmployeeTag}) => (
+	<CCard resource={resource} isEmployeeTag={isEmployeeTag} />
+);
 
 const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength}) => (
 	<StepperCard resource={resource} index={index!} arrayLength={arrayLength!} />
@@ -138,7 +140,7 @@ const getComponent = (
 	theme: MantineTheme,
 	classes: any,
 	resourceBackground: string,
-	isEmployeeTag?: boolean
+	isEmployeeTag?: boolean,
 ) => {
 	const componentMappings: Record<ReferenceTypeEnum | ResourceBlocksEnum, ComponentFunction> = {
 		[ReferenceTypeEnum.Article]: ArticleComponent,
