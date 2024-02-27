@@ -137,7 +137,10 @@
 
 .internalLink {
 	display: inline-block;
-	width: 100%;
+	width: fit-content;
+	height: min-content;
+
+	margin-top: 40px;
 
 	@media (min-width: $phil-breakpoint-sm) {
 		display: block;

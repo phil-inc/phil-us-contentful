@@ -95,7 +95,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					const {target} = node.data;
 
 					const button = (
-						<Button mt={40} variant='philDefault'>
+						<Button variant='philDefault'>
 							{node.data.target.buttonText}
 						</Button>
 					);
@@ -235,8 +235,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const mediaItemOrAsset = isSectionV2 ? section.mediaItem : section.asset;
 	const youtubeVideoUrl = isSectionV2 ? section.mediaItem.youtubeLink : section.youtubeVideoUrl;
 
-	console.log({isSectionV2, hasYoutubeLink, mediaItemOrAsset, youtubeVideoUrl});
-
 	const calculateAspectRatio = () => (hasYoutubeLink ? 16 / 9 : undefined);
 
 	const determineBackground = () => {
@@ -256,8 +254,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 		return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink;
 	};
-
-	console.log({isVideo: isVideo()});
 
 	return (
 		<Container

@@ -125,10 +125,9 @@
 }
 
 .buttonRoot {
-	/* width: 100% !important; */
 	height: fit-content !important;
 }
 
 .internalLink {
-	width: 65%;
+	width: fit-content;
 }
