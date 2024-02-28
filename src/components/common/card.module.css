@@ -1,12 +1,3 @@
-.group {
-	[data-is-faq='true'] {
-		&:hover {
-			color: #edbe3d;
-			cursor: pointer;
-		}
-	}
-}
-
 .paper {
 	padding: 34px 24px;
 	width: calc(100% - 12px);
@@ -117,6 +108,17 @@
 .entryLink {
 	color: inherit;
 	text-decoration: none;
+
+	&[data-is-faq='true'] {
+		&:hover {
+			color: #edbe3d;
+			cursor: pointer;
+
+			&[data-color='#00B6CC'] {
+				color: #00b6cc;
+			}
+		}
+	}
 }
 
 .buttonLabel {

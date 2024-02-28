@@ -15,16 +15,16 @@ import {getColorFromStylingOptions} from 'utils/stylingOptions';
 import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
 import PageContext from 'contexts/PageContext';
-import { LIFE_SCIENCES_PAGE, PATIENTS_PAGE } from 'constants/page';
+import {LIFE_SCIENCES_PAGE, PATIENTS_PAGE} from 'constants/page';
 type ArticleProps = {
 	resource: TResource;
 	isEmployeeTag?: boolean;
 };
 
 export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
-	const {body, heading, asset, buttonText} = resource;
+	const {body, asset} = resource;
 	const context = useContext(PageContext);
-	// Const showButton = !asset && !resource.isFaq && buttonText?.length;
+	const color = getColorFromStylingOptions(resource?.stylingOptions?.extraColor);
 
 	const options: Options = {
 		renderNode: {
@@ -33,7 +33,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 				const {isFaq} = node.data.target;
 
 				return (
-					<Link className={classes.entryLink} data-is-faq={isFaq} to={link}>
+					<Link className={classes.entryLink} data-color={color} data-is-faq={isFaq} to={link}>
 						{children}
 					</Link>
 				);
@@ -47,7 +47,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 					if (target.__typename === 'ContentfulMediaItem') {
 						return (
 							<ImageContainer flexStart fluid maw={128}>
-								<Asset objectFit='contain' asset={target} />
+								<Asset objectFit="contain" asset={target} />
 							</ImageContainer>
 						);
 					}
@@ -55,7 +55,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 					const button = (
 						<Button
 							classNames={{root: classes.buttonRoot, inner: classes.buttonInner, label: classes.buttonLabel}}
-							variant='philDefault'
+							variant="philDefault"
 						>
 							{node.data.target.buttonText}
 						</Button>
@@ -72,7 +72,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
+						<Anchor href={target?.link?.externalUrl ?? '#'} target="_blank" referrerPolicy="no-referrer">
 							{button}
 						</Anchor>
 					);
@@ -136,7 +136,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 					maw={900}
 					ratio={16 / 9}
 				>
-					<Asset objectFit='contain' asset={media} />
+					<Asset objectFit="contain" asset={media} />
 				</ImageContainer>
 			</Center>
 		);
@@ -146,13 +146,13 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 	// REFACTOR:: handle different styles better: isFaq, Asset
 	return (
 		// TODO: Add anchor links to cards
-		<Group h={'100%'} gap={0} data-is-faq={resource.isFaq} className={classes.group}>
+		<Group h={'100%'} gap={0}>
 			<Box
-				component='span'
-				h='100%'
+				component="span"
+				h="100%"
 				className={classes.before}
-				w={getColorFromStylingOptions(resource?.stylingOptions?.extraColor) !== 'transparent' ? 12 : 0}
-				style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
+				w={color !== 'transparent' ? 12 : 0}
+				style={{background: color}}
 				data-has-asset={Boolean(media)}
 			></Box>
 			<Paper
@@ -174,18 +174,18 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 								card
 								mx={0}
 							>
-								<Asset objectFit='cover' asset={media} />
+								<Asset objectFit="cover" asset={media} />
 							</ImageContainer>
 						</Grid.Col>
 					)}
 
-					<Grid.Col span='auto'>
+					<Grid.Col span="auto">
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
 							data-is-faq={resource.isFaq || resource.body.references?.some(ref => ref.isFaq)}
 							data-context={context.title}
-							h='100%'
+							h="100%"
 							gap={0}
 						>
 							{body && renderRichText(body, options)}
