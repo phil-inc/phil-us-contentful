@@ -1,5 +1,5 @@
 import {Paper, Title, Button, Text, Box, Stack, Anchor, Group, Grid, Center} from '@mantine/core';
-import {Link, navigate} from 'gatsby';
+import {Link} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
 import React, {useContext} from 'react';
@@ -15,7 +15,7 @@ import {getColorFromStylingOptions} from 'utils/stylingOptions';
 import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
 import PageContext from 'contexts/PageContext';
-import {LIFE_SCIENCES_PAGE, PATIENTS_PAGE} from 'constants/page';
+import {LIFE_SCIENCES_PAGE} from 'constants/page';
 type ArticleProps = {
 	resource: TResource;
 	isEmployeeTag?: boolean;

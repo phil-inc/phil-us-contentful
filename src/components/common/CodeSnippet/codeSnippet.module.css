@@ -13,6 +13,7 @@
 
 		@media (min-width: $phil-breakpoint-sm) {
 			display: flex;
+			gap: 16px;
 			align-items: flex-start;
 			justify-content: center;
 			width: 100%;
@@ -39,13 +40,13 @@
 
 		input[type='submit'] {
 			max-width: 100%;
-			width: 100%;
+			width: max-content;
 			border: 1px solid transparent;
 			margin-top: 32px;
+			cursor: pointer;
 				
 			@media (min-width: $phil-breakpoint-sm) {
 				margin: 0;
-				margin-left: 16px;
 				padding: 13.5px 40px;
 				height: 100%;
 			}
@@ -53,7 +54,13 @@
 
 		input[type='email'] {
 			@media (min-width: $phil-breakpoint-sm) {
-				width: 400px !important;
+				width: max-content !important;
+			}
+		}
+
+		input[name='firstname'], input[name='lastname'] {
+			@media(min-width: $phil-breakpoint-sm) {
+				width: max-content !important;
 			}
 		}
 	}
