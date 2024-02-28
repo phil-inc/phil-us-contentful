@@ -15,6 +15,7 @@ import {getColorFromStylingOptions} from 'utils/stylingOptions';
 import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
 import PageContext from 'contexts/PageContext';
+import { LIFE_SCIENCES_PAGE, PATIENTS_PAGE } from 'constants/page';
 type ArticleProps = {
 	resource: TResource;
 	isEmployeeTag?: boolean;
@@ -164,7 +165,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 			>
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, md: 6}}>
+						<Grid.Col span={{base: 12, md: context.title === LIFE_SCIENCES_PAGE ? 2 : 6}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}

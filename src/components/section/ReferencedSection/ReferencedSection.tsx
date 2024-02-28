@@ -110,6 +110,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 			data-context={context.title}
 			data-is-newsletter-component={isNewsLetterComponent}
 			data-disable-border-top={!isPreviousBackgroundPure}
+			pt={section.header?.length > 0 ? undefined : 0}
 		>
 			{context.title === FIELD_PAGE ? (
 				<Accordion
