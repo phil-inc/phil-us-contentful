@@ -1,7 +1,5 @@
-import {Grid, Box, Divider, List, Anchor, Group, Text, SimpleGrid} from '@mantine/core';
-import Asset from 'components/common/Asset/Asset';
-import ImageContainer from 'components/common/Container/ImageContainer';
-import {COMPANY_PAGE, HCP_PAGE, PATIENTS_PAGE, RESOURCES} from 'constants/page';
+import {Box, Divider, List, Anchor, Group, Text, SimpleGrid} from '@mantine/core';
+import {COMPANY_PAGE, PATIENTS_PAGE, RESOURCES} from 'constants/page';
 import {Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React from 'react';
@@ -9,8 +7,6 @@ import slugify from 'slugify';
 import {type TAsset} from 'types/asset';
 import {type ContentfulPage} from 'types/page';
 import {getPathForSectionAndPage} from 'utils/links';
-import {footerBackground} from 'assets/images';
-import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import {type IReferencedSection} from 'types/section';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {CAREERS} from 'constants/routes';
@@ -52,6 +48,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 								{page.title}
 							</Text>
 						</Link>
+						<Divider className={classes.divider} />
 						<List listStyleType='none' spacing={24}>
 							{page.sections
 								.filter(section =>
@@ -109,6 +106,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 				<Text unstyled className={classes.header}>
 					Connect with us
 				</Text>
+				<Divider className={classes.divider} />
 				<Group mt={18}>
 					<Anchor
 						href='https://www.linkedin.com/company/phil-inc-'

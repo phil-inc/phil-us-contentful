@@ -1,6 +1,5 @@
-import React, {useCallback, useMemo} from 'react';
-import {Text, Container, Center, SimpleGrid, Group, Box, Divider} from '@mantine/core';
-import {footerBackground} from 'assets/images';
+import React, {} from 'react';
+import {Text, Container, Group, Box, Divider} from '@mantine/core';
 import {graphql, Link, StaticQuery} from 'gatsby';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
@@ -9,7 +8,6 @@ import DesktopFooter from './DesktopFooter';
 import * as classes from './cfooter.module.css';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import Asset from 'components/common/Asset/Asset';
-import {useMediaQuery} from '@mantine/hooks';
 import isMobileView from 'hooks/useView';
 
 type FooterProps = {

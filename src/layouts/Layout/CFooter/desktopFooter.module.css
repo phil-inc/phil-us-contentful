@@ -6,7 +6,13 @@
 	font-style: normal;
 	font-weight: 700;
 	line-height: 140%; /* 25.2px */
-	margin-bottom: 24px;
+	/* margin-bottom: 24px; */
+}
+
+.divider {
+	margin-top: 10px;
+	margin-bottom: 6px;
+	border-top: 1px solid #6A7979;
 }
 
 .link {
@@ -18,6 +24,8 @@
 	font-weight: 400;
 	line-height: 140%; /* 19.6px */
 	text-decoration: none;
+	display: inline-block;
+	width: fit-content;
 
 	&[data-manual-entry='true'] {
 		margin-left: 8px;
