@@ -14,7 +14,7 @@
 	}
 }
 
-.container {
+.basicSectionContainer {
 	padding: 60px 20px;
 
 	&[data-index='0'] {

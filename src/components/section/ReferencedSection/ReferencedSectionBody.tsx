@@ -1,15 +1,13 @@
-import React, {useContext} from 'react';
-import {Box, Center, Grid} from '@mantine/core';
-import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
-import {type IReferencedSection, ReferenceTypeEnum} from 'types/section';
 import RenderResource from './RenderResource';
-
 import * as classes from './referencedSection.module.css';
 import {Carousel} from '@mantine/carousel';
-import useDeviceType from 'hooks/useView';
-import PageContext from 'contexts/PageContext';
+import {Center, Grid} from '@mantine/core';
 import {IconChevronLeft, IconChevronRight} from '@tabler/icons';
 import {EMPLOYEE_SPOTLIGHT_TAG} from 'constants/identifiers';
+import PageContext from 'contexts/PageContext';
+import useDeviceType from 'hooks/useView';
+import React, {useContext} from 'react';
+import {type IReferencedSection, ReferenceTypeEnum} from 'types/section';
 
 type ReferencedSectionBodyProps = {
 	section: IReferencedSection;
@@ -38,7 +36,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 		const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
 
 		return (
-			<Center>
+			<Center data-is-employee-tag={Boolean(isEmployeeTag)} className={classes.centerReferencedSectionContent}>
 				<Carousel
 					classNames={{
 						root: classes.root,
@@ -55,8 +53,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					slideSize={{base: '95%', sm: `${95 / columns}%`}}
 					slidesToScroll={isMobile || isTablet ? 1 : columns}
 					data-has-media-item={section.references.some(
-						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false,
+						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false
 					)}
+					data-is-employee-tag={Boolean(isEmployeeTag)}
 				>
 					{section.references.map((resource, index, array) => (
 						<Carousel.Slide key={resource.id + 'carouselItem'}>
@@ -80,8 +79,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			grow
 			className={classes.grid}
 			gutter={section.referenceType === ReferenceTypeEnum['Stepper Cards'] ? 0 : 36}
-			justify='center'
-			align='stretch'
+			justify="center"
+			align="stretch"
 			data-add-margin={addMargin}
 			data-context={title}
 			data-is-stepper-card={section.referenceType === ReferenceTypeEnum['Stepper Cards']}

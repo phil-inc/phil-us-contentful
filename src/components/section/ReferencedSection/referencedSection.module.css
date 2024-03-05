@@ -12,31 +12,15 @@
 	padding: 0;
 }
 
+.centerReferencedSectionContent {
+	
+}
+
 .control {
 	padding: 20px;
 	padding-left: 100px;
 	padding-right: 100px;
 	border-bottom: 0px !important;
-}
-
-@media (max-width: 768px) {
-	.control {
-		padding: 20px;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-}
-
-.content {
-	padding-left: 105px;
-	padding-right: 105px;
-}
-
-@media (max-width: 768px) {
-	.content {
-		padding-left: 20px;
-		padding-right: 20px;
-	}
 }
 
 .item {
@@ -47,28 +31,6 @@
 	background: #f4f4f4;
 
 	border: none;
-}
-
-.heading {
-	line-height: 1.2;
-	color: #000000;
-}
-
-@media (max-width: 768px) {
-	.heading {
-		text-align: center;
-		margin-bottom: 10px;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-}
-
-@media (max-width: 768px) {
-	.subHeading {
-		text-align: center;
-		padding-left: 34px;
-		padding-right: 34px;
-	}
 }
 
 .codeSnippetStack {
@@ -132,6 +94,10 @@
 
 .root {
 	width: fit-content;
+
+	&[data-is-employee-tag='true'] {
+		width: 80%;
+	}
 
 	&[data-has-media-item='true'] {
 		width: 100%;

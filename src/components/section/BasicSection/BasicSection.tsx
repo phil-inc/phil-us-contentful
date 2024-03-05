@@ -259,9 +259,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		<Container
 			id={slugify(section.header, {lower: true, strict: true})}
 			fluid
-			className={classes.container}
+			className={classes.basicSectionContainer}
 			data-index={index}
-			data-isMobileView={isMobileView}
 			data-context={context.title}
 			data-is-embed-form-template={isEmbedFormTemplate}
 			style={{
