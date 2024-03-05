@@ -117,7 +117,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					}
 
 					return (
-						<Anchor href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
+						<Anchor className={classes.externalLink} href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
 							{button}
 						</Anchor>
 					);
