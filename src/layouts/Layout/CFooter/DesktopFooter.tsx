@@ -48,7 +48,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 							</Text>
 						</Link>
 						<Divider className={classes.divider} />
-						<List listStyleType="none" spacing={24}>
+						<List listStyleType="none" spacing={16}>
 							{page.sections
 								.filter(section =>
 									Boolean(section.header?.length && !section.isHidden && !section?.hideNavigationAnchor)

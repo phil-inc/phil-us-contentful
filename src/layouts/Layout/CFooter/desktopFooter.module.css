@@ -6,12 +6,11 @@
 	font-style: normal;
 	font-weight: 700;
 	line-height: 140%; /* 25.2px */
-	/* margin-bottom: 24px; */
 }
 
 .divider {
 	margin-top: 10px;
-	margin-bottom: 6px;
+	margin-bottom: 10px;
 	border-top: 1px solid #6A7979;
 }
 
@@ -29,6 +28,10 @@
 
 	&[data-manual-entry='true'] {
 		margin-left: 8px;
+	}
+
+	> p {
+		margin: 0;
 	}
 }
 
