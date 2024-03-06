@@ -1,8 +1,7 @@
-import {Box, Text, Accordion, List, Anchor, Group, Divider, Grid} from '@mantine/core';
+import {Box, Text, Accordion, List, Anchor, Group, Grid} from '@mantine/core';
 import {IconChevronDown} from '@tabler/icons';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
-import HubspotNewsletter from 'components/common/HubspotForm/HubspotNewsletter';
 import {COMPANY_PAGE, PATIENTS_PAGE} from 'constants/page';
 import {CAREERS} from 'constants/routes';
 import {Link} from 'gatsby';
@@ -10,7 +9,6 @@ import {StaticImage} from 'gatsby-plugin-image';
 import React from 'react';
 import {type TAsset} from 'types/asset';
 import {type ContentfulPage} from 'types/page';
-import {type IReferencedSection} from 'types/section';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {getPathForSectionAndPage} from 'utils/links';
 import * as classes from './mobileFooter.module.css';
@@ -43,11 +41,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 						<List mb={16} listStyleType={'none'}>
 							{page.sections
 								.filter(section =>
-									Boolean(
-										section.header?.length
-											&& !section.isHidden
-											&& !(section as IReferencedSection)?.hideNavigationAnchor,
-									),
+									Boolean(section.header?.length && !section.isHidden && !section?.hideNavigationAnchor)
 								)
 								.map((section, index) => {
 									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
@@ -64,9 +58,9 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 											{page.title === PATIENTS_PAGE && index === getFinalIndex(page) && (
 												<List.Item>
 													<Anchor
-														href='https://my.phil.us/'
-														target='_blank'
-														referrerPolicy='no-referrer'
+														href="https://my.phil.us/"
+														target="_blank"
+														referrerPolicy="no-referrer"
 														className={classes.link}
 													>
 														<Text className={classes.footerLink}>Patient Log In</Text>
@@ -87,11 +81,11 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 											{page.title === 'Contact' && index === page.sections.length - 1 && (
 												<List.Item>
 													<Group>
-														<Anchor href='https://www.linkedin.com/company/phil-inc-' target='_blank'>
+														<Anchor href="https://www.linkedin.com/company/phil-inc-" target="_blank">
 															<div>
 																<StaticImage
-																	src='../../../assets/images/linkedin.svg'
-																	alt='LinkedIn Icon'
+																	src="../../../assets/images/linkedin.svg"
+																	alt="LinkedIn Icon"
 																/>
 															</div>
 														</Anchor>
@@ -107,12 +101,12 @@ const MobileFooter: React.FC<TMobileFooter> = ({pages, footer}) => (
 			))}
 		</Accordion>
 
-		<Grid mt={60} align={'center'} justify='center'>
+		<Grid mt={60} align={'center'} justify="center">
 			{footer.badge.map(badge => (
 				<Grid.Col key={badge.file.url + 'mapBadgeMobile'} span={4}>
 					<Box maw={120}>
 						<ImageContainer fluid>
-							<Asset objectFit='contain' asset={badge} />
+							<Asset objectFit="contain" asset={badge} />
 						</ImageContainer>
 					</Box>
 				</Grid.Col>

@@ -337,6 +337,7 @@ const query = graphql`
 						... on ContentfulReferencedSection {
 							id
 							header
+							headerAlias
 							isHidden
 							hideNavigationAnchor
 						}
@@ -344,6 +345,7 @@ const query = graphql`
 							id
 							header
 							isHidden
+							hideNavigationAnchor
 						}
 					}
 				}

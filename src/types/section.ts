@@ -45,6 +45,7 @@ export type ISection = {
 	body: BodyType;
 	isHubspotEmbed: boolean;
 	isInsertSnippet: boolean;
+	hideNavigationAnchor: boolean;
 	codeSnippet?: {codeSnippet: string};
 	buttonText: string;
 	internalLink: {
@@ -132,6 +133,7 @@ export type IReferencedSection = {
 	hideHeader: boolean;
 	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
 	header: string;
+	headerAlias?: string;
 	subHeading: {
 		id: string;
 		subHeading: string;

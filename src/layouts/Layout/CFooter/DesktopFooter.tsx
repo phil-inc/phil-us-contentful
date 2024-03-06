@@ -7,7 +7,6 @@ import slugify from 'slugify';
 import {type TAsset} from 'types/asset';
 import {type ContentfulPage} from 'types/page';
 import {getPathForSectionAndPage} from 'utils/links';
-import {type IReferencedSection} from 'types/section';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {CAREERS} from 'constants/routes';
 
@@ -49,16 +48,12 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 							</Text>
 						</Link>
 						<Divider className={classes.divider} />
-						<List listStyleType='none' spacing={24}>
+						<List listStyleType="none" spacing={24}>
 							{page.sections
 								.filter(section =>
-									Boolean(
-										section.header?.length
-											&& !section.isHidden
-											&& !(section as IReferencedSection)?.hideNavigationAnchor,
-									),
+									Boolean(section.header?.length && !section.isHidden && !section?.hideNavigationAnchor)
 								)
-								.map((section, index, array) => {
+								.map((section, index) => {
 									const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 									return (
@@ -83,10 +78,10 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 												<List.Item>
 													<Anchor
 														className={classes.link}
-														href='https://my.phil.us/'
-														target='_blank'
-														referrerPolicy='no-referrer'
-														underline='never'
+														href="https://my.phil.us/"
+														target="_blank"
+														referrerPolicy="no-referrer"
+														underline="never"
 														unstyled
 													>
 														<Text unstyled>Patient Log In</Text>
@@ -109,12 +104,12 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 				<Divider className={classes.divider} />
 				<Group mt={18}>
 					<Anchor
-						href='https://www.linkedin.com/company/phil-inc-'
-						target='_blank'
-						referrerPolicy='no-referrer'
+						href="https://www.linkedin.com/company/phil-inc-"
+						target="_blank"
+						referrerPolicy="no-referrer"
 						className={classes.link}
 					>
-						<StaticImage src='../../../assets/images/linkedin.svg' alt='LinkedIn Icon' />
+						<StaticImage src="../../../assets/images/linkedin.svg" alt="LinkedIn Icon" />
 						<Text unstyled span data-manual-entry={true} className={classes.link}>
 							Linkedin
 						</Text>
