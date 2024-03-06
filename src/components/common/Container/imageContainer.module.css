@@ -41,7 +41,7 @@
 
 	&[data-video='true'] {
 		max-width: 100% !important;
-		
+
 		@media (min-width: $phil-breakpoint-md) {
 			max-width: 88.77% !important;
 			width: 88.77%;
@@ -50,6 +50,12 @@
 
 	&[data-context='Contact'] {
 		height: 100%;
+	}
+
+	&[data-index='0'] {
+		&[data-context='Partners'] {
+			max-width: 500px !important;
+		}
 	}
 
 	@media (min-width: $phil-breakpoint-md) {
