@@ -14,7 +14,7 @@ import {Testimonial} from 'components/common/Testimonial';
 import {PrescriberJourney} from 'components/common/prescriberJourney/PrescriberJourney';
 import {StatsCard} from 'components/common/statsCard/StatsCard';
 import {type TResource} from 'types/resource';
-import {ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
+import {Metadata, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
 
 import * as classes from './renderResource.module.css';
@@ -68,6 +68,7 @@ type ComponentFunctionProps = {
 	classes?: any;
 	resourceBackground?: string;
 	isEmployeeTag?: boolean;
+	metadata?: Metadata;
 };
 
 type ComponentFunction = (props: ComponentFunctionProps) => JSX.Element | undefined;
@@ -80,8 +81,8 @@ const ArticleComponent: ComponentFunction = ({resource, index}) => (
 	<Article color={getColor(index!)} resource={resource} />
 );
 
-const CardComponent: ComponentFunction = ({resource, isEmployeeTag}) => (
-	<CCard resource={resource} isEmployeeTag={isEmployeeTag} />
+const CardComponent: ComponentFunction = ({resource, isEmployeeTag, metadata}) => (
+	<CCard resource={resource} isEmployeeTag={isEmployeeTag} metadata={metadata} />
 );
 
 const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength}) => (
@@ -140,6 +141,7 @@ const getComponent = (
 	theme: MantineTheme,
 	classes: any,
 	resourceBackground: string,
+	metadata?: Metadata,
 	isEmployeeTag?: boolean,
 ) => {
 	const componentMappings: Record<ReferenceTypeEnum | ResourceBlocksEnum, ComponentFunction> = {
@@ -175,7 +177,7 @@ const getComponent = (
 		return null; // Handle unknown referenceType values
 	}
 
-	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground, isEmployeeTag});
+	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground, metadata, isEmployeeTag});
 };
 
 type RenderResourceProps = {
@@ -185,6 +187,7 @@ type RenderResourceProps = {
 	arrayLength: number;
 	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
 	isEmployeeTag: boolean;
+	metadata?: Metadata
 };
 
 const RenderResource: React.FC<RenderResourceProps> = ({
@@ -194,11 +197,12 @@ const RenderResource: React.FC<RenderResourceProps> = ({
 	arrayLength,
 	referenceType,
 	isEmployeeTag,
+	metadata,
 }) => {
 	const theme = useMantineTheme();
 	const [resourceBackground] = getSectionColors(referenceType);
 
-	return getComponent(referenceType, resource, index, arrayLength, theme, classes, resourceBackground, isEmployeeTag);
+	return getComponent(referenceType, resource, index, arrayLength, theme, classes, resourceBackground, metadata, isEmployeeTag);
 };
 
 export default RenderResource;

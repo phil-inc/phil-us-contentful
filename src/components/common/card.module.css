@@ -87,6 +87,13 @@
 			padding: 30px 60px !important;
 		}
 	}
+
+	&[data-is-center='true'] {
+		padding-left: 80px !important;
+		padding-right: 80px !important;
+
+		justify-content: center;
+	}
 }
 
 .title {

@@ -102,6 +102,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 						resource={resource}
 						sectionHeader={section.header}
 						isEmployeeTag={Boolean(isEmployeeTag)}
+						metadata={section.metadata}
 					/>
 				</Grid.Col>
 			))}

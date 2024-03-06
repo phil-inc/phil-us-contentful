@@ -16,15 +16,22 @@ import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
 import PageContext from 'contexts/PageContext';
 import {LIFE_SCIENCES_PAGE} from 'constants/page';
+import {Metadata} from 'types/section';
+import {CENTER_LIFE_SCIENCES_CARD_TAG} from 'constants/identifiers';
+
 type ArticleProps = {
 	resource: TResource;
+	metadata?: Metadata;
 	isEmployeeTag?: boolean;
 };
 
-export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
+export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 	const {body, asset} = resource;
 	const context = useContext(PageContext);
 	const color = getColorFromStylingOptions(resource?.stylingOptions?.extraColor);
+
+	
+	const isCenter = metadata?.tags?.some(tag => tag.name === CENTER_LIFE_SCIENCES_CARD_TAG);
 
 	const options: Options = {
 		renderNode: {
@@ -187,6 +194,7 @@ export const CCard: FC<ArticleProps> = ({resource, isEmployeeTag}) => {
 							data-context={context.title}
 							h="100%"
 							gap={0}
+							data-is-center={isCenter}
 						>
 							{body && renderRichText(body, options)}
 						</Stack>

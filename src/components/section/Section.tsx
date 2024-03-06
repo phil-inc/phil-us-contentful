@@ -16,6 +16,8 @@ type SectionProps = {
  * @returns Section based on reference type.
  */
 const Section: React.FC<SectionProps> = ({section, index, isEmbedFormTemplate, isPreviousBackgroundPure}) => {
+	console.log({section})
+	
 	switch (section.sectionType) {
 		case 'Basic Section':
 			return <BasicSection section={section as ISection} index={index!} isEmbedFormTemplate={isEmbedFormTemplate} />;
