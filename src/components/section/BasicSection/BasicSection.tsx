@@ -94,11 +94,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				if (node?.data?.target) {
 					const {target} = node.data;
 
-					const button = (
-						<Button variant='philDefault'>
-							{node.data.target.buttonText}
-						</Button>
-					);
+					const button = <Button variant="philDefault">{node.data.target.buttonText}</Button>;
 
 					if (target?.link?.internalContent) {
 						const {link} = getLink(target, true);
@@ -117,7 +113,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					}
 
 					return (
-						<Anchor className={classes.externalLink} href={target?.link?.externalUrl ?? '#'} target='_blank' referrerPolicy='no-referrer'>
+						<Anchor
+							className={classes.externalLink}
+							href={target?.link?.externalUrl ?? '#'}
+							target="_blank"
+							referrerPolicy="no-referrer"
+						>
 							{button}
 						</Anchor>
 					);
@@ -135,20 +136,26 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type='unordered' mb={20} pl={8}>
+					<List type="unordered" mb={20} pl={8}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type='ordered' mb={20} pl={8}>
+					<List type="ordered" mb={20} pl={8}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.LIST_ITEM](node, children) {
-				return <List.Item className={classes.listItem}>{children}</List.Item>;
+				return (
+					<List.Item
+						classNames={{itemWrapper: classes.listItemWrapper, itemLabel: classes.listItemLabel, item: classes.listItem}}
+					>
+						{children}
+					</List.Item>
+				);
 			},
 			[BLOCKS.HEADING_1](node, children) {
 				return (
@@ -176,7 +183,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 			[INLINES.HYPERLINK](node, children) {
 				return (
-					<Anchor href={node.data.uri as string} target='_blank'>
+					<Anchor href={node.data.uri as string} target="_blank">
 						{children}
 					</Anchor>
 				);
@@ -273,7 +280,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				<Grid
 					// Gutter={40}
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
-					justify='flex'
+					justify="flex"
 				>
 					{/* Text Grid Column */}
 					<Grid.Col
@@ -307,7 +314,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 										)}
 									</>
 								)}
-								<Divider size={1} variant='dashed' className={classes.divider} />
+								<Divider size={1} variant="dashed" className={classes.divider} />
 								<Box>
 									<ContactForm section={section} />
 								</Box>
@@ -351,7 +358,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									isVideo={isVideo()}
 									maw={400}
 								>
-									<Asset asset={mediaItemOrAsset} objectFit='contain' youtubeVideoURL={youtubeVideoUrl} />
+									<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
 								</ImageContainer>
 							)}
 						</Group>
@@ -360,15 +367,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 				<Box className={classes.portalBox} id={uuid}></Box>
 
-				{section.isHubspotEmbed
-				&& section.isInsertSnippet
-				&& section.codeSnippet
-				&& Boolean(section.codeSnippet.codeSnippet.length)
-				&& isProduction ? (
-						<Script defer async>
-							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-						</Script>
-					) : null}
+				{section.isHubspotEmbed &&
+				section.isInsertSnippet &&
+				section.codeSnippet &&
+				Boolean(section.codeSnippet.codeSnippet.length) &&
+				isProduction ? (
+					<Script defer async>
+						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+					</Script>
+				) : null}
 			</>
 		</Container>
 	);
