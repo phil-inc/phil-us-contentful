@@ -41,6 +41,8 @@
 	display: flex;
 	place-content: center;
 	padding: 30px 40px;
+	height: 300px;
+	width: 300px;
 
 	@media (min-width: $phil-breakpoint-sm) {
 		float: right;
