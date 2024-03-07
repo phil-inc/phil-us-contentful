@@ -122,7 +122,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 					classNames={{
 						chevron: classes.chevron,
 						label: classes.label,
-						control: classes.control,
+						control: classes.accordionControl,
 						content: classes.content,
 						item: classes.item,
 					}}

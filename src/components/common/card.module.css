@@ -140,3 +140,9 @@
 .internalLink {
 	width: fit-content;
 }
+
+.heading3 {
+	&[data-context='Field'] {
+		font-size: 24px;
+	}
+}

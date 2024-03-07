@@ -12,35 +12,23 @@
 	padding: 0;
 }
 
-.centerReferencedSectionContent {
-	
-}
-
-.control {
+.accordionControl {
 	padding: 20px;
-	padding-left: 100px;
-	padding-right: 100px;
 	border-bottom: 0px !important;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding-left: 100px;
+		padding-right: 100px;
+	}
 }
 
 .item {
-	background: #f4f4f4;
-}
+	background: #f4f4f4 !important;
 
-.item[data-active] {
-	background: #f4f4f4;
-
-	border: none;
-}
-
-.codeSnippetStack {
-	align-items: flex-start;
-}
-
-@media (max-width: 768px) {
-	.codeSnippetStack {
-		align-items: center;
+	&[data-active='true'] {
+		border: none;
 	}
+
 }
 
 .column {

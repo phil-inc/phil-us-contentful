@@ -106,7 +106,7 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 			},
 			[BLOCKS.HEADING_3](node, children) {
 				return (
-					<Title order={3} lh={'normal'}>
+					<Title data-context={context.title} className={classes.heading3} order={3} lh={'normal'}>
 						{children}
 					</Title>
 				);
