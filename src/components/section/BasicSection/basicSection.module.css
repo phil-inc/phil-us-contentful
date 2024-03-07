@@ -138,12 +138,13 @@
 .internalLink,
 .externalLink {
 	display: inline-block;
-	width: fit-content;
 	height: min-content;
+	width: 100%;
 
 	margin-top: 40px;
 
 	@media (min-width: $phil-breakpoint-sm) {
 		display: block;
+		width: fit-content;
 	}
 }

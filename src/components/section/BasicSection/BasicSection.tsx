@@ -344,7 +344,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						ref={heroRef}
 						order={imageColumnOrder}
 						span={{base: 12, md: 6}}
-						// Offset={imageColumnOrder === 2 ? {base: 0, md: 1} : undefined}
 						style={{height: context.title === CONTACT_PAGE ? height : undefined}}
 						data-is-embed-form-template={isEmbedFormTemplate}
 					>

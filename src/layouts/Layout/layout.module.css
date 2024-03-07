@@ -6,7 +6,6 @@
 		position: relative;
 		line-height: 1;
 		font-family: Lato;
-		-webkit-tap-highlight-color: transparent;
 		display: inline-block;
 		width: 100%;
 		font-size: 16px;
@@ -18,7 +17,7 @@
 
 		&:hover {
 			outline: 1px solid #00201f;
-			outline-offset: -3px;
+			outline-offset: -1px;
 			background-color: transparent;
 			color: #00201f;
 			font-weight: 900;

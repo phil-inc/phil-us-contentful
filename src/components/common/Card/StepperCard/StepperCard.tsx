@@ -1,4 +1,4 @@
-import {Box, Group, Paper, Stack, Text, Title} from '@mantine/core';
+import {Box, Paper, Text, Title} from '@mantine/core';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import React from 'react';
 import {type TResource} from 'types/resource';

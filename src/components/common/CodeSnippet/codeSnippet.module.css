@@ -22,7 +22,9 @@
 		> div {
 			/* input box */
 			> div {
-				margin: 0px !important;
+				@media (min-width: $phil-breakpoint-sm) {
+					margin: 0px !important;
+				}
 			}
 
 			/* input label */
@@ -40,15 +42,16 @@
 
 		input[type='submit'] {
 			max-width: 100%;
-			width: max-content;
+			width: 100%;
 			border: 1px solid transparent;
 			margin-top: 32px;
 			cursor: pointer;
-				
+
 			@media (min-width: $phil-breakpoint-sm) {
 				margin: 0;
 				padding: 13.5px 40px;
 				height: 100%;
+				width: max-content;
 			}
 		}
 
@@ -58,8 +61,9 @@
 			}
 		}
 
-		input[name='firstname'], input[name='lastname'] {
-			@media(min-width: $phil-breakpoint-sm) {
+		input[name='firstname'],
+		input[name='lastname'] {
+			@media (min-width: $phil-breakpoint-sm) {
 				width: max-content !important;
 			}
 		}

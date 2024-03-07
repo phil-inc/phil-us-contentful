@@ -1,5 +1,4 @@
-import {Paper, Container, Center, Title, Divider, Button, Text, Group, Grid, Anchor, Modal} from '@mantine/core';
-import classNames from 'classnames';
+import {Paper, Container, Title, Divider, Button, Text, Grid, Anchor, Modal, Box} from '@mantine/core';
 import {Link, Script} from 'gatsby';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
@@ -39,8 +38,7 @@ export const Banner: FC<BannerProps> = ({resource}) => {
 									{renderRichText(body)}
 								</Text>
 							)}
-						</Container>
-					</Grid.Col>
+						</Container>					</Grid.Col>
 					{Boolean(buttonText?.length)
 						&& (isHubspotEmbed ? (
 							<Grid.Col span={{lg: 2, sm: 12}}>

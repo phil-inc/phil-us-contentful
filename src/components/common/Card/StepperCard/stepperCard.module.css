@@ -24,14 +24,27 @@
 
 	&[data-last-child='false'] {
 		border-right: none;
+
 		&::after {
 			content: '';
 			position: absolute;
-			right: 0;
-			top: 25%;
-			width: 2px;
-			height: 47%;
+			left: 20%;
+			bottom: 0;
+			width: 60%;
+			height: 2px;
 			background-color: var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
+		}
+
+		@media (min-width: $phil-breakpoint-sm) {
+			&::after {
+				content: '';
+				position: absolute;
+				right: 0;
+				top: 25%;
+				width: 2px;
+				height: 47%;
+				background-color: var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
+			}
 		}
 	}
 }

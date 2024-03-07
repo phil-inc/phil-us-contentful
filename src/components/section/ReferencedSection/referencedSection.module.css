@@ -120,3 +120,15 @@
 		cursor: not-allowed;
 	}
 }
+
+.internalLink,
+.externalLink {
+	display: inline-block;
+	height: min-content;
+	width: 100%;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		display: block;
+		width: fit-content;
+	}
+}

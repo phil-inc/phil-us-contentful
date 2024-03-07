@@ -166,11 +166,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
 				<Group justify='center' mt={isFaqSection ? 80 : 44}>
 					{isExternal ? (
-						<Anchor href={link} target='_blank'>
+						<Anchor className={classes.externalLink} href={link} target='_blank'>
 							<Button variant='philDefault'>{section.buttonText}</Button>
 						</Anchor>
 					) : (
-						<Link to={link}>
+						<Link className={classes.internalLink} to={link}>
 							<Button variant='philDefault'>{section.buttonText}</Button>
 						</Link>
 					)}
