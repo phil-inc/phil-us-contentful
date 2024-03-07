@@ -137,6 +137,12 @@ export const query = graphql`
 					id
 					isHidden
 					youtubeVideoUrl
+					metadata {
+						tags {
+							name
+							id
+						}
+					}
 					body {
 						raw
 						references {

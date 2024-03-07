@@ -35,8 +35,7 @@
 	}
 
 	@media (min-width: $phil-breakpoint-sm) {
-		padding-left: 100px;
-		padding-right: 100px;
+		padding: 100px;
 	}
 }
 

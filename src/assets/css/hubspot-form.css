@@ -53,13 +53,13 @@ input[type='submit'] {
 	display: inline-block;
 	width: auto;
 	font-size: 14px;
-	height: 36px;
-	padding: 10px 40px;
+	height: 100%;
+	padding: 12px 24px;
 	transition: outline 0.2s ease-out;
 }
 
 input[type='submit']:hover {
-	outline: 3px solid #00201f;
+	outline: 1px solid #00201f;
 	outline-offset: -3px;
 	background-color: transparent;
 	color: #00201f;

@@ -151,7 +151,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
 					<List.Item
-						classNames={{itemWrapper: classes.listItemWrapper, itemLabel: classes.listItemLabel, item: classes.listItem}}
+						classNames={{
+							itemWrapper: classes.listItemWrapper,
+							itemLabel: classes.listItemLabel,
+							item: classes.listItem,
+						}}
 					>
 						{children}
 					</List.Item>
@@ -207,6 +211,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 	const ref = React.useRef();
 	const [height, setHeight] = React.useState<number>(790);
+	const isBanner = section?.metadata?.tags?.some(({name}) => name === 'BANNER_SECTION');
 
 	// TODO: handle mobile view
 	const isMobileView = !isDesktop;
@@ -356,7 +361,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									background={determineBackground()}
 									expanded={context.title === CONTACT_PAGE}
 									isVideo={isVideo()}
-									maw={400}
+									maw={isBanner ? 300 : 400}
 									data-index={index}
 								>
 									<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
