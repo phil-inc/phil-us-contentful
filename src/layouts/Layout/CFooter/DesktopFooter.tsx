@@ -102,19 +102,19 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 					Connect with us
 				</Text>
 				<Divider className={classes.divider} />
-				<Group mt={18}>
-					<Anchor
-						href="https://www.linkedin.com/company/phil-inc-"
-						target="_blank"
-						referrerPolicy="no-referrer"
-						className={classes.link}
-					>
+				<Anchor
+					href="https://www.linkedin.com/company/phil-inc-"
+					target="_blank"
+					referrerPolicy="no-referrer"
+					className={classes.link}
+				>
+					<Group gap={0}>
 						<StaticImage src="../../../assets/images/linkedin.svg" alt="LinkedIn Icon" />
 						<Text unstyled span data-manual-entry={true} className={classes.link}>
 							Linkedin
 						</Text>
-					</Anchor>
-				</Group>
+					</Group>
+				</Anchor>
 			</Box>
 		</Box>
 	</SimpleGrid>
