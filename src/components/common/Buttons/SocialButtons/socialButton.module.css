@@ -6,23 +6,28 @@
 		&[data-hovered='true'] {
 			background: #11827d;
 
-			> svg {
-				fill: #fff !important;
+			> span {
+				> svg {
+					fill: #fff !important;
+				}
 			}
 		}
 	}
 
-	> svg {
-		fill: #01201f;
-		stroke-width: 0;
+	> span {
+		> svg {
+			fill: #01201f;
+			stroke-width: 0;
+		}
 	}
 
 	&:hover {
 		color: #fff;
 		background: #000;
-
-		> svg {
-			fill: #fff;
+		> span {
+			> svg {
+				fill: #fff;
+			}
 		}
 	}
 }

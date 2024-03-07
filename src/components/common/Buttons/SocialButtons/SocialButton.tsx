@@ -75,7 +75,7 @@ const SocialButton: React.FC<TSocialButton> = ({icon: IconComponent, tooltipLabe
 					radius='xl'
 					className={classes.socialButton}
 				>
-					<IconComponent className={classes.socialIcon} size={16} />
+					<IconComponent size={16} />
 				</ActionIcon>
 			</Tooltip>
 		</Anchor>
