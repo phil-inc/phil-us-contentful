@@ -21,7 +21,7 @@ type TDesktopFooter = {
 };
 
 const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
-	<SimpleGrid className={classes.footer} cols={{base: 4, sm: 2, md: 3, lg: 4}} verticalSpacing={80} spacing={40}>
+	<SimpleGrid className={classes.footer} cols={{base: 4, sm: 2, md: 3, lg: 4}} verticalSpacing={40} spacing={40}>
 		{pages.map(page => {
 			const [firstSection = {header: '#'}] = page.sections;
 
