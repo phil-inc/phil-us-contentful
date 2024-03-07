@@ -30,7 +30,6 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 	const context = useContext(PageContext);
 	const color = getColorFromStylingOptions(resource?.stylingOptions?.extraColor);
 
-	
 	const isCenter = metadata?.tags?.some(tag => tag.name === CENTER_LIFE_SCIENCES_CARD_TAG);
 
 	const options: Options = {
@@ -172,7 +171,7 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 			>
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, md: context.title === LIFE_SCIENCES_PAGE ? 2 : 6}}>
+						<Grid.Col span={{base: 12, sm: 12, md: context.title === LIFE_SCIENCES_PAGE ? 2 : 6}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
@@ -186,7 +185,13 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 						</Grid.Col>
 					)}
 
-					<Grid.Col span="auto">
+					<Grid.Col
+						span={{
+							base: 12,
+							sm: 12,
+							md: context.title === LIFE_SCIENCES_PAGE ? 10 : media && !resource.isFaq ? 6 : "auto",
+						}}
+					>
 						<Stack
 							className={classes.stack}
 							data-has-asset={Boolean(media)}
