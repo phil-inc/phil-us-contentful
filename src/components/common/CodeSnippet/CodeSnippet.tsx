@@ -27,12 +27,10 @@ const CodeSnippet: React.FC<CodeSnippetType> = React.memo(({resource}) => {
 		return (
 			<>
 				<Box className={classes.box} mb={80}>
-					<Center className={classes.center}>
-						<Title order={2} size={'28px'} w={'100%'}>
+						<Title order={2} size={'28px'} maw='max-content' w='100%'>
 							Get latest updates
 						</Title>
 						<HubspotForm formId={formId} portalId={portalId} classname={classes.newsletter} />
-					</Center>
 				</Box>
 			</>
 		);
