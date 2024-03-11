@@ -4,11 +4,11 @@ import * as classes from './layout.module.css';
 
 export const theme = createTheme({
 	breakpoints: {
-		xs: '40em',
-		sm: '48em',
-		md: '64em',
-		lg: '80em',
-		xl: '96em',
+		xs: '22.5em', // Adjusted for common mobile devices
+		sm: '48em', // Common tablet size (portrait orientation)
+		md: '64em', // ipad pro size
+		lg: '85em', // Adjusted for common desktop resolutions
+		xl: '120em', // Retained for larger screens, beyond typical desktop resolutions
 	},
 	colors: {
 		philBranding: [
