@@ -24,12 +24,6 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 	const span = 12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
 
 	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
-
-	const isXS = useDeviceType('xs');
-	const isSM = useDeviceType('sm');
-	const isMD = useDeviceType('md');
-	const isLG = useDeviceType('lg');
-	const isXL = useDeviceType('xl');
 	
 	const {title} = useContext(PageContext);
 

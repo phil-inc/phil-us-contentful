@@ -41,10 +41,14 @@
 
 	&[data-video='true'] {
 		max-width: 100% !important;
+		width: 100%;
 
 		@media (min-width: $phil-breakpoint-md) {
 			max-width: 91% !important;
-			width: 91%;
+
+			&[data-media-item='true'] {
+				max-width: 68% !important;
+			}
 		}
 	}
 
