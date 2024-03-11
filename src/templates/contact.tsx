@@ -73,6 +73,7 @@ const ContactTemplate: React.FC<ContactTemplateProps> = ({data: {contentfulPage}
 								section={section}
 								index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
 								isEmbedFormTemplate={false}
+								isPreviousBackgroundPure={false}
 							/>
 						))}
 				</Box>

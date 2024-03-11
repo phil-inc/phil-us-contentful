@@ -361,6 +361,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									isVideo={isVideo()}
 									maw={isBanner ? 300 : 400}
 									data-index={index}
+									data-context={context.title}
 								>
 									<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
 								</ImageContainer>

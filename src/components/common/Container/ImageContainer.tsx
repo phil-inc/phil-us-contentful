@@ -50,7 +50,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			maw={maw}
 			{...rest}
 		>
-			<AspectRatio className={classes.aspectRatio} data-contain={contain} ratio={ratio} mx={mx}>
+			<AspectRatio className={classes.aspectRatio} data-context={context.title} data-contain={contain} ratio={ratio} mx={mx}>
 				{children}
 			</AspectRatio>
 		</Container>

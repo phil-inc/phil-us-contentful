@@ -72,6 +72,12 @@
 	height: 100%;
 	margin: 0px;
 
+	&[data-context='Contact'] {
+		&:before {
+			padding: 0 !important;
+		}
+	}
+
 	img {
 		width: 100%;
 		object-fit: cover;
