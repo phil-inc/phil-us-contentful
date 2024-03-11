@@ -21,13 +21,17 @@ type ReferencedSectionBodyProps = {
 };
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, getSpan}) => {
-	const span = 12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
-
-	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
-	
 	const {title} = useContext(PageContext);
 
+	const span = 12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
+	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
 	const isEmployeeTag = section.metadata?.tags?.some(tag => tag.name === EMPLOYEE_SPOTLIGHT_TAG);
+
+	const xs = useDeviceType('xs');
+	const sm = useDeviceType('sm');
+	const md = useDeviceType('md');
+	const lg = useDeviceType('lg');
+	const xl = useDeviceType('xl');
 
 	if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
 		const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
@@ -49,10 +53,11 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					nextControlIcon={<IconChevronRight size={24} />}
 					slideSize={{
 						base: '95%',
-						sm: section.referenceType === 'Testimonial' ? `${95 / columns}%` : "95%",
+						sm: `95%`,
+						md: section.referenceType === 'Testimonial' ? `${95 / columns}%` : '95%',
 						xl: `${95 / columns}%`,
 					}}
-					slidesToScroll={section.referenceType === "Testimonial" ? columns: "auto"}
+					slidesToScroll={section.referenceType === 'Testimonial' ? (xs || sm || md ? 'auto' : columns) : 'auto'}
 					data-has-media-item={section.references.some(
 						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false
 					)}
@@ -85,15 +90,13 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 			data-add-margin={addMargin}
 			data-context={title}
 			data-is-stepper-card={section.referenceType === ReferenceTypeEnum['Stepper Cards']}
-			// Mx={section.referenceType === ReferenceTypeEnum.Banner ? -16 : -10}
-			// M={section.referenceType === ReferenceTypeEnum.Banner ? -16 : 0}
 		>
 			{section.references.map((resource, index, array) => (
 				<Grid.Col
 					className={classes.column}
 					p={section.referenceType === ReferenceTypeEnum.Investors ? 0 : undefined}
 					key={resource.id + 'mapReferencedSectionResource'}
-					span={section.v2flag ? {base: 12, md: span} : getSpan(section.referenceType)}
+					span={section.v2flag ? {base: 12, sm: span, md: span} : getSpan(section.referenceType)}
 					data-reference-type={section.referenceType}
 				>
 					<RenderResource
