@@ -1,6 +1,10 @@
 .box {
-	@media (min-width: $phil-breakpoint-sm) {
-		display: flex;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	@media (min-width: $phil-breakpoint-md) {
+		flex-direction: row;
 		align-items: baseline;
 		justify-content: center;
 		gap: 28px;
@@ -8,12 +12,16 @@
 }
 
 .newsletter {
+	width: 100%;
+
 	> form {
 		margin-top: 32px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
 
-		@media (min-width: $phil-breakpoint-sm) {
-			display: flex;
-			gap: 16px;
+		@media (min-width: $phil-breakpoint-md) {
+			flex-direction: row;
 			align-items: flex-start;
 			justify-content: center;
 			width: 100%;
@@ -51,12 +59,23 @@
 				margin: 0;
 				padding: 13.5px 40px;
 				height: 100%;
+				width: 100%;
+			}
+
+			@media (min-width: $phil-breakpoint-md) {
+				margin: 0;
+				padding: 13.5px 40px;
+				height: 100%;
 				width: max-content;
 			}
 		}
 
 		input[type='email'] {
 			@media (min-width: $phil-breakpoint-sm) {
+				width: 100% !important;
+			}
+
+			@media (min-width: $phil-breakpoint-md) {
 				width: max-content !important;
 			}
 		}
@@ -64,6 +83,10 @@
 		input[name='firstname'],
 		input[name='lastname'] {
 			@media (min-width: $phil-breakpoint-sm) {
+				width: 100% !important;
+			}
+
+			@media (min-width: $phil-breakpoint-md) {
 				width: max-content !important;
 			}
 		}
