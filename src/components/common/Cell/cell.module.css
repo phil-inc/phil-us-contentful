@@ -9,6 +9,7 @@
 	font-style: normal;
 	font-weight: 700;
 	line-height: normal;
+	height: 100%;
 }
 
 .cellDetails {
@@ -19,4 +20,5 @@
 	font-style: normal;
 	font-weight: 400;
 	line-height: 120%; /* 19.2px */
+	height: 100%;
 }

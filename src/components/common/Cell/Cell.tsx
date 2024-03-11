@@ -11,7 +11,7 @@ type CellProps = {
 };
 
 const Cell: React.FC<CellProps> = ({resource}) => (
-	<Stack gap={0}>
+	<Stack h='100%' gap={0}>
 		<Box
 			style={{background: getColorFromStylingOptions(resource?.stylingOptions?.extraColor)}}
 			className={classes.cellHeaderWrapper}
