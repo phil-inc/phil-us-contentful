@@ -35,7 +35,7 @@
 			background-color: var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
 		}
 
-		@media (min-width: $phil-breakpoint-md) {
+		@media (min-width: $phil-breakpoint-sm) {
 			&::after {
 				content: '';
 				position: absolute;
