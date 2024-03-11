@@ -30,8 +30,6 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 	const xs = useDeviceType('xs');
 	const sm = useDeviceType('sm');
 	const md = useDeviceType('md');
-	const lg = useDeviceType('lg');
-	const xl = useDeviceType('xl');
 
 	if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
 		const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
@@ -54,7 +52,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					slideSize={{
 						base: '95%',
 						sm: `95%`,
-						md: section.referenceType === 'Testimonial' ? `${95 / columns}%` : '95%',
+						md: section.referenceType === 'Testimonial' ? `${95 / columns}%` : '96%',
 						xl: `${95 / columns}%`,
 					}}
 					slidesToScroll={section.referenceType === 'Testimonial' ? (xs || sm || md ? 'auto' : columns) : 'auto'}
