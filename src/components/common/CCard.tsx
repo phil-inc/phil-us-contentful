@@ -10,6 +10,10 @@ import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import ImageContainer from './Container/ImageContainer';
 
 import * as classes from './card.module.css';
+import * as imageContainerClasses from './Container/imageContainer.module.css';
+
+import cx from 'clsx';
+
 import {getColorFromStylingOptions} from 'utils/stylingOptions';
 
 import {type Options} from '@contentful/rich-text-react-renderer';
@@ -87,7 +91,7 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 				return null;
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text className={classes.paragraph}>{children}</Text>;
+				return <Text data-is-center={isCenter} className={classes.paragraph}>{children}</Text>;
 			},
 
 			[BLOCKS.HEADING_1](node, children) {
@@ -172,7 +176,7 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 			>
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, sm: 12, md: 4, xl: context.title === LIFE_SCIENCES_PAGE ? 3 : 6}}>
+						<Grid.Col span={{base: 12, sm: 4, md: 4, xl: context.title === LIFE_SCIENCES_PAGE ? 3 : 6}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
@@ -180,6 +184,7 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 								contain
 								card
 								mx={0}
+								className={cx(imageContainerClasses.imageContainer, classes.cardImageContainer)}
 							>
 								<Asset objectFit="cover" asset={media} />
 							</ImageContainer>
