@@ -67,7 +67,7 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 			close();
 		},
 		null,
-		[navRef!, collapseRef!],
+		[navRef!, collapseRef!]
 	);
 
 	const onNavLinkClick = event => {
@@ -190,36 +190,22 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 
 	return (
 		<AppShell.Header className={classes.header} style={{borderBottom: 0}}>
-			<Group align='center' justify='space-between' className={classNames(classes.navbar, 'navbar')}>
-				{!minimal && (
-					<Anchor href='https://my.phil.us' target='_blank' className={classes.hideOnLarge}>
-						<Button
-							size='sm'
-							variant='outline'
-							px={4}
-							color='philBranding'
-							className={classes.patientLoginButtonMobile}
-						>
-							Patient Login
-						</Button>
-					</Anchor>
-				)}
-
+			<Group align="center" justify="space-between" className={classNames(classes.navbar, 'navbar')}>
 				<Box className={classes.logo}>
 					{headerTargetBlank ? (
-						<Anchor href='https://phil.us' target='_blank'>
-							<Asset asset={header.logo} objectFit='contain' />
+						<Anchor href="https://phil.us" target="_blank">
+							<Asset asset={header.logo} objectFit="contain" />
 						</Anchor>
 					) : (
-						<Link to='/'>
-							<Asset asset={header.logo} objectFit='contain' />
+						<Link to="/">
+							<Asset asset={header.logo} objectFit="contain" />
 						</Link>
 					)}
 				</Box>
 				{!minimal && (
 					<>
 						<Burger
-							name='BurgerButton'
+							name="BurgerButton"
 							opened={isDrawer}
 							onClick={() => {
 								toggleDrawer();
@@ -239,54 +225,40 @@ const Navbar: React.FC<CHeaderProps> = ({allContentfulHeader, allContentfulResou
 										<Text style={{whiteSpace: 'nowrap'}}>{page.title}</Text>
 									</List.Item>
 								))}
-							{buttons.map((button, index) => (
-								// TODO: use sys
-								<List.Item key={button.id} data-noindicator='true' className={classes.buttons}>
-									{button.internalLink ? (
-										<Box ml={index && 16}>
-											<Link className={classes.textDecorationNone} to={`/${button.internalLink.slug}`}>
-												<Button
-													size={
-														button.buttonStyle === 'Primary'
-															? buttonConfig.primary.size
-															: buttonConfig.secondary.size
-													}
-													variant={
-														button.buttonStyle === 'Primary'
-															? buttonConfig.primary.variant
-															: buttonConfig.secondary.variant
-													}
-												>
-													{button.buttonText}
-												</Button>
-											</Link>
-										</Box>
-									) : (
-										<Anchor
-											className={classes.textDecorationNone}
-											style={{textDecoration: 'none', textDecorationLine: 'none'}}
-											ml={index && 16}
-											href={button.externalLink}
-											target='_blank'
-										>
-											<Button
-												size={
-													button.buttonStyle === 'Primary'
-														? buttonConfig.primary.size
-														: buttonConfig.secondary.size
-												}
-												variant={
-													button.buttonStyle === 'Primary'
-														? buttonConfig.primary.variant
-														: buttonConfig.secondary.variant
-												}
-											>
-												{button.buttonText}
-											</Button>
-										</Anchor>
-									)}
-								</List.Item>
-							))}
+							{buttons.map((button, index) => {
+								const buttonComponent = (
+									<Button
+									className={classes.button}
+										size={
+											button.buttonStyle === 'Primary'
+												? buttonConfig.primary.size
+												: buttonConfig.secondary.size
+										}
+										variant={
+											button.buttonStyle === 'Primary'
+												? buttonConfig.primary.variant
+												: buttonConfig.secondary.variant
+										}
+									>
+										{button.buttonText}
+									</Button>
+								);
+
+								return (
+									// TODO: use sys
+									<List.Item key={button.id} data-noindicator="true" className={classes.headerCTA}>
+										{button.internalLink ? (
+											<Box ml={index && 16}>
+												<Link to={`/${button.internalLink.slug}`}>{buttonComponent} </Link>
+											</Box>
+										) : (
+											<Anchor ml={index && 16} href={button.externalLink} target="_blank">
+												{buttonComponent}
+											</Anchor>
+										)}
+									</List.Item>
+								);
+							})}
 						</List>
 					</>
 				)}

@@ -82,7 +82,11 @@
 	}
 }
 
-.buttons {
+.button {
+	width: 100% !important;
+}
+
+.headerCTA {
 	margin-right: 0px !important;
 }
 
