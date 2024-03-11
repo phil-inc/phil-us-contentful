@@ -19,7 +19,7 @@ import {getColorFromStylingOptions} from 'utils/stylingOptions';
 import {type Options} from '@contentful/rich-text-react-renderer';
 import {isVideoContent} from 'utils/isVideoContent';
 import PageContext from 'contexts/PageContext';
-import {LIFE_SCIENCES_PAGE} from 'constants/page';
+import {COMPANY_PAGE, LIFE_SCIENCES_PAGE} from 'constants/page';
 import {Metadata} from 'types/section';
 import {CENTER_LIFE_SCIENCES_CARD_TAG} from 'constants/identifiers';
 
@@ -27,12 +27,15 @@ type ArticleProps = {
 	resource: TResource;
 	metadata?: Metadata;
 	isEmployeeTag?: boolean;
+	arrayLength?: number;
 };
 
-export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
+export const CCard: FC<ArticleProps> = ({resource, metadata, arrayLength}) => {
 	const {body, asset} = resource;
 	const context = useContext(PageContext);
 	const color = getColorFromStylingOptions(resource?.stylingOptions?.extraColor);
+
+	console.log({resource, arrayLength});
 
 	const isCenter = metadata?.tags?.some(tag => tag.name === CENTER_LIFE_SCIENCES_CARD_TAG);
 
@@ -91,7 +94,11 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 				return null;
 			},
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text data-is-center={isCenter} className={classes.paragraph}>{children}</Text>;
+				return (
+					<Text data-is-center={isCenter} className={classes.paragraph}>
+						{children}
+					</Text>
+				);
 			},
 
 			[BLOCKS.HEADING_1](node, children) {
@@ -143,7 +150,7 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 					isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
 					fluid
 					contain
-					maw={900}
+					maw={context.title === COMPANY_PAGE && arrayLength === 9 ? 300 : 900}
 					ratio={16 / 9}
 					data-media-item={true}
 				>
@@ -176,7 +183,7 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 			>
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, sm: 12, md: 4, lg: 3, xl: context.title === LIFE_SCIENCES_PAGE ? 3.1 : 6}}>
+						<Grid.Col span={{base: 12, sm: 12, md: 4, lg: 4, xl: context.title === LIFE_SCIENCES_PAGE ? 3.1 : 6}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
@@ -195,8 +202,8 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 						span={{
 							base: 12,
 							sm: 12,
-							md: "auto",
-							xl: context.title === LIFE_SCIENCES_PAGE ? "auto" : media && !resource.isFaq ? 6 : "auto",
+							md: 'auto',
+							xl: context.title === LIFE_SCIENCES_PAGE ? 'auto' : media && !resource.isFaq ? 6 : 'auto',
 						}}
 					>
 						<Stack

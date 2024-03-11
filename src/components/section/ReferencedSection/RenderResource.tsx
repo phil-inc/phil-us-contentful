@@ -81,8 +81,8 @@ const ArticleComponent: ComponentFunction = ({resource, index}) => (
 	<Article color={getColor(index!)} resource={resource} />
 );
 
-const CardComponent: ComponentFunction = ({resource, isEmployeeTag, metadata}) => (
-	<CCard resource={resource} isEmployeeTag={isEmployeeTag} metadata={metadata} />
+const CardComponent: ComponentFunction = ({resource, isEmployeeTag, metadata, arrayLength}) => (
+	<CCard resource={resource} isEmployeeTag={isEmployeeTag} metadata={metadata} arrayLength={arrayLength}/>
 );
 
 const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength}) => (
