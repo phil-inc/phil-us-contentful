@@ -5,7 +5,7 @@ import {ParseContent} from './ParseContent';
 import HubspotForm from '../HubspotForm/HubspotForm';
 
 import * as classes from './codeSnippet.module.css';
-import {Box, Divider, Group, Title} from '@mantine/core';
+import {Box, Center, Divider, Group, Title} from '@mantine/core';
 
 type CodeSnippetType = {
 	resource: TResource;
@@ -27,10 +27,12 @@ const CodeSnippet: React.FC<CodeSnippetType> = React.memo(({resource}) => {
 		return (
 			<>
 				<Box className={classes.box} mb={80}>
-					<Title order={2} size={'28px'}>
-						Get latest updates
-					</Title>
-					<HubspotForm formId={formId} portalId={portalId} classname={classes.newsletter} />
+					<Center className={classes.center}>
+						<Title order={2} size={'28px'} w={'100%'}>
+							Get latest updates
+						</Title>
+						<HubspotForm formId={formId} portalId={portalId} classname={classes.newsletter} />
+					</Center>
 				</Box>
 			</>
 		);
