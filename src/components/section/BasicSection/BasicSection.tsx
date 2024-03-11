@@ -129,21 +129,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
-					<Text data-index={index} data-is-embed-form-template={isEmbedFormTemplate} className={classes.body}>
+					<Text data-index={index} data-is-embed-form-template={isEmbedFormTemplate} data-video={isVideo()} className={classes.body}>
 						{children}
 					</Text>
 				);
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type="unordered" mb={20} pl={8}>
+					<List type="unordered" className={classes.list} data-video={isVideo()}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type="ordered" mb={20} pl={8}>
+					<List type="ordered" data-video={isVideo()} className={classes.list}>
 						{children}
 					</List>
 				);
@@ -283,7 +283,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		>
 			<>
 				<Grid
-					// Gutter={40}
 					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
 					justify="flex"
 				>
@@ -291,7 +290,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					<Grid.Col
 						className={isEmbedFormTemplate ? classes.textGridColumn : undefined}
 						order={textColumnOrder}
-						// Offset={textColumnOrder === 2 ? {base: 0, md: 1} : undefined}
 						span={{base: 12, md: 6}}
 					>
 						{section.isHubspotEmbed ? (

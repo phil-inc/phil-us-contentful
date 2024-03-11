@@ -43,8 +43,8 @@
 		max-width: 100% !important;
 
 		@media (min-width: $phil-breakpoint-md) {
-			max-width: 88.77% !important;
-			width: 88.77%;
+			max-width: 91% !important;
+			width: 91%;
 		}
 	}
 

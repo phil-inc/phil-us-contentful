@@ -40,7 +40,7 @@
 }
 
 .listItem {
-	color: #00201f;
+	color: #000;
 	line-height: 27px;
 	font-size: 18px;
 	margin-top: 6px;
@@ -66,6 +66,8 @@
 }
 
 .portal {
+	gap: 0px;
+	
 	& > p:last-child:empty {
 		display: none;
 	}
@@ -96,6 +98,19 @@
 			padding-left: unset;
 			padding-right: unset;
 		}
+	}
+
+	&[data-video='true'] {
+		margin-top: 16px;
+	}
+}
+
+.list {
+	margin-bottom: 20px;
+	padding-left: 8px;
+
+	&[data-video='true'] {
+		margin-bottom: 16px;
 	}
 }
 
@@ -146,5 +161,6 @@
 	@media (min-width: $phil-breakpoint-sm) {
 		display: block;
 		width: fit-content;
+		margin-top: 16px;
 	}
 }
