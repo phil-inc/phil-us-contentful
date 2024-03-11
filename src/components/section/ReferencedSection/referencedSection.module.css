@@ -78,6 +78,10 @@
 	@media (min-width: $phil-breakpoint-sm) {
 		width: 100%;
 	}
+
+	> div:last-child {
+		margin: 0;
+	}
 }
 
 .root {
