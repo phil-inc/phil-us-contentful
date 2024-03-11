@@ -94,7 +94,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				if (node?.data?.target) {
 					const {target} = node.data;
 
-					const button = <Button variant="philDefault">{node.data.target.buttonText}</Button>;
+					const button = <Button className={classes.button} variant="philDefault">{node.data.target.buttonText}</Button>;
 
 					if (target?.link?.internalContent) {
 						const {link} = getLink(target, true);

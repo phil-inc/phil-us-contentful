@@ -154,7 +154,7 @@
 
 	margin-top: 32px;
 
-	@media (min-width: $phil-breakpoint-sm) {
+	@media (min-width: $phil-breakpoint-md) {
 		display: block;
 		width: fit-content;
 
@@ -162,4 +162,8 @@
 			margin-top: 16px;
 		}
 	}
+}
+
+.button {
+	width: 100% !important;
 }
