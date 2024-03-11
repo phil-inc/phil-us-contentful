@@ -71,10 +71,6 @@
 	& > p:last-child:empty {
 		display: none;
 	}
-
-	@media (min-width: $phil-breakpoint-md) {
-		display: block;
-	}
 }
 
 .body {
@@ -156,11 +152,14 @@
 	height: min-content;
 	width: 100%;
 
-	margin-top: 40px;
+	margin-top: 32px;
 
 	@media (min-width: $phil-breakpoint-sm) {
 		display: block;
 		width: fit-content;
-		margin-top: 16px;
+
+		&[data-video='true'] {
+			margin-top: 16px;
+		}
 	}
 }

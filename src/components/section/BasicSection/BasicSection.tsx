@@ -101,12 +101,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 						return !isDesktop ? (
 							<Portal target={`#${uuid}`}>
-								<Link className={classes.internalLink} to={link}>
+								<Link data-video={isVideo()} className={classes.internalLink} to={link}>
 									{button}
 								</Link>
 							</Portal>
 						) : (
-							<Link className={classes.internalLink} to={link}>
+							<Link data-video={isVideo()} className={classes.internalLink} to={link}>
 								{button}
 							</Link>
 						);
@@ -118,6 +118,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							href={target?.link?.externalUrl ?? '#'}
 							target="_blank"
 							referrerPolicy="no-referrer"
+							data-video={isVideo()}
 						>
 							{button}
 						</Anchor>
