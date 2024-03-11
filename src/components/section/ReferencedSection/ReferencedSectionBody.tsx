@@ -25,9 +25,12 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 
 	const addMargin = section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
 
-	const isMobile = useDeviceType('xs');
-	const isTablet = useDeviceType('sm');
-
+	const isXS = useDeviceType('xs');
+	const isSM = useDeviceType('sm');
+	const isMD = useDeviceType('md');
+	const isLG = useDeviceType('lg');
+	const isXL = useDeviceType('xl');
+	
 	const {title} = useContext(PageContext);
 
 	const isEmployeeTag = section.metadata?.tags?.some(tag => tag.name === EMPLOYEE_SPOTLIGHT_TAG);
@@ -50,8 +53,12 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 					draggable={false}
 					previousControlIcon={<IconChevronLeft size={24} />}
 					nextControlIcon={<IconChevronRight size={24} />}
-					slideSize={{base: '95%', sm: `${95 / columns}%`}}
-					slidesToScroll={isMobile || isTablet ? 1 : columns}
+					slideSize={{
+						base: '95%',
+						sm: section.referenceType === 'Testimonial' ? `${95 / columns}%` : "95%",
+						xl: `${95 / columns}%`,
+					}}
+					slidesToScroll={section.referenceType === "Testimonial" ? columns: "auto"}
 					data-has-media-item={section.references.some(
 						reference => reference?.sys?.contentType?.sys?.id === 'mediaItem' ?? false
 					)}

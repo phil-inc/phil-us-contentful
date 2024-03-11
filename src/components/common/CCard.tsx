@@ -171,7 +171,7 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 			>
 				<Grid gutter={0} classNames={{inner: classes.gridInner, root: classes.gridRoot}}>
 					{media && !resource.isFaq && (
-						<Grid.Col span={{base: 12, sm: 12, md: context.title === LIFE_SCIENCES_PAGE ? 2 : 6}}>
+						<Grid.Col span={{base: 12, sm: 12, md: 4, xl: context.title === LIFE_SCIENCES_PAGE ? 2 : 6}}>
 							{/* // TODO: check regression with 1/2 ratio images */}
 							<ImageContainer
 								isVideo={isVideoContent(media?.file?.contentType) || Boolean(media?.youtubeLink)}
@@ -189,7 +189,8 @@ export const CCard: FC<ArticleProps> = ({resource, metadata}) => {
 						span={{
 							base: 12,
 							sm: 12,
-							md: context.title === LIFE_SCIENCES_PAGE ? 10 : media && !resource.isFaq ? 6 : "auto",
+							md: "auto",
+							xl: context.title === LIFE_SCIENCES_PAGE ? 10 : media && !resource.isFaq ? 6 : "auto",
 						}}
 					>
 						<Stack
