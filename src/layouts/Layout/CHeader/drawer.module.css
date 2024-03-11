@@ -50,3 +50,7 @@
     text-decoration: none !important;
     color: var(--Phil-Rebrand-Neutral-Pitch, #0A0A0A) !important;
 }
+
+.button {
+    width: 100% !important;
+}

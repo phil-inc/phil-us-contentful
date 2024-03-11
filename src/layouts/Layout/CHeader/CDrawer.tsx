@@ -1,28 +1,11 @@
-import {
-	Text,
-	Drawer,
-	Group,
-	Anchor,
-	Button,
-	Box,
-	Burger,
-	ScrollArea,
-	Accordion,
-	Table,
-	useMantineTheme,
-	List,
-} from '@mantine/core';
+import {Text, Drawer, Group, Anchor, Button, Box, Burger, Accordion, useMantineTheme, List} from '@mantine/core';
 import {IconChevronDown} from '@tabler/icons';
 import Asset from 'components/common/Asset/Asset';
-import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link} from 'gatsby';
 import React from 'react';
-import slugify from 'slugify';
 import {getPathForSectionAndPage} from 'utils/links';
-import {navigateToPage} from 'utils/navigateToPage';
 import {Link as ScrollToElement} from 'react-scroll';
 import HeaderContext from 'contexts/HeaderProvider';
-import {type IReferencedSection} from 'types/section';
 import {COMPANY_PAGE, PATIENTS_PAGE} from 'constants/page';
 import {getFinalIndex} from 'utils/getFinalIndex';
 import {CAREERS} from 'constants/routes';
@@ -34,18 +17,43 @@ import * as classes from './drawer.module.css';
  * @component
  */
 const CDrawer: React.FC = () => {
-	const {allContentfulResource, header, isDrawer, minimal, pages, toggleDrawer, buttons} =
-		React.useContext(HeaderContext);
-	const theme = useMantineTheme();
-	// Const buttonConfig = {
-	// 	primary: {variant: 'outline', size: 'md', uppercase: true},
-	// 	secondary: {variant: 'default', size: 'md', uppercase: true},
-	// };
+	const {header, isDrawer, pages, toggleDrawer, buttons} = React.useContext(HeaderContext);
 
 	const buttonConfig = {
 		primary: {variant: 'header-primary', size: 'md', uppercase: true},
 		secondary: {variant: 'header-secondary', size: 'md', uppercase: true},
 	};
+
+	console.log({buttons});
+
+	const [firstButton, secondButton] = buttons;
+
+	const firstButtonComponent = (
+		<Button
+			size="sm"
+			radius={0}
+			variant={
+				buttons?.[0].buttonStyle === 'Primary' ? buttonConfig.primary.variant : buttonConfig.secondary.variant
+			}
+			px={4}
+			className={classes.patientLoginButtonMobile}
+		>
+			Patient Login
+		</Button>
+	);
+
+	const secondButtonComponent = (
+		<Button
+			className={classes.button}
+			size={secondButton.buttonStyle === 'Primary' ? buttonConfig.primary.size : buttonConfig.secondary.size}
+			variant={
+				secondButton.buttonStyle === 'Primary' ? buttonConfig.primary.variant : buttonConfig.secondary.variant
+			}
+			fullWidth
+		>
+			{secondButton.buttonText}
+		</Button>
+	);
 
 	return (
 		<Drawer
@@ -59,21 +67,20 @@ const CDrawer: React.FC = () => {
 			transitionProps={{transition: 'fade'}}
 		>
 			<Group justify="space-between" wrap="nowrap" align="center" mb="sm">
-				<Anchor href="https://my.phil.us" target="_blank" className={classes.hideOnLarge}>
-					<Button
-						size="sm"
-						radius={0}
-						variant={
-							buttons?.[0].buttonStyle === 'Primary'
-								? buttonConfig.primary.variant
-								: buttonConfig.secondary.variant
-						}
-						px={4}
-						className={classes.patientLoginButtonMobile}
+				{firstButton.internalLink ? (
+					<Box>
+						<Link to={`/${firstButton.internalLink.slug}`}>{firstButtonComponent} </Link>
+					</Box>
+				) : (
+					<Anchor
+						className={classes.hideOnLarge}
+						href={firstButton.externalLink}
+						target="_blank"
+						referrerPolicy="no-referrer"
 					>
-						Patient Login
-					</Button>
-				</Anchor>
+						{firstButtonComponent}
+					</Anchor>
+				)}
 
 				<Box className={classes.logo}>
 					<Link to="/">
@@ -112,7 +119,7 @@ const CDrawer: React.FC = () => {
 										.filter(section =>
 											Boolean(section.header?.length && !section.isHidden && !section?.hideNavigationAnchor)
 										)
-										.map((section, index, array) => {
+										.map((section, index) => {
 											const path = getPathForSectionAndPage(page.title, section.header, page.slug);
 
 											return (
@@ -171,47 +178,22 @@ const CDrawer: React.FC = () => {
 					))}
 			</Accordion>
 
-			{buttons
-				.filter((button, index) => index)
-				.map((button, index) =>
-					button.internalLink ? (
-						<Box key={button.id} mt={index && 16}>
-							<Link className={classes.link} to={button.internalLink.slug}>
-								<Button
-									size={
-										button.buttonStyle === 'Primary' ? buttonConfig.primary.size : buttonConfig.secondary.size
-									}
-									variant={
-										button.buttonStyle === 'Primary'
-											? buttonConfig.primary.variant
-											: buttonConfig.secondary.variant
-									}
-									fullWidth
-								>
-									{button.buttonText}
-								</Button>
-							</Link>
-						</Box>
-					) : (
-						<Anchor
-							className={classes.link}
-							mt={index && 16}
-							href={button.externalLink}
-							target="_blank"
-							underline="never"
-						>
-							<Button
-								className={classes.link}
-								size="md"
-								radius={0}
-								variant={buttonConfig.secondary.variant}
-								fullWidth
-							>
-								{button.buttonText}
-							</Button>
-						</Anchor>
-					)
-				)}
+			{secondButton.internalLink ? (
+				<Box key={secondButton.id} mt={16}>
+					<Link to={`/${secondButton.internalLink.slug}`}>
+						{secondButtonComponent}
+					</Link>
+				</Box>
+			) : (
+				<Anchor
+					mt={16}
+					href={secondButton.externalLink}
+					target="_blank"
+					referrerPolicy="no-referrer"
+				>
+					{secondButtonComponent}
+				</Anchor>
+			)}
 		</Drawer>
 	);
 };
