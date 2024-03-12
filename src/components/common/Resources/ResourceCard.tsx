@@ -14,17 +14,19 @@ type ResourceCardProps = {
 };
 
 export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({resource, isFaq = false}) => {
-	const {link, isExternal} = getLink(resource);
+	const {link, isExternal, linkLabel} = getLink(resource);
 
 	const heading = resource.subheading?.length ? resource.subheading : resource.heading;
 
+	console.log({resource})
+
 	return (
 		<Paper radius={0} className={classes.card}>
-			<Grid justify='start' align='start'>
+			<Grid justify="start" align="start">
 				<Grid.Col>
 					<Box className={classes.box}>
 						{heading && isExternal ? (
-							<Anchor href={link} target='_blank' underline='never'>
+							<Anchor href={link} target="_blank" underline="never">
 								<Title order={3} className={classes.title}>
 									{heading}
 								</Title>
@@ -41,18 +43,18 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({resourc
 								{getDescriptionFromRichtext(resource?.body?.raw)}
 							</Text>
 						)}
-						{resource.buttonText && (
+						{(resource.buttonText || linkLabel) && (
 							<Group>
 								{isExternal ? (
-									<Anchor href={link} underline='never' target='_blank'>
-										<Button variant='philDefault' className={classes.button}>
-											{resource.buttonText}
+									<Anchor href={link} underline="never" target="_blank">
+										<Button variant="philDefault" className={classes.button}>
+											{resource.buttonText || linkLabel}
 										</Button>
 									</Anchor>
 								) : (
 									<Link to={link}>
-										<Button variant='philDefault' className={classes.button}>
-											{resource.buttonText}
+										<Button variant="philDefault" className={classes.button}>
+											{resource.buttonText || linkLabel}
 										</Button>
 									</Link>
 								)}

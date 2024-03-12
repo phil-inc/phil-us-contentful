@@ -2,29 +2,14 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import {SEO} from 'layouts/SEO/SEO';
-import {
-	Accordion,
-	Anchor,
-	Box,
-	Button,
-	Card,
-	Divider,
-	Grid,
-	Group,
-	NavLink,
-	Pagination,
-	Portal,
-	Text,
-	Title,
-	useMantineTheme,
-} from '@mantine/core';
+import {Accordion, Anchor, Box, Button, Card, Divider, Grid, Group, Pagination, Text, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
+import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
 import {Link, Script, graphql, navigate} from 'gatsby';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
-import {useToggle, useViewportSize} from '@mantine/hooks';
+import {useToggle} from '@mantine/hooks';
 import {RESOURCES_PAGE} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
 import {searchSubmitCallback} from 'pages/resources/search';
@@ -60,24 +45,24 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulRe
 
 	return (
 		<SEO title={computeTitle()}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={computeTitle()} />
-			<meta name='twitter:description' content={computeMetaDescription()} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={computeMetaDescription()} />
-			<meta property='og:title' content={computeTitle()} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={computeMetaDescription()} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={computeTitle()} />
+			<meta name="twitter:description" content={computeMetaDescription()} />
+			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={computeMetaDescription()} />
+			<meta property="og:title" content={computeTitle()} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={computeMetaDescription()} />
+			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={`https://phil.us${location.pathname}}`} />
 			<Script
 				defer
-				strategy='idle'
-				charSet='utf-8'
-				type='text/javascript'
-				src='//js.hsforms.net/forms/embed/v2.js'
+				strategy="idle"
+				charSet="utf-8"
+				type="text/javascript"
+				src="//js.hsforms.net/forms/embed/v2.js"
 			></Script>
-			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
+			{contentfulPage.noindex && <meta name="robots" content="noindex" />}
 		</SEO>
 	);
 };
@@ -101,8 +86,6 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	pageContext: {currentPage: currentPageNumber, limit, numPages},
 }) => {
 	const isMobileView = useDeviceType();
-	const mobileBoxRef = React.useRef(null);
-	const desktopBoxRef = React.useRef(null);
 
 	const currentSection = data.contentfulReferencedSection;
 	const resources = currentSection?.references || [];
@@ -161,7 +144,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 											<Anchor
 												className={classes.navLink}
 												href={resource.externalLink}
-												target='_blank'
+												target="_blank"
 												data-featured={true}
 											>
 												{resource.heading}
@@ -182,7 +165,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 			<Expanded id={currentSection.id} py={0} mb={40}>
 				{/* PAGE HEADER */}
 				<Box>
-					<Grid gutter={40} align='center' my={36}>
+					<Grid gutter={40} align="center" my={36}>
 						<Grid.Col span={{sm: 12, md: 12, lg: 9.76}}>
 							<Title className={classes.heading1} order={1}>
 								Resources/
@@ -193,11 +176,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 						<Grid.Col span={{sm: 12, md: 12, lg: 2.24}}>
 							<SearchBox
-								value=''
+								value=""
 								onSubmitCallback={vs => {
 									searchSubmitCallback(vs.searchText, []);
 								}}
-								placeholder='Search...'
+								placeholder="Search..."
 							/>
 						</Grid.Col>
 					</Grid>
@@ -218,7 +201,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									item: classes.item,
 								}}
 							>
-								<Accordion.Item value='ResourcesType'>
+								<Accordion.Item value="ResourcesType">
 									<Accordion.Control
 										disabled={!isMobileView}
 										onClick={() => {
@@ -233,8 +216,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 											{data.contentfulPage.sections
 												.filter(section => !section.isHidden && Boolean(section.header))
 												.map((section, index, array) => {
-													const path
-														= RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
+													const path =
+														RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
 
 													return (
 														<React.Fragment key={path}>
@@ -264,15 +247,15 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 						{/* RESOURCES MAP */}
 						{currentSection.referenceType === ReferenceTypeEnum.FAQs && (
 							<Box className={classes.faqContainer}>
-								<Grid gutter={isMobileView ? 10 : 28} align='center'>
+								<Grid gutter={isMobileView ? 10 : 28} align="center">
 									<Grid.Col span={{sm: 12, md: 'content'}}>
 										<Title order={4} className={classes.faqLabel}>
 											For Patient FAQs
 										</Title>
 									</Grid.Col>
 									<Grid.Col span={{sm: 12, md: 'content'}}>
-										<Anchor target='_blank' href={`${process.env.GATSBY_ZENDESK_PATIENT_FAQ_LINK}`}>
-											<Button variant='philDefault' fullWidth={false} className={classes.faqButton}>
+										<Anchor target="_blank" href={`${process.env.GATSBY_ZENDESK_PATIENT_FAQ_LINK}`}>
+											<Button variant="philDefault" fullWidth={false} className={classes.faqButton}>
 												View the entire FAQ
 											</Button>
 										</Anchor>
@@ -288,8 +271,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 								</Title>
 							</Box>
 
-							{resources?.length
-								&& resources
+							{resources?.length &&
+								resources
 									.slice(startIndex, endIndex)
 									.map((resource, index) => (
 										<ResourceCard
@@ -307,12 +290,12 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									classNames={{control: classes.paginationControl}}
 									mt={44}
 									radius={0}
-									color='#0A0A0A'
+									color="#0A0A0A"
 									total={numPages}
 									value={currentPageNumber}
 									onChange={async pageNumber => {
-										const path
-											= RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
+										const path =
+											RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
 
 										if (pageNumber === 1) {
 											void navigate(path);
@@ -322,7 +305,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 										void navigate(path + `${pageNumber}`);
 									}}
 								>
-									<Group gap={16} justify='center'>
+									<Group gap={16} justify="center">
 										<Pagination.Items />
 									</Group>
 								</Pagination.Root>
@@ -334,7 +317,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 				{isMobileView && featuredBox}
 			</Expanded>
 
-			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' data-banner={true}>
+			<Expanded id="resourcesBannerSection" fullWidth background="#F4F4F4" data-banner={true}>
 				<Grid>
 					{banners.map(bannerSection =>
 						bannerSection.references.map(resource => (
@@ -344,7 +327,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							>
 								<Banner key={resource.id} resource={resource} />
 							</Grid.Col>
-						)),
+						))
 					)}
 				</Grid>
 			</Expanded>
@@ -354,7 +337,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 export const resourcesQuery = graphql`
 	query getReferencedSection($id: String!) {
-		contentfulReferencedSection(id: {eq: $id}) {
+		contentfulReferencedSection(id: {eq: $id}, node_locale: {eq: "en-US"}) {
 			id
 			title
 			metaDescription
@@ -480,6 +463,77 @@ export const resourcesQuery = graphql`
 						}
 					}
 					id
+					link {
+						id
+						linkLabel
+						internalContent {
+							... on ContentfulPage {
+								id
+								title
+								slug
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulReferencedSection {
+								id
+								page {
+									title
+									id
+								}
+								header
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulSection {
+								id
+								page {
+									title
+								}
+								header
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulResource {
+								id
+								heading
+								slug
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+								isInsertSnippet
+								codeSnippet {
+									codeSnippet
+									id
+								}
+							}
+						}
+						externalUrl
+						contentful_id
+						node_locale
+					}
 				}
 				... on ContentfulDownloadableResource {
 					id
