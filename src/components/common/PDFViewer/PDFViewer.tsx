@@ -1,9 +1,8 @@
 import React, {useState, forwardRef} from 'react';
 import {Document, Page} from 'react-pdf';
-import {ActionIcon, Anchor, Box, Button, Container, Group, Text, useMantineTheme} from '@mantine/core';
+import {ActionIcon, Anchor, Box, Button, Container, Group, Text} from '@mantine/core';
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
 import {IconChevronLeft, IconChevronRight} from '@tabler/icons';
-import {useViewportSize} from '@mantine/hooks';
 
 import * as classes from './pdfViewer.module.css';
 import useDeviceType from 'hooks/useView';
@@ -39,11 +38,6 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(({url, pageContaine
 	}, [isSmallDevice]);
 
 	const height = ref?.current?.clientHeight as number;
-	// Const {classes} = useStyles({
-	// 	pageContainerHeight: height ?? 500,
-	// 	pageContainerWidth: pageContainerWidth ?? MAX_PAGE_WIDTH,
-	// 	padding: PADDING,
-	// });
 
 	// Function to handle the successful loading of a document
 	const onDocumentLoadSuccess = ({numPages}: {numPages: number}) => {

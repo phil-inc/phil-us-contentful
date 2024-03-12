@@ -20,8 +20,12 @@
 	column-gap: 70px;
 }
 
-.pdfPage > canvas {
-	height: auto !important;
+.pdfPage {
+	height: 75vh !important;
+
+	> canvas {
+		height: 75vh !important;
+	}
 }
 
 .pdfDocument {
@@ -34,8 +38,9 @@
 
 .pageLoadingContainer {
 	max-width: 595px;
-  background: transparent !important;
-  background-color: transparent !important;
+	height: 75vh;
+	background: transparent !important;
+	background-color: transparent !important;
 }
 
 .pageNumber {
@@ -57,5 +62,5 @@
 .buttonText {
 	font-size: 14px !important;
 	font-weight: 500 !important;
-  overflow: visible !important;
+	overflow: visible !important;
 }
