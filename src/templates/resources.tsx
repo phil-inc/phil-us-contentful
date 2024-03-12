@@ -529,6 +529,18 @@ export const resourcesQuery = graphql`
 									id
 								}
 							}
+							... on ContentfulEventRegistration {
+								contentful_id
+								id
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
 						}
 						externalUrl
 						contentful_id

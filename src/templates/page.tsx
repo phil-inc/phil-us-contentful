@@ -81,6 +81,8 @@ type PageTemplateProps = {
 };
 
 const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
+	console.log({data})
+	
 	const {id, sections, title} = data.contentfulPage;
 	let basicSectionCount = 0;
 	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));
@@ -633,6 +635,20 @@ export const query = graphql`
 														}
 													}
 												}
+												... on ContentfulEventRegistration {
+													id
+													contentful_id
+													slug
+													heading
+													sys {
+														contentType {
+															sys {
+																type
+																id
+															}
+														}
+													}
+												}
 											}
 										}
 										v2flag
@@ -935,6 +951,7 @@ export const query = graphql`
 				}
 			}
 		}
-	}`;
+	}
+`;
 
 export default PageTemplate;

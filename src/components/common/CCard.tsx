@@ -41,18 +41,24 @@ export const CCard: FC<ArticleProps> = ({resource, metadata, arrayLength}) => {
 	const options: Options = {
 		renderNode: {
 			[INLINES.ENTRY_HYPERLINK](node, children) {
-				const {link} = getLink(node.data.target);
+				const {link, isExternal} = getLink(node.data.target);
 				const {isFaq} = node.data.target;
 
-				return (
+				return !isExternal ? (
 					<Link className={classes.entryLink} data-color={color} data-is-faq={isFaq} to={link}>
 						{children}
 					</Link>
+				) : (
+					<Anchor className={classes.entryLink} href={link} underline="never" referrerPolicy="no-referrer">
+						{children}
+					</Anchor>
 				);
 			},
 
 			// TODO: Refactor this
 			[BLOCKS.EMBEDDED_ENTRY](node, children) {
+				console.log({node});
+
 				if (node?.data?.target) {
 					const {target} = node.data;
 
