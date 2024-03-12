@@ -8,6 +8,7 @@ import loadable from '@loadable/component';
 
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import {type MediaItem} from 'types/section';
+import classNames from 'classnames';
 
 const LiteYouTubeEmbed = loadable(async () => import('react-lite-youtube-embed'));
 const PDFViewer = loadable(async () => import('../PDFViewer/PDFViewer'));
@@ -85,7 +86,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 
 		if (contentType?.startsWith('image/')) {
 			const pathToImage = getImage(media);
-			return <GatsbyImage objectFit='fill' image={pathToImage!} alt={title} />;
+			return <GatsbyImage objectFit='cover' image={pathToImage!} alt={title} />;
 		}
 
 		return null;
