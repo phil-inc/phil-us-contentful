@@ -21,10 +21,10 @@
 }
 
 .pdfPage {
-	height: 75vh !important;
+	height: 80vh !important;
 
 	> canvas {
-		height: 75vh !important;
+		height: 80vh !important;
 	}
 }
 
@@ -38,7 +38,7 @@
 
 .pageLoadingContainer {
 	max-width: 595px;
-	height: 75vh;
+	height: 80vh;
 	background: transparent !important;
 	background-color: transparent !important;
 }
