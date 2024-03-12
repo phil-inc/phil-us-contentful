@@ -10,6 +10,9 @@
 
 .button {
 	overflow: visible !important;
+	padding: 10px 50px !important;
+	font-size: 18px !important;
+	line-height: 1.3 !important;
 }
 
 .embededAsset {
