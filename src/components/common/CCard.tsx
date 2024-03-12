@@ -10,7 +10,6 @@ import {BLOCKS, INLINES} from '@contentful/rich-text-types';
 import ImageContainer from './Container/ImageContainer';
 
 import * as classes from './card.module.css';
-import * as imageContainerClasses from './Container/imageContainer.module.css';
 
 import cx from 'clsx';
 
@@ -191,7 +190,6 @@ export const CCard: FC<ArticleProps> = ({resource, metadata, arrayLength}) => {
 								contain
 								card
 								mx={0}
-								className={cx(imageContainerClasses.imageContainer, classes.cardImageContainer)}
 							>
 								<Asset objectFit="cover" asset={media} />
 							</ImageContainer>

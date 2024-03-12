@@ -10,12 +10,9 @@ import PageContext from 'contexts/PageContext';
 import {Script, graphql} from 'gatsby';
 import slugify from 'slugify';
 import {HOME} from 'constants/page';
+import {isVideoContent} from 'utils/isVideoContent';
 
 import * as classes from './page.module.css';
-import {parseScript} from 'utils/parseScript';
-import {TResponse} from 'extract-json-from-string';
-import HubspotForm from 'components/common/HubspotForm/HubspotForm';
-import {isVideoContent} from 'utils/isVideoContent';
 
 type HelmetProps = {
 	data: {
@@ -148,12 +145,6 @@ export const query = graphql`
 					id
 					isHidden
 					youtubeVideoUrl
-					metadata {
-						tags {
-							name
-							id
-						}
-					}
 					body {
 						raw
 						references {
@@ -630,6 +621,9 @@ export const query = graphql`
 												... on ContentfulResource {
 													id
 													heading
+													contentful_id
+													slug
+													isFaq
 													sys {
 														contentType {
 															sys {
@@ -678,6 +672,34 @@ export const query = graphql`
 										heading
 										slug
 										isFaq
+										sys {
+											contentType {
+												sys {
+													id
+													type
+												}
+											}
+										}
+									}
+									... on ContentfulEventRegistration {
+										id
+										contentful_id
+										heading
+										slug
+										sys {
+											contentType {
+												sys {
+													id
+													type
+												}
+											}
+										}
+									}
+									... on ContentfulDownloadableResource {
+										id
+										contentful_id
+										heading
+										slug
 										sys {
 											contentType {
 												sys {
@@ -913,7 +935,6 @@ export const query = graphql`
 				}
 			}
 		}
-	}
-`;
+	}`;
 
 export default PageTemplate;

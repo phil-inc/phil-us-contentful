@@ -30,8 +30,13 @@
 	}
 
 	&[data-is-embed-form-template='true'] {
-		padding-top: 152px;
-		padding-bottom: 152px;
+		padding-top: 56px;
+		padding-bottom: 56px;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			padding-top: 152px;
+			padding-bottom: 152px;
+		}
 	}
 
 	@media (min-width: $phil-breakpoint-sm) {
@@ -67,7 +72,7 @@
 
 .portal {
 	gap: 0px;
-	
+
 	& > p:last-child:empty {
 		display: none;
 	}
@@ -82,8 +87,10 @@
 	}
 
 	&[data-is-embed-form-template='true'] {
-		padding-left: 16px;
-		padding-right: 16px;
+		&[data-index='0'] {
+			padding-left: 16px;
+			padding-right: 16px;
+		}
 
 		@media (min-width: $phil-breakpoint-sm) {
 			padding-left: 0px;
@@ -102,7 +109,7 @@
 }
 
 .list {
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	padding-left: 8px;
 
 	&[data-video='true'] {
@@ -112,17 +119,12 @@
 
 .heroGridColumn {
 	&[data-is-embed-form-template='true'] {
-		padding-left: 16px;
-		padding-right: 16px;
+		padding-left: 0px;
+		padding-right: 0px;
 
 		@media (min-width: $phil-breakpoint-sm) {
 			padding-left: 32px;
 			padding-right: 32px;
-		}
-
-		@media (min-width: $phil-breakpoint-md) {
-			padding-left: 0px;
-			padding-right: 0px;
 		}
 	}
 }

@@ -38,6 +38,8 @@ import {parseScript} from 'utils/parseScript';
 import cx from 'clsx';
 import * as classes from './basicSection.module.css';
 import {getColorFromStylingOptions} from 'utils/stylingOptions';
+import {title} from 'process';
+import useDeviceType from 'hooks/useView';
 
 type BasicSectionProps = {
 	section: ISection;
@@ -66,7 +68,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 	const uuid = useId();
 	const {width} = useViewportSize();
-	const isDesktop = useMediaQuery('(min-width: 48em)');
+	const isDesktop = useDeviceType('xl');
+	const isMobileView = !isDesktop;
+
+	let header = '';
 
 	// eslint-disable-next-line array-callback-return
 	section.body.references.map((reference: any) => {
@@ -94,7 +99,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				if (node?.data?.target) {
 					const {target} = node.data;
 
-					const button = <Button className={classes.button} variant="philDefault">{node.data.target.buttonText}</Button>;
+					const button = (
+						<Button className={classes.button} variant="philDefault">
+							{node.data.target.buttonText}
+						</Button>
+					);
 
 					if (target?.link?.internalContent) {
 						const {link} = getLink(target, true);
@@ -130,7 +139,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 			[BLOCKS.PARAGRAPH](node, children) {
 				return (
-					<Text data-index={index} data-is-embed-form-template={isEmbedFormTemplate} data-video={isVideo()} className={classes.body}>
+					<Text
+						data-index={index}
+						data-context={context.title}
+						data-is-embed-form-template={isEmbedFormTemplate}
+						data-video={isVideo()}
+						className={classes.body}
+					>
 						{children}
 					</Text>
 				);
@@ -163,6 +178,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				);
 			},
 			[BLOCKS.HEADING_1](node, children) {
+				if (isMobileView) {
+					return null;
+				}
+
 				return (
 					<Title order={1} className={classes.title}>
 						{children}
@@ -213,9 +232,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const ref = React.useRef();
 	const [height, setHeight] = React.useState<number>(790);
 	const isBanner = section?.metadata?.tags?.some(({name}) => name === 'BANNER_SECTION');
-
-	// TODO: handle mobile view
-	const isMobileView = !isDesktop;
 
 	let formId = '';
 	let portalId = '';
@@ -283,10 +299,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 			}}
 		>
 			<>
-				<Grid
-					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
-					justify="flex"
-				>
+				<Grid align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'} justify="flex">
 					{/* Text Grid Column */}
 					<Grid.Col
 						className={isEmbedFormTemplate ? classes.textGridColumn : undefined}
@@ -295,7 +308,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					>
 						{section.isHubspotEmbed ? (
 							<>
-								<Title order={titleOrdering}>{section.header}</Title>
+								{section?.header && <Title order={titleOrdering}>{section.header}</Title>}
 								{Boolean(section.subHeader?.subHeader.length) && context.title !== CONTACT_PAGE && (
 									<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
 										{section.subHeader?.subHeader}
@@ -318,7 +331,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 										)}
 									</>
 								)}
-								<Divider size={1} variant="dashed" className={classes.divider} />
+								{/* <Divider size={1} variant="dashed" className={classes.divider} /> */}
 								<Box>
 									<ContactForm section={section} />
 								</Box>
@@ -327,6 +340,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							<>
 								{Boolean(section.body) && (
 									<Stack className={classes.portal}>
+										{isMobileView && <Title>{section.header}</Title>}
 										{heroRef.current && isMobileView && section.embedForm
 											? createPortal(renderRichText(section.body, options), heroRef.current)
 											: renderRichText(section.body, options)}
