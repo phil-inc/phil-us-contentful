@@ -1,10 +1,10 @@
 .card {
 	position: relative;
 	overflow: hidden;
-	padding: 32px;
 	width: 100%;
 	max-width: 1725px;
 	margin: 0 auto;
+	padding: 64px;
 
 	&::before {
 		content: '';
@@ -15,10 +15,6 @@
 		width: 6px;
 		background: #5abea4 0% 0% no-repeat padding-box;
 	}
-
-	@media (min-width: $phil-breakpoint-md) {
-		padding: 16px;
-	}
 }
 
 .gridColumn {
@@ -26,5 +22,13 @@
 
 	@media (min-width: $phil-breakpoint-md) {
 		padding: 64px 32px 52px;
+	}
+}
+
+.group {
+	justify-content: start;
+
+	@media (min-width: $phil-breakpoint-md) {
+		justify-content: end;
 	}
 }
