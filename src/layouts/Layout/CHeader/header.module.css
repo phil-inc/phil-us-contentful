@@ -27,11 +27,11 @@
 .navbar {
 	position: relative;
 	height: 90px;
-	width: 100vw;
+	width: 100%;
 	background: #fff;
 	display: flex;
 	align-items: center;
-	overflow-y: hidden;
+	overflow: hidden;
 }
 
 .navbar ul li {
