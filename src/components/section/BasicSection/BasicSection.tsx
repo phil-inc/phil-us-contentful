@@ -178,7 +178,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				);
 			},
 			[BLOCKS.HEADING_1](node, children) {
-				if (isMobileView) {
+				if (isMobileView && index === 0 && context.title === 'Demo Page') {
 					return null;
 				}
 
