@@ -340,7 +340,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 							<>
 								{Boolean(section.body) && (
 									<Stack className={classes.portal}>
-										{isMobileView && <Title>{section.header}</Title>}
+										{isMobileView && context.title === 'Demo Page' && index === 0 && (
+											<Title>{section.header}</Title>
+										)}
 										{heroRef.current && isMobileView && section.embedForm
 											? createPortal(renderRichText(section.body, options), heroRef.current)
 											: renderRichText(section.body, options)}
