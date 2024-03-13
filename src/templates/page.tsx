@@ -85,13 +85,6 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	let basicSectionCount = 0;
 	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));
 
-	// Const formScript =
-	// 	'<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script> <script> hbspt.forms.create({ region: "na1", portalId: "20880193", formId: "adf259e8-bb50-4f9e-b2e5-d3bbc0cf4e77" }); </script> ';
-
-	// const object: any = parseScript({raw: formScript});
-
-	// const [formProps] = object as TResponse[];
-
 	return (
 		<PageContext.Provider value={{title}}>
 			<Layout minimal={false}>

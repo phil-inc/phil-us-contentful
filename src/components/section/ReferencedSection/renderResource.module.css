@@ -1,12 +1,15 @@
-/* Styles.css */
-
 .investorImage {
-    width: 300px;
-}
+	width: fit-content;
+    margin-top: 16px;
+    margin-bottom: 16px;
 
-/* Replace '768px' with the actual breakpoint value for 'md' from your theme settings */
-@media (max-width: 768px) {
-    .investorImage {
-        width: fit-content;
-    }
+	> img {
+		margin: 0 auto;
+	}
+
+	@media (min-width: $phil-breakpoint-lg) {
+		width: 300px;
+        margin-top: 0;
+        margin-bottom: 0;
+	}
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, type MantineTheme, useMantineTheme} from '@mantine/core';
+import {Container, type MantineTheme, useMantineTheme, Group} from '@mantine/core';
 import {Article} from 'components/common/Article';
 import Asset from 'components/common/Asset/Asset';
 import {Banner} from 'components/common/Banner/Banner';
@@ -23,6 +23,7 @@ import StepperCard from 'components/common/Card/StepperCard/StepperCard';
 import {BrandOutcomeCard} from 'components/brandOutcomeCard/BrandOutcomeCard';
 import Cell from 'components/common/Cell/Cell';
 
+// TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
 export const getSectionColors = (referenceType: string) => {
 	switch (referenceType) {
@@ -82,7 +83,7 @@ const ArticleComponent: ComponentFunction = ({resource, index}) => (
 );
 
 const CardComponent: ComponentFunction = ({resource, isEmployeeTag, metadata, arrayLength}) => (
-	<CCard resource={resource} isEmployeeTag={isEmployeeTag} metadata={metadata} arrayLength={arrayLength}/>
+	<CCard resource={resource} isEmployeeTag={isEmployeeTag} metadata={metadata} arrayLength={arrayLength} />
 );
 
 const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength}) => (
@@ -90,10 +91,10 @@ const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength})
 );
 
 const TestimonialCompanyComponent: ComponentFunction = ({resource}) => (
-	<Testimonial type='company' resource={resource} />
+	<Testimonial type="company" resource={resource} />
 );
 
-const TestimonialPersonComponent: ComponentFunction = ({resource}) => <Testimonial type='person' resource={resource} />;
+const TestimonialPersonComponent: ComponentFunction = ({resource}) => <Testimonial type="person" resource={resource} />;
 
 const ResourceCardComponent: ComponentFunction = ({resource}) => <ResourceCard resource={resource} />;
 
@@ -119,7 +120,9 @@ const ProfileComponent: ComponentFunction = ({resource}) => <Profile resource={r
 
 const InvestorImageComponent: ComponentFunction = ({resource, classes}) => (
 	<Container className={classes.investorImage}>
-		<Asset asset={resource.asset!} />
+		<Group align='center' justify='center'>
+			<Asset asset={resource.asset!} />
+		</Group>
 	</Container>
 );
 
@@ -142,7 +145,7 @@ const getComponent = (
 	classes: any,
 	resourceBackground: string,
 	metadata?: Metadata,
-	isEmployeeTag?: boolean,
+	isEmployeeTag?: boolean
 ) => {
 	const componentMappings: Record<ReferenceTypeEnum | ResourceBlocksEnum, ComponentFunction> = {
 		[ReferenceTypeEnum.Article]: ArticleComponent,
@@ -177,7 +180,16 @@ const getComponent = (
 		return null; // Handle unknown referenceType values
 	}
 
-	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground, metadata, isEmployeeTag});
+	return componentFunction({
+		resource,
+		index,
+		arrayLength,
+		theme,
+		classes,
+		resourceBackground,
+		metadata,
+		isEmployeeTag,
+	});
 };
 
 type RenderResourceProps = {
@@ -187,7 +199,7 @@ type RenderResourceProps = {
 	arrayLength: number;
 	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
 	isEmployeeTag: boolean;
-	metadata?: Metadata
+	metadata?: Metadata;
 };
 
 const RenderResource: React.FC<RenderResourceProps> = ({
@@ -202,7 +214,17 @@ const RenderResource: React.FC<RenderResourceProps> = ({
 	const theme = useMantineTheme();
 	const [resourceBackground] = getSectionColors(referenceType);
 
-	return getComponent(referenceType, resource, index, arrayLength, theme, classes, resourceBackground, metadata, isEmployeeTag);
+	return getComponent(
+		referenceType,
+		resource,
+		index,
+		arrayLength,
+		theme,
+		classes,
+		resourceBackground,
+		metadata,
+		isEmployeeTag
+	);
 };
 
 export default RenderResource;

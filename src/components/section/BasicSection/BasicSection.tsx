@@ -6,7 +6,6 @@ import {
 	Box,
 	Button,
 	Container,
-	Divider,
 	Grid,
 	Group,
 	List,
@@ -29,7 +28,7 @@ import {isVideoContent} from 'utils/isVideoContent';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
 import ContactForm from 'components/ContactPageForm/ContactForm';
-import {useId, useMediaQuery, useViewportSize} from '@mantine/hooks';
+import {useId, useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
@@ -38,7 +37,6 @@ import {parseScript} from 'utils/parseScript';
 import cx from 'clsx';
 import * as classes from './basicSection.module.css';
 import {getColorFromStylingOptions} from 'utils/stylingOptions';
-import {title} from 'process';
 import useDeviceType from 'hooks/useView';
 
 type BasicSectionProps = {
@@ -183,7 +181,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 				}
 
 				return (
-					<Title order={1} className={classes.title}>
+					<Title order={1} data-context={context.title} className={classes.title}>
 						{children}
 					</Title>
 				);

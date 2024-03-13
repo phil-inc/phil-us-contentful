@@ -133,11 +133,11 @@
 
 	&[data-is-faq='true'] {
 		&:hover {
-			color: #edbe3d;
+			color: #edbe3d !important;
 			cursor: pointer;
 
 			&[data-color='#00B6CC'] {
-				color: #00b6cc;
+				color: #00b6cc !important;
 			}
 		}
 	}

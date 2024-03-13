@@ -3,7 +3,9 @@ import * as classes from './referencedSection.module.css';
 import {Carousel} from '@mantine/carousel';
 import {Center, Grid} from '@mantine/core';
 import {IconChevronLeft, IconChevronRight} from '@tabler/icons';
+import {ResourceCarousel} from 'components/common/Carousel/ResourceCarousel';
 import {EMPLOYEE_SPOTLIGHT_TAG} from 'constants/identifiers';
+import { COMPANY_PAGE } from 'constants/page';
 import PageContext from 'contexts/PageContext';
 import useDeviceType from 'hooks/useView';
 import React, {useContext} from 'react';
@@ -78,13 +80,17 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({section, g
 		);
 	}
 
+	if (section.referenceType === ReferenceTypeEnum['Image Carousel']) {
+		return <ResourceCarousel imageCaraouselSection={section} />;
+	}
+
 	return (
 		<Grid
 			grow
 			className={classes.grid}
 			gutter={section.referenceType === ReferenceTypeEnum['Stepper Cards'] ? 0 : 36}
 			justify="center"
-			align="stretch"
+			align={title === COMPANY_PAGE ? 'center' : 'stretch'}
 			data-add-margin={addMargin}
 			data-context={title}
 			data-is-stepper-card={section.referenceType === ReferenceTypeEnum['Stepper Cards']}

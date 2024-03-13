@@ -12,6 +12,14 @@
 		font-size: 35px;
 		line-height: 1.3;
 	}
+
+	&[data-context='Company'] {
+		font-size: 38px;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			font-size: 60px;
+		}
+	}
 }
 
 .basicSectionContainer {
@@ -21,6 +29,11 @@
 		@media (min-width: $phil-breakpoint-sm) {
 			padding-top: 160px;
 			padding-bottom: 160px;
+		}
+
+		&[data-context='Company'] {
+			padding-top: 64px;
+			padding-bottom: 64px;
 		}
 	}
 
@@ -41,6 +54,10 @@
 
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 100px;
+
+		&[data-context='Company'] {
+			padding: 32px 100px;
+		}
 	}
 }
 

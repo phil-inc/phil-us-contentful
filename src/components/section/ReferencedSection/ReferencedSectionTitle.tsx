@@ -20,7 +20,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 	const {title} = useContext(PageContext);
 
 	const renderTitle = (text: string, order?: TitleOrder, className?: string) => (
-		<Title data-context={title} className={className} order={order}>
+		<Title data-context={title} className={className} order={order} c={textColor}>
 			{text}
 		</Title>
 	);
