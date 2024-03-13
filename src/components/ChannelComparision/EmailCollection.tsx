@@ -8,7 +8,7 @@ const EmailCollection = () => {
 	const {stepper, form} = React.useContext(ChannelComparisionContext);
 
 	return (
-		<Grid.Col span={{base: 12, sm: 6}} order={{base: 2, lg: 1, md: 1, sm: 1}}>
+		<Grid.Col span={{base: 12, lg: 6}} order={{base: 2, lg: 1, md: 1, sm: 1}}>
 			<Box className={classes.content}>
 				<Title className={classes.title} order={1} mb={20}>
 					{'Learn how you can optimize your '}

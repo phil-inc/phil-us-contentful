@@ -113,9 +113,9 @@ const Information = () => {
 		<Grid.Col
 			ref={targetRef}
 			p={0}
-			span='auto'
+			span={{base: 12, lg: "auto"}}
 			className={classes.contentGrid}
-			order={{base: 2, lg: 1, md: 1, sm: 1}}
+			order={{base: 12, lg: 1, md: 1, sm: 1}}
 		>
 			<Box className={classes.content}>
 				<Button

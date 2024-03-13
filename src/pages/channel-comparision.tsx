@@ -112,7 +112,7 @@ const ChannelComparisionPage = () => {
 					</ChannelComparisionContext.Provider>
 
 					{!isMobileDevice && (
-						<Grid.Col span={{base: 12, sm: 6}} p={0} order={1}>
+						<Grid.Col span={{base: 12, sm: "auto"}} p={0} order={1}>
 							<Image src={getCustomizedReport as string} fit='cover' />
 						</Grid.Col>
 					)}
