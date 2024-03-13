@@ -1,82 +1,14 @@
-import React from 'react';
-import {createStyles, Text, Container, Center} from '@mantine/core';
-import {footerBackground} from 'assets/images';
+import React, {} from 'react';
+import {Text, Container, Group, Box, Divider} from '@mantine/core';
 import {graphql, Link, StaticQuery} from 'gatsby';
 import type {TAsset} from 'types/asset';
 import type {ContentfulPage} from 'types/page';
 import MobileFooter from './MobileFooter';
 import DesktopFooter from './DesktopFooter';
-
-const useStyles = createStyles(theme => ({
-	footer: {
-		[theme.fn.smallerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	inner: {
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
-
-		[theme.fn.smallerThan('sm')]: {
-			flexDirection: 'column',
-		},
-	},
-
-	links: {
-		color: 'white',
-		fontSize: 12,
-	},
-
-	footLinkHeader: {
-		fontFamily: 'Lato',
-		fontWeight: 700,
-		margin: '10px 0',
-		textDecoration: 'none',
-		color: '#00201F',
-	},
-
-	footerLink: {
-		textDecoration: 'none',
-		color: '#00201F',
-		fontSize: '14px',
-		lineHeight: '40px',
-	},
-
-	footerWrapper: {
-		padding: '85px 175px',
-		backgroundImage: `url("${footerBackground as string}")`,
-		backgroundRepeat: 'no-repeat',
-		backgroundPosition: 'bottom -420px right -220px',
-
-		[theme.fn.smallerThan('lg')]: {
-			padding: '40px ',
-			backgroundPosition: 'bottom -522px right -561px',
-		},
-	},
-	burger: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none !important',
-		},
-	},
-	drawer: {
-		[theme.fn.largerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	drawerTitle: {
-		width: '100%',
-		margin: 0,
-	},
-
-	textDecorationNone: {
-		textDecoration: 'none',
-		color: 'white',
-	},
-}));
+import * as classes from './cfooter.module.css';
+import ImageContainer from 'components/common/Container/ImageContainer';
+import Asset from 'components/common/Asset/Asset';
+import isMobileView from 'hooks/useView';
 
 type FooterProps = {
 	allContentfulFooter: {nodes: Array<{badge: TAsset[]; navigationLinks: ContentfulPage[]}>};
@@ -85,41 +17,82 @@ type FooterProps = {
 };
 
 const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
-	const {classes} = useStyles();
-
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
+	const isMobile = isMobileView('xs');
+
+	const links = [
+		{
+			label: !isMobile && !minimal ? 'Copyright 2023, Phil Inc.' : '© Phil, Inc.',
+		},
+		{
+			label: 'Terms of Use',
+			link: '/terms',
+		},
+		{
+			label: 'Privacy Policy',
+			link: '/privacy',
+		},
+		{
+			label: 'HIPAA Notice',
+			link: '/hipaa',
+		},
+	];
+
+	const renderFooterItem = (item, key) => {
+		if (item.link) {
+			return (
+				<Link data-minimal={minimal} key={key} to={item.link} className={classes.links}>
+					{item.label}
+				</Link>
+			);
+		}
+
+		return (
+			<Text data-minimal={minimal} key={key} fw={400} component='span' className={classes.texts} unstyled>
+				{item.label}
+			</Text>
+		);
+	};
+
+	const children = links.map((item, index) => (
+		<React.Fragment key={index}>
+			{renderFooterItem(item, index)}
+			{index < links.length - 1 && (isMobile || minimal) && <span className={classes.pipe}> | </span>}
+		</React.Fragment>
+	));
 
 	return (
 		<>
 			{!minimal && (
-				<Container fluid className={classes.footerWrapper}>
-					{/* Desktop View */}
-					<DesktopFooter pages={pages} footer={footer} />
-
-					{/* Mobile View */}
-					<MobileFooter footer={footer} pages={pages} />
+				<Container py={80} fluid p={{base: 16, sm: 100}}>
+					{isMobile ? (
+						<MobileFooter footer={footer} pages={pages} />
+					) : (
+						<DesktopFooter pages={pages} footer={footer} />
+					)}
 				</Container>
 			)}
 
 			{/* Bottom Footer */}
-			<Container fluid style={{background: '#00827E'}} py={14}>
-				<Center>
-					<Text className={classes.links}>
-						© Phil, Inc. |{' '}
-						<Link to='/terms' className={classes.textDecorationNone}>
-							Terms of Use
-						</Link>{' '}
-						|{' '}
-						<Link to='/privacy' className={classes.textDecorationNone}>
-							Privacy Policy
-						</Link>{' '}
-						|{' '}
-						<Link to='/hipaa' className={classes.textDecorationNone}>
-							HIPAA Notice
-						</Link>
-					</Text>
-				</Center>
+			{!isMobile && !minimal && <Divider className={classes.divider} mx={100} />}
+
+			<Container data-minimal={minimal} fluid className={classes.bottomFooter}>
+				<Group gap={isMobile ? 2 : 0} justify={isMobile || minimal ? 'center' : 'space-between'}>
+					{!isMobile && !minimal && (
+						<Group gap={9}>
+							{footer.badge.map(badge => (
+								<Box className={classes.badge}>
+									<ImageContainer background='transparent' fluid>
+										<Asset asset={badge} objectFit='contain' />
+									</ImageContainer>
+								</Box>
+							))}
+						</Group>
+					)}
+
+					{isMobile || minimal ? children : <Box className={classes.textsWrapper}>{children}</Box>}
+				</Group>
 			</Container>
 		</>
 	);
@@ -195,4 +168,4 @@ const CFooter: React.FC<{minimal: boolean}> = ({minimal = false}) => (
 	<StaticQuery query={query} render={props => <Footer minimal={minimal} {...props} />} />
 );
 
-export default React.memo(CFooter);
+export default CFooter;

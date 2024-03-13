@@ -1,0 +1,160 @@
+.cardContainer {
+	padding: 28px 18px;
+	background: #f4f4f4;
+
+	> *:not(:last-child) {
+		margin-bottom: 44px;
+	}
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 70px;
+	}
+}
+
+.navigationList {
+	background: #f4f4f4;
+	padding: 36px 34px;
+	margin-bottom: 20px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		margin-bottom: 36px;
+	}
+}
+
+.featuredItemsList {
+	background: #f4f4f4;
+	padding: 36px 34px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		display: block;
+	}
+}
+
+.navLink {
+	display: block;
+	padding: 12px 16px 12px 0px;
+	background-color: transparent;
+	color: #0a0a0a;
+	font-size: 16px;
+	font-weight: 700;
+	text-decoration: none;
+
+	&[data-featured='true'] {
+		padding-right: 0;
+	}
+
+	&[data-active='true'] {
+		color: #00827e;
+	}
+
+	&:hover {
+		color: #00827e;
+	}
+
+	&[data-index='0'] {
+		padding-top: 0;
+	}
+}
+
+.heading1 {
+	font-size: 32px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 48px;
+	}
+}
+
+.navLinkContainer {
+	padding-top: 0;
+
+	:last-child {
+		padding-bottom: 0;
+	}
+}
+
+.content {
+	padding: 0 !important;
+}
+
+.control {
+	padding: 0 !important;
+	border-bottom: 0 !important;
+	background-color: transparent !important;
+	cursor: default;
+	margin-bottom: 0;
+	color: #0a0a0a !important;
+	font-size: inherit;
+
+	&[data-disabled='true'] {
+		opacity: 1;
+	}
+
+	&[data-active='true'] {
+		margin-bottom: 24px;
+	}
+}
+
+.label {
+	padding: 0;
+	overflow: visible;
+	font-size: 24px;
+	font-weight: 700;
+	font-family: Raleway, sans-serif;
+}
+
+.item {
+	border-bottom: none;
+}
+
+.chevron {
+	height: 24px;
+	width: 24px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		display: none;
+	}
+}
+
+.currentSectionHeader {
+	display: block;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		display: none;
+	}
+}
+
+.breakSection {
+	display: block;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		display: none;
+	}
+}
+
+.paginationControl {
+	height: 40px;
+	width: 40px;
+}
+
+.faqContainer {
+	padding: 16px 24px;
+	background: rgb(244, 244, 244);
+	margin-bottom: 38px;
+}
+
+.faqLabel {
+	font-size: 16px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 20px;
+	}
+}
+
+.faqButton {
+	font-size: 10.28px !important;
+	width: fit-content !important;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 16px !important;
+	}
+}

@@ -1,0 +1,56 @@
+.divider {
+	max-width: 35%;
+	margin-top: 10px;
+	margin-bottom: 64px;
+}
+
+.heading {
+	line-height: 1.2;
+	color: #000000;
+
+	&[data-context='Field'] {
+		font-size: 25px;
+	}
+
+	&[data-context='Company'] {
+		text-align: center;
+		width: 100%;
+		font-size: 38px;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			font-size: 60px;
+		}
+	}
+
+	@media (min-width: $phil-breakpoint-sm) {
+		&[data-context='Field'] {
+			font-size: 30px;
+		}
+	}
+}
+
+.stack {
+	align-items: flex-start;
+	gap: 20px;
+
+	&[data-reference-type='Code Snippet'] {
+		align-items: start;
+	}
+
+	@media (min-width: $phil-breakpoint-sm) {
+		align-items: center;
+
+		&[data-context='Field'] {
+			align-items: start;
+		}
+	}
+}
+
+.subHeading {
+	color: var(--Phil-Rebrand-Neutral-Pitch, #030303);
+	font-family: Lato, sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 150%; /* 27px */
+}

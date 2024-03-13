@@ -1,0 +1,43 @@
+.paper {
+	padding: 64px 34px;
+	height: 100%;
+
+	@media (min-width: $phil-breakpoint-md) {
+		max-width: 365px;
+	}
+}
+
+.body {
+	color: var(--Phil-Rebrand-Neutral-Gunmetal, #525252);
+	font-family: Lato, sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 140%;
+}
+
+.avatarPlaceholder {
+	color: white;
+}
+
+.author {
+	color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
+	font-family: Raleway, sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 160%;
+}
+
+.authorTitle {
+	color: var(--Phil-Rebrand-Neutral-Gunmetal, #525252);
+	font-family: Lato, sans-serif;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%;
+}
+
+.phil-Avatar-placeholder {
+	background-color: #0a0a0a !important;
+}

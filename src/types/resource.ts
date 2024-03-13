@@ -1,5 +1,5 @@
 import type {TAsset} from './asset';
-import type {BodyType} from './section';
+import type {BodyType, MediaItem, Metadata, StylingOptions} from './section';
 
 export type TLink = {
 	link: string;
@@ -20,6 +20,7 @@ export type TResource = {
 	heading: string;
 	subheading: string;
 	noindex?: boolean;
+	metadata?: Metadata;
 	description: {
 		id: string;
 		description: string;
@@ -44,6 +45,31 @@ export type TResource = {
 			};
 		};
 	};
+
+	hyperlink?: {
+		contentful_id: string;
+		id: string;
+		externalLink?: string;
+		linkLabel: string;
+		name: string;
+
+		internalContent: {
+			slug?: string;
+			id: string;
+			page: Array<{title: string}>;
+			header?: string;
+			heading?: string;
+			title?: string;
+			sys: {
+				contentType: {
+					sys: {
+						id: string;
+					};
+				};
+			};
+		};
+	};
+
 	author?: TAuthor;
 	designation?: string;
 	isHubspotEmbed?: boolean;
@@ -62,6 +88,9 @@ export type TResource = {
 		};
 	};
 	slug?: string; // Populates only for static pages
+
+	stylingOptions: StylingOptions;
+	media: MediaItem;
 };
 
 export type DownloadableAsset = {
