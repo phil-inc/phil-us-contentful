@@ -1,0 +1,109 @@
+.imageContainer {
+	padding: 0px !important;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	max-width: 100%;
+
+	&[data-flex-start='true'] {
+		margin: 0 !important;
+
+		&[data-video='true'] {
+			margin: 0 !important;
+		}
+	}
+
+	&[data-card='true'] {
+		margin: 0;
+
+		max-width: 100% !important;
+		max-height: max-content !important;
+	}
+
+	&[data-fluid='true'] {
+		padding: 0px;
+	}
+
+	&[data-expanded='true'] {
+		position: static;
+		max-width: 100%;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			max-width: 50vw !important;
+			width: 50vw !important;
+
+			position: absolute;
+			top: 90px;
+			right: 0px;
+		}
+	}
+
+	&[data-video='true'] {
+		max-width: 100% !important;
+		width: 100%;
+
+		@media (min-width: $phil-breakpoint-md) {
+			max-width: 91% !important;
+
+			&[data-media-item='true'] {
+				max-width: 68% !important;
+			}
+		}
+	}
+
+	&[data-context='Contact'] {
+		height: 100%;
+	}
+
+	&[data-context='Company'] {
+		max-width: 100% !important;
+	}
+
+	&[data-index='0'] {
+		&[data-context='Partners'] {
+			max-width: 500px !important;
+		}
+	}
+
+	&[data-is-svg='false'] {
+		> div {
+			&::before {
+				padding-bottom: 0 !important;
+			}
+		}
+	}
+
+	@media (min-width: $phil-breakpoint-md) {
+		position: static;
+		max-width: 335px;
+	}
+}
+
+.aspectRatio {
+	height: 100%;
+	margin: 0px;
+
+	&[data-context='Contact'] {
+		&:before {
+			padding: 0 !important;
+		}
+	}
+
+	img {
+		width: 100%;
+		object-fit: cover;
+
+		&[data-contain='true'] {
+			object-fit: contain;
+		}
+	}
+}
+
+.portalBox {
+	display: none;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		display: block;
+		margin-top: 40px;
+	}
+}

@@ -1,4 +1,4 @@
-import {Paper, Title, Divider, Text, createStyles, Grid, Box, Anchor} from '@mantine/core';
+import {Paper, Title, Divider, Text, Grid, Box, Anchor, useMantineTheme} from '@mantine/core';
 import classNames from 'classnames';
 import type {FC} from 'react';
 import {Link} from 'gatsby';
@@ -10,6 +10,8 @@ import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
 import ImageContainer from './Container/ImageContainer';
 import Asset from './Asset/Asset';
 
+import * as classes from './featured.module.css';
+
 type FeaturedProps = {
 	resource: TResource;
 	noDivider?: boolean;
@@ -18,39 +20,7 @@ type FeaturedProps = {
 };
 
 export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resourceBackground = '#F4F4F4', pr = 0}) => {
-	const useStyles = createStyles(theme => ({
-		card: {
-			position: 'relative',
-			overflow: 'hidden',
-			paddingLeft: 18,
-			background: resourceBackground,
-			height: '100%',
-			display: 'flex',
-
-			'&::before': {
-				content: '""',
-				position: 'absolute',
-				top: 0,
-				bottom: 0,
-				left: 0,
-				width: 6,
-				background: '#5ABEA4 0% 0% no-repeat padding-box',
-			},
-		},
-
-		center: {
-			display: 'grid',
-			alignItems: 'center',
-		},
-
-		textDecorationNone: {
-			color: 'inherit',
-			textDecoration: 'none',
-			cursor: 'pointer',
-		},
-	}));
-
-	const {classes, theme} = useStyles();
+	const theme = useMantineTheme();
 	const {link, isExternal} = getLink(resource);
 
 	const options = {
@@ -90,21 +60,21 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 	};
 
 	return (
-		<Paper radius={0} className={classNames(classes.card)}>
+		<Paper radius={0} style={{background: resourceBackground}} className={classes.card}>
 			<Grid justify='center' style={{height: '100%'}} mt={0}>
-				<Grid.Col lg={5} sm={6} md={6} p={0} pl={8}>
+				<Grid.Col span={{base: 12, lg: 5, sm: 6, md: 6}} p={0} pl={8}>
 					{resource.asset && (
 						<ImageContainer fluid>
 							<Asset asset={resource.asset} />
 						</ImageContainer>
 					)}
 				</Grid.Col>
-				<Grid.Col lg={7} sm={6} md={6} className={classes.center}>
-					<Box pl={theme.spacing.sm} pr={60} sx={{overflow: 'hidden'}}>
+				<Grid.Col span={{base: 12, lg: 7, sm: 6, md: 6}} className={classes.center}>
+					<Box pl={theme.spacing.sm} pr={60} style={{overflow: 'hidden'}}>
 						{resource.heading && (
 							<>
 								{isExternal ? (
-									<Anchor href={link} target='_blank' underline={false} className={classes.textDecorationNone}>
+									<Anchor href={link} target='_blank' underline='never' className={classes.textDecorationNone}>
 										<Title order={3} mt='md'>
 											{resource.heading}
 										</Title>
@@ -121,12 +91,12 @@ export const Featured: FC<FeaturedProps> = ({resource, noDivider = false, resour
 						<Divider variant='dashed' size={1} style={{maxWidth: 404}} my={13} />
 
 						{resource?.description?.description?.length ? (
-							<Text size={18} mt='sm' mb={20} lineClamp={2}>
+							<Text size='18px' lh={'27.7px'} mt='sm' mb={20} lineClamp={2}>
 								{resource.description.description}
 							</Text>
 						) : (
 							resource.body && (
-								<Text size={18} mt='sm' mb={20} lineClamp={2}>
+								<Text size='18px' lh={'27.7px'} mt='sm' mb={20} lineClamp={2}>
 									{renderRichText(resource.body, options)}
 								</Text>
 							)

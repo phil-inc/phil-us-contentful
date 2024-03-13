@@ -1,0 +1,56 @@
+.logo {
+    width: 125px !important;
+}
+
+.drawerHeader {
+	padding: 20px !important;
+}
+
+.drawerBody {
+	padding: 20px !important;
+}
+
+.control {
+	padding: 32px 0 !important;
+    border: 0px !important;
+    border-bottom: 1px solid black !important;
+}
+
+.label {
+	font-family: Lato, sans-serif;
+	font-weight: 700 !important;
+	font-size: 18px;
+    padding: 0px !important;
+}
+
+.content {
+    padding: 0 !important;
+}
+
+.chevron {
+    width: 24px !important;
+}
+
+.item {
+    border-bottom: 0 !important;
+}
+
+.listItem {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.tableHeader {
+    font-family: Lato, sans-serif;
+    font-weight: 400 !important;
+    font-size: 14px;
+    padding: 0px !important;
+}
+
+.link {
+    text-decoration: none !important;
+    color: var(--Phil-Rebrand-Neutral-Pitch, #0A0A0A) !important;
+}
+
+.button {
+    width: 100% !important;
+}

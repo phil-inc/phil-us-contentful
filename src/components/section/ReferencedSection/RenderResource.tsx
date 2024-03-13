@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, type MantineTheme, createStyles, useMantineTheme} from '@mantine/core';
+import {Container, type MantineTheme, useMantineTheme, Group} from '@mantine/core';
 import {Article} from 'components/common/Article';
 import Asset from 'components/common/Asset/Asset';
 import {Banner} from 'components/common/Banner/Banner';
@@ -14,9 +14,16 @@ import {Testimonial} from 'components/common/Testimonial';
 import {PrescriberJourney} from 'components/common/prescriberJourney/PrescriberJourney';
 import {StatsCard} from 'components/common/statsCard/StatsCard';
 import {type TResource} from 'types/resource';
-import {ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
+import {Metadata, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {handleSpacing} from 'utils/handleSpacing';
 
+import * as classes from './renderResource.module.css';
+import {CCard} from 'components/common/CCard';
+import StepperCard from 'components/common/Card/StepperCard/StepperCard';
+import {BrandOutcomeCard} from 'components/brandOutcomeCard/BrandOutcomeCard';
+import Cell from 'components/common/Cell/Cell';
+
+// TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
 export const getSectionColors = (referenceType: string) => {
 	switch (referenceType) {
@@ -54,38 +61,40 @@ const getColor = (index: number) => {
 	return 'yellow';
 };
 
-const useStyles = createStyles(theme => ({
-	investorImage: {
-		width: '300px',
-
-		[theme.fn.smallerThan('md')]: {
-			width: 'fit-content',
-		},
-	},
-}));
-
 type ComponentFunctionProps = {
 	resource: TResource;
 	index?: number;
 	arrayLength?: number;
 	theme?: MantineTheme;
-	classes?: ReturnType<typeof useStyles>['classes'];
+	classes?: any;
 	resourceBackground?: string;
+	isEmployeeTag?: boolean;
+	metadata?: Metadata;
 };
 
 type ComponentFunction = (props: ComponentFunctionProps) => JSX.Element | undefined;
 
 const CodeSnippetComponent: ComponentFunction = ({resource}) => <CodeSnippet resource={resource} />;
 
+const CellComponent: ComponentFunction = ({resource}) => <Cell resource={resource} />;
+
 const ArticleComponent: ComponentFunction = ({resource, index}) => (
 	<Article color={getColor(index!)} resource={resource} />
 );
 
-const TestimonialCompanyComponent: ComponentFunction = ({resource}) => (
-	<Testimonial type='company' resource={resource} />
+const CardComponent: ComponentFunction = ({resource, isEmployeeTag, metadata, arrayLength}) => (
+	<CCard resource={resource} isEmployeeTag={isEmployeeTag} metadata={metadata} arrayLength={arrayLength} />
 );
 
-const TestimonialPersonComponent: ComponentFunction = ({resource}) => <Testimonial type='person' resource={resource} />;
+const StepperCardComponent: ComponentFunction = ({resource, index, arrayLength}) => (
+	<StepperCard resource={resource} index={index!} arrayLength={arrayLength!} />
+);
+
+const TestimonialCompanyComponent: ComponentFunction = ({resource}) => (
+	<Testimonial type="company" resource={resource} />
+);
+
+const TestimonialPersonComponent: ComponentFunction = ({resource}) => <Testimonial type="person" resource={resource} />;
 
 const ResourceCardComponent: ComponentFunction = ({resource}) => <ResourceCard resource={resource} />;
 
@@ -99,6 +108,7 @@ const FeaturedResourceComponent: ComponentFunction = ({theme, resource}) => (
 );
 
 const StatsCardComponent: ComponentFunction = ({resource}) => <StatsCard resource={resource} />;
+const BrandOutcomeCardComponent: ComponentFunction = ({resource}) => <BrandOutcomeCard resource={resource} />;
 
 const StatsCardWithArrowsComponent: ComponentFunction = ({resource, index, arrayLength}) => (
 	<StatsCard resource={resource} arrow={true} index={index === arrayLength! - 1 ? undefined : index} />
@@ -109,8 +119,10 @@ const PrescriberJourneyComponent: ComponentFunction = ({resource}) => <Prescribe
 const ProfileComponent: ComponentFunction = ({resource}) => <Profile resource={resource} />;
 
 const InvestorImageComponent: ComponentFunction = ({resource, classes}) => (
-	<Container className={classes!.investorImage}>
-		<Asset asset={resource.asset!} />
+	<Container className={classes.investorImage}>
+		<Group align='center' justify='center'>
+			<Asset asset={resource.asset!} />
+		</Group>
 	</Container>
 );
 
@@ -130,11 +142,12 @@ const getComponent = (
 	index: number,
 	arrayLength: number,
 	theme: MantineTheme,
-	classes: ReturnType<typeof useStyles>['classes'],
+	classes: any,
 	resourceBackground: string,
+	metadata?: Metadata,
+	isEmployeeTag?: boolean
 ) => {
 	const componentMappings: Record<ReferenceTypeEnum | ResourceBlocksEnum, ComponentFunction> = {
-		[ReferenceTypeEnum['Code Snippet']]: CodeSnippetComponent,
 		[ReferenceTypeEnum.Article]: ArticleComponent,
 		[ReferenceTypeEnum['Customer Story']]: TestimonialCompanyComponent,
 		[ReferenceTypeEnum.Testimonial]: TestimonialPersonComponent,
@@ -145,15 +158,21 @@ const getComponent = (
 		[ReferenceTypeEnum['Featured Resource']]: FeaturedResourceComponent,
 		[ReferenceTypeEnum['Info Card']]: FeaturedResourceComponent,
 		[ReferenceTypeEnum.Banner]: BannerComponent,
-		[ReferenceTypeEnum['Stats Card']]: StatsCardComponent,
 		[ReferenceTypeEnum['Stats Card with Arrows']]: StatsCardWithArrowsComponent,
 		[ReferenceTypeEnum['Prescriber Journey']]: PrescriberJourneyComponent,
 		[ReferenceTypeEnum['Team Member']]: ProfileComponent,
 		[ReferenceTypeEnum.Investors]: InvestorImageComponent,
 		[ReferenceTypeEnum['Press Release']]: PressReleaseComponent,
 		[ReferenceTypeEnum.Location]: CardWithImageComponent,
-		[ReferenceTypeEnum.FAQs]: FAQComponent,
 		[ReferenceTypeEnum['Image Carousel']]: ImageCarouselComponent,
+
+		[ReferenceTypeEnum.Card]: CardComponent,
+		[ReferenceTypeEnum['Code Snippet']]: CodeSnippetComponent,
+		[ReferenceTypeEnum['Stepper Cards']]: StepperCardComponent,
+		[ReferenceTypeEnum.FAQs]: FAQComponent,
+		[ReferenceTypeEnum['Stats Card']]: StatsCardComponent,
+		[ReferenceTypeEnum['Brand Outcome Card']]: BrandOutcomeCardComponent,
+		[ReferenceTypeEnum.Cell]: CellComponent,
 	};
 
 	const componentFunction = componentMappings[referenceType];
@@ -161,7 +180,16 @@ const getComponent = (
 		return null; // Handle unknown referenceType values
 	}
 
-	return componentFunction({resource, index, arrayLength, theme, classes, resourceBackground});
+	return componentFunction({
+		resource,
+		index,
+		arrayLength,
+		theme,
+		classes,
+		resourceBackground,
+		metadata,
+		isEmployeeTag,
+	});
 };
 
 type RenderResourceProps = {
@@ -170,6 +198,8 @@ type RenderResourceProps = {
 	index: number;
 	arrayLength: number;
 	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
+	isEmployeeTag: boolean;
+	metadata?: Metadata;
 };
 
 const RenderResource: React.FC<RenderResourceProps> = ({
@@ -178,12 +208,23 @@ const RenderResource: React.FC<RenderResourceProps> = ({
 	index,
 	arrayLength,
 	referenceType,
+	isEmployeeTag,
+	metadata,
 }) => {
 	const theme = useMantineTheme();
 	const [resourceBackground] = getSectionColors(referenceType);
-	const {classes} = useStyles();
 
-	return getComponent(referenceType, resource, index, arrayLength, theme, classes, resourceBackground);
+	return getComponent(
+		referenceType,
+		resource,
+		index,
+		arrayLength,
+		theme,
+		classes,
+		resourceBackground,
+		metadata,
+		isEmployeeTag
+	);
 };
 
 export default RenderResource;

@@ -103,12 +103,6 @@ export const query = graphql`
 					youtubeVideoUrl
 					body {
 						raw
-						references {
-							contentful_id
-							__typename
-							description
-							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-						}
 					}
 					isHubspotEmbed
 					isInsertSnippet

@@ -34,10 +34,10 @@ const config: GatsbyConfig = {
   },
  adapter: adapter(),
   plugins: [
-    'gatsby-plugin-mantine',
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-inline-svg`,
+    `gatsby-plugin-postcss`,
     {
       resolve: `gatsby-plugin-advanced-sitemap-patch`,
       options: {
@@ -64,6 +64,7 @@ const config: GatsbyConfig = {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
         environment: process.env.CONTENTFUL_ENVIRONMENT,
+        enableTags: true,
       },
     },
     {

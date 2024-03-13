@@ -1,0 +1,12 @@
+.imageSection {
+    margin: 0;
+    padding-top: 28px;
+    display: grid;
+    place-items: center;
+}
+
+
+.fragment {
+    position: relative;
+    height: 100%;
+}

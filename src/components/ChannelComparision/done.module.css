@@ -1,0 +1,42 @@
+.content {
+	height: 100%;
+	padding: 40px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 72px 105px;
+	}
+}
+
+.contentGrid {
+	background: #f4f4f4;
+}
+
+.title {
+	line-height: 1.2;
+	font-size: 28px;
+}
+
+.normalText {
+	line-height: 29px;
+	margin-bottom: 44px;
+	font-size: 18px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 24px;
+		margin-bottom: 64px;
+	}
+}
+
+.image {
+	width: 80px;
+
+	margin-top: 90px;
+	margin-bottom: 44px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		margin-bottom: 44px;
+		margin-top: 90px;
+
+		width: 124px;
+	}
+}
