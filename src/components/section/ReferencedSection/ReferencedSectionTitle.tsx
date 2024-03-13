@@ -7,7 +7,7 @@ import {ReferenceTypeEnum, type IReferencedSection} from 'types/section';
 
 import * as classes from './referencedSectionTitle.module.css';
 import PageContext from 'contexts/PageContext';
-import {PATIENTS_PAGE} from 'constants/page';
+import {COMPANY_PAGE, PATIENTS_PAGE} from 'constants/page';
 
 type ReferencedSectionTitleProps = {
 	section: IReferencedSection;
@@ -20,7 +20,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({section,
 	const {title} = useContext(PageContext);
 
 	const renderTitle = (text: string, order?: TitleOrder, className?: string) => (
-		<Title data-context={title} className={className} order={order} c={textColor}>
+		<Title data-context={title} className={className} order={order} c={title === COMPANY_PAGE ? textColor : undefined}>
 			{text}
 		</Title>
 	);

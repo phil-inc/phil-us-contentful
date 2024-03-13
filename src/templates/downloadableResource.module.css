@@ -94,3 +94,9 @@
 	font-size: 14px;
 	font-weight: 500;
 }
+
+.aspectRatio {
+	&::before {
+		padding-bottom: 0px !important;
+	}
+}
