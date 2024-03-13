@@ -13,19 +13,23 @@ type ResourceCarouselProps = {
 };
 
 export const ResourceCarousel: FC<ResourceCarouselProps> = ({imageCaraouselSection}) => {
-	const slides = imageCaraouselSection.references.map(item => (
+	
+	const slides = imageCaraouselSection.references.map(item => {
+		const isSvg = item.asset?.file.contentType === 'image/svg+xml';
+
+		return (
 		<Carousel.Slide key={item.asset.id + 'ResourceCarousel'}>
 			<Paper radius={0} className={classes.card}>
 				<Grid>
 					<Grid.Col span={{base: 12, sm: 12}}>
-						<ImageContainer ratio={16 / 9}>
+						<ImageContainer data-is-svg={isSvg} ratio={16 / 9}>
 							<Asset asset={item.asset!} />
 						</ImageContainer>
 					</Grid.Col>
 				</Grid>
 			</Paper>
 		</Carousel.Slide>
-	));
+	)});
 
 	return (
 		<>

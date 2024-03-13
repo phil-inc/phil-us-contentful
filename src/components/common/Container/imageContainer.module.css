@@ -65,6 +65,14 @@
 		}
 	}
 
+	> div {
+		&[data-is-svg='true'] {
+			&::before {
+				padding-bottom: 0 !important;
+			}
+		}
+	}
+
 	@media (min-width: $phil-breakpoint-md) {
 		position: static;
 		max-width: 335px;
