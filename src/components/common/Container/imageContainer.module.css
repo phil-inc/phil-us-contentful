@@ -54,19 +54,19 @@
 	&[data-context='Contact'] {
 		height: 100%;
 	}
-	
+
 	&[data-context='Company'] {
 		max-width: 100% !important;
 	}
-	
+
 	&[data-index='0'] {
 		&[data-context='Partners'] {
 			max-width: 500px !important;
 		}
 	}
 
-	> div {
-		&[data-is-svg='true'] {
+	&[data-is-svg='false'] {
+		> div {
 			&::before {
 				padding-bottom: 0 !important;
 			}
