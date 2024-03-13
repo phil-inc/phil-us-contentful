@@ -1,7 +1,8 @@
-import {AspectRatio, Container, createStyles, Group, useMantineTheme} from '@mantine/core';
-import {CONTACT_PAGE} from 'constants/page';
-import PageContext from 'contexts/PageContext';
+import {AspectRatio, Container, type MantineSpacing, type StyleProp} from '@mantine/core';
 import React from 'react';
+
+import * as classes from './imageContainer.module.css';
+import PageContext from 'contexts/PageContext';
 
 type ImageContainerProps = {
 	fluid?: boolean;
@@ -12,6 +13,11 @@ type ImageContainerProps = {
 	contain?: boolean;
 	containerRef?: React.MutableRefObject<undefined>;
 	isVideo?: boolean;
+	cover?: boolean;
+	mx?: StyleProp<React.CSSProperties['margin']>;
+	maw?: MantineSpacing;
+	card?: boolean;
+	flexStart?: boolean;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
@@ -22,58 +28,33 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	expanded = false,
 	contain = false,
 	containerRef,
-	isVideo,
+	isVideo = false,
+	mx = 'auto',
+	card = false,
+	maw = 335,
+	flexStart = false,
+	...rest
 }) => {
 	const context = React.useContext(PageContext);
 
-	const useStyles = createStyles((theme, _, getRef) => ({
-		imageContainer: {
-			background,
-			padding: fluid ? 0 : 50,
-			maxWidth: expanded ? '50vw' : '100%',
-			width: expanded ? '50vw' : '100%',
-			...(expanded && {position: 'absolute', top: '90px', right: '0px'}),
-			...(context.title !== CONTACT_PAGE && {height: '100%'}),
-			...(isVideo && {padding: '100px 0'}),
-
-			[theme.fn.smallerThan('lg')]: {
-				maxWidth: '100%',
-				width: '100%',
-				marginTop: 0,
-				marginRight: 0,
-				...(isVideo && {padding: '0'}),
-			},
-
-			[theme.fn.smallerThan('md')]: {
-				position: 'static',
-			},
-		},
-
-		center: {
-			display: 'grid',
-			placeItems: 'center',
-		},
-
-		objectFitContain: {
-			img: {
-				objectFit: 'contain',
-			},
-		},
-	}));
-
-	const {classes} = useStyles();
-
 	return (
-		<Container ref={containerRef} fluid className={classes.imageContainer}>
-			<AspectRatio
-				className={contain ? classes.objectFitContain : undefined}
-				sx={{width: '100%', height: '100%'}}
-				ratio={ratio}
-			>
+		<Container
+			ref={containerRef}
+			fluid={fluid}
+			data-video={isVideo}
+			data-expanded={expanded}
+			data-context={context.title}
+			data-card={card}
+			data-flex-start={flexStart}
+			className={classes.imageContainer}
+			maw={maw}
+			{...rest}
+		>
+			<AspectRatio className={classes.aspectRatio} data-context={context.title} data-contain={contain} ratio={ratio} mx={mx}>
 				{children}
 			</AspectRatio>
 		</Container>
 	);
 };
 
-export default React.memo(ImageContainer);
+export default ImageContainer;

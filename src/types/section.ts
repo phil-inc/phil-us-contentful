@@ -8,6 +8,34 @@ export type BodyType = RenderRichTextData<ContentfulRichTextGatsbyReference>;
 
 export type BackgroundType = 'Default' | 'Grey';
 
+export type MediaItem = {
+	id: string;
+	name?: string;
+	media?: TAsset;
+	youtubeLink?: string;
+	emdedForm?: BodyType;
+};
+
+export type StylingOptions = {
+	id: string;
+	name: string;
+	background: string;
+	extraColor: string;
+};
+
+export type LayoutOptions = {
+	id: string;
+	name: string;
+	numberOfColumns: number;
+	shouldRenderCarousel: boolean;
+};
+
+export type RenderOptions = {
+	id: string;
+	name: string;
+	layoutOptions: LayoutOptions;
+};
+
 export type ISection = {
 	id: string;
 	sectionType: SectionType;
@@ -17,6 +45,7 @@ export type ISection = {
 	body: BodyType;
 	isHubspotEmbed: boolean;
 	isInsertSnippet: boolean;
+	hideNavigationAnchor: boolean;
 	codeSnippet?: {codeSnippet: string};
 	buttonText: string;
 	internalLink: {
@@ -40,6 +69,20 @@ export type ISection = {
 	embedForm: BodyType;
 	background: BackgroundType;
 	automaticOrder: true;
+
+	mediaItem: {
+		id: string;
+		name: string;
+		media: TAsset;
+		youtubeLink: string;
+		emdedForm: BodyType;
+	};
+
+	stylingOptions: StylingOptions;
+
+	renderOptions: RenderOptions;
+
+	v2Flag: boolean;
 };
 
 export enum ResourceBlocksEnum {
@@ -68,22 +111,35 @@ export enum ReferenceTypeEnum {
 	'Investors' = 'Investors',
 	'Stats Card with Arrows' = 'Stats Card with Arrows',
 	'Code Snippet' = 'Code Snippet',
+
+	// V2 components
+	'Card' = 'Card',
+	'Stepper Cards' = 'Stepper Cards',
+	'Brand Outcome Card' = 'Brand Outcome Card',
+	'Cell' = 'Cell',
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
 
+export type Metadata = {
+	tags: Array<{id: string; name: string}>;
+};
+
 export type IReferencedSection = {
+	[x: string]: any;
 	id: string;
 	title: string;
 	metaDescription: string;
 	hideHeader: boolean;
 	referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
 	header: string;
+	headerAlias?: string;
 	subHeading: {
 		id: string;
 		subHeading: string;
 	};
 	references: TResource[];
+	metadata?: Metadata;
 	buttonText?: string;
 	internalLink: {
 		slug?: string;
@@ -105,4 +161,7 @@ export type IReferencedSection = {
 	isHidden: boolean;
 	hideNavigationAnchor: boolean;
 	featuredItems: Array<Pick<TResource, 'generateStaticPage' | 'id' | 'heading' | 'externalLink' | 'internalLink'>>;
+
+	stylingOptions?: StylingOptions;
+	renderOptions?: RenderOptions;
 };

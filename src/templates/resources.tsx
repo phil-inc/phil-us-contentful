@@ -2,31 +2,20 @@ import React from 'react';
 import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import {SEO} from 'layouts/SEO/SEO';
-import {
-	Accordion,
-	Anchor,
-	Box,
-	Button,
-	Card,
-	Divider,
-	Grid,
-	NavLink,
-	Pagination,
-	Text,
-	Title,
-	createStyles,
-	useMantineTheme,
-} from '@mantine/core';
+import {Accordion, Anchor, Box, Button, Card, Divider, Grid, Group, Pagination, Text, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import {type IReferencedSection, type ISection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
+import {type IReferencedSection, type ISection, ReferenceTypeEnum} from 'types/section';
 import {Link, Script, graphql, navigate} from 'gatsby';
 import {ResourceCard} from 'components/common/Resources/ResourceCard';
 import slugify from 'slugify';
 import {Banner} from 'components/common/Banner/Banner';
-import {useToggle, useViewportSize} from '@mantine/hooks';
+import {useToggle} from '@mantine/hooks';
 import {RESOURCES_PAGE} from 'constants/routes';
 import SearchBox from 'components/common/SearchBox/SearchBox';
 import {searchSubmitCallback} from 'pages/resources/search';
+
+import * as classes from './resources.module.css';
+import useDeviceType from 'hooks/useView';
 
 type HelmetProps = {
 	data: {
@@ -56,219 +45,27 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage, contentfulRe
 
 	return (
 		<SEO title={computeTitle()}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={computeTitle()} />
-			<meta name='twitter:description' content={computeMetaDescription()} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={computeMetaDescription()} />
-			<meta property='og:title' content={computeTitle()} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={computeMetaDescription()} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={computeTitle()} />
+			<meta name="twitter:description" content={computeMetaDescription()} />
+			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={computeMetaDescription()} />
+			<meta property="og:title" content={computeTitle()} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={computeMetaDescription()} />
+			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={`https://phil.us${location.pathname}}`} />
 			<Script
 				defer
-				strategy='idle'
-				charSet='utf-8'
-				type='text/javascript'
-				src='//js.hsforms.net/forms/embed/v2.js'
+				strategy="idle"
+				charSet="utf-8"
+				type="text/javascript"
+				src="//js.hsforms.net/forms/embed/v2.js"
 			></Script>
-			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
+			{contentfulPage.noindex && <meta name="robots" content="noindex" />}
 		</SEO>
 	);
 };
-
-const useStyles = createStyles((theme, _params: {isMobileView: boolean}) => ({
-	container: {
-		margin: 0,
-		padding: '0px 100px',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '42px 100px',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: '42px 16px',
-		},
-	},
-
-	cardContainer: {
-		padding: 70,
-		background: '#F4F4F4',
-
-		'> div': {
-			marginBottom: 44,
-		},
-
-		'> :last-child': {
-			marginBottom: 0,
-		},
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '28px 18px',
-		},
-	},
-
-	navigationList: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-	},
-
-	featuredItemsList: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'none',
-		},
-	},
-
-	featuredItemsNavLinksContainer: {
-		'> div': {
-			padding: '16px 0',
-
-			'&[role|="separator"]': {
-				padding: 0,
-			},
-		},
-
-		'div:first-of-type': {
-			paddingTop: 0,
-		},
-
-		'> div:last-child': {
-			paddingBottom: 0,
-		},
-	},
-
-	featuredItemsListMobile: {
-		background: '#F4F4F4',
-		padding: '36px 34px',
-		display: 'none',
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'block',
-		},
-	},
-
-	navLabel: {
-		fontSize: 16,
-		fontWeight: 700,
-	},
-
-	featuredItemSectionLabel: {
-		fontSize: 12,
-		fontWeight: 700,
-		color: '#9a9a9a',
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 16,
-		},
-	},
-
-	navLinkRoot: {
-		backgroundColor: 'transparent',
-
-		':hover': {
-			backgroundColor: 'transparent !important',
-			color: '#00827E',
-		},
-	},
-
-	paginationItem: {
-		height: 40,
-		width: 40,
-
-		'&[data-active]': {
-			background: '#0A0A0A',
-		},
-	},
-
-	textDecorationNone: {
-		textDecoration: 'none',
-		color: 'white',
-	},
-
-	heading1: {
-		fontSize: 48,
-
-		[theme.fn.smallerThan('md')]: {
-			fontSize: 32,
-		},
-	},
-
-	sectionNavLinksContainer: {
-		'a:first-of-type > button': {
-			paddingTop: 0,
-		},
-
-		'> a:last-child > button': {
-			paddingBottom: 0,
-		},
-	},
-
-	accordionContent: {
-		padding: 0,
-	},
-
-	accordionControl: {
-		padding: 0,
-		borderBottom: '0 !important',
-		backgroundColor: 'transparent !important',
-		cursor: _params.isMobileView ? 'pointer' : 'default !important',
-		marginBottom: 0,
-
-		color: '#0A0A0A !important',
-
-		'&[data-active]': {
-			marginBottom: 24,
-		},
-
-		':disabled': {
-			opacity: 1,
-		},
-	},
-
-	chevron: {
-		svg: {
-			height: 24,
-			width: 24,
-		},
-	},
-
-	currentSectionHeader: {
-		display: 'none',
-
-		[theme.fn.smallerThan('md')]: {
-			display: 'block',
-		},
-	},
-
-	searchInput: {
-		borderRadius: 0,
-	},
-
-	faqContainer: {
-		padding: '16px 24px',
-		background: '#F4F4F4',
-		marginBottom: 38,
-	},
-	faqContainerButton: {
-		fontSize: 16,
-		fontWeight: 400,
-		padding: '8px 20px',
-		[theme.fn.smallerThan('sm')]: {fontSize: 10.28, padding: '10px 7px'},
-	},
-	faqContainerText: {fontSize: 20, [theme.fn.smallerThan('sm')]: {fontSize: 16}},
-
-	breakSection: {
-		display: 'none',
-
-		[theme.fn.smallerThan('sm')]: {
-			display: 'block',
-		},
-	},
-}));
 
 type ResourcesPageProps = {
 	data: {
@@ -288,10 +85,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 	data,
 	pageContext: {currentPage: currentPageNumber, limit, numPages},
 }) => {
-	const {width} = useViewportSize();
-	const theme = useMantineTheme();
-	const isMobileView = theme.breakpoints.md > width;
-	const {classes} = useStyles({isMobileView});
+	const isMobileView = useDeviceType();
 
 	const currentSection = data.contentfulReferencedSection;
 	const resources = currentSection?.references || [];
@@ -317,13 +111,62 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 		}
 	}, [isMobileView]);
 
+	const featuredBox = currentSection?.featuredItems?.length && (
+		<Card className={classes.featuredItemsList}>
+			<Title size={24} order={4} mb={24}>
+				Featured Items
+			</Title>
+			<Box className={classes.featuredItemsNavLinksContainer}>
+				{data.contentfulReferencedSection.featuredItems
+					.filter(resource => resource.generateStaticPage)
+					.map((resource, index, array) => {
+						const path = '/' + slugify(resource.heading, {lower: true, strict: true});
+
+						const sectionLabelText = (
+							<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
+						);
+
+						return (
+							<React.Fragment key={path + index.toString() + index.toString()}>
+								<Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
+									{resource?.internalLink && (
+										<>
+											{sectionLabelText}
+											<Link to={path} data-featured={true} className={classes.navLink}>
+												{resource.heading}
+											</Link>
+										</>
+									)}
+
+									{resource?.externalLink && (
+										<>
+											{sectionLabelText}
+											<Anchor
+												className={classes.navLink}
+												href={resource.externalLink}
+												target="_blank"
+												data-featured={true}
+											>
+												{resource.heading}
+											</Anchor>
+										</>
+									)}
+								</Box>
+								{index !== array.length - 1 && <Divider my={0} />}
+							</React.Fragment>
+						);
+					})}
+			</Box>
+		</Card>
+	);
+
 	return (
 		<Layout>
-			<Expanded id={currentSection.id} py={0}>
+			<Expanded id={currentSection.id} py={0} mb={40}>
 				{/* PAGE HEADER */}
 				<Box>
-					<Grid align='center'>
-						<Grid.Col sm={12} md={12} lg={9.76}>
+					<Grid gutter={40} align="center" my={36}>
+						<Grid.Col span={{sm: 12, md: 12, lg: 9.76}}>
 							<Title className={classes.heading1} order={1}>
 								Resources/
 								<br className={classes.breakSection} />
@@ -331,63 +174,60 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 							</Title>
 						</Grid.Col>
 
-						<Grid.Col sm={12} md={12} lg={2.24}>
+						<Grid.Col span={{sm: 12, md: 12, lg: 2.24}}>
 							<SearchBox
-								value=''
+								value=""
 								onSubmitCallback={vs => {
 									searchSubmitCallback(vs.searchText, []);
 								}}
-								placeholder='Search...'
+								placeholder="Search..."
 							/>
 						</Grid.Col>
 					</Grid>
 				</Box>
 
-				<Grid mt={36} mb={20}>
-					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={3}>
+				<Grid my={40}>
+					<Grid.Col span={{sm: 12, lg: 3}}>
 						{/* RESOURCE TYPE NAV LINKS */}
-						<Card className={classes.navigationList} mb={isMobileView ? 20 : 36}>
+						<Card className={classes.navigationList}>
 							<Accordion
 								value={value}
 								chevronSize={isMobileView ? 24 : 0}
 								classNames={{
-									content: classes.accordionContent,
-									control: classes.accordionControl,
+									content: classes.content,
+									control: classes.control,
 									chevron: classes.chevron,
+									label: classes.label,
+									item: classes.item,
 								}}
 							>
-								<Accordion.Item value='ResourcesType'>
+								<Accordion.Item value="ResourcesType">
 									<Accordion.Control
 										disabled={!isMobileView}
 										onClick={() => {
 											toggle();
 										}}
 									>
-										<Title size={24} order={4}>
-											Resources Type
-										</Title>
+										Resources Type
 									</Accordion.Control>
+
 									<Accordion.Panel>
-										<Box className={classes.sectionNavLinksContainer}>
+										<Box className={classes.navLinkContainer}>
 											{data.contentfulPage.sections
 												.filter(section => !section.isHidden && Boolean(section.header))
 												.map((section, index, array) => {
-													const path
-														= RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
+													const path =
+														RESOURCES_PAGE + slugify(section.header, {lower: true, strict: true});
 
 													return (
 														<React.Fragment key={path}>
-															<Link to={path} className={classes.textDecorationNone}>
-																<NavLink
-																	active={currentSection.id === section.id}
-																	color='#00827E'
-																	py={12}
-																	variant='subtle'
-																	classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
-																	pl={0}
-																	key={section.id}
-																	label={section.header}
-																/>
+															<Link
+																to={path}
+																data-index={index}
+																data-active={currentSection.id === section.id}
+																className={classes.navLink}
+															>
+																{section.header}
 															</Link>
 															{index !== array.length - 1 && <Divider my={0} />}
 														</React.Fragment>
@@ -400,77 +240,24 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 						</Card>
 
 						{/* FEATURED ITEMS NAV LINKS */}
-						{currentSection?.featuredItems?.length && (
-							<Card className={classes.featuredItemsList}>
-								<Title size={24} order={4} mb={24}>
-									Featured Items
-								</Title>
-								<Box className={classes.featuredItemsNavLinksContainer}>
-									{data.contentfulReferencedSection.featuredItems
-										.filter(resource => resource.generateStaticPage)
-										.map((resource, index, array) => {
-											const path = '/' + slugify(resource.heading, {lower: true, strict: true});
-
-											const sectionLabelText = (
-												<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
-											);
-
-											const navLink = (
-												<NavLink
-													classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
-													p={0}
-													pl={0}
-													key={resource.id}
-													label={resource.heading}
-												/>
-											);
-
-											return (
-												<React.Fragment key={path + index.toString() + index.toString()}>
-													<Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
-														{resource?.internalLink && (
-															<>
-																{sectionLabelText}
-																<Link to={path} className={classes.textDecorationNone}>
-																	{navLink}
-																</Link>
-															</>
-														)}
-
-														{resource?.externalLink && (
-															<>
-																{sectionLabelText}
-																<Anchor
-																	href={resource.externalLink}
-																	target='_blank'
-																	className={classes.textDecorationNone}
-																>
-																	{navLink}
-																</Anchor>
-															</>
-														)}
-													</Box>
-													{index !== array.length - 1 && <Divider my={0} />}
-												</React.Fragment>
-											);
-										})}
-								</Box>
-							</Card>
-						)}
+						{!isMobileView && featuredBox}
 					</Grid.Col>
-					<Grid.Col py={isMobileView ? 0 : undefined} sm={12} lg={9}>
+
+					<Grid.Col py={isMobileView ? 0 : undefined} span={{sm: 12, lg: 9}}>
 						{/* RESOURCES MAP */}
 						{currentSection.referenceType === ReferenceTypeEnum.FAQs && (
 							<Box className={classes.faqContainer}>
-								<Grid gutter={isMobileView ? 10 : 28} align='center'>
-									<Grid.Col sm={12} md={'content'}>
-										<Title order={4} className={classes.faqContainerText}>
+								<Grid gutter={isMobileView ? 10 : 28} align="center">
+									<Grid.Col span={{sm: 12, md: 'content'}}>
+										<Title order={4} className={classes.faqLabel}>
 											For Patient FAQs
 										</Title>
 									</Grid.Col>
-									<Grid.Col sm={12} md={'content'}>
-										<Anchor target='_blank' href={`${process.env.GATSBY_ZENDESK_PATIENT_FAQ_LINK}`}>
-											<Button className={classes.faqContainerButton}>View the entire FAQ</Button>
+									<Grid.Col span={{sm: 12, md: 'content'}}>
+										<Anchor target="_blank" href={`${process.env.GATSBY_ZENDESK_PATIENT_FAQ_LINK}`}>
+											<Button variant="philDefault" fullWidth={false} className={classes.faqButton}>
+												View the entire FAQ
+											</Button>
 										</Anchor>
 									</Grid.Col>
 								</Grid>
@@ -484,8 +271,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 								</Title>
 							</Box>
 
-							{resources?.length
-								&& resources
+							{resources?.length &&
+								resources
 									.slice(startIndex, endIndex)
 									.map((resource, index) => (
 										<ResourceCard
@@ -496,103 +283,51 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 									))}
 						</Box>
 
-						{/* PAGINATION CONTROLS */}
-						{numPages > 1 && (
-							<Pagination
-								position='center'
-								mt={44}
-								classNames={{item: classes.paginationItem}}
-								radius={0}
-								color='#0A0A0A'
-								total={numPages}
-								page={currentPageNumber}
-								withControls={false}
-								onChange={async pageNumber => {
-									const path
-										= RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
+						<Box>
+							{/* PAGINATION CONTROLS TODO: update component props */}
+							{numPages > 1 && (
+								<Pagination.Root
+									classNames={{control: classes.paginationControl}}
+									mt={44}
+									radius={0}
+									color="#0A0A0A"
+									total={numPages}
+									value={currentPageNumber}
+									onChange={async pageNumber => {
+										const path =
+											RESOURCES_PAGE + slugify(currentSection.header, {lower: true, strict: true}) + '/';
 
-									if (pageNumber === 1) {
-										void navigate(path);
-										return;
-									}
+										if (pageNumber === 1) {
+											void navigate(path);
+											return;
+										}
 
-									void navigate(path + `${pageNumber}`);
-								}}
-							/>
-						)}
+										void navigate(path + `${pageNumber}`);
+									}}
+								>
+									<Group gap={16} justify="center">
+										<Pagination.Items />
+									</Group>
+								</Pagination.Root>
+							)}
+						</Box>
 					</Grid.Col>
 				</Grid>
 
-				{currentSection?.featuredItems?.length && (
-					<Card className={classes.featuredItemsListMobile}>
-						<Title size={24} order={4} mb={24}>
-							Featured Items
-						</Title>
-						<Box className={classes.featuredItemsNavLinksContainer}>
-							{data.contentfulReferencedSection.featuredItems
-								.filter(resource => resource.generateStaticPage)
-								.map((resource, index, array) => {
-									const path = '/' + slugify(resource.heading, {lower: true, strict: true});
-
-									const sectionLabelText = (
-										<Text className={classes.featuredItemSectionLabel}>{currentSection.header}</Text>
-									);
-
-									const navLink = (
-										<NavLink
-											classNames={{label: classes.navLabel, root: classes.navLinkRoot}}
-											p={0}
-											pl={0}
-											key={resource.id}
-											label={resource.heading}
-										/>
-									);
-
-									return (
-										<React.Fragment key={resource.id + path}>
-											<Box key={path + index.toString()} pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
-												{resource?.internalLink && (
-													<>
-														{sectionLabelText}
-														<Link to={path} className={classes.textDecorationNone}>
-															{navLink}
-														</Link>
-													</>
-												)}
-
-												{resource?.externalLink && (
-													<>
-														{sectionLabelText}
-														<Anchor
-															href={resource.externalLink}
-															target='_blank'
-															className={classes.textDecorationNone}
-														>
-															{navLink}
-														</Anchor>
-													</>
-												)}
-											</Box>
-											{index !== array.length - 1 && <Divider my={0} />}
-										</React.Fragment>
-									);
-								})}
-						</Box>
-					</Card>
-				)}
+				{isMobileView && featuredBox}
 			</Expanded>
-			<Expanded id='resourcesBannerSection' fullWidth background='#F4F4F4' py={120} px={106}>
+
+			<Expanded id="resourcesBannerSection" fullWidth background="#F4F4F4" data-banner={true}>
 				<Grid>
 					{banners.map(bannerSection =>
 						bannerSection.references.map(resource => (
 							<Grid.Col
 								key={resource.id + resource.heading}
-								sm={12}
-								lg={bannerSection.references?.length > 1 ? 6 : 12}
+								span={{sm: 12, lg: bannerSection.references?.length > 1 ? 6 : 12}}
 							>
 								<Banner key={resource.id} resource={resource} />
 							</Grid.Col>
-						)),
+						))
 					)}
 				</Grid>
 			</Expanded>
@@ -602,7 +337,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
 export const resourcesQuery = graphql`
 	query getReferencedSection($id: String!) {
-		contentfulReferencedSection(id: {eq: $id}) {
+		contentfulReferencedSection(id: {eq: $id}, node_locale: {eq: "en-US"}) {
 			id
 			title
 			metaDescription
@@ -728,6 +463,89 @@ export const resourcesQuery = graphql`
 						}
 					}
 					id
+					link {
+						id
+						linkLabel
+						internalContent {
+							... on ContentfulPage {
+								id
+								title
+								slug
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulReferencedSection {
+								id
+								page {
+									title
+									id
+								}
+								header
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulSection {
+								id
+								page {
+									title
+								}
+								header
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+							... on ContentfulResource {
+								id
+								heading
+								slug
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+								isInsertSnippet
+								codeSnippet {
+									codeSnippet
+									id
+								}
+							}
+							... on ContentfulEventRegistration {
+								contentful_id
+								id
+								sys {
+									contentType {
+										sys {
+											type
+											id
+										}
+									}
+								}
+							}
+						}
+						externalUrl
+						contentful_id
+						node_locale
+					}
 				}
 				... on ContentfulDownloadableResource {
 					id

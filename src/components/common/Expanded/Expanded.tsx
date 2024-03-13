@@ -1,7 +1,7 @@
 import React from 'react';
-import {Container, createStyles} from '@mantine/core';
-import {handleSpacing} from 'utils/handleSpacing';
-import PageContext from 'contexts/PageContext';
+import {Container, type MantineSpacing, type StyleProp} from '@mantine/core';
+
+import * as classes from './expanded.module.css';
 
 type ExpandedProps = {
 	id: string;
@@ -9,11 +9,11 @@ type ExpandedProps = {
 	background?: string;
 	minHeight?: number | string;
 	noMargin?: boolean;
-	py?: number;
-	px?: number;
-	pt?: number;
-	pb?: number;
-	mb?: number;
+	py?: StyleProp<MantineSpacing>;
+	px?: StyleProp<MantineSpacing>;
+	pt?: StyleProp<MantineSpacing>;
+	pb?: StyleProp<MantineSpacing>;
+	mb?: StyleProp<MantineSpacing>;
 	fullWidth?: boolean;
 };
 
@@ -34,43 +34,22 @@ const Expanded: React.FC<ExpandedProps> = ({
 	pb,
 	px,
 	fullWidth = false,
-}) => {
-	const context = React.useContext(PageContext);
+	...rest
+}) => (
+	<Container
+		style={{background, minHeight}}
+		id={id}
+		fluid
+		className={classes.container}
+		py={py}
+		pt={pt}
+		pb={pb}
+		mb={mb}
+		px={px ? px : fullWidth ? 0 : undefined}
+		{...rest}
+	>
+		{children}
+	</Container>
+);
 
-	const useStyles = createStyles(theme => ({
-		container: {
-			background,
-			minHeight,
-			maxWidth: '100%',
-			width: '100vw',
-			padding: '100px 100px 92px 100px',
-
-			[theme.fn.smallerThan('md')]: {
-				padding: context.title === 'Field' ? '0px 100px' : '42px 100px',
-			},
-
-			[theme.fn.smallerThan('sm')]: {
-				padding: context.title === 'Field' ? '0px 16px' : '42px 16px',
-			},
-		},
-	}));
-
-	const {classes} = useStyles();
-
-	return (
-		<Container
-			id={id}
-			fluid
-			className={classes.container}
-			py={py}
-			pt={pt}
-			pb={pb}
-			mb={mb}
-			px={px ? px : fullWidth ? 0 : undefined}
-		>
-			{children}
-		</Container>
-	);
-};
-
-export default React.memo(Expanded);
+export default Expanded;

@@ -1,0 +1,126 @@
+.bodyText {
+	font-size: 16px;
+	line-height: 1.4;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 18px;
+	}
+}
+
+.border {
+	border: 2px solid black;
+	padding: 10px;
+}
+
+.table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.tableHeader {
+	text-align: start;
+}
+
+.anchor {
+	color: #00827e;
+}
+
+.listItem {
+	overflow: hidden;
+	font-size: 24px;
+}
+
+.listItem::marker {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.formWrapper {
+	padding: 44px 32px;
+	background: #f4f4f4;
+}
+
+.image {
+	justify-content: center;
+
+	img {
+		max-width: 500px;
+		max-height: 500px;
+		object-fit: cover;
+	}
+}
+
+.eventType {
+	color: #0a0a0a;
+	font-size: 20px;
+
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 24px;
+	}
+}
+
+.title {
+	color: #0a0a0a;
+	letter-spacing: -0.95px;
+	font-size: 38px;
+
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 52px;
+	}
+}
+
+.eventDate {
+	color: #0a0a0a;
+	font-size: 20px;
+
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 24px;
+		margin-bottom: 40px;
+	}
+}
+
+.formHeader {
+	font-size: 20px;
+	color: #0a0a0a;
+	font-family: Raleway, sans-serif;
+
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 22px;
+	}
+}
+
+.speakersHeader {
+	color: #0a0a0a;
+	font-size: 32px;
+	margin-bottom: 24px;
+
+	@media (min-width: $phil-breakpoint-md) {
+		margin-bottom: 32px;
+		font-size: 40px;
+	}
+}
+
+.speakersSubHeader {
+	font-size: 18px;
+	margin-bottom: 40px;
+	color: #0a0a0a;
+
+	@media (min-width: $phil-breakpoint-md) {
+		font-size: 20px;
+		margin-bottom: 80px;
+	}
+}
+
+.container {
+	padding: 0;
+
+	margin-bottom: 40px;
+
+	@media (min-width: $phil-breakpoint-md) {
+		margin-bottom: 120px;
+	}
+}
+
+.stack {
+	align-items: start;
+}

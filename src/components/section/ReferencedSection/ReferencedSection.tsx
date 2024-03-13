@@ -1,116 +1,27 @@
 import React from 'react';
-import {Button, Group, Anchor, createStyles, Accordion} from '@mantine/core';
+import {Button, Group, Anchor, Accordion, Text} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
 import {Link} from 'gatsby';
 import {type IReferencedSection, ReferenceTypeEnum, ResourceBlocksEnum} from 'types/section';
 import {getLink} from 'utils/getLink';
 import slugify from 'slugify';
-import {handleSpacing} from 'utils/handleSpacing';
 import {getWindowProperty} from 'utils/getWindowProperty';
 import * as FullStory from '@fullstory/browser';
 import {isProduction} from 'utils/isProduction';
 import mixpanel from 'mixpanel-browser';
 import PageContext from 'contexts/PageContext';
-import {FIELD_PAGE} from 'constants/page';
+import {FIELD_PAGE, PATIENTS_PAGE} from 'constants/page';
 import ReferencedSectionTitle from './ReferencedSectionTitle';
 import ReferencedSectionBody from './ReferencedSectionBody';
 import {getSectionColors} from './RenderResource';
 
-const useStyles = createStyles(theme => ({
-	investorImage: {
-		width: '300px',
-
-		[theme.fn.smallerThan('md')]: {
-			width: 'fit-content',
-		},
-	},
-	chevron: {
-		svg: {
-			width: 40,
-			height: 40,
-		},
-	},
-
-	label: {
-		div: {
-			justifyContent: 'start',
-			marginBottom: 0,
-			overflowWrap: 'anywhere',
-
-			h2: {
-				fontFamily: 'Raleway, sans-serif',
-				fontSize: 'min(55px, calc(1.5rem + 0.31vw))',
-			},
-		},
-	},
-
-	control: {
-		padding: 20,
-		paddingLeft: 100,
-		paddingRight: 100,
-		borderBottom: '0px !important',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: 20,
-			paddingLeft: 20,
-			paddingRight: 20,
-		},
-	},
-
-	content: {
-		paddingLeft: 105,
-		paddingRight: 105,
-
-		[theme.fn.smallerThan('md')]: {
-			paddingLeft: 20,
-			paddingRight: 20,
-		},
-	},
-
-	item: {
-		background: '#F4F4F4',
-
-		'&[data-active]': {
-			background: '#F4F4F4',
-		},
-	},
-
-	heading: {
-		lineHeight: '1.2',
-		color: '#000000',
-
-		[theme.fn.smallerThan('md')]: {
-			textAlign: 'center',
-			marginBottom: 10,
-			paddingLeft: 20,
-			paddingRight: 20,
-		},
-	},
-
-	subHeading: {
-		fontFamily: 'Lato, sans-serif',
-		fontWeight: 400,
-		color: '#01201F',
-
-		[theme.fn.smallerThan('md')]: {
-			textAlign: 'center',
-			paddingLeft: 34,
-			paddingRight: 34,
-		},
-	},
-
-	codeSnippetStack: {
-		alignItems: 'flex-start',
-
-		[theme.fn.smallerThan('md')]: {
-			alignItems: 'center',
-		},
-	},
-}));
+import * as classes from './referencedSection.module.css';
+import {getColorFromStylingOptions} from 'utils/stylingOptions';
 
 type ReferencedSectionProps = {
 	section: IReferencedSection;
 	isEmbedFormTemplate: boolean;
+	isPreviousBackgroundPure: boolean;
 };
 
 /**
@@ -119,12 +30,15 @@ type ReferencedSectionProps = {
  * @returns Referenced Resources
  */
 
-const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFormTemplate}) => {
+const ReferencedSection: React.FC<ReferencedSectionProps> = ({
+	section,
+	isEmbedFormTemplate,
+	isPreviousBackgroundPure,
+}) => {
 	const params = new URLSearchParams(getWindowProperty('location.search', {}));
-	const GRID_COLUMNS = 100;
+	const GRID_COLUMNS = 12;
 	const SPAN_LG = GRID_COLUMNS / section.references.length;
 	const {link, isExternal} = getLink(section);
-	const {classes, theme} = useStyles();
 	const context = React.useContext(PageContext);
 
 	React.useEffect(() => {
@@ -144,7 +58,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 		}
 	}, []);
 
-	// Get grid span based on resource type
+	// TODO: Refactor Get grid span based on resource type
 	const getSpan = (referenceType: string): {xl: number; lg: number; md: number; sm: number; xs?: number} => {
 		switch (referenceType) {
 			case ReferenceTypeEnum.Testimonial:
@@ -182,27 +96,21 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 
 	const [background, textColor] = getSectionColors(section.referenceType);
 
+	const isNewsLetterComponent = section.references.some(ref =>
+		ref?.metadata?.tags?.some(tag => tag.name === 'Newsletter Component'),
+	);
+
+	const isFaqSection = section.references.some(ref => ref?.body?.references?.some(reff => reff?.isFaq));
+
 	return (
 		<Expanded
 			id={slugify(section.header ?? section.id, {lower: true, strict: true})}
-			background={background}
-			pt={
-				context.title === FIELD_PAGE || section.referenceType === ReferenceTypeEnum['Code Snippet']
-					? 0
-					: handleSpacing(theme, 92)
-			}
-			pb={
-				section.referenceType === ResourceBlocksEnum['Phil Blog']
-				|| section.referenceType === ResourceBlocksEnum['Case Study']
-				|| section.referenceType === ResourceBlocksEnum['White Paper']
-				|| section.referenceType === ResourceBlocksEnum['Upcoming Events']
-				|| context.title === FIELD_PAGE
-					? 0
-					: handleSpacing(theme, 92)
-			}
+			background={section.v2flag ? getColorFromStylingOptions(section?.stylingOptions?.background) : background}
 			fullWidth={section.referenceType === ReferenceTypeEnum['Image Carousel']}
-			py={section.referenceType === ReferenceTypeEnum.Banner ? 120 : undefined}
-			px={section.referenceType === ReferenceTypeEnum.Banner ? 106 : undefined}
+			data-context={context.title}
+			data-is-newsletter-component={isNewsLetterComponent}
+			data-disable-border-top={!isPreviousBackgroundPure}
+			pt={section.header?.length > 0 ? undefined : 0}
 		>
 			{context.title === FIELD_PAGE ? (
 				<Accordion
@@ -214,7 +122,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 					classNames={{
 						chevron: classes.chevron,
 						label: classes.label,
-						control: classes.control,
+						control: classes.accordionControl,
 						content: classes.content,
 						item: classes.item,
 					}}
@@ -234,27 +142,36 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 				</Accordion>
 			) : (
 				<>
-					{Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
+					{!isNewsLetterComponent && Boolean(section.header?.length) && Boolean(!section.hideHeader) && (
 						<ReferencedSectionTitle
 							section={section}
 							isEmbedFormTemplate={isEmbedFormTemplate}
 							textColor={textColor}
 						/>
 					)}
+
 					<ReferencedSectionBody getSpan={getSpan} section={section} />
 				</>
 			)}
 
+			{section.subHeading
+				&& section.referenceType === ReferenceTypeEnum['Stepper Cards']
+				&& context.title === PATIENTS_PAGE && (
+				<Group className={classes.subHeading} data-reference-type={section.referenceType} justify='center'>
+					<Text>{section.subHeading.subHeading}</Text>
+				</Group>
+			)}
+
 			{/* bottom buttons */}
 			{Boolean(section.buttonText?.length) && (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-				<Group position='center' mt={handleSpacing(theme, theme.spacing.lg)}>
+				<Group justify='center' mt={isFaqSection ? 80 : 44}>
 					{isExternal ? (
-						<Anchor href={link} target='_blank'>
-							<Button color={'dark'}>{section.buttonText}</Button>
+						<Anchor className={classes.externalLink} href={link} target='_blank'>
+							<Button variant='philDefault'>{section.buttonText}</Button>
 						</Anchor>
 					) : (
-						<Link to={link}>
-							<Button color={'dark'}>{section.buttonText}</Button>
+						<Link className={classes.internalLink} to={link}>
+							<Button variant='philDefault'>{section.buttonText}</Button>
 						</Link>
 					)}
 				</Group>
@@ -263,4 +180,4 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({section, isEmbedFo
 	);
 };
 
-export default React.memo(ReferencedSection);
+export default ReferencedSection;

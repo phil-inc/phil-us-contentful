@@ -1,0 +1,15 @@
+.body p {
+    margin-top: 0;
+}
+
+.container {
+    padding: 0 20px 20px;
+}
+
+/* Assuming 'md' is a predefined breakpoint in your theme. Replace '768px' with the actual value for 'md' from your theme settings. */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+}
+

@@ -1,0 +1,41 @@
+.socialButton {
+	color: #01201f;
+	background: #f4f4f4;
+
+	&[data-copied='true'] {
+		&[data-hovered='true'] {
+			background: #11827d;
+
+			> span {
+				> svg {
+					fill: #fff !important;
+				}
+			}
+		}
+	}
+
+	> span {
+		> svg {
+			fill: #01201f;
+			stroke-width: 0;
+		}
+	}
+
+	&:hover {
+		color: #fff;
+		background: #000;
+		> span {
+			> svg {
+				fill: #fff;
+			}
+		}
+	}
+}
+
+.tooltip {
+	background: #01201f;
+
+	&[data-copied='true'] {
+		background: #11827d;
+	}
+}

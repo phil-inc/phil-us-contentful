@@ -3,13 +3,16 @@ import {Layout} from 'layouts/Layout/Layout';
 import type {ContentfulPage} from 'types/page';
 import Section from 'components/section/Section';
 import {SEO} from 'layouts/SEO/SEO';
-import {Box, Container, createStyles, Grid, Title} from '@mantine/core';
+import {Box, Container, Grid, Title} from '@mantine/core';
 import Expanded from 'components/common/Expanded/Expanded';
-import type {IReferencedSection, ISection} from 'types/section';
+import type {ISection} from 'types/section';
 import PageContext from 'contexts/PageContext';
 import {Script, graphql} from 'gatsby';
 import slugify from 'slugify';
 import {HOME} from 'constants/page';
+import {isVideoContent} from 'utils/isVideoContent';
+
+import * as classes from './page.module.css';
 
 type HelmetProps = {
 	data: {
@@ -21,7 +24,15 @@ type HelmetProps = {
 export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) => {
 	const heroSection = contentfulPage.sections.find(section => section.sectionType === 'Basic Section') as ISection;
 	const heroImage = heroSection?.asset.file.url;
+	const heroImageV2 = heroSection?.mediaItem?.media?.file?.url;
+
 	const title = contentfulPage.displayTitle.length ? contentfulPage.displayTitle : contentfulPage.title;
+
+	let image = heroImage;
+
+	if (!isVideoContent(heroSection?.mediaItem?.media?.file?.contentType)) {
+		image = heroImageV2 || heroImage;
+	}
 
 	const config = {
 		slug: contentfulPage.slug,
@@ -33,31 +44,31 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 
 	return (
 		<SEO title={title}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={title} />
-			<meta name='twitter:description' content={contentfulPage.description} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={contentfulPage.description} />
-			<meta property='og:title' content={title} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={contentfulPage.description} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${config.slug}`} />
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={title} />
+			<meta name="twitter:description" content={contentfulPage.description} />
+			{image && <meta name="twitter:image" content={`https:${image}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={contentfulPage.description} />
+			<meta property="og:title" content={title} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={contentfulPage.description} />
+			{image && <meta property="og:image" content={`https:${image}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={`https://phil.us${config.slug}`} />
 			<Script
 				defer
 				async
-				strategy='idle'
-				charSet='utf-8'
-				type='text/javascript'
-				src='//js.hsforms.net/forms/embed/v2.js'
+				strategy="idle"
+				charSet="utf-8"
+				type="text/javascript"
+				src="//js.hsforms.net/forms/embed/v2.js"
 			></Script>
-			{contentfulPage.noindex && <meta name='robots' content='noindex' />}
+			{contentfulPage.noindex && <meta name="robots" content="noindex" />}
 			<Script
 				defer
 				async
-				strategy='idle'
-				type='text/javascript'
-				src='//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js'
+				strategy="idle"
+				type="text/javascript"
+				src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
 			></Script>
 		</SEO>
 	);
@@ -69,33 +80,17 @@ type PageTemplateProps = {
 	};
 };
 
-const useStyles = createStyles((theme, {title}: {title: string}) => ({
-	container: {
-		margin: 0,
-		padding: '0px 100px',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: title === 'Field' ? '0px 100px' : '42px 100px',
-		},
-
-		[theme.fn.smallerThan('sm')]: {
-			padding: title === 'Field' ? '0px 16px' : '42px 16px',
-		},
-	},
-}));
-
 const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {id, sections, title} = data.contentfulPage;
-	const {classes} = useStyles({title});
 	let basicSectionCount = 0;
 	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));
 
 	return (
 		<PageContext.Provider value={{title}}>
-			<Layout>
+			<Layout minimal={false}>
 				{title === 'Resources' && (
 					<Expanded id={id} py={0}>
-						<Grid align='center' justify='space-between'>
+						<Grid align="center" justify="space-between">
 							<Grid.Col span={12}>
 								<Box>
 									<Title order={1}>Resources</Title>
@@ -105,20 +100,23 @@ const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
 					</Expanded>
 				)}
 				{title === 'Field' && (
-					<Container className={classes.container}>
-						<Title order={1} mb={30}>
+					<Container className={classes.container} fluid>
+						<Title order={1} mb={30} className={classes.heading}>
 							FAQ
 						</Title>
 					</Container>
 				)}
 				{sections
 					.filter(section => !section.isHidden)
-					.map(section => (
+					.map((section, index, array) => (
 						<Section
 							key={section.id + 'mapSectionComponent'}
 							section={section}
 							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
 							isEmbedFormTemplate={isEmbedFormTemplate}
+							isPreviousBackgroundPure={Boolean(
+								array[index - 1]?.stylingOptions?.background.includes('#FFFFFF')
+							)}
 						/>
 					))}
 			</Layout>
@@ -143,10 +141,93 @@ export const query = graphql`
 					body {
 						raw
 						references {
-							contentful_id
 							__typename
-							description
-							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+							... on ContentfulAsset {
+								id
+								contentful_id
+								description
+								gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+								file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+								sys {
+									type
+								}
+							}
+							... on ContentfulButton {
+								id
+								contentful_id
+								buttonText
+								buttonStyle
+								link {
+									linkLabel
+									name
+									externalUrl
+									internalContent {
+										__typename
+										... on ContentfulPage {
+											id
+											title
+											slug
+											sys {
+												contentType {
+													sys {
+														type
+														id
+													}
+												}
+											}
+										}
+										... on ContentfulReferencedSection {
+											id
+											page {
+												title
+											}
+											header
+											sys {
+												contentType {
+													sys {
+														type
+														id
+													}
+												}
+											}
+										}
+										... on ContentfulSection {
+											id
+											page {
+												title
+											}
+											header
+											sys {
+												contentType {
+													sys {
+														type
+														id
+													}
+												}
+											}
+										}
+										... on ContentfulResource {
+											id
+											heading
+											sys {
+												contentType {
+													sys {
+														type
+														id
+													}
+												}
+											}
+										}
+									}
+								}
+								v2flag
+							}
 						}
 					}
 					isHubspotEmbed
@@ -240,6 +321,41 @@ export const query = graphql`
 							}
 						}
 					}
+					mediaItem {
+						name
+						media {
+							gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+							title
+							file {
+								contentType
+								details {
+									size
+								}
+								url
+							}
+						}
+						youtubeLink
+						embedCode {
+							raw
+						}
+						id
+					}
+					stylingOptions {
+						background
+						id
+						name
+					}
+					v2Flag
+					renderOptions {
+						name
+						id
+						layoutOptions {
+							id
+							name
+							numberOfColumns
+							shouldRenderCarousel
+						}
+					}
 				}
 				... on ContentfulReferencedSection {
 					id
@@ -252,8 +368,16 @@ export const query = graphql`
 						subHeading
 					}
 					sectionType
+					metadata {
+						tags {
+							name
+							id
+						}
+					}
 					references {
 						... on ContentfulResource {
+							id
+							isFaq
 							externalLink
 							internalLink {
 								... on ContentfulPage {
@@ -324,6 +448,83 @@ export const query = graphql`
 									}
 								}
 							}
+							buttonText
+							hyperlink {
+								contentful_id
+								id
+								linkLabel
+								name
+								externalUrl
+								internalContent {
+									... on ContentfulPage {
+										slug
+										id
+										title
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+									... on ContentfulReferencedSection {
+										id
+										page {
+											title
+										}
+										header
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+									... on ContentfulSection {
+										id
+										page {
+											title
+										}
+										header
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+									... on ContentfulResource {
+										id
+										heading
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+									... on ContentfulEventRegistration {
+										id
+										heading
+										sys {
+											contentType {
+												sys {
+													type
+													id
+												}
+											}
+										}
+									}
+								}
+							}
 							heading
 							subheading
 							hubspotEmbed {
@@ -338,9 +539,184 @@ export const query = graphql`
 								id
 								description
 							}
-							buttonText
 							body {
 								raw
+								references {
+									__typename
+									... on ContentfulAsset {
+										id
+										contentful_id
+										description
+										gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+										file {
+											contentType
+											details {
+												size
+											}
+											url
+										}
+										sys {
+											type
+										}
+									}
+									... on ContentfulButton {
+										id
+										contentful_id
+										buttonText
+										buttonStyle
+										link {
+											linkLabel
+											name
+											externalUrl
+											internalContent {
+												... on ContentfulPage {
+													id
+													title
+													sys {
+														contentType {
+															sys {
+																type
+																id
+															}
+														}
+													}
+												}
+												... on ContentfulReferencedSection {
+													id
+													page {
+														title
+													}
+													header
+													sys {
+														contentType {
+															sys {
+																type
+																id
+															}
+														}
+													}
+												}
+												... on ContentfulSection {
+													id
+													page {
+														title
+													}
+													header
+													sys {
+														contentType {
+															sys {
+																type
+																id
+															}
+														}
+													}
+												}
+												... on ContentfulResource {
+													id
+													heading
+													contentful_id
+													slug
+													isFaq
+													sys {
+														contentType {
+															sys {
+																type
+																id
+															}
+														}
+													}
+												}
+												... on ContentfulEventRegistration {
+													id
+													contentful_id
+													slug
+													heading
+													sys {
+														contentType {
+															sys {
+																type
+																id
+															}
+														}
+													}
+												}
+											}
+										}
+										v2flag
+									}
+									... on ContentfulMediaItem {
+										sys {
+											contentType {
+												sys {
+													id
+													type
+												}
+											}
+										}
+										contentful_id
+										name
+										name
+										media {
+											gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+											title
+											file {
+												contentType
+												details {
+													size
+												}
+												url
+											}
+										}
+										youtubeLink
+										embedCode {
+											raw
+										}
+										id
+									}
+									... on ContentfulResource {
+										id
+										contentful_id
+										heading
+										slug
+										isFaq
+										sys {
+											contentType {
+												sys {
+													id
+													type
+												}
+											}
+										}
+									}
+									... on ContentfulEventRegistration {
+										id
+										contentful_id
+										heading
+										slug
+										sys {
+											contentType {
+												sys {
+													id
+													type
+												}
+											}
+										}
+									}
+									... on ContentfulDownloadableResource {
+										id
+										contentful_id
+										heading
+										slug
+										sys {
+											contentType {
+												sys {
+													id
+													type
+												}
+											}
+										}
+									}
+								}
 							}
 							author {
 								id
@@ -369,7 +745,31 @@ export const query = graphql`
 									url
 								}
 							}
-							id
+							stylingOptions {
+								background
+								extraColor
+								id
+								name
+							}
+							media {
+								name
+								media {
+									gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+									title
+									file {
+										contentType
+										details {
+											size
+										}
+										url
+									}
+								}
+								youtubeLink
+								embedCode {
+									raw
+								}
+								id
+							}
 						}
 						... on ContentfulDownloadableResource {
 							id
@@ -420,12 +820,48 @@ export const query = graphql`
 								mimeType
 							}
 						}
+						... on ContentfulMediaItem {
+							metadata {
+								tags {
+									name
+									id
+								}
+							}
+							sys {
+								contentType {
+									sys {
+										id
+										type
+									}
+								}
+							}
+							contentful_id
+							name
+							name
+							media {
+								gatsbyImageData(resizingBehavior: SCALE, placeholder: BLURRED, layout: CONSTRAINED)
+								title
+								file {
+									contentType
+									details {
+										size
+									}
+									url
+								}
+							}
+							youtubeLink
+							embedCode {
+								raw
+							}
+							id
+						}
 					}
 					referenceType
 					externalLink
 					buttonText
 					internalLink {
 						... on ContentfulPage {
+							slug
 							id
 							title
 							sys {
@@ -486,10 +922,27 @@ export const query = graphql`
 							}
 						}
 					}
+					stylingOptions {
+						background
+						extraColor
+						id
+						name
+					}
+					v2flag
+					renderOptions {
+						name
+						id
+						layoutOptions {
+							id
+							name
+							numberOfColumns
+							shouldRenderCarousel
+						}
+					}
 				}
 			}
 		}
 	}
 `;
 
-export default React.memo(PageTemplate);
+export default PageTemplate;

@@ -1,0 +1,66 @@
+.container {
+	min-height: 64.5rem;
+	background: #6a7979;
+	margin: 100px -100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 22px 20px;
+
+	@media (max-width: $phil-breakpoint-sm) {
+		margin: auto -16px;
+		min-height: 35rem;
+	}
+}
+
+.pageContainer {
+	display: flex;
+	align-items: center;
+	column-gap: 70px;
+}
+
+.pdfPage {
+	height: 80vh !important;
+
+	> canvas {
+		height: 80vh !important;
+	}
+}
+
+.pdfDocument {
+	margin-top: 0;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		margin-top: 71.5px;
+	}
+}
+
+.pageLoadingContainer {
+	max-width: 595px;
+	height: 80vh;
+	background: transparent !important;
+	background-color: transparent !important;
+}
+
+.pageNumber {
+	margin-top: 20px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		margin-top: 30px;
+	}
+}
+
+.downloadButton {
+	margin-top: 20px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		margin-top: 30px;
+	}
+}
+
+.buttonText {
+	font-size: 14px !important;
+	font-weight: 500 !important;
+	overflow: visible !important;
+}

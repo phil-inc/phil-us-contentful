@@ -1,0 +1,14 @@
+.card {
+    position: relative;
+    overflow: hidden;
+    font-family: Raleway, sans-serif;
+    font-size: 26px;
+}
+
+.title {
+    font-family: Raleway, sans-serif;
+}
+
+.description {
+    font-family: Lato, sans-serif;
+}

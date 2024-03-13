@@ -1,0 +1,15 @@
+.investorImage {
+	width: fit-content;
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+	> img {
+		margin: 0 auto;
+	}
+
+	@media (min-width: $phil-breakpoint-lg) {
+		width: 300px;
+        margin-top: 0;
+        margin-bottom: 0;
+	}
+}
