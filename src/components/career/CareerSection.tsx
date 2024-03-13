@@ -16,15 +16,16 @@ type CareerSectionProps = {
 
 const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAsset}) => {
 	const theme = useMantineTheme();
+	const isSVG = heroAsset?.file?.contentType === 'image/svg+xml';
 
 	return (
 		<Container id={'Career Section'} fluid className={classes.container}>
 			<Grid
 				gutter={handleSpacing(theme, theme.spacing.lg)}
 				pb={handleSpacing(theme, theme.spacing.xl)}
-				align='flex-start'
+				align="flex-start"
 			>
-				<Grid.Col order={{sm: 1}} span={{lg: 6, md: 6, sm: 12}}>
+				<Grid.Col order={{sm: 1}} span={{base: 12, sm: 12, md: 6, lg: 6}}>
 					<Box className={classes.center}>
 						<Group align={'center'} mb={28}>
 							<Box>
@@ -35,16 +36,16 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 						</Group>
 						{isLoading && (
 							<Center h={200}>
-								<Loader color='dark' size='xl' type='dots' />
+								<Loader color="dark" size="xl" type="dots" />
 							</Center>
 						)}
-						{!isLoading
-							&& Object.keys(careers).map((job, index) => (
+						{!isLoading &&
+							Object.keys(careers).map((job, index) => (
 								<Box key={job} mt={index === 1 ? 21 : 0} mb={theme.spacing.lg}>
 									<Title order={3} className={classes.jobTitle}>
 										{job}
 									</Title>
-									<Divider variant='dashed' size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
+									<Divider variant="dashed" size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
 									{careers[job].map(listing => (
 										<Box key={listing.url} mb={theme.spacing.md}>
 											<CareerArticle title={listing.title} url={listing.url} location={listing.location} />
@@ -54,8 +55,8 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 							))}
 					</Box>
 				</Grid.Col>
-				<Grid.Col order={{sm: 2}} span={{lg: 6, md: 6, sm: 12}}>
-					<ImageContainer fluid maw={'100%'}>
+				<Grid.Col order={{sm: 2}} span={{base: 12, sm: 12, md: 6, lg: 6}}>
+					<ImageContainer data-is-svg={isSVG} fluid maw={'100%'}>
 						<Asset asset={heroAsset} />
 					</ImageContainer>
 				</Grid.Col>

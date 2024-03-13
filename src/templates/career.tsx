@@ -3,7 +3,6 @@ import {CAREER_LISTING_URL} from 'constants/api';
 import {Layout} from 'layouts/Layout/Layout';
 import {SEO} from 'layouts/SEO/SEO';
 import React, {useEffect, useState} from 'react';
-import slugify from 'slugify';
 import type {ContentfulPage} from 'types/page';
 import type {ISection} from 'types/section';
 import {getTitle} from 'utils/getTitle';
@@ -11,7 +10,6 @@ import {getWindowProperty} from 'utils/getWindowProperty';
 import {groupBy} from 'utils/groupBy';
 import {isProduction} from 'utils/isProduction';
 import {Script, graphql} from 'gatsby';
-import {HOME} from 'constants/page';
 
 type HelmetProps = {
 	pageContext: ContentfulPage;
