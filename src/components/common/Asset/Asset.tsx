@@ -1,20 +1,23 @@
-import React, {forwardRef, Suspense, lazy, type FC} from 'react';
-import {AspectRatio} from '@mantine/core';
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
+import React, {forwardRef, Suspense, type FC} from 'react';
+import {AspectRatio, Image} from '@mantine/core';
+import {GatsbyImage, type GatsbyImageProps, getImage} from 'gatsby-plugin-image';
 import type {TAsset} from 'types/asset';
 import {isVideoContent} from 'utils/isVideoContent';
 import {getYouTubeId} from 'utils/links';
 import loadable from '@loadable/component';
 
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import {type MediaItem} from 'types/section';
+import classNames from 'classnames';
 
 const LiteYouTubeEmbed = loadable(async () => import('react-lite-youtube-embed'));
 const PDFViewer = loadable(async () => import('../PDFViewer/PDFViewer'));
 
 type AssetProps = {
-	asset: TAsset;
+	asset: TAsset | MediaItem;
 	youtubeVideoURL?: string;
 	width?: number;
+	objectFit?: GatsbyImageProps['objectFit'];
 };
 
 type YouTubeEmbedProps = {
@@ -37,33 +40,53 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({videoId, title}) => (
 );
 
 const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) => {
-	const {asset, youtubeVideoURL, width} = props;
+	const {asset, youtubeVideoURL: youtubeURL, width, objectFit} = props;
+
+	let media = asset;
+	let url = '';
+	let title = '';
+	let contentType = '';
+	let youtubeVideoURL = youtubeURL;
+
+	// TODO: handle this better
+	if (asset?.media) {
+		media = asset?.media;
+		url = asset?.media?.file?.url ?? '';
+		title = asset?.name ?? '';
+		contentType = asset?.media?.file?.contentType ?? '';
+	} else if (asset?.youtubeLink) {
+		youtubeVideoURL = asset?.youtubeLink ?? '';
+	} else {
+		url = asset?.file?.url ?? '';
+		title = asset?.title ?? '';
+		contentType = asset?.file?.contentType ?? '';
+	}
 
 	const renderContent = () => {
 		if (youtubeVideoURL?.length) {
 			const vid = getYouTubeId(youtubeVideoURL);
-			return vid && <YouTubeEmbed videoId={vid} title={asset.title || ''} />;
+			return vid && <YouTubeEmbed videoId={vid} title={title} />;
 		}
 
-		if (isVideoContent(asset.file.contentType)) {
+		if (isVideoContent(contentType)) {
 			return (
 				<AspectRatio ratio={16 / 9}>
-					<video src={asset.file.url} width={'99%'} height={'100%'} controls />
+					<video src={url} width={'99%'} height={'100%'} controls />
 				</AspectRatio>
 			);
 		}
 
-		if (asset.file.contentType === 'image/svg+xml') {
-			return <img src={asset.file.url} alt={asset.title || ''} />;
+		if (contentType === 'image/svg+xml') {
+			return <img style={{objectFit}} src={url} alt={title} />;
 		}
 
-		if (asset.file.contentType === 'application/pdf' && typeof window !== 'undefined') {
-			return <PDFViewer url={asset.file.url} pageContainerWidth={width!} ref={ref} />;
+		if (contentType === 'application/pdf' && typeof window !== 'undefined') {
+			return <PDFViewer url={url} pageContainerWidth={width!} ref={ref} />;
 		}
 
-		if (asset.file.contentType.startsWith('image/')) {
-			const pathToImage = getImage(asset);
-			return <GatsbyImage objectFit='fill' image={pathToImage!} alt={asset.title || ''} />;
+		if (contentType?.startsWith('image/')) {
+			const pathToImage = getImage(media);
+			return <GatsbyImage objectFit='cover' image={pathToImage!} alt={title} />;
 		}
 
 		return null;
@@ -72,4 +95,4 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 	return <Suspense fallback={<div>Loading...</div>}>{renderContent()}</Suspense>;
 });
 
-export default React.memo(Asset);
+export default Asset;

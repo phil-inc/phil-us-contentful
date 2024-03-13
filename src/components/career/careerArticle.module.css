@@ -1,0 +1,14 @@
+.title {
+	margin: 0;
+	/* margin-bottom: 10px; */
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.55;
+	font-family: Lato, sans-serif;
+}
+
+.location {
+	font-size: 18px;
+	font-style: italic;
+    margin: 0;
+}

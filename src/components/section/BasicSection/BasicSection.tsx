@@ -1,7 +1,20 @@
 import React from 'react';
 import {createPortal} from 'react-dom';
 import {BLOCKS, INLINES} from '@contentful/rich-text-types';
-import {Anchor, Box, Button, Container, createStyles, Divider, Grid, Group, List, Text, Title} from '@mantine/core';
+import {
+	Anchor,
+	Box,
+	Button,
+	Container,
+	Grid,
+	Group,
+	List,
+	Portal,
+	Stack,
+	Text,
+	Title,
+	useMantineTheme,
+} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {Link, Script} from 'gatsby';
@@ -15,118 +28,16 @@ import {isVideoContent} from 'utils/isVideoContent';
 import {handleSpacing} from 'utils/handleSpacing';
 import {isProduction} from 'utils/isProduction';
 import ContactForm from 'components/ContactPageForm/ContactForm';
-import {useViewportSize} from '@mantine/hooks';
+import {useId, useViewportSize} from '@mantine/hooks';
 import PageContext from 'contexts/PageContext';
 import {CONTACT_PAGE} from 'constants/page';
 import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 import {parseScript} from 'utils/parseScript';
 
-const useStyles = createStyles(
-	(
-		theme,
-		{
-			isContact,
-			isEmbedFormTemplate,
-			index,
-			isEmbedFormSection,
-		}: {isContact: boolean; isEmbedFormTemplate: boolean; index: number; isEmbedFormSection: boolean},
-	) => ({
-		title: {
-			maxWidth: isEmbedFormTemplate ? (index === 0 ? 500 : '100%') : '100%',
-			...(isEmbedFormTemplate && {fontSize: index === 0 ? 52 : 40}),
-
-			[theme.fn.smallerThan('lg')]: {
-				maxWidth: '100%',
-			},
-		},
-
-		portal: {
-			[theme.fn.smallerThan('md')]: {
-				display: isEmbedFormSection ? 'none' : undefined,
-			},
-		},
-
-		body: {
-			p: {
-				marginTop: 0,
-			},
-			maxWidth: '100%',
-
-			[theme.fn.smallerThan('md')]: {
-				...(isEmbedFormSection && {paddingLeft: 0, paddingRight: 0}),
-			},
-
-			[theme.fn.smallerThan('sm')]: {
-				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
-			},
-
-			[theme.fn.smallerThan('lg')]: {
-				maxWidth: '100%',
-			},
-		},
-
-		formWrapper: {
-			padding: '44px 32px',
-			background: '#F4F4F4',
-
-			[theme.fn.smallerThan('sm')]: {
-				padding: '44px 38px',
-			},
-		},
-
-		container: {
-			padding: '0 100px',
-			[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-				padding: '0 16px',
-			},
-
-			[theme.fn.smallerThan('md')]: {
-				...(isContact && {marginBottom: 42}),
-			},
-		},
-
-		section: {
-			[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-				display: 'none',
-			},
-		},
-
-		largeSection: {
-			[`@media (max-width: ${theme.breakpoints.md}px)`]: {
-				display: 'none',
-			},
-		},
-
-		listItem: {
-			fontSize: 18,
-			lineHeight: 27,
-			marginTop: 14,
-			color: theme.colors.primary[0],
-		},
-
-		contactSubheader: {
-			a: {
-				color: '#00827E',
-				textDecoration: 'none',
-			},
-		},
-
-		textGridColumn: {
-			[theme.fn.smallerThan('md')]: {
-				...(isEmbedFormSection && {paddingBottom: 8}),
-			},
-		},
-
-		heroGridColumn: {
-			[theme.fn.smallerThan('md')]: {
-				...(isEmbedFormSection && {paddingLeft: 32, paddingRight: 20}),
-			},
-			[theme.fn.smallerThan('sm')]: {
-				...(isEmbedFormSection && {paddingLeft: 16, paddingRight: 16}),
-			},
-		},
-	}),
-);
+import cx from 'clsx';
+import * as classes from './basicSection.module.css';
+import {getColorFromStylingOptions} from 'utils/stylingOptions';
+import useDeviceType from 'hooks/useView';
 
 type BasicSectionProps = {
 	section: ISection;
@@ -149,16 +60,16 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const HEADING_SECOND = 2;
 	const context = React.useContext(PageContext);
 
-	const {classes, theme} = useStyles({
-		isContact: context.title === CONTACT_PAGE,
-		isEmbedFormTemplate,
-		index,
-		isEmbedFormSection: Boolean(section.embedForm),
-	});
-
-	const {link, isExternal} = getLink(section);
+	const theme = useMantineTheme();
 
 	const richTextImages: Record<string, any> = {};
+
+	const uuid = useId();
+	const {width} = useViewportSize();
+	const isDesktop = useDeviceType('xl');
+	const isMobileView = !isDesktop;
+
+	let header = '';
 
 	// eslint-disable-next-line array-callback-return
 	section.body.references.map((reference: any) => {
@@ -180,33 +91,121 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 					/>
 				);
 			},
+
+			// TODO: Refactor this
+			[BLOCKS.EMBEDDED_ENTRY](node, children) {
+				if (node?.data?.target) {
+					const {target} = node.data;
+
+					const button = (
+						<Button className={classes.button} variant="philDefault">
+							{node.data.target.buttonText}
+						</Button>
+					);
+
+					if (target?.link?.internalContent) {
+						const {link} = getLink(target, true);
+
+						return !isDesktop ? (
+							<Portal target={`#${uuid}`}>
+								<Link data-video={isVideo()} className={classes.internalLink} to={link}>
+									{button}
+								</Link>
+							</Portal>
+						) : (
+							<Link data-video={isVideo()} className={classes.internalLink} to={link}>
+								{button}
+							</Link>
+						);
+					}
+
+					return (
+						<Anchor
+							className={classes.externalLink}
+							href={target?.link?.externalUrl ?? '#'}
+							target="_blank"
+							referrerPolicy="no-referrer"
+							data-video={isVideo()}
+						>
+							{button}
+						</Anchor>
+					);
+				}
+
+				return null;
+			},
+
 			[BLOCKS.PARAGRAPH](node, children) {
-				return <Text>{children}</Text>;
+				return (
+					<Text
+						data-index={index}
+						data-context={context.title}
+						data-is-embed-form-template={isEmbedFormTemplate}
+						data-video={isVideo()}
+						className={classes.body}
+					>
+						{children}
+					</Text>
+				);
 			},
 			[BLOCKS.UL_LIST](node, children) {
 				return (
-					<List type='unordered' mb={20} pl={8}>
+					<List type="unordered" className={classes.list} data-video={isVideo()}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.OL_LIST](node, children) {
 				return (
-					<List type='ordered' mb={20} pl={8}>
+					<List type="ordered" data-video={isVideo()} className={classes.list}>
 						{children}
 					</List>
 				);
 			},
 			[BLOCKS.LIST_ITEM](node, children) {
 				return (
-					<List.Item>
-						<Text className={classes.listItem}>{children}</Text>
+					<List.Item
+						classNames={{
+							itemWrapper: classes.listItemWrapper,
+							itemLabel: classes.listItemLabel,
+							item: classes.listItem,
+						}}
+					>
+						{children}
 					</List.Item>
 				);
 			},
+			[BLOCKS.HEADING_1](node, children) {
+				if (isMobileView && index === 0 && context.title === 'Demo Page') {
+					return null;
+				}
+
+				return (
+					<Title order={1} data-context={context.title} className={classes.title}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_2](node, children) {
+				return (
+					<Title order={2} className={classes.title}>
+						{children}
+					</Title>
+				);
+			},
+
+			[BLOCKS.HEADING_3](node, children) {
+				return (
+					<Title order={3} className={classes.title}>
+						{children}
+					</Title>
+				);
+			},
+
 			[INLINES.HYPERLINK](node, children) {
 				return (
-					<Anchor href={node.data.uri as string} target='_blank'>
+					<Anchor href={node.data.uri as string} target="_blank">
 						{children}
 					</Anchor>
 				);
@@ -229,10 +228,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 	const isHeroSection = index === HERO_SECTION_INDEX;
 	const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
 	const ref = React.useRef();
-	const {width} = useViewportSize();
 	const [height, setHeight] = React.useState<number>(790);
-
-	const isMobileView = theme.breakpoints.md > width;
+	const isBanner = section?.metadata?.tags?.some(({name}) => name === 'BANNER_SECTION');
 
 	let formId = '';
 	let portalId = '';
@@ -260,24 +257,56 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		}
 	};
 
+	const isSectionV2 = section.v2Flag;
+	const hasYoutubeLink = isSectionV2 ? Boolean(section.mediaItem.youtubeLink) : Boolean(section.youtubeVideoUrl);
+	const mediaItemOrAsset = isSectionV2 ? section.mediaItem : section.asset;
+	const youtubeVideoUrl = isSectionV2 ? section.mediaItem.youtubeLink : section.youtubeVideoUrl;
+
+	const calculateAspectRatio = () => (hasYoutubeLink ? 16 / 9 : undefined);
+
+	const determineBackground = () => {
+		if (isSectionV2) {
+			return isVideoContent(section?.mediaItem?.media?.file?.contentType) || hasYoutubeLink
+				? 'transparent'
+				: undefined;
+		}
+
+		return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink ? 'transparent' : undefined;
+	};
+
+	const isVideo = () => {
+		if (isSectionV2) {
+			return isVideoContent(section?.mediaItem?.media?.file?.contentType) || hasYoutubeLink;
+		}
+
+		return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink;
+	};
+
 	return (
 		<Container
 			id={slugify(section.header, {lower: true, strict: true})}
 			fluid
-			className={classes.container}
-			my={context.title === CONTACT_PAGE ? 0 : isMobileView ? 32 : isEmbedFormTemplate ? 152 : 92}
-			sx={{background: sectionBackground(section.background)}}
+			className={classes.basicSectionContainer}
+			data-index={index}
+			data-context={context.title}
+			data-is-embed-form-template={isEmbedFormTemplate}
+			style={{
+				background: section.v2Flag
+					? getColorFromStylingOptions(section.stylingOptions.background)
+					: sectionBackground(section.background),
+			}}
 		>
 			<>
-				<Grid
-					gutter={handleSpacing(theme, theme.spacing.lg)}
-					align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'}
-				>
+				<Grid align={section.isHubspotEmbed || section.embedForm ? 'flex-start' : 'center'} justify="flex">
 					{/* Text Grid Column */}
-					<Grid.Col className={classes.textGridColumn} order={textColumnOrder} lg={6} md={6} sm={12}>
+					<Grid.Col
+						className={isEmbedFormTemplate ? classes.textGridColumn : undefined}
+						order={textColumnOrder}
+						span={{base: 12, md: 6}}
+					>
 						{section.isHubspotEmbed ? (
 							<>
-								<Title order={titleOrdering}>{section.header}</Title>
+								{section?.header && <Title order={titleOrdering}>{section.header}</Title>}
 								{Boolean(section.subHeader?.subHeader.length) && context.title !== CONTACT_PAGE && (
 									<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
 										{section.subHeader?.subHeader}
@@ -285,7 +314,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 								)}
 								{context.title === CONTACT_PAGE && (
 									<>
-										<Title order={3} mt={handleSpacing(theme, theme.spacing.md)}>
+										<Title order={3} data-context={context.title} className={classes.title}>
 											Start a conversation
 										</Title>
 										{Boolean(section.subHeader?.subHeader.length) && (
@@ -300,109 +329,75 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 										)}
 									</>
 								)}
-								<Divider
-									size={1}
-									variant='dashed'
-									mt={handleSpacing(theme, theme.spacing.sm)}
-									mb={handleSpacing(theme, theme.spacing.md)}
-								/>
+								{/* <Divider size={1} variant="dashed" className={classes.divider} /> */}
 								<Box>
 									<ContactForm section={section} />
 								</Box>
 							</>
 						) : (
 							<>
-								<Title className={classes.title} order={titleOrdering}>
-									{section.header}
-								</Title>
-								{Boolean(section.subHeader?.subHeader.length) && (
-									<Text size={18} weight='bold' mt={handleSpacing(theme, theme.spacing.sm)}>
-										{section.subHeader?.subHeader}
-									</Text>
-								)}
 								{Boolean(section.body) && (
-									<Box className={classes.portal}>
-										{heroRef.current && isMobileView && section.embedForm ? (
-											createPortal(
-												<Text
-													size={18}
-													className={classes.body}
-													mt={handleSpacing(theme, theme.spacing.sm)}
-												>
-													{renderRichText(section.body, options)}
-												</Text>,
-												heroRef.current,
-											)
-										) : (
-											<Text size={18} className={classes.body} mt={handleSpacing(theme, theme.spacing.sm)}>
-												{renderRichText(section.body, options)}
-											</Text>
+									<Stack className={classes.portal}>
+										{isMobileView && context.title === 'Demo Page' && index === 0 && (
+											<Title>{section.header}</Title>
 										)}
-									</Box>
-								)}
-								{Boolean(section.buttonText?.length) && (
-									<Group mt={handleSpacing(theme, theme.spacing.md)}>
-										{isExternal ? (
-											<Anchor href={link} target='_blank'>
-												<Button style={{paddingBottom: '2px', paddingTop: '2px'}}>
-													{section.buttonText}
-												</Button>
-											</Anchor>
-										) : (
-											<Link to={link}>
-												<Button>{section.buttonText}</Button>
-											</Link>
-										)}
-									</Group>
+										{heroRef.current && isMobileView && section.embedForm
+											? createPortal(renderRichText(section.body, options), heroRef.current)
+											: renderRichText(section.body, options)}
+									</Stack>
 								)}
 							</>
 						)}
 					</Grid.Col>
-
 					{/* Hero Grid Column */}
+					{/* TODO:: Handle in css */}
+					{/* TODO: Refactor v2Flags and links */}
 					<Grid.Col
-						className={classes.heroGridColumn}
+						className={cx(classes.heroGridColumn, classes.embedFormTemplate)}
 						ref={heroRef}
 						order={imageColumnOrder}
-						lg={6}
-						md={6}
-						sm={12}
-						sx={{height: context.title === CONTACT_PAGE ? height : undefined}}
+						span={{base: 12, md: 6}}
+						style={{height: context.title === CONTACT_PAGE ? height : undefined}}
+						data-is-embed-form-template={isEmbedFormTemplate}
 					>
-						{section.embedForm ? (
-							<Box className={classes.formWrapper}>
-								<HubspotForm formId={formId} portalId={portalId} />
-							</Box>
-						) : (
-							<ImageContainer
-								containerRef={ref}
-								fluid
-								ratio={section?.youtubeVideoUrl ? 16 / 9 : undefined}
-								background={
-									isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)
-										? 'transparent'
-										: undefined
-								}
-								expanded={context.title === CONTACT_PAGE}
-								isVideo={isVideoContent(section.asset.file.contentType) || Boolean(section?.youtubeVideoUrl)}
-							>
-								<Asset asset={section.asset} youtubeVideoURL={section?.youtubeVideoUrl} />
-							</ImageContainer>
-						)}
+						<Group justify={isVideo() ? 'start' : 'center'} gap={0}>
+							{section.embedForm ? (
+								<Box className={classes.formWrapper}>
+									<HubspotForm formId={formId} portalId={portalId} />
+								</Box>
+							) : (
+								<ImageContainer
+									containerRef={ref}
+									contain
+									ratio={calculateAspectRatio()}
+									background={determineBackground()}
+									expanded={context.title === CONTACT_PAGE}
+									isVideo={isVideo()}
+									maw={isBanner ? 300 : 400}
+									data-index={index}
+									data-context={context.title}
+								>
+									<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
+								</ImageContainer>
+							)}
+						</Group>
 					</Grid.Col>
 				</Grid>
-				{section.isHubspotEmbed
-				&& section.isInsertSnippet
-				&& section.codeSnippet
-				&& Boolean(section.codeSnippet.codeSnippet.length)
-				&& isProduction ? (
-						<Script defer async>
-							{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
-						</Script>
-					) : null}
+
+				<Box className={classes.portalBox} id={uuid}></Box>
+
+				{section.isHubspotEmbed &&
+				section.isInsertSnippet &&
+				section.codeSnippet &&
+				Boolean(section.codeSnippet.codeSnippet.length) &&
+				isProduction ? (
+					<Script defer async>
+						{section.codeSnippet.codeSnippet.trim().replace('<script>', '').replace('</script>', '')}
+					</Script>
+				) : null}
 			</>
 		</Container>
 	);
 };
 
-export default React.memo(BasicSection);
+export default BasicSection;

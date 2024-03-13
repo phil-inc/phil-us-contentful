@@ -1,0 +1,13 @@
+.searchInput {
+  border-radius: 0;
+  border-color: #6A7979;
+}
+
+.searchInput::placeholder {
+  color: #0A0A0A;
+}
+
+.rightSection {
+  width: fit-content;
+  padding-right: 12px;
+}

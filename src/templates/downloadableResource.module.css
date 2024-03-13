@@ -1,0 +1,102 @@
+.inner {
+	padding: 0 16px;
+	padding-bottom: 92px;
+	padding-top: 55px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 100px;
+	}
+}
+
+.button {
+	overflow: visible !important;
+	padding: 10px 50px !important;
+	font-size: 18px !important;
+	line-height: 1.3 !important;
+}
+
+.embededAsset {
+	margin-bottom: 32px;
+
+	&[data-is-pdf='false'] {
+		display: flex;
+		justify-content: center;
+	}
+}
+
+.section {
+	font-size: 20px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 24px;
+	}
+}
+
+.title {
+	font-size: 38px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 52px;
+	}
+}
+
+.description {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 16px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		max-width: 500px;
+		margin-top: 24px;
+		margin-bottom: 45px;
+		font-size: 18px;
+	}
+}
+
+.bodyText {
+	font-size: 16px;
+	line-height: 1.4;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 18px;
+	}
+}
+
+.border {
+	border: 2px solid black;
+	padding: 10px;
+}
+
+.table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.tableHeader {
+	text-align: start;
+}
+
+.anchor {
+	color: #00827e;
+}
+
+.listItem {
+	overflow: hidden;
+	font-size: 24px;
+}
+
+.listItem::marker {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.buttonText {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.aspectRatio {
+	&::before {
+		padding-bottom: 0px !important;
+	}
+}

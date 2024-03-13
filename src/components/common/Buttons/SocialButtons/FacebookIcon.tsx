@@ -3,9 +3,9 @@ import React from 'react';
 export function FacebookIcon(props: React.ComponentProps<'svg'>) {
 	return (
 		<svg
-			width='11'
-			height='19'
-			viewBox='0 0 16 15'
+			width='16'
+			height='16'
+			viewBox='0 0 16 16'
 			xmlns='http://www.w3.org/2000/svg'
 			data-icon='facebook'
 			{...props}

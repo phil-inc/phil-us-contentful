@@ -6,7 +6,6 @@ import {
 	Divider,
 	Button,
 	Text,
-	createStyles,
 	Box,
 	Stack,
 	Anchor,
@@ -15,7 +14,6 @@ import {
 } from '@mantine/core';
 import classNames from 'classnames';
 import {Link} from 'gatsby';
-import {GatsbyImage, getImage} from 'gatsby-plugin-image';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {FC} from 'react';
 import React from 'react';
@@ -26,60 +24,7 @@ import Asset from './Asset/Asset';
 import {BLOCKS, MARKS, INLINES} from '@contentful/rich-text-types';
 import ImageContainer from './Container/ImageContainer';
 
-const useStyles = createStyles(theme => ({
-	card: {
-		position: 'relative',
-		overflow: 'hidden',
-		padding: '50px 30px 40px 30px',
-		width: '100%',
-		height: '100%',
-		minWidth: '100%',
-		minHeight: '100%',
-		lineHeight: '27px',
-
-		'&::before': {
-			content: '""',
-			position: 'absolute',
-			top: 0,
-			bottom: 0,
-			left: 0,
-			width: 6,
-			background: '#5ABEA4 0% 0% no-repeat padding-box',
-		},
-	},
-
-	blue: {
-		'&::before': {
-			background: '#29A5B4 0% 0% no-repeat padding-box',
-		},
-	},
-
-	yellow: {
-		'&::before': {
-			background: '#EDBE3D 0% 0% no-repeat padding-box',
-		},
-	},
-
-	none: {
-		'&::before': {
-			width: 0,
-		},
-	},
-
-	imageWrapper: {
-		maxWidth: 425,
-		maxHeight: 425,
-		padding: 0,
-	},
-
-	fullHeight: {
-		height: '100%',
-	},
-
-	fullWidth: {
-		width: '100%',
-	},
-}));
+import * as classes from './card.module.css';
 
 type ArticleProps = {
 	color: 'blue' | 'yellow' | 'green' | 'none';
@@ -87,7 +32,6 @@ type ArticleProps = {
 };
 
 export const Article: FC<ArticleProps> = ({color, resource}) => {
-	const {classes} = useStyles();
 	const {body, heading, asset, buttonText} = resource;
 	const {link, isExternal} = getLink(resource);
 
@@ -131,7 +75,7 @@ export const Article: FC<ArticleProps> = ({color, resource}) => {
 						{resource.body && renderRichText(resource.body, options)}
 					</Text>
 				</Box>
-				<Group position='center'>
+				<Group align='center'>
 					{isExternal ? (
 						<Anchor href={link} target='_blank'>
 							<Button color={'dark'}>{buttonText}</Button>

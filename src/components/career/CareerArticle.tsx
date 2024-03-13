@@ -1,6 +1,8 @@
 import {Anchor, Box, Button, Grid, Text} from '@mantine/core';
 import React from 'react';
 
+import * as classes from './careerArticle.module.css';
+
 type CareerArticleProps = {
 	title: string;
 	url: string;
@@ -9,22 +11,22 @@ type CareerArticleProps = {
 
 const CareerArticle = ({title, url, location}: CareerArticleProps) => (
 	<Grid align='center' gutter='sm' justify='end'>
-		<Grid.Col xs={12} sm={9} lg={9}>
+		<Grid.Col span={{xs: 12, sm: 9, lg: 9}}>
 			<Box>
-				<Text size={18} weight='bold'>
+				<Text unstyled className={classes.title}>
 					{title}
 				</Text>
-				<Text size={18} italic>
+				<Text unstyled className={classes.location}>
 					{location}
 				</Text>
 			</Box>
 		</Grid.Col>
-		<Grid.Col xs={12} sm={2} lg={3} offsetSm={1} offsetLg={0}>
-			<Anchor href={url} target='_blank'>
-				<Button>View details</Button>
+		<Grid.Col span={{xs: 12, sm: 2, lg: 3}} offset={{sm: 1, lg: 0}}>
+			<Anchor href={url} target='_blank' referrerPolicy='no-referrer'>
+				<Button variant='philDefault'>View details</Button>
 			</Anchor>
 		</Grid.Col>
 	</Grid>
 );
 
-export default React.memo(CareerArticle);
+export default CareerArticle;

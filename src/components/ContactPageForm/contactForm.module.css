@@ -1,0 +1,58 @@
+/* Styles.module.css */
+
+/* Block: body */
+.body p {
+    margin-top: 0;
+}
+
+/* Block: container */
+.container {
+    padding: 0 100px;
+}
+
+@media (max-width: 800px) { /* Adjust to your theme's 'sm' breakpoint */
+    .container {
+        padding: 0 16px;
+    }
+}
+
+/* Block: section */
+.section {
+    /* default styles for section */
+}
+
+@media (max-width: 1275px) { /* Adjust to your theme's 'md' breakpoint */
+    .section {
+        display: none;
+    }
+}
+
+/* Block: large-section */
+.large-section {
+    /* default styles for large-section */
+}
+
+@media (max-width: 1275px) { /* Adjust to your theme's 'md' breakpoint */
+    .large-section {
+        display: none;
+    }
+}
+
+/* Block: list-item */
+.list-item {
+    font-size: 18px;
+    line-height: 27px;
+    margin-top: 14px;
+    color: /* primary color value from theme */; /* Replace with actual primary color value */
+}
+
+/* Block: contact-subheader */
+.contact-subheader a {
+    color: #00827E;
+    text-decoration: none;
+}
+
+/* Block: hubspot-contact-form */
+.hubspot-contact-form[data-hs-forms-root="true"] {
+    min-height: 0;
+}

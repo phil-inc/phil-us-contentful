@@ -1,23 +1,9 @@
 import React from 'react';
-import {Image, TextInput, createStyles} from '@mantine/core';
+import {Image, TextInput} from '@mantine/core';
 import {searchIcon} from 'assets/images';
 import {useForm} from '@mantine/form';
 
-const useStyles = createStyles(() => ({
-	searchInput: {
-		borderRadius: 0,
-		borderColor: '#6A7979',
-
-		'::placeholder': {
-			color: '#0A0A0A',
-		},
-	},
-
-	rightSection: {
-		width: 'fit-content',
-		paddingRight: 12,
-	},
-}));
+import * as classes from './searchBox.module.css';
 
 type SearchBoxType = {
 	placeholder: string;
@@ -31,7 +17,6 @@ type FormValuesType = {
 };
 
 const SearchBox: React.FC<SearchBoxType> = ({onChange, placeholder, onSubmitCallback, value}) => {
-	const {classes} = useStyles();
 	const form = useForm<FormValuesType>({
 		initialValues: {
 			searchText: value,

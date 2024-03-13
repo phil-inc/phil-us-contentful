@@ -1,0 +1,27 @@
+.card {
+	background: #f4f4f4;
+	height: 100%;
+}
+
+.wrapper {
+	background: #f4f4f4;
+}
+
+.content {
+	padding: 32px 42px;
+}
+
+.textColor {
+	color: #525252;
+}
+
+.speakerImageContainer {
+	overflow: hidden;
+	height: 100%;
+
+	> div {
+		&::before {
+			padding-bottom: 0px !important;
+		}
+	}
+}

@@ -1,6 +1,4 @@
-import {Script} from 'gatsby';
 import React from 'react';
-import {isProduction} from 'utils/isProduction';
 
 type SEOProps = {
 	title: string;

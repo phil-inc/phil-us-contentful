@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Title, Text, createStyles, Container, Box, Anchor, List, AspectRatio} from '@mantine/core';
+import {Title, Text, Container, Box, Anchor, List} from '@mantine/core';
 import {Layout} from 'layouts/Layout/Layout';
 import {renderRichText} from 'gatsby-source-contentful/rich-text';
 import type {TResource} from 'types/resource';
@@ -14,10 +14,11 @@ import SocialShare from 'components/Blog/SocialShare/SocialShare';
 import {getDescriptionFromRichtext} from 'utils/getDescription';
 import {isPDFContent, isVideoContent} from 'utils/isVideoContent';
 import {type Block} from '@contentful/rich-text-types';
-import {getWindowProperty} from 'utils/getWindowProperty';
-import slugify from 'slugify';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import {getYouTubeId} from 'utils/links';
+
+import * as classes from './blog.module.css';
+import cx from 'clsx';
 
 type HelmetProps = {
 	data: {
@@ -31,8 +32,8 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulResource}, locatio
 	const description = contentfulResource.metaDescription?.length
 		? contentfulResource.metaDescription
 		: contentfulResource.body?.raw
-			? getDescriptionFromRichtext(contentfulResource.body.raw)
-			: '';
+		? getDescriptionFromRichtext(contentfulResource.body.raw)
+		: '';
 
 	const config = {
 		slug: 'https://phil.us' + location.pathname,
@@ -40,25 +41,25 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulResource}, locatio
 
 	return (
 		<SEO title={contentfulResource.heading}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={contentfulResource.heading} />
-			<meta name='twitter:description' content={description} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={description} />
-			<meta property='og:title' content={contentfulResource.heading} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={description} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={config.slug} />
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={contentfulResource.heading} />
+			<meta name="twitter:description" content={description} />
+			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={description} />
+			<meta property="og:title" content={contentfulResource.heading} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={description} />
+			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={config.slug} />
 			<Script
 				defer
 				async
-				strategy='idle'
-				charSet='utf-8'
-				type='text/javascript'
-				src='//js.hsforms.net/forms/embed/v2.js'
+				strategy="idle"
+				charSet="utf-8"
+				type="text/javascript"
+				src="//js.hsforms.net/forms/embed/v2.js"
 			></Script>
-			{contentfulResource.noindex && <meta name='robots' content='noindex' />}
+			{contentfulResource.noindex && <meta name="robots" content="noindex" />}
 		</SEO>
 	);
 };
@@ -72,145 +73,95 @@ type PageTemplateProps = {
 	};
 };
 
-const useStyles = createStyles(theme => ({
-	body: {
-		p: {
-			marginTop: 0,
-		},
-	},
-	anchor: {
-		color: '#00827E',
-	},
+// Separate components for each content type
+type ContentProps = {
+	asset: TAsset;
+	canvasRef: React.RefObject<HTMLCanvasElement>;
+	classes: Record<string, string>;
+};
 
-	inner: {
-		padding: '0 100px',
+const PDFContent: React.FC<ContentProps> = ({asset, canvasRef}) => <Asset ref={canvasRef} asset={asset} />;
 
-		'&::after': {
-			content: '""',
-			clear: 'both',
-			display: 'table',
-		},
+const VideoContent: React.FC<ContentProps> = ({asset, canvasRef}) => (
+	<ImageContainer fluid maw="100%" ratio={16 / 9}>
+		<Asset ref={canvasRef} asset={asset} />
+	</ImageContainer>
+);
 
-		[theme.fn.smallerThan('sm')]: {
-			padding: '0 16px',
-		},
-	},
+const DefaultContent: React.FC<ContentProps> = ({asset, canvasRef, classes}) => (
+	<Box className={classes.embededAssetWrapper}>
+		<Asset ref={canvasRef} asset={asset} />
+	</Box>
+);
 
-	listItem: {
-		overflow: 'hidden',
-		fontSize: 24,
+type ContentRendererProps = {
+	node: Block;
+	classes: Record<string, string>;
+};
 
-		'::marker': {
-			fontSize: 16,
-			fontWeight: 700,
-		},
-	},
+const ContentRenderer: React.FC<ContentRendererProps> = ({node, classes}) => {
+	const canvasRef = React.useRef<HTMLCanvasElement>(null);
+	const asset = node?.data?.target as TAsset;
+	const contentType: string = node?.data?.target?.file?.contentType as string;
 
-	floatingImage: {
-		float: 'right',
-		padding: '30px 40px',
+	if (isPDFContent(contentType)) {
+		return <PDFContent asset={asset} canvasRef={canvasRef} classes={classes} />;
+	}
 
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-			float: 'none',
-			display: 'flex',
-			placeContent: 'center',
-		},
-	},
+	if (isVideoContent(contentType)) {
+		return <VideoContent asset={asset} canvasRef={canvasRef} classes={classes} />;
+	}
 
-	embededAsset: {
-		marginBottom: '32px',
-
-		display: 'flex',
-		justifyContent: 'start',
-	},
-
-	embededAssetPDF: {
-		marginBottom: '32px',
-	},
-
-	embededAssetWrapper: {
-		maxWidth: 420,
-	},
-
-	border: {
-		border: '2px solid black',
-		padding: 10,
-	},
-
-	table: {
-		borderCollapse: 'collapse',
-		borderSpacing: 0,
-	},
-
-	tableHeader: {
-		textAlign: 'start',
-	},
-}));
+	return <DefaultContent asset={asset} canvasRef={canvasRef} classes={classes} />;
+};
 
 const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 	const {heading, body, asset, banners, author, noindex, isFaq} = data.contentfulResource;
 
-	const {classes, cx} = useStyles();
-
-	const canvasRef = React.useRef(null);
-	const [isMounted, setIsMounted] = React.useState(false);
-	const [origin, setOrigin] = React.useState('https://phil.us');
-
-	React.useEffect(() => {
-		setIsMounted(true);
-
-		const origin = getWindowProperty('location.origin', 'https://www.phil.us');
-		setOrigin(origin);
-	}, []);
-
 	// Map for future reference to match content
-	const richTextImages: Record<string, {image: any; alt: string}> = {};
 	const youtubeEmbeds = new Map<string, {title: string; url: string}>();
 
-	if (body && Boolean(body.references)) {
-		// Rich text image map
-		body.references
-			.filter(reference => reference?.sys?.contentType?.sys?.id !== 'youtubeEmbedResource')
-			.map((reference: any) => {
-				richTextImages[reference.contentful_id] = {
-					image: reference.gatsbyImageData as unknown,
-					alt: reference.title as string,
-				};
+	if (body?.references) {
+		body.references.forEach(reference => {
+			const contentTypeID = reference?.sys?.contentType?.sys?.id;
+			const contentfulID = reference?.contentful_id;
+			if (!contentfulID) {
+				return;
+			}
 
-				return true;
-			});
-
-		// Youtube embed map
-		body.references
-			.filter(reference => reference?.sys?.contentType?.sys?.id === 'youtubeEmbedResource')
-			.map((reference: any) => {
-				youtubeEmbeds[reference.contentful_id] = {
-					title: reference?.title as string,
-					url: reference?.youtubeVideoUrl as string,
-				};
-
-				return true;
-			});
+			switch (contentTypeID) {
+				case 'youtubeEmbedResource':
+					youtubeEmbeds.set(contentfulID, {
+						title: reference.title as string,
+						url: reference.youtubeVideoUrl as string,
+					});
+					break;
+			}
+		});
 	}
 
 	const options = {
 		renderNode: {
-			[BLOCKS.EMBEDDED_ENTRY](node, children) {
-				const content: {title: string; url: string} = youtubeEmbeds[node?.data?.target?.contentful_id] as {
+			[INLINES.ENTRY_HYPERLINK](node: Block, children) {
+				return <>{children}</>;
+			},
+
+			[BLOCKS.EMBEDDED_ENTRY](node: Block, children) {
+				const content: {title: string; url: string} = youtubeEmbeds.get(node?.data?.target?.contentful_id) as {
 					title: string;
 					url: string;
 				};
 
-				if (isMounted && content?.url?.length) {
+				if (content?.url?.length) {
 					const vid = getYouTubeId(content.url);
 					if (vid) {
 						return <YouTubeEmbed videoId={vid} title={content.title} />;
 					}
 				}
 
-				return null; // Return null during SSR
+				return null; // Return null during build time
 			},
-			[BLOCKS.EMBEDDED_ASSET](node) {
+			[BLOCKS.EMBEDDED_ASSET](node: Block) {
 				return (
 					<Box
 						className={
@@ -219,46 +170,31 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 								: classes.embededAsset
 						}
 					>
-						{isPDFContent(node.data.target.file.contentType as string) ? (
-							<Asset ref={canvasRef} asset={node.data.target as TAsset} />
-						) : node?.data?.target?.file?.contentType
-						  && isVideoContent(node.data.target.file.contentType as string) ? (
-								<ImageContainer fluid ratio={16 / 9}>
-									<Asset ref={canvasRef} asset={node.data.target as TAsset} />
-								</ImageContainer>
-							) : (
-								<Box className={classes.embededAssetWrapper}>
-									<Asset ref={canvasRef} asset={node.data.target as TAsset} />
-								</Box>
-							)}
+						<ContentRenderer node={node} classes={classes} />
 					</Box>
 				);
 			},
-			[BLOCKS.PARAGRAPH](node, children) {
-				return (
-					<Text component='p' mt={0} size={18}>
-						{children}
-					</Text>
-				);
+			[BLOCKS.PARAGRAPH](node: Block, children) {
+				return <Text className={classes.paragraph}>{children}</Text>;
 			},
 
-			[BLOCKS.OL_LIST](node, children) {
+			[BLOCKS.OL_LIST](node: Block, children) {
 				return (
-					<List type='ordered' mt={16} mb={32}>
+					<List type="ordered" mt={16} mb={32}>
 						{children}
 					</List>
 				);
 			},
 
-			[BLOCKS.UL_LIST](node, children) {
+			[BLOCKS.UL_LIST](node: Block, children) {
 				return (
-					<List type='unordered' listStyleType='disc' pl={32} mt={16} mb={44}>
+					<List type="unordered" listStyleType="disc" pl={32} mt={16} mb={44}>
 						{children}
 					</List>
 				);
 			},
 
-			[BLOCKS.LIST_ITEM](node, children) {
+			[BLOCKS.LIST_ITEM](node: Block, children) {
 				return (
 					<List.Item mt={8} mb={0} pr={20} className={classes.listItem}>
 						{children}
@@ -266,57 +202,57 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				);
 			},
 
-			[INLINES.HYPERLINK](node, children) {
+			[INLINES.HYPERLINK](node: Block, children) {
 				const {uri} = node.data as {uri: string};
 				return (
-					<Anchor href={uri} target='_blank' className={classes.anchor}>
+					<Anchor href={uri} target="_blank" referrerPolicy="no-referrer" className={classes.anchor}>
 						{children}
 					</Anchor>
 				);
 			},
-			[BLOCKS.HEADING_1](node, children) {
+			[BLOCKS.HEADING_1](node: Block, children) {
 				return (
-					<Title order={1} mt={40} mb={4}>
+					<Title order={1} className={classes.heading}>
 						{children}
 					</Title>
 				);
 			},
 
-			[BLOCKS.HEADING_2](node, children) {
+			[BLOCKS.HEADING_2](node: Block, children) {
 				return (
-					<Title order={2} size={24} mt={40} mb={4}>
+					<Title order={2} className={cx(classes.heading, classes.heading2)}>
 						{children}
 					</Title>
 				);
 			},
 
-			[BLOCKS.HEADING_3](node, children) {
+			[BLOCKS.HEADING_3](node: Block, children) {
 				return (
-					<Title order={3} size={18} mt={40} mb={4}>
+					<Title order={3} className={cx(classes.heading, classes.heading3)}>
 						{children}
 					</Title>
 				);
 			},
 
-			[BLOCKS.HEADING_4](node, children) {
+			[BLOCKS.HEADING_4](node: Block, children) {
 				return (
-					<Title order={4} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
+					<Title order={4} className={cx(classes.heading, classes.heading4)}>
 						{children}
 					</Title>
 				);
 			},
 
-			[BLOCKS.HEADING_5](node, children) {
+			[BLOCKS.HEADING_5](node: Block, children) {
 				return (
-					<Title order={5} size={18} style={{fontWeight: 400, fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
+					<Title order={5} className={cx(classes.heading, classes.heading5)}>
 						{children}
 					</Title>
 				);
 			},
 
-			[BLOCKS.HEADING_6](node, children) {
+			[BLOCKS.HEADING_6](node: Block, children) {
 				return (
-					<Title order={6} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
+					<Title order={6} className={cx(classes.heading, classes.heading6)}>
 						{children}
 					</Title>
 				);
@@ -361,7 +297,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 				return null; // Return null if no rows present
 			},
 
-			[BLOCKS.TABLE_ROW](node, children) {
+			[BLOCKS.TABLE_ROW](node: Block, children) {
 				return <tr>{children}</tr>;
 			},
 
@@ -377,30 +313,27 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 	const defaultBanners = data.allContentfulResource.nodes;
 	const hasBanners = Boolean(banners);
-	const hideBanners = noindex ?? isFaq;
+	const hideBanners = noindex || isFaq;
 
 	const bannersToDisplay = hasBanners ? banners! : (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
 	return (
 		<Layout>
-			<Container size='xl' className={classes.inner}>
-				<Grid gutter='xl' align='center' pb={52} pt={0}>
-					<Grid.Col lg={12} md={12} sm={12}>
-						<Title order={1} mb={36}>
-							{heading}
-						</Title>
-						{Boolean(asset) && (
-							<Container className={classes.floatingImage} size='sm'>
-								<Asset asset={asset!} />
-							</Container>
-						)}
-						<Text mb={42}>{body && renderRichText(body, options)}</Text>
+			<Container size="xl" className={classes.wrapper}>
+				<Title order={1} mb={36} className={classes.title}>
+					{heading}
+				</Title>
+				{Boolean(asset) && (
+					<Container className={classes.floatingImage} size="sm">
+						<Asset asset={asset!} />
+					</Container>
+				)}
 
-						{!noindex && <SocialShare />}
+				<Box mb={42}>{body && renderRichText(body, options)}</Box>
 
-						{Boolean(author) && <AuthorBlock author={author!} />}
-					</Grid.Col>
-				</Grid>
+				{!noindex && <SocialShare />}
+
+				{Boolean(author) && <AuthorBlock author={author!} />}
 			</Container>
 
 			{/* Bottom Banners */}
@@ -562,4 +495,4 @@ export const query = graphql`
 	}
 `;
 
-export default React.memo(BlogTemplate);
+export default BlogTemplate;

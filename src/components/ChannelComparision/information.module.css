@@ -1,0 +1,54 @@
+.content {
+	height: 100%;
+	padding: 40px;
+	
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 72px 105px;
+	}
+}
+
+.contentGrid {
+	background: #f4f4f4;
+}
+
+.inputLabel {
+	color: #525252;
+	font-size: 20px;
+}
+
+.rootWrapper {
+	margin-bottom: 20px !important;
+}
+
+.inputWrapper {
+	margin-bottom: 0;
+}
+
+.radioButton {
+	width: 24px;
+	height: 24px;
+	border-radius: 1px;
+}
+
+.radioIcon {
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	top: 60%;
+	left: 60%;
+	transform: translate(-50%, -50%);
+}
+
+.radioLabel {
+	font-size: 20px;
+	color: #525252;
+	font-weight: 400;
+}
+
+.backButton {
+	color: #525252;
+
+	&:hover {
+		background: none;
+	}
+}

@@ -1,0 +1,15 @@
+.root {
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+
+.title {
+	font-weight: 900;
+	margin-bottom: 18px;
+	font-family: Raleway, sans-serif;
+	font-size: 32px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		font-size: 34px;
+	}
+}

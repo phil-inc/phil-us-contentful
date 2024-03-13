@@ -1,4 +1,4 @@
-import {Box, Container, createStyles, Divider, Grid, Group, Loader, Title, Text} from '@mantine/core';
+import {Box, Container, Divider, Grid, Group, Loader, Title, Text, useMantineTheme, Center} from '@mantine/core';
 import Asset from 'components/common/Asset/Asset';
 import ImageContainer from 'components/common/Container/ImageContainer';
 import React from 'react';
@@ -6,26 +6,7 @@ import type {TAsset} from 'types/asset';
 import {handleSpacing} from 'utils/handleSpacing';
 import CareerArticle from './CareerArticle';
 
-const useStyles = createStyles(theme => ({
-	body: {
-		p: {
-			marginTop: 0,
-		},
-	},
-	container: {
-		padding: '0 100px',
-		[`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-			padding: `0 ${theme.spacing.sm}px`,
-		},
-	},
-
-	center: {
-		height: '100%',
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-	},
-}));
+import * as classes from './careerSection.module.css';
 
 type CareerSectionProps = {
 	heroAsset: TAsset;
@@ -34,7 +15,7 @@ type CareerSectionProps = {
 };
 
 const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAsset}) => {
-	const {classes, theme} = useStyles();
+	const theme = useMantineTheme();
 
 	return (
 		<Container id={'Career Section'} fluid className={classes.container}>
@@ -43,22 +24,24 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 				pb={handleSpacing(theme, theme.spacing.xl)}
 				align='flex-start'
 			>
-				<Grid.Col orderSm={1} lg={6} md={6} sm={12}>
+				<Grid.Col order={{sm: 1}} span={{lg: 6, md: 6, sm: 12}}>
 					<Box className={classes.center}>
 						<Group align={'center'} mb={28}>
 							<Box>
-								<Title order={1}>
-									<Text>Careers at Phil</Text>
+								<Title order={1} className={classes.title}>
+									Careers at Phil
 								</Title>
 							</Box>
 						</Group>
 						{isLoading && (
-							<Loader color='dark' size='xl' variant='dots' style={{marginTop: `${theme.spacing.sm}`}} />
+							<Center h={200}>
+								<Loader color='dark' size='xl' type='dots' />
+							</Center>
 						)}
 						{!isLoading
 							&& Object.keys(careers).map((job, index) => (
 								<Box key={job} mt={index === 1 ? 21 : 0} mb={theme.spacing.lg}>
-									<Title order={3} style={{lineHeight: '1'}}>
+									<Title order={3} className={classes.jobTitle}>
 										{job}
 									</Title>
 									<Divider variant='dashed' size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
@@ -71,8 +54,8 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 							))}
 					</Box>
 				</Grid.Col>
-				<Grid.Col orderSm={2} lg={6} md={6} sm={12}>
-					<ImageContainer fluid>
+				<Grid.Col order={{sm: 2}} span={{lg: 6, md: 6, sm: 12}}>
+					<ImageContainer fluid maw={'100%'}>
 						<Asset asset={heroAsset} />
 					</ImageContainer>
 				</Grid.Col>
@@ -81,4 +64,4 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 	);
 };
 
-export default React.memo(CareerSection);
+export default CareerSection;

@@ -1,0 +1,51 @@
+.navigationList {
+	background: #f4f4f4;
+	padding: 36px 34px;
+}
+
+.sectionNavLinksContainer {
+	:first-child {
+		padding-top: 0;
+	}
+
+	:last-child {
+		padding-bottom: 0;
+	}
+}
+
+.accordionContent {
+	padding: 0;
+	margin-top: 24px;
+}
+
+.accordionControl {
+	padding: 0;
+	border-bottom: 0;
+	background-color: transparent;
+	cursor: pointer;
+	margin-bottom: 0;
+	color: #0a0a0a;
+}
+
+.chevron {
+	svg {
+		height: 24px !important;
+		width: 24px !important;
+	}
+}
+
+.item {
+	border: none;
+}
+
+.checkboxRoot {
+	padding: 12px 0;
+}
+
+.checkboxLabel {
+	&Checked {
+		padding-left: 8px;
+		font-size: 16px;
+    color: #00827e;
+	}
+}

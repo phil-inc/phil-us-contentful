@@ -76,7 +76,7 @@ export const query = graphql`
 					raw
 					references {
 						... on ContentfulAsset {
-							contentful_id
+							id
 							__typename
 							description
 							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)

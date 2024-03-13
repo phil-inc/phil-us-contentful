@@ -1,0 +1,110 @@
+.header {
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	position: static !important;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 0px 100px;
+	}
+}
+
+.burger {
+	@media (min-width: $phil-breakpoint-lg) {
+		display: none !important;
+	}
+}
+
+.collapse {
+	position: absolute;
+	top: 90px;
+	left: 0;
+	z-index: 2;
+	opacity: 1;
+	width: 100%;
+}
+
+.navbar {
+	position: relative;
+	height: 90px;
+	width: 100%;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+.navbar ul li {
+	position: relative;
+	list-style-type: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+}
+
+.indicator {
+	position: absolute;
+	bottom: -25px;
+	left: 25px;
+	width: 0px;
+	height: 0px;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-bottom: 20px solid #00827e;
+	transition: transform 0.5s;
+}
+
+.navLinksWrapper {
+	display: none;
+
+	@media (min-width: $phil-breakpoint-lg) {
+		display: flex;
+	}
+}
+
+.navLink {
+	position: relative;
+	margin-right: 36px;
+	cursor: pointer;
+	text-decoration: none;
+
+	&:last-child {
+		margin-right: 0px;
+	}
+
+	@media (min-width: $phil-breakpoint-lg) {
+		margin-right: 20px;
+	}
+
+	@media (min-width: $phil-breakpoint-xl) {
+		margin-right: 36px;
+	}
+}
+
+.button {
+	width: 100% !important;
+}
+
+.headerCTA {
+	margin-right: 0px !important;
+}
+
+.patientLoginButtonMobile:hover {
+	color: white;
+}
+
+.logo {
+	max-width: 125px;
+	max-height: 90px;
+	width: 100%;
+}
+
+.hideOnLarge {
+	display: none !important;
+}
+
+.textDecorationNone {
+	text-decoration: none;
+	text-decoration-line: none;
+}

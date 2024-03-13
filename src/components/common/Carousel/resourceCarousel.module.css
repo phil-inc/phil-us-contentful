@@ -1,0 +1,65 @@
+.card {
+	position: relative;
+	overflow: hidden;
+	background: #f4f4f4;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: 6;
+		background: #5abea4 0% 0% no-repeat padding-box;
+	}
+}
+
+.image {
+	height: 50%;
+	width: 100%;
+	background: #00827e;
+}
+
+.mobileCarousel {
+	display: block;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		display: none;
+	}
+}
+
+.controls {
+	position: relative;
+	margin-top: 64px;
+	justify-content: center;
+}
+
+.control {
+	border: none;
+	background: transparent;
+	box-shadow: none;
+
+	margin-bottom: 26px;
+	margin-top: 26px;
+
+	margin-left: 5.6%;
+	margin-right: 5.6%;
+
+	@media (min-width: $phil-breakpoint-md) {
+		margin-left: 1.4%;
+		margin-right: 1.4%;
+	}
+}
+
+.indicator {
+	width: 20px;
+	height: 20px;
+	border: 3px solid #ffffff;
+	background-color: #ffffff40;
+	opacity: 1;
+	box-shadow: none;
+
+	&[data-active='true'] {
+		background-color: #ffffff !important;
+	}
+}

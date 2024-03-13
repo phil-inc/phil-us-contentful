@@ -1,0 +1,42 @@
+.footerWrapper {
+		padding: 0px;
+}
+
+.label {
+	line-height: 1.55 !important;
+	font-size: 18px !important;
+	font-weight: bold !important;
+	padding: 0 !important;
+}
+
+.footerSection {
+	line-height: 40px !important;
+}
+
+.content {
+	padding: 0 !important;
+}
+
+.item {
+	border: none !important;
+}
+
+.control {
+	border-bottom: 1px solid #6a7979 !important;
+	padding: 32px 0 !important;
+}
+
+.chevron {
+	width: 24px !important;
+}
+
+.footerLink,
+.link {
+	color: black !important;
+	text-decoration: none !important;
+}
+
+.divider {
+	border-bottom: 1px solid #6a7979 !important;
+	margin-bottom: 20px;
+}

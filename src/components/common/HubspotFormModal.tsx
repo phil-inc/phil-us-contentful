@@ -1,28 +1,13 @@
 import React from 'react';
-import {Center, Container, createStyles, Loader} from '@mantine/core';
+import {Center, Container, Loader} from '@mantine/core';
 import {useHubspotForm} from '@aaronhayes/react-use-hubspot-form';
 import {parseScript} from 'utils/parseScript';
 import {type BodyType} from 'types/section';
 
-const useStyles = createStyles(theme => ({
-	body: {
-		p: {
-			marginTop: 0,
-		},
-	},
-
-	container: {
-		padding: '0 20px 20px',
-
-		[theme.fn.smallerThan('md')]: {
-			padding: '0 16px',
-		},
-	},
-}));
+import * as classes from './hubspotFormModal.module.css';
 
 const HubspotFormModal = ({hubspotEmbed}: {hubspotEmbed: BodyType}) => {
 	const hubspotRef = React.useRef(null);
-	const {classes} = useStyles();
 	const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 
 	if (hubspotEmbed) {

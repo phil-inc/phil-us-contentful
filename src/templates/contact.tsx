@@ -64,16 +64,19 @@ const ContactTemplate: React.FC<ContactTemplateProps> = ({data: {contentfulPage}
 	return (
 		<PageContext.Provider value={{title}}>
 			<Layout>
-				{sections
-					.filter(section => !section.isHidden)
-					.map(section => (
-						<Section
-							key={section.id + 'mapSectionComponent'}
-							section={section}
-							index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
-							isEmbedFormTemplate={false}
-						/>
-					))}
+				<Box mt={36}>
+					{sections
+						.filter(section => !section.isHidden)
+						.map(section => (
+							<Section
+								key={section.id + 'mapSectionComponent'}
+								section={section}
+								index={section.sectionType === 'Basic Section' ? basicSectionCount++ : basicSectionCount}
+								isEmbedFormTemplate={false}
+								isPreviousBackgroundPure={false}
+							/>
+						))}
+				</Box>
 			</Layout>
 		</PageContext.Provider>
 	);
@@ -94,10 +97,18 @@ export const query = graphql`
 					body {
 						raw
 						references {
-							contentful_id
-							__typename
-							description
-							gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+							... on ContentfulButton {
+								id
+								__typename
+								buttonText
+								buttonStyle
+								v2flag
+								link {
+									linkLabel
+									name
+									externalUrl
+								}
+							}
 						}
 					}
 					isHubspotEmbed

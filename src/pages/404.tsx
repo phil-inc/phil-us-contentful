@@ -1,8 +1,11 @@
-import {createStyles, Container, Title, Text, Button, SimpleGrid} from '@mantine/core';
+import {Container, Title, Text, Button, SimpleGrid, Box, Image, Grid} from '@mantine/core';
 import {Link, Script} from 'gatsby';
 import {Layout} from 'layouts/Layout/Layout';
 import {SEO} from 'layouts/SEO/SEO';
 import React from 'react';
+
+import * as classes from './404.module.css';
+import {notFoundIcon} from 'assets/images';
 
 export const Head: React.FC = () => (
 	<SEO title={'Page not found'}>
@@ -12,72 +15,38 @@ export const Head: React.FC = () => (
 				'Page you are trying to open does not exist. You may have mistyped the address, or the page has been moved to another URL. If you think this is an error contact support.'
 			}
 		/>
-		<Script strategy='idle' charSet='utf-8' type='text/javascript' src='//js.hsforms.net/forms/embed/v2.js'></Script>
+		<Script
+			async
+			defer
+			strategy='idle'
+			charSet='utf-8'
+			type='text/javascript'
+			src='//js.hsforms.net/forms/embed/v2.js'
+		></Script>
 	</SEO>
 );
 
-const useStyles = createStyles(theme => ({
-	root: {
-		paddingTop: 80,
-		paddingBottom: 80,
-	},
-
-	title: {
-		fontWeight: 900,
-		fontSize: 34,
-		marginBottom: theme.spacing.md,
-		fontFamily: 'Raleway, sans-serif',
-
-		[theme.fn.smallerThan('sm')]: {
-			fontSize: 32,
-		},
-	},
-
-	control: {
-		[theme.fn.smallerThan('sm')]: {
-			width: '100%',
-		},
-	},
-
-	mobileImage: {
-		[theme.fn.largerThan('sm')]: {
-			display: 'none',
-		},
-	},
-
-	desktopImage: {
-		[theme.fn.smallerThan('sm')]: {
-			display: 'none',
-		},
-	},
-}));
-
-const Error = () => {
-	const {classes} = useStyles();
-
-	return (
-		<Layout>
-			<Container className={classes.root}>
-				<SimpleGrid spacing={80} cols={2} breakpoints={[{maxWidth: 'sm', cols: 1, spacing: 40}]}>
-					<div>
-						<Title className={classes.title}>Something is not right...</Title>
-						<Text color='dimmed' size='lg'>
-							Page you are trying to open does not exist. You may have mistyped the address, or the page has been
-							moved to another URL. If you think this is an error contact support.
-						</Text>
-						<Link to={'/'}>
-							<Button variant='outline' color={'dark'} size='md' mt='xl' className={classes.control}>
-								Get back to home page
-							</Button>
-						</Link>
-					</div>
-					<Container>
-						<img src='https://phil.us/images/404.svg' width='100%' height='100%' />
-					</Container>
-				</SimpleGrid>
-			</Container>
-		</Layout>
-	);
-};
-
-export default React.memo(Error);
+const Error = () => (
+	<Layout>
+		<Container className={classes.root}>
+			<Grid>
+				<Grid.Col span={{base: 12, sm: 6}} order={{base: 2, sm: 1}}>
+					<Title className={classes.title}>Something is not right...</Title>
+					<Text c='dimmed' size='lg' mb={32}>
+						Page you are trying to open does not exist. You may have mistyped the address, or the page has been
+						moved to another URL. If you think this is an error contact support.
+					</Text>
+					<Link to='/'>
+						<Button variant='philDefault' color={'dark'} size='md'>
+							Get back to home page
+						</Button>
+					</Link>
+				</Grid.Col>
+				<Grid.Col span='auto' order={{base: 1, sm: 2}}>
+					<img src={notFoundIcon} />
+				</Grid.Col>
+			</Grid>
+		</Container>
+	</Layout>
+);
+export default Error;
