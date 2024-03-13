@@ -81,8 +81,6 @@ type PageTemplateProps = {
 };
 
 const PageTemplate: React.FC<PageTemplateProps> = ({data}) => {
-	console.log({data})
-	
 	const {id, sections, title} = data.contentfulPage;
 	let basicSectionCount = 0;
 	const isEmbedFormTemplate = sections.some(section => Boolean((section as ISection)?.embedForm?.raw));

@@ -24,8 +24,6 @@ const CDrawer: React.FC = () => {
 		secondary: {variant: 'header-secondary', size: 'md', uppercase: true},
 	};
 
-	console.log({buttons});
-
 	const [firstButton, secondButton] = buttons;
 
 	const firstButtonComponent = (

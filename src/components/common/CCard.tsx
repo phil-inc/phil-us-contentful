@@ -34,8 +34,6 @@ export const CCard: FC<ArticleProps> = ({resource, metadata, arrayLength}) => {
 	const context = useContext(PageContext);
 	const color = getColorFromStylingOptions(resource?.stylingOptions?.extraColor);
 
-	console.log({resource, arrayLength});
-
 	const isCenter = metadata?.tags?.some(tag => tag.name === CENTER_LIFE_SCIENCES_CARD_TAG);
 
 	const options: Options = {
@@ -57,8 +55,6 @@ export const CCard: FC<ArticleProps> = ({resource, metadata, arrayLength}) => {
 
 			// TODO: Refactor this
 			[BLOCKS.EMBEDDED_ENTRY](node, children) {
-				console.log({node});
-
 				if (node?.data?.target) {
 					const {target} = node.data;
 

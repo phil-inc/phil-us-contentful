@@ -18,4 +18,10 @@
 .speakerImageContainer {
 	overflow: hidden;
 	height: 100%;
+
+	> div {
+		&::before {
+			padding-bottom: 0px !important;
+		}
+	}
 }
