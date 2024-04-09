@@ -1,4 +1,4 @@
-import React, {} from 'react';
+import React from 'react';
 import {Text, Container, Group, Box, Divider} from '@mantine/core';
 import {graphql, Link, StaticQuery} from 'gatsby';
 import type {TAsset} from 'types/asset';
@@ -20,6 +20,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 	const [footer] = allContentfulFooter.nodes;
 	const pages = footer.navigationLinks;
 	const isMobile = isMobileView('xs');
+
+	console.log({footer});
 
 	const links = [
 		{
@@ -49,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 		}
 
 		return (
-			<Text data-minimal={minimal} key={key} fw={400} component='span' className={classes.texts} unstyled>
+			<Text data-minimal={minimal} key={key} fw={400} component="span" className={classes.texts} unstyled>
 				{item.label}
 			</Text>
 		);
@@ -83,8 +85,8 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 						<Group gap={9}>
 							{footer.badge.map(badge => (
 								<Box className={classes.badge}>
-									<ImageContainer background='transparent' fluid>
-										<Asset asset={badge} objectFit='contain' />
+									<ImageContainer background="transparent" fluid>
+										<Asset asset={badge} objectFit="contain" />
 									</ImageContainer>
 								</Box>
 							))}

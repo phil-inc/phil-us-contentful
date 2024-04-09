@@ -1,5 +1,5 @@
-import React, {useCallback} from 'react';
-import {Anchor, AspectRatio, Box, Container, Grid, Group, Image, useMantineTheme} from '@mantine/core';
+import React from 'react';
+import {Anchor, Box, Container, Grid, Group, Image} from '@mantine/core';
 import {SEO} from 'layouts/SEO/SEO';
 import {Layout} from 'layouts/Layout/Layout';
 import {getCustomizedReport} from 'assets/images';
