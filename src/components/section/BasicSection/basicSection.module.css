@@ -186,3 +186,24 @@
 .button {
 	width: 100% !important;
 }
+
+.group {
+	justify-content: center;
+
+	&[data-context='Contact'] {
+		height: 100%;
+		justify-content: center;
+
+		&[data-is-video='true'] {
+			justify-content: start;
+		}
+
+		@media (min-width: $phil-breakpoint-md) {
+			justify-content: end;
+		}
+	}
+
+	&[data-is-video='true'] {
+		justify-content: start;
+	}
+}
