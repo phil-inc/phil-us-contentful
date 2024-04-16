@@ -21,8 +21,6 @@ const Footer: React.FC<FooterProps> = ({allContentfulFooter, minimal}) => {
 	const pages = footer.navigationLinks;
 	const isMobile = isMobileView('xs');
 
-	console.log({footer});
-
 	const links = [
 		{
 			label: !isMobile && !minimal ? 'Copyright 2023, Phil Inc.' : '© Phil, Inc.',
