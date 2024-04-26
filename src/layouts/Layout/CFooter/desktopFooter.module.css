@@ -39,3 +39,11 @@
 	padding-top: 40px;
 	padding-bottom: 40px;
 }
+
+.column {
+	width: 80%;
+}
+
+.root {
+	justify-items: center;
+}
