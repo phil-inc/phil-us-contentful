@@ -44,24 +44,24 @@ export const Head: React.FC<HelmetProps> = ({data: {contentfulPage}, location}) 
 
 	return (
 		<SEO title={title}>
-			<meta name='twitter:card' content='summary_large_image' />
-			<meta name='twitter:title' content={title} />
-			<meta name='twitter:description' content={contentfulPage.description} />
-			{heroImage && <meta name='twitter:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta name='description' content={contentfulPage.description} />
-			<meta property='og:title' content={title} />
-			<meta property='og:type' content={'Page'} />
-			<meta property='og:description' content={contentfulPage.description} />
-			{heroImage && <meta property='og:image' content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
-			<meta property='og:url' content={`https://phil.us${location.pathname}}`} />
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:title" content={title} />
+			<meta name="twitter:description" content={contentfulPage.description} />
+			{heroImage && <meta name="twitter:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta name="description" content={contentfulPage.description} />
+			<meta property="og:title" content={title} />
+			<meta property="og:type" content={'Page'} />
+			<meta property="og:description" content={contentfulPage.description} />
+			{heroImage && <meta property="og:image" content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`} />}
+			<meta property="og:url" content={`https://phil.us${location.pathname}}`} />
 			<Script
 				defer
-				strategy='idle'
-				charSet='utf-8'
-				type='text/javascript'
-				src='//js.hsforms.net/forms/embed/v2.js'
+				strategy="idle"
+				charSet="utf-8"
+				type="text/javascript"
+				src="//js.hsforms.net/forms/embed/v2.js"
 			></Script>
-			{location.pathname === '/field/' && <meta name='robots' content='noindex' />}
+			{location.pathname === '/field/' && <meta name="robots" content="noindex" />}
 		</SEO>
 	);
 };
@@ -75,12 +75,12 @@ type ResourcesSearchProps = {
 };
 
 type PaginationState = Record<
-string,
-{
-	numPages: number;
-	currentPage: number;
-	skip: number;
-}
+	string,
+	{
+		numPages: number;
+		currentPage: number;
+		skip: number;
+	}
 >;
 
 type SearchBodyType = {
@@ -92,14 +92,14 @@ type SearchBodyType = {
 
 const EmptySearchState: React.FC<{searchQueryParam: string}> = ({searchQueryParam}) => (
 	<Box className={classes.emptyStateContainer}>
-		<Text fs={'18px'} c='#0A0A0A'>
+		<Text fs={'18px'} c="#0A0A0A">
 			0 items found for "{searchQueryParam}"
 		</Text>
 		<Divider mt={22} mb={47} />
-		<Title c='#0A0A0A' order={2} size={28} mb={8}>
+		<Title c="#0A0A0A" order={2} size={28} mb={8}>
 			Search No Result
 		</Title>
-		<Text fs={'18px'} color='#0A0A0A'>
+		<Text fs={'18px'} color="#0A0A0A">
 			We're sorry. We cannot find any matches for your search term.
 		</Text>
 	</Box>
@@ -128,7 +128,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 
 	const badges = React.useMemo(
 		() => filterQueryParam.filter(element => availableSectionHeaders.includes(element)),
-		[filterQueryParam, availableSectionHeaders],
+		[filterQueryParam, availableSectionHeaders]
 	);
 
 	const RemoveButton: React.FC<{badge: string}> = ({badge}) => (
@@ -138,14 +138,14 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 
 				const path = generateSearchParams(
 					badges.filter(b => b !== badge),
-					searchQueryParam,
+					searchQueryParam
 				);
 
 				void navigate('/resources/search/' + path);
 			}}
 			size={9}
-			radius='xl'
-			variant='transparent'
+			radius="xl"
+			variant="transparent"
 		>
 			<img src={crossIcon as string} width={9} />
 		</ActionIcon>
@@ -159,7 +159,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 				</Text>
 
 				{Boolean(badges.length) && (
-					<Grid ref={badgeRef} gutter={12} align='end'>
+					<Grid ref={badgeRef} gutter={12} align="end">
 						<Grid.Col span={{md: 'content'}}>
 							<Text className={classes.filterHeading}>Filtered By:</Text>
 						</Grid.Col>
@@ -174,7 +174,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 											root: classes.badgeRoot,
 											section: classes.badgeSection,
 										}}
-										variant='outline'
+										variant="outline"
 										rightSection={<RemoveButton badge={badge} />}
 									>
 										{badge}
@@ -200,8 +200,8 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 			</Box>
 
 			{/* Section Map */}
-			{Boolean(Object.keys(paginationState).length)
-				&& sections
+			{Boolean(Object.keys(paginationState).length) &&
+				sections
 					.filter(section => {
 						if (filterQueryParam.length) {
 							const availableFilter = filterQueryParam.filter(param => availableSectionHeaders.includes(param));
@@ -250,7 +250,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 									mt={44}
 									classNames={{root: classes.root, control: classes.control}}
 									radius={0}
-									color='#0A0A0A'
+									color="#0A0A0A"
 									total={paginationState[section.id].numPages}
 									value={paginationState[section.id]?.currentPage ?? 1}
 									withControls={false}
@@ -287,7 +287,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 	const {sections} = data.contentfulPage;
 	const resources = React.useMemo(
 		() => sections.map(section => (section as IReferencedSection).references).flat(),
-		[],
+		[]
 	);
 
 	const params = new URLSearchParams(location.search);
@@ -312,7 +312,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 
 				return false;
 			}) as IReferencedSection[],
-		[],
+		[]
 	);
 
 	const filteredSection = React.useMemo(
@@ -324,12 +324,12 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 					references: section.references.filter(ref => searchResults.map(sr => sr.id).includes(ref.id)),
 				}))
 				.filter(section => section.references.length),
-		[sections, searchResults],
+		[sections, searchResults]
 	);
 
 	const availableSectionHeaders = React.useMemo(
 		() => filteredSection.map(section => section.header),
-		[filteredSection],
+		[filteredSection]
 	);
 
 	// Create search index
@@ -361,7 +361,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 
 	return (
 		<Layout>
-			<Expanded mt={36} id='ResourcesContainer' py={0}>
+			<Expanded mt={36} id="ResourcesContainer" py={0}>
 				{/* PAGE HEADER */}
 				<Box>
 					<Title className={classes.heading1} order={1}>
@@ -395,11 +395,11 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 				</Grid>
 			</Expanded>
 			<Expanded
-				id='resourcesBannerSection'
+				id="resourcesBannerSection"
 				data-banner={true}
 				data-v1={true}
 				fullWidth
-				background='#F4F4F4'
+				background="#F4F4F4"
 				py={120}
 				px={106}
 			>
@@ -412,7 +412,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({location, data}) => {
 							>
 								<Banner resource={resource} />
 							</Grid.Col>
-						)),
+						))
 					)}
 				</Grid>
 			</Expanded>
@@ -551,6 +551,13 @@ export const resourcesQuery = graphql`
 								}
 							}
 							id
+							sys {
+								__typename
+								contentType {
+									__typename
+								}
+								type
+							}
 						}
 						... on ContentfulDownloadableResource {
 							id

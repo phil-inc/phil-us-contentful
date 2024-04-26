@@ -360,7 +360,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 						style={{height: context.title === CONTACT_PAGE ? height : undefined}}
 						data-is-embed-form-template={isEmbedFormTemplate}
 					>
-						<Group justify={isVideo() ? 'start' : 'center'} gap={0}>
+						<Group
+							h={context.title === CONTACT_PAGE ? '100%' : undefined}
+							classNames={{root: classes.group}}
+							gap={0}
+							data-is-video={isVideo()}
+							data-context={context.title}
+						>
 							{section.embedForm ? (
 								<Box className={classes.formWrapper}>
 									<HubspotForm formId={formId} portalId={portalId} />
