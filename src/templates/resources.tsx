@@ -463,7 +463,7 @@ export const resourcesQuery = graphql`
 						}
 					}
 					id
-					link {
+					hyperlink {
 						id
 						linkLabel
 						internalContent {
