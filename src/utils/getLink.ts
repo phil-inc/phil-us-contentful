@@ -12,7 +12,7 @@ import type {IReferencedSection, ISection} from 'types/section';
 export const getLink = (
 	section: ISection | IReferencedSection | TResource | ContentfulButton,
 	v2 = false
-): {link: string; isExternal: boolean, linkLabel: string} => {
+): {link: string; isExternal: boolean; linkLabel: string} => {
 	const link: string[] = [];
 	const sanitizeLink = (link: string[]) =>
 		`/${link.filter((piece, index) => !(index === 0 && piece === 'home')).join('/')}`;
@@ -106,6 +106,22 @@ export const getLink = (
 		}
 
 		return {link: section.link.externalUrl ?? '#', isExternal: true, linkLabel: section.link[0].linkLabel};
+	}
+
+	if (section?.sys?.__typename === 'ContentfulResourceSys') {
+		const paths = useInternalPaths();
+		const [staticPage] = paths.filter(path => path.id === section.id);
+
+		return {link: staticPage?.path ?? '#', isExternal: false, linkLabel: section.buttonText ?? 'Learn more'};
+	}
+
+	if (section?.hyperlink?.internalContent) {
+		const paths = useInternalPaths();
+		const staticPage = paths.find(path => path.id === section.hyperlink.internalContent.id);
+
+		// Referencing a internal link but not relating it to a section
+		// can cause issues which is mitigated by # link
+		return {link: staticPage?.path ?? '#', isExternal: false, linkLabel: section.hyperlink.linkLabel};
 	}
 
 	return {link: '#', isExternal: true};

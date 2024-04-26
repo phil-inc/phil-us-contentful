@@ -28,13 +28,12 @@
 		position: static;
 		max-width: 100%;
 
-		@media (min-width: $phil-breakpoint-sm) {
+		@media (min-width: $phil-breakpoint-lg) {
 			max-width: 50vw !important;
 			width: 50vw !important;
 
-			position: absolute;
-			top: 90px;
-			right: 0px;
+			margin-right: -100px;
+			margin-top: calc((2.25rem* var(--mantine-scale)) * -2);
 		}
 	}
 
@@ -107,3 +106,5 @@
 		margin-top: 40px;
 	}
 }
+
+
