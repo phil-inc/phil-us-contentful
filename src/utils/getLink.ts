@@ -115,5 +115,14 @@ export const getLink = (
 		return {link: staticPage?.path ?? '#', isExternal: false, linkLabel: section.buttonText ?? 'Learn more'};
 	}
 
+	if (section?.hyperlink?.internalContent) {
+		const paths = useInternalPaths();
+		const staticPage = paths.find(path => path.id === section.hyperlink.internalContent.id);
+
+		// Referencing a internal link but not relating it to a section
+		// can cause issues which is mitigated by # link
+		return {link: staticPage?.path ?? '#', isExternal: false, linkLabel: section.hyperlink.linkLabel};
+	}
+
 	return {link: '#', isExternal: true};
 };

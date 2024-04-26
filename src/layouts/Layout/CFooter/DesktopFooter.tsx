@@ -1,5 +1,5 @@
 import {Box, Divider, List, Anchor, Group, Text, SimpleGrid} from '@mantine/core';
-import {COMPANY_PAGE, PATIENTS_PAGE, RESOURCES} from 'constants/page';
+import {COMPANY_PAGE, CONTACT_PAGE, PATIENTS_PAGE, RESOURCES} from 'constants/page';
 import {Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import React from 'react';
@@ -21,7 +21,7 @@ type TDesktopFooter = {
 };
 
 const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
-	<SimpleGrid className={classes.footer} cols={{base: 4, sm: 2, md: 3, lg: 4}} verticalSpacing={40} spacing={40}>
+	<SimpleGrid classNames={{root: classes.root}} cols={{base: 4, sm: 2, md: 3, lg: 4}} spacing={20} verticalSpacing={20}>
 		{pages.map(page => {
 			const [firstSection = {header: '#'}] = page.sections;
 
@@ -41,14 +41,14 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 
 			return (
 				<Box key={page.id + 'mapFooterPages'} className={classes.column}>
-					<Box style={{width: '80%'}}>
+					<Box>
 						<Link to={path} className={classes.link}>
 							<Text className={classes.header} unstyled>
 								{page.title}
 							</Text>
 						</Link>
 						<Divider className={classes.divider} />
-						<List listStyleType="none" spacing={16}>
+						<List listStyleType="none" spacing={8}>
 							{page.sections
 								.filter(section =>
 									Boolean(section.header?.length && !section.isHidden && !section?.hideNavigationAnchor)
@@ -88,6 +88,27 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 													</Anchor>
 												</List.Item>
 											)}
+
+											{page.title === CONTACT_PAGE && index === getFinalIndex(page) && (
+												<List.Item>
+													<Anchor
+														href="https://www.linkedin.com/company/phil-inc-"
+														target="_blank"
+														referrerPolicy="no-referrer"
+														className={classes.link}
+													>
+														<Group gap={0}>
+															<StaticImage
+																src="../../../assets/images/linkedin.svg"
+																alt="LinkedIn Icon"
+															/>
+															<Text unstyled span data-manual-entry={true} className={classes.link}>
+																Linkedin
+															</Text>
+														</Group>
+													</Anchor>
+												</List.Item>
+											)}
 										</React.Fragment>
 									);
 								})}
@@ -96,27 +117,6 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({pages, footer}) => (
 				</Box>
 			);
 		})}
-		<Box className={classes.column}>
-			<Box style={{width: '80%'}}>
-				<Text unstyled className={classes.header}>
-					Connect with us
-				</Text>
-				<Divider className={classes.divider} />
-				<Anchor
-					href="https://www.linkedin.com/company/phil-inc-"
-					target="_blank"
-					referrerPolicy="no-referrer"
-					className={classes.link}
-				>
-					<Group gap={0}>
-						<StaticImage src="../../../assets/images/linkedin.svg" alt="LinkedIn Icon" />
-						<Text unstyled span data-manual-entry={true} className={classes.link}>
-							Linkedin
-						</Text>
-					</Group>
-				</Anchor>
-			</Box>
-		</Box>
 	</SimpleGrid>
 );
 
