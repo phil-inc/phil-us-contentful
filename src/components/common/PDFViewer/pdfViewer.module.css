@@ -21,10 +21,10 @@
 }
 
 .pdfPage {
-	height: 80vh !important;
+	height: 100% !important;
 
 	> canvas {
-		height: 80vh !important;
+		height: 100% !important;
 	}
 }
 
