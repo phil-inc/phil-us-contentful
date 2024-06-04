@@ -44,11 +44,8 @@ const getCareerListing = async (request: Request) => {
 				title,
 				department,
 				jobUrl,
-				address: {
-					postalAddress: {addressLocality, addressRegion, addressCountry},
-				},
+				location,
 			}: any) => {
-				const location = [addressLocality, addressRegion, addressCountry].filter(Boolean).join(', ');
 				return {title, location, department, url: jobUrl};
 			}
 		);
