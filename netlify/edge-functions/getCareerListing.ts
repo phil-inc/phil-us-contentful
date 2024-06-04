@@ -21,16 +21,16 @@ const getCareerListing = async (request: Request) => {
 		origin = '';
 	}
 
-	const allowedOrigins = Deno.env.get('ALLOWED_ORIGINS')?.split(',') || [];
-	if (!allowedOrigins.includes(origin)) {
-		return new Response(JSON.stringify({error: 'Not allowed'}), {
-			status: 403,
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': origin,
-			},
-		});
-	}
+	// const allowedOrigins = Deno.env.get('ALLOWED_ORIGINS')?.split(',') || [];
+	// if (!allowedOrigins.includes(origin)) {
+	// 	return new Response(JSON.stringify({error: 'Not allowed'}), {
+	// 		status: 403,
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			'Access-Control-Allow-Origin': origin,
+	// 		},
+	// 	});
+	// }
 
 	try {
 		const response = await fetch(uri);
