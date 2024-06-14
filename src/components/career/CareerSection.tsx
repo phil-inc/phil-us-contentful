@@ -27,7 +27,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 			>
 				<Grid.Col order={{sm: 1}} span={{base: 12, sm: 12, md: 6, lg: 6}}>
 					<Box className={classes.center}>
-						<Group align={'center'} mb={28}>
+						<Group align={'center'} mb={80}>
 							<Box>
 								<Title order={1} className={classes.title}>
 									Careers at Phil
@@ -41,7 +41,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 						)}
 						{!isLoading &&
 							Object.keys(careers).map((job, index) => (
-								<Box key={job} mt={index === 1 ? 21 : 0} mb={theme.spacing.lg}>
+								<Box key={job} mb={16}>
 									<Title order={3} className={classes.jobTitle}>
 										{job}
 									</Title>
