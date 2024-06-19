@@ -40,14 +40,14 @@ const CareerSection: React.FC<CareerSectionProps> = ({careers, isLoading, heroAs
 							</Center>
 						)}
 						{!isLoading &&
-							Object.keys(careers).map((job, index) => (
-								<Box key={job} mb={16}>
+							Object.keys(careers).map((job, index, array) => (
+								<Box key={job} mb={index != array.length - 1 ? 48 : 0}>
 									<Title order={3} className={classes.jobTitle}>
 										{job}
 									</Title>
-									<Divider variant="dashed" size={1} mt={theme.spacing.xs} mb={theme.spacing.md} />
-									{careers[job].map(listing => (
-										<Box key={listing.url} mb={theme.spacing.md}>
+									<Divider variant="dashed" size={1} mt={theme.spacing.xs} mb={20} />
+									{careers[job].map((listing, index, array) => (
+										<Box key={listing.url} mb={index !== array.length - 1 ? 12 : 0}>
 											<CareerArticle title={listing.title} url={listing.url} location={listing.location} />
 										</Box>
 									))}
