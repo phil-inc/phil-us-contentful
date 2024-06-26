@@ -96,6 +96,10 @@
 }
 
 .aspectRatio {
+	> img {
+		position: static;
+	}
+	
 	&::before {
 		padding-bottom: 0px !important;
 	}
