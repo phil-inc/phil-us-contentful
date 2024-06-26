@@ -97,7 +97,7 @@
 
 .aspectRatio {
 	> img {
-		position: static;
+		position: static !important;
 	}
 	
 	&::before {
