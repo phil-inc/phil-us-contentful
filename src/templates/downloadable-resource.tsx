@@ -403,7 +403,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 						<Grid.Col span={{sm: 12, md: 5}}>
 							<AspectRatio className={classes.aspectRatio} ratio={1} ref={ref}>
 								{data.contentfulDownloadableResource.image && (
-									<Asset asset={data.contentfulDownloadableResource.image} />
+									<Asset asset={data.contentfulDownloadableResource.image} position="static" />
 								)}
 							</AspectRatio>
 						</Grid.Col>

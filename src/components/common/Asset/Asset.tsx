@@ -18,6 +18,7 @@ type AssetProps = {
 	youtubeVideoURL?: string;
 	width?: number;
 	objectFit?: GatsbyImageProps['objectFit'];
+	position?: string; 
 };
 
 type YouTubeEmbedProps = {
@@ -40,7 +41,7 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({videoId, title}) => (
 );
 
 const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) => {
-	const {asset, youtubeVideoURL: youtubeURL, width, objectFit} = props;
+	const {asset, youtubeVideoURL: youtubeURL, width, objectFit, position} = props;
 
 	let media = asset;
 	let url = '';
@@ -77,7 +78,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>((props: AssetProps, ref) =>
 		}
 
 		if (contentType === 'image/svg+xml') {
-			return <img style={{objectFit}} src={url} alt={title} />;
+			return <img style={{objectFit, position: position ? position : "static"}} src={url} alt={title} />;
 		}
 
 		if (contentType === 'application/pdf' && typeof window !== 'undefined') {
