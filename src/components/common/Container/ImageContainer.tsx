@@ -11,11 +11,12 @@ type ImageContainerProps = {
 	children: React.ReactNode;
 	expanded?: boolean;
 	contain?: boolean;
-	containerRef?: React.MutableRefObject<undefined>;
+	containerRef?: React.Ref<HTMLDivElement> | undefined;
 	isVideo?: boolean;
 	cover?: boolean;
 	mx?: StyleProp<React.CSSProperties['margin']>;
 	maw?: MantineSpacing;
+	mah?: MantineSpacing;
 	card?: boolean;
 	flexStart?: boolean;
 };
