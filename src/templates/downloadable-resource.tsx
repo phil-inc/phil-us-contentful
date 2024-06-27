@@ -237,6 +237,8 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 		},
 	};
 
+
+
 	return (
 		<Layout>
 			<Container className={classes.inner} fluid id={data.contentfulDownloadableResource.id}>
@@ -267,6 +269,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 								ratio={1}
 								maw={data.contentfulDownloadableResource.image?.gatsbyImageData?.width}
 								mah={data.contentfulDownloadableResource.image?.gatsbyImageData?.height}
+								isGatsbyImageData={Boolean(data.contentfulDownloadableResource.image?.gatsbyImageData)}
 							>
 								{data.contentfulDownloadableResource.image && (
 									<Asset asset={data.contentfulDownloadableResource.image} />
