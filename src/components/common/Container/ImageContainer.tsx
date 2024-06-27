@@ -11,17 +11,19 @@ type ImageContainerProps = {
 	children: React.ReactNode;
 	expanded?: boolean;
 	contain?: boolean;
-	containerRef?: React.MutableRefObject<undefined>;
+	containerRef?: React.Ref<HTMLDivElement> | undefined;
 	isVideo?: boolean;
 	cover?: boolean;
 	mx?: StyleProp<React.CSSProperties['margin']>;
 	maw?: MantineSpacing;
+	mah?: MantineSpacing;
 	card?: boolean;
 	flexStart?: boolean;
+	isGatsbyImageData?: boolean;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({
-	ratio = 1,
+	ratio,
 	fluid = false,
 	background = '#F4F4F4',
 	children,
@@ -33,6 +35,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 	card = false,
 	maw = 335,
 	flexStart = false,
+	isGatsbyImageData = false,
 	...rest
 }) => {
 	const context = React.useContext(PageContext);
@@ -50,7 +53,14 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
 			maw={maw}
 			{...rest}
 		>
-			<AspectRatio className={classes.aspectRatio} data-context={context.title} data-contain={contain} ratio={ratio} mx={mx}>
+			<AspectRatio
+				className={classes.aspectRatio}
+				data-context={context.title}
+				data-contain={contain}
+				data-is-gatsby-image-data={isGatsbyImageData}
+				ratio={ratio}
+				mx={mx}
+			>
 				{children}
 			</AspectRatio>
 		</Container>
