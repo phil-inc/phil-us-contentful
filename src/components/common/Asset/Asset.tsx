@@ -24,7 +24,7 @@ type YouTubeEmbedProps = {
   title: string;
 };
 
-const YouTubeEmbed: FC<YouTubeEmbedProps> = ({ videoId, title }) => (
+export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({ videoId, title }) => (
   <AspectRatio ratio={16 / 9}>
     <LiteYouTubeEmbed
       id={videoId}
