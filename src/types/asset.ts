@@ -8,7 +8,7 @@ type File = {
 export type TAsset = {
 	id: string;
 	file: File;
-	gatsbyImageData: GatsbyImageProps;
+	gatsbyImageData: GatsbyImageProps & {height: number, width: number};
 	publicUrl: string;
 	title: string;
 };

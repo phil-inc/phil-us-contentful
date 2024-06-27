@@ -33,7 +33,7 @@
 			width: 50vw !important;
 
 			margin-right: -100px;
-			margin-top: calc((2.25rem* var(--mantine-scale)) * -2);
+			margin-top: calc((2.25rem * var(--mantine-scale)) * -2);
 		}
 	}
 
@@ -82,12 +82,14 @@
 	height: 100%;
 	margin: 0px;
 
-	&[data-context='Contact'] {
+
+	&[data-is-gatsby-image-data='true'] {
 		&:before {
 			padding: 0 !important;
 		}
 	}
 
+	
 	img {
 		width: 100%;
 		object-fit: cover;
@@ -106,5 +108,3 @@
 		margin-top: 40px;
 	}
 }
-
-
