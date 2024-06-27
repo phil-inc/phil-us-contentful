@@ -100,3 +100,8 @@
 		padding-bottom: 0px !important;
 	}
 }
+
+.centerImage {
+	display: flex;
+	justify-content: center;
+}

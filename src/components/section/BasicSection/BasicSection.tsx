@@ -38,6 +38,7 @@ import cx from 'clsx';
 import * as classes from './basicSection.module.css';
 import {getColorFromStylingOptions} from 'utils/stylingOptions';
 import useDeviceType from 'hooks/useView';
+import {extractAssetData} from 'utils/asset';
 
 type BasicSectionProps = {
 	section: ISection;
@@ -282,6 +283,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 		return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink;
 	};
 
+	const {media} = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
+
+	console.log('media', media);
+
 	return (
 		<Container
 			id={slugify(section.header, {lower: true, strict: true})}
@@ -382,6 +387,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 									maw={isBanner ? 300 : 400}
 									data-index={index}
 									data-context={context.title}
+									isGatsbyImageData={Boolean(media?.gatsbyImageData)}
 								>
 									<Asset asset={mediaItemOrAsset} objectFit="contain" youtubeVideoURL={youtubeVideoUrl} />
 								</ImageContainer>

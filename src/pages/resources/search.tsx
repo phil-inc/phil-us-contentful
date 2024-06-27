@@ -154,7 +154,7 @@ const SearchBody: React.FC<SearchBodyType> = ({searchResults, sections, searchQu
 	return searchResults.length ? (
 		<>
 			<Box mb={badgeRef.current ? 36 : 26}>
-				<Text mb={4} className={classes.searchResultHeader}>
+				<Text mb={4}>
 					Showing results for "{searchQueryParam}"
 				</Text>
 

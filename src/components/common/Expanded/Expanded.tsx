@@ -14,6 +14,7 @@ type ExpandedProps = {
 	pt?: StyleProp<MantineSpacing>;
 	pb?: StyleProp<MantineSpacing>;
 	mb?: StyleProp<MantineSpacing>;
+	mt?: StyleProp<MantineSpacing>;
 	fullWidth?: boolean;
 };
 
