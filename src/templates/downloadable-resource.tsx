@@ -14,6 +14,8 @@ import {type TAsset} from 'types/asset';
 import {isPDFContent} from 'utils/isVideoContent';
 import cx from 'clsx';
 import * as classes from './downloadableResource.module.css';
+import ImageContainer from 'components/common/Container/ImageContainer';
+import {Options} from '@contentful/rich-text-react-renderer';
 
 type HelmetProps = {
 	data: {
@@ -85,26 +87,16 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 		? [data.contentfulDownloadableResource.banner]
 		: (defaultBanners.map(r => r.banners).flat(1) as TResource[]);
 
-	const options = {
+	const options: Options = {
 		renderNode: {
-			[BLOCKS.EMBEDDED_ASSET](node: {data: {target: TAsset}}) {
+			[BLOCKS.EMBEDDED_ASSET](node) {
 				return (
 					<Box data-is-pdf={isPDFContent(node.data.target.file.contentType)} className={classes.embededAsset}>
 						<Asset ref={canvasRef} asset={node.data.target} />
 					</Box>
 				);
 			},
-			[BLOCKS.PARAGRAPH](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.PARAGRAPH](node, children) {
 				return (
 					<Text component="p" mt={0} className={classes.bodyText}>
 						{children}
@@ -112,17 +104,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.OL_LIST](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.OL_LIST](node, children) {
 				return (
 					<List type="ordered" mt={16} mb={32}>
 						{children}
@@ -130,17 +112,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.UL_LIST](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.UL_LIST](node, children) {
 				return (
 					<List type="unordered" listStyleType="disc" pl={16} mt={16} mb={44}>
 						{children}
@@ -148,17 +120,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.LIST_ITEM](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.LIST_ITEM](node, children) {
 				return (
 					<List.Item mt={8} mb={0} pr={20} className={classes.listItem}>
 						{children}
@@ -166,17 +128,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[INLINES.HYPERLINK](
-				node: {data: {uri: string}},
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[INLINES.HYPERLINK](node, children) {
 				const {uri} = node.data as {uri: string};
 				return (
 					<Anchor href={uri} target="_blank" className={classes.anchor}>
@@ -184,17 +136,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 					</Anchor>
 				);
 			},
-			[BLOCKS.HEADING_1](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.HEADING_1](node, children) {
 				return (
 					<Title order={1} mt={40} mb={4}>
 						{children}
@@ -202,17 +144,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_2](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.HEADING_2](node, children) {
 				return (
 					<Title order={2} size={24} mt={40} mb={4}>
 						{children}
@@ -220,17 +152,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_3](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.HEADING_3](node, children) {
 				return (
 					<Title order={3} size={18} mt={40} mb={4}>
 						{children}
@@ -238,17 +160,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_4](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.HEADING_4](node, children) {
 				return (
 					<Title order={4} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
 						{children}
@@ -256,17 +168,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_5](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.HEADING_5](node, children) {
 				return (
 					<Title order={5} size={18} style={{fontWeight: 400, fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
 						{children}
@@ -274,17 +176,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.HEADING_6](
-				node: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.HEADING_6](node, children) {
 				return (
 					<Title order={6} size={18} style={{fontFamily: 'Lato, sans-serif'}} mt={40} mb={4}>
 						{children}
@@ -292,8 +184,8 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				);
 			},
 
-			[BLOCKS.TABLE](node: Block, children: React.ReactElement[]) {
-				if (children.length === 1) {
+			[BLOCKS.TABLE](node, children) {
+				if ((children as React.ReactElement[]).length === 1) {
 					// Only one row
 					return (
 						<table className={classes.table}>
@@ -302,9 +194,9 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 					);
 				}
 
-				if (children.length === 2) {
+				if ((children as React.ReactElement[]).length === 2) {
 					// Two rows
-					const [first, second] = children;
+					const [first, second] = children as React.ReactElement[];
 					return (
 						<table className={classes.table}>
 							<tbody>
@@ -315,9 +207,9 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 					);
 				}
 
-				if (children.length >= 3) {
+				if ((children as React.ReactElement[]).length >= 3) {
 					// Three or more rows
-					const [first, ...rest] = children;
+					const [first, ...rest] = children as React.ReactElement[];
 					const last = rest.pop();
 					return (
 						<table className={classes.table}>
@@ -331,45 +223,15 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 				return null; // Return null if no rows present
 			},
 
-			[BLOCKS.TABLE_ROW](
-				_: any,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.TABLE_ROW](_, children) {
 				return <tr>{children}</tr>;
 			},
 
-			[BLOCKS.TABLE_CELL](
-				node: Block,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.TABLE_CELL](node, children) {
 				return <td className={classes.border}>{children}</td>;
 			},
 
-			[BLOCKS.TABLE_HEADER_CELL](
-				node: Block,
-				children:
-					| string
-					| number
-					| boolean
-					| React.ReactElement
-					| React.ReactFragment
-					| React.ReactPortal
-					| undefined
-			) {
+			[BLOCKS.TABLE_HEADER_CELL](node, children) {
 				return <th className={cx(classes.tableHeader, classes.border)}>{children}</th>;
 			},
 		},
@@ -379,7 +241,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 		<Layout>
 			<Container className={classes.inner} fluid id={data.contentfulDownloadableResource.id}>
 				<Box>
-					<Grid>
+					<Grid justify="center">
 						<Grid.Col span={{sm: 12, md: 7}}>
 							{data?.contentfulDownloadableResource?.type?.length && (
 								<Text className={classes.section}>{data.contentfulDownloadableResource.type}</Text>
@@ -400,12 +262,16 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 								</Box>
 							</Anchor>
 						</Grid.Col>
-						<Grid.Col span={{sm: 12, md: 5}}>
-							<AspectRatio className={classes.aspectRatio} ratio={1} ref={ref}>
+						<Grid.Col className={classes.centerImage} span={{sm: 12, md: 5}}>
+							<ImageContainer
+								ratio={1}
+								maw={data.contentfulDownloadableResource.image?.gatsbyImageData.width}
+								mah={data.contentfulDownloadableResource.image?.gatsbyImageData.height}
+							>
 								{data.contentfulDownloadableResource.image && (
 									<Asset asset={data.contentfulDownloadableResource.image} />
 								)}
-							</AspectRatio>
+							</ImageContainer>
 						</Grid.Col>
 					</Grid>
 				</Box>
