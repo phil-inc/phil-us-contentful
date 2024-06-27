@@ -97,6 +97,7 @@
     "core-js-pure",
     "es5-ext",
     "gatsby-cli",
-    "gatsby-telemetry"
+    "gatsby-telemetry",
+    "sharp"
   ]
 }
