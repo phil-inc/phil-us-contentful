@@ -265,8 +265,8 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 						<Grid.Col className={classes.centerImage} span={{sm: 12, md: 5}}>
 							<ImageContainer
 								ratio={1}
-								maw={data.contentfulDownloadableResource.image?.gatsbyImageData.width}
-								mah={data.contentfulDownloadableResource.image?.gatsbyImageData.height}
+								maw={data.contentfulDownloadableResource.image?.gatsbyImageData?.width}
+								mah={data.contentfulDownloadableResource.image?.gatsbyImageData?.height}
 							>
 								{data.contentfulDownloadableResource.image && (
 									<Asset asset={data.contentfulDownloadableResource.image} />
