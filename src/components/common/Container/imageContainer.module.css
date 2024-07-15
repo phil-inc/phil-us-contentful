@@ -72,6 +72,10 @@
 		}
 	}
 
+	&[data-is-downloadable-reource-hero-image='true'] {
+		max-width: 335px !important;
+	}
+
 	@media (min-width: $phil-breakpoint-md) {
 		position: static;
 		max-width: 335px;

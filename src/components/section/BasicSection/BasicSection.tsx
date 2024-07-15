@@ -285,8 +285,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({section, index, isEmbedFormT
 
 	const {media} = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
 
-	console.log('media', media);
-
 	return (
 		<Container
 			id={slugify(section.header, {lower: true, strict: true})}
