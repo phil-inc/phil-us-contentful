@@ -270,6 +270,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({data}) => {
 								maw={data.contentfulDownloadableResource.image?.gatsbyImageData?.width}
 								mah={data.contentfulDownloadableResource.image?.gatsbyImageData?.height}
 								isGatsbyImageData={Boolean(data.contentfulDownloadableResource.image?.gatsbyImageData)}
+								data-is-downloadable-reource-hero-image={true}
 							>
 								{data.contentfulDownloadableResource.image && (
 									<Asset asset={data.contentfulDownloadableResource.image} />
