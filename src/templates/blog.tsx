@@ -188,7 +188,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 			[BLOCKS.UL_LIST](node: Block, children) {
 				return (
-					<List type="unordered" listStyleType="disc" pl={32} mt={16} mb={44}>
+					<List className={classes.unorderedList} type="unordered" listStyleType="disc">
 						{children}
 					</List>
 				);
@@ -196,7 +196,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 			[BLOCKS.LIST_ITEM](node: Block, children) {
 				return (
-					<List.Item mt={8} mb={0} pr={20} className={classes.listItem}>
+					<List.Item mb={0} pr={20} className={classes.listItem}>
 						{children}
 					</List.Item>
 				);

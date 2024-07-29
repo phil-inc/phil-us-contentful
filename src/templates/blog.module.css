@@ -9,7 +9,31 @@
 .paragraph {
 	font-size: 18px;
 	font-family: Lato, sans-serif;
-	margin-bottom: 18px;
+	padding-bottom: 16px;
+
+	+ .unorderedList {
+		padding-top: 0;
+	}
+}
+
+.unorderedList {
+	padding-left: 32px;
+	padding-top: 12px;
+	padding-bottom: 16px;
+
+	li {
+		margin-top: 8px;
+		
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+}
+
+li {
+	.paragraph {
+		padding-bottom: 0;
+	}
 }
 
 .anchor {
@@ -78,8 +102,8 @@
 }
 
 .heading {
-	margin-top: 40px;
-	margin-bottom: 4px;
+	padding-top: 20px;
+	padding-bottom: 16px;
 
 	&2 {
 		font-size: 24px;
