@@ -1,15 +1,50 @@
 .title {
 	font-size: 38px;
+	margin-bottom: 56px;
+
+	&[data-is-field-faq='true'] {
+		margin-bottom: 36px;
+	}
 
 	@media (min-width: $phil-breakpoint-sm) {
 		font-size: 60px;
+		margin-bottom: 68px;
 	}
 }
 
 .paragraph {
 	font-size: 18px;
 	font-family: Lato, sans-serif;
-	margin-bottom: 18px;
+
+	+ .unorderedList, + .orderedList {
+		padding-top: 0px;
+	}
+}
+
+.orderedList {
+	padding-top: 16px;
+	padding-bottom: 32px;
+}
+
+.unorderedList {
+	padding-left: 32px;
+
+	padding-top: 12px;
+	padding-bottom: 16px;
+
+	li {
+		margin-top: 0px;
+		
+		&:first-child {
+			margin-top: 0;
+		}
+	}
+}
+
+li {
+	.paragraph {
+		padding-bottom: 0;
+	}
 }
 
 .anchor {
@@ -29,6 +64,7 @@
 .listItem {
 	overflow: hidden;
 	font-size: 24px;
+	line-height: 1.4;
 }
 
 .listItem::marker {
@@ -78,15 +114,18 @@
 }
 
 .heading {
-	margin-top: 40px;
-	margin-bottom: 4px;
+	padding-top: 20px;
+	padding-bottom: 16px;
 
 	&2 {
 		font-size: 24px;
 	}
 
 	&3 {
-		font-size: 18px;
+		font-size: 20px;
+		
+		padding-top: 52px;
+		padding-bottom: 20px;
 	}
 
 	&4 {
