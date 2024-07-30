@@ -180,7 +180,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({data}) => {
 
 			[BLOCKS.OL_LIST](node: Block, children) {
 				return (
-					<List type="ordered" mt={16} mb={32}>
+					<List className={classes.orderedList} type="ordered">
 						{children}
 					</List>
 				);

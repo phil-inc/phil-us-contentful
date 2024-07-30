@@ -9,20 +9,26 @@
 .paragraph {
 	font-size: 18px;
 	font-family: Lato, sans-serif;
-	padding-bottom: 16px;
+	/* padding-bottom: 16px; */
 
-	+ .unorderedList {
-		padding-top: 0;
+	+ .unorderedList, + .orderedList {
+		padding-top: 0px;
 	}
+}
+
+.orderedList {
+	padding-top: 16px;
+	padding-bottom: 32px;
 }
 
 .unorderedList {
 	padding-left: 32px;
+
 	padding-top: 12px;
 	padding-bottom: 16px;
 
 	li {
-		margin-top: 8px;
+		margin-top: 0px;
 		
 		&:first-child {
 			margin-top: 0;
@@ -110,7 +116,9 @@ li {
 	}
 
 	&3 {
-		font-size: 18px;
+		font-size: 20px;
+		padding-top: 60px;
+		padding-bottom: 20px;
 	}
 
 	&4 {
