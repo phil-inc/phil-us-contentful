@@ -2,6 +2,10 @@
 	font-size: 38px;
 	margin-bottom: 56px;
 
+	&[data-is-field-faq='true'] {
+		margin-bottom: 36px;
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		font-size: 60px;
 		margin-bottom: 68px;
