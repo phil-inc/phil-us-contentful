@@ -392,7 +392,7 @@ const EventRegistration: React.FC<EventRegistrationProps> = ({data}) => {
 				<Expanded id={data.contentfulEventRegistration.id} pt={40}>
 					{/* HEADER/IMAGE CONTAINER */}
 					<Container fluid className={classes.container}>
-						<Grid justify="space-between" m={0} gutter={0}>
+						<Grid justify="space-between" m={0} gutter={0} align='center'>
 							<Grid.Col span={{xs: 12, sm: 12, md: 'auto'}}>
 								<Text mb={16} className={classes.eventType}>
 									{data.contentfulEventRegistration.eventType}
@@ -409,7 +409,7 @@ const EventRegistration: React.FC<EventRegistrationProps> = ({data}) => {
 							</Grid.Col>
 
 							<Grid.Col span={'auto'}>
-								<Group className={classes.image}>
+								<Group className={classes.image} align='center' justify='center'>
 									{data.contentfulEventRegistration.heroImage && (
 										<Asset asset={data.contentfulEventRegistration.heroImage} />
 									)}
