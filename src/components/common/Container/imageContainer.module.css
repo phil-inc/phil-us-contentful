@@ -74,6 +74,9 @@
 
 	&[data-is-downloadable-reource-hero-image='true'] {
 		max-width: 335px !important;
+		max-height: 335px !important;
+		height: 335px;
+		width: 335px;
 	}
 
 	@media (min-width: $phil-breakpoint-md) {
