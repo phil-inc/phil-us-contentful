@@ -1,23 +1,23 @@
 export const isVideoContent = (contentType: string) => {
-	if (!contentType) {
-		return false;
-	}
+  if (!contentType) {
+    return false;
+  }
 
-	const [mime] = contentType.split('/');
+  const [mime] = contentType.split("/");
 
-	if (mime === 'video') {
-		return true;
-	}
+  if (mime === "video") {
+    return true;
+  }
 
-	return false;
+  return false;
 };
 
 export const isPDFContent = (contentType: string) => {
-	const [mime, type] = contentType.split('/');
+  const [mime, type] = contentType.split("/");
 
-	if (mime === 'application' && type === 'pdf') {
-		return true;
-	}
+  if (mime === "application" && type === "pdf") {
+    return true;
+  }
 
-	return false;
+  return false;
 };

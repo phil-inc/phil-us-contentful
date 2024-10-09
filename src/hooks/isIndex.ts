@@ -1,7 +1,7 @@
-import {useLocation} from '@reach/router';
+import { useLocation } from "@reach/router";
 
 export const isIndex = () => {
-	const location = useLocation();
+  const location = useLocation();
 
-	return location.pathname === '/';
+  return location.pathname === "/";
 };
