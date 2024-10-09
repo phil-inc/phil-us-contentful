@@ -3,6 +3,8 @@ import GenerateMainPages from './src/strategies/GenerateMainPages';
 import GenerateStaticPages from './src/strategies/GenerateStaticPages';
 import GenerateDownloadableResourcePages from './src/strategies/GenerateDownloadableResourcePages';
 import GenerateEventRegistrationPages from './src/strategies/GenerateEventRegistrationPages';
+import GenerateCaseStudyPages from './src/strategies/GenerateCaseStudyPages';
+
 import {RedirectConfig, RedirectFactory} from './src/factories/redirectFactory';
 
 // redirect configurations
@@ -29,6 +31,7 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
         GenerateStaticPages({ actions, graphql }),
         GenerateDownloadableResourcePages({ actions, graphql }),
         GenerateEventRegistrationPages({ actions, graphql }),
+        GenerateCaseStudyPages({ actions, graphql })
     ]);
 
     // Handle redirects
