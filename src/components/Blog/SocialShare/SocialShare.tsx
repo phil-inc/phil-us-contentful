@@ -9,7 +9,7 @@ import { TwitterIcon } from "../../common/Buttons/SocialButtons/TwitterIcon";
 
 import * as classes from "./socialShare.module.css";
 
-const SocialShare: React.FC<{ text: string; gap: MantineSpacing }> = ({
+const SocialShare: React.FC<{ text?: string; gap?: MantineSpacing }> = ({
   text = "Share this article on:",
   gap = "sm",
 }) => (
