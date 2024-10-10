@@ -40,7 +40,12 @@ const CaseStudyTestimonial: React.FC<CaseStudyTestimonialProps> = ({
         <Grid.Col span={{ base: 12, lg: 5 }}>
           <Center>
             <Box className={classes.testimonialImageBox}>
-              <ImageContainer data-testimonial-image-container={true}>
+              <ImageContainer
+                data-testimonial-image-container={true}
+                isGatsbyImageData={Boolean(
+                  testimonial?.testimonialImage?.gatsbyImageData,
+                )}
+              >
                 <Asset asset={testimonial.testimonialImage} />
               </ImageContainer>
               <Image className={classes.quoteImage} src={image} />
