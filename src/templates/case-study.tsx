@@ -176,7 +176,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
   const [activeId, setActiveId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    const elems = (contentRef.current as HTMLElement)?.querySelectorAll(
+    const elems = (contentRef.current as unknown as HTMLElement)?.querySelectorAll(
       "h2[id]",
     );
 
@@ -204,7 +204,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   // Intersection Observer to highlight the TOC based on section visibility
   React.useEffect(() => {
-    const elems = (contentRef.current as HTMLElement)?.querySelectorAll(
+    const elems = (contentRef.current as unknown as HTMLElement)?.querySelectorAll(
       "h2[id]",
     );
 
