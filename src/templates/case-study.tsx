@@ -90,7 +90,7 @@ export const Head: React.FC<HelmetProps> = ({
   );
 };
 
-type CaseStudy = {
+export type CaseStudy = {
   metaDescription: string;
   image: TAsset;
   id: string;
@@ -149,6 +149,29 @@ type CaseStudy = {
     mimeType: string;
     url: string;
   }[];
+  hyperlink?: {
+    contentful_id: string;
+    id: string;
+    externalLink?: string;
+    linkLabel: string;
+    name: string;
+
+    internalContent: {
+      slug?: string;
+      id: string;
+      page: Array<{ title: string }>;
+      header?: string;
+      heading?: string;
+      title?: string;
+      sys: {
+        contentType: {
+          sys: {
+            id: string;
+          };
+        };
+      };
+    };
+  };
 };
 
 type CaseStudyProps = {
@@ -176,9 +199,9 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
   const [activeId, setActiveId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    const elems = (contentRef.current as unknown as HTMLElement)?.querySelectorAll(
-      "h2[id]",
-    );
+    const elems = (
+      contentRef.current as unknown as HTMLElement
+    )?.querySelectorAll("h2[id]");
 
     if (elems) {
       const elementsArray = Array.from(elems);
@@ -204,9 +227,9 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   // Intersection Observer to highlight the TOC based on section visibility
   React.useEffect(() => {
-    const elems = (contentRef.current as unknown as HTMLElement)?.querySelectorAll(
-      "h2[id]",
-    );
+    const elems = (
+      contentRef.current as unknown as HTMLElement
+    )?.querySelectorAll("h2[id]");
 
     const observer = new IntersectionObserver(
       (entries) => {

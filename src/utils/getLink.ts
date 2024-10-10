@@ -1,6 +1,7 @@
 import { useInternalPaths } from "hooks/useInternalPaths";
 import { type ContentfulButton } from "layouts/Layout/CHeader/CHeader";
 import slugify from "slugify";
+import { CaseStudy } from "templates/case-study";
 import type { TResource } from "types/resource";
 import type { IReferencedSection, ISection } from "types/section";
 
@@ -10,7 +11,7 @@ import type { IReferencedSection, ISection } from "types/section";
  * @returns a link string.
  */
 export const getLink = (
-  section: ISection | IReferencedSection | TResource | ContentfulButton,
+  section: ISection | IReferencedSection | TResource | ContentfulButton | CaseStudy,
   v2 = false,
 ): { link: string; isExternal: boolean; linkLabel: string } => {
   const link: string[] = [];
@@ -163,5 +164,5 @@ export const getLink = (
     };
   }
 
-  return { link: "#", isExternal: true };
+  return { link: "#", isExternal: true, linkLabel: "Learn more" };
 };

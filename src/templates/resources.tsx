@@ -688,6 +688,116 @@ export const resourcesQuery = graphql`
             mimeType
           }
         }
+        ... on ContentfulCaseStudy {
+          contentful_id
+          id
+          slug
+          noIndex
+          title
+          description {
+            raw
+          }
+          metaDescription
+          body {
+            raw
+          }
+          hyperlink {
+            id
+            linkLabel
+            internalContent {
+              ... on ContentfulPage {
+                id
+                title
+                slug
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+              }
+              ... on ContentfulReferencedSection {
+                id
+                page {
+                  title
+                  id
+                }
+                header
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+              }
+              ... on ContentfulSection {
+                id
+                page {
+                  title
+                }
+                header
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+              }
+              ... on ContentfulResource {
+                id
+                heading
+                slug
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                isInsertSnippet
+                codeSnippet {
+                  codeSnippet
+                  id
+                }
+              }
+              ... on ContentfulEventRegistration {
+                contentful_id
+                id
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+              }
+              ... on ContentfulCaseStudy {
+                id
+                title
+                slug
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+              }
+            }
+            externalUrl
+            contentful_id
+            node_locale
+          }
+        }
       }
       referenceType
       externalLink
