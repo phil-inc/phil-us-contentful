@@ -60,6 +60,7 @@
 
   @media (min-width: $phil-breakpoint-sm) {
     margin: 120px 100px !important;
+    margin-bottom: 0 !important;
   }
 }
 
