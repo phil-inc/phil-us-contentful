@@ -112,6 +112,14 @@
     }
   }
 
+  > .metricBox {
+    border-bottom: 1.27px solid #e9e9e9;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+
   @media (min-width: $phil-breakpoint-sm) {
     display: grid;
     width: 100%;
@@ -122,11 +130,23 @@
     margin: 80px auto;
 
     > .metricBox {
-      border-right: 1.27px solid #e9e9e9;
+      border-bottom: none;
 
       margin: 0 auto;
       padding-right: 40px;
       padding-left: 40px;
+
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 60px;
+        right: 0;
+        height: 60%;
+        border-right: 1.27px solid #e9e9e9;
+        border-bottom: none;
+      }
 
       &:first-of-type {
         padding-left: 0;
@@ -134,7 +154,12 @@
 
       &:last-of-type {
         border-right: none;
+
         padding-right: 0;
+
+        &::after {
+          border-right: none;
+        }
       }
     }
 
@@ -148,6 +173,22 @@
         padding-bottom: 33.17px;
         width: auto;
         max-width: 225px;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 60px;
+          right: 0;
+          height: 60%;
+          border-right: none;
+          border-bottom: none;
+        }
+
+        &:last-of-type {
+          &::after {
+            border-right: none;
+          }
+        }
 
         &:nth-of-type(even) {
           padding-left: 0;

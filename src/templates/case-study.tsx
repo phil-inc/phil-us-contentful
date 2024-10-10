@@ -270,7 +270,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         </Grid>
       </Container>
 
-      <Divider className={classes.divider} size={"1px"} color="#f4f4f4" />
+      <Divider className={classes.divider} data-manual={true} size={"1px"} color="#f4f4f4" />
 
       <Container fluid className={classes.container} pos={"relative"}>
         <Grid justify="center" gutter={{ base: 0, md: 69 }} pos={"relative"}>

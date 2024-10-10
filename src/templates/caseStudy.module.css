@@ -15,6 +15,8 @@
   line-height: 25.6px;
   text-align: left;
 
+  margin-top: 0;
+
   @media (min-width: $phil-breakpoint-sm) {
     font-family: Lato;
     font-size: 18px;
@@ -111,10 +113,18 @@
 }
 
 .divider {
-  margin: 60px 20px;
+  margin: 60px 0px;
 
-  @media (min-width: $phil-breakpoint-sm) {
-    margin: 80px 0;
+  &[data-manual="true"] {
+    margin: 60px 20px;
+  }
+
+  @media (min-width: $phil-breakpoint-md) {
+    margin: 80px 0px;
+
+    &[data-manual="true"] {
+      margin: 80px 100px;
+    }
   }
 }
 
@@ -189,7 +199,7 @@
     content: "";
     position: absolute;
     bottom: 0;
-    left: 0;
+    /* left: 0; */
     width: calc(100% - 40px);
     margin: 0 20px;
     border-bottom: 1px solid #f4f4f4;
@@ -201,7 +211,7 @@
     }
   }
 
-  @media (min-width: $phil-breakpoint-sm) {
+  @media (min-width: $phil-breakpoint-md) {
     &::after {
       content: "";
       position: absolute;
