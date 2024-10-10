@@ -37,18 +37,18 @@ const MetricBox: React.FC<MetricBoxProps & MantineStyleProps> = ({
   return (
     <Box ref={ref} className={classes.metricBox} {...restProps}>
       {metric?.metricLabel?.length && (
-        <Text className={classes.metricLabel}>{metric.metricLabel}</Text>
+        <Text unstyled my={0} className={classes.metricLabel}>{metric.metricLabel}</Text>
       )}
       <Title
         order={4}
-        data-has-label={metric?.metricLabel?.length}
+        data-has-label={metric?.metricLabel?.length > 0}
         className={classes.metricValue}
       >
         {metric.metricValue.split("").map((char) => (
           <span>{char}</span>
         ))}
       </Title>
-      <Text className={classes.metricDescription}>
+      <Text data-has-label={metric?.metricLabel?.length > 0} className={classes.metricDescription}>
         {metric.metricDescription}
       </Text>
     </Box>

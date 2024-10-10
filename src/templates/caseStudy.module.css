@@ -1,38 +1,121 @@
 .sticky {
-  position: sticky;
-  top: 0;
-  height: fit-content;
+  display: none;
+
+  @media (min-width: $phil-breakpoint-md) {
+    display: block;
+    position: sticky;
+    top: 0;
+    height: fit-content;
+  }
+}
+
+.paragraph {
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 25.6px;
+  text-align: left;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-family: Lato;
+    font-size: 18px;
+    line-height: 32.4px;
+    text-align: left;
+  }
+}
+
+.header2 {
+  font-family: Raleway, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36.4px;
+  text-align: left;
+  padding-bottom: 16px;
+  margin: 0;
+
+  > b {
+    font-weight: 700;
+  }
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-size: 32px;
+  }
 }
 
 .heroContainer {
+  margin: 0 20px !important;
   padding: 0 !important;
-  margin: 0 100px !important;
-  margin-top: 100px !important;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    padding: 0 !important;
+    margin: 0 100px !important;
+    margin-top: 100px !important;
+  }
 }
 
 .container {
   padding: 0 !important;
-  margin: 120px 100px !important;
+  margin: 0 20px !important;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    margin: 120px 100px !important;
+  }
 }
 
 .heroTitle {
-  font-size: 52px !important;
+  font-size: 40px !important;
+  margin-bottom: 40px !important;
+  margin-top: 40px !important;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    margin-top: 0 !important;
+    font-size: 52px !important;
+    padding-right: 69px;
+  }
 }
 
 .box {
-  padding: 72px 52px;
+  padding: 40px 20px;
   background: #f7f7f7;
-  font-size: 20px !important;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    padding: 72px 52px;
+    font-size: 20px !important;
+  }
 }
 
 .boxTitle {
-  margin-bottom: 32px !important;
-  font-size: 32px !important;
   font-family: Raleway, sans-serif !important;
+  font-size: 28px !important;
+  margin-bottom: 32px !important;
+  line-height: 36.4px !important;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-size: 32px !important;
+  }
+}
+
+.boxDescription {
+  font-family: Lato;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  text-align: left;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    text-align: left;
+  }
 }
 
 .divider {
-  margin: 0 100px;
+  margin: 60px 20px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    margin: 80px 0;
+  }
 }
 
 .tableOfContentHeader {
@@ -62,24 +145,77 @@
   }
 }
 
+.list {
+  padding-left: 24px;
+}
+
 .listItem {
+  padding-left: 4px;
+
   &::marker {
     font-family: Lato;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    line-height: 32.4px;
     text-align: left;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      font-size: 18px;
+    }
   }
 
   b {
     font-family: Lato;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    line-height: 32.4px;
     text-align: left;
 
     &:first-of-type {
       display: block;
+    }
+
+    @media (min-width: $phil-breakpoint-sm) {
+      font-family: Lato;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: left;
+    }
+  }
+}
+
+.metricBoxGrid {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 40px);
+    margin: 0 20px;
+    border-bottom: 1px solid #f4f4f4;
+  }
+
+  &:last-of-type {
+    &::after {
+      border-bottom: none;
+    }
+  }
+
+  @media (min-width: $phil-breakpoint-sm) {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 20%;
+      right: 0;
+      width: 0;
+      height: 70%;
+      border-right: 1px solid #f2f2f2;
+    }
+
+    &:last-of-type {
+      &::after {
+        border-right: none;
+      }
     }
   }
 }

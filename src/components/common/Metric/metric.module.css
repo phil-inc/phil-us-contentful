@@ -1,55 +1,71 @@
 .metricValue {
-  font-family: Lato, sans-serif;
+  font-family: Lato;
   font-size: 65.41px;
   font-weight: 800;
   line-height: 78.49px;
   text-align: center;
+
   color: #00827e;
+
+  > span:last-of-type {
+    font-family: Lato;
+    font-size: 43.61px;
+    font-weight: 900;
+    line-height: 52.33px;
+    letter-spacing: -0.06em;
+    text-align: center;
+  }
 }
 
 .metricDescription {
-  font-family: Lato, sans-serif;
-  font-size: 24px;
+  color: #0a0a0a;
+  font-family: Lato;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 28.8px;
+  line-height: 24px;
   text-align: center;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-family: Lato, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28.8px;
+    text-align: center;
+  }
 }
 
 .inlineMetricContainer {
   display: grid;
   width: 100%;
   gap: 0px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, auto);
+  justify-content: center;
 
   margin: 80px auto;
 
-  > .metricBox {
-    border-right: 1.27px solid #e9e9e9;
-    padding-right: 40px;
-    padding-left: 40px;
-
-    &:first-of-type {
-      padding-left: 0;
-    }
-
-    &:last-of-type {
-      border-right: none;
-      padding-right: 0;
-    }
-  }
-
   .metricLabel {
     font-family: Raleway;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 700;
-    line-height: 18.78px;
-    text-align: left;
+    text-align: center;
+    line-height: 23.48px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      line-height: 18.78px;
+      text-align: left;
+      font-size: 16px;
+    }
   }
 
   .metricValue {
-    margin-top: 29px;
-    margin-bottom: 29px;
     color: #00827e;
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-top: 29px;
+      margin-bottom: 29px;
+    }
 
     &:not([data-has-label="true"]) {
       margin-top: 0;
@@ -74,90 +90,159 @@
 
   .metricDescription {
     font-family: Raleway;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
-    line-height: 15.26px;
-    text-align: left;
+    line-height: 18.78px;
+    text-align: center;
+
+    &[data-has-label="false"] {
+      font-family: Lato;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 30px;
+      text-align: center;
+    }
+
+    @media (min-width: $phil-breakpoint-sm) {
+      font-family: Raleway;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 15.26px;
+      text-align: left;
+    }
   }
 
-  &[data-columns="2"] {
-    grid-template-columns: repeat(2, 1fr);
+  @media (min-width: $phil-breakpoint-sm) {
+    display: grid;
+    width: 100%;
+    gap: 0px;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+
+    margin: 80px auto;
 
     > .metricBox {
-      padding: 0;
-      border: none;
-      padding-bottom: 33.17px;
+      border-right: 1.27px solid #e9e9e9;
 
-      &:nth-of-type(even) {
+      margin: 0 auto;
+      padding-right: 40px;
+      padding-left: 40px;
+
+      &:first-of-type {
         padding-left: 0;
-        margin-left: 40px;
       }
 
-      &:nth-of-type(odd) {
-        padding-right: 0;
+      &:last-of-type {
         border-right: none;
-        border-right: 0.83px solid #e9e9e9;
+        padding-right: 0;
       }
+    }
 
-      &:nth-of-type(n + 3):nth-of-type(2n),
-      &:nth-of-type(n + 3):nth-of-type(2n + 1) {
-        position: relative;
-        padding-top: 33.17px;
-        padding-bottom: 0;
+    &[data-columns="2"] {
+      grid-template-columns: repeat(2, auto);
+      justify-content: center;
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 80%; 
-          border-top: 0.83px solid #e9e9e9;
+      > .metricBox {
+        padding: 0;
+        border: none;
+        padding-bottom: 33.17px;
+        width: auto;
+        max-width: 225px;
+
+        &:nth-of-type(even) {
+          padding-left: 0;
+          margin-left: 40px;
         }
-      }
 
-      width: auto;
+        &:nth-of-type(odd) {
+          padding-right: 40px;
+          border-right: none;
+          border-right: 0.83px solid #e9e9e9;
+        }
 
-      > .metricValue {
-        font-family: Lato;
-        font-size: 56px;
-        font-weight: 800;
-        line-height: 56px;
-        text-align: left;
+        &:nth-of-type(n + 3):nth-of-type(2n),
+        &:nth-of-type(n + 3):nth-of-type(2n + 1) {
+          position: relative;
+          padding-top: 33.17px;
+          padding-bottom: 0;
 
-        > span:last-of-type {
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80%;
+            border-top: 0.83px solid #e9e9e9;
+          }
+        }
+
+        > .metricValue {
           font-family: Lato;
-          font-size: 48.64px;
-          font-weight: 900;
-          line-height: 48.64px;
+          font-size: 56px;
+          font-weight: 800;
+          line-height: 56px;
+          text-align: left;
+
+          > span:last-of-type {
+            font-family: Lato;
+            font-size: 48.64px;
+            font-weight: 900;
+            line-height: 48.64px;
+            text-align: left;
+          }
+        }
+
+        > .metricDescription {
+          font-family: Lato;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 30px;
           text-align: left;
         }
-      }
-
-      > .metricDescription {
-        font-family: Lato;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 30px;
-        text-align: left;
       }
     }
   }
 }
 
 .metricBox {
-  max-width: 308px !important;
-  margin: 0 auto;
+  padding: 0px;
+
+  &:first-of-type {
+    padding-top: 20px;
+  }
+
+  &:last-of-type {
+    padding-bottom: 20px;
+  }
 
   &[data-inline="true"] {
-    margin: 0;
-    display: inline-block;
+    padding: 40px;
+  }
 
-    > .metricValue {
-      text-align: start !important;
+  @media (min-width: $phil-breakpoint-sm) {
+    padding: 48px;
+    max-width: 308px;
+    margin: 0 auto;
+
+    &:first-of-type {
+      padding-top: 48px;
     }
 
-    > .metricDescription {
-      text-align: start;
+    &:last-of-type {
+      padding-bottom: 48px;
+    }
+
+    &[data-inline="true"] {
+      margin: 0;
+      display: inline-block;
+
+      > .metricValue {
+        text-align: start !important;
+      }
+
+      > .metricDescription {
+        text-align: start;
+      }
     }
   }
 }
