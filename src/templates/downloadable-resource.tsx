@@ -116,7 +116,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
           </Box>
         );
       },
-      [BLOCKS.PARAGRAPH](children) {
+      [BLOCKS.PARAGRAPH](node, children) {
         return (
           <Text component="p" mt={0} className={classes.bodyText}>
             {children}
@@ -124,7 +124,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.OL_LIST](children) {
+      [BLOCKS.OL_LIST](node, children) {
         return (
           <List type="ordered" mt={16} mb={32}>
             {children}
@@ -132,7 +132,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.UL_LIST](children) {
+      [BLOCKS.UL_LIST](node, children) {
         return (
           <List type="unordered" listStyleType="disc" pl={16} mt={16} mb={44}>
             {children}
@@ -140,7 +140,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.LIST_ITEM](children) {
+      [BLOCKS.LIST_ITEM](node, children) {
         return (
           <List.Item mt={8} mb={0} pr={20} className={classes.listItem}>
             {children}
@@ -156,7 +156,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
           </Anchor>
         );
       },
-      [BLOCKS.HEADING_1](children) {
+      [BLOCKS.HEADING_1](node, children) {
         return (
           <Title order={1} mt={40} mb={4}>
             {children}
@@ -164,7 +164,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.HEADING_2](children) {
+      [BLOCKS.HEADING_2](node, children) {
         return (
           <Title order={2} size={24} mt={40} mb={4}>
             {children}
@@ -172,7 +172,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.HEADING_3](children) {
+      [BLOCKS.HEADING_3](node, children) {
         return (
           <Title order={3} size={18} mt={40} mb={4}>
             {children}
@@ -180,7 +180,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.HEADING_4](children) {
+      [BLOCKS.HEADING_4](node, children) {
         return (
           <Title
             order={4}
@@ -194,7 +194,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.HEADING_5](children) {
+      [BLOCKS.HEADING_5](node, children) {
         return (
           <Title
             order={5}
@@ -208,7 +208,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.HEADING_6](children) {
+      [BLOCKS.HEADING_6](node, children) {
         return (
           <Title
             order={6}
@@ -222,7 +222,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         );
       },
 
-      [BLOCKS.TABLE](children) {
+      [BLOCKS.TABLE](node, children) {
         if ((children as React.ReactElement[]).length === 1) {
           // Only one row
           return (
@@ -265,11 +265,11 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
         return <tr>{children}</tr>;
       },
 
-      [BLOCKS.TABLE_CELL](children) {
+      [BLOCKS.TABLE_CELL](node, children) {
         return <td className={classes.border}>{children}</td>;
       },
 
-      [BLOCKS.TABLE_HEADER_CELL](children) {
+      [BLOCKS.TABLE_HEADER_CELL](node, children) {
         return (
           <th className={cx(classes.tableHeader, classes.border)}>
             {children}
@@ -341,7 +341,7 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
           {data.contentfulDownloadableResource.body &&
             renderRichText(data.contentfulDownloadableResource.body, options)}
         </Box>
-        <SocialShare />
+        <SocialShare  />
       </Container>
       {renderBanners(bannersToDisplay)}
     </Layout>
