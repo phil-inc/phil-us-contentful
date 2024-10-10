@@ -31,8 +31,6 @@ export default async function GenerateCaseStudyPages({
     data?: { allContentfulCaseStudy: { nodes: Node[] } } | undefined;
   } = await graphql(allCaseStudyQuery);
 
-  console.log("HERE:: ", { data });
-
   data?.allContentfulCaseStudy.nodes.forEach(({ id, slug, title }: Node) => {
     const path = slug ?? `/${slugify(title, { lower: true, strict: true })}`;
 
