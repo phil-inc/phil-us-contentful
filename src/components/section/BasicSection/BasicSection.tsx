@@ -74,10 +74,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const isDesktop = useDeviceType("xl");
   const isMobileView = !isDesktop;
 
-  let header = "";
 
   // eslint-disable-next-line array-callback-return
-  section.body.references.map((reference: any) => {
+  section?.body?.references?.map((reference: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     richTextImages[reference.contentful_id] = {
       image: reference.gatsbyImageData,
