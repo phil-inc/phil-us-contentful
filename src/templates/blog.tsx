@@ -167,11 +167,11 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({ data }) => {
 
   const options: Options = {
     renderText: (text) => {
-		if (text === "") {
-			return <br></br>
-		}
+      if (text === "") {
+        return <br></br>;
+      }
 
-		return text
+      return text;
     },
 
     renderNode: {
@@ -366,12 +366,16 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({ data }) => {
     ? banners!
     : (defaultBanners.map((r) => r.banners).flat(1) as TResource[]);
 
-  const isFieldFAQ =  data?.contentfulResource?.slug?.startsWith("field/");
+  const isFieldFAQ = data?.contentfulResource?.slug?.startsWith("field/");
 
   return (
     <Layout>
       <Container size="xl" className={classes.wrapper}>
-        <Title order={1} data-is-field-faq={isFieldFAQ} className={classes.title}>
+        <Title
+          order={1}
+          data-is-field-faq={isFieldFAQ}
+          className={classes.title}
+        >
           {heading}
         </Title>
         {Boolean(asset) && (
