@@ -86,11 +86,15 @@ export const Head: React.FC<HelmetProps> = ({
         type="text/javascript"
         src="//js.hsforms.net/forms/embed/v2.js"
       ></Script>
+
+
+      {contentfulCaseStudy.noIndex && <meta name="robots" content="noindex" />}
     </SEO>
   );
 };
 
 export type CaseStudy = {
+  noIndex: boolean;
   metaDescription: string;
   image: TAsset;
   id: string;
@@ -423,6 +427,7 @@ export default CaseStudy;
 export const caseStudyQuery = graphql`
   query getDownloadableResource($id: String) {
     contentfulCaseStudy(id: { eq: $id }) {
+      noIndex
       id
       title
       metaDescription
