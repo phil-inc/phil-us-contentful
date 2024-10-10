@@ -1,0 +1,83 @@
+.box {
+  color: #0a0a0a;
+  font-family: Lato, sans-serif;
+  background: #f8f8f8;
+
+    margin: 60px auto;
+  padding: 36px 32px;
+  
+  @media (min-width: $phil-breakpoint-sm) {
+    padding: 40px 42px;
+    margin: 80px auto;
+  }
+}
+
+.testimonialImageBox {
+  position: relative;
+  width: 100%;
+  max-width: 335px;
+}
+
+.quote {
+  position: relative;
+}
+
+.quoteImage {
+  width: 41.43px;
+  height: 27.93px;
+  gap: 0px;
+  opacity: 0px;
+
+  position: absolute;
+  top: -14.93px;
+  left: 18.44px;
+}
+
+.quoteTitle {
+  font-family: Raleway, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 31.2px;
+  letter-spacing: -0.08529312908649445px;
+  text-align: left;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.quoteTitle::before {
+  content: "“";
+  position: absolute;
+  top: -3px;
+  left: -15px;
+  color: inherit;
+
+  font-family: Raleway;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: -0.0943739041686058px;
+  text-align: center;
+}
+
+.quoteText {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 25.2px;
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.author {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 27px;
+  text-align: left;
+  color: #00827e;
+}
+
+.authorTitle {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: left;
+}

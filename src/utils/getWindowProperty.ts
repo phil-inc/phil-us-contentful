@@ -6,19 +6,19 @@
  * @returns {T} - The value of the property at the given path or the default value.
  */
 export const getWindowProperty = <T>(path: string, defaultValue: T): T => {
-	if (typeof window !== 'undefined') {
-		let object: any = window;
-		const properties = path.split('.');
-		for (const prop of properties) {
-			if (prop in object) {
-				object = object[prop] as unknown;
-			} else {
-				return defaultValue;
-			}
-		}
+  if (typeof window !== "undefined") {
+    let object: any = window;
+    const properties = path.split(".");
+    for (const prop of properties) {
+      if (prop in object) {
+        object = object[prop] as unknown;
+      } else {
+        return defaultValue;
+      }
+    }
 
-		return object as T;
-	}
+    return object as T;
+  }
 
-	return defaultValue;
+  return defaultValue;
 };
