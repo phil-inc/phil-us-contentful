@@ -13,11 +13,10 @@ import {
   Container,
   Divider,
   Grid,
-  List,
   Text,
   Title,
 } from "@mantine/core";
-import { graphql } from "gatsby";
+import { graphql, Script } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 
 import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
@@ -25,16 +24,75 @@ import { renderRichText } from "gatsby-source-contentful/rich-text";
 import SocialShare from "components/Blog/SocialShare/SocialShare";
 import MetricBox from "components/common/Metric/Metric";
 import CaseStudyTestimonial from "components/common/Testimonials/CaseStudyTestimonial";
-import { TResource } from "types/resource";
-import { renderBanners } from "components/common/Banner/Banner";
 import { ISection } from "types/section";
-import BasicSection from "components/section/BasicSection/BasicSection";
 import Section from "components/section/Section";
-import HubspotNewsletter from "components/common/HubspotForm/HubspotNewsletter";
+import { SEO } from "layouts/SEO/SEO";
+import { TAsset } from "types/asset";
 
-// TODO: Add head component here
+type HelmetProps = {
+  data: {
+    contentfulCaseStudy: CaseStudy;
+  };
+  location: { pathname: string };
+};
+
+export const Head: React.FC<HelmetProps> = ({
+  data: { contentfulCaseStudy },
+  location,
+}) => {
+  const config = {
+    slug: "https://phil.us" + location.pathname,
+    heroImage: contentfulCaseStudy?.image?.file?.url,
+  };
+
+  const computeTitle = () => {
+    const pageTitle = contentfulCaseStudy.title;
+
+    return pageTitle.trim();
+  };
+
+  const computeMetaDescription = () => {
+    const pageMetaDescription = contentfulCaseStudy.metaDescription;
+
+    return pageMetaDescription.trim();
+  };
+
+  return (
+    <SEO title={computeTitle()}>
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={computeTitle()} />
+      <meta name="twitter:description" content={computeMetaDescription()} />
+      {config.heroImage && (
+        <meta
+          name="twitter:image"
+          content={`https:${config.heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
+        />
+      )}
+      <meta name="description" content={computeMetaDescription()} />
+      <meta property="og:title" content={computeTitle()} />
+      <meta property="og:type" content={"Page"} />
+      <meta property="og:description" content={computeMetaDescription()} />
+      {config.heroImage && (
+        <meta
+          property="og:image"
+          content={`https:${config.heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
+        />
+      )}
+      <meta property="og:url" content={config.slug} />
+      <Script
+        defer
+        strategy="idle"
+        charSet="utf-8"
+        type="text/javascript"
+        src="//js.hsforms.net/forms/embed/v2.js"
+      ></Script>
+    </SEO>
+  );
+};
 
 type CaseStudy = {
+  metaDescription: string;
+  image: TAsset;
   id: string;
   title: string;
   subtitle?: {
@@ -270,7 +328,12 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         </Grid>
       </Container>
 
-      <Divider className={classes.divider} data-manual={true} size={"1px"} color="#f4f4f4" />
+      <Divider
+        className={classes.divider}
+        data-manual={true}
+        size={"1px"}
+        color="#f4f4f4"
+      />
 
       <Container fluid className={classes.container} pos={"relative"}>
         <Grid justify="center" gutter={{ base: 0, md: 69 }} pos={"relative"}>
@@ -334,12 +397,21 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
 export default CaseStudy;
 
-// TODO: query what is needed
 export const caseStudyQuery = graphql`
   query getDownloadableResource($id: String) {
     contentfulCaseStudy(id: { eq: $id }) {
       id
       title
+      metaDescription
+      image {
+        file {
+          contentType
+          details {
+            size
+          }
+          url
+        }
+      }
       subtitle {
         id
         subtitle
