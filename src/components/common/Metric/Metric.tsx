@@ -20,16 +20,18 @@ const MetricBox: React.FC<MetricBoxProps & MantineStyleProps> = ({
   metric,
   ...restProps
 }) => {
-  const ref = React.useRef(null);
+  const ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (ref.current && ref.current.getAttribute("data-inline") === "true") {
       const parent = ref.current.parentElement;
 
-      parent.classList.add(classes.inlineMetricContainer);
+      if (parent) {
+        parent.classList.add(classes.inlineMetricContainer);
 
-      if (parent.children.length > 3) {
-        parent.setAttribute("data-columns", "2");
+        if (parent.children.length > 3) {
+          parent.setAttribute("data-columns", "2");
+        }
       }
     }
   }, []);
