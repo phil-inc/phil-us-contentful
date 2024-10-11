@@ -30,12 +30,11 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
 }) => {
   const { link, isExternal, linkLabel } = getLink(resource);
 
-  const heading: React.ReactNode = 'subHeading' in resource 
-    ? (resource.subHeading as React.ReactNode)
-    : 'heading' in resource 
-    ? (resource.heading as React.ReactNode)
-    : (resource.title as React.ReactNode);
-  
+  const heading: React.ReactNode =
+    (resource.subHeading as React.ReactNode) ??
+    (resource.heading as React.ReactNode) ??
+    (resource.title as React.ReactNode);
+
   return (
     <Paper radius={0} className={classes.card}>
       <Grid justify="start" align="start">
@@ -56,21 +55,24 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
             )}
             {resource.body && (
               <Text className={classes.body} lineClamp={2}>
-                {getDescriptionFromRichtext(resource?.body?.raw ?? '')}
+                {getDescriptionFromRichtext(resource?.body?.raw ?? "")}
               </Text>
             )}
-            {('buttonText' in resource && resource.buttonText || linkLabel) && (
+            {(("buttonText" in resource && resource.buttonText) ||
+              linkLabel) && (
               <Group>
                 {isExternal ? (
                   <Anchor href={link} underline="never" target="_blank">
                     <Button variant="philDefault" className={classes.button}>
-                      {'buttonText' in resource ? resource.buttonText : linkLabel}
+                      {("buttonText" in resource && resource.buttonText) ||
+                        linkLabel}
                     </Button>
                   </Anchor>
                 ) : (
                   <Link to={link}>
                     <Button variant="philDefault" className={classes.button}>
-                      {'buttonText' in resource ? resource.buttonText : linkLabel}
+                      {("buttonText" in resource && resource.buttonText) ||
+                        linkLabel}
                     </Button>
                   </Link>
                 )}
