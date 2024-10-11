@@ -97,3 +97,7 @@
 .loader {
 	pointer-events: none;
 }
+
+b {
+	font-weight: 700;
+}
