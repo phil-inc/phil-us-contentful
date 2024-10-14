@@ -87,7 +87,6 @@ export const Head: React.FC<HelmetProps> = ({
         src="//js.hsforms.net/forms/embed/v2.js"
       ></Script>
 
-
       {contentfulCaseStudy.noIndex && <meta name="robots" content="noindex" />}
     </SEO>
   );
@@ -317,7 +316,6 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
     },
   };
 
-  // TODO: add components and logic here
   return (
     <Layout>
       <Container fluid className={classes.heroContainer}>
