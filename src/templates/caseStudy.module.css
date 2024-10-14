@@ -120,7 +120,7 @@
     margin: 60px 20px;
   }
 
-  @media (min-width: $phil-breakpoint-md) {
+  @media (min-width: $phil-breakpoint-sm) {
     margin: 80px 0px;
 
     &[data-manual="true"] {
@@ -221,6 +221,15 @@
       width: 0;
       height: 70%;
       border-right: 1px solid #f2f2f2;
+    }
+
+    &:nth-of-type(3n) {
+      padding-right: 0;
+      border-right: none;
+
+      &::after {
+        border-right: none;
+      }
     }
 
     &:last-of-type {
