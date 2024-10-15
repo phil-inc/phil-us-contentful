@@ -39,6 +39,10 @@ const config: GatsbyConfig = {
     `gatsby-transformer-inline-svg`,
     `gatsby-plugin-postcss`,
     {
+      resolve: `gatsby-transformer-remark`,
+      options: {},
+    },
+    {
       resolve: `gatsby-plugin-advanced-sitemap-patch`,
       options: {
         exclude: [`/dev-404-page`, `/dev-404-page/`, `/404`, `/404/`, `/404.html`, `/field`],

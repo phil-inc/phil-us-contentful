@@ -1,10 +1,10 @@
-import React from 'react';
-import {Script} from 'gatsby';
+import React from "react";
+import { Script } from "gatsby";
 
 const LinkedinInsights = () => (
-	<Script>
-		{`
-			_linkedin_partner_id = "${process.env.GATSBY_LINKEDIN_PARTNER_ID ?? ''}";
+  <Script>
+    {`
+			_linkedin_partner_id = "${process.env.GATSBY_LINKEDIN_PARTNER_ID ?? ""}";
 			window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
 			window._linkedin_data_partner_ids.push(_linkedin_partner_id);
 			(function(l) {
@@ -22,7 +22,7 @@ const LinkedinInsights = () => (
 				s.parentNode.insertBefore(b, s);
 			})(window.lintrk);
 			`}
-	</Script>
+  </Script>
 );
 
 export default LinkedinInsights;

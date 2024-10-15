@@ -1,20 +1,20 @@
-import React from 'react';
-import {Script} from 'gatsby';
+import React from "react";
+import { Script } from "gatsby";
 
 const ZoominfoAnalytics: React.FC = () => {
-	const [shouldExecute, setShouldExecute] = React.useState(false);
+  const [shouldExecute, setShouldExecute] = React.useState(false);
 
-	React.useEffect(() => {
-		if (!window?.zi) {
-			setShouldExecute(true);
-		}
-	}, []);
+  React.useEffect(() => {
+    if (!window?.zi) {
+      setShouldExecute(true);
+    }
+  }, []);
 
-	return (
-		<Script>
-			{shouldExecute
-				? `
-    window.ZIProjectKey = "${process.env.GATSBY_ZI_PROJECT_KEY ?? ''}"; 
+  return (
+    <Script>
+      {shouldExecute
+        ? `
+    window.ZIProjectKey = "${process.env.GATSBY_ZI_PROJECT_KEY ?? ""}"; 
     var zi = document.createElement('script');
     (zi.type = 'text/javascript'),
     (zi.async = true),
@@ -25,9 +25,9 @@ const ZoominfoAnalytics: React.FC = () => {
     document.body.appendChild(zi)
     });
 `
-				: undefined}
-		</Script>
-	);
+        : undefined}
+    </Script>
+  );
 };
 
 export default ZoominfoAnalytics;

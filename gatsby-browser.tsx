@@ -1,9 +1,13 @@
 import React from 'react';
 
 import '@fontsource/raleway'; // Defaults to 400
+import '@fontsource/raleway/600.css';
 import '@fontsource/raleway/700.css';
+import '@fontsource/raleway/800.css';
+import '@fontsource/raleway/900.css';
 import '@fontsource/lato'; // Defaults to 400
 import '@fontsource/lato/700.css';
+import '@fontsource/lato/900.css';
 
 import {pdfjs} from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';

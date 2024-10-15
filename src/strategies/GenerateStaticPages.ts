@@ -1,55 +1,68 @@
-import slugify from 'slugify';
-import {createPageObject} from '../utils/pageObjectCreator';
-import {templateFactory} from '../factories/templateFactory';
-import {type Actions} from 'gatsby';
-import {type TResource} from '../types/resource';
+import slugify from "slugify";
+import { createPageObject } from "../utils/pageObjectCreator";
+import { templateFactory } from "../factories/templateFactory";
+import { type Actions } from "gatsby";
+import { type TResource } from "../types/resource";
 
 export default async function GenerateStaticPages({
-	actions,
-	graphql,
+  actions,
+  graphql,
 }: {
-	actions: Actions;
-	graphql: <TData, TVariables = any>(
-		query: string,
-		variables?: TVariables | undefined
-	) => Promise<{
-		errors?: any;
-		data?: TData | undefined;
-	}>;
+  actions: Actions;
+  graphql: <TData, TVariables = any>(
+    query: string,
+    variables?: TVariables | undefined,
+  ) => Promise<{
+    errors?: any;
+    data?: TData | undefined;
+  }>;
 }): Promise<void> {
-	const template = templateFactory('Blog');
-	const {
-		data = {allContentfulResource: {nodes: []}},
-	}: {data?: {allContentfulResource: {nodes: TResource[]}} | undefined} = await graphql(allStaticPagesQuery);
+  const template = templateFactory("Blog");
+  const {
+    data = { allContentfulResource: { nodes: [] } },
+  }: { data?: { allContentfulResource: { nodes: TResource[] } } | undefined } =
+    await graphql(allStaticPagesQuery);
 
-	data.allContentfulResource.nodes.forEach((resource: TResource) => {
-		const isRelatedPage = Boolean(resource.relatesTo?.page && resource.heading);
+  data.allContentfulResource.nodes.forEach((resource: TResource) => {
+    const isRelatedPage = Boolean(resource.relatesTo?.page && resource.heading);
 
-		const path
-			= resource.slug
-			?? `/${slugify(resource.heading, {
-				lower: true,
-				strict: true,
-			})}`;
+    const path =
+      resource.slug ??
+      `/${slugify(resource.heading, {
+        lower: true,
+        strict: true,
+      })}`;
 
-		if (isRelatedPage) {
-			const newPath = `${slugify(resource.relatesTo.page.title || resource.relatesTo.header, {
-				lower: true,
-				strict: true,
-			})}/${slugify(resource.relatesTo.header, {lower: true, strict: true})}/${slugify(resource.heading, {
-				lower: true,
-				strict: true,
-			})}`;
+    if (isRelatedPage) {
+      const newPath = `${slugify(
+        resource.relatesTo.page.title || resource.relatesTo.header,
+        {
+          lower: true,
+          strict: true,
+        },
+      )}/${slugify(resource.relatesTo.header, { lower: true, strict: true })}/${slugify(
+        resource.heading,
+        {
+          lower: true,
+          strict: true,
+        },
+      )}`;
 
-			const pageObject = createPageObject(newPath, template, {id: resource.id, heading: resource.heading});
-			actions.createPage(pageObject);
+      const pageObject = createPageObject(newPath, template, {
+        id: resource.id,
+        heading: resource.heading,
+      });
+      actions.createPage(pageObject);
 
-			return;
-		}
+      return;
+    }
 
-		const pageObject = createPageObject(path, template, {id: resource.id, heading: resource.heading});
-		actions.createPage(pageObject);
-	});
+    const pageObject = createPageObject(path, template, {
+      id: resource.id,
+      heading: resource.heading,
+    });
+    actions.createPage(pageObject);
+  });
 }
 
 const allStaticPagesQuery = `

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
 type SEOProps = {
-	title: string;
-	children?: React.ReactNode;
+  title: string;
+  children?: React.ReactNode;
 };
 
-export const SEO: React.FC<SEOProps> = ({title, children}) => (
-	<>
-		<title>{title}</title>
-		{children}
-	</>
+export const SEO: React.FC<SEOProps> = ({ title, children }) => (
+  <>
+    <title>{title}</title>
+    {children}
+  </>
 );

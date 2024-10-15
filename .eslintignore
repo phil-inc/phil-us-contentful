@@ -1,7 +1,0 @@
-gatsby-*.js
-gatsby-*.ts
-gatsby-*.tsx
-public/
-netlify/
-contentful/apps/
-node_modules/

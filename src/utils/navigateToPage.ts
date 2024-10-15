@@ -1,1 +1,1 @@
-export const navigateToPage = (page: string) => '/' + page;
+export const navigateToPage = (page: string) => "/" + page;
