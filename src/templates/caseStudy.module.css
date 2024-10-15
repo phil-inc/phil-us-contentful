@@ -43,6 +43,64 @@
   }
 }
 
+.header3 {
+  font-family: Raleway, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36.4px;
+  text-align: left;
+  color: #0a0a0a;
+}
+
+.featuredContainer {
+  padding: 64px 32px;
+  padding-left: calc(32px + 12px);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 12px;
+    background: #35ada7;
+  }
+}
+
+.featuredCaseStudyTitle {
+  font-family: Raleway;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 46.96px;
+  color: #0a0a0a;
+  text-align: left;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    text-align: center;
+  }
+}
+
+.featuredCaseStudyDescription {
+  font-family: Lato;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21.6px;
+  text-align: left;
+  color: #525252;
+}
+
+.featuredCaseStudyButton {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.2px;
+  text-align: left;
+  color: #525252;
+
+  width: 100%;
+}
+
 .heroContainer {
   margin: 0 20px !important;
   padding: 0 !important;
@@ -238,4 +296,28 @@
       }
     }
   }
+}
+
+.featuredContainer {
+  background: #fff
+}
+
+.indicators {
+  bottom: -32px !important;
+}
+
+.indicator {
+  background-color: #d9d9d9 !important;
+  height: 8px !important;
+  width: 8px !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+
+  &[data-active="true"] {
+    background-color: #525252 !important;
+  }
+}
+
+.link {
+  text-decoration: none;
 }
