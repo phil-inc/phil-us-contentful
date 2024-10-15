@@ -1,0 +1,294 @@
+.metricValue {
+  font-family: Lato;
+  font-size: 65.41px;
+  font-weight: 800;
+  line-height: 78.49px;
+  text-align: center;
+
+  color: #00827e;
+
+  > span:last-of-type {
+    font-family: Lato;
+    font-size: 43.61px;
+    font-weight: 900;
+    line-height: 52.33px;
+    letter-spacing: -0.06em;
+    text-align: center;
+  }
+}
+
+.metricDescription {
+  color: #0a0a0a;
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-family: Lato, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28.8px;
+    text-align: center;
+  }
+}
+
+.inlineMetricContainer {
+  display: grid;
+  width: 100%;
+  gap: 0px;
+  grid-template-columns: repeat(1, auto);
+  justify-content: center;
+
+  margin: 80px auto;
+
+  .metricLabel {
+    font-family: Raleway;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 23.48px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      line-height: 18.78px;
+      text-align: left;
+      font-size: 16px;
+    }
+  }
+
+  .metricValue {
+    color: #00827e;
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-top: 29px;
+      margin-bottom: 29px;
+    }
+
+    &:not([data-has-label="true"]) {
+      margin-top: 0;
+    }
+
+    > span {
+      font-family: Lato;
+      font-size: 60.68px;
+      font-weight: 800;
+      line-height: 60.68px;
+      text-align: left;
+
+      &:last-of-type {
+        font-family: Lato;
+        font-size: 47.19px;
+        font-weight: 800;
+        line-height: 47.19px;
+        text-align: left;
+      }
+    }
+  }
+
+  .metricDescription {
+    font-family: Raleway;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18.78px;
+    text-align: center;
+
+    &[data-has-label="false"] {
+      font-family: Lato;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 30px;
+      text-align: center;
+    }
+
+    @media (min-width: $phil-breakpoint-sm) {
+      font-family: Raleway;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 15.26px;
+      text-align: left;
+    }
+  }
+
+  > .metricBox {
+    border-bottom: 1.27px solid #e9e9e9;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  @media (min-width: $phil-breakpoint-sm) {
+    display: grid;
+    width: 100%;
+    gap: 0px;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+
+    margin: 80px auto;
+
+    > .metricBox {
+      border-bottom: none;
+
+      margin: 0 auto;
+      padding-right: 40px;
+      padding-left: 40px;
+
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 60px;
+        right: 0;
+        height: 60%;
+        border-right: 1.27px solid #e9e9e9;
+        border-bottom: none;
+      }
+
+      &:first-of-type {
+        padding-left: 0;
+      }
+
+      &:last-of-type {
+        border-right: none;
+
+        padding-right: 0;
+
+        &::after {
+          border-right: none;
+        }
+      }
+    }
+
+    &[data-columns="2"] {
+      grid-template-columns: repeat(2, auto);
+      justify-content: center;
+
+      > .metricBox {
+        padding: 0;
+        border: none;
+        padding-bottom: 33.17px;
+        width: auto;
+        max-width: 225px;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 60px;
+          right: 0;
+          height: 60%;
+          border-right: none;
+          border-bottom: none;
+        }
+
+        &:last-of-type {
+          padding-bottom: 0;
+
+          &::after {
+            border-right: none;
+          }
+        }
+
+        &:nth-of-type(even) {
+          padding-left: 0;
+          margin-left: 40px;
+        }
+
+        &:nth-of-type(odd) {
+          padding-right: 40px;
+          border-right: none;
+          border-right: 0.83px solid #e9e9e9;
+        }
+
+        &:nth-of-type(n + 3):nth-of-type(2n),
+        &:nth-of-type(n + 3):nth-of-type(2n + 1) {
+          position: relative;
+          padding-top: 33.17px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80%;
+            border-top: 0.83px solid #e9e9e9;
+          }
+        }
+
+        &:nth-last-of-type(2) {
+          padding-bottom: 0;
+        }
+
+        > .metricValue {
+          font-family: Lato;
+          font-size: 56px;
+          font-weight: 800;
+          line-height: 56px;
+          text-align: left;
+
+          > span:last-of-type {
+            font-family: Lato;
+            font-size: 48.64px;
+            font-weight: 900;
+            line-height: 48.64px;
+            text-align: left;
+          }
+        }
+
+        > .metricDescription {
+          font-family: Lato;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 30px;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+.metricBox {
+  padding: 0px;
+
+  &:first-of-type {
+    padding-top: 20px;
+  }
+
+  &:last-of-type {
+    padding-bottom: 20px;
+  }
+
+  &[data-inline="true"] {
+    padding: 40px;
+  }
+
+  @media (min-width: $phil-breakpoint-sm) {
+    padding: 48px;
+    max-width: 308px;
+    margin: 0 auto;
+
+    &:first-of-type {
+      padding-top: 40px;
+    }
+
+    &:last-of-type {
+      padding-bottom: 48px;
+    }
+
+    &[data-inline="true"] {
+      margin: 0;
+      display: inline-block;
+
+      > .metricValue {
+        text-align: start !important;
+      }
+
+      > .metricDescription {
+        text-align: start;
+      }
+    }
+  }
+}
