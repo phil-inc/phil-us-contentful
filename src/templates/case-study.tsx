@@ -13,10 +13,12 @@ import {
   Container,
   Divider,
   Grid,
+  Group,
+  Stack,
   Text,
   Title,
 } from "@mantine/core";
-import { graphql, Script } from "gatsby";
+import { graphql, Link, Script } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 
 import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
@@ -28,6 +30,64 @@ import { ISection } from "types/section";
 import Section from "components/section/Section";
 import { SEO } from "layouts/SEO/SEO";
 import { TAsset } from "types/asset";
+import Expanded from "components/common/Expanded/Expanded";
+import { TDownloadableResource } from "types/resource";
+import { Carousel } from "@mantine/carousel";
+import { useMediaQuery } from "@mantine/hooks";
+
+const FeaturedCaseStudy: React.FC<{
+  resource: CaseStudy | TDownloadableResource;
+}> = ({ resource }) => {
+  return (
+    <Box h={"100%"} className={classes.featuredContainer}>
+      <Stack h={"100%"} align="stretch" justify="space-between" gap={40}>
+        <Box>
+          <Title unstyled m={0} order={3} className={classes.header3}>
+            {"heading" in resource && resource.heading
+              ? typeof resource.heading === "string"
+                ? resource.heading
+                : (resource as unknown as CaseStudy).title ||
+                  "No title available"
+              : (resource as CaseStudy).title || "No heading available"}
+          </Title>
+          <Text mt={32} className={classes.featuredCaseStudyDescription}>
+            {resource.description
+              ? typeof resource.description === "string"
+                ? resource.description
+                : resource.description.raw
+                  ? documentToPlainTextString(
+                      JSON.parse(resource.description.raw),
+                    )
+                  : "No description available"
+              : "No description available"}
+          </Text>
+        </Box>
+        <Link className={classes.link} to={`/${resource.slug}`}>
+          <Text
+            mr={7}
+            span
+            unstyled
+            className={classes.featuredCaseStudyButton}
+          >
+            Read more
+          </Text>
+          <svg
+            width="16"
+            height="11"
+            viewBox="0 0 16 11"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.2001 5.97935C15.4734 5.70598 15.4734 5.26277 15.2001 4.9894L10.7453 0.534628C10.4719 0.261261 10.0287 0.261261 9.75533 0.534628C9.48196 0.807996 9.48196 1.25121 9.75533 1.52458L13.7151 5.48438L9.75533 9.44417C9.48196 9.71754 9.48196 10.1608 9.75533 10.4341C10.0287 10.7075 10.4719 10.7075 10.7453 10.4341L15.2001 5.97935ZM0.155273 6.18437L14.7051 6.18438L14.7051 4.78438L0.155273 4.78438L0.155273 6.18437Z"
+              fill="#525252"
+            />
+          </svg>
+        </Link>
+      </Stack>
+    </Box>
+  );
+};
 
 type HelmetProps = {
   data: {
@@ -94,6 +154,7 @@ export const Head: React.FC<HelmetProps> = ({
 
 export type CaseStudy = {
   noIndex: boolean;
+  slug: string;
   metaDescription: string;
   image: TAsset;
   id: string;
@@ -182,6 +243,8 @@ type CaseStudyProps = {
     contentfulCaseStudy: CaseStudy;
     allContentfulSection: { nodes: ISection[] };
     allContentfulReferencedSection: { nodes: ISection[] };
+    allContentfulDownloadableResource: { nodes: TDownloadableResource[] };
+    allContentfulCaseStudy: { nodes: CaseStudy[] };
   };
 };
 
@@ -190,6 +253,8 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
     contentfulCaseStudy: data,
     allContentfulSection,
     allContentfulReferencedSection,
+    allContentfulDownloadableResource,
+    allContentfulCaseStudy,
   },
 }) => {
   const contentRef = React.useRef(null);
@@ -200,6 +265,19 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   const [TOC, setTOC] = React.useState<React.ReactNode[]>([]);
   const [activeId, setActiveId] = React.useState<string | null>(null);
+
+  const isMobile = useMediaQuery("(max-width: 64em)", false, {
+    getInitialValueInEffect: false,
+  });
+
+  const featured = [
+    ...allContentfulDownloadableResource.nodes,
+    ...allContentfulCaseStudy.nodes,
+  ]
+    .sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    })
+    ?.slice(0, 3);
 
   React.useEffect(() => {
     const elems = (
@@ -365,7 +443,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
             <Box className={classes.sticky}>
               <Box>
-                <SocialShare text="Share" gap={8} />
+                <SocialShare text="Share" gap={8} radius={'sm'}/>
               </Box>
               <Divider my={28} />
               <Box>
@@ -409,6 +487,58 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         index={0}
         isEmbedFormTemplate={false}
       />
+
+      <Expanded id="featured-case-study" background="#f4f4f4">
+        <Group justify="center" className={classes.group}>
+          <Box mb={isMobile ? 60 : 80}>
+            <Title
+              unstyled
+              m={0}
+              order={3}
+              className={classes.featuredCaseStudyTitle}
+            >
+              Featured Case Studies
+            </Title>
+          </Box>
+
+          {isMobile ? (
+            <Carousel
+              withIndicators
+              withControls={false}
+              classNames={{
+                indicators: classes.indicators,
+                indicator: classes.indicator,
+              }}
+              slideSize={{ base: "40%", xs: "50%", sm: "100%" }}
+              slideGap={{ base: "5%", xs: "10%"}}
+            >
+              {featured.map((resource) => (
+                <Carousel.Slide>
+                  <FeaturedCaseStudy key={resource.id} resource={resource} />
+                </Carousel.Slide>
+              ))}
+            </Carousel>
+          ) : (
+            <Grid gutter={44} mb={80} align="stretch">
+              {featured.map((resource) => (
+                <Grid.Col span={4}>
+                  <FeaturedCaseStudy key={resource.id} resource={resource} />
+                </Grid.Col>
+              ))}
+            </Grid>
+          )}
+
+          <Link to="/resources/case-studies">
+            <Button
+              className={classes.featuredCaseStudyButton}
+              variant="philDefault"
+              mt={20}
+            >
+              View all case studies
+            </Button>
+          </Link>
+        </Group>
+      </Expanded>
 
       <Section
         isPreviousBackgroundPure={false}
@@ -508,7 +638,6 @@ export const caseStudyQuery = graphql`
         url
       }
     }
-
     allContentfulSection(
       filter: {
         metadata: {
@@ -749,7 +878,6 @@ export const caseStudyQuery = graphql`
         }
       }
     }
-
     allContentfulReferencedSection(
       filter: {
         metadata: {
@@ -1055,7 +1183,6 @@ export const caseStudyQuery = graphql`
                   }
                   contentful_id
                   name
-                  name
                   media {
                     gatsbyImageData(
                       resizingBehavior: SCALE
@@ -1195,15 +1322,13 @@ export const caseStudyQuery = graphql`
             buttonText
             internalLink {
               id
-              ... on ContentfulDownloadableResource {
-                slug
-                heading
-                sys {
-                  contentType {
-                    sys {
-                      type
-                      id
-                    }
+              slug
+              heading
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
                   }
                 }
               }
@@ -1256,7 +1381,6 @@ export const caseStudyQuery = graphql`
               }
             }
             contentful_id
-            name
             name
             media {
               gatsbyImageData(
@@ -1363,6 +1487,50 @@ export const caseStudyQuery = graphql`
             shouldRenderCarousel
           }
         }
+      }
+    }
+    allContentfulDownloadableResource(
+      limit: 3
+      sort: { createdAt: DESC }
+      filter: {
+        node_locale: { eq: "en-US" }
+        type: { eq: "Case Study" }
+        id: { ne: $id }
+      }
+    ) {
+      nodes {
+        contentful_id
+        id
+        slug
+        noindex
+        heading
+        description
+        createdAt
+        internalLink {
+          ... on ContentfulDownloadableResource {
+            slug
+            id
+            contentful_id
+          }
+        }
+      }
+    }
+
+    allContentfulCaseStudy(
+      limit: 3
+      sort: { createdAt: DESC }
+      filter: { node_locale: { eq: "en-US" }, id: { ne: $id } }
+    ) {
+      nodes {
+        contentful_id
+        id
+        createdAt
+        noIndex
+        title
+        description {
+          raw
+        }
+        slug
       }
     }
   }
