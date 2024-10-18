@@ -120,7 +120,7 @@
     margin-top: 100px !important;
   }
 
-  @media screen and (width: 1440px) and (height: 900px) {
+@media screen and (min-width: 1080px) and (max-width: 1440px) {
     margin-top: 80px !important;
   }
 
@@ -135,7 +135,7 @@
     margin-bottom: 0 !important;
   }
 
-  @media screen and (width: 1440px) and (height: 900px) {
+@media screen and (min-width: 1080px) and (max-width: 1440px) {
     margin-top: 60px !important;
   }
 }
@@ -151,7 +151,7 @@
     padding-right: 69px;
   }
 
-  @media screen and (width: 1440px) and (height: 900px) {
+@media screen and (min-width: 1080px) and (max-width: 1440px) {
     font-size: 48px !important;
   }
 }
@@ -176,7 +176,7 @@
     font-size: 32px !important;
   }
 
-  @media screen and (width: 1440px) and (height: 900px) {
+@media screen and (min-width: 1080px) and (max-width: 1440px) {
     margin-bottom: 20px !important;
     font-size: 28px !important;
   }
@@ -197,7 +197,7 @@
     text-align: left;
   }
 
-  @media screen and (width: 1440px) and (height: 900px) {
+@media screen and (min-width: 1080px) and (max-width: 1440px) {
     font-size: 18px;
   }
 }
