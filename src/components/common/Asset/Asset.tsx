@@ -14,6 +14,8 @@ import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import { type MediaItem } from "types/section";
 import { extractAssetData } from "utils/asset";
 
+import * as classes from "./asset.module.css";
+
 const LiteYouTubeEmbed = loadable(() => import("react-lite-youtube-embed"));
 const PDFViewer = loadable(() => import("../PDFViewer/PDFViewer"));
 
@@ -72,7 +74,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
 
       if (contentType.startsWith("image/")) {
         const image = getImage(media);
-        return <GatsbyImage objectFit="cover" image={image!} alt={title} />;
+        return <GatsbyImage objectFit="cover" image={image!} alt={title} className={classes.gatsbyImageContainer}  />;
       }
 
       return null;

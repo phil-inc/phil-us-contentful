@@ -443,7 +443,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
             <Box className={classes.sticky}>
               <Box>
-                <SocialShare text="Share" gap={8} radius={'sm'}/>
+                <SocialShare text="Share" gap={8} radius={"sm"} />
               </Box>
               <Divider my={28} />
               <Box>
@@ -481,6 +481,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         </Grid>
       </Container>
 
+      <Divider className={classes.divider} data-main-content-end={true} />
       <Section
         isPreviousBackgroundPure={false}
         section={bannerSection}
@@ -490,7 +491,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
       <Expanded id="featured-case-study" background="#f4f4f4">
         <Group justify="center" className={classes.group}>
-          <Box mb={isMobile ? 60 : 80}>
+          <Box mb={isMobile ? 60 : 80 - 22}>
             <Title
               unstyled
               m={0}
@@ -510,7 +511,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
                 indicator: classes.indicator,
               }}
               slideSize={{ base: "40%", xs: "50%", sm: "100%" }}
-              slideGap={{ base: "5%", xs: "10%"}}
+              slideGap={{ base: "5%", xs: "10%" }}
             >
               {featured.map((resource) => (
                 <Carousel.Slide>
@@ -519,7 +520,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
               ))}
             </Carousel>
           ) : (
-            <Grid gutter={44} mb={80} align="stretch">
+            <Grid gutter={44} mb={80 - 22} align="stretch">
               {featured.map((resource) => (
                 <Grid.Col span={4}>
                   <FeaturedCaseStudy key={resource.id} resource={resource} />
@@ -532,7 +533,6 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
             <Button
               className={classes.featuredCaseStudyButton}
               variant="philDefault"
-              mt={20}
             >
               View all case studies
             </Button>
@@ -751,7 +751,8 @@ export const caseStudyQuery = graphql`
           gatsbyImageData(
             resizingBehavior: SCALE
             placeholder: BLURRED
-            layout: CONSTRAINED
+            layout: FULL_WIDTH
+            aspectRatio: 1
           )
           title
           file {

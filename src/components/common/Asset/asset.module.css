@@ -1,0 +1,7 @@
+.gatsbyImageContainer {
+  > div {
+    &:first-of-type {
+      max-width: 100% !important;
+    }
+  }
+}
