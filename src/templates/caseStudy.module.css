@@ -9,6 +9,15 @@
   }
 }
 
+.gatsbyImageContainer {
+  > div {
+    &:first-of-type {
+      max-width: 100% !important;
+    }
+  }
+}
+ 
+
 .paragraph {
   font-family: Lato;
   font-size: 16px;
@@ -31,7 +40,7 @@
   font-weight: 700;
   line-height: 36.4px;
   text-align: left;
-  padding-bottom: 16px;
+  padding-bottom: 36px;
   margin: 0;
 
   > b {
@@ -110,6 +119,11 @@
     margin: 0 100px !important;
     margin-top: 100px !important;
   }
+
+  @media screen and (width: 1440px) and (height: 900px) {
+    margin-top: 80px !important;
+  }
+
 }
 
 .container {
@@ -120,6 +134,10 @@
     margin: 120px 100px !important;
     margin-bottom: 0 !important;
   }
+
+  @media screen and (width: 1440px) and (height: 900px) {
+    margin-top: 60px !important;
+  }
 }
 
 .heroTitle {
@@ -129,8 +147,12 @@
 
   @media (min-width: $phil-breakpoint-sm) {
     margin-top: 0 !important;
-    font-size: 52px !important;
+    font-size: 56px !important;
     padding-right: 69px;
+  }
+
+  @media screen and (width: 1440px) and (height: 900px) {
+    font-size: 48px !important;
   }
 }
 
@@ -139,7 +161,7 @@
   background: #f7f7f7;
 
   @media (min-width: $phil-breakpoint-sm) {
-    padding: 72px 52px;
+    padding: 52px;
     font-size: 20px !important;
   }
 }
@@ -152,6 +174,11 @@
 
   @media (min-width: $phil-breakpoint-sm) {
     font-size: 32px !important;
+  }
+
+  @media screen and (width: 1440px) and (height: 900px) {
+    margin-bottom: 20px !important;
+    font-size: 28px !important;
   }
 }
 
@@ -169,6 +196,10 @@
     line-height: 30px;
     text-align: left;
   }
+
+  @media screen and (width: 1440px) and (height: 900px) {
+    font-size: 18px;
+  }
 }
 
 .divider {
@@ -176,6 +207,16 @@
 
   &[data-manual="true"] {
     margin: 60px 20px;
+  }
+
+  &[data-main-content-end="true"] {
+    margin: 0 20px;
+    margin-top: 60px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin: 0 100px;
+      margin-top: 100px;
+    }
   }
 
   @media (min-width: $phil-breakpoint-sm) {
@@ -299,7 +340,7 @@
 }
 
 .featuredContainer {
-  background: #fff
+  background: #fff;
 }
 
 .indicators {
