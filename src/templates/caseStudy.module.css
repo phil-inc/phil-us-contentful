@@ -108,6 +108,10 @@
   color: #525252;
 
   width: 100%;
+
+  @media (max-width: $phil-breakpoint-md) {
+    margin-top: 20px;
+  }
 }
 
 .heroContainer {
@@ -361,4 +365,8 @@
 
 .link {
   text-decoration: none;
+}
+
+.carouselViewport {
+  width: 100vw;
 }
