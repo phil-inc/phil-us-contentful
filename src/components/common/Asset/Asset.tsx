@@ -38,7 +38,6 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({ videoId, title }) => (
       adNetwork
       params="rel=0"
       rel="0"
-      poster="maxresdefault"
       title={title}
       noCookie
     />

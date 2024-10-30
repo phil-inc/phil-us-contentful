@@ -509,9 +509,10 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
               classNames={{
                 indicators: classes.indicators,
                 indicator: classes.indicator,
+                viewport: classes.carouselViewport,
               }}
-              slideSize={{ base: "40%", xs: "50%", sm: "100%" }}
-              slideGap={{ base: "5%", xs: "10%" }}
+              slideSize={{ base: "40%", xs: "90%", sm: "90%" }}
+              slideGap={{ base: "5%", xs: "15%" }}
             >
               {featured.map((resource) => (
                 <Carousel.Slide>
