@@ -15,6 +15,7 @@ import {
   Grid,
   Group,
   Stack,
+  Table,
   Text,
   Title,
 } from "@mantine/core";
@@ -34,6 +35,7 @@ import Expanded from "components/common/Expanded/Expanded";
 import { TDownloadableResource } from "types/resource";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
+import Asset from "components/common/Asset/Asset";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -391,6 +393,36 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
       [BLOCKS.PARAGRAPH](node, children) {
         return <p className={classes.paragraph}>{children}</p>;
       },
+
+      [BLOCKS.TABLE](node, children) {
+        return (
+          <Table withTableBorder={true} withColumnBorders={true}>
+            {children}
+          </Table>
+        );
+      },
+
+      [BLOCKS.TABLE_HEADER_CELL](node, children) {
+        return <Table.Thead>{children}</Table.Thead>;
+      },
+
+      [BLOCKS.TABLE_CELL](node, children) {
+        return <Table.Td>{children}</Table.Td>;
+      },
+
+      [BLOCKS.TABLE_ROW](node, children) {
+        return <Table.Tr>{children}</Table.Tr>;
+      },
+
+      [BLOCKS.EMBEDDED_ASSET](node) {
+        const asset = node?.data?.target as TAsset;
+
+        return (
+          <Box className={classes.embededAssetWrapper}>
+            <Asset asset={asset} />
+          </Box>
+        );
+      },
     },
   };
 
@@ -590,6 +622,23 @@ export const caseStudyQuery = graphql`
         __typename
         references {
           __typename
+
+           ... on ContentfulAsset {
+            contentful_id
+            description
+            gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+            sys {
+              type
+            }
+          }
+          
           ... on ContentfulEntry {
             contentful_id
             id
