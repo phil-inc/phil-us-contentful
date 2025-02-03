@@ -177,5 +177,13 @@ export const getLink = (
     };
   }
 
+  if (section?.hyperlink?.externalUrl) {
+    return {
+      link: section.hyperlink.externalUrl,
+      isExternal: true,
+      linkLabel: section.hyperlink.linkLabel,
+    };
+  }
+
   return { link: "#", isExternal: true, linkLabel: "Learn more" };
 };

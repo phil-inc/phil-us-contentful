@@ -41,7 +41,7 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
         <Grid.Col>
           <Box className={classes.box}>
             {heading && isExternal ? (
-              <Anchor href={link} target="_blank" underline="never">
+              <Anchor href={link} target="_blank" underline="never" className={classes.textDecorationNone}>
                 <Title order={3} className={classes.title}>
                   {heading}
                 </Title>
