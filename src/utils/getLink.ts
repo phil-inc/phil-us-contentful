@@ -119,8 +119,6 @@ export const getLink = (
         return { link: staticPage?.path ?? "#", isExternal: false };
     }
 
-    console.log({link})
-
     if (link.length <= 0) {
       return { link: "#", isExternal: true };
     }
