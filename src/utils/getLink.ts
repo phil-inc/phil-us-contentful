@@ -119,8 +119,6 @@ export const getLink = (
         return { link: staticPage?.path ?? "#", isExternal: false };
     }
 
-    console.log({link})
-
     if (link.length <= 0) {
       return { link: "#", isExternal: true };
     }
@@ -173,6 +171,14 @@ export const getLink = (
     return {
       link: staticPage?.path ?? "#",
       isExternal: false,
+      linkLabel: section.hyperlink.linkLabel,
+    };
+  }
+
+  if (section?.hyperlink?.externalUrl) {
+    return {
+      link: section.hyperlink.externalUrl,
+      isExternal: true,
       linkLabel: section.hyperlink.linkLabel,
     };
   }
