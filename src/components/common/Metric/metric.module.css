@@ -86,21 +86,6 @@
         text-align: left;
       }
     }
-
-    &[data-label-as-value="true"] {
-      color: #0a0a0a;
-
-      > span {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 1;
-
-        &:last-of-type {
-          font-size: 24px;
-          line-height: 1;
-        }
-      }
-    }
   }
 
   .metricDescription {
@@ -250,25 +235,6 @@
             font-weight: 900;
             line-height: 48.64px;
             text-align: left;
-          }
-
-          &[data-label-as-value="true"] {
-            color: #0a0a0a;
-            line-height: 1;
-            font-size: 20px;
-            margin: 0;
-            margin-top: 36px;
-
-            > span {
-              font-size: 20px;
-              font-weight: 700;
-              line-height: 1;
-              
-              &:last-of-type {
-                font-size: 20px;
-                line-height: 1;
-              }
-            }
           }
         }
 

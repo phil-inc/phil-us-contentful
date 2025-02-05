@@ -2,7 +2,7 @@ import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
 import React from "react";
 import { useId } from "@mantine/hooks";
 import { Box, Center, Loader } from "@mantine/core";
-import classNames from "classnames";
+import { navigate } from "gatsby";
 
 type HubSpotFormProps = {
   portalId: string;
@@ -22,6 +22,9 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({
     target: `#${uuid}`,
     portalId,
     formId,
+    onFormSubmitted() {
+      navigate("/sharpen-your-access-and-commercialization-efforts");
+    },
   });
 
   React.useEffect(() => {
