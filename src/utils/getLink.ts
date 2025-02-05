@@ -83,12 +83,24 @@ export const getLink = (
   }
 
   if (section?.__typename) {
+    const paths = useInternalPaths();
     switch (section?.link?.internalContent?.__typename) {
       case "ContentfulSection":
       case "ContentfulReferencedSection":
         const sectionLink = section?.link?.internalContent?.page?.[0];
+
+        const icid = section.link.internalContent.id 
+        const existingPage = paths.find((path)=> path.id === icid);
+        
+        // check if the existing page is a resource section page
+        if (existingPage?.path.startsWith("/resources/")) {
+          link.push(existingPage.path.slice(1));
+          break;
+        }
+        
         if (sectionLink) {
           link.push(slugify(sectionLink.title, { lower: true, strict: true }));
+
           link.push(
             `#${slugify(sectionLink.header ?? sectionLink.id, { lower: true, strict: true })}`,
           );
@@ -97,7 +109,6 @@ export const getLink = (
         break;
 
       default:
-        const paths = useInternalPaths();
         const staticPage = paths.find(
           (path) =>
             path.id === (section?.link?.internalContent?.id ?? section?.id),
@@ -160,6 +171,14 @@ export const getLink = (
     return {
       link: staticPage?.path ?? "#",
       isExternal: false,
+      linkLabel: section.hyperlink.linkLabel,
+    };
+  }
+
+  if (section?.hyperlink?.externalUrl) {
+    return {
+      link: section.hyperlink.externalUrl,
+      isExternal: true,
       linkLabel: section.hyperlink.linkLabel,
     };
   }
