@@ -46,6 +46,7 @@ const MetricBox: React.FC<MetricBoxProps & MantineStyleProps> = ({
         data-has-label={metric?.metricLabel?.length > 0}
         className={classes.metricValue}
       >
+        
         {metric.metricValue?.split("").map((char) => (
           <span>{char}</span>
         ))}
