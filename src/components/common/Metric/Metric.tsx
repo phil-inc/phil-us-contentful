@@ -1,13 +1,6 @@
 import React from "react";
 
-import {
-  Box,
-  Center,
-  Group,
-  MantineStyleProps,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Box, MantineStyleProps, Text, Title } from "@mantine/core";
 
 import * as classes from "./metric.module.css";
 
@@ -45,39 +38,21 @@ const MetricBox: React.FC<MetricBoxProps & MantineStyleProps> = ({
 
   return (
     <Box ref={ref} className={classes.metricBox} {...restProps}>
-      {!metric?.metricValue?.length && !metric?.metricDescription?.length ? (
-        <Text
-          unstyled
-          data-has-label={metric?.metricLabel?.length > 0}
-          data-label-as-value={true}
-          className={classes.metricValue}
-        >
-          {metric.metricLabel?.split("")?.map((char) => <span>{char}</span>)}
-        </Text>
-      ) : (
-        metric?.metricLabel?.length && (
-          <Text unstyled my={0} className={classes.metricLabel}>
-            {metric.metricLabel}
-          </Text>
-        )
+      {metric?.metricLabel?.length && (
+        <Text unstyled my={0} className={classes.metricLabel}>{metric.metricLabel}</Text>
       )}
-      {metric?.metricValue?.length && (
-        <Title
-          order={4}
-          data-has-label={metric?.metricLabel?.length > 0}
-          className={classes.metricValue}
-        >
-          {metric.metricValue?.split("")?.map((char) => <span>{char}</span>)}
-        </Title>
-      )}
-      {metric?.metricDescription?.length && (
-        <Text
-          data-has-label={metric?.metricLabel?.length > 0}
-          className={classes.metricDescription}
-        >
-          {metric.metricDescription}
-        </Text>
-      )}
+      <Title
+        order={4}
+        data-has-label={metric?.metricLabel?.length > 0}
+        className={classes.metricValue}
+      >
+        {metric.metricValue.split("").map((char) => (
+          <span>{char}</span>
+        ))}
+      </Title>
+      <Text data-has-label={metric?.metricLabel?.length > 0} className={classes.metricDescription}>
+        {metric.metricDescription}
+      </Text>
     </Box>
   );
 };
