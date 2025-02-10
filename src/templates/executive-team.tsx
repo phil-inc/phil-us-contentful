@@ -24,38 +24,36 @@ import cx from "clsx";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { ELinkedinIcon } from "components/common/Buttons/SocialButtons/ELinkedInIcon";
 
-
 type ExecutiveTeamProps = {
   data: { contentfulPage: ContentfulPage };
 };
 
 const ECard = ({ reference }: any) => {
-  const {body, media, hyperlink } = reference;
+  const { body, media, hyperlink } = reference;
 
   const pastCompanies = body.references;
 
-    const options: Options = {
-  
-      renderNode: {
-        [BLOCKS.HEADING_3](node, children) {
-          return (
-            <Title order={3} className={cx(classes.heading, classes.heading3)}>
-              {children}
-            </Title>
-          );
-        },
+  const options: Options = {
+    renderNode: {
+      [BLOCKS.HEADING_3](node, children) {
+        return (
+          <Title order={3} className={cx(classes.heading, classes.heading3)}>
+            {children}
+          </Title>
+        );
+      },
 
-         [BLOCKS.HEADING_6](node, children) {
-                return (
-                  <Title order={6} className={cx(classes.heading, classes.heading6)}>
-                    {children}
-                  </Title>
-                );
-              },
+      [BLOCKS.HEADING_6](node, children) {
+        return (
+          <Title order={6} className={cx(classes.heading, classes.heading6)}>
+            {children}
+          </Title>
+        );
+      },
 
-        [INLINES.EMBEDDED_ENTRY]: () => null,
-       },
-    };
+      [INLINES.EMBEDDED_ENTRY]: () => null,
+    },
+  };
 
   return (
     <Box
@@ -76,7 +74,7 @@ const ECard = ({ reference }: any) => {
         }}
       >
         <div>
-         <Box mb={42}>{body && renderRichText(body, options)}</Box>
+          <Box mb={42}>{body && renderRichText(body, options)}</Box>
         </div>
         <Group gap={13}>
           {pastCompanies.map((company, index) => (
@@ -95,9 +93,19 @@ const ECard = ({ reference }: any) => {
           underline="never"
           target="_blank"
           className={classes.textDecorationNone}
+          w={"100%"}
+          h="100%"
         >
-          <Button leftSection={<ELinkedinIcon/>} variant="outline" color="#007EBB" className={classes.button}>
-            View LinkedIn Profile
+          <Button
+            size="lg"
+            py={11}
+            leftSection={<ELinkedinIcon />}
+            fullWidth
+            variant="outline"
+            color="#007EBB"
+            className={classes.button}
+          >
+            <Text lh={"16px"}>View LinkedIn Profile</Text>
           </Button>
         </Anchor>
       </div>
@@ -132,7 +140,7 @@ const ExecutiveTeam: React.FC<ExecutiveTeamProps> = ({
               span={{ base: 12, sm: 6, md: 4 }}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <ECard reference={reference}/>
+              <ECard reference={reference} />
             </Grid.Col>
           ))}
         </Grid>
