@@ -89,8 +89,9 @@ const ECard = ({ reference }: any) => {
                 src={company.media.file.url}
                 alt={pastCompanies.name}
                 height={20}
-                width="auto"
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "cover",
+                width:"auto"
+                 }}
               />
             ))}
           </Group>
