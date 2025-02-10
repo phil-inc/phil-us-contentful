@@ -285,12 +285,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   };
 
   const isSectionV2 = section.v2Flag;
+
   const hasYoutubeLink = isSectionV2
-    ? Boolean(section.mediaItem.youtubeLink)
+    ? Boolean(section?.mediaItem?.youtubeLink)
     : Boolean(section.youtubeVideoUrl);
   const mediaItemOrAsset = isSectionV2 ? section.mediaItem : section.asset;
   const youtubeVideoUrl = isSectionV2
-    ? section.mediaItem.youtubeLink
+    ? section?.mediaItem?.youtubeLink
     : section.youtubeVideoUrl;
 
   const calculateAspectRatio = () => (hasYoutubeLink ? 16 / 9 : undefined);

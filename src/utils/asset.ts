@@ -10,7 +10,7 @@ export const extractAssetData = (
   const title = asset?.name ?? asset?.title ?? "";
   const contentType =
     asset?.media?.file?.contentType || asset?.file?.contentType || "";
-  const videoURL = youtubeVideoURL || asset.youtubeLink || "";
+  const videoURL = youtubeVideoURL || asset?.youtubeLink || "";
 
   return { media, url, title, contentType, videoURL };
 };

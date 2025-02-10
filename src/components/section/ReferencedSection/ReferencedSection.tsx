@@ -39,6 +39,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   isEmbedFormTemplate,
   isPreviousBackgroundPure,
 }) => {
+  console.log("inside referenced section", section);
   const params = new URLSearchParams(getWindowProperty("location.search", {}));
   const GRID_COLUMNS = 12;
   const SPAN_LG = GRID_COLUMNS / section.references.length;
