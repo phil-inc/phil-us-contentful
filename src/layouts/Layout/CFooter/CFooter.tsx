@@ -27,12 +27,14 @@ type FooterProps = {
 const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
   const [footer] = allContentfulFooter.nodes;
   const pages = footer.navigationLinks;
+
   const isMobile = isMobileView("xs");
+  const currentYear = new Date().getFullYear();
 
   const links = [
     {
       label:
-        !isMobile && !minimal ? "Copyright 2023, Phil Inc." : "© Phil, Inc.",
+        !isMobile && !minimal ? `Copyright ${currentYear}, Phil Inc.` : "© Phil, Inc.",
     },
     {
       label: "Terms of Use",

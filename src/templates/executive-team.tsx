@@ -1,0 +1,251 @@
+import {
+  Anchor,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Group,
+  Image,
+  Text,
+  Title,
+} from "@mantine/core";
+import { graphql } from "gatsby";
+import { Layout } from "layouts/Layout/Layout";
+import React from "react";
+import { ContentfulPage } from "types/page";
+
+import * as classes from "./executiveTeam.module.css";
+
+import { url } from "inspector";
+import { LinkedinIcon } from "components/common/Buttons/SocialButtons/LinkedinIcon";
+import { BLOCKS, INLINES } from "@contentful/rich-text-types";
+import { Options } from "@contentful/rich-text-react-renderer";
+import cx from "clsx";
+import { renderRichText } from "gatsby-source-contentful/rich-text";
+import { ELinkedinIcon } from "components/common/Buttons/SocialButtons/ELinkedInIcon";
+
+type ExecutiveTeamProps = {
+  data: { contentfulPage: ContentfulPage };
+};
+
+const ECard = ({ reference }: any) => {
+  const { body, media, hyperlink } = reference;
+
+  const pastCompanies = body.references;
+
+  const options: Options = {
+    renderNode: {
+      [BLOCKS.HEADING_3](node, children) {
+        return (
+          <Title order={3} className={cx(classes.heading, classes.heading3)}>
+            {children}
+          </Title>
+        );
+      },
+
+      [BLOCKS.HEADING_6](node, children) {
+        return (
+          <Title order={6} className={cx(classes.heading, classes.heading6)}>
+            {children}
+          </Title>
+        );
+      },
+
+      [INLINES.EMBEDDED_ENTRY]: () => null,
+    },
+  };
+
+  return (
+    <Box
+      style={{
+        height: "auto",
+        background: "#F5F6F8",
+      }}
+    >
+      <Image src={media.media.file.url} alt={media.media.title} />
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          padding: "20px",
+        }}
+      >
+        <div>
+          <Box mb={42}>{body && renderRichText(body, options)}</Box>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "32px",
+          }}
+        >
+          <Group gap={13}>
+            {pastCompanies.map((company, index) => (
+              <Image
+                key={index}
+                src={company.media.file.url}
+                alt={pastCompanies.name}
+                height={20}
+                style={{ objectFit: "cover" }}
+              />
+            ))}
+          </Group>
+
+          <Anchor
+            href={hyperlink.externalUrl}
+            underline="never"
+            target="_blank"
+            className={classes.textDecorationNone}
+            w={"100%"}
+            h="100%"
+          >
+            <Button
+              size="lg"
+              py={11}
+              leftSection={<ELinkedinIcon />}
+              fullWidth
+              variant="outline"
+              color="#007EBB"
+              className={classes.button}
+            >
+              <Text lh={"16px"}>View LinkedIn Profile</Text>
+            </Button>
+          </Anchor>
+        </div>
+      </div>
+    </Box>
+  );
+};
+
+const ExecutiveTeam: React.FC<ExecutiveTeamProps> = ({
+  data: { contentfulPage },
+}) => {
+  const references = contentfulPage.sections[0].references;
+
+  return (
+    <Layout>
+      <Container fluid className={classes.container}>
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "80px",
+          }}
+        >
+          <Title order={1} size={"40px"}>
+            Meet the PHIL team
+          </Title>
+        </Box>
+
+        <Grid gutter="lg">
+          {references.map((reference, index) => (
+            <Grid.Col
+              key={index}
+              span={{ base: 12, sm: 6, md: 4 }}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <ECard reference={reference} />
+            </Grid.Col>
+          ))}
+        </Grid>
+      </Container>
+    </Layout>
+  );
+};
+
+export const query = graphql`
+  query getPages($id: String!) {
+    contentfulPage(id: { eq: $id }) {
+      id
+      title
+      displayTitle
+      description
+      sections {
+        ... on ContentfulReferencedSection {
+          id
+          title
+          renderOptions {
+            name
+            id
+            layoutOptions {
+              id
+              name
+              numberOfColumns
+              shouldRenderCarousel
+            }
+          }
+          stylingOptions {
+            background
+            id
+            name
+          }
+          references {
+            ... on ContentfulResource {
+              heading
+              subheading
+              hyperlink {
+                id
+                externalUrl
+              }
+              body {
+                raw
+                references {
+                  __typename
+                  ... on ContentfulMediaItem {
+                    sys {
+                      contentType {
+                        sys {
+                          id
+                          type
+                        }
+                      }
+                    }
+                    contentful_id
+                    name
+                    media {
+                      gatsbyImageData(
+                        resizingBehavior: SCALE
+                        placeholder: BLURRED
+                        layout: CONSTRAINED
+                      )
+                      title
+                      file {
+                        contentType
+                        details {
+                          size
+                        }
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+              media {
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default React.memo(ExecutiveTeam);
