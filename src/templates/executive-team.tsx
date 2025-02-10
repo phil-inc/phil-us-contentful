@@ -1,4 +1,5 @@
 import {
+  Anchor,
   Box,
   Button,
   Container,
@@ -13,71 +14,92 @@ import { Layout } from "layouts/Layout/Layout";
 import React from "react";
 import { ContentfulPage } from "types/page";
 
-import * as classes from "../components/career/careerSection.module.css";
+import * as classes from "./executiveTeam.module.css";
+
 import { url } from "inspector";
+import { LinkedinIcon } from "components/common/Buttons/SocialButtons/LinkedinIcon";
+import { BLOCKS, INLINES } from "@contentful/rich-text-types";
+import { Options } from "@contentful/rich-text-react-renderer";
+import cx from "clsx";
+import { renderRichText } from "gatsby-source-contentful/rich-text";
+import { ELinkedinIcon } from "components/common/Buttons/SocialButtons/ELinkedInIcon";
+
 
 type ExecutiveTeamProps = {
   data: { contentfulPage: ContentfulPage };
 };
 
-const ECard = (reference: any) => {
-  const { heading, subheading, body } = reference;
+const ECard = ({ reference }: any) => {
+  const {body, media, hyperlink } = reference;
 
-  console.log(reference, reference.heading, subheading, body)
+  const pastCompanies = body.references;
 
-  const companies = [
-    {
-      media: {
-        type: "image",
-        url: "https://phil.us/img/investors/Eniac.png",
-      },
-    },
-    {
-      media: {
-        type: "image",
-        url: "https://phil.us/img/investors/Eniac.png",
-      },
-    },
-    {
-      media: {
-        type: "image",
-        url: "https://phil.us/img/investors/Eniac.png",
-      },
-    },
-  ];
+    const options: Options = {
+  
+      renderNode: {
+        [BLOCKS.HEADING_3](node, children) {
+          return (
+            <Title order={3} className={cx(classes.heading, classes.heading3)}>
+              {children}
+            </Title>
+          );
+        },
+
+         [BLOCKS.HEADING_6](node, children) {
+                return (
+                  <Title order={6} className={cx(classes.heading, classes.heading6)}>
+                    {children}
+                  </Title>
+                );
+              },
+
+        [INLINES.EMBEDDED_ENTRY]: () => null,
+       },
+    };
 
   return (
-    <Box className="text-center p-4">
-      <div>
-        <Image
-          src={
-            reference.image || "https://phil.us/img/investors/Forerunner.png"
-          }
-          alt={reference.heading}
-          className="rounded-lg mb-3 w-full h-48 object-cover"
-        />
-      </div>
-      <div>
-        <Text size="lg" className="mb-1">
-          {reference.heading || "Deepak"}
-        </Text>
-        <Text size="sm" color="dimmed" className="mb-2">
-          {reference.subheading || "Founder"}
-        </Text>
-        <Group wrap="nowrap">
-          {companies.map((company, index) => (
+    <Box
+      style={{
+        width: "388px",
+        height: "auto",
+        background: "#F5F6F8",
+      }}
+    >
+      <Image src={media.media.file.url} alt={media.media.title} />
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          padding: "20px",
+        }}
+      >
+        <div>
+         <Box mb={42}>{body && renderRichText(body, options)}</Box>
+        </div>
+        <Group gap={13}>
+          {pastCompanies.map((company, index) => (
             <Image
               key={index}
-              src={company.media.url}
-              alt={`Company ${index + 1}`}
-              height={36}
+              src={company.media.file.url}
+              alt={pastCompanies.name}
+              height={20}
               style={{ objectFit: "cover" }}
             />
           ))}
         </Group>
-        <Button variant="outline" color="blue">
-        View LinkedIn Profile
-      </Button>
+
+        <Anchor
+          href={hyperlink.externalUrl}
+          underline="never"
+          target="_blank"
+          className={classes.textDecorationNone}
+        >
+          <Button leftSection={<ELinkedinIcon/>} variant="outline" color="#007EBB" className={classes.button}>
+            View LinkedIn Profile
+          </Button>
+        </Anchor>
       </div>
     </Box>
   );
@@ -91,20 +113,26 @@ const ExecutiveTeam: React.FC<ExecutiveTeamProps> = ({
   return (
     <Layout>
       <Container fluid className={classes.container}>
-        <Grid align="center" justify="space-between">
-          <Grid.Col span={5}>
-            <Box>
-              <Title order={1} size={"40px"}>
-                Meet the PHIL team
-              </Title>
-            </Box>
-          </Grid.Col>
-        </Grid>
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "80px",
+          }}
+        >
+          <Title order={1} size={"40px"}>
+            Meet the PHIL team
+          </Title>
+        </Box>
 
         <Grid gutter="lg">
           {references.map((reference, index) => (
-            <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4 }}>
-              <ECard reference={reference} />
+            <Grid.Col
+              key={index}
+              span={{ base: 12, sm: 6, md: 4 }}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <ECard reference={reference}/>
             </Grid.Col>
           ))}
         </Grid>
@@ -143,6 +171,10 @@ export const query = graphql`
             ... on ContentfulResource {
               heading
               subheading
+              hyperlink {
+                id
+                externalUrl
+              }
               body {
                 raw
                 references {
@@ -173,6 +205,23 @@ export const query = graphql`
                         url
                       }
                     }
+                  }
+                }
+              }
+              media {
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
                   }
                 }
               }

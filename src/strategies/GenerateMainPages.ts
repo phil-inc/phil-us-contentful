@@ -46,7 +46,6 @@ export default async function GenerateMainPages(
   }: { data?: { allContentfulPage: { nodes: ContentfulPage[] } } | undefined } =
     await graphql(getPagesQuery);
 
-    console.log("inside generate main page",data)
   data.allContentfulPage.nodes.forEach((page: ContentfulPage) => {
     if (page.title === RESOURCES) {
       handleResourcePage(page, resourceSubPages, actions);
@@ -93,7 +92,6 @@ function handleResourcePage(
   resourceSubPages: string[],
   actions: Actions,
 ): void {
-  console.log("inside handleResourcePage", page);
   page.sections.forEach((section) => {
     if (!section.header) {
       return;
@@ -117,7 +115,6 @@ function handleResourcePage(
 }
 
 function handleRegularPage(page: ContentfulPage, actions: Actions): void {
-  console.log("inside handleRegularPage", page);
   const config = {
     slug: page.slug,
     component: templateFactory(page.title as TemplateKey),

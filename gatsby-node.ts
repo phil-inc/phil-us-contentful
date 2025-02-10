@@ -25,8 +25,6 @@ const redirectConfigurations: Record<string, RedirectConfig> = {
 // Gatsby createPages API
 export const createPages: GatsbyNode['createPages'] = async function ({ actions, graphql }) {
 
-    console.log("inside create pages")
-
     // Handle static html creation
     const [resourceSubPages] = await Promise.all([
         new Promise(resolve => GenerateMainPages({ actions, graphql }, resolve)),

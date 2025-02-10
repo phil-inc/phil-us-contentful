@@ -23,7 +23,6 @@ export default async function GenerateStaticPages({
   }: { data?: { allContentfulResource: { nodes: TResource[] } } | undefined } =
     await graphql(allStaticPagesQuery);
 
-    console.log("inside generaye static page", data)
   data.allContentfulResource.nodes.forEach((resource: TResource) => {
     const isRelatedPage = Boolean(resource.relatesTo?.page && resource.heading);
 

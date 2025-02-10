@@ -60,3 +60,8 @@
 		height: 40px !important;
 	}
 }
+
+.button-texts{
+	display: flex;
+	justify-content: space-between;
+}
