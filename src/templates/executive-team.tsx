@@ -58,7 +58,6 @@ const ECard = ({ reference }: any) => {
   return (
     <Box
       style={{
-        width: "388px",
         height: "auto",
         background: "#F5F6F8",
       }}
@@ -76,38 +75,46 @@ const ECard = ({ reference }: any) => {
         <div>
           <Box mb={42}>{body && renderRichText(body, options)}</Box>
         </div>
-        <Group gap={13}>
-          {pastCompanies.map((company, index) => (
-            <Image
-              key={index}
-              src={company.media.file.url}
-              alt={pastCompanies.name}
-              height={20}
-              style={{ objectFit: "cover" }}
-            />
-          ))}
-        </Group>
-
-        <Anchor
-          href={hyperlink.externalUrl}
-          underline="never"
-          target="_blank"
-          className={classes.textDecorationNone}
-          w={"100%"}
-          h="100%"
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "32px",
+          }}
         >
-          <Button
-            size="lg"
-            py={11}
-            leftSection={<ELinkedinIcon />}
-            fullWidth
-            variant="outline"
-            color="#007EBB"
-            className={classes.button}
+          <Group gap={13}>
+            {pastCompanies.map((company, index) => (
+              <Image
+                key={index}
+                src={company.media.file.url}
+                alt={pastCompanies.name}
+                height={20}
+                style={{ objectFit: "cover" }}
+              />
+            ))}
+          </Group>
+
+          <Anchor
+            href={hyperlink.externalUrl}
+            underline="never"
+            target="_blank"
+            className={classes.textDecorationNone}
+            w={"100%"}
+            h="100%"
           >
-            <Text lh={"16px"}>View LinkedIn Profile</Text>
-          </Button>
-        </Anchor>
+            <Button
+              size="lg"
+              py={11}
+              leftSection={<ELinkedinIcon />}
+              fullWidth
+              variant="outline"
+              color="#007EBB"
+              className={classes.button}
+            >
+              <Text lh={"16px"}>View LinkedIn Profile</Text>
+            </Button>
+          </Anchor>
+        </div>
       </div>
     </Box>
   );
