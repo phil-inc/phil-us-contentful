@@ -16,8 +16,6 @@ import { ContentfulPage } from "types/page";
 
 import * as classes from "./executiveTeam.module.css";
 
-import { url } from "inspector";
-import { LinkedinIcon } from "components/common/Buttons/SocialButtons/LinkedinIcon";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import { Options } from "@contentful/rich-text-react-renderer";
 import cx from "clsx";
@@ -30,7 +28,6 @@ type ExecutiveTeamProps = {
 
 const ECard = ({ reference }: any) => {
   const { body, media, hyperlink } = reference;
-
   const pastCompanies = body.references;
 
   const options: Options = {
@@ -42,7 +39,6 @@ const ECard = ({ reference }: any) => {
           </Title>
         );
       },
-
       [BLOCKS.HEADING_6](node, children) {
         return (
           <Title order={6} className={cx(classes.heading, classes.heading6)}>
@@ -50,7 +46,6 @@ const ECard = ({ reference }: any) => {
           </Title>
         );
       },
-
       [INLINES.EMBEDDED_ENTRY]: () => null,
     },
   };
@@ -60,6 +55,8 @@ const ECard = ({ reference }: any) => {
       style={{
         height: "auto",
         background: "#F5F6F8",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Image src={media.media.file.url} alt={media.media.title} />
@@ -68,13 +65,16 @@ const ECard = ({ reference }: any) => {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
+          justifyContent: "space-between",
+          height: "100%",
           padding: "20px",
+          gap: "10px",
         }}
       >
         <div>
-          <Box mb={42}>{body && renderRichText(body, options)}</Box>
+          <Box>{body && renderRichText(body, options)}</Box>
         </div>
+
         <div
           style={{
             display: "flex",
@@ -83,11 +83,11 @@ const ECard = ({ reference }: any) => {
           }}
         >
           <Group gap={13}>
-            {pastCompanies.map((company, index) => (
+            {pastCompanies.map((company: any, index: number) => (
               <Image
                 key={index}
                 src={company.media.file.url}
-                alt={pastCompanies.name}
+                alt={company.media.title}
                 height={20}
                 style={{ objectFit: "cover",
                 width:"auto"
@@ -143,7 +143,7 @@ const ExecutiveTeam: React.FC<ExecutiveTeamProps> = ({
         </Box>
 
         <Grid gutter="lg">
-          {references.map((reference, index) => (
+          {references.map((reference: any, index: number) => (
             <Grid.Col
               key={index}
               span={{ base: 12, sm: 6, md: 4 }}
