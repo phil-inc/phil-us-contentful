@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { graphql } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
-import React from "react";
+import React, { useState } from "react";
 import { ContentfulPage } from "types/page";
 
 import * as classes from "./executiveTeam.module.css";
@@ -27,6 +27,8 @@ type ExecutiveTeamProps = {
 };
 
 const ECard = ({ reference }: any) => {
+  const [hovered, setHovered] = useState(false);
+
   const { body, media, hyperlink } = reference;
   const pastCompanies = body.references;
 
@@ -107,11 +109,13 @@ const ECard = ({ reference }: any) => {
             <Button
               size="lg"
               py={11}
-              leftSection={<ELinkedinIcon />}
+              leftSection={!hovered ? <ELinkedinIcon/> : <ELinkedinIcon firstFill="white" secondFill="#007EBB"/>}
               fullWidth
               variant="outline"
               color="#007EBB"
               className={classes.button}
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
             >
               <Text lh={"16px"}>View LinkedIn Profile</Text>
             </Button>
@@ -138,7 +142,7 @@ const ExecutiveTeam: React.FC<ExecutiveTeamProps> = ({
           }}
         >
           <Title order={1} size={"40px"}>
-            Meet the PHIL team
+            Meet the PHIL Team
           </Title>
         </Box>
 
