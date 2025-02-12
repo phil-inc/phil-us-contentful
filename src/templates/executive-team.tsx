@@ -69,7 +69,7 @@ const ECard = ({ reference }: any) => {
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
-          padding: "20px",
+          padding: "27px 30px",
           gap: "10px",
         }}
       >
@@ -141,12 +141,12 @@ const ExecutiveTeam: React.FC<ExecutiveTeamProps> = ({
             marginBottom: "80px",
           }}
         >
-          <Title order={1} size={"40px"}>
-            Meet the PHIL Team
+          <Title order={1} size={"44px"}>
+          Meet the PHIL leadership team
           </Title>
         </Box>
 
-        <Grid gutter="lg">
+        <Grid gutter={36}>
           {references.map((reference: any, index: number) => (
             <Grid.Col
               key={index}
