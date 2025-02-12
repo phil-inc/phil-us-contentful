@@ -3,7 +3,7 @@ import { IconChevronDown } from "@tabler/icons";
 import Asset from "components/common/Asset/Asset";
 import ImageContainer from "components/common/Container/ImageContainer";
 import { COMPANY_PAGE, PATIENTS_PAGE } from "constants/page";
-import { CAREERS } from "constants/routes";
+import { CAREERS, EXECUTIVE_TEAM } from "constants/routes";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
@@ -42,6 +42,14 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => (
           <Accordion.Control>{page.title}</Accordion.Control>
           <Accordion.Panel>
             <List mb={16} listStyleType={"none"}>
+              {page.title === COMPANY_PAGE && (
+                <List.Item>
+                  <Link to={EXECUTIVE_TEAM} className={classes.footerLink}>
+                  <Text className={classes.footerSection}>Executive Team</Text>
+                  </Link>
+                </List.Item>
+              )}
+
               {page.sections
                 .filter((section) =>
                   Boolean(
@@ -89,16 +97,17 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => (
                       {/* Careers on accordian on company page */}
                       {page.title === COMPANY_PAGE &&
                         index === getFinalIndex(page) && (
-                          <List.Item>
-                            <Link
-                              to={CAREERS}
-                              style={{ textDecoration: "none" }}
-                            >
-                              <Text className={classes.footerLink}>
-                                Careers
-                              </Text>
-                            </Link>
-                          </List.Item>
+                            <List.Item>
+                              <Link
+                                to={CAREERS}
+                                className={classes.footerLink}
+                                // style={{ textDecoration: "none" }}
+                              >
+                                <Text className={classes.footerSection}>
+                                  Careers
+                                </Text>
+                              </Link>
+                            </List.Item>
                         )}
 
                       {/* Socials on contact accordian on mobile */}

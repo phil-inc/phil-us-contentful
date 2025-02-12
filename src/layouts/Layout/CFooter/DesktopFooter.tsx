@@ -21,7 +21,7 @@ import { type TAsset } from "types/asset";
 import { type ContentfulPage } from "types/page";
 import { getPathForSectionAndPage } from "utils/links";
 import { getFinalIndex } from "utils/getFinalIndex";
-import { CAREERS } from "constants/routes";
+import { CAREERS, EXECUTIVE_TEAM } from "constants/routes";
 
 import * as classes from "./desktopFooter.module.css";
 
@@ -70,6 +70,15 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => (
             </Link>
             <Divider className={classes.divider} />
             <List listStyleType="none" spacing={8}>
+              
+              {page.title === COMPANY_PAGE && (
+                <List.Item>
+                  <Link to={EXECUTIVE_TEAM} className={classes.link}>
+                    <Text unstyled>Executive Team</Text>
+                  </Link>
+                </List.Item>
+              )}
+
               {page.sections
                 .filter((section) =>
                   Boolean(
@@ -98,11 +107,11 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => (
                       {/* Careers on accordian on company page */}
                       {page.title === COMPANY_PAGE &&
                         index === getFinalIndex(page) && (
-                          <List.Item>
-                            <Link to={CAREERS} className={classes.link}>
-                              <Text unstyled>Careers</Text>
-                            </Link>
-                          </List.Item>
+                            <List.Item>
+                              <Link to={CAREERS} className={classes.link}>
+                                <Text unstyled>Careers</Text>
+                              </Link>
+                            </List.Item>
                         )}
 
                       {/* Patients section mapping extra elements */}

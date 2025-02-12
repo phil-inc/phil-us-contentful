@@ -82,6 +82,7 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({
   data: { contentfulPage },
 }) => {
   const { sections } = contentfulPage;
+
   const heroSection = sections.find(
     (section) => !section.isHidden && section.sectionType === "Basic Section",
   ) as ISection;
