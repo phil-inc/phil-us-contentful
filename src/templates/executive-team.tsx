@@ -142,7 +142,7 @@ const ExecutiveTeam: React.FC<ExecutiveTeamProps> = ({
           }}
         >
           <Title order={1} size={"44px"}>
-          Meet the PHIL leadership team
+            Meet the PHIL Leadership Team
           </Title>
         </Box>
 
