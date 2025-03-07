@@ -44,7 +44,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
     case RESOURCE_BLOCKS.includes(section.referenceType):
       return (
         <Box mb={handleSpacing(theme, theme.spacing.md)}>
-          {/* {renderTitle(section.header, 3, undefined)} */}
+          {renderTitle(section.header, 3, undefined)}
           <Divider variant="dashed" size={1} className={classes.divider} />
         </Box>
       );
