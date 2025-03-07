@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
+import { IconMinus, IconPlus } from "@tabler/icons";
 import { Accordion, Text, Title } from "@mantine/core";
 import PageContext from "contexts/PageContext";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { Options } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { PATIENTS_PAGE } from "constants/page";
-import { IconMinus, IconPlus } from "@tabler/icons";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 
 import cx from "clsx";
