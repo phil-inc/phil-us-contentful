@@ -41,6 +41,23 @@
 		border-top: none;
 	}
 
+	&[data-is-faq-section='true'] {
+		box-sizing: content-box;
+
+		width: auto;
+
+		margin-left: 16px;
+		margin-right: 16px;
+		padding: 100px 0;
+
+		border-top: 2px solid var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
+
+		@media (min-width: $phil-breakpoint-sm) {
+			margin-left: 100px;
+			margin-right: 100px;
+		}
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 100px;
 
