@@ -146,6 +146,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       fullWidth={section.referenceType === ReferenceTypeEnum["Image Carousel"]}
       data-context={context.title}
       data-is-newsletter-component={isNewsLetterComponent}
+      data-is-faq-section={isFaqSection}
       data-disable-border-top={!isPreviousBackgroundPure}
       pt={section.header?.length > 0 ? undefined : 0}
     >
