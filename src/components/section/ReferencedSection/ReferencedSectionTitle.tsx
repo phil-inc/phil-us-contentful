@@ -23,7 +23,6 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
   const theme = useMantineTheme();
   const { title } = useContext(PageContext);
 
-  console.log("inside referenced section title", {title, text: section.header});
 
   const renderTitle = (
     text: string,

@@ -27,6 +27,7 @@ import { CCard } from "components/common/CCard";
 import StepperCard from "components/common/Card/StepperCard/StepperCard";
 import { BrandOutcomeCard } from "components/brandOutcomeCard/BrandOutcomeCard";
 import Cell from "components/common/Cell/Cell";
+import { FaqAccordion } from "components/common/Accordion/FaqAccordion";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -189,6 +190,10 @@ const BannerComponent: ComponentFunction = ({ resource }) => (
   <Banner resource={resource} />
 );
 
+const FaqAccordianComponent: ComponentFunction = ({resource}) => (
+  <FaqAccordion resource = {resource}/>
+);
+
 const getComponent = (
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum,
   resource: TResource,
@@ -229,6 +234,7 @@ const getComponent = (
     [ReferenceTypeEnum["Stats Card"]]: StatsCardComponent,
     [ReferenceTypeEnum["Brand Outcome Card"]]: BrandOutcomeCardComponent,
     [ReferenceTypeEnum.Cell]: CellComponent,
+    [ReferenceTypeEnum["FAQ Accordion"]]: FaqAccordianComponent
   };
 
   const componentFunction = componentMappings[referenceType];

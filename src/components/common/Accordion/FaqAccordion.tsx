@@ -1,0 +1,163 @@
+import React, { useContext, useState } from "react";
+import { Accordion, Text, Title } from "@mantine/core";
+import PageContext from "contexts/PageContext";
+import { renderRichText } from "gatsby-source-contentful/rich-text";
+import { Options } from "@contentful/rich-text-react-renderer";
+import { BLOCKS } from "@contentful/rich-text-types";
+import { PATIENTS_PAGE } from "constants/page";
+import { IconMinus, IconPlus } from "@tabler/icons";
+import { getColorFromStylingOptions } from "utils/stylingOptions";
+
+import cx from "clsx";
+import * as classes from "./FaqAccordion.module.css";
+
+export const FaqAccordion = ({ resource }: any) => {
+  const { title } = useContext(PageContext);
+
+  console.log({ resource });
+
+  const options: Options = {
+    renderNode: {
+      [BLOCKS.PARAGRAPH](node, children) {
+        return <Text className={cx(classes.paragraph)}>{children}</Text>;
+      },
+
+      [BLOCKS.HEADING_3](node, children) {
+        return (
+          <Title data-context={title} order={3} lh={"normal"}>
+            {children}
+          </Title>
+        );
+      },
+    },
+  };
+
+  const Compo = ({ referenceBackground, referenceHeading, referenceBody }: any) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+      <Accordion
+        variant="separated"
+        transitionDuration={0}
+        chevron={
+          isOpen ? (
+            <IconMinus size={24} style={{ color: '#000' }} />
+          ) : (
+            <IconPlus size={24} style={{ color: '#000' }} />
+          )
+        }
+        styles={{
+          item: {
+            background: getColorFromStylingOptions(referenceBackground),
+            border: 'none',
+            padding: '0px'
+          },
+          control:{
+            padding: '0px 30px',
+            margin: '20px 0px 0px 0px',
+            fontSize: '22px',
+            background: '#f4f4f4'
+          },
+          label:{
+            fontWeight: 700
+          },
+          content: {
+            color: '#525252',
+            margin: '0px 0px 20px 0px',
+
+          }
+        }}
+      >
+        <Accordion.Item
+          value={referenceHeading}
+          onClick={() => setIsOpen((prev) => !prev)}
+        >
+          <Accordion.Control
+          >
+            {referenceHeading}
+          </Accordion.Control>
+          <Accordion.Panel>
+            {referenceBody && renderRichText(referenceBody, options)}
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+  };
+
+  if (title === PATIENTS_PAGE) {
+    const referenceBody = resource.body.references[0].body;
+    return (
+      <Accordion transitionDuration={0}  styles={{
+        content: {
+          background: '#f4f4f4',
+          marginBottom: '20px',
+          padding: '28px',
+          fontSize: '20px',
+          color: '#525252'
+        },
+        control: {
+          padding: '0px 30px 0px 0px',
+          fontSize: '24px',
+        },   
+        label: {
+          fontWeight: 700
+        },
+        chevron: {
+          width: '20px',
+          height: '12px',
+        }
+      }}>
+        <Accordion.Item value={resource.heading}>
+          <Accordion.Control>{resource.heading}</Accordion.Control>
+          <Accordion.Panel>
+            {referenceBody && renderRichText(referenceBody, options)}
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+  }
+
+  return (
+    <Accordion
+      transitionDuration={0}
+      styles={{
+        content: {
+          // background: '#f4f4f4',
+          marginBottom: '20px',
+          padding: '0px',
+        },
+        control: {
+          padding: '0px 30px 0px 0px',
+          fontSize: '28px',
+        },   
+        label: {
+          fontWeight: 700
+        },
+        chevron: {
+          width: '20px',
+          height: '12px',
+        }
+      }}
+    >
+      <Accordion.Item value={resource.header} >
+        <Accordion.Control
+        >
+          {resource.header}
+        </Accordion.Control>
+        <Accordion.Panel>
+          {resource.references.map((reference:any, index:any) => {
+            const referenceBody = reference.body.references[0]?.body;
+            return (
+              <Compo
+                key={index}
+                referenceBackground={reference?.stylingOptions?.background}
+                referenceHeading={reference.heading}
+                referenceBody={referenceBody}
+              />
+            );
+          })}
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  );
+};
