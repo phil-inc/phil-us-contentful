@@ -59,6 +59,7 @@ const ECard = ({ reference }: any) => {
         background: "#F5F6F8",
         display: "flex",
         flexDirection: "column",
+        width: "500px",
       }}
     >
       <Image src={media.media.file.url} alt={media.media.title} />
