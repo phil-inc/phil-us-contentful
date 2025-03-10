@@ -23,7 +23,6 @@ export const FaqAccordion = ({ resource }: any) => {
       [INLINES.HYPERLINK](node, children) {
         const { uri } = node.data as { uri: string };
 
-        console.log("here", {uri})
         return (
           <Anchor
             href={uri}
@@ -47,7 +46,8 @@ export const FaqAccordion = ({ resource }: any) => {
     },
   };
 
-  const Compo = ({
+
+  const AccordionContent = ({
     referenceBackground,
     referenceHeading,
     referenceBody,
@@ -113,15 +113,12 @@ export const FaqAccordion = ({ resource }: any) => {
             color: "#525252",
           },
           control: {
-            padding: "0px 30px 0px 10px",
+            padding: "0px 30px 0px 0px",
             fontSize: "24px",
+            backgroundColor: "transparent",
           },
           label: {
             fontWeight: 700,
-          },
-          chevron: {
-            width: "20px",
-            height: "12px",
           },
         }}
       >
@@ -140,20 +137,16 @@ export const FaqAccordion = ({ resource }: any) => {
       transitionDuration={0}
       styles={{
         content: {
-          // background: '#f4f4f4',
           marginBottom: "20px",
           padding: "0px",
         },
         control: {
-          padding: "0px 30px 0px 10px",
+          padding: "0px 30px 0px 0px",
           fontSize: "28px",
+          backgroundColor: "transparent",
         },
         label: {
           fontWeight: 700,
-        },
-        chevron: {
-          width: "20px",
-          height: "12px",
         },
       }}
     >
@@ -163,7 +156,7 @@ export const FaqAccordion = ({ resource }: any) => {
           {resource.references.map((reference: any, index: any) => {
             const referenceBody = reference.body.references[0]?.body;
             return (
-              <Compo
+              <AccordionContent
                 key={index}
                 referenceBackground={reference?.stylingOptions?.background}
                 referenceHeading={reference.heading}
