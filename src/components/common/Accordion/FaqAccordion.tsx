@@ -46,6 +46,7 @@ export const FaqAccordion = ({ resource }: any) => {
     },
   };
 
+
   const AccordionContent = ({
     referenceBackground,
     referenceHeading,
