@@ -14,7 +14,7 @@ import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, PATIENTS_PAGE } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, PATIENTS_PAGE } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
@@ -135,6 +135,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     ref?.body?.references?.some((reff) => reff?.isFaq),
   );
 
+  const isFaqId= slugify(section.header ?? section.id, { lower: true, strict: true }) === "faqs"
+
+  const isProviderPage = context.title === HCP_PAGE
   return (
     <Expanded
       id={slugify(section.header ?? section.id, { lower: true, strict: true })}
@@ -146,8 +149,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       fullWidth={section.referenceType === ReferenceTypeEnum["Image Carousel"]}
       data-context={context.title}
       data-is-newsletter-component={isNewsLetterComponent}
+      data-no-padding-bottom= {isFaqId && isProviderPage}
       data-is-faq-section={isFaqSection}
-      data-disable-border-top={!isPreviousBackgroundPure}
+      data-disable-border-top={!isPreviousBackgroundPure || isProviderPage}
       pt={section.header?.length > 0 ? undefined : 0}
     >
       {context.title === FIELD_PAGE ? (
