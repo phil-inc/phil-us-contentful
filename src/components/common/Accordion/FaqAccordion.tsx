@@ -46,7 +46,6 @@ export const FaqAccordion = ({ resource }: any) => {
     },
   };
 
-
   const AccordionContent = ({
     referenceBackground,
     referenceHeading,
@@ -60,9 +59,9 @@ export const FaqAccordion = ({ resource }: any) => {
         transitionDuration={0}
         chevron={
           isOpen ? (
-            <IconMinus size={24} style={{ color: "#000" }} />
+            <IconMinus size={28} style={{ color: "#525252" }} />
           ) : (
-            <IconPlus size={24} style={{ color: "#000" }} />
+            <IconPlus size={28} style={{ color: "#525252" }} />
           )
         }
         styles={{
@@ -84,6 +83,10 @@ export const FaqAccordion = ({ resource }: any) => {
             color: "#525252",
             margin: "0px 0px 20px 0px",
           },
+          chevron: {
+            width: "28px",
+            height: "28px"
+          }
         }}
       >
         <Accordion.Item
@@ -104,12 +107,15 @@ export const FaqAccordion = ({ resource }: any) => {
     return (
       <Accordion
         transitionDuration={0}
+        chevronSize={28}
+        classNames={{
+          chevron: classes.chevron
+        }}
         styles={{
           content: {
             background: "#f4f4f4",
             marginBottom: "20px",
             padding: "28px",
-            fontSize: "20px",
             color: "#525252",
           },
           control: {
@@ -120,6 +126,9 @@ export const FaqAccordion = ({ resource }: any) => {
           label: {
             fontWeight: 700,
           },
+          chevron:{
+            color: "#525252",
+          }
         }}
       >
         <Accordion.Item value={resource.heading}>
@@ -135,6 +144,10 @@ export const FaqAccordion = ({ resource }: any) => {
   return (
     <Accordion
       transitionDuration={0}
+      chevronSize={28}
+        classNames={{
+          chevron: classes.chevron
+        }}
       styles={{
         content: {
           marginBottom: "20px",
@@ -148,6 +161,9 @@ export const FaqAccordion = ({ resource }: any) => {
         label: {
           fontWeight: 700,
         },
+        chevron:{
+          color: "#525252",
+        }
       }}
     >
       <Accordion.Item value={resource.header}>
