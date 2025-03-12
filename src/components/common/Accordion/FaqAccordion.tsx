@@ -59,9 +59,9 @@ export const FaqAccordion = ({ resource }: any) => {
         transitionDuration={0}
         chevron={
           isOpen ? (
-            <IconMinus size={28} style={{ color: "#000" }} />
+            <IconMinus size={28} style={{ color: "#525252" }} />
           ) : (
-            <IconPlus size={28} style={{ color: "#000" }} />
+            <IconPlus size={28} style={{ color: "#525252" }} />
           )
         }
         styles={{
@@ -126,6 +126,9 @@ export const FaqAccordion = ({ resource }: any) => {
           label: {
             fontWeight: 700,
           },
+          chevron:{
+            color: "#525252",
+          }
         }}
       >
         <Accordion.Item value={resource.heading}>
@@ -158,6 +161,9 @@ export const FaqAccordion = ({ resource }: any) => {
         label: {
           fontWeight: 700,
         },
+        chevron:{
+          color: "#525252",
+        }
       }}
     >
       <Accordion.Item value={resource.header}>
