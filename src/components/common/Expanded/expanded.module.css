@@ -41,6 +41,10 @@
 		border-top: none;
 	}
 
+	&[data-no-padding-bottom='true'] {
+		padding-bottom: 0px;
+	}
+
 	&[data-is-faq-section='true'] {
 		box-sizing: content-box;
 
