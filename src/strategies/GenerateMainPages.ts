@@ -115,6 +115,7 @@ function handleResourcePage(
 }
 
 function handleRegularPage(page: ContentfulPage, actions: Actions): void {
+  console.log({title: page.title})
   const config = {
     slug: page.slug,
     component: templateFactory(page.title as TemplateKey),

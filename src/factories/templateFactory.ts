@@ -2,7 +2,7 @@ import path from "path";
 
 const templates = {
   Careers: path.resolve("./src/templates/career.tsx"),
-  ExecutiveTeam: path.resolve("./src/templates/executive-team.tsx"),
+  Leadership: path.resolve("./src/templates/executive-team.tsx"),
   Resources: path.resolve("./src/templates/resources.tsx"),
   Contact: path.resolve("./src/templates/contact.tsx"),
   EventRegistration: path.resolve("./src/templates/event-registration.tsx"),

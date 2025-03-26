@@ -31,7 +31,7 @@
 	background: #fff;
 	display: flex;
 	align-items: center;
-	overflow: hidden;
+	/* overflow: hidden; */
 }
 
 .navbar ul li {
@@ -108,3 +108,4 @@
 	text-decoration: none;
 	text-decoration-line: none;
 }
+

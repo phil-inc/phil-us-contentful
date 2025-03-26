@@ -146,7 +146,7 @@ const CDrawer: React.FC = () => {
                   {page.sections
                     .filter((section) =>
                       Boolean(
-                        section.header?.length &&
+                        (section.header?.length || section.title?.length) &&
                           !section.isHidden &&
                           !section?.hideNavigationAnchor,
                       ),
@@ -154,7 +154,7 @@ const CDrawer: React.FC = () => {
                     .map((section, index) => {
                       const path = getPathForSectionAndPage(
                         page.title,
-                        section.header,
+                        section.header ?? section.title,
                         page.slug,
                       );
 
@@ -180,7 +180,7 @@ const CDrawer: React.FC = () => {
                               </ScrollToElement>
                             ) : (
                               <Link to={path} className={classes.link}>
-                                {section.header}
+                                {section.header ?? section.title}
                               </Link>
                             )}
                           </List.Item>

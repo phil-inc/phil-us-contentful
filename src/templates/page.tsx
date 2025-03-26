@@ -28,7 +28,7 @@ export const Head: React.FC<HelmetProps> = ({
   const heroSection = contentfulPage.sections.find(
     (section) => section.sectionType === "Basic Section",
   ) as ISection;
-  const heroImage = heroSection?.asset.file.url;
+  const heroImage = heroSection?.asset?.file.url;
   const heroImageV2 = heroSection?.mediaItem?.media?.file?.url;
 
   const title = contentfulPage.displayTitle.length
