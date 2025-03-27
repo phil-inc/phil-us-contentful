@@ -35,7 +35,6 @@ type FooterProps = {
 const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
   const [footer] = allContentfulFooter.nodes;
   const pages = footer.navigationLinks;
-  console.log({ pages });
 
   const isMobile = isMobileView("xs");
   const currentYear = new Date().getFullYear();
@@ -246,6 +245,7 @@ const query = graphql`
             ... on ContentfulPage {
               id
               title
+              slug
             }
           }
         }

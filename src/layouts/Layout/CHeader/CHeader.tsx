@@ -74,13 +74,12 @@ const Navbar: React.FC<CHeaderProps> = ({
   headerTargetBlank,
 }) => {
   const [header] = allContentfulHeader.nodes;
-  console.log({header})
   const { navigationLinks: pages, buttons } = header;
 
   const { width } = useViewportSize();
 
   const [navRef, setNavRef] = React.useState<HTMLUListElement>();
-  const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement>();
+  // const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement>();
 
   const [opened, { toggle, open, close }] = useDisclosure(false, {
     onClose() {
@@ -133,6 +132,8 @@ const Navbar: React.FC<CHeaderProps> = ({
   //   if (!minimal) {
   //     const navBar = document.querySelector(".navbar")!;
   //     const allLi = navBar.querySelectorAll("li");
+
+  //     console.log(allLi)
 
   //     const clickHandlers: Array<(e: MouseEvent) => void> = [];
 
@@ -211,7 +212,6 @@ const Navbar: React.FC<CHeaderProps> = ({
   //     }
   //   }
   // }, [opened, activePageLI]);
-  // console.log({isDrawer});
 
   // React.useEffect(() => {
   //   if (!minimal) {
@@ -228,12 +228,6 @@ const Navbar: React.FC<CHeaderProps> = ({
     primary: { variant: "header-primary", size: "md", uppercase: true },
     secondary: { variant: "header-secondary", size: "md", uppercase: true },
   };
-
-    const [openMenu, setOpenMenu] = useState(null);
-  
-    const toggleMenu = (menu: any) => {
-      setOpenMenu(openMenu === menu ? null : menu);
-    };
 
   return (
     <AppShell.Header className={classes.header} style={{ borderBottom: 0 }}>
@@ -264,9 +258,9 @@ const Navbar: React.FC<CHeaderProps> = ({
               className={classes.burger}
             />
             <List ref={setNavRef} className={classes.navLinksWrapper}>
-              <div className={classes.indicator}></div>
+              {/* <div className={classes.indicator}></div> */}
 
-              <Navigation />
+              <Navigation pages={pages} />
 
               {/* {pages
                 .filter((page) => page.title !== "Home")
@@ -470,6 +464,7 @@ const query = graphql`
             ... on ContentfulPage {
               id
               title
+              slug
             }
           }
         }

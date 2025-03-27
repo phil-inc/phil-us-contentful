@@ -72,7 +72,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
     <div className={classes.container}>
       <div className={classes.leftSection}>
       <Box className={classes.logo}>
-            <Anchor href="/">
+            <Anchor href="/" target="_blank">
               <Asset asset={footer.logo} objectFit="contain" />
             </Anchor>
         </Box>
@@ -82,7 +82,6 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
         </div>
 
         <div className={classes.socials}>
-          <Anchor href="#">
           <Group gap={0}>
               <EmailIcon/>
               <Text
@@ -94,7 +93,6 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                 info@phil.us
               </Text>
             </Group>
-          </Anchor>
           <Anchor
             href="https://www.linkedin.com/company/phil-inc-"
             target="_blank"
@@ -121,7 +119,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
 
       <SimpleGrid
         classNames={{ root: classes.root }}
-        cols={{ base: 4, sm: 2, md: 3, lg: 4 }}
+        cols={{ base: 4, sm: 2, md: 3, lg: 3 }}
         spacing={74}
         verticalSpacing={20}
       >
@@ -136,15 +134,12 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
             } else {
               const slug = slugify(page.slug, { lower: true, strict: true });
 
-              console.log({slug, title: page.title})
-
               if (page.title === RESOURCES) {
                 const sectionSlug = slugify(firstSection.header, {
                   lower: true,
                   strict: true,
                 });
 
-                console.log({ResourceSection: sectionSlug})
                 path = `/${slug}/${sectionSlug}`;
               } else {
                 path = `/${slug}`;
@@ -154,11 +149,11 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
             return (
               <Box key={page.id + "mapFooterPages"} className={classes.column}>
                 <Box>
-                  <Link to={path} className={classes.link}>
+                  {/* <Link to={path} className={classes.link}> */}
                     <Text className={classes.header} unstyled>
                       {page.title}
                     </Text>
-                  </Link>
+                  {/* </Link> */}
                   <Divider className={classes.divider} />
 
                   {/* sub-lists of footer */}
@@ -235,8 +230,8 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                           page.title,
                           section.header ?? section.title,
                           page.slug,
+                          section.slug
                         );
-                        console.log({ path, section });
 
                         return (
                           <React.Fragment

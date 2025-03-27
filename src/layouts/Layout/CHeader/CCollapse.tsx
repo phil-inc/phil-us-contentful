@@ -17,7 +17,6 @@ import { IReferencedSection } from "types/section";
 const CCollapse = () => {
   const { opened, target, pages, setCollapseRef, close } =
     React.useContext(HeaderContext);
-  console.log({ pages, target, opened, close });
 
   return (
     <Collapse
@@ -43,7 +42,6 @@ const CCollapse = () => {
                   ),
                 )
                 .map((section, index) => {
-                  console.log({ section });
                   const path = getPathForSectionAndPage(
                     page.title,
                     section.header ?? section.title,
