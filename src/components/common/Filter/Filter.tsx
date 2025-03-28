@@ -12,7 +12,7 @@ import React from "react";
 import SearchBox from "../SearchBox/SearchBox";
 import { generateSearchParams } from "utils/search";
 import { navigate } from "gatsby";
-import { searchSubmitCallback } from "pages/resources/search";
+import { searchSubmitCallback } from "pages/insights/search";
 import * as classes from "./filter.module.css";
 
 type FilterType = {
@@ -116,7 +116,7 @@ const Filter: React.FC<FilterType> = ({
 
                         setCheckboxState({ ...newState });
 
-                        void navigate("/resources/search/" + path);
+                        void navigate("/insights/search" + path);
                       }}
                       label={value}
                       checked={Boolean(checkboxState[value])}

@@ -1,4 +1,4 @@
-import { HOME, RESOURCES } from "constants/page";
+import { HOME, INSIGHTS } from "constants/page";
 import slugify from "slugify";
 
 export const getPathForSectionAndPage = (
@@ -15,7 +15,7 @@ export const getPathForSectionAndPage = (
     path = `/${pageSlug}`;
   }
 
-  if (pageTitle === RESOURCES) {
+  if (pageTitle === INSIGHTS) {
     const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
     path += `/${sectionSlug}`;
   } else {

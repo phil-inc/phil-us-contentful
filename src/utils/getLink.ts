@@ -93,7 +93,7 @@ export const getLink = (
         const existingPage = paths.find((path)=> path.id === icid);
         
         // check if the existing page is a resource section page
-        if (existingPage?.path.startsWith("/resources/")) {
+        if (existingPage?.path.startsWith("/insights/")) {
           link.push(existingPage.path.slice(1));
           break;
         }

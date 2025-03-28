@@ -13,7 +13,7 @@ import {
   COMPANY_PAGE,
   CONTACT_PAGE,
   PATIENTS_PAGE,
-  RESOURCES,
+  INSIGHTS,
 } from "constants/page";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
@@ -134,7 +134,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
             } else {
               const slug = slugify(page.slug, { lower: true, strict: true });
 
-              if (page.title === RESOURCES) {
+              if (page.title === INSIGHTS) {
                 const sectionSlug = slugify(firstSection.header, {
                   lower: true,
                   strict: true,

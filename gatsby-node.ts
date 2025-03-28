@@ -9,13 +9,13 @@ import {RedirectConfig, RedirectFactory} from './src/factories/redirectFactory';
 
 // redirect configurations
 const redirectConfigurations: Record<string, RedirectConfig> = {
-    resources: {
-        fromPaths: ['/resources/', '/resources'],
+    insights: {
+        fromPaths: ['/insights/', '/insights'],
         toPath: (subPages: string[]) => {
             const [firstSubPage] = subPages;
             let redirectPath = '/';
             if (firstSubPage) {
-                redirectPath = '/resources/' + firstSubPage + redirectPath;
+                redirectPath = '/insights/' + firstSubPage + redirectPath;
             }
             return redirectPath;
         }
