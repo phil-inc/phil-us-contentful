@@ -3,7 +3,7 @@ import { IconChevronDown } from "@tabler/icons";
 import Asset from "components/common/Asset/Asset";
 import ImageContainer from "components/common/Container/ImageContainer";
 import { COMPANY_PAGE, PATIENTS_PAGE } from "constants/page";
-import { CAREERS, EXECUTIVE_TEAM } from "constants/routes";
+import { CAREERS, LEADERSHIP } from "constants/routes";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
@@ -44,8 +44,8 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => (
             <List mb={16} listStyleType={"none"}>
               {page.title === COMPANY_PAGE && (
                 <List.Item>
-                  <Link to={EXECUTIVE_TEAM} className={classes.footerLink}>
-                  <Text className={classes.footerSection}>Executive Team</Text>
+                  <Link to={LEADERSHIP} className={classes.footerLink}>
+                  <Text className={classes.footerSection}>Leadership</Text>
                   </Link>
                 </List.Item>
               )}

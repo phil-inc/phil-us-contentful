@@ -23,7 +23,7 @@ import { type TAsset } from "types/asset";
 import { type ContentfulPage } from "types/page";
 import { getPathForSectionAndPage } from "utils/links";
 import { getFinalIndex } from "utils/getFinalIndex";
-import { CAREERS, EXECUTIVE_TEAM } from "constants/routes";
+import { CAREERS, LEADERSHIP } from "constants/routes";
 
 import * as classes from "./desktopFooter.module.css";
 import Asset from "components/common/Asset/Asset";
@@ -160,8 +160,8 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                   <List listStyleType="none" spacing={8}>
                     {page.title === COMPANY_PAGE && (
                       <List.Item>
-                        <Link to={EXECUTIVE_TEAM} className={classes.link}>
-                          <Text unstyled>Executive Team</Text>
+                        <Link to={LEADERSHIP} className={classes.link}>
+                          <Text unstyled>Leadership</Text>
                         </Link>
                       </List.Item>
                     )}

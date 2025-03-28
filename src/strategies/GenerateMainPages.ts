@@ -124,6 +124,7 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
     id: page.id,
     title: page.title,
   });
+
   actions.createPage(pageObject);
 }
 
