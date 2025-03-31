@@ -27,62 +27,64 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
     };
   }, []);
 
-
   return (
     <nav className={classes.navbar} ref={menuRef}>
       <div className={classes.navContainer}>
         <ul className={classes.navMenu}>
-
           {pages
             .filter((page) => page.title !== "Home")
             .map((page, index) => (
               <>
-              <li key={index} className={classes.navItem}>
-      
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleMenu(page.title);
-                  }}
-                  className={cx(classes.navLink, {
-                    [classes.active]: openMenu === page.title,
-                  })}
-                >
-                  {page.title}
-                </button>
-                {openMenu === page.title && (
-                  <ul className={classes.dropdown}>
-                    {page.sections
-                      .filter(
-                        (section) =>
-                          (section.header?.length ?? section.title?.length) &&
-                          !section.hideNavigationAnchor &&
-                          !section.isHidden,
-                      )
-                      .map((section, subIndex) => {
-                        const path = getPathForSectionAndPage(
-                          page.title,
-                          section.header ?? section.title,
-                          page.slug,
-                          section.slug,
-                        );
+                <li key={index} className={classes.navItem}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleMenu(page.title);
+                    }}
+                    className={cx(classes.navLink, {
+                      [classes.active]: openMenu === page.title,
+                    })}
+                  >
+                    {page.title}
+                  </button>
+                  {openMenu === page.title && (
+                    <ul className={classes.dropdown}>
+                      {page.sections
+                        .filter(
+                          (section) =>
+                            (section.header?.length ?? section.title?.length) &&
+                            !section.hideNavigationAnchor &&
+                            !section.isHidden,
+                        )
+                        .map((section, subIndex) => {
+                          const path = getPathForSectionAndPage(
+                            page.title,
+                            section.header ?? section.title,
+                            page.slug,
+                            section.slug,
+                          );
 
-                        return (
-                          <>
-              <div className={classes.indicator}></div>
+                          return (
+                            <div>
+                              <div className={classes.indicator}></div>
 
-                          <li key={subIndex} className={classes.dropdownItem}>
-                            <Link to={path} className={classes.dropdownLink}>
-                              {section.header ?? section.title}
-                            </Link>
-                          </li>
-                          </>
-
-                        );
-                      })}
-                  </ul>
-                )}
-              </li>
+                              <li
+                                key={subIndex}
+                                className={classes.dropdownItem}
+                              >
+                                <Link
+                                  to={path}
+                                  className={classes.dropdownLink}
+                                >
+                                  {section.header ?? section.title}
+                                </Link>
+                              </li>
+                            </div>
+                          );
+                        })}
+                    </ul>
+                  )}
+                </li>
               </>
             ))}
         </ul>

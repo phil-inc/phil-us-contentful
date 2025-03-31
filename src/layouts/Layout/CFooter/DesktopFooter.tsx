@@ -10,9 +10,7 @@ import {
   Title,
 } from "@mantine/core";
 import {
-  COMPANY_PAGE,
   CONTACT_PAGE,
-  PATIENTS_PAGE,
   INSIGHTS,
 } from "constants/page";
 import { Link } from "gatsby";
@@ -22,8 +20,6 @@ import slugify from "slugify";
 import { type TAsset } from "types/asset";
 import { type ContentfulPage } from "types/page";
 import { getPathForSectionAndPage } from "utils/links";
-import { getFinalIndex } from "utils/getFinalIndex";
-import { CAREERS, LEADERSHIP } from "constants/routes";
 
 import * as classes from "./desktopFooter.module.css";
 import Asset from "components/common/Asset/Asset";
@@ -71,28 +67,26 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
   return (
     <div className={classes.container}>
       <div className={classes.leftSection}>
-      <Box className={classes.logo}>
-            <Anchor href="/" target="_blank">
-              <Asset asset={footer.logo} objectFit="contain" />
-            </Anchor>
+        <Box className={classes.logo}>
+          <Anchor href="/">
+            <Asset asset={footer.logo} objectFit="contain" />
+          </Anchor>
         </Box>
 
-        <div>
-        {footer.address && renderRichText(footer.address, options)}
-        </div>
+        <div>{footer.address && renderRichText(footer.address, options)}</div>
 
         <div className={classes.socials}>
           <Group gap={0}>
-              <EmailIcon/>
-              <Text
-                unstyled
-                span
-                data-manual-entry={true}
-                className={classes.link}
-              >
-                info@phil.us
-              </Text>
-            </Group>
+            <EmailIcon />
+            <Text
+              unstyled
+              span
+              data-manual-entry={true}
+              className={classes.link}
+            >
+              info@phil.us
+            </Text>
+          </Group>
           <Anchor
             href="https://www.linkedin.com/company/phil-inc-"
             target="_blank"
@@ -150,28 +144,20 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
               <Box key={page.id + "mapFooterPages"} className={classes.column}>
                 <Box>
                   {/* <Link to={path} className={classes.link}> */}
-                    <Text className={classes.header} unstyled>
-                      {page.title}
-                    </Text>
+                  <Text className={classes.header} unstyled>
+                    {page.title}
+                  </Text>
                   {/* </Link> */}
                   <Divider className={classes.divider} />
 
                   {/* sub-lists of footer */}
                   <List listStyleType="none" spacing={8}>
-                    {page.title === COMPANY_PAGE && (
-                      <List.Item>
-                        <Link to={LEADERSHIP} className={classes.link}>
-                          <Text unstyled>Leadership</Text>
-                        </Link>
-                      </List.Item>
-                    )}
-
                     {page.title === CONTACT_PAGE && (
-                        // <List.Item>
-                        <div>
-                          {footer.buttons.map((button, index) => {
-                            const buttonComponent = (
-                              <Button
+                      // <List.Item>
+                      <div>
+                        {footer.buttons.map((button, index) => {
+                          const buttonComponent = (
+                            <Button
                               size={
                                 button.buttonStyle === "Primary"
                                   ? buttonConfig.primary.size
@@ -182,46 +168,47 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                                   ? buttonConfig.primary.variant
                                   : buttonConfig.secondary.variant
                               }
-                              >
-                                {button.buttonText}
-                              </Button>
-                            );
+                            >
+                              {button.buttonText}
+                            </Button>
+                          );
 
-                            return (
-                              // TODO: use sys
-                              <List.Item
-                                key={button.id}
-                                data-noindicator="true"
-                                className={classes.headerCTA}
-                              >
-                                {button.internalLink ? (
-                                  <Box>
-                                    <Link to={`/${button.internalLink.slug}`}>
-                                      {buttonComponent}
-                                    </Link>
-                                  </Box>
-                                ) : (
-                                  <Anchor
-                                    href={button.externalLink}
-                                    target="_blank"
-                                  >
+                          return (
+                            // TODO: use sys
+                            <List.Item
+                              key={button.id}
+                              data-noindicator="true"
+                              className={classes.headerCTA}
+                            >
+                              {button.internalLink ? (
+                                <Box>
+                                  <Link to={`/${button.internalLink.slug}`}>
                                     {buttonComponent}
-                                  </Anchor>
-                                )}
-                              </List.Item>
-                            );
-                          })}
-                        </div>
+                                  </Link>
+                                </Box>
+                              ) : (
+                                <Anchor
+                                  href={button.externalLink}
+                                  target="_blank"
+                                >
+                                  {buttonComponent}
+                                </Anchor>
+                              )}
+                            </List.Item>
+                          );
+                        })}
+                      </div>
 
-                        // </List.Item>
-                      )}
+                      // </List.Item>
+                    )}
 
                     {page.sections
                       .filter((section) =>
                         Boolean(
-                          ((section.header?.length ?? section.title?.length) &&
+                          (section.header?.length ?? section.title?.length) &&
                             !section.isHidden &&
-                            !section?.hideNavigationAnchor) && section.header !== "Contact us"
+                            !section?.hideNavigationAnchor &&
+                            section.header !== "Contact us",
                         ),
                       )
                       .map((section, index) => {
@@ -230,7 +217,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                           page.title,
                           section.header ?? section.title,
                           page.slug,
-                          section.slug
+                          section.slug,
                         );
 
                         return (
@@ -247,88 +234,6 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                                 </Text>
                               </Link>
                             </List.Item>
-
-                            {/* Careers on accordian on company page */}
-                            {/* {page.title === COMPANY_PAGE &&
-                              index === getFinalIndex(page) && (
-                                <List.Item>
-                                  <Link to={CAREERS} className={classes.link}>
-                                    <Text unstyled>Careers</Text>
-                                  </Link>
-                                </List.Item>
-                              )} */}
-
-                            {/* Patients section mapping extra elements */}
-                            {page.title === PATIENTS_PAGE &&
-                              index === getFinalIndex(page) && (
-                                <List.Item>
-                                  <Anchor
-                                    className={classes.link}
-                                    href="https://my.phil.us/"
-                                    target="_blank"
-                                    referrerPolicy="no-referrer"
-                                    underline="never"
-                                    unstyled
-                                  >
-                                    <Text unstyled>Patient Log In</Text>
-                                  </Anchor>
-                                </List.Item>
-                              )}
-
-                            {/* {page.title === CONTACT_PAGE &&
-                              index === getFinalIndex(page) && (
-                                // <List.Item>
-                                <div>
-                                  {footer.buttons.map((button, index) => {
-                                    const buttonComponent = (
-                                      <Button
-                                        // className={classes.button}
-                                        // size={
-                                        //   button.buttonStyle === "Primary"
-                                        //     ? buttonConfig.primary.size
-                                        //     : buttonConfig.secondary.size
-                                        // }
-                                        // variant={
-                                        //   button.buttonStyle === "Primary"
-                                        //     ? buttonConfig.primary.variant
-                                        //     : buttonConfig.secondary.variant
-                                        // }
-                                      >
-                                        {button.buttonText}
-                                      </Button>
-                                    );
-
-                                    return (
-                                      // TODO: use sys
-                                      <List.Item
-                                        key={button.id}
-                                        data-noindicator="true"
-                                        className={classes.headerCTA}
-                                      >
-                                        {button.internalLink ? (
-                                          <Box ml={index && 16}>
-                                            <Link
-                                              to={`/${button.internalLink.slug}`}
-                                            >
-                                              {buttonComponent}{" "}
-                                            </Link>
-                                          </Box>
-                                        ) : (
-                                          <Anchor
-                                            ml={index && 16}
-                                            href={button.externalLink}
-                                            target="_blank"
-                                          >
-                                            {buttonComponent}
-                                          </Anchor>
-                                        )}
-                                      </List.Item>
-                                    );
-                                  })}
-                                </div>
-
-                                // </List.Item>
-                              )} */}
                           </React.Fragment>
                         );
                       })}

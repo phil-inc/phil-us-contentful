@@ -1,6 +1,5 @@
 import {
   Group,
-  Text,
   List,
   Burger,
   Box,
@@ -79,7 +78,7 @@ const Navbar: React.FC<CHeaderProps> = ({
   const { width } = useViewportSize();
 
   const [navRef, setNavRef] = React.useState<HTMLUListElement>();
-  // const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement>();
+  const [collapseRef, setCollapseRef] = React.useState<HTMLDivElement>();
 
   const [opened, { toggle, open, close }] = useDisclosure(false, {
     onClose() {
@@ -258,21 +257,9 @@ const Navbar: React.FC<CHeaderProps> = ({
               className={classes.burger}
             />
             <List ref={setNavRef} className={classes.navLinksWrapper}>
-              {/* <div className={classes.indicator}></div> */}
 
               <Navigation pages={pages} />
 
-              {/* {pages
-                .filter((page) => page.title !== "Home")
-                .map((page) => (
-                  <List.Item
-                    key={page.id + "mapHeaderPages"}
-                    className={classes.navLink}
-                    onClick={onNavLinkClick}
-                  >
-                    <Text style={{ whiteSpace: "nowrap" }}>{page.title}</Text>
-                  </List.Item>
-                ))} */}
               {buttons.map((button, index) => {
                 const buttonComponent = (
                   <Button
@@ -321,7 +308,7 @@ const Navbar: React.FC<CHeaderProps> = ({
           </>
         )}
       </Group>
-      {/* {!minimal && (
+      {!minimal && (
         <HeaderContext.Provider
           value={{
             minimal,
@@ -337,9 +324,9 @@ const Navbar: React.FC<CHeaderProps> = ({
             buttons,
           }}
         >
-          {isDrawer ? <CDrawer /> : <CCollapse />}
+          {isDrawer && <CDrawer />}
         </HeaderContext.Provider>
-      )} */}
+      )}
     </AppShell.Header>
   );
 };

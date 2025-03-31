@@ -7,7 +7,6 @@ import {
   Box,
   Burger,
   Accordion,
-  useMantineTheme,
   List,
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons";
@@ -156,6 +155,7 @@ const CDrawer: React.FC = () => {
                         page.title,
                         section.header ?? section.title,
                         page.slug,
+                        section.slug
                       );
 
                       return (
@@ -176,7 +176,7 @@ const CDrawer: React.FC = () => {
                                   cursor: "pointer",
                                 }}
                               >
-                                {section.header}
+                                {section.header ?? section.title}
                               </ScrollToElement>
                             ) : (
                               <Link to={path} className={classes.link}>
