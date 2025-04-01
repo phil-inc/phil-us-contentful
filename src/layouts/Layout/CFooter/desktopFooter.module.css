@@ -46,4 +46,57 @@
 
 .root {
 	justify-items: center;
+	width: 50%
+}
+
+.heading {
+  padding-bottom: 16px;
+
+  &4 {
+    font-size: 18px;
+    padding-bottom: 16px;
+    font-weight: 700;
+  }
+}
+
+.paragraph {
+  font-size: 14px;
+  font-family: Lato, sans-serif;
+	font-weight: 400; 
+}
+
+.button {
+	width: 100% !important;
+}
+
+.headerCTA {
+	margin-right: 0px !important;
+}
+
+.patientLoginButtonMobile:hover {
+	color: white;
+}
+
+.logo {
+	max-width: 125px;
+	max-height: 90px;
+	width: 100%;
+}
+
+.container {
+	display: flex;
+	gap: 27px;
+	justify-content: space-between;
+}
+
+.socials {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.leftSection{
+	display: flex;
+	flex-direction: column;
+	gap: 64px;
 }

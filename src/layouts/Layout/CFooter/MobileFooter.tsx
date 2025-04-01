@@ -1,9 +1,18 @@
-import { Box, Text, Accordion, List, Anchor, Group, Grid } from "@mantine/core";
+import {
+  Box,
+  Text,
+  Accordion,
+  List,
+  Anchor,
+  Group,
+  Grid,
+  Title,
+} from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons";
 import Asset from "components/common/Asset/Asset";
 import ImageContainer from "components/common/Container/ImageContainer";
-import { COMPANY_PAGE, PATIENTS_PAGE } from "constants/page";
-import { CAREERS, EXECUTIVE_TEAM } from "constants/routes";
+import { CONTACT_PAGE } from "constants/page";
+import { CAREERS, LEADERSHIP } from "constants/routes";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
@@ -12,144 +21,159 @@ import { type ContentfulPage } from "types/page";
 import { getFinalIndex } from "utils/getFinalIndex";
 import { getPathForSectionAndPage } from "utils/links";
 import * as classes from "./mobileFooter.module.css";
+import { BodyType } from "types/section";
+import { renderRichText } from "gatsby-source-contentful/rich-text";
+import { Options } from "@contentful/rich-text-react-renderer";
+import { BLOCKS } from "@contentful/rich-text-types";
+import cx from "clsx";
+import { EmailIcon } from "components/common/Buttons/SocialButtons/EmailIcon";
 
 type TMobileFooter = {
   pages: ContentfulPage[];
   footer: {
     badge: TAsset[];
     navigationLinks: ContentfulPage[];
+    logo: TAsset;
+    address: BodyType;
   };
 };
 
-const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => (
-  <Box className={classes.footerWrapper}>
-    <Accordion
-      classNames={{
-        content: classes.content,
-        item: classes.item,
-        label: classes.label,
-        control: classes.control,
-        chevron: classes.chevron,
-      }}
-      chevron={<IconChevronDown size={24} />}
-      mb={15}
-    >
-      {pages.map((page) => (
-        <Accordion.Item
-          key={page.id + "mapFooterPagesMobile"}
-          value={page.title}
-        >
-          <Accordion.Control>{page.title}</Accordion.Control>
-          <Accordion.Panel>
-            <List mb={16} listStyleType={"none"}>
-              {page.title === COMPANY_PAGE && (
-                <List.Item>
-                  <Link to={EXECUTIVE_TEAM} className={classes.footerLink}>
-                  <Text className={classes.footerSection}>Executive Team</Text>
-                  </Link>
-                </List.Item>
-              )}
+const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => {
+  const options: Options = {
+    renderNode: {
+      [BLOCKS.HEADING_4](node, children) {
+        return <Title className={cx(classes.heading4)}>{children}</Title>;
+      },
 
-              {page.sections
-                .filter((section) =>
-                  Boolean(
-                    section.header?.length &&
-                      !section.isHidden &&
-                      !section?.hideNavigationAnchor,
-                  ),
-                )
-                .map((section, index) => {
-                  const path = getPathForSectionAndPage(
-                    page.title,
-                    section.header,
-                    page.slug,
-                  );
+      [BLOCKS.PARAGRAPH](node, children) {
+        return <Title className={cx(classes.paragraph)}>{children}</Title>;
+      },
+    },
+  };
 
-                  return (
-                    <React.Fragment
-                      key={section.id + "mapFooterSectionsMobile"}
-                    >
-                      <List.Item>
-                        <Link to={path} className={classes.footerLink}>
-                          <Text className={classes.footerSection}>
-                            {section.header.replace(":", "")}
+  return (
+    <Box className={classes.footerWrapper}>
+      <Accordion
+        classNames={{
+          content: classes.content,
+          item: classes.item,
+          label: classes.label,
+          control: classes.control,
+          chevron: classes.chevron,
+        }}
+        chevron={<IconChevronDown size={24} />}
+        mb={15}
+      >
+        {pages
+          .filter((page) => page.title !== "Home")
+          .map((page) => (
+            <Accordion.Item
+              key={page.id + "mapFooterPagesMobile"}
+              value={page.title}
+            >
+              <Accordion.Control>{page.title}</Accordion.Control>
+              <Accordion.Panel>
+                <List mb={16} listStyleType={"none"}>
+                  {page.title === CONTACT_PAGE && (
+                    <div className={classes.contact}>
+                      <Group gap={4}>
+                        <EmailIcon />
+                        <Text
+                          unstyled
+                          span
+                          data-manual-entry={true}
+                          className={classes.link}
+                        >
+                          info@phil.us
+                        </Text>
+                      </Group>
+                      <Anchor
+                        href="https://www.linkedin.com/company/phil-inc-"
+                        target="_blank"
+                        referrerPolicy="no-referrer"
+                        className={classes.link}
+                      >
+                        <Group gap={4}>
+                          <StaticImage
+                            src="../../../assets/images/linkedin.svg"
+                            alt="LinkedIn Icon"
+                          />
+                          <Text
+                            unstyled
+                            span
+                            data-manual-entry={true}
+                            className={classes.link}
+                          >
+                            Linkedin
                           </Text>
-                        </Link>
-                      </List.Item>
+                        </Group>
+                      </Anchor>
+                    </div>
+                  )}
 
-                      {/* Patient login on accordian on patients page */}
-                      {page.title === PATIENTS_PAGE &&
-                        index === getFinalIndex(page) && (
+                  {page.sections
+                    .filter((section) =>
+                      Boolean(
+                        (section.header?.length || section.title?.length) &&
+                          !section.isHidden &&
+                          !section?.hideNavigationAnchor &&
+                          section.header !== "Contact us",
+                      ),
+                    )
+                    .map((section, index) => {
+                      const path = getPathForSectionAndPage(
+                        page.title,
+                        section.header ?? section.title,
+                        page.slug,
+                        section.slug,
+                      );
+
+                      return (
+                        <React.Fragment
+                          key={section.id + "mapFooterSectionsMobile"}
+                        >
                           <List.Item>
-                            <Anchor
-                              href="https://my.phil.us/"
-                              target="_blank"
-                              referrerPolicy="no-referrer"
-                              className={classes.link}
-                            >
-                              <Text className={classes.footerLink}>
-                                Patient Log In
+                            <Link to={path} className={classes.footerLink}>
+                              <Text className={classes.footerSection}>
+                                {(section.header ?? section.title).replace(
+                                  ":",
+                                  "",
+                                )}
                               </Text>
-                            </Anchor>
+                            </Link>
                           </List.Item>
-                        )}
+                        </React.Fragment>
+                      );
+                    })}
+                </List>
+              </Accordion.Panel>
+            </Accordion.Item>
+          ))}
+      </Accordion>
 
-                      {/* Careers on accordian on company page */}
-                      {page.title === COMPANY_PAGE &&
-                        index === getFinalIndex(page) && (
-                            <List.Item>
-                              <Link
-                                to={CAREERS}
-                                className={classes.footerLink}
-                                // style={{ textDecoration: "none" }}
-                              >
-                                <Text className={classes.footerSection}>
-                                  Careers
-                                </Text>
-                              </Link>
-                            </List.Item>
-                        )}
+      <div className={classes.footerContent}>
+        <Box className={classes.logo}>
+          <Anchor href="/">
+            <Asset asset={footer.logo} objectFit="contain" />
+          </Anchor>
+        </Box>
 
-                      {/* Socials on contact accordian on mobile */}
-                      {page.title === "Contact" &&
-                        index === page.sections.length - 1 && (
-                          <List.Item>
-                            <Group>
-                              <Anchor
-                                href="https://www.linkedin.com/company/phil-inc-"
-                                target="_blank"
-                              >
-                                <div>
-                                  <StaticImage
-                                    src="../../../assets/images/linkedin.svg"
-                                    alt="LinkedIn Icon"
-                                  />
-                                </div>
-                              </Anchor>
-                            </Group>
-                          </List.Item>
-                        )}
-                    </React.Fragment>
-                  );
-                })}
-            </List>
-          </Accordion.Panel>
-        </Accordion.Item>
-      ))}
-    </Accordion>
+        <div>{footer.address && renderRichText(footer.address, options)}</div>
+      </div>
 
-    <Grid mt={60} align={"center"} justify="center">
-      {footer.badge.map((badge) => (
-        <Grid.Col key={badge.file.url + "mapBadgeMobile"} span={4}>
-          <Box maw={120}>
-            <ImageContainer fluid>
-              <Asset objectFit="contain" asset={badge} />
-            </ImageContainer>
-          </Box>
-        </Grid.Col>
-      ))}
-    </Grid>
-  </Box>
-);
+      <Grid mt={60} align={"center"} justify="center">
+        {footer.badge.map((badge) => (
+          <Grid.Col key={badge.file.url + "mapBadgeMobile"} span={4}>
+            <Box maw={120}>
+              <ImageContainer fluid>
+                <Asset objectFit="contain" asset={badge} />
+              </ImageContainer>
+            </Box>
+          </Grid.Col>
+        ))}
+      </Grid>
+    </Box>
+  );
+};
 
 export default MobileFooter;

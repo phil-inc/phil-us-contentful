@@ -46,7 +46,7 @@ const Done = () => {
           your email address.
         </Text>
         <div>
-          <Link to="/resources/">
+          <Link to="/insights/">
             <Button variant="philDefault">Patient Access Resources</Button>
           </Link>
         </div>

@@ -31,7 +31,7 @@ import Filter from "components/common/Filter/Filter";
 import { crossIcon } from "assets/images";
 import { generateSearchParams } from "utils/search";
 import LoadingIndicator from "components/common/LoadingIndicator/LoadingIndicator";
-import { RESOURCES_PAGE } from "constants/routes";
+import { INSIGHTS_PAGE } from "constants/routes";
 import * as classes from "./search.module.css";
 import useDeviceType from "hooks/useView";
 
@@ -45,7 +45,7 @@ export const searchSubmitCallback = (
 
   const path = generateSearchParams(filterOptions, searchText);
 
-  void navigate("/resources/search/" + path);
+  void navigate("/insights/search" + path);
 };
 
 type HelmetProps = {
@@ -201,7 +201,7 @@ const SearchBody: React.FC<SearchBodyType> = ({
           searchQueryParam,
         );
 
-        void navigate("/resources/search/" + path);
+        void navigate("/insights/search" + path);
       }}
       size={9}
       radius="xl"
@@ -247,7 +247,7 @@ const SearchBody: React.FC<SearchBodyType> = ({
                 onClick={() => {
                   const path = generateSearchParams([], searchQueryParam);
 
-                  void navigate("/resources/search/" + path);
+                  void navigate("/insights/search" + path);
                 }}
               >
                 Clear All
@@ -416,7 +416,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({
   // Create search index
   React.useEffect(() => {
     if (!searchQueryParam.length) {
-      void navigate(RESOURCES_PAGE);
+      void navigate(INSIGHTS_PAGE);
       return;
     }
 
@@ -512,9 +512,9 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({
   );
 };
 
-export const resourcesQuery = graphql`
-  query resourceSearchPage {
-    contentfulPage(title: { eq: "Resources" }) {
+export const insightsQuery = graphql`
+  query insightSearchPage {
+    contentfulPage(title: { eq: "News & Insights" }) {
       id
       title
       displayTitle

@@ -14,7 +14,7 @@ import { Layout } from "layouts/Layout/Layout";
 import React, { useState } from "react";
 import { ContentfulPage } from "types/page";
 
-import * as classes from "./executiveTeam.module.css";
+import * as classes from "./leadership.module.css";
 
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import { Options } from "@contentful/rich-text-react-renderer";
@@ -22,7 +22,7 @@ import cx from "clsx";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { ELinkedinIcon } from "components/common/Buttons/SocialButtons/ELinkedInIcon";
 
-type ExecutiveTeamProps = {
+type LeadershipProps = {
   data: { contentfulPage: ContentfulPage };
 };
 
@@ -127,7 +127,7 @@ const ECard = ({ reference }: any) => {
   );
 };
 
-const ExecutiveTeam: React.FC<ExecutiveTeamProps> = ({
+const Leadership: React.FC<LeadershipProps> = ({
   data: { contentfulPage },
 }) => {
   const references = contentfulPage.sections[0].references;
@@ -255,4 +255,4 @@ export const query = graphql`
   }
 `;
 
-export default React.memo(ExecutiveTeam);
+export default React.memo(Leadership);

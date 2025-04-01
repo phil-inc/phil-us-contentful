@@ -1,6 +1,5 @@
 import {
   Group,
-  Text,
   List,
   Burger,
   Box,
@@ -28,6 +27,7 @@ import HeaderContext from "contexts/HeaderProvider";
 import CCollapse from "./CCollapse";
 
 import * as classes from "./header.module.css";
+import { Navigation } from "./Navigation";
 
 export const HEADER_HEIGHT = 90;
 
@@ -92,134 +92,136 @@ const Navbar: React.FC<CHeaderProps> = ({
 
   const [activePageLI, setActivePageLI] = useState<HTMLLIElement>();
 
-  useClickOutside(
-    () => {
-      close();
-    },
-    null,
-    [navRef!, collapseRef!],
-  );
+  // useClickOutside(
+  //   () => {
+  //     close();
+  //   },
+  //   null,
+  //   [navRef!, collapseRef!],
+  // );
 
-  const onNavLinkClick = (event) => {
-    if (event.target.textContent === target) {
-      toggle();
-    } else {
-      open();
-      setTarget(event.target.textContent as string);
-    }
-  };
+  // const onNavLinkClick = (event) => {
+  //   if (event.target.textContent === target) {
+  //     toggle();
+  //   } else {
+  //     open();
+  //     setTarget(event.target.textContent as string);
+  //   }
+  // };
 
-  function moveIntidatorActiveTo(li: HTMLLIElement) {
-    if (li.dataset.noindicator === "true") {
-      return;
-    }
+  // function moveIntidatorActiveTo(li: HTMLLIElement) {
+  //   if (li.dataset.noindicator === "true") {
+  //     return;
+  //   }
 
-    const INDICATOR_SIZE = 20;
-    const INITIAL_OFFSET = 25;
-    const indicator: HTMLElement = document.querySelector(
-      `.${classes.indicator}`,
-    )!;
+  //   const INDICATOR_SIZE = 20;
+  //   const INITIAL_OFFSET = 25;
+  //   const indicator: HTMLElement = document.querySelector(
+  //     `.${classes.indicator}`,
+  //   )!;
 
-    li.classList.add("active");
+  //   li.classList.add("active");
 
-    indicator.style.transform = `translate(calc(${
-      li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
-    }px), calc(${-INDICATOR_SIZE}px))`;
-  }
+  //   indicator.style.transform = `translate(calc(${
+  //     li.offsetLeft - INITIAL_OFFSET - INDICATOR_SIZE + li.clientWidth / 2
+  //   }px), calc(${-INDICATOR_SIZE}px))`;
+  // }
 
-  React.useEffect(() => {
-    if (!minimal) {
-      const navBar = document.querySelector(".navbar")!;
-      const allLi = navBar.querySelectorAll("li");
+  // React.useEffect(() => {
+  //   if (!minimal) {
+  //     const navBar = document.querySelector(".navbar")!;
+  //     const allLi = navBar.querySelectorAll("li");
 
-      const clickHandlers: Array<(e: MouseEvent) => void> = [];
+  //     console.log(allLi)
 
-      allLi.forEach((li) => {
-        if (li.dataset.noindicator === "true") {
-          return;
-        }
+  //     const clickHandlers: Array<(e: MouseEvent) => void> = [];
 
-        const titleToMatch = li.innerText.trim();
+  //     allLi.forEach((li) => {
+  //       if (li.dataset.noindicator === "true") {
+  //         return;
+  //       }
 
-        const [currentPage] = pages.filter(
-          (page) => page.title === titleToMatch,
-        );
+  //       const titleToMatch = li.innerText.trim();
 
-        // Initial set active
-        if (
-          location.pathname === "/"
-            ? false
-            : location.pathname.startsWith(
-                `/${slugify(currentPage.title, { lower: true, strict: true })}/`,
-              )
-        ) {
-          setActivePageLI(li);
-          li.classList.add("active");
-          moveIntidatorActiveTo(li);
-        }
+  //       const [currentPage] = pages.filter(
+  //         (page) => page.title === titleToMatch,
+  //       );
 
-        const clickEventHandler = (e: MouseEvent) => {
-          e.preventDefault(); // Preventing from submitting
-          const active = navBar.querySelector(".active");
-          if (active) {
-            active.classList.remove("active");
-          }
+  //       // Initial set active
+  //       if (
+  //         location.pathname === "/"
+  //           ? false
+  //           : location.pathname.startsWith(
+  //               `/${slugify(currentPage.title, { lower: true, strict: true })}/`,
+  //             )
+  //       ) {
+  //         setActivePageLI(li);
+  //         li.classList.add("active");
+  //         moveIntidatorActiveTo(li);
+  //       }
 
-          moveIntidatorActiveTo(li);
-        };
+  //       const clickEventHandler = (e: MouseEvent) => {
+  //         e.preventDefault(); // Preventing from submitting
+  //         const active = navBar.querySelector(".active");
+  //         if (active) {
+  //           active.classList.remove("active");
+  //         }
 
-        clickHandlers.push(clickEventHandler);
+  //         moveIntidatorActiveTo(li);
+  //       };
 
-        li.addEventListener("click", clickEventHandler);
-      });
+  //       clickHandlers.push(clickEventHandler);
 
-      return () => {
-        allLi.forEach((li, index) => {
-          li.removeEventListener("click", clickHandlers[index]);
-        });
-      };
-    }
-  }, []);
+  //       li.addEventListener("click", clickEventHandler);
+  //     });
 
-  React.useEffect(() => {
-    if (!minimal) {
-      const navBar = document.querySelector(".navbar")!;
-      const active = navBar.querySelector(".active");
+  //     return () => {
+  //       allLi.forEach((li, index) => {
+  //         li.removeEventListener("click", clickHandlers[index]);
+  //       });
+  //     };
+  //   }
+  // }, []);
 
-      if (Boolean(!opened) && Boolean(activePageLI)) {
-        if (activePageLI!.dataset.noindicator === "true") {
-          return;
-        }
+  // React.useEffect(() => {
+  //   if (!minimal) {
+  //     const navBar = document.querySelector(".navbar")!;
+  //     const active = navBar.querySelector(".active");
 
-        if (active) {
-          active.classList.remove("active");
-        }
+  //     if (Boolean(!opened) && Boolean(activePageLI)) {
+  //       if (activePageLI!.dataset.noindicator === "true") {
+  //         return;
+  //       }
 
-        moveIntidatorActiveTo(activePageLI!);
-      } else if (Boolean(!opened) && Boolean(!activePageLI)) {
-        const active = navBar.querySelector(".active");
-        if (active) {
-          active.classList.remove("active");
-        }
+  //       if (active) {
+  //         active.classList.remove("active");
+  //       }
 
-        const indicator: HTMLElement = document.querySelector(
-          `.${classes.indicator}`,
-        )!;
-        indicator.style.transform = "";
-      }
-    }
-  }, [opened, activePageLI]);
+  //       moveIntidatorActiveTo(activePageLI!);
+  //     } else if (Boolean(!opened) && Boolean(!activePageLI)) {
+  //       const active = navBar.querySelector(".active");
+  //       if (active) {
+  //         active.classList.remove("active");
+  //       }
 
-  React.useEffect(() => {
-    if (!minimal) {
-      const navBar = document.querySelector(".navbar")!;
-      const active: HTMLLIElement = navBar.querySelector(".active")!;
+  //       const indicator: HTMLElement = document.querySelector(
+  //         `.${classes.indicator}`,
+  //       )!;
+  //       indicator.style.transform = "";
+  //     }
+  //   }
+  // }, [opened, activePageLI]);
 
-      if (active) {
-        moveIntidatorActiveTo(active);
-      }
-    }
-  }, [width]);
+  // React.useEffect(() => {
+  //   if (!minimal) {
+  //     const navBar = document.querySelector(".navbar")!;
+  //     const active: HTMLLIElement = navBar.querySelector(".active")!;
+
+  //     if (active) {
+  //       moveIntidatorActiveTo(active);
+  //     }
+  //   }
+  // }, [width]);
 
   const buttonConfig = {
     primary: { variant: "header-primary", size: "md", uppercase: true },
@@ -255,18 +257,9 @@ const Navbar: React.FC<CHeaderProps> = ({
               className={classes.burger}
             />
             <List ref={setNavRef} className={classes.navLinksWrapper}>
-              <div className={classes.indicator}></div>
-              {pages
-                .filter((page) => page.title !== "Home")
-                .map((page) => (
-                  <List.Item
-                    key={page.id + "mapHeaderPages"}
-                    className={classes.navLink}
-                    onClick={onNavLinkClick}
-                  >
-                    <Text style={{ whiteSpace: "nowrap" }}>{page.title}</Text>
-                  </List.Item>
-                ))}
+
+              <Navigation pages={pages} />
+
               {buttons.map((button, index) => {
                 const buttonComponent = (
                   <Button
@@ -331,15 +324,99 @@ const Navbar: React.FC<CHeaderProps> = ({
             buttons,
           }}
         >
-          {isDrawer ? <CDrawer /> : <CCollapse />}
+          {isDrawer && <CDrawer />}
         </HeaderContext.Provider>
       )}
     </AppShell.Header>
   );
 };
 
+// const query = graphql`
+//   query {
+//     allContentfulHeader(filter: { node_locale: { eq: "en-US" } }) {
+//       nodes {
+//         id
+//         title
+//         navigationLinks {
+//           slug
+//           id
+//           title
+//           displayTitle
+//           sys {
+//             contentType {
+//               sys {
+//                 id
+//                 type
+//               }
+//             }
+//           }
+//           sections {
+//             ... on ContentfulReferencedSection {
+//               id
+//               header
+//               headerAlias
+//               isHidden
+//               hideNavigationAnchor
+//             }
+//             ... on ContentfulSection {
+//               id
+//               header
+//               isHidden
+//               hideNavigationAnchor
+//             }
+//           }
+//         }
+//         logo {
+//           gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+//           title
+//           file {
+//             contentType
+//             details {
+//               size
+//             }
+//             url
+//           }
+//         }
+//         buttons {
+//           id
+//           buttonText
+//           buttonStyle
+//           externalLink
+//           internalLink {
+//             ... on ContentfulPage {
+//               slug
+//               id
+//               title
+//             }
+//           }
+//         }
+//       }
+//     }
+//     allContentfulResource(filter: { node_locale: { eq: "en-US" } }) {
+//       nodes {
+//         id
+//         heading
+//         relatesTo {
+//           ... on ContentfulReferencedSection {
+//             id
+//             header
+//           }
+//           ... on ContentfulSection {
+//             id
+//             header
+//           }
+//         }
+//       }
+//     }
+//     sitePage {
+//       id
+//       pageContext
+//     }
+//   }
+// `;
+
 const query = graphql`
-  query {
+ {
     allContentfulHeader(filter: { node_locale: { eq: "en-US" } }) {
       nodes {
         id
@@ -370,6 +447,11 @@ const query = graphql`
               header
               isHidden
               hideNavigationAnchor
+            }
+            ... on ContentfulPage {
+              id
+              title
+              slug
             }
           }
         }
