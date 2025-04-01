@@ -11,7 +11,7 @@ import {
 import { IconChevronDown } from "@tabler/icons";
 import Asset from "components/common/Asset/Asset";
 import ImageContainer from "components/common/Container/ImageContainer";
-import {CONTACT_PAGE } from "constants/page";
+import { CONTACT_PAGE } from "constants/page";
 import { CAREERS, LEADERSHIP } from "constants/routes";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
@@ -116,7 +116,8 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => {
                       Boolean(
                         (section.header?.length || section.title?.length) &&
                           !section.isHidden &&
-                          !section?.hideNavigationAnchor && section.header !== "Contact us",
+                          !section?.hideNavigationAnchor &&
+                          section.header !== "Contact us",
                       ),
                     )
                     .map((section, index) => {
