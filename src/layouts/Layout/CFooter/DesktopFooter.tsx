@@ -87,8 +87,8 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
               info@phil.us
             </Text>
           </Group>
-          <Anchor
-            href="https://www.linkedin.com/company/phil-inc-"
+          <Link
+            to="https://www.linkedin.com/company/phil-inc-"
             target="_blank"
             referrerPolicy="no-referrer"
             className={classes.link}
@@ -107,7 +107,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                 Linkedin
               </Text>
             </Group>
-          </Anchor>
+          </Link>
         </div>
       </div>
 
