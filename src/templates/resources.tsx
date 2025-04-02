@@ -26,9 +26,9 @@ import { ResourceCard } from "components/common/Resources/ResourceCard";
 import slugify from "slugify";
 import { Banner } from "components/common/Banner/Banner";
 import { useToggle } from "@mantine/hooks";
-import { RESOURCES_PAGE } from "constants/routes";
+import { INSIGHTS_PAGE } from "constants/routes";
 import SearchBox from "components/common/SearchBox/SearchBox";
-import { searchSubmitCallback } from "pages/resources/search";
+import { searchSubmitCallback } from "pages/insights/search";
 
 import * as classes from "./resources.module.css";
 import useDeviceType from "hooks/useView";
@@ -271,7 +271,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
                         )
                         .map((section, index, array) => {
                           const path =
-                            RESOURCES_PAGE +
+                            INSIGHTS_PAGE +
                             slugify(section.header, {
                               lower: true,
                               strict: true,
@@ -362,7 +362,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
                   value={currentPageNumber}
                   onChange={async (pageNumber) => {
                     const path =
-                      RESOURCES_PAGE +
+                      INSIGHTS_PAGE +
                       slugify(currentSection.header, {
                         lower: true,
                         strict: true,
@@ -927,7 +927,7 @@ export const resourcesQuery = graphql`
         }
       }
     }
-    contentfulPage(title: { eq: "Resources" }) {
+    contentfulPage(title: { eq: "News & Insights" }) {
       id
       title
       displayTitle

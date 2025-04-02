@@ -1,24 +1,29 @@
-import { HOME, RESOURCES } from "constants/page";
+import { HOME, INSIGHTS } from "constants/page";
 import slugify from "slugify";
 
 export const getPathForSectionAndPage = (
   pageTitle: string,
   sectionHeader: string,
   slug: string,
+  sectionPath?: string,
 ): string => {
-  // Set path based on page and section
+
+// Set path based on page and section
   let path = "";
   if (pageTitle !== HOME) {
     const pageSlug = slugify(slug, { lower: true, strict: true });
     path = `/${pageSlug}`;
   }
 
-  if (pageTitle === RESOURCES) {
+  if (pageTitle === INSIGHTS) {
     const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
     path += `/${sectionSlug}`;
   } else {
-    const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
-    path += `/#${sectionSlug}`;
+    // {TODO - change this for both section and page}
+    // const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
+    // path += `/#${sectionSlug}`;
+
+    path = `/${sectionPath}`;
   }
 
   return path || "#";

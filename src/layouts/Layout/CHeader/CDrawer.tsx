@@ -7,7 +7,6 @@ import {
   Box,
   Burger,
   Accordion,
-  useMantineTheme,
   List,
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons";
@@ -17,7 +16,7 @@ import React from "react";
 import { getPathForSectionAndPage } from "utils/links";
 import { Link as ScrollToElement } from "react-scroll";
 import HeaderContext from "contexts/HeaderProvider";
-import { COMPANY_PAGE, PATIENTS_PAGE } from "constants/page";
+import { COMPANY_PAGE, INSIGHTS, PATIENTS_PAGE } from "constants/page";
 import { getFinalIndex } from "utils/getFinalIndex";
 import { CAREERS } from "constants/routes";
 
@@ -146,7 +145,7 @@ const CDrawer: React.FC = () => {
                   {page.sections
                     .filter((section) =>
                       Boolean(
-                        section.header?.length &&
+                        (section.header?.length || section.title?.length) &&
                           !section.isHidden &&
                           !section?.hideNavigationAnchor,
                       ),
@@ -154,8 +153,9 @@ const CDrawer: React.FC = () => {
                     .map((section, index) => {
                       const path = getPathForSectionAndPage(
                         page.title,
-                        section.header,
+                        section.header ?? section.title,
                         page.slug,
+                        section.slug
                       );
 
                       return (
@@ -166,7 +166,7 @@ const CDrawer: React.FC = () => {
                             {/* All sections except for the first */}
 
                             {page.title === document.title &&
-                            page.title !== "Resources" ? (
+                            page.title !== INSIGHTS ? (
                               <ScrollToElement
                                 to={path}
                                 spy={true}
@@ -176,11 +176,11 @@ const CDrawer: React.FC = () => {
                                   cursor: "pointer",
                                 }}
                               >
-                                {section.header}
+                                {section.header ?? section.title}
                               </ScrollToElement>
                             ) : (
                               <Link to={path} className={classes.link}>
-                                {section.header}
+                                {section.header ?? section.title}
                               </Link>
                             )}
                           </List.Item>

@@ -530,7 +530,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
             </Grid>
           )}
 
-          <Link to="/resources/case-studies">
+          <Link to="/insights/case-studies">
             <Button
               className={classes.featuredCaseStudyButton}
               variant="philDefault"

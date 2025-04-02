@@ -169,7 +169,7 @@ export const FaqAccordion = ({ resource }: any) => {
       <Accordion.Item value={resource.header}>
         <Accordion.Control>{resource.header}</Accordion.Control>
         <Accordion.Panel>
-          {resource.references.map((reference: any, index: any) => {
+          {resource.references?.map((reference: any, index: any) => {
             const referenceBody = reference.body.references[0]?.body;
             return (
               <AccordionContent

@@ -44,6 +44,8 @@ export type ISection = {
   sectionType: SectionType;
   header: string;
   youtubeVideoUrl?: string;
+  title?:string;
+  slug?: string;
   subHeader?: { subHeader: string };
   body: BodyType;
   isHubspotEmbed: boolean;

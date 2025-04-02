@@ -1,8 +1,8 @@
 export const CONTACT_PAGE = "Contact";
 export const HCP_PAGE = "Providers";
 export const HOME = "Home";
-export const RESOURCES = "Resources";
+export const INSIGHTS = "News & Insights";
 export const PATIENTS_PAGE = "Patients";
-export const LIFE_SCIENCES_PAGE = "Life Sciences";
+export const LIFE_SCIENCES_PAGE = "Pharma";
 export const COMPANY_PAGE = "Company";
 export const FIELD_PAGE = "Field"; // Page created for xifaxan

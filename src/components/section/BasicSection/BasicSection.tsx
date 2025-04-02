@@ -332,7 +332,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
       style={{
         background: section.v2Flag
-          ? getColorFromStylingOptions(section.stylingOptions.background)
+          ? getColorFromStylingOptions(section.stylingOptions?.background)
           : sectionBackground(section.background),
       }}
     >

@@ -28,18 +28,25 @@ export const Head: React.FC<HelmetProps> = ({
   const heroSection = contentfulPage.sections.find(
     (section) => section.sectionType === "Basic Section",
   ) as ISection;
-  const heroImage = heroSection?.asset.file.url;
-  const heroImageV2 = heroSection?.mediaItem?.media?.file?.url;
+// Safely extract heroImage and heroImageV2
+const heroImage = heroSection?.asset?.file?.url || null;
+const heroImageV2 = heroSection?.mediaItem?.media?.file?.url || null;
 
-  const title = contentfulPage.displayTitle.length
-    ? contentfulPage.displayTitle
-    : contentfulPage.title;
+// Safely extract title with a fallback
+const title = contentfulPage?.displayTitle?.length
+  ? contentfulPage.displayTitle
+  : contentfulPage?.title || "";
 
-  let image = heroImage;
+// Initialize image with heroImage as default
+let image = heroImage;
 
-  if (!isVideoContent(heroSection?.mediaItem?.media?.file?.contentType)) {
-    image = heroImageV2 || heroImage;
-  }
+// Check content type and update image accordingly
+if (
+  heroSection?.mediaItem?.media?.file?.contentType &&
+  !isVideoContent(heroSection.mediaItem.media.file.contentType)
+) {
+  image = heroImageV2 || heroImage;
+}
 
   const config = {
     slug: contentfulPage.slug,
@@ -104,6 +111,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
   const { id, sections, title } = data.contentfulPage;
 
   let basicSectionCount = 0;
+  
   const isEmbedFormTemplate = sections.some((section) =>
     Boolean((section as ISection)?.embedForm?.raw),
   );

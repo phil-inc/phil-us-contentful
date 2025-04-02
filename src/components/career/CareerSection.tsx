@@ -31,6 +31,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({
   heroAsset,
 }) => {
   const theme = useMantineTheme();
+  
   const isSVG = heroAsset?.file?.contentType === "image/svg+xml";
 
   return (

@@ -9,10 +9,18 @@ import * as classes from "./cfooter.module.css";
 import ImageContainer from "components/common/Container/ImageContainer";
 import Asset from "components/common/Asset/Asset";
 import isMobileView from "hooks/useView";
+import { ContentfulButton } from "../CHeader/CHeader";
+import { BodyType } from "types/section";
 
 type FooterProps = {
   allContentfulFooter: {
-    nodes: Array<{ badge: TAsset[]; navigationLinks: ContentfulPage[] }>;
+    nodes: Array<{
+      badge: TAsset[];
+      navigationLinks: ContentfulPage[];
+      logo: TAsset;
+      buttons: ContentfulButton[];
+      address: BodyType;
+    }>;
   };
   allContentfulResource: {
     nodes: Array<{
@@ -34,7 +42,9 @@ const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
   const links = [
     {
       label:
-        !isMobile && !minimal ? `Copyright ${currentYear}, Phil Inc.` : "© Phil, Inc.",
+        !isMobile && !minimal
+          ? `Copyright ${currentYear}, Phil Inc.`
+          : "© Phil, Inc.",
     },
     {
       label: "Terms of Use",
@@ -132,6 +142,76 @@ const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
   );
 };
 
+// const query = graphql`
+//   {
+//     allContentfulFooter(filter: { node_locale: { eq: "en-US" } }) {
+//       nodes {
+//         id
+//         title
+//         navigationLinks {
+//           slug
+//           id
+//           title
+//           sys {
+//             contentType {
+//               sys {
+//                 id
+//                 type
+//               }
+//             }
+//           }
+//           sections {
+//             ... on ContentfulReferencedSection {
+//               id
+//               header
+//               isHidden
+//               hideNavigationAnchor
+//             }
+//             ... on ContentfulSection {
+//               id
+//               header
+//               isHidden
+//             }
+//           }
+//         }
+//         badge {
+//           file {
+//             contentType
+//             url
+//             details {
+//               size
+//             }
+//           }
+//           gatsbyImageData(
+//             resizingBehavior: FILL
+//             placeholder: BLURRED
+//             layout: CONSTRAINED
+//           )
+//         }
+//       }
+//     }
+//     allContentfulResource(filter: { node_locale: { eq: "en-US" } }) {
+//       nodes {
+//         id
+//         heading
+//         relatesTo {
+//           ... on ContentfulReferencedSection {
+//             id
+//             header
+//             isHidden
+//             hideNavigationAnchor
+//           }
+//           ... on ContentfulSection {
+//             id
+//             header
+//             isHidden
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
+
 const query = graphql`
   {
     allContentfulFooter(filter: { node_locale: { eq: "en-US" } }) {
@@ -162,6 +242,11 @@ const query = graphql`
               header
               isHidden
             }
+            ... on ContentfulPage {
+              id
+              title
+              slug
+            }
           }
         }
         badge {
@@ -177,6 +262,33 @@ const query = graphql`
             placeholder: BLURRED
             layout: CONSTRAINED
           )
+        }
+        buttons {
+          id
+          buttonText
+          buttonStyle
+          externalLink
+          internalLink {
+            ... on ContentfulPage {
+              slug
+              id
+              title
+            }
+          }
+        }
+        logo {
+          gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+          title
+          file {
+            contentType
+            details {
+              size
+            }
+            url
+          }
+        }
+        address {
+          raw
         }
       }
     }

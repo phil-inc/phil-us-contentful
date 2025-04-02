@@ -6,7 +6,7 @@ import {
   type TemplateKey,
   templateFactory,
 } from "../factories/templateFactory";
-import { HOME, RESOURCES } from "../constants/page";
+import { HOME, INSIGHTS } from "../constants/page";
 import type { Actions } from "gatsby";
 import { type ContentfulPage } from "../types/page";
 import { type IReferencedSection, type ISection } from "../types/section";
@@ -40,14 +40,14 @@ export default async function GenerateMainPages(
   callback: (resourceSubPages: string[]) => void,
 ): Promise<void> {
   const resourceSubPages: string[] = [];
-
+  
   const {
     data = { allContentfulPage: { nodes: [] } },
   }: { data?: { allContentfulPage: { nodes: ContentfulPage[] } } | undefined } =
     await graphql(getPagesQuery);
 
   data.allContentfulPage.nodes.forEach((page: ContentfulPage) => {
-    if (page.title === RESOURCES) {
+    if (page.title === INSIGHTS) {
       handleResourcePage(page, resourceSubPages, actions);
     } else {
       handleRegularPage(page, actions);
@@ -124,6 +124,7 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
     id: page.id,
     title: page.title,
   });
+
   actions.createPage(pageObject);
 }
 
@@ -135,12 +136,13 @@ function createResourceSubPage(
   const { headerSlug, index, numPages } = pageDetails;
 
   const pageSlug = slugify(page.slug, { lower: true, strict: true });
+
   const path =
     index === 0
       ? `${pageSlug}/${headerSlug}`
       : `${pageSlug}/${headerSlug}/${index + 1}`;
 
-  const pageObject = createPageObject(path, templateFactory("Resources"), {
+  const pageObject = createPageObject(path, templateFactory("Insights"), {
     id: section.id,
     title: section.header,
     limit: POSTS_PER_SECTION,
