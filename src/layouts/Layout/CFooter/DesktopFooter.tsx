@@ -157,7 +157,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                       <div>
                         {footer.buttons.map((button, index) => {
                           const buttonComponent = (
-                            <Button
+                            <Button className={classes.button}
                               size={
                                 button.buttonStyle === "Primary"
                                   ? buttonConfig.primary.size

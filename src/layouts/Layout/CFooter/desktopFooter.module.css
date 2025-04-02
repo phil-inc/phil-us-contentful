@@ -67,6 +67,10 @@
 
 .button {
 	width: 100% !important;
+	white-space: nowrap; /* Prevents text from wrapping */
+	min-width: 120px; /* Adjust based on your design */
+	padding: 10px 20px; /* Keeps the button size reasonable */
+	text-align: center;
 }
 
 .headerCTA {
