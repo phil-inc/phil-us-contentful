@@ -378,6 +378,21 @@ to = "/leadership"
 status = 301
 
 [[redirects]]
+from = "/resources/events"
+to= "/insights/events"
+status = 301
+
+[[redirects]]
+from = "/resources/faqs"
+to= "/insights/faqs"
+status = 301
+
+[[redirects]]
+from = "/resources/phil-blog"
+to= "/insights/phil-blog"
+status = 301
+
+[[redirects]]
 from = "/resources/*"
 to= "/insights"
 status = 301
