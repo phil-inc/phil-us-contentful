@@ -362,7 +362,6 @@ to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
-
 [[redirects]]
 from = "/healthcare-providers/*"
 to = "/providers"
