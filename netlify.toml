@@ -396,4 +396,3 @@ status = 301
 from = "/resources/*"
 to= "/insights"
 status = 301
-
