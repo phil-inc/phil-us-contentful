@@ -40,8 +40,8 @@ status = 302
 # faqs redirection
 [[redirects]]
 from = "/faqs/*"
-to = "/insights/#faqs"
-status = 200
+to = "/insights/faqs/"
+status = 301
 
 [[redirects]]
 from = "/about-us/*"
@@ -61,12 +61,12 @@ status = 200
 [[redirects]]
 from = "/newprovider/*"
 to = "/providers"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/pharmacists/*"
 to = "/providers"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/connect/*"
@@ -76,7 +76,7 @@ status = 200
 [[redirects]]
 from = "/press-releases"
 to = "/insights"
-status = 200
+status = 301
 
 # redirect blog.phil.us to phil.us as 301 Moved Permanently
 [[redirects]]
@@ -362,23 +362,22 @@ to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
-
 [[redirects]]
 from = "/healthcare-providers/*"
 to = "/providers"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/life-sciences/*"
 to = "/pharma"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/executive-team/*"
 to = "/leadership"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/resources/*"
 to= "/insights"
-status = 200
+status = 301
