@@ -40,7 +40,7 @@ status = 302
 # faqs redirection
 [[redirects]]
 from = "/faqs/*"
-to = "/insights/#faqs"
+to = "/insights/faqs/"
 status = 301
 
 [[redirects]]
@@ -61,12 +61,12 @@ status = 200
 [[redirects]]
 from = "/newprovider/*"
 to = "/providers"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/pharmacists/*"
 to = "/providers"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/connect/*"
@@ -366,17 +366,17 @@ force = true
 [[redirects]]
 from = "/healthcare-providers/*"
 to = "/providers"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/life-sciences/*"
 to = "/pharma"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/executive-team/*"
 to = "/leadership"
-status = 200
+status = 301
 
 [[redirects]]
 from = "/resources/*"
