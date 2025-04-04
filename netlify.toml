@@ -40,7 +40,7 @@ status = 302
 # faqs redirection
 [[redirects]]
 from = "/faqs/*"
-to = "/resources/#faqs"
+to = "/insights/#faqs"
 status = 200
 
 [[redirects]]
@@ -50,7 +50,7 @@ status = 200
 
 [[redirects]]
 from = "/manufacturers/*"
-to = "/life-sciences"
+to = "/pharma"
 status = 301
 
 [[redirects]]
@@ -60,12 +60,12 @@ status = 200
 
 [[redirects]]
 from = "/newprovider/*"
-to = "/healthcare-providers"
+to = "/providers"
 status = 200
 
 [[redirects]]
 from = "/pharmacists/*"
-to = "/healthcare-providers"
+to = "/providers"
 status = 200
 
 [[redirects]]
@@ -75,7 +75,7 @@ status = 200
 
 [[redirects]]
 from = "/press-releases"
-to = "/resources"
+to = "/insights"
 status = 200
 
 # redirect blog.phil.us to phil.us as 301 Moved Permanently
@@ -142,222 +142,243 @@ status = 301
 
 [[redirects]]
 from = "/from-the-go-go-days-to-a-bubble-crunch-biotech-sector-faces-its-next-challenge/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/the-digital-therapeutics-revolution-is-happening-and-big-pharma-is-buying-in/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/5-fda-decisions-to-watch-in-the-fourth-quarter/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/the-digital-therapeutics-revolution-is-happening-and-big-pharma-is-buying-in--with-caution/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/pharma-earnings-outline-drug-laws-looming-impact-on-sales-development/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/for-als-patients-doctors-a-new-medicine-reignites-concerns-about-healthcare/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/pharma-companies-boost-drug-prices-to-start-year-but-hikes-lag-inflation-and/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/2023-forecast-biotech-plummeted-from-the-highest-of-highs-in-2022-will-the/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/what-prescription-drug-pricing-can-learn-from-value-based-care-models/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/prior-authorization-reform-cms-rule-aimed-at-improving-medicare-advantage/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/drug-pricing-2023-likely-to-be-a-crucial-year-for-pharma-and-insurers/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/evolving-consumer-behavior-pharma-spending-on-linear-tv-ads-falls-for-first/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/drug-price-negotiations-5-key-dates-to-watch/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/unclear-regulations-prevent-telehealth-from-reaching-its-full-potential/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/biotech-cfos-eye-research-cuts-partnerships-amid-sector-retrenchment-report/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/bio-big-pharma-offers-menu-of-partnering-options-but-biotechs-want-licensing/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/after-pandemic-breather-big-pharma-sees-drug-development-costs-rise-and/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/big-pharmas-looming-threat-a-patent-cliff-of-tectonic-magnitude/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/what-are-the-leading-pharma-healthtech-trends/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/prior-authorization-increases-use-of-health-care-resources-physicians-say/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/why-layoffs-are-not-the-answer-to-biopharmas-troubled-market/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/how-health-care-leaders-are-leveraging-technology-in-a-tumultuous-economy/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/how-real-time-data-management-is-revolutionizing-healthcare/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/how-predictive-analytics-is-changing-the-healthcare-industry/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/a-majority-of-payers-used-outcomes-based-contracting-last-year-survey/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/dea-extends-telehealth-prescribing-flexibilities-to-maintain-digital-patient/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/responding-to-evolving-consumer-behavior-retailers-are-making-a-big-push/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/biosimilar-drugs-underutilized-due-to-payer-restrictions/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/in-therapeutic-innovation-prescription-digital-therapeutics-must-demonstrate/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/drugmakers-hit-with-higher-production-costs-adversely-impacting-gtn/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/fda-proposes-new-easy-to-read-medication-guide-for-patients-responding-to/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/the-role-of-scientific-evidence-in-specialty-drug-commercialization/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/pharma-injecting-life-into-digital-health-amidst-funding-downturn/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/rigorous-data-are-key-to-convince-payers-investors-in-the-world-of-digital/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/consumer-choice-is-the-key-to-solving-our-massive-prescription-drugs-non/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/commercial-innovation-is-key-to-maximizing-sales-as-traditional-approaches/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/pharma-commercial-model-requires-an-urgent-overhaul-report/*"
-to = "https://phil.us/resources/phil-blog/"
+to = "https://phil.us/insights/phil-blog/"
 status = 301
 force = true
+
+
+[[redirects]]
+from = "/healthcare-providers/*"
+to = "/providers"
+status = 200
+
+[[redirects]]
+from = "/life-sciences/*"
+to = "/pharma"
+status = 200
+
+[[redirects]]
+from = "/executive-team/*"
+to = "/leadership"
+status = 200
+
+[[redirects]]
+from = "/resources/*"
+to= "/insights"
+status = 200
