@@ -14,7 +14,7 @@ import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, HCP_PAGE, PATIENTS_PAGE } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
@@ -135,9 +135,77 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     ref?.body?.references?.some((reff) => reff?.isFaq),
   );
 
-  const isFaqId= slugify(section.header ?? section.id, { lower: true, strict: true }) === "faqs"
+  const isFaqId =
+    slugify(section.header ?? section.id, { lower: true, strict: true }) ===
+    "faqs";
 
-  const isProviderPage = context.title === HCP_PAGE
+  const isBrandOutcomeCardSection =
+    section.referenceType === "Brand Outcome Card";
+
+  const isProviderPage = context.title === HCP_PAGE;
+
+  let sectionContent;
+
+  if (context.title === FIELD_PAGE) {
+    sectionContent = (
+      <Accordion
+        variant="separated"
+        radius="xs"
+        chevronPosition="left"
+        mb={24}
+        chevronSize={44}
+        classNames={{
+          chevron: classes.chevron,
+          label: classes.label,
+          control: classes.accordionControl,
+          content: classes.content,
+          item: classes.item,
+        }}
+      >
+        <Accordion.Item value={section.id}>
+          <Accordion.Control>
+            <ReferencedSectionTitle
+              isEmbedFormTemplate={isEmbedFormTemplate}
+              section={section}
+              textColor={textColor}
+            />
+          </Accordion.Control>
+          <Accordion.Panel>
+            <ReferencedSectionBody getSpan={getSpan} section={section} />
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    );
+  } else if (section.referenceType === ReferenceTypeEnum["Commitment Card"]) {
+    sectionContent = (
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ paddingRight: "60px" }}>
+          <h1 style={{fontSize: "40px", fontWeight: 700}}>{section.header}</h1>
+          <p style={{fontSize: "18px", fontWeight: 400}}>{section.subHeading?.subHeading}</p>
+        </div>
+        <div style={{borderLeft: "1px solid #E6E6E6", padding: "40px 60px" }}>
+        <ReferencedSectionBody getSpan={getSpan} section={section} />
+        </div>
+      </div>
+    );
+  } else {
+    sectionContent = (
+      <>
+        {!isNewsLetterComponent &&
+          Boolean(section.header?.length) &&
+          Boolean(!section.hideHeader) && (
+            <ReferencedSectionTitle
+              section={section}
+              isEmbedFormTemplate={isEmbedFormTemplate}
+              textColor={textColor}
+            />
+          )}
+
+        <ReferencedSectionBody getSpan={getSpan} section={section} />
+      </>
+    );
+  }
+
   return (
     <Expanded
       id={slugify(section.header ?? section.id, { lower: true, strict: true })}
@@ -149,55 +217,36 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       fullWidth={section.referenceType === ReferenceTypeEnum["Image Carousel"]}
       data-context={context.title}
       data-is-newsletter-component={isNewsLetterComponent}
-      data-no-padding-bottom= {isFaqId && isProviderPage}
+      data-no-padding-bottom={isFaqId && isProviderPage}
       data-is-faq-section={isFaqSection}
       data-disable-border-top={!isPreviousBackgroundPure || isProviderPage}
+      data-is-home-page-brand-outcome={
+        isBrandOutcomeCardSection && context.title === HOME
+      }
       pt={section.header?.length > 0 ? undefined : 0}
     >
-      {context.title === FIELD_PAGE ? (
-        <Accordion
-          variant="separated"
-          radius="xs"
-          chevronPosition="left"
-          mb={24}
-          chevronSize={44}
-          classNames={{
-            chevron: classes.chevron,
-            label: classes.label,
-            control: classes.accordionControl,
-            content: classes.content,
-            item: classes.item,
-          }}
-        >
-          <Accordion.Item value={section.id}>
-            <Accordion.Control>
-              <ReferencedSectionTitle
-                isEmbedFormTemplate={isEmbedFormTemplate}
-                section={section}
-                textColor={textColor}
-              />
-            </Accordion.Control>
-            <Accordion.Panel>
-              <ReferencedSectionBody getSpan={getSpan} section={section} />
-            </Accordion.Panel>
-          </Accordion.Item>
-        </Accordion>
-      ) : (
-        <>
-          {!isNewsLetterComponent &&
-            Boolean(section.header?.length) &&
-            Boolean(!section.hideHeader) && (
-              <ReferencedSectionTitle
-                section={section}
-                isEmbedFormTemplate={isEmbedFormTemplate}
-                textColor={textColor}
-              />
-            )}
+      {context.title === HOME &&
+        section.referenceType === ReferenceTypeEnum["Card Section"] && (
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "40px" }}
+          >
+            <h1 className={classes.title}>
+              Medication Access,{" "}
+              <span style={{ color: "#00827E" }}>Simplified.</span>
+            </h1>
+            <p
+              className={classes.subHeading}
+              data-reference-type="Card Section"
+            >
+              Solving access barriers in retail and specialty-lite to improve
+              patient outcomes and drive commercial success.
+            </p>
+          </div>
+        )}
 
-          <ReferencedSectionBody getSpan={getSpan} section={section} />
-        </>
-      )}
+      {sectionContent}
 
+      {/* subheading */}
       {section.subHeading &&
         section.referenceType === ReferenceTypeEnum["Stepper Cards"] &&
         context.title === PATIENTS_PAGE && (

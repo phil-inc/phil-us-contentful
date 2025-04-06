@@ -1,138 +1,172 @@
 .chevron {
-	margin-left: 0;
-	margin-right: 16px;
+  margin-left: 0;
+  margin-right: 16px;
 
-	> svg {
-		width: 44px !important;
-		height: 44px !important;
-	}
+  > svg {
+    width: 44px !important;
+    height: 44px !important;
+  }
 }
 
 .label {
-	padding: 0;
+  padding: 0;
 }
 
 .accordionControl {
-	padding: 20px;
-	border-bottom: 0px !important;
+  padding: 20px;
+  border-bottom: 0px !important;
 
-	@media (min-width: $phil-breakpoint-sm) {
-		padding-left: 100px;
-		padding-right: 100px;
-	}
+  @media (min-width: $phil-breakpoint-sm) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
 }
 
 .item {
-	background: #f4f4f4 !important;
+  background: #f4f4f4 !important;
 
-	&[data-active='true'] {
-		border: none;
-	}
-
+  &[data-active="true"] {
+    border: none;
+  }
 }
 
 .column {
-	&[data-reference-type='Stepper Cards'],
-	&[data-reference-type='Testimonial'] {
-		max-width: fit-content;
-	}
+  &[data-reference-type="Stepper Cards"],
+  &[data-reference-type="Testimonial"] {
+    max-width: fit-content;
+  }
+
+  &[data-is-home-page-brand-outcome="true"] {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .subHeading {
-	display: none;
-	margin-top: 44px;
+  display: none;
+  margin-top: 44px;
 
-	color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
-	font-family: Lato, sans-serif;
-	font-size: 18px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 120%; /* 21.6px */
+  color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
+  font-family: Lato, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 21.6px */
 
-	&[data-reference-type='Stepper Cards'] {
-		display: flex;
-	}
+  &[data-reference-type="Stepper Cards"] {
+    display: flex;
+  }
+
+  &[data-reference-type="Card Section"] {
+    display: block;
+    color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
+    leading-trim: both;
+    text-edge: cap;
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 36px */
+    margin: 0 0 20px 0;
+  }
 }
 
 .grid {
-	&[data-add-margin='true'] {
-		margin-top: 40px;
+  
+  &[data-add-margin="true"] {
+    margin-top: 40px;
 
-		@media (min-width: $phil-breakpoint-sm) {
-			margin-top: 80px;
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-top: 80px;
 
-			&[data-is-stepper-card='true'] {
-				margin-top: 40px;
-			}
-		}
-	}
+      &[data-reference-type="Commitment Card"] {
+        margin-top: 0;
+      }
 
-	&[data-context='Field'] {
-		margin-top: 0;
-	}
+      &[data-is-stepper-card="true"] {
+        margin-top: 40px;
+      }
+    }
+  }
+
+  &[data-context="Field"] {
+    margin-top: 0;
+  }
 }
 
 .carouselContainer {
-	width: calc(99vw - 150px);
+  width: calc(99vw - 150px);
 
-	@media (min-width: $phil-breakpoint-sm) {
-		width: 100%;
-	}
+  @media (min-width: $phil-breakpoint-sm) {
+    width: 100%;
+  }
 
-	> div:last-child {
-		margin: 0;
-	}
+  > div:last-child {
+    margin: 0;
+  }
 }
 
 .root {
-	width: fit-content;
+  width: fit-content;
 
-	&[data-is-employee-tag='true'] {
-		width: 80%;
-	}
+  &[data-is-employee-tag="true"] {
+    width: 80%;
+  }
 
-	&[data-has-media-item='true'] {
-		width: 100%;
-	}
+  &[data-has-media-item="true"] {
+    width: 100%;
+  }
 
-	&[data-has-media-item='false'] {
-		.phil-Carousel-viewport {
-			width: fit-content;
-		}
-	}
+  &[data-has-media-item="false"] {
+    .phil-Carousel-viewport {
+      width: fit-content;
+    }
+  }
 }
 
 .controls {
-	> button:first-child {
-		margin-left: -46px;
-	}
+  > button:first-child {
+    margin-left: -46px;
+  }
 
-	> button:nth-child(2) {
-		margin-right: -46px;
-	}
+  > button:nth-child(2) {
+    margin-right: -46px;
+  }
 }
 
 .control {
-	background: none;
-	border: none;
-	box-shadow: none;
-	padding: 0;
-	opacity: 0.7;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  opacity: 0.7;
 
-	&[data-inactive='true'] {
-		opacity: 0.2;
-		cursor: not-allowed;
-	}
+  &[data-inactive="true"] {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
 }
 
 .internalLink,
 .externalLink {
-	display: inline-block;
-	height: min-content;
-	width: 100%;
+  display: inline-block;
+  height: min-content;
+  width: 100%;
 
-	@media (min-width: $phil-breakpoint-sm) {
-		display: block;
-		width: fit-content;
-	}
+  @media (min-width: $phil-breakpoint-sm) {
+    display: block;
+    width: fit-content;
+  }
+}
+
+.title {
+  color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
+  leading-trim: both;
+  text-edge: cap;
+  font-family: Raleway;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 0;
 }

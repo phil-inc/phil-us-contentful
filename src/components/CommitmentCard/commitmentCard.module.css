@@ -1,0 +1,33 @@
+.paper {
+	padding: 34px 24px;
+	width: calc(100% - 12px);
+	height: 100%;
+	line-height: 27px;
+
+	@media (min-width: $phil-breakpoint-sm) {
+		padding: 0;
+		padding-bottom: 8px;
+	}
+}
+
+.heading3 {
+	&[data-context='Home'] {
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+	}
+}
+
+.link {
+	border-bottom: 2px solid #00827E;
+	color: #00827E;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-family: Lato;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 600;
+	text-decoration: none;
+}
+

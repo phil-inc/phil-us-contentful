@@ -1,11 +1,20 @@
 .paper {
-	padding: 32px;
+	/* padding: 32px; */
 	width: calc(100% - 12px);
 	height: 100%;
 
 	@media (min-width: $phil-breakpoint-sm) {
-		padding: 64px 38px;
+
+		&[data.context='Field'] {
+			padding: 40px 0px;
+		}
+		
+		padding: 64px 32px;
 	}
+}
+
+.brand{
+	justify-content: center;
 }
 
 .title {
@@ -20,6 +29,20 @@
 	line-height: 1;
 }
 
+.homeTitle {
+	color: var(--Global-Green-Foliage, #00827E);
+	text-align: center;
+	leading-trim: both;
+	text-edge: cap;
+	font-variant-numeric: lining-nums proportional-nums;
+	font-family: Raleway;
+	font-size: 88px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 120%; /* 91.768px */
+	align-self: center;
+}
+
 .description {
 	color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
 	font-family: Raleway, sans-serif;
@@ -27,4 +50,16 @@
 	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
+}
+
+.homeDescription {
+color: var(--Phil-Rebrand-Neutral-Pitch, #0A0A0A);
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: Raleway;
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 }
