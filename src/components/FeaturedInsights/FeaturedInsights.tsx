@@ -288,7 +288,6 @@ export const FeaturedInsights: FC<ArticleProps> = ({
               data-is-center={isCenter}
             >
               {body && renderRichText(body, options)}
-
               <div>
               {resource.hyperlink &&
                 (resource.hyperlink?.externalUrl ? (
