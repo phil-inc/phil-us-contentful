@@ -215,7 +215,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
   // REFACTOR:: handle different styles better: isFaq, Asset
   return (
     // TODO: Add anchor links to cards
-    <Group gap={0}>
+    <Group h={"100%"} gap={0}>
       <Box
         component="span"
         h="100%"

@@ -178,12 +178,12 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     );
   } else if (section.referenceType === ReferenceTypeEnum["Commitment Card"]) {
     sectionContent = (
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div className={classes.commitmentCard}>
         <div style={{ paddingRight: "60px" }}>
           <h1 style={{fontSize: "40px", fontWeight: 700}}>{section.header}</h1>
           <p style={{fontSize: "18px", fontWeight: 400}}>{section.subHeading?.subHeading}</p>
         </div>
-        <div style={{borderLeft: "1px solid #E6E6E6", padding: "40px 60px" }}>
+        <div className={classes.commitmentCardRightSection}>
         <ReferencedSectionBody getSpan={getSpan} section={section} />
         </div>
       </div>
