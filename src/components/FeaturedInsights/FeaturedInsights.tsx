@@ -215,7 +215,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
   // REFACTOR:: handle different styles better: isFaq, Asset
   return (
     // TODO: Add anchor links to cards
-    <Group h={"100%"} gap={0}>
+    <Group gap={0}>
       <Box
         component="span"
         h="100%"
@@ -288,7 +288,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
               data-is-center={isCenter}
             >
               {body && renderRichText(body, options)}
-              
+
               <div>
               {resource.hyperlink &&
                 (resource.hyperlink?.externalUrl ? (
