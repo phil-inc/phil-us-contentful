@@ -49,7 +49,7 @@ export type TResource = {
   hyperlink?: {
     contentful_id: string;
     id: string;
-    externalLink?: string;
+    externalUrl?: string;
     linkLabel: string;
     name: string;
 

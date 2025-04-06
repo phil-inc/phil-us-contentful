@@ -548,6 +548,7 @@ query getPages($id: String!) {
                 ... on ContentfulResource {
                   id
                   heading
+                  slug
                   sys {
                     contentType {
                       sys {
@@ -560,6 +561,20 @@ query getPages($id: String!) {
                 ... on ContentfulEventRegistration {
                   id
                   heading
+                  slug
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulDownloadableResource {
+                   id
+                  heading
+                  slug
                   sys {
                     contentType {
                       sys {

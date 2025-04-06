@@ -5,7 +5,7 @@ import { Center, Grid } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { ResourceCarousel } from "components/common/Carousel/ResourceCarousel";
 import { EMPLOYEE_SPOTLIGHT_TAG } from "constants/identifiers";
-import { COMPANY_PAGE } from "constants/page";
+import { COMPANY_PAGE, HOME } from "constants/page";
 import PageContext from "contexts/PageContext";
 import useDeviceType from "hooks/useView";
 import React, { useContext } from "react";
@@ -104,6 +104,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
     return <ResourceCarousel imageCaraouselSection={section} />;
   }
 
+  const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
+
   return (
     <Grid
       grow
@@ -118,6 +120,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
       data-is-stepper-card={
         section.referenceType === ReferenceTypeEnum["Stepper Cards"]
       }
+      data-reference-type={section.referenceType}
+      data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
     >
       {section.references.map((resource, index, array) => (
         <Grid.Col
@@ -134,6 +138,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
               : getSpan(section.referenceType)
           }
           data-reference-type={section.referenceType}
+          data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
         >
           <RenderResource
             arrayLength={array.length}

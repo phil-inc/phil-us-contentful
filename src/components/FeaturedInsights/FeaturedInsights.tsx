@@ -16,11 +16,9 @@ import type { FC } from "react";
 import React, { useContext } from "react";
 import type { TResource } from "types/resource";
 import { getLink } from "utils/getLink";
-import Asset from "./Asset/Asset";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import ImageContainer from "./Container/ImageContainer";
 
-import * as classes from "./card.module.css";
+import * as classes from "./featuredInsights.module.css";
 
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 
@@ -30,6 +28,9 @@ import PageContext from "contexts/PageContext";
 import { COMPANY_PAGE, LIFE_SCIENCES_PAGE } from "constants/page";
 import { Metadata } from "types/section";
 import { CENTER_LIFE_SCIENCES_CARD_TAG } from "constants/identifiers";
+import { IconArrowRight } from "@tabler/icons";
+import ImageContainer from "components/common/Container/ImageContainer";
+import Asset from "components/common/Asset/Asset";
 
 type ArticleProps = {
   resource: TResource;
@@ -38,7 +39,7 @@ type ArticleProps = {
   arrayLength?: number;
 };
 
-export const CCard: FC<ArticleProps> = ({
+export const FeaturedInsights: FC<ArticleProps> = ({
   resource,
   metadata,
   arrayLength,
@@ -52,6 +53,9 @@ export const CCard: FC<ArticleProps> = ({
   const isCenter = metadata?.tags?.some(
     (tag) => tag.name === CENTER_LIFE_SCIENCES_CARD_TAG,
   );
+
+  const link = (resource.hyperlink?.externalUrl ?? resource.hyperlink?.internalContent?.slug) ?? "#";
+
 
   const options: Options = {
     renderNode: {
@@ -128,6 +132,7 @@ export const CCard: FC<ArticleProps> = ({
 
         return null;
       },
+
       [BLOCKS.PARAGRAPH](node, children) {
         return (
           <Text data-is-center={isCenter} className={classes.paragraph}>
@@ -143,6 +148,7 @@ export const CCard: FC<ArticleProps> = ({
           </Title>
         );
       },
+
       [BLOCKS.HEADING_2](node, children) {
         return (
           <Title order={2} lh={"normal"}>
@@ -150,6 +156,7 @@ export const CCard: FC<ArticleProps> = ({
           </Title>
         );
       },
+
       [BLOCKS.HEADING_3](node, children) {
         return (
           <Title
@@ -162,6 +169,7 @@ export const CCard: FC<ArticleProps> = ({
           </Title>
         );
       },
+
       [BLOCKS.HEADING_4](node, children) {
         return (
           <Title order={4} lh={"normal"}>
@@ -274,16 +282,32 @@ export const CCard: FC<ArticleProps> = ({
             <Stack
               className={classes.stack}
               data-has-asset={Boolean(media)}
-              data-is-faq={
-                resource.isFaq ||
-                resource.body?.references?.some((ref) => ref.isFaq)
-              }
               data-context={context.title}
               h="100%"
-              gap={0}
+              gap={20}
               data-is-center={isCenter}
             >
               {body && renderRichText(body, options)}
+
+              <div>
+              {resource.hyperlink &&
+                (resource.hyperlink?.externalUrl ? (
+                  <Anchor
+                    href={link}
+                    target="_blank"
+                    underline="never"
+                    className={classes.link}
+                  >
+                      {resource.hyperlink?.linkLabel}
+                      <IconArrowRight size={18} />
+                  </Anchor>
+                ) : (
+                  <Link to={link} className={classes.link}>
+                    {resource.hyperlink?.linkLabel}
+                    <IconArrowRight size={18} />
+                  </Link>
+                ))}
+              </div>
 
             </Stack>
           </Grid.Col>
