@@ -183,6 +183,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           <h1 style={{fontSize: "40px", fontWeight: 700}}>{section.header}</h1>
           <p style={{fontSize: "18px", fontWeight: 400}}>{section.subHeading?.subHeading}</p>
         </div>
+        
         <div className={classes.commitmentCardRightSection}>
         <ReferencedSectionBody getSpan={getSpan} section={section} />
         </div>
