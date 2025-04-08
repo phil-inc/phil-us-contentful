@@ -284,7 +284,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
               data-has-asset={Boolean(media)}
               data-context={context.title}
               h="100%"
-              gap={20}
+              gap={12}
               data-is-center={isCenter}
             >
               {body && renderRichText(body, options)}

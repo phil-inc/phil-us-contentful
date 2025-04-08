@@ -5,7 +5,7 @@
 	line-height: 27px;
 
 	@media (min-width: $phil-breakpoint-sm) {
-		padding: 64px 32px;
+		padding: 48px 32px;
 	}
 }
 
@@ -31,8 +31,6 @@
 	font-style: normal;
 	font-weight: 400;
 	line-height: 120%; /* 19.2px */
-	font-size: 16px;
-	color: #525252;
 }
 
 .stack {

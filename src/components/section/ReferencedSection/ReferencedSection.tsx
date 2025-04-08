@@ -179,7 +179,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   } else if (section.referenceType === ReferenceTypeEnum["Commitment Card"]) {
     sectionContent = (
       <div className={classes.commitmentCard}>
-        <div style={{ paddingRight: "60px" }}>
+        <div className={classes.commitmentCardLeftSection}>
           <h1 style={{fontSize: "40px", fontWeight: 700}}>{section.header}</h1>
           <p style={{fontSize: "18px", fontWeight: 400}}>{section.subHeading?.subHeading}</p>
         </div>
@@ -229,13 +229,14 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "40px" }}
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
             <h1 className={classes.title}>
               Medication Access,{" "}
-              <span style={{ color: "#00827E" }}>Simplified.</span>
+              <span style={{ color: "#00827E" }}>Simplified</span>
             </h1>
             <p
+            style={{marginBottom: "0px"}}
               className={classes.subHeading}
               data-reference-type="Card Section"
             >

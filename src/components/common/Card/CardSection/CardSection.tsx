@@ -74,7 +74,7 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "32px",
+                  gap: "16px",
                 }}
               >
                 {body && renderRichText(body, options)}
