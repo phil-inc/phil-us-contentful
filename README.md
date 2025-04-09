@@ -1,4 +1,4 @@
-# Phil.us marketing website 
+# Phil.us marketing website
 
 This is the repo for phil marketing website hosted at [phil.us](https://phil.us)
 
