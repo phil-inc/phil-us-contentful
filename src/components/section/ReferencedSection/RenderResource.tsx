@@ -28,6 +28,9 @@ import StepperCard from "components/common/Card/StepperCard/StepperCard";
 import { BrandOutcomeCard } from "components/brandOutcomeCard/BrandOutcomeCard";
 import Cell from "components/common/Cell/Cell";
 import { FaqAccordion } from "components/common/Accordion/FaqAccordion";
+import { CardSection } from "components/common/Card/CardSection/CardSection";
+import { CommitmentCard } from "components/CommitmentCard/CommitmentCard";
+import { FeaturedInsights } from "components/FeaturedInsights/FeaturedInsights";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -137,6 +140,10 @@ const FeaturedResourceComponent: ComponentFunction = ({ theme, resource }) => (
   />
 );
 
+const FeaturedInsightsComponent: ComponentFunction = ({ resource }) => (
+  <FeaturedInsights resource={resource} />
+);
+
 const StatsCardComponent: ComponentFunction = ({ resource }) => (
   <StatsCard resource={resource} />
 );
@@ -190,8 +197,26 @@ const BannerComponent: ComponentFunction = ({ resource }) => (
   <Banner resource={resource} />
 );
 
-const FaqAccordianComponent: ComponentFunction = ({resource}) => (
-  <FaqAccordion resource = {resource}/>
+const FaqAccordianComponent: ComponentFunction = ({ resource }) => (
+  <FaqAccordion resource={resource} />
+);
+
+const CardSectionComponent: ComponentFunction = ({
+  resource,
+  isEmployeeTag,
+  metadata,
+  arrayLength,
+}) => (
+  <CardSection
+    resource={resource}
+    isEmployeeTag={isEmployeeTag}
+    metadata={metadata}
+    arrayLength={arrayLength}
+  />
+);
+
+const CommitmentCardComponent: ComponentFunction = ({ resource }) => (
+  <CommitmentCard resource={resource} />
 );
 
 const getComponent = (
@@ -234,7 +259,10 @@ const getComponent = (
     [ReferenceTypeEnum["Stats Card"]]: StatsCardComponent,
     [ReferenceTypeEnum["Brand Outcome Card"]]: BrandOutcomeCardComponent,
     [ReferenceTypeEnum.Cell]: CellComponent,
-    [ReferenceTypeEnum["FAQ Accordion"]]: FaqAccordianComponent
+    [ReferenceTypeEnum["FAQ Accordion"]]: FaqAccordianComponent,
+    [ReferenceTypeEnum["Card Section"]]: CardSectionComponent,
+    [ReferenceTypeEnum["Commitment Card"]]: CommitmentCardComponent,
+    [ReferenceTypeEnum["Featured Insights"]]: FeaturedInsightsComponent,
   };
 
   const componentFunction = componentMappings[referenceType];

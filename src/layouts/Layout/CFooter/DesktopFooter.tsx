@@ -9,10 +9,7 @@ import {
   Button,
   Title,
 } from "@mantine/core";
-import {
-  CONTACT_PAGE,
-  INSIGHTS,
-} from "constants/page";
+import { CONTACT_PAGE, INSIGHTS } from "constants/page";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
@@ -78,20 +75,24 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
         <div className={classes.socials}>
           <Group gap={0}>
             <EmailIcon />
-            <Text
-              unstyled
-              span
-              data-manual-entry={true}
-              className={classes.link}
-            >
-              info@phil.us
-            </Text>
+            <Anchor href="mailto:info@phil.us" className={classes.link}>
+              <Text
+                unstyled
+                span
+                data-manual-entry={true}
+                className={classes.link}
+              >
+                info@phil.us
+              </Text>
+            </Anchor>
           </Group>
-          <Link
-            to="https://www.linkedin.com/company/phil-inc-"
+
+          <Anchor
+            href="https://www.linkedin.com/company/phil-inc-"
             target="_blank"
             referrerPolicy="no-referrer"
             className={classes.link}
+            style={{ textDecoration: "none" }}
           >
             <Group gap={0}>
               <StaticImage
@@ -107,7 +108,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                 Linkedin
               </Text>
             </Group>
-          </Link>
+          </Anchor>
         </div>
       </div>
 
@@ -157,7 +158,8 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                       <div>
                         {footer.buttons.map((button, index) => {
                           const buttonComponent = (
-                            <Button className={classes.button}
+                            <Button
+                              className={classes.button}
                               size={
                                 button.buttonStyle === "Primary"
                                   ? buttonConfig.primary.size

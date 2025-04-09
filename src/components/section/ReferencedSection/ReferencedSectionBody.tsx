@@ -1,11 +1,11 @@
 import RenderResource from "./RenderResource";
 import * as classes from "./referencedSection.module.css";
 import { Carousel } from "@mantine/carousel";
-import { Center, Grid } from "@mantine/core";
+import { Center, Container, Grid } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { ResourceCarousel } from "components/common/Carousel/ResourceCarousel";
 import { EMPLOYEE_SPOTLIGHT_TAG } from "constants/identifiers";
-import { COMPANY_PAGE } from "constants/page";
+import { COMPANY_PAGE, HOME } from "constants/page";
 import PageContext from "contexts/PageContext";
 import useDeviceType from "hooks/useView";
 import React, { useContext } from "react";
@@ -39,15 +39,14 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const xs = useDeviceType("xs");
   const sm = useDeviceType("sm");
   const md = useDeviceType("md");
+  const lg = useDeviceType("lg");
 
   if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
     const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
 
     return (
-      <Center
-        data-is-employee-tag={Boolean(isEmployeeTag)}
-        className={classes.centerReferencedSectionContent}
-      >
+      <Container className="carousel__container" fluid  >
+ 
         <Carousel
           classNames={{
             root: classes.root,
@@ -63,19 +62,23 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           nextControlIcon={<IconChevronRight size={24} />}
           slideSize={{
             base: "95%",
-            sm: `95%`,
+            sm: `calc(50% - 16px)`,
             md:
               section.referenceType === "Testimonial"
                 ? `${95 / columns}%`
-                : "96%",
+                : "calc50% - 32px)",
             xl: `${95 / columns}%`,
           }}
+          align={"start"}
+          // slideSize={{base: '320px', sm: "calc(50% - 16px)", md: "calc50% - 32px)"}} 
+          // slidesToScroll={1}
+          loop={false}
           slidesToScroll={
             section.referenceType === "Testimonial"
               ? xs || sm || md
                 ? "auto"
                 : columns
-              : "auto"
+              : 1
           }
           data-has-media-item={section.references.some(
             (reference) =>
@@ -96,13 +99,16 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
             </Carousel.Slide>
           ))}
         </Carousel>
-      </Center>
+      
+      </Container>
     );
   }
 
   if (section.referenceType === ReferenceTypeEnum["Image Carousel"]) {
     return <ResourceCarousel imageCaraouselSection={section} />;
   }
+
+  const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
   return (
     <Grid
@@ -118,6 +124,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
       data-is-stepper-card={
         section.referenceType === ReferenceTypeEnum["Stepper Cards"]
       }
+      data-reference-type={section.referenceType}
+      data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
     >
       {section.references.map((resource, index, array) => (
         <Grid.Col
@@ -134,6 +142,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
               : getSpan(section.referenceType)
           }
           data-reference-type={section.referenceType}
+          data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
         >
           <RenderResource
             arrayLength={array.length}

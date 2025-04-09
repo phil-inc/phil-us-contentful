@@ -7,7 +7,7 @@ import { ReferenceTypeEnum, type IReferencedSection } from "types/section";
 
 import * as classes from "./referencedSectionTitle.module.css";
 import PageContext from "contexts/PageContext";
-import { COMPANY_PAGE, HCP_PAGE, PATIENTS_PAGE } from "constants/page";
+import { COMPANY_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE } from "constants/page";
 
 type ReferencedSectionTitleProps = {
   section: IReferencedSection;
@@ -23,28 +23,49 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
   const theme = useMantineTheme();
   const { title } = useContext(PageContext);
 
+  const isCardSection =
+    section.referenceType === ReferenceTypeEnum["Card Section"];
+    
+  const isBrandOutcomeCardSection =
+    section.referenceType === ReferenceTypeEnum["Brand Outcome Card"];
+
+  const isHomePage = title === HOME;
 
   const renderTitle = (
     text: string,
     order?: TitleOrder,
     className?: string,
-  ) => (
-    <Title
-      data-context={title}
-      className={className}
-      order={order}
-      c={title === COMPANY_PAGE ? textColor : undefined}
-    >
-      {(title === PATIENTS_PAGE || title=== HCP_PAGE) && text === "FAQs" ? "Frequently Asked Questions" : text}
-    </Title>
-  );
+  ) => {
+    return (
+      <Title
+        data-context={title}
+        data-is-home-brand-outcome={isBrandOutcomeCardSection && isHomePage}
+        className={className}
+        order={order}
+        c={title === COMPANY_PAGE ? textColor : undefined}
+      >
+        {(title === PATIENTS_PAGE || title === HCP_PAGE) && text === "FAQs"
+          ? "Frequently Asked Questions"
+          : text}
+      </Title>
+    );
+  };
+
+  // === Conditionally render header and subheading ===
+  const showHeader = Boolean(section.header?.length) && !isCardSection;
+
+  const showSubheading =
+    Boolean(section.subHeading?.subHeading?.length) &&
+    title !== PATIENTS_PAGE &&
+    section.referenceType !== ReferenceTypeEnum["Stepper Cards"] &&
+    !isCardSection;
 
   switch (true) {
-    // Handle referenced sections in /resources page
+    // === Handle referenced sections in resource block section ===
     case RESOURCE_BLOCKS.includes(section.referenceType):
       return (
         <Box mb={handleSpacing(theme, theme.spacing.md)}>
-          {renderTitle(section.header, 3, undefined)}
+          {renderTitle(section.header, 3)}
           <Divider variant="dashed" size={1} className={classes.divider} />
         </Box>
       );
@@ -65,6 +86,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
     // 				renderTitle(section.subHeading.subHeading, 3, classes.subHeading)}
     // 		</Stack>
     // 	);
+
     default:
       return (
         <Stack
@@ -73,11 +95,9 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
           data-reference-type={section.referenceType}
           data-context={title}
         >
-          {Boolean(section.header?.length) &&
-            renderTitle(section.header, 2, classes.heading)}
-          {Boolean(section.subHeading?.subHeading?.length) &&
-            title !== PATIENTS_PAGE &&
-            section.referenceType !== ReferenceTypeEnum["Stepper Cards"] &&
+          {showHeader && renderTitle(section.header, 2, classes.heading)}
+
+          {showSubheading &&
             renderTitle(section.subHeading.subHeading, 3, classes.subHeading)}
         </Stack>
       );

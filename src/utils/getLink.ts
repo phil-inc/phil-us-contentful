@@ -18,7 +18,7 @@ export const getLink = (
   const sanitizeLink = (link: string[]) =>
     `/${link.filter((piece, index) => !(index === 0 && piece === "home")).join("/")}`;
 
-  if (section.internalLink) {
+  if (section?.internalLink) {
     if (
       section.internalLink?.sys?.contentType?.sys?.id === "section" ||
       section.internalLink.sys?.contentType?.sys?.id === "referencedSection"
@@ -78,7 +78,7 @@ export const getLink = (
     return { link: sanitizeLink(link), isExternal: false };
   }
 
-  if (section.externalLink) {
+  if (section?.externalLink) {
     return { link: section.externalLink, isExternal: true };
   }
 
@@ -126,7 +126,7 @@ export const getLink = (
     return { link: sanitizeLink(link), isExternal: false };
   }
 
-  if (section.link) {
+  if (section?.link) {
     if (section.link[0].internalContent) {
       const paths = useInternalPaths();
       const staticPage = paths.find(
