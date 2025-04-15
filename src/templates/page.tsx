@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout } from "layouts/Layout/Layout";
 import type { ContentfulPage } from "types/page";
 import Section from "components/section/Section";
@@ -108,13 +108,27 @@ type PageTemplateProps = {
 };
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
-  const { id, sections, title } = data.contentfulPage;
+  const { id, sections, title } = data?.contentfulPage;
 
   let basicSectionCount = 0;
   
   const isEmbedFormTemplate = sections.some((section) =>
     Boolean((section as ISection)?.embedForm?.raw),
   );
+
+  useEffect(() => {
+    const slug = data?.contentfulPage?.slug;
+   
+    if(slug){
+      document.body.classList.remove(slug);
+    }
+   
+    document.body.classList.add(slug);
+   
+    return () => {
+      document.body.classList.remove(slug);
+    };
+  }, [data?.contentfulPage?.slug]);
 
   return (
     <PageContext.Provider value={{ title }}>
@@ -171,9 +185,30 @@ query getPages($id: String!) {
     displayTitle
     description
     sections {
+      ... on ContentfulTextAndTextColumns {
+        id
+        heading
+        subHeadingText: subHeading
+         sectionType
+         addBorder
+        leftColumn {
+          raw
+        }
+        rightColumn {
+          raw
+          references {
+            ... on ContentfulResource {
+              id
+              heading
+            }
+          }
+        }
+      }
       ... on ContentfulSection {
         id
         isHidden
+        isReverse
+        addBorder
         youtubeVideoUrl
         body {
           raw

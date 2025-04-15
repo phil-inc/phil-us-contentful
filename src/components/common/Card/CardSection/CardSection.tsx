@@ -82,7 +82,7 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
 
               <div>
                 <Link
-                  to={`/${hyperlink?.internalContent.slug}`}
+                  to={`/${hyperlink?.internalContent?.slug}`}
                   style={{
                     borderBottom: "2px solid #00827E",
                     display: "inline-flex",

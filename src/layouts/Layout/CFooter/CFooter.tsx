@@ -98,7 +98,8 @@ const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
   ));
 
   return (
-    <>
+    <> 
+    <Divider className={classes.divider} mx={100} />
       {!minimal && (
         <Container py={80} fluid p={{ base: 16, sm: 100 }}>
           {isMobile ? (

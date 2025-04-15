@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group, Anchor, Accordion, Text } from "@mantine/core";
+import { Button, Group, Anchor, Accordion, Text, Container } from "@mantine/core";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {
@@ -14,7 +14,7 @@ import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, HOME, LIFE_SCIENCES_PAGE, PATIENTS_PAGE } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
@@ -26,6 +26,7 @@ type ReferencedSectionProps = {
   section: IReferencedSection;
   isEmbedFormTemplate: boolean;
   isPreviousBackgroundPure: boolean;
+  addBorder: boolean
 };
 
 /**
@@ -38,6 +39,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   section,
   isEmbedFormTemplate,
   isPreviousBackgroundPure,
+  addBorder
 }) => {
   const params = new URLSearchParams(getWindowProperty("location.search", {}));
   const GRID_COLUMNS = 12;
@@ -226,6 +228,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       }
       pt={section.header?.length > 0 ? undefined : 0}
     >
+      <Container className={classes.container} size={"xl"}>
+        {section.addBorder && <hr className={classes.hr} />}
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
@@ -280,6 +284,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             )}
           </Group>
         )}
+        </Container>
     </Expanded>
   );
 };
