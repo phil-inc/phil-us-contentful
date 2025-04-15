@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Container,
+  Flex,
   Grid,
   Group,
   List,
@@ -55,7 +56,7 @@ type BasicSectionProps = {
 const BasicSection: React.FC<BasicSectionProps> = ({
   section,
   index,
-  isEmbedFormTemplate,
+  isEmbedFormTemplate, 
 }) => {
   const HERO_SECTION_INDEX = 0; // Hero section index is always 0
   const NUMBER_OF_COLUMNS = 2; // Basic section will always have 2 columns
@@ -64,6 +65,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const HEADING_FIRST = 1;
   const HEADING_SECOND = 2;
   const context = React.useContext(PageContext);
+ 
 
   const theme = useMantineTheme();
 
@@ -321,22 +323,22 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   };
 
   const { media } = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
-
   return (
+    <Box style={{
+      background: section.v2Flag
+        ? getColorFromStylingOptions(section.stylingOptions?.background)
+        : sectionBackground(section.background),
+    }} className={section.slug}>
     <Container
       id={slugify(section.header, { lower: true, strict: true })}
-      fluid
+      size={"xl"}
       className={classes.basicSectionContainer}
       data-index={index}
       data-context={context.title}
       data-is-embed-form-template={isEmbedFormTemplate}
-      style={{
-        background: section.v2Flag
-          ? getColorFromStylingOptions(section.stylingOptions?.background)
-          : sectionBackground(section.background),
-      }}
     >
       <>
+      {section.addBorder && <hr className={classes.hr} />}
         <Grid
           align={
             section.isHubspotEmbed || section.embedForm
@@ -473,6 +475,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         ) : null}
       </>
     </Container>
+    </Box>
   );
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import type { IReferencedSection, ISection } from "types/section";
 import BasicSection from "./BasicSection/BasicSection";
 import ReferencedSection from "./ReferencedSection/ReferencedSection";
+import TextAndTextColumns from "components/text-text-columns";
 
 type SectionProps = {
   section: ISection | IReferencedSection;
@@ -36,8 +37,16 @@ const Section: React.FC<SectionProps> = ({
           section={section as IReferencedSection}
           isEmbedFormTemplate={isEmbedFormTemplate}
           isPreviousBackgroundPure={isPreviousBackgroundPure}
+          addBorder
         />
       );
+
+      case "Text and Text Columns":
+        return (
+          <TextAndTextColumns data={section as ISection} 
+          />
+        ) 
+      
     default:
       return <></>;
   }
