@@ -156,6 +156,7 @@
 }
 
 .heading3 {
+	font-size: 20px;
 	&[data-context='Field'] {
 		font-size: 24px;
 	}
@@ -174,3 +175,9 @@
 	text-decoration: none;
 }
 
+.imageContainer{
+	height: 100%;
+    background: #35ADA7;
+}
+
+ 
