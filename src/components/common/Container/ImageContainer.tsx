@@ -25,6 +25,7 @@ type ImageContainerProps = {
   card?: boolean;
   flexStart?: boolean;
   isGatsbyImageData?: boolean;
+  className?: string;
 };
 
 const ImageContainer: React.FC<ImageContainerProps> = ({

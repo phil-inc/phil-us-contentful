@@ -9,7 +9,9 @@ import * as classes from "./brandOutcomeCard.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 import cx from "clsx";
 import PageContext from "contexts/PageContext";
-import { HOME } from "constants/page";
+import { HOME, } from "constants/page";
+import { TAsset } from "types/asset";
+import Asset from "components/common/Asset/Asset";
 
 
 type StyleProps = {
@@ -27,11 +29,18 @@ type StatsCardProps = {
  */
 export const BrandOutcomeCard: FC<StatsCardProps> = ({ resource }) => {
   const context = useContext(PageContext);
-
   const options = {
     renderNode: {
       [BLOCKS.PARAGRAPH](node, children) {
         return <>{children}</>;
+      },
+
+      [BLOCKS.EMBEDDED_ASSET](node: { data: { target: TAsset } }) {
+        return (
+          <Box>
+            <Asset asset={node.data.target} />
+          </Box>
+        );
       },
     },
   };

@@ -1,0 +1,12 @@
+.listCheckIcon{    
+    padding-left: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #E6E6E6; 
+}
+
+hr{ 
+    margin-bottom: 100px;
+    border: 0;
+    border-top: 1px solid #E6E6E6;
+}

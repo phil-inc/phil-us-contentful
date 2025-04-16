@@ -1,15 +1,97 @@
 @import "header.css";
 @import "hubspot-form.css";
 @import "mantine-accordion-override.css";
+@import url("https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css");
 
-
-
-.carousel__container{
-    max-width: 700px;
-    margin: 0px auto;
-    padding: 0;
+ 
+.phil-Container-root{
     @media screen and (min-width: 1360px) {
         max-width: 1200px;
     }
+
+    @media screen and (min-width: 1680px) {
+        max-width: 1600px;
+    }
 }
 
+.pharma {
+  .brandOutcomeCard-module--title--4129d {
+    color: #00827e;
+  }
+
+  .brandOutcomeCard-module--description--0c8c9 {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    max-width: 146px;
+
+    [data-gatsby-image-wrapper] {
+      margin-bottom: 20px;
+    }
+  }
+
+  [data-reference-type="Brand Outcome Card"] {
+    .phil-Grid-col {
+      max-width: 350px;
+    }
+  }
+
+  .expanded-module--container--990b8 {
+    &:has(iframe) {
+      padding-top: 0 !important;
+
+      .referencedSection-module--grid--8e21d {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .card-module--stack--8e982 {
+    a {
+      color: #00827e;
+      font-weight: 600;
+      font-size: 18px;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:after {
+        content: "\ea1f";
+        font-family: "tabler-icons";
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 4px;
+      }
+    }
+  }
+
+}
+
+
+.featuredInsights-module--imageContainer--a439e{
+	padding: 0;
+  margin: 0;
+
+  img{
+    object-fit: contain !important;
+  }
+ }
+
+ .referencedSection-module--root--09ebf{
+  width: 100%;
+ }
+
+ .carousel__container{
+  padding: 0;
+}
+
+.home{
+	.featuredInsights-module--paper--1c78b{
+		.gatsby-image-wrapper{
+  position: absolute !important;
+}
+
+	}
+	
+}
