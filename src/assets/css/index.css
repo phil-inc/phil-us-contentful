@@ -73,45 +73,5 @@
       }
     }
   }
- 
- #a-comprehensive-solution-for-commercial-success {
-    .referencedSection-module--internalLink--d822f {
-      text-decoration: none;
-    }
-    .layout-module--root--7eb23 {
-      color: #00827e;
-      font-weight: 600;
-      font-size: 18px;
-      background: none;
-      border: none;
-      display: flex;
-      text-decoration: none;
 
-      &:hover {
-        text-decoration: none;
-        border: none;
-        outline: none;
-      }
-
-      &::before {
-        display: none;
-      }
-
-      &:after {
-        content: "\ea1f";
-        font-family: "tabler-icons";
-        display: inline-block;
-        vertical-align: middle;
-        margin-left: 4px;
-      }
-
-      .phil-Button-inner {
-        text-decoration: underline;
-
-        &:hover {
-          text-decoration: none;
-        }
-      }
-    }
-  }
 }
