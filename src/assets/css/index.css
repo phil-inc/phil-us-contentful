@@ -87,5 +87,5 @@
 }
 
 .gatsby-image-wrapper{
-  position: absolute;
+  position: absolute !important;
 }
