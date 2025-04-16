@@ -119,6 +119,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
   useEffect(() => {
     const slug = data?.contentfulPage?.slug;
    
+    if(slug === '/'){
+      document.body.classList.remove('/');
+      document.body.classList.add('home');
+    }
+
     if(slug){
       document.body.classList.remove(slug);
     }
@@ -127,6 +132,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
    
     return () => {
       document.body.classList.remove(slug);
+      document.body.classList.remove('home');
     };
   }, [data?.contentfulPage?.slug]);
 

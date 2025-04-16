@@ -252,6 +252,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
             >
               {/* // TODO: check regression with 1/2 ratio images */}
               <ImageContainer
+              className={classes.imageContainer}
                 isVideo={
                   isVideoContent(media?.file?.contentType) ||
                   Boolean(media?.youtubeLink)
@@ -260,6 +261,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
                 contain
                 card
                 mx={0}
+                ratio={1}
               >
                 <Asset objectFit="cover" asset={media} />
               </ImageContainer>
