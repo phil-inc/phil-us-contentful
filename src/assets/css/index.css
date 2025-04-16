@@ -85,3 +85,7 @@
  .carousel__container{
   padding: 0;
 }
+
+.gatsby-image-wrapper{
+  position: absolute;
+}
