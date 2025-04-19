@@ -65,9 +65,9 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
     <div className={classes.container}>
       <div className={classes.leftSection}>
         <Box className={classes.logo}>
-          <Anchor href="/">
+          <Link to="/">
             <Asset asset={footer.logo} objectFit="contain" />
-          </Anchor>
+          </Link>
         </Box>
 
         <div>{footer.address && renderRichText(footer.address, options)}</div>
@@ -114,7 +114,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
 
       <SimpleGrid
         classNames={{ root: classes.root }}
-        cols={{ base: 4, sm: 2, md: 3, lg: 3 }}
+        cols={{ base: 4, sm: 2, md: 2, lg: 4 }}
         spacing={74}
         verticalSpacing={20}
       >
@@ -189,7 +189,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                                   </Link>
                                 </Box>
                               ) : (
-                                <Anchor
+                                <Anchor 
                                   href={button.externalLink}
                                   target="_blank"
                                 >

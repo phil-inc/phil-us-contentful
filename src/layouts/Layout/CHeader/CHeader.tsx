@@ -6,6 +6,7 @@ import {
   Anchor,
   Button,
   AppShell,
+  Container,
 } from "@mantine/core";
 import {
   useClickOutside,
@@ -230,9 +231,11 @@ const Navbar: React.FC<CHeaderProps> = ({
 
   return (
     <AppShell.Header className={classes.header} style={{ borderBottom: 0 }}>
+      <Container size="xl">
       <Group
         align="center"
         justify="space-between"
+        gap={0}
         className={classNames(classes.navbar, "navbar")}
       >
         <Box className={classes.logo}>
@@ -327,6 +330,7 @@ const Navbar: React.FC<CHeaderProps> = ({
           {isDrawer && <CDrawer />}
         </HeaderContext.Provider>
       )}
+      </Container>
     </AppShell.Header>
   );
 };

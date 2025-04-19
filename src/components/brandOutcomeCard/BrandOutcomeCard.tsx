@@ -65,7 +65,7 @@ export const BrandOutcomeCard: FC<StatsCardProps> = ({ resource }) => {
       <Paper className={classes.paper}>
         <Stack
           justify="center"
-          align="start"
+          align="center "
           className={classes.stack}
           gap={24}
         >

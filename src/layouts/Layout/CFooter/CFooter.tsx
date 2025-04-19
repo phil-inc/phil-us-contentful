@@ -36,7 +36,7 @@ const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
   const [footer] = allContentfulFooter.nodes;
   const pages = footer.navigationLinks;
 
-  const isMobile = isMobileView("xs");
+  const isMobile = isMobileView("maxSm");
   const currentYear = new Date().getFullYear();
 
   const links = [
@@ -99,9 +99,9 @@ const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
 
   return (
     <> 
-    <Divider className={classes.divider} mx={100} />
       {!minimal && (
-        <Container py={{base: 80}}>
+        <Container className='footer-container' size={"xl"} pb={{base: 80}}>
+          <Divider size={'sm'} className={classes.divider} mb={{base: 100}}/>
           {isMobile ? (
             <MobileFooter footer={footer} pages={pages} />
           ) : (
@@ -110,12 +110,12 @@ const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
         </Container>
       )}
 
+
+      <Container size={"xl"} data-minimal={minimal} className={classes.bottomFooter}>
       {/* Bottom Footer */}
       {!isMobile && !minimal && (
-        <Divider className={classes.divider} mx={100} />
+        <Divider className={classes.divider} mb={40} />
       )}
-
-      <Container data-minimal={minimal} fluid className={classes.bottomFooter}>
         <Group
           gap={isMobile ? 2 : 0}
           justify={isMobile || minimal ? "center" : "space-between"}

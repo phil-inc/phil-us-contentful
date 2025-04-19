@@ -1,4 +1,4 @@
-import { Button, createTheme } from "@mantine/core";
+import { Anchor, Button, createTheme } from "@mantine/core";
 
 import * as classes from "./layout.module.css";
 
@@ -71,6 +71,12 @@ export const theme = createTheme({
         root: classes.root,
         label: classes.label,
         loader: classes.loader,
+      },
+    }),
+
+    Anchor: Anchor.extend({
+      defaultProps: {
+        underline: 'always',
       },
     }),
   },

@@ -28,7 +28,7 @@ const CodeSnippet: React.FC<CodeSnippetType> = React.memo(({ resource }) => {
 
     return (
       <>
-        <Box className={classes.box} mb={80}>
+        <Box className={classes.box}>
           <Title order={2} size={"28px"} maw="max-content" w="100%">
             Get latest updates
           </Title>

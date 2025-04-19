@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group, Anchor, Accordion, Text, Container } from "@mantine/core";
+import { Button, Group, Anchor, Accordion, Text, Container, Divider } from "@mantine/core";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {
@@ -38,9 +38,8 @@ type ReferencedSectionProps = {
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   section,
   isEmbedFormTemplate,
-  isPreviousBackgroundPure,
-  addBorder
-}) => {
+  isPreviousBackgroundPure, 
+}) => { 
   const params = new URLSearchParams(getWindowProperty("location.search", {}));
   const GRID_COLUMNS = 12;
   const SPAN_LG = GRID_COLUMNS / section.references.length;
@@ -210,6 +209,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   }
 
   return (
+    <>
+    {Boolean(section.addBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
     <Expanded
       id={slugify(section.header ?? section.id, { lower: true, strict: true })}
       background={
@@ -229,7 +230,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       pt={section.header?.length > 0 ? undefined : 0}
     >
       <Container className={classes.container} size={"xl"}>
-        {section.addBorder && <hr className={classes.hr} />}
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
@@ -286,6 +286,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         )}
         </Container>
     </Expanded>
+    </>
   );
 };
 

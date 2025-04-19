@@ -153,9 +153,9 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => {
 
       <div className={classes.footerContent}>
         <Box className={classes.logo}>
-          <Anchor href="/">
+          <Link to="/">
             <Asset asset={footer.logo} objectFit="contain" />
-          </Anchor>
+          </Link>
         </Box>
 
         <div>{footer.address && renderRichText(footer.address, options)}</div>

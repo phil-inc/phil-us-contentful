@@ -11,8 +11,7 @@
 
 .paragraph {
 	font-size: 16px;
-	color: #525252;
-  height: 30px;
+	color: #525252; 
 
 	&[data-is-center='true'] {
 		color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
