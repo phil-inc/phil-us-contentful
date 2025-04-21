@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Card,
+  Container,
   Divider,
   Grid,
   Group,
@@ -213,8 +214,10 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
   return (
     <Layout>
+      
       <Expanded id={currentSection.id} py={0} mb={40}>
         {/* PAGE HEADER */}
+        <Container size={'xl'}>
         <Box>
           <Grid gutter={40} align="center" my={36}>
             <Grid.Col span={{ sm: 12, md: 12, lg: 9.76 }}>
@@ -387,6 +390,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
         </Grid>
 
         {isMobileView && featuredBox}
+
+        </Container>
       </Expanded>
 
       <Expanded
@@ -395,6 +400,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
         background="#F4F4F4"
         data-banner={true}
       >
+        <Container size={'xl'}>
         <Grid>
           {banners.map((bannerSection) =>
             bannerSection.references.map((resource) => (
@@ -410,7 +416,9 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
             )),
           )}
         </Grid>
+        </Container>
       </Expanded>
+     
     </Layout>
   );
 };

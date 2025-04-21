@@ -182,7 +182,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
 };
 
 export const query = graphql`
-query getPages($id: String!) {
+ query getPages($id: String!) {
   contentfulPage(id: { eq: $id }) {
     noindex
     slug
@@ -454,6 +454,7 @@ query getPages($id: String!) {
           subHeading
         }
         sectionType
+        addBorder
         metadata {
           tags {
             name

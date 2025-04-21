@@ -1,4 +1,4 @@
-import { Paper, Title, Text, Stack, Group, Grid } from "@mantine/core";
+import { Paper, Title, Text, Stack, Group, Grid, Anchor } from "@mantine/core";
 import { Link } from "gatsby";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import type { FC } from "react";
@@ -81,21 +81,15 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
               </div>
 
               <div>
-                <Link
-                  to={`/${hyperlink?.internalContent?.slug}`}
-                  style={{
-                    borderBottom: "2px solid #00827E",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    textDecoration: "none",
-                    color: "#00827E",
-                    fontWeight: "600",
-                  }}
+                <Anchor
+                  href={`/${hyperlink?.internalContent?.slug}`}
+               
                 >
-                  {hyperlink?.linkLabel}
+                  <span className="anchor-text">
+                    {hyperlink?.linkLabel}
+s                  </span>
                   <IconArrowRight size={16} />
-                </Link>
+                </Anchor>
               </div>
             </Stack>
           </Grid.Col>

@@ -90,7 +90,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
 
           if (target.__typename === "ContentfulMediaItem") {
             return (
-              <ImageContainer flexStart fluid maw={128}>
+              <ImageContainer flexStart fluid>
                 <Asset objectFit="contain" asset={target} />
               </ImageContainer>
             );
@@ -261,7 +261,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
                 contain
                 card
                 mx={0}
-                ratio={1}
+                ratio={16 / 9}
               >
                 <Asset objectFit="cover" asset={media} />
               </ImageContainer>
@@ -293,22 +293,18 @@ export const FeaturedInsights: FC<ArticleProps> = ({
 
               <div>
               {resource.hyperlink &&
-                (resource.hyperlink?.externalUrl ? (
                   <Anchor
                     href={link}
-                    target="_blank"
+                    target={resource.hyperlink.externalUrl ? "_blank" : "_self"}
                     underline="never"
                     className={classes.link}
                   >
+                    <span className="anchor-text">
                       {resource.hyperlink?.linkLabel}
+                    </span>
                       <IconArrowRight size={18} />
                   </Anchor>
-                ) : (
-                  <Link to={link} className={classes.link}>
-                    {resource.hyperlink?.linkLabel}
-                    <IconArrowRight size={18} />
-                  </Link>
-                ))}
+                  }
               </div>
 
             </Stack>

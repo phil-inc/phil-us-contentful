@@ -134,7 +134,7 @@ const Leadership: React.FC<LeadershipProps> = ({
 
   return (
     <Layout>
-      <Container fluid className={classes.container}>
+      <Container size={"xl"} className={classes.container}>
         <Box
           style={{
             display: "flex",

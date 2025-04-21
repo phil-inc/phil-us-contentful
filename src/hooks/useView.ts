@@ -1,10 +1,11 @@
 import React from "react";
 import { useMediaQuery } from "@mantine/hooks";
 
-type DeviceType = "xs" | "sm" | "md" | "lg" | "xl" | undefined;
+type DeviceType = "xs" | "sm" | "md" | "lg" | "xl" | "maxSm" | undefined;
 
 const useDeviceType = (deviceType?: DeviceType): boolean | undefined => {
   const breakpoints = {
+    maxSm: '(max-width: 767px)',
     xs: "(max-width: 39.99em)", // Less than 640px
     sm: "(min-width: 40em) and (max-width: 47.99em)", // 640px - 767px
     md: "(min-width: 48em) and (max-width: 63.99em)", // 768px - 1023px

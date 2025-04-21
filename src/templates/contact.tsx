@@ -83,7 +83,7 @@ const ContactTemplate: React.FC<ContactTemplateProps> = ({
   return (
     <PageContext.Provider value={{ title }}>
       <Layout>
-        <Box mt={36}>
+        <Box my={36}>
           {sections
             .filter((section) => !section.isHidden)
             .map((section) => (

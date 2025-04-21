@@ -1,4 +1,4 @@
-import { Paper, Stack, Group, Grid, Title } from "@mantine/core";
+import { Paper, Stack, Group, Grid, Title, Anchor } from "@mantine/core";
 import { Link } from "gatsby";
 import type { FC } from "react";
 import React, { useContext } from "react";
@@ -53,12 +53,14 @@ export const CommitmentCard: FC<ArticleProps> = ({ resource }) => {
         <div>{body && renderRichText(body, options)}</div>
 
         <div>
-          <Link
-            to={path}
+          <Anchor
+            href={path}
             className={classes.link}>
-            {hyperlink?.linkLabel}
+            <span className="anchor-text">
+              {hyperlink?.linkLabel}
+            </span>
             <IconArrowRight size={18} />
-          </Link>
+          </Anchor>
         </div>
       </Paper>
     </Group>

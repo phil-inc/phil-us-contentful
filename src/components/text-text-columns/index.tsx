@@ -2,6 +2,7 @@ import React from "react";
 import {
   Box,
   Container,
+  Divider,
   Flex,
   Grid,
   Text,
@@ -42,8 +43,11 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
   const { heading, subHeadingText, leftColumn, rightColumn, addBorder } = data;
 
   return (
-    <Container className="container" size={"xl"}>
-      {addBorder && <hr className={classes.hr} />}
+    <>
+    {Boolean(addBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
+    
+   
+    <Container className="container" size={"xl"} py={{base: 16, sm: 100}}> 
       <Box mb={100}>
         <Title order={2} ta={"center"} mb={20}>
           {heading}
@@ -56,6 +60,7 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
         <Grid.Col span={{base: 12, md: 6 }}>{renderColumn(rightColumn)}</Grid.Col>
       </Grid>
     </Container>
+    </>
   );
 };
 

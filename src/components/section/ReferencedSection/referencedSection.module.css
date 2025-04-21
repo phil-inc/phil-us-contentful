@@ -180,11 +180,14 @@
   leading-trim: both;
   text-edge: cap;
   font-family: Raleway;
-  font-size: 60px;
+  font-size: 48px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   margin: 0;
+  @media (min-width: $phil-breakpoint-md) {
+    font-size: 60px;
+  }
 }
 
 .commitmentCard {
@@ -200,9 +203,9 @@
 
 .commitmentCardRightSection {
   padding: 0px;
-  
-  @media (min-width: $phil-breakpoint-sm) {
-    padding: 40px 60px;
+  @media (min-width: $phil-breakpoint-md) {
+    padding: 0 60px;
+    min-width: 360px;
     border-left: 1px solid #E6E6E6;
  }
 }
@@ -210,6 +213,7 @@
 .commitmentCardLeftSection{
   @media screen and (min-width: $phil-breakpoint-md) {
       padding-right: 60px;
+      max-width: 900px;
  
   }
 

@@ -3,7 +3,7 @@
 	min-height: 100%;
 	max-width: 100%;
 	width: 100%;
-	padding: 60px 20px;
+	padding: 60px 0;
 
 	&[data-context='Field'] {
 		padding: 0 16px;
@@ -19,24 +19,7 @@
 		}
 	}
 
-	&[data-is-newsletter-component='true'] {
-		box-sizing: content-box;
-
-		width: auto;
-
-		margin-left: 16px;
-		margin-right: 16px;
-		padding: 40px 0;
-
-		border-top: 2px solid var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
-		border-bottom: 2px solid var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
-
-		@media (min-width: $phil-breakpoint-sm) {
-			margin-left: 100px;
-			margin-right: 100px;
-		}
-	}
-
+ 
 	&[data-disable-border-top='true'] {
 		border-top: none;
 	}
@@ -45,44 +28,15 @@
 		padding-bottom: 0px;
 	}
 
-	&[data-is-faq-section='true']:not([data-context='Field']) {
-		box-sizing: content-box;
-
-		width: auto;
-
-		margin-left: 16px;
-		margin-right: 16px;
-		padding: 100px 0;
-
-		border-top: 2px solid var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
-		
-		@media (min-width: $phil-breakpoint-sm) {
-			margin-left: 100px;
-			margin-right: 100px;
-		}
-	}
+ 
 
 	@media (min-width: $phil-breakpoint-sm) {
-		padding: 100px;
+		padding: 100px 0;
 
 		&[data-context='Field'] {
 			padding: 0 100px;
 		}
 	}
 
-	&[data-is-home-page-brand-outcome='true'] {
-		box-sizing: content-box;
-
-		width: 1296px;
-
-		margin-left: 16px;
-		margin-right: 16px;
-		padding: 100px 0;
-
-
-		@media (min-width: $phil-breakpoint-sm) {
-			margin: 0 auto;
-			padding: 100px 0;
-		}
-	}
+ 
 }

@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   Flex,
   Grid,
   Group,
@@ -324,6 +325,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
   const { media } = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
   return (
+    <>
+   {Boolean(section.addBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
+
     <Box style={{
       background: section.v2Flag
         ? getColorFromStylingOptions(section.stylingOptions?.background)
@@ -338,7 +342,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
     >
       <>
-      {section.addBorder && <hr className={classes.hr} />}
         <Grid
           align={
             section.isHubspotEmbed || section.embedForm
@@ -476,6 +479,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       </>
     </Container>
     </Box>
+    </>
   );
 };
 
