@@ -1,11 +1,6 @@
-.inner {
-	padding: 0 16px;
+.inner { 
 	padding-bottom: 92px;
 	padding-top: 55px;
-
-	@media (min-width: $phil-breakpoint-sm) {
-		padding: 100px;
-	}
 }
 
 .button {

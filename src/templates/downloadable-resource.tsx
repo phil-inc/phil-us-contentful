@@ -282,8 +282,8 @@ const DownloadableResource: React.FC<ResourcesPageProps> = ({ data }) => {
   return (
     <Layout>
       <Container
+        size={'xl'}
         className={classes.inner}
-        fluid
         id={data.contentfulDownloadableResource.id}
       >
         <Box>
