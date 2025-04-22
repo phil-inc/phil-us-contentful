@@ -7,8 +7,8 @@ export const getPathForSectionAndPage = (
   slug: string,
   sectionPath?: string,
 ): string => {
-
 // Set path based on page and section
+
   let path = "";
   if (pageTitle !== HOME) {
     const pageSlug = slugify(slug, { lower: true, strict: true });
@@ -18,12 +18,14 @@ export const getPathForSectionAndPage = (
   if (pageTitle === INSIGHTS) {
     const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
     path += `/${sectionSlug}`;
-  } else {
-    // {TODO - change this for both section and page}
-    // const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
-    // path += `/#${sectionSlug}`;
+  } else if(sectionPath){
 
     path = `/${sectionPath}`;
+  }else{
+    // {TODO - change this for both section and page}
+    const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
+    path += `/#${sectionSlug}`;
+
   }
 
   return path || "#";
