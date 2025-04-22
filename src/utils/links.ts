@@ -19,13 +19,11 @@ export const getPathForSectionAndPage = (
     const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
     path += `/${sectionSlug}`;
   } else if(sectionPath){
-
     path = `/${sectionPath}`;
   }else{
     // {TODO - change this for both section and page}
     const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
     path += `/#${sectionSlug}`;
-
   }
 
   return path || "#";
