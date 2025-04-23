@@ -76,7 +76,7 @@ const renderColumn = (column: ReferenceBodyType) => {
         if (entry.sys.contentType.sys.id === "referencedSection") {
           return (
             <Box className={classes.referencedSectionBox}>
-              <Title order={3}>{entry.title}</Title>
+              <Title className={classes.sectionHeadingTitle} order={3}>{entry.title}</Title>
               {entry.subHeading?.subHeading && (
                 <Text fz="md" mt={4}>
                   {entry.subHeading.subHeading}
@@ -104,22 +104,25 @@ const renderRightColumn = (column: any, context: any) => {
 
   return (
     <div>
-      <Box>{renderRichText(column)}</Box>
+      <Box className={classes.rightColumnTitle}>{renderRichText(column)}</Box>
 
       <div>
         {column.references?.map((item: any) => {
-          console.log("🚀 ~ item:", item);
+          const hasOnlyTitle = Boolean(item.heading) && !item.subheading;
+
           return (
             <Flex gap={8} key={item.id} className={classes.listCheckIcon}>
               {!item.choose && <CheckIcon size={28} color="#00827E" />}
               <div className={cx(item.choose && classes.border)}>
-                <Text data-context={context.title} className={classes.heading}>
+                <Text data-context={context.title} className={cx(classes.heading, {
+                  [classes.greenTitle]: hasOnlyTitle,
+                })}>
                   {item.heading}
                 </Text>
-                <Text className={classes.subheading}>
+                <Text className={classes.subheading}>     
                   {item.subheading}
                 </Text>
-              </div>
+                </div>
             </Flex>
           );
         })}
@@ -142,18 +145,24 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
       )}
 
       <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
-        <Box mb={100}>
-          <Title order={2} ta={"center"} mb={20}>
-            {heading}
-          </Title>
-          <Text ta={"center"}>{subHeadingText}</Text>
-        </Box>
+        {Boolean(heading) && Boolean(subHeadingText) && (
+          <Box mb={100}>
+            <Title order={2} ta={"center"} mb={20}>
+              {heading}
+            </Title>
+            <Text ta={"center"}>{subHeadingText}</Text>
+          </Box>
+        )}
 
         <Grid gutter={48}>
           <Grid.Col span={{ base: 12, md: 6 }}>
             {renderColumn(leftColumn)}
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6 }} data-context={context.title} className={classes.rightColumn}>
+          <Grid.Col
+            span={{ base: 12, md: 6 }}
+            data-context={context.title}
+            className={classes.rightColumn}
+          >
             {renderRightColumn(rightColumn, context)}
           </Grid.Col>
         </Grid>

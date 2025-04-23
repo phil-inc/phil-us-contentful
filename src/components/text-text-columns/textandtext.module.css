@@ -1,5 +1,5 @@
 .listCheckIcon {
-  padding-left: 20px;
+  padding-left: 0px;
   padding-bottom: 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid #e6e6e6;
@@ -38,4 +38,30 @@
       border-left: 0px;
     }
   }
+
+  @media (max-width: $phil-breakpoint-xs) {
+    padding-left: 0px;
+  }
+}
+
+.rightColumnTitle{
+ font-size: 20px;
+ font-weight: 700;
+}
+
+.sectionHeadingTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: #00827E;
+}
+
+.greenTitle{
+  font-size: 28px;
+  font-weight: 700;
+  color: #00827E;
+
+  @media (max-width: $phil-breakpoint-xs) {
+    font-size: 24px;
+  }
+
 }
