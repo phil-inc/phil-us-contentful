@@ -8,6 +8,7 @@ import {
   Grid,
   Text,
   Title,
+  Image
 } from "@mantine/core";
 import { ITextandTextColumns, ReferenceBodyType } from "types/section";
 import {
@@ -21,6 +22,8 @@ import { IconArrowRight } from "@tabler/icons";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import cx from "clsx";
 import PageContext from "contexts/PageContext";
+import { getDescriptionFromRichtext } from "utils/getDescription";
+import{getPhilRxAccessSolution,getDataInsights} from "assets/images";
 
 interface CheckIconProps {
   size: number;
@@ -45,6 +48,7 @@ const CheckIcon = ({ size, color }: CheckIconProps) => {
 
 type TextAndTextColumnsProps = {
   data: ITextandTextColumns;
+  index?: number;
 };
 
 const renderColumn = (column: ReferenceBodyType) => {
@@ -61,7 +65,7 @@ const renderColumn = (column: ReferenceBodyType) => {
       [INLINES.ENTRY_HYPERLINK]: (node) => {
         const entry = referenceMap.get(node.data.target?.sys.id);
         if (!entry) return null;
-
+        
         return (
           <a href={`/${entry.slug}`} className="text-blue-600 underline">
             {node.content[0]?.value}
@@ -72,25 +76,53 @@ const renderColumn = (column: ReferenceBodyType) => {
       [BLOCKS.EMBEDDED_ENTRY]: (node) => {
         const entry = referenceMap.get(node.data.target?.sys.id);
         if (!entry) return null;
-
-        if (entry.sys.contentType.sys.id === "referencedSection") {
+        console.log("enefsfsd",entry)
+        if (entry.title == "PhilRx Access Solution") {
           return (
-            <Box className={classes.referencedSectionBox}>
-              <Title order={3}>{entry.title}</Title>
-              {entry.subHeading?.subHeading && (
-                <Text fz="md" mt={4}>
-                  {entry.subHeading.subHeading}
-                </Text>
-              )}
-            </Box>
-          );
+            <Image className={classes.quoteImage} src={getPhilRxAccessSolution} />
+          )
+        } else {
+          if (entry.sys.contentType.sys.id === "referencedSection") {
+            return (
+              <Box className={classes.referencedSectionBox}>
+                <Title order={3} className={classes.leftColumnTitle}>{entry.title}</Title>
+                <Title order={3} className={classes.leftColumnHeader}>{entry.header}</Title>
+                {entry.subHeading?.subHeading && (
+                  <Text fz="md" mt={4} className={classes.leftColumnSubHeading}>
+                    {entry.subHeading.subHeading}
+                  </Text>
+                )}
+              <div className={classes.leftColumnCard}>
+                {entry.references?.map((item:any) => {
+                  return (
+                      <div className={classes.leftColumnCardBox}>
+                        <Text data-context={entry.title} 
+                           className={classes.leftColumnCardTitle}>
+                          {item.heading}
+                        </Text>
+                        {item.body && (
+                          <Text className={classes.leftColumnCardBody} lineClamp={2}>
+                            {getDescriptionFromRichtext(item?.body?.raw ?? "")}
+                          </Text>
+                        )}
+                      </div>
+                  );
+                }
+                )}
+                {entry.title === "DATA & INSIGHTS " && (
+                   <Image className={classes.quoteImage} src={getDataInsights} />
+                )}
+              </div>
+              </Box>
+            );
+          }
         }
+       
 
         return null;
       },
     },
   };
-
   return (
     <div>
       <Box>{renderRichText(column, options)}</Box>
@@ -101,18 +133,20 @@ const renderColumn = (column: ReferenceBodyType) => {
 const renderRightColumn = (column: any, context: any) => {
 
   if (!column) return null;
-
+  
   return (
     <div>
       <Box>{renderRichText(column)}</Box>
 
       <div>
-        {column.references?.map((item: any) => {      
+        {column.references?.map((item: any) => {
+          // console.log("🚀 ~ item:", item);
           return (
             <Flex gap={8} key={item.id} className={classes.listCheckIcon}>
               {!item.choose && <CheckIcon size={28} color="#00827E" />}
               <div className={cx(item.choose && classes.border)}>
-                <Text data-context={context.title} className={classes.heading}>
+                <Text data-context={context.title} 
+                   className={item.subheading ? classes.heading : classes.noSubHeading}>
                   {item.heading}
                 </Text>
                 <Text className={classes.subheading}>
@@ -127,7 +161,8 @@ const renderRightColumn = (column: any, context: any) => {
   );
 };
 
-const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
+const TextAndTextColumns = ({ data,index }: TextAndTextColumnsProps) => {
+  console.log("index",index)
   const context = useContext(PageContext);
 
   const { heading, subHeadingText, leftColumn, rightColumn, addBorder } = data;
@@ -150,7 +185,7 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
 
         <Grid gutter={48}>
           <Grid.Col span={{ base: 12, md: 6 }}>
-              {renderColumn(leftColumn)}
+            {renderColumn(leftColumn)}
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6 }} data-context={context.title} className={classes.rightColumn}>
             {renderRightColumn(rightColumn, context)}

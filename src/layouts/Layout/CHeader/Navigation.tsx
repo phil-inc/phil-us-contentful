@@ -7,7 +7,6 @@ import { getPathForSectionAndPage } from "utils/links";
 
 export function Navigation({ pages }: { pages: ContentfulPage[] }) {
   const [visibleIndex, setVisibleIndex] = useState<number | null>(null);
-  console.log("🚀 ~ Navigation ~ visibleIndex:", visibleIndex)
 
   return (
     <nav className={classes.navbar} >

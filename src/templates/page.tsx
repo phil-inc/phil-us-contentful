@@ -135,7 +135,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
       document.body.classList.remove('home');
     };
   }, [data?.contentfulPage?.slug]);
-
+  
   return (
     <PageContext.Provider value={{ title }}>
       <Layout minimal={false}>
@@ -149,7 +149,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
               </Grid.Col>
             </Grid>
           </Expanded>
-        )}
+        )}  
         {title === "Field" && (
           <Container className={classes.container} fluid>
             <Title order={1} mb={30} className={classes.heading}>
@@ -174,6 +174,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
                   "#FFFFFF",
                 ),
               )}
+              pageTitle={title}
             />
           ))}
       </Layout>

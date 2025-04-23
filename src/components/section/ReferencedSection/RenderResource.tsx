@@ -79,6 +79,7 @@ type ComponentFunctionProps = {
   resourceBackground?: string;
   isEmployeeTag?: boolean;
   metadata?: Metadata;
+  sectionHeader?: string;
 };
 
 type ComponentFunction = (
@@ -206,12 +207,14 @@ const CardSectionComponent: ComponentFunction = ({
   isEmployeeTag,
   metadata,
   arrayLength,
+  sectionHeader,
 }) => (
   <CardSection
     resource={resource}
     isEmployeeTag={isEmployeeTag}
     metadata={metadata}
     arrayLength={arrayLength}
+    sectionHeader={sectionHeader}
   />
 );
 
@@ -229,6 +232,7 @@ const getComponent = (
   resourceBackground: string,
   metadata?: Metadata,
   isEmployeeTag?: boolean,
+  sectionHeader?: string,
 ) => {
   const componentMappings: Record<
     ReferenceTypeEnum | ResourceBlocksEnum,
@@ -279,6 +283,7 @@ const getComponent = (
     resourceBackground,
     metadata,
     isEmployeeTag,
+    sectionHeader,
   });
 };
 
@@ -303,7 +308,6 @@ const RenderResource: React.FC<RenderResourceProps> = ({
 }) => {
   const theme = useMantineTheme();
   const [resourceBackground] = getSectionColors(referenceType);
-
   return getComponent(
     referenceType,
     resource,
@@ -314,6 +318,7 @@ const RenderResource: React.FC<RenderResourceProps> = ({
     resourceBackground,
     metadata,
     isEmployeeTag,
+    sectionHeader,
   );
 };
 
