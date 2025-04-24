@@ -24,18 +24,6 @@
 		padding: 0px;
 	}
 
-	&[data-expanded='true'] {
-		position: static;
-		max-width: 100%;
-
-		@media (min-width: $phil-breakpoint-lg) {
-			max-width: 50vw !important;
-			width: 50vw !important;
-
-			margin-right: -100px;
-			margin-top: calc((2.25rem * var(--mantine-scale)) * -2);
-		}
-	}
 
 	&[data-video='true'] {
 		max-width: 100% !important;
@@ -52,6 +40,7 @@
 
 	&[data-context='Contact'] {
 		height: 100%;
+		min-width: 100%;
 	}
 
 	&[data-context='Company'] {
@@ -88,6 +77,9 @@
 .aspectRatio {
 	height: 100%;
 	margin: 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 
 	&[data-is-gatsby-image-data='true'] {

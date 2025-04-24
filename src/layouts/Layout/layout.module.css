@@ -79,7 +79,7 @@
 			outline-offset: -1px;
 			background-color: #000;
 			color:  #FFF;
-			font-weight: 900;
+		 
 		}
 
 		@media (min-width: $phil-breakpoint-sm) {

@@ -6,3 +6,4 @@ export const PATIENTS_PAGE = "Patients";
 export const LIFE_SCIENCES_PAGE = "Pharma";
 export const COMPANY_PAGE = "Company";
 export const FIELD_PAGE = "Field"; // Page created for xifaxan
+export const OUR_SOLUTIONS = "Our Solutions";

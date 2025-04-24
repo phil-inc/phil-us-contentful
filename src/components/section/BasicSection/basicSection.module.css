@@ -23,8 +23,6 @@
 }
 
 .basicSectionContainer {
-	padding: 60px 20px;
-
 	&[data-index='0'] {
 		@media (min-width: $phil-breakpoint-sm) {
 			padding-top: 160px;
@@ -53,7 +51,8 @@
 	}
 
 	@media (min-width: $phil-breakpoint-sm) {
-		/* padding: 100px; */
+		padding-top: 100px;
+		padding-bottom: 100px;
 
 		&[data-context='Company'] {
 			padding: 32px 100px;
@@ -160,10 +159,6 @@
 	margin: 16px auto;
 }
 
-.divider {
-	margin-top: 16px;
-	margin-bottom: 32px;
-}
 
 .internalLink,
 .externalLink {
@@ -206,4 +201,12 @@
 	&[data-is-video='true'] {
 		justify-content: start;
 	}
+}
+
+#the-all-in-one-access-solution-for-retail-and-specialty-lite-success {
+	padding-bottom: 60px;
+	
+	@media (min-width: $phil-breakpoint-sm) {
+      padding-bottom: 0px;
+    }
 }

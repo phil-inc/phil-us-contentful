@@ -6,6 +6,7 @@ import {
   Anchor,
   Button,
   AppShell,
+  Container,
 } from "@mantine/core";
 import {
   useClickOutside,
@@ -230,9 +231,11 @@ const Navbar: React.FC<CHeaderProps> = ({
 
   return (
     <AppShell.Header className={classes.header} style={{ borderBottom: 0 }}>
+      <Container size="xl">
       <Group
         align="center"
         justify="space-between"
+        gap={0}
         className={classNames(classes.navbar, "navbar")}
       >
         <Box className={classes.logo}>
@@ -327,6 +330,7 @@ const Navbar: React.FC<CHeaderProps> = ({
           {isDrawer && <CDrawer />}
         </HeaderContext.Provider>
       )}
+      </Container>
     </AppShell.Header>
   );
 };
@@ -416,92 +420,99 @@ const Navbar: React.FC<CHeaderProps> = ({
 // `;
 
 const query = graphql`
- {
-    allContentfulHeader(filter: { node_locale: { eq: "en-US" } }) {
-      nodes {
+
+{
+  allContentfulHeader(filter: { node_locale: { eq: "en-US" } }) {
+    nodes {
+      id
+      title
+      navigationLinks {
+        slug
         id
         title
-        navigationLinks {
-          slug
-          id
-          title
-          displayTitle
-          sys {
-            contentType {
-              sys {
-                id
-                type
-              }
-            }
-          }
-          sections {
-            ... on ContentfulReferencedSection {
+        displayTitle
+        sys {
+          contentType {
+            sys {
               id
-              header
-              headerAlias
-              isHidden
-              hideNavigationAnchor
-            }
-            ... on ContentfulSection {
-              id
-              header
-              isHidden
-              hideNavigationAnchor
-            }
-            ... on ContentfulPage {
-              id
-              title
-              slug
+              type
             }
           }
         }
-        logo {
-          gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
-          title
-          file {
-            contentType
-            details {
-              size
-            }
-            url
-          }
-        }
-        buttons {
-          id
-          buttonText
-          buttonStyle
-          externalLink
-          internalLink {
-            ... on ContentfulPage {
-              slug
-              id
-              title
-            }
-          }
-        }
-      }
-    }
-    allContentfulResource(filter: { node_locale: { eq: "en-US" } }) {
-      nodes {
-        id
-        heading
-        relatesTo {
+        sections {
           ... on ContentfulReferencedSection {
             id
             header
+            headerAlias
+            isHidden
+            hideNavigationAnchor
           }
           ... on ContentfulSection {
             id
             header
+            isHidden
+            hideNavigationAnchor
+          }
+          ... on ContentfulTextAndTextColumns {
+            id
+            header
+            hideNavigationAnchor
+          }
+          ... on ContentfulPage {
+            id
+            title
+            slug
+          }
+        }
+      }
+      logo {
+        gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+        title
+        file {
+          contentType
+          details {
+            size
+          }
+          url
+        }
+      }
+      buttons {
+        id
+        buttonText
+        buttonStyle
+        externalLink
+        internalLink {
+          ... on ContentfulPage {
+            slug
+            id
+            title
           }
         }
       }
     }
-    sitePage {
+  }
+  allContentfulResource(filter: { node_locale: { eq: "en-US" } }) {
+    nodes {
       id
-      pageContext
+      heading
+      relatesTo {
+        ... on ContentfulReferencedSection {
+          id
+          header
+        }
+        ... on ContentfulSection {
+          id
+          header
+        }
+      }
     }
   }
+  sitePage {
+    id
+    pageContext
+  }
+}
+
 `;
 
 const CHeader: React.FC<{ minimal: boolean; headerTargetBlank?: boolean }> = ({

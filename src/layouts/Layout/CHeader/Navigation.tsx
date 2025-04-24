@@ -6,48 +6,31 @@ import { Link } from "gatsby";
 import { getPathForSectionAndPage } from "utils/links";
 
 export function Navigation({ pages }: { pages: ContentfulPage[] }) {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  const toggleMenu = (menu: string) => {
-    setOpenMenu(openMenu === menu ? null : menu);
-  };
-
-  // Handle click outside to close the dropdown
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setOpenMenu(null);
-      }
-    }
-
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  const [visibleIndex, setVisibleIndex] = useState<number | null>(null);
 
   return (
-    <nav className={classes.navbar} ref={menuRef}>
+    <nav className={classes.navbar} >
       <div className={classes.navContainer}>
         <ul className={classes.navMenu}>
           {pages
             .filter((page) => page.title !== "Home")
             .map((page, index) => (
               <>
-                <li key={index} className={classes.navItem}>
+                <li key={index} className={classes.navItem}   onMouseEnter={() => setVisibleIndex(index)}
+                onMouseLeave={() => setVisibleIndex(null)}
+          >
                   <button
                     onClick={(e) => {
-                      e.stopPropagation();
-                      toggleMenu(page.title);
+                      e.stopPropagation(); 
                     }}
                     className={cx(classes.navLink, {
-                      [classes.active]: openMenu === page.title,
+                    
                     })}
                   >
                     {page.title}
                   </button>
-                  {openMenu === page.title && (
+                  {visibleIndex === index && (
+                    <div className={classes.dropdownContainer}>
                     <ul className={classes.dropdown}>
                       {page.sections
                         .filter(
@@ -83,6 +66,7 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
                           );
                         })}
                     </ul>
+                    </div>
                   )}
                 </li>
               </>

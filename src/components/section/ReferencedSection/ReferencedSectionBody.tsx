@@ -43,7 +43,6 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
 
   if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
     const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
-
     return (
       <Container className="carousel__container" fluid  >
  
@@ -86,7 +85,23 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           )}
           data-is-employee-tag={Boolean(isEmployeeTag)}
         >
-          {section.references.map((resource, index, array) => (
+          {section.header === "Recent Client News" ? (
+            section.references.map((resource, index, array) => {
+              return (
+                <Carousel.Slide key={resource.id + "carouselItem"}>
+                <RenderResource
+                  arrayLength={array.length}
+                  index={index}
+                  referenceType={section.referenceType}
+                  resource={resource}
+                  sectionHeader={section.header}
+                  isEmployeeTag={Boolean(isEmployeeTag)}
+                />
+              </Carousel.Slide>
+              )
+            }
+          )): (
+          section.references.map((resource, index, array) => (
             <Carousel.Slide key={resource.id + "carouselItem"}>
               <RenderResource
                 arrayLength={array.length}
@@ -97,7 +112,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
                 isEmployeeTag={Boolean(isEmployeeTag)}
               />
             </Carousel.Slide>
-          ))}
+          ))
+        )}
         </Carousel>
       
       </Container>
@@ -109,7 +125,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   }
 
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
-
+  
   return (
     <Grid
       grow
@@ -127,7 +143,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
       data-reference-type={section.referenceType}
       data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
     >
-      {section.references.map((resource, index, array) => (
+      {section.references.map((resource, index, array) => (   
         <Grid.Col
           className={classes.column}
           p={

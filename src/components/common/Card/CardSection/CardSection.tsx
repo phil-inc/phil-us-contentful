@@ -1,4 +1,4 @@
-import { Paper, Title, Text, Stack, Group, Grid } from "@mantine/core";
+import { Paper, Title, Text, Stack, Group, Grid, Anchor } from "@mantine/core";
 import { Link } from "gatsby";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import type { FC } from "react";
@@ -20,11 +20,19 @@ type ArticleProps = {
   metadata?: Metadata;
   isEmployeeTag?: boolean;
   arrayLength?: number;
+  sectionHeader?: string;
 };
 
-export const CardSection: FC<ArticleProps> = ({ resource }) => {
-  const { body, hyperlink } = resource;
+export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
+  const { heading, subheading, body, hyperlink } = resource;
+ 
   const context = useContext(PageContext);
+  var customHyperLink = "";
+  if (hyperlink?.linkLabel === "Read Press Release") {
+    customHyperLink = "https://phil.us/insights/case-studies/";
+  } else if (hyperlink?.linkLabel === "Read Case Study"){
+    customHyperLink = "https://phil.us/insights/case-studies/";
+  }
 
   const options: Options = {
     renderNode: {
@@ -45,7 +53,7 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
       },
     },
   };
-
+ 
   return (
     <Group h={"100%"} gap={0}>
       <Paper
@@ -69,6 +77,16 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
               md: "auto",
             }}
           >
+            {sectionHeader === "Recent Client News" && (
+              <div >
+                <Text className={classes.recentClientNewsHeader}>
+                  {heading}
+                </Text>
+                <Text className={classes.recentClientNewsSubHeader}>
+                  {subheading}
+                </Text>
+              </div>
+            )}
             <Stack className={classes.stack} h="100%" gap={32}>
               <div
                 style={{
@@ -79,23 +97,18 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
               >
                 {body && renderRichText(body, options)}
               </div>
-
+                {
+                  hyperlink?.linkLabel === "Read Press Release"
+                }
               <div>
-                <Link
-                  to={`/${hyperlink?.internalContent?.slug}`}
-                  style={{
-                    borderBottom: "2px solid #00827E",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    textDecoration: "none",
-                    color: "#00827E",
-                    fontWeight: "600",
-                  }}
+                <Anchor
+                  href={customHyperLink !== "" ? customHyperLink:`/${hyperlink?.internalContent?.slug}`}
                 >
-                  {hyperlink?.linkLabel}
+                  <span className="anchor-text">
+                    {hyperlink?.linkLabel}
+                  </span>
                   <IconArrowRight size={16} />
-                </Link>
+                </Anchor>
               </div>
             </Stack>
           </Grid.Col>
