@@ -105,7 +105,7 @@ const renderColumn = (column: ReferenceBodyType) => {
                       href={`/pharma/#a-dedicated-partner-for-retail-and-specialty-lite`}
                     >
                       <span className="anchor-text">
-                        {"See supported products"}
+                        {"See Supported Products"}
                       </span>
                       <IconArrowRight size={16} />
                     </Anchor>
@@ -203,10 +203,10 @@ const renderRightColumn = (column: any, context: any) => {
                     <a 
                     href={
                       index === 0
-                        ? "/solutions/#digital-hub"
+                        ? "/solution/#digital-hub"
                         : index === 1 
-                        ? "/solutions/#pharmacy-network"
-                        : "/solutions/#data-and-insights"
+                        ? "/solution/#pharmacy-network"
+                        : "/solution/#data-and-insights"
                     }
                       style={{ textDecoration: "none" }}>
                        <Text data-context={context.title} 

@@ -146,7 +146,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const isProviderPage = context.title === HCP_PAGE;
 
   let sectionContent;
-
   if (context.title === FIELD_PAGE) {
     sectionContent = (
       <Accordion
@@ -249,7 +248,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             </p>
           </div>
         )}
-
+      
+  
         {context.title === OUR_SOLUTIONS && section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
             style={{ display: "flex", justifyContent:"center"}}
