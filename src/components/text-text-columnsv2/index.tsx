@@ -85,34 +85,79 @@ const renderColumn = (column: ReferenceBodyType) => {
           if (entry.sys.contentType.sys.id === "referencedSection") {
             return (
               <Box className={classes.referencedSectionBox}>
-                <Title order={3} className={classes.leftColumnTitle}>{entry.title}</Title>
-                <Title order={3} className={classes.leftColumnHeader}>{entry.header}</Title>
-                {entry.subHeading?.subHeading && (
-                  <Text fz="md" mt={4} className={classes.leftColumnSubHeading}>
-                    {entry.subHeading.subHeading}
-                  </Text>
-                )}
-              <div className={classes.leftColumnCard}>
-                {entry.references?.map((item:any) => {
-                  return (
-                      <div className={classes.leftColumnCardBox}>
-                        <Text data-context={entry.title} 
-                           className={classes.leftColumnCardTitle}>
-                          {item.heading}
-                        </Text>
-                        {item.body && (
-                          <Text className={classes.leftColumnCardBody} lineClamp={2}>
-                            {getDescriptionFromRichtext(item?.body?.raw ?? "")}
-                          </Text>
-                        )}
+                {entry.title === "All-in-One" ? (
+                  <>
+                  <Title order={3} className={classes.leftColumnSubTitle}>{entry.header}</Title>
+                  {entry.subHeading?.subHeading && (
+                    <Text fz="md" mt={4} className={classes.leftColumnSubHeading}>
+                      {entry.subHeading.subHeading}
+                    </Text>
+                  )}
+                  <div>
+                    <Anchor
+                      href={`/`}
+                    >
+                      <span className="anchor-text">
+                        {"See supported products"}
+                      </span>
+                      <IconArrowRight size={16} />
+                    </Anchor>
+                  </div>
+                  </>
+                ) : (
+                  <>
+                  <Title order={3} className={classes.leftColumnTitle}>{entry.title}</Title>
+                  <Title order={3} className={classes.leftColumnHeader}>{entry.header}</Title>
+                  {entry.subHeading?.subHeading && (
+                    <Text fz="md" mt={4} className={classes.leftColumnSubHeading}>
+                      {entry.subHeading.subHeading}
+                    </Text>
+                  )}
+                  <div className={classes.leftColumnCard}>
+                    {entry.references?.map((item:any) => {
+                      return (
+                          <div className={classes.leftColumnCardBox}>
+                            <Text data-context={entry.title} 
+                              className={classes.leftColumnCardTitle}>
+                              {item.heading}
+                            </Text>
+                            {item.body && (
+                              <Text className={classes.leftColumnCardBody} lineClamp={2}>
+                                {getDescriptionFromRichtext(item?.body?.raw ?? "")}
+                              </Text>
+                            )}
+                          </div>
+                      );
+                    }
+                    )}
+                    {entry.title === "DATA & INSIGHTS " && (
+                      <Image className={classes.quoteImage} src={getDataInsights} />
+                    )} 
+                  </div>
+                  {entry.title === "DIGITAL HUB" && (
+                      <div className={classes.leftColumnLinkContainer}>
+                        <div className={classes.leftColumnLinkBox}>
+                        <Anchor
+                          href={`/`}
+                        >
+                          <span className={`anchor-text ${classes.leftColumnLink}`}>
+                            {"Explore Patient Experience"}
+                          </span>
+                          <IconArrowRight size={16} />
+                        </Anchor>
+                        </div>
+                        <Anchor
+                          href={`/`}
+                        >
+                          <span className={`anchor-text ${classes.leftColumnLink}`}>
+                            {"Explore HCP Experience"}
+                          </span>
+                          <IconArrowRight size={16} />
+                        </Anchor>
                       </div>
-                  );
-                }
+                      )} 
+                  </>
                 )}
-                {entry.title === "DATA & INSIGHTS " && (
-                   <Image className={classes.quoteImage} src={getDataInsights} />
-                )}
-              </div>
               </Box>
             );
           }
@@ -144,7 +189,7 @@ const renderRightColumn = (column: any, context: any) => {
           return (
             <Flex gap={8} key={item.id} className={classes.listCheckIcon}>
               {!item.choose && <CheckIcon size={28} color="#00827E" />}
-              <div className={cx(item.choose && classes.border)}>
+              <div className={cx(item.choose && classes.border, !item.subheading && classes.noSubHeadingChooseBox)}>
                 <Text data-context={context.title} 
                    className={item.subheading ? classes.heading : classes.noSubHeading}>
                   {item.heading}
@@ -162,7 +207,6 @@ const renderRightColumn = (column: any, context: any) => {
 };
 
 const TextAndTextColumns = ({ data,index }: TextAndTextColumnsProps) => {
-  console.log("index",index)
   const context = useContext(PageContext);
 
   const { heading, subHeadingText, leftColumn, rightColumn, addBorder } = data;

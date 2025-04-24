@@ -28,7 +28,12 @@
   .noSubHeading {
     font-size: 28px;
     font-weight: 700;
-    color : #00827E
+    color : #00827E;
+  }
+
+  .noSubHeadingChooseBox {
+    margin-bottom:16px;
+    margin-top:16px;
   }
   
   .rightColumn {
@@ -59,11 +64,20 @@
   }
 
   .leftColumnSubHeading{
-    margin-bottom: 80px;
+    margin-bottom: 36px;
+    
+    /* @media (min-width: $phil-breakpoint-lg) {
+      margin-bottom: 80px;
+    } */
   }
 
   .leftColumnCard{
     display: flex;
+    flex-direction: column;
+
+    @media (min-width: $phil-breakpoint-md) {
+      flex-direction: row; 
+    }
   }
 
   .leftColumnCardBox{
@@ -81,4 +95,24 @@
     width: 140px;
   }
   
-  
+  .leftColumnSubTitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 36px;
+
+  }
+
+  .leftColumnLinkContainer {
+    display: flex;
+    margin-top: 90px;
+  }
+
+  .leftColumnLinkBox {
+    margin-right:36px;
+  }
+
+  .leftColumnLink {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 16px;
+  }

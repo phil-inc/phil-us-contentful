@@ -97,7 +97,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
                 >
                   <span className="anchor-text">
                     {hyperlink?.linkLabel}
-s                  </span>
+                  </span>
                   <IconArrowRight size={16} />
                 </Anchor>
               </div>
