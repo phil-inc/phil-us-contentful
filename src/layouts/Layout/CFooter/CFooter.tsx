@@ -242,6 +242,7 @@ const query = graphql`
               id
               header
               isHidden
+               hideNavigationAnchor
             }
             ... on ContentfulPage {
               id
@@ -313,6 +314,7 @@ const query = graphql`
             id
             header
             isHidden
+            
           }
         }
       }

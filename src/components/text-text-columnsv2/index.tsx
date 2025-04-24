@@ -29,6 +29,14 @@ interface CheckIconProps {
   size: number;
   color: string;
 }
+
+const slugify = (str: string): string => {
+  if (str === undefined) return "";
+  if (str === null) return "";
+  return str.toLowerCase().replace(/\s+/g, '-');
+};
+
+
 const CheckIcon = ({ size, color }: CheckIconProps) => {
   return (
     <svg
@@ -76,10 +84,9 @@ const renderColumn = (column: ReferenceBodyType) => {
       [BLOCKS.EMBEDDED_ENTRY]: (node) => {
         const entry = referenceMap.get(node.data.target?.sys.id);
         if (!entry) return null;
-        console.log("enefsfsd",entry)
         if (entry.title == "PhilRx Access Solution") {
           return (
-            <Image className={classes.quoteImage} src={getPhilRxAccessSolution} />
+            <Image className={classes.philRxAccessSolutionPageImage} src={getPhilRxAccessSolution} />
           )
         } else {
           if (entry.sys.contentType.sys.id === "referencedSection") {
@@ -95,7 +102,7 @@ const renderColumn = (column: ReferenceBodyType) => {
                   )}
                   <div>
                     <Anchor
-                      href={`/`}
+                      href={`/pharma/#a-dedicated-partner-for-retail-and-specialty-lite`}
                     >
                       <span className="anchor-text">
                         {"See supported products"}
@@ -106,6 +113,7 @@ const renderColumn = (column: ReferenceBodyType) => {
                   </>
                 ) : (
                   <>
+                  {/* <Title order={3} className={classes.leftColumnTitle} id={entry.title === "DATA & INSIGHTS" ? slugify("DATA AND INSIGHTS") : slugify(entry.title)}>{entry.title}</Title> */}
                   <Title order={3} className={classes.leftColumnTitle}>{entry.title}</Title>
                   <Title order={3} className={classes.leftColumnHeader}>{entry.header}</Title>
                   {entry.subHeading?.subHeading && (
@@ -130,15 +138,15 @@ const renderColumn = (column: ReferenceBodyType) => {
                       );
                     }
                     )}
-                    {entry.title === "DATA & INSIGHTS " && (
-                      <Image className={classes.quoteImage} src={getDataInsights} />
+                    {entry.title === "DATA & INSIGHTS" && (
+                      <Image className={classes.dataAndInsightsImage} src={getDataInsights} />
                     )} 
                   </div>
                   {entry.title === "DIGITAL HUB" && (
                       <div className={classes.leftColumnLinkContainer}>
                         <div className={classes.leftColumnLinkBox}>
                         <Anchor
-                          href={`/`}
+                          href={"https://phil.us/patients/"}
                         >
                           <span className={`anchor-text ${classes.leftColumnLink}`}>
                             {"Explore Patient Experience"}
@@ -147,7 +155,7 @@ const renderColumn = (column: ReferenceBodyType) => {
                         </Anchor>
                         </div>
                         <Anchor
-                          href={`/`}
+                          href={"https://phil.us/providers/#sending-a-script-to-philrx-is-easy"}
                         >
                           <span className={`anchor-text ${classes.leftColumnLink}`}>
                             {"Explore HCP Experience"}
@@ -181,22 +189,42 @@ const renderRightColumn = (column: any, context: any) => {
   
   return (
     <div>
-      <Box>{renderRichText(column)}</Box>
+      <Box className={classes.rightColumnHeader}>{renderRichText(column)}</Box>
 
       <div>
-        {column.references?.map((item: any) => {
-          // console.log("🚀 ~ item:", item);
+        {column.references?.map((item: any, index :any) => {
+          
           return (
             <Flex gap={8} key={item.id} className={classes.listCheckIcon}>
               {!item.choose && <CheckIcon size={28} color="#00827E" />}
               <div className={cx(item.choose && classes.border, !item.subheading && classes.noSubHeadingChooseBox)}>
-                <Text data-context={context.title} 
-                   className={item.subheading ? classes.heading : classes.noSubHeading}>
-                  {item.heading}
-                </Text>
-                <Text className={classes.subheading}>
-                  {item.subheading}
-                </Text>
+                {
+                  !item.subheading ? (
+                    <a 
+                    href={
+                      index === 0
+                        ? "/solutions/#digital-hub"
+                        : index === 1 
+                        ? "/solutions/#pharmacy-network"
+                        : "/solutions/#data-and-insights"
+                    }
+                      style={{ textDecoration: "none" }}>
+                       <Text data-context={context.title} 
+                        className={item.subheading ? classes.heading : classes.noSubHeading}>
+                        {item.heading}
+                      </Text>
+                    </a>
+                  ): (
+                    <>
+                    <Text data-context={context.title} 
+                      className={item.subheading ? classes.heading : classes.noSubHeading}>
+                      {item.heading}
+                    </Text>
+                    <Text className={classes.subheading}>
+                      {item.subheading}
+                    </Text>
+                  </>
+                )}
               </div>
             </Flex>
           );
@@ -206,13 +234,13 @@ const renderRightColumn = (column: any, context: any) => {
   );
 };
 
-const TextAndTextColumns = ({ data,index }: TextAndTextColumnsProps) => {
+const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
-  const { heading, subHeadingText, leftColumn, rightColumn, addBorder } = data;
-
+  const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header } = data;
   return (
     <>
+      <div id={header === "Data & Insights" ? slugify("DATA AND INSIGHTS") : slugify(header)}>
       {addBorder && (
         <Container className={classes.container} size={"xl"}>
           <Divider size={"sm"} className={classes.divider} />
@@ -220,22 +248,27 @@ const TextAndTextColumns = ({ data,index }: TextAndTextColumnsProps) => {
       )}
 
       <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
-        <Box mb={100}>
-          <Title order={2} ta={"center"} mb={20}>
-            {heading}
-          </Title>
-          <Text ta={"center"}>{subHeadingText}</Text>
-        </Box>
-
+      { heading !== "PhilRx Access Solution" && (
+          <Box className={classes.containerHeaderBox}>
+            <Title className={classes.containerHeader} order={2} mb={20}>
+              {heading}
+            </Title>
+            <Text className={classes.containerSubHeader}>{subHeadingText}</Text>
+          </Box>
+        )}
         <Grid gutter={48}>
           <Grid.Col span={{ base: 12, md: 6 }}>
             {renderColumn(leftColumn)}
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6 }} data-context={context.title} className={classes.rightColumn}>
+          <Grid.Col 
+          span={{ base: 12, md: 6 }} 
+          data-context={context.title} 
+          className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === "Why Brands Win with PhilRxs" && classes.philRxAccessSolutionNoBorder)}>
             {renderRightColumn(rightColumn, context)}
           </Grid.Col>
         </Grid>
       </Container>
+      </div>
     </>
   );
 };

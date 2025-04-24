@@ -1,7 +1,15 @@
-.listCheckIcon {
-    padding-left: 20px;
+  .listCheckIcon {
     padding-bottom: 20px;
     margin-bottom: 20px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      padding-left: 20px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .listCheckIcon:not(:last-child) {
     border-bottom: 1px solid #e6e6e6;
   }
   
@@ -11,11 +19,6 @@
   }
   
   .heading {
-    &[data-context="Pharma"] {
-      font-size: 20px;
-      font-weight: 700;
-    }
-  
     font-size: 16px;
     font-weight: 700;
   }
@@ -51,6 +54,11 @@
     }
   }
 
+  .philRxAccessSolutionNoBorder {
+    border-left: 0px;
+    border-top: 0px;
+  }
+
   .leftColumnHeader {
     font-size: 40px;
     margin-bottom: 40px;
@@ -64,11 +72,15 @@
   }
 
   .leftColumnSubHeading{
-    margin-bottom: 36px;
+    margin-bottom: 0px;
     
     /* @media (min-width: $phil-breakpoint-lg) {
       margin-bottom: 80px;
     } */
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-bottom: 36px;
+    }
   }
 
   .leftColumnCard{
@@ -82,6 +94,11 @@
 
   .leftColumnCardBox{
     margin-right: 60px;
+    margin-top: 60px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-top: 0px;
+    }
   }
 
   .leftColumnCardTitle{
@@ -92,7 +109,11 @@
 
   .leftColumnCardBody {
     font-size: 14px;
-    width: 140px;
+    width: auto;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      width: 140px;
+    }
   }
   
   .leftColumnSubTitle {
@@ -103,16 +124,78 @@
   }
 
   .leftColumnLinkContainer {
-    display: flex;
-    margin-top: 90px;
+    display: block;
+    margin-top: 60px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      display: flex;
+      margin-top: 90px;
+    }
   }
 
   .leftColumnLinkBox {
     margin-right:36px;
+    margin-bottom: 36px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-right:36px;
+      margin-bottom: 0px;
+    }
   }
 
   .leftColumnLink {
     font-size: 18px;
     font-weight: 600;
     line-height: 16px;
+  }
+
+  .rightColumnHeader {
+    padding-left: 0px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+       padding-left: 20px;
+    }
+  }
+
+  .dataAndInsightsImage {
+    padding-top : 60px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      padding-top : 88px;
+    }
+  }
+
+  .philRxAccessSolutionPageImage {
+    width: 64%;
+    margin: auto;
+  }
+
+  .rightColumnContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .containerHeaderBox {
+    margin-bottom: 60px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-bottom: 100px;
+    }
+  }
+
+  .containerHeader {
+    text-align: left;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      text-align: center;
+    }
+  }
+
+  .containerSubHeader {
+    text-align: left;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      text-align: center;
+    }
   }

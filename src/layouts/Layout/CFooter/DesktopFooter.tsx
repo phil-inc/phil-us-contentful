@@ -82,7 +82,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                 data-manual-entry={true}
                 className={classes.link}
               >
-                info@phil.us
+                Contact Us
               </Text>
             </Anchor>
           </Group>
