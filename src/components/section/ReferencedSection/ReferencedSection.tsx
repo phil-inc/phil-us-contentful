@@ -14,7 +14,7 @@ import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, HCP_PAGE, HOME, LIFE_SCIENCES_PAGE, PATIENTS_PAGE } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, HOME, LIFE_SCIENCES_PAGE, PATIENTS_PAGE,OUR_SOLUTIONS } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
@@ -250,6 +250,16 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           </div>
         )}
 
+        {context.title === OUR_SOLUTIONS && section.referenceType === ReferenceTypeEnum["Card Section"] && (
+          <div
+            style={{ display: "flex", justifyContent:"center"}}
+          >
+            <Text className={classes.recentClientNewsHeader} data-reference-type="Our Solution">
+              Recent Client News
+            </Text>
+          </div>
+        )}
+
       {sectionContent}
 
       {/* subheading */}
@@ -283,6 +293,16 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               </Link>
             )}
           </Group>
+        )}
+
+        {/* philrx testimonial */}
+        {console.log("section.title", section)}
+        {section.header === "What PhilRx Patients & Providers Say"  && (
+          <div className={classes.customTestiominalFooter}>
+            <div className="trustpilot-widget" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%">
+              <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
+          </div>
         )}
         </Container>
     </Expanded>

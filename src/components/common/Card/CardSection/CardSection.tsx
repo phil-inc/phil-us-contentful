@@ -20,10 +20,11 @@ type ArticleProps = {
   metadata?: Metadata;
   isEmployeeTag?: boolean;
   arrayLength?: number;
+  sectionHeader?: string;
 };
 
-export const CardSection: FC<ArticleProps> = ({ resource }) => {
-  const { body, hyperlink } = resource;
+export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
+  const { heading, subheading, body, hyperlink } = resource;
   const context = useContext(PageContext);
 
   const options: Options = {
@@ -45,7 +46,7 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
       },
     },
   };
-
+ 
   return (
     <Group h={"100%"} gap={0}>
       <Paper
@@ -69,6 +70,16 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
               md: "auto",
             }}
           >
+            {sectionHeader === "Recent Client News" && (
+              <div >
+                <Text className={classes.recentClientNewsHeader}>
+                  {heading}
+                </Text>
+                <Text className={classes.recentClientNewsSubHeader}>
+                  {subheading}
+                </Text>
+              </div>
+            )}
             <Stack className={classes.stack} h="100%" gap={32}>
               <div
                 style={{
@@ -83,11 +94,10 @@ export const CardSection: FC<ArticleProps> = ({ resource }) => {
               <div>
                 <Anchor
                   href={`/${hyperlink?.internalContent?.slug}`}
-               
                 >
                   <span className="anchor-text">
                     {hyperlink?.linkLabel}
-s                  </span>
+                  </span>
                   <IconArrowRight size={16} />
                 </Anchor>
               </div>

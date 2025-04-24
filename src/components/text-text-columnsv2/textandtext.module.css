@@ -1,0 +1,118 @@
+.listCheckIcon {
+    padding-left: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  
+  .border {
+    border-left: 4px solid #35ada7;
+    padding-left: 20px;
+  }
+  
+  .heading {
+    &[data-context="Pharma"] {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .subHeading {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .noSubHeading {
+    font-size: 28px;
+    font-weight: 700;
+    color : #00827E;
+  }
+
+  .noSubHeadingChooseBox {
+    margin-bottom:16px;
+    margin-top:16px;
+  }
+  
+  .rightColumn {
+    border-top: 1px solid #e6e6e6;
+    padding-top: 20px;
+  
+    @media (min-width: $phil-breakpoint-sm) {
+      border-top: 0px;
+  
+      border-left: 1px solid #e6e6e6;
+      padding-left: 70px;
+      &[data-context="Pharma"] {
+        border-left: 0px;
+      }
+    }
+  }
+
+  .leftColumnHeader {
+    font-size: 40px;
+    margin-bottom: 40px;
+  }
+
+  .leftColumnTitle {
+    font-size: 18px;
+    font-weight: 800;
+    color : #00827E;
+    margin-bottom: 40px;
+  }
+
+  .leftColumnSubHeading{
+    margin-bottom: 36px;
+    
+    /* @media (min-width: $phil-breakpoint-lg) {
+      margin-bottom: 80px;
+    } */
+  }
+
+  .leftColumnCard{
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $phil-breakpoint-md) {
+      flex-direction: row; 
+    }
+  }
+
+  .leftColumnCardBox{
+    margin-right: 60px;
+  }
+
+  .leftColumnCardTitle{
+    font-size: 40px;
+    color : #00827E;
+    font-weight: 600;
+  }
+
+  .leftColumnCardBody {
+    font-size: 14px;
+    width: 140px;
+  }
+  
+  .leftColumnSubTitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 36px;
+
+  }
+
+  .leftColumnLinkContainer {
+    display: flex;
+    margin-top: 90px;
+  }
+
+  .leftColumnLinkBox {
+    margin-right:36px;
+  }
+
+  .leftColumnLink {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 16px;
+  }

@@ -248,6 +248,11 @@ const query = graphql`
               title
               slug
             }
+            ... on ContentfulTextAndTextColumns {
+              id
+              header
+              hideNavigationAnchor
+            }
           }
         }
         badge {

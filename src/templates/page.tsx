@@ -135,7 +135,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
       document.body.classList.remove('home');
     };
   }, [data?.contentfulPage?.slug]);
-
+  
   return (
     <PageContext.Provider value={{ title }}>
       <Layout minimal={false}>
@@ -149,7 +149,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
               </Grid.Col>
             </Grid>
           </Expanded>
-        )}
+        )}  
         {title === "Field" && (
           <Container className={classes.container} fluid>
             <Title order={1} mb={30} className={classes.heading}>
@@ -174,6 +174,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
                   "#FFFFFF",
                 ),
               )}
+              pageTitle={title}
             />
           ))}
       </Layout>
@@ -181,8 +182,8 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
   );
 };
 
-export const query = graphql`
- query getPages($id: String!) {
+export const query = graphql `
+query getPages($id: String!) {
   contentfulPage(id: { eq: $id }) {
     noindex
     slug
@@ -199,16 +200,71 @@ export const query = graphql`
          addBorder
         leftColumn {
           raw
-        }
-        rightColumn {
-          raw
           references {
-            ... on ContentfulResource {
+            __typename
+            
+            ... on ContentfulReferencedSection {
+               sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
               id
-              heading
+              header
+              title
+              subHeading {
+                id
+                subHeading
+              }
+              referenceType
+              references {
+                ... on ContentfulResource {
+                  id
+                  heading
+                  body {
+                    raw
+                  }
+                }
+              }
             }
           }
         }
+rightColumn {
+  raw
+  references {
+    __typename
+    ... on ContentfulList {
+       sys {
+        contentType {
+          sys {
+            type
+            id
+          }
+        }
+      }
+      id
+      heading
+      subheading
+      choose
+    }
+    ... on ContentfulResource {
+       sys {
+        contentType {
+          sys {
+            type
+            id
+          }
+        }
+      }
+      id
+      heading
+    }
+  }
+}
+
       }
       ... on ContentfulSection {
         id
@@ -454,7 +510,6 @@ export const query = graphql`
           subHeading
         }
         sectionType
-        addBorder
         metadata {
           tags {
             name
@@ -1101,6 +1156,7 @@ export const query = graphql`
     }
   }
 }
+
 `;
 
 export default PageTemplate;
