@@ -202,20 +202,7 @@ query getPages($id: String!) {
           raw
           references {
             __typename
-            ... on ContentfulPage {
-              sys {
-                contentType {
-                  sys {
-                    id
-                    type
-                  }
-                }
-              }
-              id
-              slug
-              title
-              displayTitle
-            }
+            
             ... on ContentfulReferencedSection {
                sys {
                 contentType {
