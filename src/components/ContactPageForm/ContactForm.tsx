@@ -140,6 +140,7 @@ const ContactForm: React.FC<{ section: ISection }> = ({ section }) => {
             href="https://philhelp.zendesk.com/hc/en-us/p/faq"
             target="_blank"
             underline="never"
+            className={classes.fullWidth}
           >
             <Button radius={0} variant="outline" color="dark" fullWidth>
               Patient/Caregiver
