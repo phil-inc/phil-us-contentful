@@ -78,6 +78,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => {
                     <div className={classes.contact}>
                       <Group gap={4}>
                         <EmailIcon />
+                        <Anchor href="https://phil.us/contact/" className={classes.link}>
                         <Text
                           unstyled
                           span
@@ -86,6 +87,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => {
                         >
                           info@phil.us
                         </Text>
+                        </Anchor>
                       </Group>
                       <Anchor
                         href="https://www.linkedin.com/company/phil-inc-"

@@ -75,7 +75,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
         <div className={classes.socials}>
           <Group gap={0}>
             <EmailIcon />
-            <Anchor href="mailto:info@phil.us" className={classes.link}>
+            <Anchor href="https://phil.us/contact/" className={classes.link}>
               <Text
                 unstyled
                 span
@@ -189,7 +189,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                                   </Link>
                                 </Box>
                               ) : (
-                                <Anchor 
+                                <Anchor
                                   href={button.externalLink}
                                   target="_blank"
                                 >
