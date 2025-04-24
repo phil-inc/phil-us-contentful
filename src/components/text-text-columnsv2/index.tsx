@@ -76,10 +76,10 @@ const renderColumn = (column: ReferenceBodyType) => {
       [BLOCKS.EMBEDDED_ENTRY]: (node) => {
         const entry = referenceMap.get(node.data.target?.sys.id);
         if (!entry) return null;
-        console.log("enefsfsd",entry)
+
         if (entry.title == "PhilRx Access Solution") {
           return (
-            <Image className={classes.quoteImage} src={getPhilRxAccessSolution} />
+            <Image className={classes.philRxAccessSolutionPageImage} src={getPhilRxAccessSolution} />
           )
         } else {
           if (entry.sys.contentType.sys.id === "referencedSection") {
@@ -131,7 +131,7 @@ const renderColumn = (column: ReferenceBodyType) => {
                     }
                     )}
                     {entry.title === "DATA & INSIGHTS " && (
-                      <Image className={classes.quoteImage} src={getDataInsights} />
+                      <Image className={classes.dataAndInsightsImage} src={getDataInsights} />
                     )} 
                   </div>
                   {entry.title === "DIGITAL HUB" && (
@@ -181,7 +181,7 @@ const renderRightColumn = (column: any, context: any) => {
   
   return (
     <div>
-      <Box>{renderRichText(column)}</Box>
+      <Box className={classes.rightColumnHeader}>{renderRichText(column)}</Box>
 
       <div>
         {column.references?.map((item: any) => {
@@ -206,11 +206,11 @@ const renderRightColumn = (column: any, context: any) => {
   );
 };
 
-const TextAndTextColumns = ({ data,index }: TextAndTextColumnsProps) => {
+const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
   const { heading, subHeadingText, leftColumn, rightColumn, addBorder } = data;
-
+  
   return (
     <>
       {addBorder && (
@@ -220,19 +220,20 @@ const TextAndTextColumns = ({ data,index }: TextAndTextColumnsProps) => {
       )}
 
       <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
-        <Box mb={100}>
-          <Title order={2} ta={"center"} mb={20}>
-            {heading}
-          </Title>
-          <Text ta={"center"}>{subHeadingText}</Text>
-        </Box>
-
+        { heading !== "PhilRx Access Solution" && (
+          <Box className={classes.containerHeaderBox}>
+            <Title className={classes.containerHeader} order={2} mb={20}>
+              {heading}
+            </Title>
+            <Text className={classes.containerSubHeader}>{subHeadingText}</Text>
+          </Box>
+        )}
         <Grid gutter={48}>
           <Grid.Col span={{ base: 12, md: 6 }}>
             {renderColumn(leftColumn)}
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6 }} data-context={context.title} className={classes.rightColumn}>
-            {renderRightColumn(rightColumn, context)}
+          <Grid.Col span={{ base: 12, md: 6 }} data-context={context.title} className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution" && classes.philRxAccessSolutionNoBorder)}>
+              {renderRightColumn(rightColumn, context)}
           </Grid.Col>
         </Grid>
       </Container>
