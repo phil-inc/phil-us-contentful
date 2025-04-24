@@ -56,3 +56,7 @@
 .hubspot-contact-form[data-hs-forms-root="true"] {
     min-height: 0;
 }
+
+.fullWidth {
+    width: 100%;
+}
