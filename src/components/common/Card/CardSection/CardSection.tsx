@@ -29,7 +29,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
   const context = useContext(PageContext);
   var customHyperLink = "";
   if (hyperlink?.linkLabel === "Read Press Release") {
-    customHyperLink = "https://investors.harrow.com/news-releases/news-release-details/harrow-launches-vevyer-access-all";
+    customHyperLink = "https://phil.us/philrx-drives-high-adoption-for-ophthalmology-brand/";
   } else if (hyperlink?.linkLabel === "Read Case Study" && heading === "WOMEN'S HEALTH"){
     customHyperLink = "https://phil.us/philrx-unlocks-90-dispense-coverage-for-womens-health-brand/";
   } else if (hyperlink?.linkLabel === "Read Case Study" && heading === "NEUROLOGY"){ 
