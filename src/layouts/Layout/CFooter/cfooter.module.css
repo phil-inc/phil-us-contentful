@@ -2,10 +2,7 @@
 	> :not(:first-child) {
 		margin-left: 32px;
 	}
-
-	@media (min-width: $phil-breakpoint-sm) and (max-width: $phil-breakpoint-md) {
-		margin-top: 20px;
-	}
+ 
 }
 
 .links,
@@ -26,25 +23,27 @@
 	}
 }
 
+.links:hover{
+	color: #00827e
+}
+
 .bottomFooter {
 	background: #00827e;
-	padding: 14px 32px;
+	 
 
 	@media (min-width: $phil-breakpoint-sm) {
-		padding: 14px 32px;
+		 
 		
 		&[data-minimal='false'] {
 			background: white;
 			color: black;
-			padding: 30px 100px;
+			padding-bottom: 30px;
+			padding-top: 0;
 		}
 	}
 }
 
-.divider {
-	height: 2px;
-	background: var(--Phil-Rebrand-Neutral-Base, #e6e6e6);
-}
+ 
 
 .pipe {
 	padding: 0px 2px;

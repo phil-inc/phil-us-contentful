@@ -35,7 +35,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({
   const isSVG = heroAsset?.file?.contentType === "image/svg+xml";
 
   return (
-    <Container id={"Career Section"} fluid className={classes.container}>
+    <Container size={"xl"} id={"Career Section"} className={classes.container}>
       <Grid
         gutter={handleSpacing(theme, theme.spacing.lg)}
         pb={handleSpacing(theme, theme.spacing.xl)}

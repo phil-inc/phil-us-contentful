@@ -1,12 +1,5 @@
 .header {
-	padding: 20px;
-	display: flex;
-	align-items: center;
 	position: static !important;
-
-	@media (min-width: $phil-breakpoint-sm) {
-		padding: 0px 100px;
-	}
 }
 
 .burger {
@@ -26,12 +19,15 @@
 
 .navbar {
 	position: relative;
-	height: 90px;
+	height: 74px;
 	width: 100%;
 	background: #fff;
 	display: flex;
 	align-items: center;
-	/* overflow: hidden; */
+	@media (min-width: $phil-breakpoint-sm) {
+		height: 90px;
+		
+	}
 }
 
 .navbar ul li {

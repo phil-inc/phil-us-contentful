@@ -138,7 +138,9 @@ export const bannerFactory = (resource: TResource) => (
     py={120}
     px={106}
   >
+    <Container size="xl">
     <Banner resource={resource} />
+    </Container>
   </Expanded>
 );
 

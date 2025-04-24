@@ -199,4 +199,5 @@ export type ITextandTextColumns = {
   leftColumn: ReferenceBodyType;
   rightColumn: ReferenceBodyType;
   addBorder: boolean;
+  header: string;
 };

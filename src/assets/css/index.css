@@ -1,13 +1,29 @@
 @import "header.css";
+@import "anchor.css";
 @import "hubspot-form.css";
 @import "mantine-accordion-override.css";
 @import url("https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css");
 
- 
-.phil-Container-root{
-    @media screen and (min-width: 1360px) {
-        max-width: 1200px;
+
+  .home{
+    .phil-Carousel-slide{
+      --carousel-slide-size: calc(100% - var(--carousel-slide-gap));
+      @media (min-width: $phil-breakpoint-sm) {
+        --carousel-slide-size: calc(50% - var(--carousel-slide-gap));
+      }
     }
+
+    .footer-container{
+      padding-top: 100px;
+      > .phil-Divider-root{
+        display: none;
+      }
+    }
+  }
+
+
+.phil-Container-root{
+  width: 100%;
 
     @media screen and (min-width: 1680px) {
         max-width: 1600px;
@@ -38,7 +54,9 @@
 
   .expanded-module--container--990b8 {
     &:has(iframe) {
-      padding-top: 0 !important;
+      @media (min-width: $phil-breakpoint-sm) {
+        padding-top: 0 !important;
+      }
 
       .referencedSection-module--grid--8e21d {
         margin-top: 0;
@@ -75,6 +93,8 @@
 
   img{
     object-fit: contain !important;
+    max-width: 180px;
+    margin: auto
   }
  }
 
@@ -84,14 +104,16 @@
 
  .carousel__container{
   padding: 0;
+
+  .referencedSection-module--root--09ebf{
+    margin: auto
+  }
 }
 
-.home{
-	.featuredInsights-module--paper--1c78b{
-		.gatsby-image-wrapper{
-  position: absolute !important;
+.gatsby-image-wrapper{
+  position: relative;
 }
 
-	}
-	
+#the-all-in-one-access-solution-for-retail-and-specialty-lite-success {
+	padding-bottom: 60px;
 }

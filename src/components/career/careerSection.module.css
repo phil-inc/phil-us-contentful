@@ -1,10 +1,5 @@
 .container {
 	margin-top: 36px;
-	padding: 0 16px !important;
-
-	@media (min-width: $phil-breakpoint-sm) {
-		padding: 0 100px !important;
-	}
 }
 
 .center {

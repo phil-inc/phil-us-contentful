@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group, Anchor, Accordion, Text, Container } from "@mantine/core";
+import { Button, Group, Anchor, Accordion, Text, Container, Divider } from "@mantine/core";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {
@@ -14,7 +14,7 @@ import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, HCP_PAGE, HOME, LIFE_SCIENCES_PAGE, PATIENTS_PAGE } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, HOME, LIFE_SCIENCES_PAGE, PATIENTS_PAGE,OUR_SOLUTIONS } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
@@ -38,9 +38,8 @@ type ReferencedSectionProps = {
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   section,
   isEmbedFormTemplate,
-  isPreviousBackgroundPure,
-  addBorder
-}) => {
+  isPreviousBackgroundPure, 
+}) => { 
   const params = new URLSearchParams(getWindowProperty("location.search", {}));
   const GRID_COLUMNS = 12;
   const SPAN_LG = GRID_COLUMNS / section.references.length;
@@ -147,7 +146,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const isProviderPage = context.title === HCP_PAGE;
 
   let sectionContent;
-
   if (context.title === FIELD_PAGE) {
     sectionContent = (
       <Accordion
@@ -210,6 +208,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   }
 
   return (
+    <>
+    {Boolean(section.addBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
     <Expanded
       id={slugify(section.header ?? section.id, { lower: true, strict: true })}
       background={
@@ -229,7 +229,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       pt={section.header?.length > 0 ? undefined : 0}
     >
       <Container className={classes.container} size={"xl"}>
-        {section.addBorder && <hr className={classes.hr} />}
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
@@ -247,6 +246,17 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               Solving access barriers in retail and specialty-lite to improve
               patient outcomes and drive commercial success.
             </p>
+          </div>
+        )}
+      
+  
+        {context.title === OUR_SOLUTIONS && section.referenceType === ReferenceTypeEnum["Card Section"] && (
+          <div
+            style={{ display: "flex", justifyContent:"center"}}
+          >
+            <Text className={classes.recentClientNewsHeader} data-reference-type="Our Solution">
+              Recent Client News
+            </Text>
           </div>
         )}
 
@@ -284,8 +294,18 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             )}
           </Group>
         )}
+
+        {/* philrx testimonial */}
+        {section.header === "What PhilRx Patients & Providers Say"  && (
+          <div className={classes.customTestiominalFooter}>
+            <div className="trustpilot-widget" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%">
+              <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
+          </div>
+        )}
         </Container>
     </Expanded>
+    </>
   );
 };
 
