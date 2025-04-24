@@ -25,7 +25,14 @@ type ArticleProps = {
 
 export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
   const { heading, subheading, body, hyperlink } = resource;
+ 
   const context = useContext(PageContext);
+  var customHyperLink = "";
+  if (hyperlink?.linkLabel === "Read Press Release") {
+    customHyperLink = "https://phil.us/insights/case-studies/";
+  } else if (hyperlink?.linkLabel === "Read Case Study"){
+    customHyperLink = "https://phil.us/insights/case-studies/";
+  }
 
   const options: Options = {
     renderNode: {
@@ -90,10 +97,12 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
               >
                 {body && renderRichText(body, options)}
               </div>
-
+                {
+                  hyperlink?.linkLabel === "Read Press Release"
+                }
               <div>
                 <Anchor
-                  href={`/${hyperlink?.internalContent?.slug}`}
+                  href={customHyperLink !== "" ? customHyperLink:`/${hyperlink?.internalContent?.slug}`}
                 >
                   <span className="anchor-text">
                     {hyperlink?.linkLabel}
