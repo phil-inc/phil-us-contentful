@@ -102,7 +102,7 @@ const renderColumn = (column: ReferenceBodyType) => {
                   )}
                   <div>
                     <Anchor
-                      href={`/`}
+                      href={`/pharma/#a-dedicated-partner-for-retail-and-specialty-lite`}
                     >
                       <span className="anchor-text">
                         {"See supported products"}
@@ -137,7 +137,7 @@ const renderColumn = (column: ReferenceBodyType) => {
                       );
                     }
                     )}
-                    {entry.title === "DATA & INSIGHTS " && (
+                    {entry.title === "DATA & INSIGHTS" && (
                       <Image className={classes.dataAndInsightsImage} src={getDataInsights} />
                     )} 
                   </div>
@@ -191,19 +191,39 @@ const renderRightColumn = (column: any, context: any) => {
       <Box className={classes.rightColumnHeader}>{renderRichText(column)}</Box>
 
       <div>
-        {column.references?.map((item: any) => {
-          // console.log("🚀 ~ item:", item);
+        {column.references?.map((item: any, index :any) => {
+          
           return (
             <Flex gap={8} key={item.id} className={classes.listCheckIcon}>
               {!item.choose && <CheckIcon size={28} color="#00827E" />}
               <div className={cx(item.choose && classes.border, !item.subheading && classes.noSubHeadingChooseBox)}>
-                <Text data-context={context.title} 
-                   className={item.subheading ? classes.heading : classes.noSubHeading}>
-                  {item.heading}
-                </Text>
-                <Text className={classes.subheading}>
-                  {item.subheading}
-                </Text>
+                {
+                  !item.subheading ? (
+                    <a 
+                    href={
+                      index === 0
+                        ? "/solutions/#digital-hub"
+                        : index === 1 
+                        ? "/solutions/#pharmacy-network"
+                        : "/solutions/#data-and-insights"
+                    }
+                      style={{ textDecoration: "none" }}>
+                       <Text data-context={context.title} 
+                        className={item.subheading ? classes.heading : classes.noSubHeading}>
+                        {item.heading}
+                      </Text>
+                    </a>
+                  ): (
+                    <>
+                    <Text data-context={context.title} 
+                      className={item.subheading ? classes.heading : classes.noSubHeading}>
+                      {item.heading}
+                    </Text>
+                    <Text className={classes.subheading}>
+                      {item.subheading}
+                    </Text>
+                  </>
+                )}
               </div>
             </Flex>
           );

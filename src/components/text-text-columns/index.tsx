@@ -26,6 +26,12 @@ interface CheckIconProps {
   size: number;
   color: string;
 }
+
+const slugify = (str: string): string => {
+  if (str === undefined) return "";
+  if (str === null) return "";
+  return str.toLowerCase().replace(/\s+/g, '-');
+};
 const CheckIcon = ({ size, color }: CheckIconProps) => {
   return (
     <svg
@@ -142,7 +148,7 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
 
       <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
         <Box mb={100}>
-          <Title order={2} ta={"center"} mb={20}>
+          <Title order={2} ta={"center"} mb={20} id={slugify(heading)}>
             {heading}
           </Title>
           <Text ta={"center"}>{subHeadingText}</Text>
