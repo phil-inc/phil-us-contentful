@@ -198,6 +198,7 @@ query getPages($id: String!) {
         subHeadingText: subHeading
          sectionType
          addBorder
+         header
         leftColumn {
           raw
           references {

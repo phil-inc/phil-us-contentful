@@ -113,7 +113,8 @@ const renderColumn = (column: ReferenceBodyType) => {
                   </>
                 ) : (
                   <>
-                  <Title order={3} className={classes.leftColumnTitle} id={entry.title === "DATA & INSIGHTS" ? slugify("DATA AND INSIGHTS") : slugify(entry.title)}>{entry.title}</Title>
+                  {/* <Title order={3} className={classes.leftColumnTitle} id={entry.title === "DATA & INSIGHTS" ? slugify("DATA AND INSIGHTS") : slugify(entry.title)}>{entry.title}</Title> */}
+                  <Title order={3} className={classes.leftColumnTitle}>{entry.title}</Title>
                   <Title order={3} className={classes.leftColumnHeader}>{entry.header}</Title>
                   {entry.subHeading?.subHeading && (
                     <Text fz="md" mt={4} className={classes.leftColumnSubHeading}>
@@ -233,13 +234,13 @@ const renderRightColumn = (column: any, context: any) => {
   );
 };
 
-const TextAndTextColumns = ({ data,index }: TextAndTextColumnsProps) => {
+const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
-  const { heading, subHeadingText, leftColumn, rightColumn, addBorder } = data;
-  
+  const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header } = data;
   return (
     <>
+      <div id={header === "Data & Insights" ? slugify("DATA AND INSIGHTS") : slugify(header)}>
       {addBorder && (
         <Container className={classes.container} size={"xl"}>
           <Divider size={"sm"} className={classes.divider} />
@@ -267,6 +268,7 @@ const TextAndTextColumns = ({ data,index }: TextAndTextColumnsProps) => {
           </Grid.Col>
         </Grid>
       </Container>
+      </div>
     </>
   );
 };
