@@ -1,10 +1,14 @@
-.section {
-  margin-bottom: 60px;
+:where(html) {
+  --section-padding: 50px;
+}
+
+.gridBox {
+  padding: var(--section-padding) var(--section-padding);
+  position: relative;
 }
 
 .left {
   max-height: 100%;
-  padding: 50px 50px;
   color: #ffffff;
 
   &[data-context='Demo Page'] {
@@ -13,8 +17,6 @@
 }
 
 .right {
-  padding: 50px 50px;
-
   &[data-context='Demo Page'] {
     background-color: #ffffff;
   }
@@ -38,3 +40,26 @@
   max-height: 90px;
   margin-bottom: 60px;
 }
+
+.rightSection {
+  z-index: 1;
+  position: relative;
+}
+
+.bottomImage {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 90%;
+  height: auto;
+  margin: auto;
+  z-index: 0;
+  opacity: 0.7;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+

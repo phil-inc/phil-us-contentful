@@ -1,32 +1,32 @@
 .title {
-  &[data-is-embed-form-template='true'] {
+  &[data-is-embed-form-template="true"] {
     font-size: 40px;
 
-    &[data-index='0'] {
+    &[data-index="0"] {
       max-width: 500px;
     }
   }
 }
 
 .basicSectionContainer {
-  &[data-index='0'] {
+  &[data-index="0"] {
     @media (min-width: $phil-breakpoint-sm) {
       padding-top: 160px;
       padding-bottom: 160px;
     }
 
-    &[data-context='Company'] {
+    &[data-context="Company"] {
       padding-top: 64px;
       padding-bottom: 64px;
     }
   }
 
-  &[data-context='Contact'] {
+  &[data-context="Contact"] {
     padding-top: 0px;
     padding-bottom: 0px;
   }
 
-  &[data-is-embed-form-template='true'] {
+  &[data-is-embed-form-template="true"] {
     padding-top: 56px;
     padding-bottom: 56px;
 
@@ -40,7 +40,7 @@
     padding-top: 100px;
     padding-bottom: 100px;
 
-    &[data-context='Company'] {
+    &[data-context="Company"] {
       padding: 32px 100px;
     }
   }
@@ -85,17 +85,17 @@
   font-size: 18px;
   margin-top: 24px;
 
-  &[data-index='0'] {
+  &[data-index="0"] {
     max-width: 84.5%;
   }
 
-  &[data-video='true'] {
+  &[data-video="true"] {
     text-align: center;
     display: block;
   }
 
-  &[data-is-embed-form-template='true'] {
-    &[data-index='0'] {
+  &[data-is-embed-form-template="true"] {
+    &[data-index="0"] {
       padding-left: 16px;
       padding-right: 16px;
     }
@@ -111,19 +111,19 @@
     }
   }
 
-  &[data-video='true'] {
+  &[data-video="true"] {
     margin-top: 16px;
   }
 }
 
 .list {
-  &[data-video='true'] {
+  &[data-video="true"] {
     margin-bottom: 0px;
   }
 }
 
 .heroGridColumn {
-  &[data-is-embed-form-template='true'] {
+  &[data-is-embed-form-template="true"] {
     padding-left: 0px;
     padding-right: 0px;
 
@@ -134,14 +134,9 @@
   }
 }
 
-.formWrapper {
-  padding: 44px 38px;
-  background: #f4f4f4;
+.formSection {
+  padding: 48px 0px;
   width: 100%;
-
-  @media (min-width: $phil-breakpoint-sm) {
-    padding: 44px 32px;
-  }
 }
 
 .contactSubheader {
@@ -160,7 +155,7 @@
     display: block;
     width: fit-content;
 
-    &[data-video='true'] {
+    &[data-video="true"] {
       margin-top: 16px;
     }
   }
@@ -173,7 +168,7 @@
 .group {
   justify-content: center;
 
-  &[data-is-video='true'] {
+  &[data-is-video="true"] {
     justify-content: start;
   }
 }
@@ -192,7 +187,7 @@
   margin-bottom: 42px;
 }
 
-.blockH2[data-context='Demo Page'] > b {
+.blockH2[data-context="Demo Page"] > b {
   color: #00827e;
 }
 

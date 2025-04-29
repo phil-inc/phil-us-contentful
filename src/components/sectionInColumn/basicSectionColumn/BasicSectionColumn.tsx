@@ -1,6 +1,7 @@
 import React, { useId } from 'react';
 import {
   Anchor,
+  Box,
   Button,
   Divider,
   List,
@@ -24,6 +25,7 @@ import { ISection, MediaItem } from 'types/section';
 import { getLink } from 'utils/getLink';
 import { isVideoContent } from 'utils/isVideoContent';
 import { extractAssetData } from 'utils/asset';
+import { getHubspotFormDetails } from 'utils/utils';
 
 import PageContext from 'contexts/PageContext';
 
@@ -31,6 +33,7 @@ import useDeviceType from 'hooks/useView';
 
 import ImageContainer from 'components/common/Container/ImageContainer';
 import Asset from 'components/common/Asset/Asset';
+import HubspotForm from 'components/common/HubspotForm/HubspotForm';
 
 import * as classes from './BasicSectionColumn.module.css';
 
@@ -51,6 +54,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
   const youtubeVideoUrl = isSectionV2
     ? section?.mediaItem?.youtubeLink
     : section.youtubeVideoUrl;
+  const { formId, portalId } = getHubspotFormDetails(section?.embedForm);
 
   const isVideo = () => {
     if (isSectionV2) {
@@ -276,6 +280,11 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
                 youtubeVideoURL={youtubeVideoUrl}
               />
             </ImageContainer>
+          )}
+          {section?.embedForm && (
+            <Box className={classes.formSection}>
+              <HubspotForm formId={formId} portalId={portalId} />
+            </Box>
           )}
           {Boolean(section.addBorder) && (
             <Divider size={'sm'} className={classes.divider} />
