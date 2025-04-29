@@ -18,12 +18,14 @@ type LayoutProps = {
   children: React.ReactNode;
   minimal?: boolean;
   headerTargetBlank?: boolean;
+  canHideHeaderFooter?: boolean;
 };
 
 export function Layout({
   children,
   minimal = false,
   headerTargetBlank = false,
+  canHideHeaderFooter = false,
 }: LayoutProps) {
   return (
     <>
@@ -34,9 +36,9 @@ export function Layout({
           }}
         >
           {isProduction && <ZoominfoAnalytics />}
-          <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />
+          {!canHideHeaderFooter && <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />}
           <Box>{children}</Box>
-          <CFooter minimal={minimal} />
+          {!canHideHeaderFooter && <CFooter minimal={minimal} />}
         </AppShell>
       </HubspotProvider>
     </>

@@ -201,3 +201,5 @@ export type ITextandTextColumns = {
   addBorder: boolean;
   header: string;
 };
+
+export type ISectionsArray = Array <ISection | IReferencedSection >;
