@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import * as classes from "./navigation.module.css";
 import cx from "clsx";
 import { ContentfulPage } from "types/page";
-import { Link } from "gatsby";
+import { Link, navigate } from "gatsby";
 import { getPathForSectionAndPage } from "utils/links";
+import {  PATH, SLUGS } from "constants/routes";
 
 export function Navigation({ pages }: { pages: ContentfulPage[] }) {
   const [visibleIndex, setVisibleIndex] = useState<number | null>(null);
@@ -22,6 +23,9 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation(); 
+                      if(page.slug === SLUGS.SOLUTION){ 
+                        navigate(PATH.SOLUTION);
+                      }
                     }}
                     className={cx(classes.navLink, {
                     
