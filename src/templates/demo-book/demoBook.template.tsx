@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { Layout } from 'layouts/Layout/Layout';
-import type { ContenfulHeaderLogo, ContentfulPage } from 'types/page';
-import PageContext from 'contexts/PageContext';
-import {  graphql } from 'gatsby';
-import { PAGE_WITHOUT_HEADER_FOOTER } from 'constants/page';
-import { IReferencedSection, ISection } from 'types/section';
-import { getLeftRightArrayFromSections } from 'utils/utils';
-import LeftRightContainer from 'components/LeftRigtContainer/LeftRigthContainer';
+import React, { useEffect } from "react";
+import { Layout } from "layouts/Layout/Layout";
+import type { ContenfulHeaderLogo, ContentfulPage } from "types/page";
+import PageContext from "contexts/PageContext";
+import { graphql } from "gatsby";
+import { PAGE_WITHOUT_HEADER_FOOTER } from "constants/page";
+import { IReferencedSection, ISection } from "types/section";
+import { getLeftRightArrayFromSections } from "utils/utils";
+import LeftRightContainer from "components/LeftRigtContainer/LeftRigthContainer";
 
 type DemoBookTemplateProps = {
   data: {
@@ -21,18 +21,17 @@ const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
   const philLogo = allContentfulHeader.nodes[0]?.logo;
   const whiltePhilLogo = allContentfulHeader.nodes[0]?.whiteLogo || philLogo;
   const { sections, title, slug, id } = contentfulPage;
-  console.log(id, '333', philLogo);
 
   const canHideHeaderFooter = PAGE_WITHOUT_HEADER_FOOTER.includes(title);
 
   const LeftRightSections = getLeftRightArrayFromSections(
-    sections as Array<ISection | IReferencedSection>
+    sections as Array<ISection | IReferencedSection>,
   );
 
   useEffect(() => {
-    if (slug === '/') {
-      document.body.classList.remove('/');
-      document.body.classList.add('home');
+    if (slug === "/") {
+      document.body.classList.remove("/");
+      document.body.classList.add("home");
     }
     if (slug) {
       document.body.classList.remove(slug);
@@ -41,21 +40,21 @@ const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
 
     return () => {
       document.body.classList.remove(slug);
-      document.body.classList.remove('home');
+      document.body.classList.remove("home");
     };
   }, [slug]);
 
   return (
     <PageContext.Provider value={{ title }}>
       <Layout minimal={false} canHideHeaderFooter={canHideHeaderFooter}>
-        <>
+        <main className="demoBookPage">
           <LeftRightContainer
             leftSection={LeftRightSections.leftSection}
             rightSection={LeftRightSections.rightSection}
             philLogo={philLogo}
             whiltePhilLogo={whiltePhilLogo}
           />
-        </>
+        </main>
       </Layout>
     </PageContext.Provider>
   );
