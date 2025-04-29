@@ -1,3 +1,7 @@
+.basicSectionColumn{
+  margin-bottom: 40px;
+}
+
 .title {
   &[data-is-embed-form-template="true"] {
     font-size: 40px;
@@ -201,4 +205,8 @@
   @media (min-width: $phil-breakpoint-sm) {
     padding-bottom: 0px;
   }
+}
+
+.trustpilotWidgetWrapper{
+  margin-bottom: -40px;
 }

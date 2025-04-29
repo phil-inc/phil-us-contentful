@@ -16,7 +16,7 @@ type Props = {
 
 const ReferencedSectionColumn = ({ section }: Props) => {
   return (
-    <section className={classes.section}>
+    <section className={classes.referencedSection}>
       <Title order={3} className={classes.title}>
         {section.title}
       </Title>

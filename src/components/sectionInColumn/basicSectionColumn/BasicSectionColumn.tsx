@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { useId } from "react";
 import {
   Anchor,
   Box,
@@ -8,34 +8,34 @@ import {
   Portal,
   Text,
   Title,
-} from '@mantine/core';
-import { renderRichText } from 'gatsby-source-contentful/rich-text';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+} from "@mantine/core";
+import { renderRichText } from "gatsby-source-contentful/rich-text";
+import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import {
   GatsbyImage,
   getImage,
   ImageDataLike,
   StaticImage,
-} from 'gatsby-plugin-image';
-import { Link } from 'gatsby';
+} from "gatsby-plugin-image";
+import { Link } from "gatsby";
 
-import { TAsset } from 'types/asset';
-import { ISection, MediaItem } from 'types/section';
+import { TAsset } from "types/asset";
+import { ISection, MediaItem } from "types/section";
 
-import { getLink } from 'utils/getLink';
-import { isVideoContent } from 'utils/isVideoContent';
-import { extractAssetData } from 'utils/asset';
-import { getHubspotFormDetails } from 'utils/utils';
+import { getLink } from "utils/getLink";
+import { isVideoContent } from "utils/isVideoContent";
+import { extractAssetData } from "utils/asset";
+import { getHubspotFormDetails } from "utils/utils";
 
-import PageContext from 'contexts/PageContext';
+import PageContext from "contexts/PageContext";
 
-import useDeviceType from 'hooks/useView';
+import useDeviceType from "hooks/useView";
 
-import ImageContainer from 'components/common/Container/ImageContainer';
-import Asset from 'components/common/Asset/Asset';
-import HubspotForm from 'components/common/HubspotForm/HubspotForm';
+import ImageContainer from "components/common/Container/ImageContainer";
+import Asset from "components/common/Asset/Asset";
+import HubspotForm from "components/common/HubspotForm/HubspotForm";
 
-import * as classes from './BasicSectionColumn.module.css';
+import * as classes from "./BasicSectionColumn.module.css";
 
 type Props = {
   section: ISection;
@@ -45,7 +45,7 @@ type Props = {
 const BasicSectionColumn = ({ section, index = 0 }: Props) => {
   const context = React.useContext(PageContext);
   const uuid = useId();
-  const isDesktop = useDeviceType('xl');
+  const isDesktop = useDeviceType("xl");
   const isSectionV2 = section.v2Flag;
   const hasYoutubeLink = isSectionV2
     ? Boolean(section?.mediaItem?.youtubeLink)
@@ -75,12 +75,12 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
     if (isSectionV2) {
       return isVideoContent(section?.mediaItem?.media?.file?.contentType) ||
         hasYoutubeLink
-        ? 'transparent'
+        ? "transparent"
         : undefined;
     }
 
     return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink
-      ? 'transparent'
+      ? "transparent"
       : undefined;
   };
 
@@ -108,7 +108,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
             //   marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`,
             // }}
             image={image!}
-            alt={''}
+            alt={""}
           />
         );
       },
@@ -151,7 +151,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
           return (
             <Anchor
               className={classes.externalLink}
-              href={target?.link?.externalUrl ?? '#'}
+              href={target?.link?.externalUrl ?? "#"}
               target="_blank"
               referrerPolicy="no-referrer"
               data-video={isVideo()}
@@ -165,6 +165,16 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
       },
 
       [BLOCKS.PARAGRAPH](node, children) {
+        const html = node.content[0]?.value || "";
+        if (html.includes("trustpilot-widget")) {
+          return (
+            <div
+              className={classes.trustpilotWidgetWrapper}
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          );
+        }
+
         return (
           <Text
             data-index={index}
@@ -287,7 +297,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
             </Box>
           )}
           {Boolean(section.addBorder) && (
-            <Divider size={'sm'} className={classes.divider} />
+            <Divider size={"sm"} className={classes.divider} />
           )}
         </section>
       )}
