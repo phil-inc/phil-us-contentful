@@ -6,3 +6,4 @@ export { default as crossIcon } from "./images/icons/cross.svg";
 export { default as notFoundIcon } from "./images/404.svg";
 export { default as getPhilRxAccessSolution } from "./images/philrx-access-solution.jpg";
 export { default as getDataInsights } from "./images/DataInsight.svg";
+export { default as dottedCircleBackground } from "./images/background-icon/Circles Right.svg";

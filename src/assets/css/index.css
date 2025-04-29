@@ -117,3 +117,12 @@
 #the-all-in-one-access-solution-for-retail-and-specialty-lite-success {
 	padding-bottom: 60px;
 }
+
+.demoBookPage{
+  width: 100%;
+
+  @media screen and (min-width: 1680px) {
+      max-width: 1600px;
+      margin: 0 auto;
+  }
+}
