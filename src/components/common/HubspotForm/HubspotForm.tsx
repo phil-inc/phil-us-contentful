@@ -22,6 +22,7 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({
     target: `#${uuid}`,
     portalId,
     formId,
+    cssClass: classname,
     onFormSubmitted() {
       navigate("/sharpen-your-access-and-commercialization-efforts");
     },

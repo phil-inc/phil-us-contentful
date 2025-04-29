@@ -293,7 +293,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
           )}
           {section?.embedForm && (
             <Box className={classes.formSection}>
-              <HubspotForm formId={formId} portalId={portalId} />
+              <HubspotForm formId={formId} portalId={portalId} classname="book-demo-hubspot-form" />
             </Box>
           )}
           {Boolean(section.addBorder) && (
