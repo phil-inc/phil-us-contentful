@@ -1,0 +1,40 @@
+.section {
+  margin-bottom: 60px;
+}
+
+.left {
+  max-height: 100%;
+  padding: 50px 50px;
+  color: #ffffff;
+
+  &[data-context='Demo Page'] {
+    background-color: #00827e;
+  }
+}
+
+.right {
+  padding: 50px 50px;
+
+  &[data-context='Demo Page'] {
+    background-color: #ffffff;
+  }
+}
+
+.canShowLeftLogo {
+  display: none;
+  @media (min-width: $phil-breakpoint-md) {
+    display: block;
+  }
+}
+.canShowRightLogo {
+  display: block;
+  @media (min-width: $phil-breakpoint-md) {
+    display: none;
+  }
+}
+
+.logo {
+  max-width: 125px;
+  max-height: 90px;
+  margin-bottom: 60px;
+}

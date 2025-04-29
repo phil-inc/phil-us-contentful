@@ -11,6 +11,7 @@ const templates = {
   ),
   CaseStudy: path.resolve("./src/templates/case-study.tsx"),
   Blog: path.resolve("./src/templates/blog.tsx"),
+  "Demo Page": path.resolve("./src/templates/demo-book/demoBook.template.tsx"),
   Default: path.resolve("./src/templates/page.tsx"),
 } as const; // Mark the object as a constant so TypeScript can infer a narrower type
 
