@@ -7,6 +7,7 @@ import { PAGE_WITHOUT_HEADER_FOOTER } from "constants/page";
 import { IReferencedSection, ISection } from "types/section";
 import { getLeftRightArrayFromSections } from "utils/utils";
 import LeftRightContainer from "components/LeftRigtContainer/LeftRigthContainer";
+import Head from "components/common/Head/Head";
 
 type DemoBookTemplateProps = {
   data: {
@@ -14,6 +15,9 @@ type DemoBookTemplateProps = {
     allContentfulHeader: ContenfulHeaderLogo;
   };
 };
+
+// Page head
+export { Head };
 
 const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
   data: { contentfulPage, allContentfulHeader },
@@ -25,7 +29,7 @@ const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
   const canHideHeaderFooter = PAGE_WITHOUT_HEADER_FOOTER.includes(title);
 
   const LeftRightSections = getLeftRightArrayFromSections(
-    sections as Array<ISection | IReferencedSection>,
+    sections as Array<ISection | IReferencedSection>
   );
 
   useEffect(() => {
