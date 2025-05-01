@@ -14,6 +14,7 @@ type Props = {
   section: IReferencedSection;
 };
 
+//TODO: need to make like ReferencedSection but it is done for the demo page only
 const ReferencedSectionColumn = ({ section }: Props) => {
   return (
     <section className={classes.referencedSection}>

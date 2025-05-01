@@ -10,6 +10,7 @@ import { TAsset } from "types/asset";
 import { navigate } from "gatsby";
 import { dottedCircleBackground, notFoundIcon } from "assets/images";
 import { PAGES_TITLE } from "constants/page";
+import { useIsLaptop } from "hooks/useIsLaptop";
 
 type Props = {
   leftSection: ISectionsArray;
@@ -28,6 +29,7 @@ export default function LeftRightContainer({
   const lengthOfRightSection = rightSection.length;
   const context = useContext(PageContext);
   const isDemoPage = context.title === PAGES_TITLE.DEMO;
+  const isLaptopScreen = useIsLaptop();
 
   const renderPhilLogo = (logo: TAsset) => {
     return (
@@ -68,8 +70,8 @@ export default function LeftRightContainer({
   };
 
   return (
-    <div className={classes.maincontainer}>
-      <Grid gutter={0}>
+    <div className={classes.leftRightContainer}>
+      <Grid gutter={0} style={{ height: "100%" }}>
         <Grid.Col
           className={cx(classes.gridBox, classes.left)}
           data-context={title}
@@ -101,8 +103,8 @@ export default function LeftRightContainer({
               </div>
               {renderSection(rightSection)}
             </section>
-            {isDemoPage && (
-              <div className={classes.bottomImage}>
+            {(!isLaptopScreen && isDemoPage) && (
+              <div className={classes.mobileBottomImage}>
                 <img src={dottedCircleBackground} />
               </div>
             )}

@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
-import { Layout } from "layouts/Layout/Layout";
-import type { ContenfulHeaderLogo, ContentfulPage } from "types/page";
-import PageContext from "contexts/PageContext";
 import { graphql } from "gatsby";
-import { PAGE_WITHOUT_HEADER_FOOTER } from "constants/page";
+
+import { Layout } from "layouts/Layout/Layout";
+import PageContext from "contexts/PageContext";
+import type { ContenfulHeaderLogo, ContentfulPage } from "types/page";
+import { PAGE_WITHOUT_HEADER_FOOTER, PAGES_TITLE } from "constants/page";
 import { IReferencedSection, ISection } from "types/section";
+
 import { getLeftRightArrayFromSections } from "utils/utils";
-import LeftRightContainer from "components/LeftRigtContainer/LeftRigthContainer";
+
 import Head from "components/common/Head/Head";
+import LeftRightContainer from "components/LeftRigtContainer/LeftRigthContainer";
+
+import { dottedCircleBackground } from "assets/images";
+
+import { useIsLaptop } from "hooks/useIsLaptop";
 
 type DemoBookTemplateProps = {
   data: {
@@ -31,6 +38,9 @@ const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
   const LeftRightSections = getLeftRightArrayFromSections(
     sections as Array<ISection | IReferencedSection>
   );
+  const isDemoPage = contentfulPage.title === PAGES_TITLE.DEMO;
+  const isLaptopScreen = useIsLaptop();
+
 
   useEffect(() => {
     if (slug === "/") {
@@ -58,6 +68,11 @@ const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
             philLogo={philLogo}
             whiltePhilLogo={whiltePhilLogo}
           />
+          {isLaptopScreen && isDemoPage && (
+            <div className="bottomImage">
+              <img src={dottedCircleBackground} alt="dot circle" />
+            </div>
+          )}
         </main>
       </Layout>
     </PageContext.Provider>

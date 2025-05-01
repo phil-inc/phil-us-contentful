@@ -1,0 +1,7 @@
+export const SCREEN_SIZES = {
+    MOBILE: 480,
+    TABLET: 768,
+    SMALL_DESKTOP: 1024,
+    DESKTOP: 1280,
+    LARGE_DESKTOP: 1536,
+  };
