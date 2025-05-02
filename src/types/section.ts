@@ -149,6 +149,7 @@ export type IReferencedSection = {
     id: string;
     subHeading: string;
   };
+  subHeadingRichtext:BodyType;
   references: TResource[];
   metadata?: Metadata;
   buttonText?: string;

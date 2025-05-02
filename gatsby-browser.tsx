@@ -28,15 +28,3 @@ export const wrapPageElement = ({element}) => {
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.js', import.meta.url).toString();
 
-
-// Add Trustpilot script once on client-side navigation
-export const onRouteUpdate = () => {
-	const id = 'trustpilot-widget-script';
-	if (!document.getElementById(id)) {
-	  const script = document.createElement('script');
-	  script.src = '//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js';
-	  script.async = true;
-	  script.id = id;
-	  document.body.appendChild(script);
-	}
-  };
