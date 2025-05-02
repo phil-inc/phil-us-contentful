@@ -8,7 +8,6 @@ import { getDescriptionFromRichtext } from "utils/getDescription";
 
 import * as classes from "./ReferenceSectionColumn.module.css";
 
-import RichTextRenderer from "components/common/RichTextRenderer/RichTextRenderer";
 
 import PageContext from "contexts/PageContext";
 
@@ -32,15 +31,6 @@ const ReferencedSectionColumn = ({ section }: Props) => {
         <Text fz="md" mt={4} className={classes.subHeading}>
           {section.subHeading.subHeading}
         </Text>
-      )}
-      {section.subHeadingRichtext?.raw && (
-        <RichTextRenderer
-          body={section.subHeadingRichtext}
-          context={context}
-          isVideo={false}
-          index={0}
-          className="referencedSec"
-        />
       )}
 
       <Grid

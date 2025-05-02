@@ -361,9 +361,6 @@ export const query = graphql`
             id
             subHeading
           }
-          subHeadingRichtext {
-            raw
-          }
           addBorder
           sectionType
           metadata {
