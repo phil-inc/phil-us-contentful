@@ -1,20 +1,25 @@
-import {
-  Divider,
-  Grid,
-  Text,
-  Title,
-} from '@mantine/core';
-import React from 'react';
-import { TResource } from 'types/resource';
-import { IReferencedSection } from 'types/section';
-import { getDescriptionFromRichtext } from 'utils/getDescription';
-import * as classes from './ReferenceSectionColumn.module.css';
+import React, { useContext } from "react";
+import { Divider, Grid, Text, Title } from "@mantine/core";
+
+import { TResource } from "types/resource";
+import { IReferencedSection } from "types/section";
+
+import { getDescriptionFromRichtext } from "utils/getDescription";
+
+import * as classes from "./ReferenceSectionColumn.module.css";
+
+import RichTextRenderer from "components/common/RichTextRenderer/RichTextRenderer";
+
+import PageContext from "contexts/PageContext";
 
 type Props = {
   section: IReferencedSection;
 };
 
+//TODO: need to make like ReferencedSection but it is done for the demo page only
 const ReferencedSectionColumn = ({ section }: Props) => {
+  const context = useContext(PageContext);
+
   return (
     <section className={classes.referencedSection}>
       <Title order={3} className={classes.title}>
@@ -28,6 +33,15 @@ const ReferencedSectionColumn = ({ section }: Props) => {
           {section.subHeading.subHeading}
         </Text>
       )}
+      {section.subHeadingRichtext?.raw && (
+        <RichTextRenderer
+          body={section.subHeadingRichtext}
+          context={context}
+          isVideo={false}
+          index={0}
+          className="referencedSec"
+        />
+      )}
 
       <Grid
         className={classes.gridCard}
@@ -37,14 +51,19 @@ const ReferencedSectionColumn = ({ section }: Props) => {
       >
         {section.references?.map((item: TResource) => {
           return (
-            <Grid.Col key={item.id + "card"} span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
+            <Grid.Col
+              key={item.id + "card"}
+              span={{ base: 12, sm: 4, md: 4, lg: 4 }}
+            >
               <div className={classes.card}>
-                <Text align='center' className={classes.cardTitle}>{item.heading}</Text>
+                <Text align="center" className={classes.cardTitle}>
+                  {item.heading}
+                </Text>
                 {item.body && (
                   <div>
-                  <Text className={classes.cardBody} lineClamp={2}>
-                    {getDescriptionFromRichtext(item?.body?.raw ?? '')}
-                  </Text>
+                    <Text className={classes.cardBody} lineClamp={2}>
+                      {getDescriptionFromRichtext(item?.body?.raw ?? "")}
+                    </Text>
                   </div>
                 )}
               </div>
@@ -53,7 +72,7 @@ const ReferencedSectionColumn = ({ section }: Props) => {
         })}
       </Grid>
       {Boolean(section.addBorder) && (
-        <Divider size={'sm'} className={classes.divider} />
+        <Divider size={"sm"} className={classes.divider} />
       )}
     </section>
   );
