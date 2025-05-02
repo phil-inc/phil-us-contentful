@@ -25,7 +25,7 @@ import { ISection, MediaItem } from "types/section";
 import { getLink } from "utils/getLink";
 import { isVideoContent } from "utils/isVideoContent";
 import { extractAssetData } from "utils/asset";
-import { getHubspotFormDetails } from "utils/utils";
+import { extractTrustpilotHtml, getHubspotFormDetails } from "utils/utils";
 
 import PageContext from "contexts/PageContext";
 
@@ -34,6 +34,7 @@ import useDeviceType from "hooks/useView";
 import ImageContainer from "components/common/Container/ImageContainer";
 import Asset from "components/common/Asset/Asset";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
+import TrustpilotWidget from "components/common/TrustpilotWidget/TrustPilotWidget";
 
 import * as classes from "./BasicSectionColumn.module.css";
 
@@ -165,14 +166,15 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
       },
 
       [BLOCKS.PARAGRAPH](node, children) {
-        const html = node.content[0]?.value || "";
-        if (html.includes("trustpilot-widget")) {
+        const trustpilotHtml = extractTrustpilotHtml(node)
+        
+        if (trustpilotHtml && trustpilotHtml.includes("trustpilot-widget")) {
           return (
-            <div
-              className={classes.trustpilotWidgetWrapper}
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          );
+            <>
+              <TrustpilotWidget />
+              <div dangerouslySetInnerHTML={{ __html: trustpilotHtml }} data-trustpilot-rendered />
+            </>
+          )
         }
 
         return (

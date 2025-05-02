@@ -1,5 +1,9 @@
 import React from "react";
 
-const PageContext = React.createContext({} as { title: string });
+export type PageContextType = {
+    title: string;
+}
+
+const PageContext = React.createContext({} as PageContextType);
 
 export default PageContext;

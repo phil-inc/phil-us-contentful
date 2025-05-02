@@ -2,7 +2,7 @@
   --section-padding: 60px;
 }
 
-.leftRightContainer{
+.leftRightContainer {
   height: inherit;
 }
 
@@ -15,13 +15,13 @@
   max-height: 100%;
   color: #ffffff;
 
-  &[data-context='Demo Page'] {
-    background-color: #00827e;
+  &[data-context="Demo Page"] {
+    background: linear-gradient(180deg, #00827e 0%, #005d5a 100%);
   }
 }
 
 .right {
-  &[data-context='Demo Page'] {
+  &[data-context="Demo Page"] {
   }
 
   @media (min-width: $phil-breakpoint-md) {
@@ -71,4 +71,3 @@
     object-fit: cover;
   }
 }
-
