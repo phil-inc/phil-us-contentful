@@ -35,6 +35,9 @@ import ImageContainer from "components/common/Container/ImageContainer";
 import Asset from "components/common/Asset/Asset";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
 import TrustpilotWidget from "components/common/TrustpilotWidget/TrustPilotWidget";
+import RightArrowCircle from "components/icons/RightArrow.icon";
+
+import { THANKS_FOR_YOUR_INTEREST } from "constants/identifiers";
 
 import * as classes from "./BasicSectionColumn.module.css";
 
@@ -56,6 +59,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
     ? section?.mediaItem?.youtubeLink
     : section.youtubeVideoUrl;
   const { formId, portalId } = getHubspotFormDetails(section?.embedForm);
+const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
 
   const isVideo = () => {
     if (isSectionV2) {
@@ -196,12 +200,11 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
             data-context={context.title}
             className={classes.list}
             data-video={isVideo()}
-            icon={
-              <StaticImage
-                src="../../../assets/images/icons/Arrow.svg"
-                alt="right arrow Icon"
-              />
-            }
+            icon={isThanksSection 
+              ? <Box className={classes.ulIcon}>
+              <RightArrowCircle width="23px" height="23px"/>
+              </Box>
+              : undefined}
           >
             {children}
           </List>
