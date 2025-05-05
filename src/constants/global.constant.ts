@@ -4,4 +4,6 @@ export const SCREEN_SIZES = {
     SMALL_DESKTOP: 1024,
     DESKTOP: 1280,
     LARGE_DESKTOP: 1536,
-  };
+};
+
+export const LAYOUT_12COL = 12;
