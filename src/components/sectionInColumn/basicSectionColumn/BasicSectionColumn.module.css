@@ -126,6 +126,10 @@
   }
 }
 
+.ulIcon{
+  display: flex;
+}
+
 .heroGridColumn {
   &[data-is-embed-form-template="true"] {
     padding-left: 0px;
