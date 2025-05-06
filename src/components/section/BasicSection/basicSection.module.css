@@ -25,7 +25,9 @@
 }
 
 .title {
-	&[data-is-embed-form-template='true'] {
+	overflow-wrap: break-word;
+
+		&[data-is-embed-form-template='true'] {
 		font-size: 40px;
 
 		&[data-index='0'] {
@@ -66,8 +68,7 @@
 	}
 	
 	&[data-oneColumn="true"] {
-		text-align: left;
-		color: white;
+		color: #FFFFFF;
 
 		@media (min-width: $phil-breakpoint-sm) {
 			text-align: center;
@@ -224,7 +225,7 @@
 	width: 100% !important;
 
 	&.secondaryBtn {
-			background-color: white;
+			background-color: #FFFFFF;
 			color: black;
 			border-radius: 0px;
 		}
