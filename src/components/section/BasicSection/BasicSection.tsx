@@ -41,8 +41,8 @@ import * as classes from "./basicSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 import useDeviceType from "hooks/useView";
 import { extractAssetData } from "utils/asset";
-import { dottedCircleBannerBackground } from "assets/images";
-import { LAYOUT_12COL } from "constants/global.constant";
+
+import { BUTTON_STYLE, LAYOUT_12COL } from "constants/global.constant";
 
 type BasicSectionProps = {
   section: ISection;
@@ -114,9 +114,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       [BLOCKS.EMBEDDED_ENTRY](node, children) {
         if (node?.data?.target) {
           const { target } = node.data;
-
+          const isSecondaryAltButton =
+            node.data.target.buttonStyle === BUTTON_STYLE.Secondary;
           const button = (
-            <Button className={classes.button} variant="philDefault">
+            <Button
+              className={cx(classes.button, {
+                [classes.secondaryBtn]: isSecondaryAltButton,
+              })}
+              variant={isSecondaryAltButton ? "white" : "philDefault"}
+            >
               {node.data.target.buttonText}
             </Button>
           );
@@ -343,9 +349,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     }} className={cx(classes.basicSectionMainContainer, section.slug)}
     >
       <>
-      {isOneColumn && 
+      {section?.backgroundAssetImage && 
         <div className={classes.rightBackgroundIcon}>
-            <img src={dottedCircleBannerBackground} alt="dot graphic" />
+          <Asset
+              asset={section.backgroundAssetImage}
+          />
           </div>
       }
     <Container
