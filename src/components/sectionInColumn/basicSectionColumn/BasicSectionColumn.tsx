@@ -15,9 +15,9 @@ import {
   GatsbyImage,
   getImage,
   ImageDataLike,
-  StaticImage,
 } from "gatsby-plugin-image";
 import { Link } from "gatsby";
+import cx from "clsx";
 
 import { TAsset } from "types/asset";
 import { ISection, MediaItem } from "types/section";
@@ -109,9 +109,6 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
         const image = getImage(imageData?.image as ImageDataLike);
         return (
           <GatsbyImage
-            // style={{
-            //   marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`,
-            // }}
             image={image!}
             alt={""}
           />
@@ -198,7 +195,7 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
             spacing="lg"
             type="unordered"
             data-context={context.title}
-            className={classes.list}
+            className={cx(classes.list, classes.ulList)}
             data-video={isVideo()}
             icon={isThanksSection 
               ? <Box className={classes.ulIcon}>

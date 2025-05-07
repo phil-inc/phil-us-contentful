@@ -162,6 +162,10 @@
 	&[data-video='true'] {
 		margin-top: 16px;
 	}
+
+	&[data-oneColumn="true"] {
+		max-width: 100%;
+	}
 }
 
 .list {

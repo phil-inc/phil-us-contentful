@@ -126,6 +126,10 @@
   }
 }
 
+.ulList{
+  font-family: Lato;
+}
+
 .ulIcon{
   display: flex;
 }
@@ -200,7 +204,7 @@
 }
 
 .divider {
-  border-top: 1px solid #6a7979;
+  border-top: 1px solid #F4F4F4;
 }
 
 #the-all-in-one-access-solution-for-retail-and-specialty-lite-success {
