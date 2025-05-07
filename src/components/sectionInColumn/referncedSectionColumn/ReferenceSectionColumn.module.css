@@ -15,6 +15,7 @@
 }
 
 .subHeading {
+  font-family: Lato;
   margin-bottom: 18px;
 
   @media (min-width: $phil-breakpoint-sm) {
@@ -56,4 +57,5 @@
 
 .divider {
   margin-top: 50px;
+  border: 0.6px solid #F4F4F4
 }

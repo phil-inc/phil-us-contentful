@@ -177,7 +177,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             data-is-embed-form-template={isEmbedFormTemplate}
             data-video={isVideo()}
             className={classes.body}
-          >
+            data-oneColumn={isOneColumn}
+            >
             {children}
           </Text>
         );
