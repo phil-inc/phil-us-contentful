@@ -90,6 +90,7 @@ export type ISection = {
   v2Flag: boolean;
   addBorder: boolean;
   isReverse: boolean;
+  backgroundAssetImage?: TAsset;
 };
 
 export enum ResourceBlocksEnum {

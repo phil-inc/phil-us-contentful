@@ -1,5 +1,6 @@
 .header {
-	position: static !important;
+	/* position: static !important; */
+	position: sticky;
 }
 
 .burger {

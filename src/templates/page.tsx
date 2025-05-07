@@ -299,6 +299,22 @@ export const query = graphql`
               url
             }
           }
+          backgroundAssetImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
           buttonText
           header
           sectionType

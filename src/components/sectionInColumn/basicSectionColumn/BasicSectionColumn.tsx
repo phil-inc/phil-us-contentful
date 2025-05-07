@@ -15,9 +15,9 @@ import {
   GatsbyImage,
   getImage,
   ImageDataLike,
-  StaticImage,
 } from "gatsby-plugin-image";
 import { Link } from "gatsby";
+import cx from "clsx";
 
 import { TAsset } from "types/asset";
 import { ISection, MediaItem } from "types/section";
@@ -35,6 +35,9 @@ import ImageContainer from "components/common/Container/ImageContainer";
 import Asset from "components/common/Asset/Asset";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
 import TrustpilotWidget from "components/common/TrustpilotWidget/TrustPilotWidget";
+import RightArrowCircle from "components/icons/RightArrow.icon";
+
+import { THANKS_FOR_YOUR_INTEREST } from "constants/identifiers";
 
 import * as classes from "./BasicSectionColumn.module.css";
 
@@ -56,6 +59,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
     ? section?.mediaItem?.youtubeLink
     : section.youtubeVideoUrl;
   const { formId, portalId } = getHubspotFormDetails(section?.embedForm);
+const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
 
   const isVideo = () => {
     if (isSectionV2) {
@@ -105,9 +109,6 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
         const image = getImage(imageData?.image as ImageDataLike);
         return (
           <GatsbyImage
-            // style={{
-            //   marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`,
-            // }}
             image={image!}
             alt={""}
           />
@@ -194,14 +195,13 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
             spacing="lg"
             type="unordered"
             data-context={context.title}
-            className={classes.list}
+            className={cx(classes.list, classes.ulList)}
             data-video={isVideo()}
-            icon={
-              <StaticImage
-                src="../../../assets/images/icons/Arrow.svg"
-                alt="right arrow Icon"
-              />
-            }
+            icon={isThanksSection 
+              ? <Box className={classes.ulIcon}>
+              <RightArrowCircle width="23px" height="23px"/>
+              </Box>
+              : undefined}
           >
             {children}
           </List>
