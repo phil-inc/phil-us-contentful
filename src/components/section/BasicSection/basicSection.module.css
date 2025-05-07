@@ -1,5 +1,33 @@
+.basicSectionMainContainer {
+	position: relative;
+	overflow: hidden;
+
+	.rightBackgroundIcon {
+		display: none;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			opacity: 0.8;
+			display: block;
+			position: absolute;
+			top: -20%;
+			right: -5%;
+			height: 200%;
+			z-index: 1;
+		}
+
+		>img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: 0% 50%;
+		}
+	}
+}
+
 .title {
-	&[data-is-embed-form-template='true'] {
+	overflow-wrap: break-word;
+
+		&[data-is-embed-form-template='true'] {
 		font-size: 40px;
 
 		&[data-index='0'] {
@@ -23,6 +51,10 @@
 }
 
 .basicSectionContainer {
+	position: relative;
+	z-index: 2;
+	padding:40px;
+	
 	&[data-index='0'] {
 		@media (min-width: $phil-breakpoint-sm) {
 			padding-top: 160px;
@@ -32,6 +64,14 @@
 		&[data-context='Company'] {
 			padding-top: 64px;
 			padding-bottom: 64px;
+		}
+	}
+	
+	&[data-oneColumn="true"] {
+		color: #FFFFFF;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			text-align: center;
 		}
 	}
 
@@ -165,8 +205,11 @@
 	display: inline-block;
 	height: min-content;
 	width: 100%;
-
 	margin-top: 32px;
+
+	&[data-oneColumn="true"] {
+		margin: 32px auto 0px;
+	}
 
 	@media (min-width: $phil-breakpoint-md) {
 		display: block;
@@ -180,6 +223,12 @@
 
 .button {
 	width: 100% !important;
+
+	&.secondaryBtn {
+			background-color: #FFFFFF;
+			color: black;
+			border-radius: 0px;
+		}
 }
 
 .group {

@@ -42,6 +42,8 @@ import { getColorFromStylingOptions } from "utils/stylingOptions";
 import useDeviceType from "hooks/useView";
 import { extractAssetData } from "utils/asset";
 
+import { BUTTON_STYLE, LAYOUT_12COL } from "constants/global.constant";
+
 type BasicSectionProps = {
   section: ISection;
   index: number;
@@ -76,7 +78,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const { width } = useViewportSize();
   const isDesktop = useDeviceType("xl");
   const isMobileView = !isDesktop;
-
+  const span =
+    LAYOUT_12COL /
+    (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
+  const isOneColumn =
+    section?.renderOptions?.layoutOptions?.numberOfColumns === 1;
 
   // eslint-disable-next-line array-callback-return
   section?.body?.references?.map((reference: any) => {
@@ -108,9 +114,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       [BLOCKS.EMBEDDED_ENTRY](node, children) {
         if (node?.data?.target) {
           const { target } = node.data;
-
+          const isSecondaryAltButton =
+            node.data.target.buttonStyle === BUTTON_STYLE.Secondary;
           const button = (
-            <Button className={classes.button} variant="philDefault">
+            <Button
+              className={cx(classes.button, {
+                [classes.secondaryBtn]: isSecondaryAltButton,
+              })}
+              variant={isSecondaryAltButton ? "white" : "philDefault"}
+            >
               {node.data.target.buttonText}
             </Button>
           );
@@ -122,6 +134,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               <Portal target={`#${uuid}`}>
                 <Link
                   data-video={isVideo()}
+                  data-oneColumn={isOneColumn}
                   className={classes.internalLink}
                   to={link}
                 >
@@ -131,6 +144,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             ) : (
               <Link
                 data-video={isVideo()}
+                data-oneColumn={isOneColumn}
                 className={classes.internalLink}
                 to={link}
               >
@@ -332,7 +346,16 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       background: section.v2Flag
         ? getColorFromStylingOptions(section.stylingOptions?.background)
         : sectionBackground(section.background),
-    }} className={section.slug}>
+    }} className={cx(classes.basicSectionMainContainer, section.slug)}
+    >
+      <>
+      {section?.backgroundAssetImage && 
+        <div className={classes.rightBackgroundIcon}>
+          <Asset
+              asset={section.backgroundAssetImage}
+          />
+          </div>
+      }
     <Container
       id={slugify(section.header, { lower: true, strict: true })}
       size={"xl"}
@@ -340,6 +363,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-index={index}
       data-context={context.title}
       data-is-embed-form-template={isEmbedFormTemplate}
+      data-oneColumn={isOneColumn}
     >
       <>
         <Grid
@@ -354,7 +378,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           <Grid.Col
             className={isEmbedFormTemplate ? classes.textGridColumn : undefined}
             order={textColumnOrder}
-            span={{ base: 12, md: 6 }}
+            span={{ base: 12, md: span }}
           >
             {section.isHubspotEmbed ? (
               <>
@@ -417,23 +441,24 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           {/* Hero Grid Column */}
           {/* TODO:: Handle in css */}
           {/* TODO: Refactor v2Flags and links */}
+          {(section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) &&
           <Grid.Col
             className={cx(classes.heroGridColumn, classes.embedFormTemplate)}
             ref={heroRef}
             order={imageColumnOrder}
-            span={{ base: 12, md: 6 }}
+            span={{ base: 12, md: span }}
             style={{
               height: context.title === CONTACT_PAGE ? height : undefined,
             }}
             data-is-embed-form-template={isEmbedFormTemplate}
-          >
+            >
             <Group
               h={context.title === CONTACT_PAGE ? "100%" : undefined}
               classNames={{ root: classes.group }}
               gap={0}
               data-is-video={isVideo()}
               data-context={context.title}
-            >
+              >
               {section.embedForm ? (
                 <Box className={classes.formWrapper}>
                   <HubspotForm formId={formId} portalId={portalId} />
@@ -460,6 +485,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               )}
             </Group>
           </Grid.Col>
+          }
         </Grid>
 
         <Box className={classes.portalBox} id={uuid}></Box>
@@ -478,6 +504,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         ) : null}
       </>
     </Container>
+    </>
     </Box>
     </>
   );
