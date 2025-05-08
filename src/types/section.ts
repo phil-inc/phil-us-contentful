@@ -52,8 +52,8 @@ export type ISection = {
   isInsertSnippet: boolean;
   hideNavigationAnchor: boolean;
   codeSnippet?: { codeSnippet: string };
-  buttonText: string;
-  internalLink: {
+  buttonText?: string;
+  internalLink?: {
     id: string;
     page?: Array<{ title: string }>;
     header?: string;
@@ -67,15 +67,15 @@ export type ISection = {
       };
     };
   };
-  externalLink: string;
-  asset: TAsset;
+  externalLink?: string;
+  asset?: TAsset;
   subNavigationSection?: TResource[];
   isHidden: boolean;
-  embedForm: BodyType;
-  background: BackgroundType;
-  automaticOrder: true;
+  embedForm?: BodyType;
+  background?: BackgroundType;
+  automaticOrder: boolean;
 
-  mediaItem: {
+  mediaItem?: {
     id: string;
     name: string;
     media: TAsset;
@@ -83,9 +83,9 @@ export type ISection = {
     emdedForm: BodyType;
   };
 
-  stylingOptions: StylingOptions;
+  stylingOptions?: StylingOptions;
 
-  renderOptions: RenderOptions;
+  renderOptions?: RenderOptions;
 
   v2Flag: boolean;
   addBorder: boolean;
