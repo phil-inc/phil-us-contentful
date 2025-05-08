@@ -1,5 +1,5 @@
 import type { TAsset } from "./asset";
-import type { BodyType, MediaItem, Metadata, StylingOptions } from "./section";
+import type { BodyType, MediaItem, Metadata, RenderOptions, StylingOptions } from "./section";
 
 export type TLink = {
   link: string;
@@ -91,6 +91,7 @@ export type TResource = {
 
   stylingOptions: StylingOptions;
   media: MediaItem;
+  renderOptions?: RenderOptions;
 };
 
 export type DownloadableAsset = {
