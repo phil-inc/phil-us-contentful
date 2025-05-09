@@ -33,6 +33,7 @@ import { searchSubmitCallback } from "pages/insights/search";
 
 import * as classes from "./resources.module.css";
 import useDeviceType from "hooks/useView";
+import BookBannerFromResource from "components/Resource/BookBannerFromResource/BookBannerFromResource";
 
 type HelmetProps = {
   data: {
@@ -147,6 +148,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
     return false;
   }) as IReferencedSection[];
+
+  /* section data extracted from ReferenceTypeCard to build book banner */
+  const bookBannerSectionData = (data?.contentfulPage?.sections?.find(
+    (section:IReferencedSection | ISection) => (section as IReferencedSection).referenceType === ReferenceTypeEnum.Card,
+  )) as IReferencedSection | undefined;
 
   const [value, toggle] = useToggle(["ResourcesType", null]);
 
@@ -418,7 +424,12 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
         </Grid>
         </Container>
       </Expanded>
-     
+
+      {bookBannerSectionData &&
+          <div style={{ width: "100%" }}>
+            <BookBannerFromResource bookBannerSection={bookBannerSectionData} />
+          </div>
+      }
     </Layout>
   );
 };
@@ -1033,8 +1044,97 @@ export const resourcesQuery = graphql`
                 description
               }
               buttonText
+              stylingOptions {
+                background
+                extraColor
+                id
+                name
+              }
+              renderOptions {
+                name
+                id
+                layoutOptions {
+                  id
+                  name
+                  numberOfColumns
+                  shouldRenderCarousel
+                }
+              }
               body {
                 raw
+                references {
+                  __typename
+                  ... on ContentfulButton {
+                    id
+                    contentful_id
+                    buttonText
+                    buttonStyle
+                    link {
+                      linkLabel
+                      name
+                      externalUrl
+                      internalContent {
+                        __typename
+                        ... on ContentfulPage {
+                          id
+                          title
+                          slug
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulReferencedSection {
+                          id
+                          page {
+                            title
+                          }
+                          header
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulSection {
+                          id
+                          page {
+                            title
+                          }
+                          header
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulResource {
+                          id
+                          heading
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    v2flag
+                  }
+                }
               }
               author {
                 id
