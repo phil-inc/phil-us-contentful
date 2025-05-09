@@ -112,7 +112,7 @@ export const Head: React.FC<HelmetProps> = ({
   };
 
   const computeMetaDescription = () => {
-    const pageMetaDescription = contentfulCaseStudy.metaDescription;
+    const pageMetaDescription = contentfulCaseStudy?.metaDescription || '';
 
     return pageMetaDescription.trim();
   };
@@ -396,7 +396,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   return (
     <Layout>
-      <Container fluid className={classes.heroContainer}>
+      <Container fluid className={cx("container", classes.heroContainer)}size={"xl"}>
         <Grid align="center">
           <Grid.Col span={{ base: 12, md: 6 }}>
             <Title order={1} className={classes.heroTitle}>
@@ -417,7 +417,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         </Grid>
       </Container>
 
-      <Container fluid className={classes.container}>
+      <Container fluid className="container" size="xl">
         <Grid align="center" justify="center">
           {data.metric?.map((metric) => (
             <Grid.Col
@@ -438,7 +438,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         color="#f4f4f4"
       />
 
-      <Container fluid className={classes.container} pos={"relative"}>
+      <Container fluid className="container" pos={"relative"} size="xl">
         <Grid justify="center" gutter={{ base: 0, md: 69 }} pos={"relative"}>
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
             <Box className={classes.sticky}>
@@ -461,7 +461,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
             </Box>
           </Grid.Col>
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
-            {data.files && data.files.length > 0 && (
+            {data?.files && data.files.length > 0 && (
               <Box p={24} className={classes.box}>
                 <Text size="14px" fw={700}>
                   Get the PDF of this blog
@@ -490,6 +490,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
       />
 
       <Expanded id="featured-case-study" background="#f4f4f4">
+      <Container className={cx("container")} size={"xl"}>
         <Group justify="center" className={classes.group}>
           <Box mb={isMobile ? 60 : 80 - 22}>
             <Title
@@ -539,6 +540,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
             </Button>
           </Link>
         </Group>
+        </Container>
       </Expanded>
 
       <Section
