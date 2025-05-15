@@ -6,3 +6,6 @@ export const RESOURCE_BLOCKS = [
 ];
 
 export const POSTS_PER_SECTION = 5; // 5 posts per section is the limit in resources page.
+
+export const RECENT_CLIENT_WINS = 'Recent Client Wins';      
+

@@ -144,8 +144,8 @@ const renderColumn = (column: ReferenceBodyType) => {
                   </div>
                   {entry.title === "DIGITAL HUB" && (
                       <div className={classes.leftColumnLinkContainer}>
-                        <div className={classes.leftColumnLinkBox}>
                         <Anchor
+                          className={classes.greenAnchor}
                           href={"https://phil.us/patients/"}
                         >
                           <span className={`anchor-text ${classes.leftColumnLink}`}>
@@ -153,8 +153,8 @@ const renderColumn = (column: ReferenceBodyType) => {
                           </span>
                           <IconArrowRight size={16} />
                         </Anchor>
-                        </div>
                         <Anchor
+                          className={classes.greenAnchor}
                           href={"https://phil.us/providers/#sending-a-script-to-philrx-is-easy"}
                         >
                           <span className={`anchor-text ${classes.leftColumnLink}`}>
