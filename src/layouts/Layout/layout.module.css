@@ -1,4 +1,7 @@
 .root {
+	--phil-white: #FFF;
+	--phil-black: #000;
+	
 	&[data-variant='philDefault'] {
 		background-color: #000;
 		color: #fff;
@@ -84,6 +87,13 @@
 
 		@media (min-width: $phil-breakpoint-sm) {
 			width: auto;
+		}
+	}
+
+	&[data-variant='white'] {
+		&:hover {
+			color: var(--phil-white);
+			background-color: var(--phil-black);
 		}
 	}
 }

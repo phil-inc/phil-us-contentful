@@ -124,24 +124,22 @@
   }
 
   .leftColumnLinkContainer {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap:36px;
     margin-top: 60px;
 
     @media (min-width: $phil-breakpoint-sm) {
-      display: flex;
+      flex-direction: row;
       margin-top: 90px;
     }
-  }
 
-  .leftColumnLinkBox {
-    margin-right:36px;
-    margin-bottom: 36px;
-
-    @media (min-width: $phil-breakpoint-sm) {
-      margin-right:36px;
-      margin-bottom: 0px;
+    .greenAnchor{
+      display: inline-block;
+      align-items: center;
     }
   }
+
 
   .leftColumnLink {
     font-size: 18px;
