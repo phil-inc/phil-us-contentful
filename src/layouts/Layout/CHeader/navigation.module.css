@@ -1,5 +1,6 @@
 /* General Navbar Styles */
 .navbar {
+  --primary-green-color: #00827E;
   padding: 15px 30px;
 }
 
@@ -50,7 +51,7 @@
 .dropdown {
   padding: 0;
   margin: 0;
-  background-color: #00796b;
+  background-color: var(--primary-green-color);
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   position: relative;
 }
@@ -117,7 +118,11 @@
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #00827e;
+  border-bottom: 10px solid  var(--primary-green-color);
+
+  @media (min-width: $phil-breakpoint-sm) {
+    top: -9px;
+  }
 }
 
 /* Make indicator visible when submenu is open */

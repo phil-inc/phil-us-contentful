@@ -1,5 +1,4 @@
 import { Paper, Title, Text, Stack, Group, Grid, Anchor } from "@mantine/core";
-import { Link } from "gatsby";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import type { FC } from "react";
 import React, { useContext } from "react";
@@ -14,6 +13,8 @@ import { type Options } from "@contentful/rich-text-react-renderer";
 import PageContext from "contexts/PageContext";
 import { Metadata } from "types/section";
 import { IconArrowRight } from "@tabler/icons";
+
+import { RECENT_CLIENT_WINS } from "constants/section";
 
 type ArticleProps = {
   resource: TResource;
@@ -79,7 +80,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
               md: "auto",
             }}
           >
-            {sectionHeader === "Recent Client News" && (
+            {(sectionHeader === "Recent Client News" || sectionHeader === RECENT_CLIENT_WINS) && (
               <div >
                 <Text className={classes.recentClientNewsHeader}>
                   {heading}
