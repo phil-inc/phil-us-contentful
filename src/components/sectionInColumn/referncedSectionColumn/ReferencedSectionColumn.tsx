@@ -8,7 +8,6 @@ import { getDescriptionFromRichtext } from "utils/getDescription";
 
 import * as classes from "./ReferenceSectionColumn.module.css";
 
-
 import PageContext from "contexts/PageContext";
 
 type Props = {
@@ -28,8 +27,10 @@ const ReferencedSectionColumn = ({ section }: Props) => {
         {section.header}
       </Title>
       {section.subHeading?.subHeading && (
-        <Text fz="md" mt={4} className={classes.subHeading}>
-          {section.subHeading.subHeading}
+        <Text mt={4} className={classes.subHeading}>
+          <span className={classes.subHeadingSpan}>
+            {section.subHeading.subHeading}
+          </span>
         </Text>
       )}
 
