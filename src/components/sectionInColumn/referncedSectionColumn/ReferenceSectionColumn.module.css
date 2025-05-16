@@ -1,4 +1,4 @@
-.referencedSection{
+.referencedSection {
   font-family: Raleway;
   margin-bottom: 40px;
 }
@@ -21,6 +21,10 @@
   @media (min-width: $phil-breakpoint-sm) {
     margin-bottom: 36px;
   }
+
+  .subHeadingSpan {
+    font-size: 22px;
+  }
 }
 
 .card {
@@ -33,9 +37,13 @@
 
 .cardTitle {
   font-size: 66px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: left;
-  font-family: Lato;
+  font-family: Raleway, sans-serif;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-style: normal;
+  letter-spacing: -2px;
+
 
   @media (min-width: $phil-breakpoint-sm) {
     text-align: center;
@@ -47,6 +55,7 @@
   width: auto;
   text-align: left;
   margin: auto;
+  font-weight: 600;
 
   @media (min-width: $phil-breakpoint-sm) {
     width: 140px;
