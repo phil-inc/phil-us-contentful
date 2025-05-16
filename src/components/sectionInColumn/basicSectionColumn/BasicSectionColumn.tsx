@@ -11,11 +11,7 @@ import {
 } from "@mantine/core";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import {
-  GatsbyImage,
-  getImage,
-  ImageDataLike,
-} from "gatsby-plugin-image";
+import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image";
 import { Link } from "gatsby";
 import cx from "clsx";
 
@@ -59,7 +55,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
     ? section?.mediaItem?.youtubeLink
     : section.youtubeVideoUrl;
   const { formId, portalId } = getHubspotFormDetails(section?.embedForm);
-const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
+  const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
 
   const isVideo = () => {
     if (isSectionV2) {
@@ -73,7 +69,7 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
   };
   const { media } = extractAssetData(
     mediaItemOrAsset as TAsset & MediaItem,
-    youtubeVideoUrl
+    youtubeVideoUrl,
   );
   const calculateAspectRatio = () => (hasYoutubeLink ? 16 / 9 : undefined);
   const determineBackground = () => {
@@ -107,12 +103,7 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const imageData = richTextImages[node.data.target.sys.id];
         const image = getImage(imageData?.image as ImageDataLike);
-        return (
-          <GatsbyImage
-            image={image!}
-            alt={""}
-          />
-        );
+        return <GatsbyImage image={image!} alt={""} />;
       },
 
       // TODO: Refactor this
@@ -167,15 +158,18 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
       },
 
       [BLOCKS.PARAGRAPH](node, children) {
-        const trustpilotHtml = extractTrustpilotHtml(node)
-        
+        const trustpilotHtml = extractTrustpilotHtml(node);
+
         if (trustpilotHtml && trustpilotHtml.includes("trustpilot-widget")) {
           return (
             <>
               <TrustpilotWidget />
-              <div dangerouslySetInnerHTML={{ __html: trustpilotHtml }} data-trustpilot-rendered />
+              <div
+                dangerouslySetInnerHTML={{ __html: trustpilotHtml }}
+                data-trustpilot-rendered
+              />
             </>
-          )
+          );
         }
 
         return (
@@ -183,7 +177,7 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
             data-index={index}
             data-context={context.title}
             data-video={isVideo()}
-            className={classes.body}
+            className={classes.bodyPart}
           >
             {children}
           </Text>
@@ -197,11 +191,13 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
             data-context={context.title}
             className={cx(classes.list, classes.ulList)}
             data-video={isVideo()}
-            icon={isThanksSection 
-              ? <Box className={classes.ulIcon}>
-              <RightArrowCircle width="23px" height="23px"/>
-              </Box>
-              : undefined}
+            icon={
+              isThanksSection ? (
+                <Box className={classes.ulIcon}>
+                  <RightArrowCircle width="23px" height="23px" />
+                </Box>
+              ) : undefined
+            }
           >
             {children}
           </List>
@@ -261,7 +257,11 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
 
       [INLINES.HYPERLINK](node, children) {
         return (
-          <Anchor href={node.data.uri as string} target="_blank">
+          <Anchor
+            className={classes.linkAnchor}
+            href={node.data.uri as string}
+            target="_blank"
+          >
             {children}
           </Anchor>
         );
@@ -295,7 +295,11 @@ const isThanksSection = section.header === THANKS_FOR_YOUR_INTEREST;
           )}
           {section?.embedForm && (
             <Box className={classes.formSection}>
-              <HubspotForm formId={formId} portalId={portalId} classname="book-demo-hubspot-form" />
+              <HubspotForm
+                formId={formId}
+                portalId={portalId}
+                classname="book-demo-hubspot-form"
+              />
             </Box>
           )}
           {Boolean(section.addBorder) && (
