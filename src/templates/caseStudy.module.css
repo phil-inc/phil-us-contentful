@@ -4,7 +4,7 @@
   @media (min-width: $phil-breakpoint-md) {
     display: block;
     position: sticky;
-    top: 0;
+    top: var(--navbar-height);
     height: fit-content;
   }
 }
@@ -114,34 +114,9 @@
   }
 }
 
-.heroContainer {
-  margin: 0 20px !important;
-  padding: 0 !important;
+.heroContainer{
+  margin-top: 60px;
 
-  @media (min-width: $phil-breakpoint-sm) {
-    padding: 0 !important;
-    margin: 0 100px !important;
-    margin-top: 100px !important;
-  }
-
-@media screen and (min-width: 1080px) and (max-width: 1440px) {
-    margin-top: 80px !important;
-  }
-
-}
-
-.container {
-  padding: 0 !important;
-  margin: 0 20px !important;
-
-  @media (min-width: $phil-breakpoint-sm) {
-    margin: 120px 100px !important;
-    margin-bottom: 0 !important;
-  }
-
-@media screen and (min-width: 1080px) and (max-width: 1440px) {
-    margin-top: 60px !important;
-  }
 }
 
 .heroTitle {

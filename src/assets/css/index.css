@@ -4,6 +4,9 @@
 @import "mantine-accordion-override.css";
 @import url("https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css");
 
+:root {
+  --navbar-height: 90px;
+}
 
   .home{
     .phil-Carousel-slide{

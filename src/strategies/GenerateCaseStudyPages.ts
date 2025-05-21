@@ -32,7 +32,9 @@ export default async function GenerateCaseStudyPages({
   } = await graphql(allCaseStudyQuery);
 
   data?.allContentfulCaseStudy.nodes.forEach(({ id, slug, title }: Node) => {
-    const path = slug ?? `/${slugify(title, { lower: true, strict: true })}`;
+    // const path = slug ?? `/${slugify(title, { lower: true, strict: true })}`;
+    const path = "insights/case-studies/"+(slug ?? `/${slugify(title, { lower: true, strict: true })}`);
+
 
     const pageObject = createPageObject(path, template, {
       id,
