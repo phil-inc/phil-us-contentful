@@ -355,6 +355,10 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
                       isFaq={
                         currentSection.referenceType === ReferenceTypeEnum.FAQs
                       }
+                      isCaseStudy={
+                        currentSection.referenceType ===
+                        ReferenceTypeEnum["Case Study"]
+                      }
                     />
                   ))}
             </Box>
@@ -660,6 +664,7 @@ export const resourcesQuery = graphql`
           desc: description
           metaDescription
           buttonText
+          externalLink
           internalLink {
             id
             ... on ContentfulDownloadableResource {

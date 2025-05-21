@@ -22,11 +22,13 @@ import { CaseStudy } from "templates/case-study";
 type ResourceCardProps = {
   resource: TResource | CaseStudy;
   isFaq?: boolean;
+  isCaseStudy?: boolean;
 };
 
 export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
   resource,
   isFaq = false,
+  isCaseStudy = false,
 }) => {
   const { link, isExternal, linkLabel } = getLink(resource);
 
@@ -40,8 +42,14 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
       <Grid justify="start" align="start">
         <Grid.Col>
           <Box className={classes.box}>
-            {heading && isExternal ? (
-              <Anchor href={link} target="_blank" underline="never" className={classes.textDecorationNone}>
+            {isCaseStudy &&  <Link to={link} className={classes.textDecorationNone}>
+              <Title order={3} className={classes.title}>
+                {heading}
+              </Title>
+              </Link>
+            }
+            {!isCaseStudy && ((heading && isExternal)
+              ? (<Anchor href={link} target="_blank" underline="never" className={classes.textDecorationNone}>
                 <Title order={3} className={classes.title}>
                   {heading}
                 </Title>
@@ -52,7 +60,7 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
                   {heading}
                 </Title>
               </Link>
-            )}
+            ))}
             {resource.body && (
               <Text className={classes.body} lineClamp={2}>
                 {getDescriptionFromRichtext(resource?.body?.raw ?? "")}
@@ -61,7 +69,14 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
             {(("buttonText" in resource && resource.buttonText) ||
               linkLabel) && (
               <Group>
-                {isExternal ? (
+                {isCaseStudy &&  <Link to={link}>
+                    <Button variant="philDefault" className={classes.button}>
+                      {("buttonText" in resource && resource.buttonText) ||
+                        linkLabel}
+                    </Button>
+                  </Link>
+                }
+                {!isCaseStudy && (isExternal ? (
                   <Anchor href={link} underline="never" target="_blank">
                     <Button variant="philDefault" className={classes.button}>
                       {("buttonText" in resource && resource.buttonText) ||
@@ -75,7 +90,7 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
                         linkLabel}
                     </Button>
                   </Link>
-                )}
+                ))}
               </Group>
             )}
           </Box>

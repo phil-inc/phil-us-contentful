@@ -34,6 +34,7 @@ import Expanded from "components/common/Expanded/Expanded";
 import { TDownloadableResource } from "types/resource";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
+import Asset from "components/common/Asset/Asset";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -191,6 +192,10 @@ export type CaseStudy = {
           metricLabel: string;
           metricValue: string;
           metricDescription?: string;
+          metricDescriptionRichText?: {
+            raw: string;
+            __typename: string;
+          }
         }
       | {
           __typename: "ContentfulTestimonials";
@@ -340,6 +345,14 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   const options: Options = {
     renderNode: {
+
+      [BLOCKS.EMBEDDED_ASSET](node,children) {
+        return (
+          <Box className={classes.embededAsset}>
+            <Asset asset={node.data.target} />
+          </Box>
+        );
+      },
       [INLINES.EMBEDDED_ENTRY](node, children) {
         return <MetricBox data-inline={true} metric={node.data.target} />;
       },
@@ -592,6 +605,22 @@ export const caseStudyQuery = graphql`
         __typename
         references {
           __typename
+           ... on ContentfulAsset{
+              id
+              contentful_id
+              description
+              gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+              file {
+                contentType
+                details {
+                  size
+                }
+                url
+              }
+              sys {
+                type
+              }
+            }
           ... on ContentfulEntry {
             contentful_id
             id
@@ -603,6 +632,10 @@ export const caseStudyQuery = graphql`
             metricLabel
             metricValue
             metricDescription
+            metricDescriptionRichText{
+              raw
+              __typename
+            }
             __typename
           }
           ... on ContentfulTestimonials {

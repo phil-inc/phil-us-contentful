@@ -34,8 +34,7 @@ export default async function GenerateCaseStudyPages({
   data?.allContentfulCaseStudy.nodes.forEach(({ id, slug, title }: Node) => {
     // const path = slug ?? `/${slugify(title, { lower: true, strict: true })}`;
     const path = "insights/case-studies/"+(slug ?? `/${slugify(title, { lower: true, strict: true })}`);
-
-
+    
     const pageObject = createPageObject(path, template, {
       id,
       title: title,
