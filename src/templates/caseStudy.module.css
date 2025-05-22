@@ -44,8 +44,11 @@
   font-weight: 700;
   line-height: 36.4px;
   text-align: left;
-  padding-bottom: 36px;
-  margin: 0;
+  margin: 36px 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
 
   > b {
     font-weight: 700;
@@ -63,6 +66,11 @@
   line-height: 36.4px;
   text-align: left;
   color: #0a0a0a;
+}
+
+.header5{
+  font-family: Raleway;
+  font-weight: 700;
 }
 
 .featuredContainer {
@@ -119,14 +127,12 @@
 }
 
 .heroContainer{
-  margin-top: 60px;
+  margin-top: 100px;
 
 }
 
 .heroTitle {
   font-size: 40px !important;
-  margin-bottom: 40px !important;
-  margin-top: 40px !important;
 
   @media (min-width: $phil-breakpoint-sm) {
     margin-top: 0 !important;

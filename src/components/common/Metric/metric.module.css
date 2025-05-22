@@ -41,7 +41,7 @@
   grid-template-columns: repeat(1, auto);
   justify-content: center;
 
-  margin: 80px auto;
+  margin: 0px auto;
 
   .metricLabel {
     font-family: Raleway;
@@ -179,7 +179,7 @@
     grid-template-columns: repeat(3, auto);
     justify-content: center;
 
-    margin: 80px auto;
+    margin: 0px auto;
 
     > .metricBox {
       border-bottom: none;
@@ -302,6 +302,7 @@
 
     &[data-columns="1"] {
       display: block;
+      margin: -20px auto 0px;
 
       >.singleRow {
         padding: 0;

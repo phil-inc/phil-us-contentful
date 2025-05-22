@@ -396,7 +396,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         return <Title order={4}>{children}</Title>;
       },
       [BLOCKS.HEADING_5](node, children) {
-        return <Title order={5}>{children}</Title>;
+        return <Title className={classes.header5} order={5}>{children}</Title>;
       },
       [BLOCKS.HEADING_6](node, children) {
         return <Title order={6}>{children}</Title>;
@@ -500,6 +500,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         section={bannerSection}
         index={0}
         isEmbedFormTemplate={false}
+        pageTitle={bannerSection.title ?? ''}
       />
 
       <Expanded id="featured-case-study" background="#f4f4f4">
@@ -561,6 +562,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         section={newsletterSection}
         index={0}
         isEmbedFormTemplate={false}
+        pageTitle={newsletterSection.title ?? ''}
       />
     </Layout>
   );
