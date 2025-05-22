@@ -4,7 +4,7 @@
   @media (min-width: $phil-breakpoint-md) {
     display: block;
     position: sticky;
-    top: 0;
+    top: var(--navbar-height);
     height: fit-content;
   }
 }
@@ -15,6 +15,10 @@
       max-width: 100% !important;
     }
   }
+}
+.embededAsset{
+  text-align: center;
+  margin-bottom: 80px;
 }
  
 
@@ -40,8 +44,11 @@
   font-weight: 700;
   line-height: 36.4px;
   text-align: left;
-  padding-bottom: 36px;
-  margin: 0;
+  margin: 36px 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
 
   > b {
     font-weight: 700;
@@ -59,6 +66,11 @@
   line-height: 36.4px;
   text-align: left;
   color: #0a0a0a;
+}
+
+.header5{
+  font-family: Raleway;
+  font-weight: 700;
 }
 
 .featuredContainer {
@@ -114,40 +126,13 @@
   }
 }
 
-.heroContainer {
-  margin: 0 20px !important;
-  padding: 0 !important;
+.heroContainer{
+  margin-top: 100px;
 
-  @media (min-width: $phil-breakpoint-sm) {
-    padding: 0 !important;
-    margin: 0 100px !important;
-    margin-top: 100px !important;
-  }
-
-@media screen and (min-width: 1080px) and (max-width: 1440px) {
-    margin-top: 80px !important;
-  }
-
-}
-
-.container {
-  padding: 0 !important;
-  margin: 0 20px !important;
-
-  @media (min-width: $phil-breakpoint-sm) {
-    margin: 120px 100px !important;
-    margin-bottom: 0 !important;
-  }
-
-@media screen and (min-width: 1080px) and (max-width: 1440px) {
-    margin-top: 60px !important;
-  }
 }
 
 .heroTitle {
   font-size: 40px !important;
-  margin-bottom: 40px !important;
-  margin-top: 40px !important;
 
   @media (min-width: $phil-breakpoint-sm) {
     margin-top: 0 !important;

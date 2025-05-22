@@ -34,6 +34,7 @@ import Expanded from "components/common/Expanded/Expanded";
 import { TDownloadableResource } from "types/resource";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
+import Asset from "components/common/Asset/Asset";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -112,7 +113,7 @@ export const Head: React.FC<HelmetProps> = ({
   };
 
   const computeMetaDescription = () => {
-    const pageMetaDescription = contentfulCaseStudy.metaDescription;
+    const pageMetaDescription = contentfulCaseStudy?.metaDescription || '';
 
     return pageMetaDescription.trim();
   };
@@ -191,6 +192,10 @@ export type CaseStudy = {
           metricLabel: string;
           metricValue: string;
           metricDescription?: string;
+          metricDescriptionRichText?: {
+            raw: string;
+            __typename: string;
+          }
         }
       | {
           __typename: "ContentfulTestimonials";
@@ -340,6 +345,14 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   const options: Options = {
     renderNode: {
+
+      [BLOCKS.EMBEDDED_ASSET](node,children) {
+        return (
+          <Box className={classes.embededAsset}>
+            <Asset asset={node.data.target} />
+          </Box>
+        );
+      },
       [INLINES.EMBEDDED_ENTRY](node, children) {
         return <MetricBox data-inline={true} metric={node.data.target} />;
       },
@@ -383,7 +396,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         return <Title order={4}>{children}</Title>;
       },
       [BLOCKS.HEADING_5](node, children) {
-        return <Title order={5}>{children}</Title>;
+        return <Title className={classes.header5} order={5}>{children}</Title>;
       },
       [BLOCKS.HEADING_6](node, children) {
         return <Title order={6}>{children}</Title>;
@@ -396,7 +409,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   return (
     <Layout>
-      <Container fluid className={classes.heroContainer}>
+      <Container fluid className={cx("container", classes.heroContainer)}size={"xl"}>
         <Grid align="center">
           <Grid.Col span={{ base: 12, md: 6 }}>
             <Title order={1} className={classes.heroTitle}>
@@ -417,7 +430,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         </Grid>
       </Container>
 
-      <Container fluid className={classes.container}>
+      <Container fluid className="container" size="xl">
         <Grid align="center" justify="center">
           {data.metric?.map((metric) => (
             <Grid.Col
@@ -438,7 +451,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         color="#f4f4f4"
       />
 
-      <Container fluid className={classes.container} pos={"relative"}>
+      <Container fluid className="container" pos={"relative"} size="xl">
         <Grid justify="center" gutter={{ base: 0, md: 69 }} pos={"relative"}>
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
             <Box className={classes.sticky}>
@@ -461,7 +474,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
             </Box>
           </Grid.Col>
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
-            {data.files && data.files.length > 0 && (
+            {data?.files && data.files.length > 0 && (
               <Box p={24} className={classes.box}>
                 <Text size="14px" fw={700}>
                   Get the PDF of this blog
@@ -487,9 +500,11 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         section={bannerSection}
         index={0}
         isEmbedFormTemplate={false}
+        pageTitle={bannerSection.title ?? ''}
       />
 
       <Expanded id="featured-case-study" background="#f4f4f4">
+      <Container className={cx("container")} size={"xl"}>
         <Group justify="center" className={classes.group}>
           <Box mb={isMobile ? 60 : 80 - 22}>
             <Title
@@ -539,6 +554,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
             </Button>
           </Link>
         </Group>
+        </Container>
       </Expanded>
 
       <Section
@@ -546,6 +562,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         section={newsletterSection}
         index={0}
         isEmbedFormTemplate={false}
+        pageTitle={newsletterSection.title ?? ''}
       />
     </Layout>
   );
@@ -590,6 +607,22 @@ export const caseStudyQuery = graphql`
         __typename
         references {
           __typename
+           ... on ContentfulAsset{
+              id
+              contentful_id
+              description
+              gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+              file {
+                contentType
+                details {
+                  size
+                }
+                url
+              }
+              sys {
+                type
+              }
+            }
           ... on ContentfulEntry {
             contentful_id
             id
@@ -601,6 +634,10 @@ export const caseStudyQuery = graphql`
             metricLabel
             metricValue
             metricDescription
+            metricDescriptionRichText{
+              raw
+              __typename
+            }
             __typename
           }
           ... on ContentfulTestimonials {
