@@ -129,6 +129,7 @@ export enum ReferenceTypeEnum {
   "Card Section" = "Card Section",
   "Commitment Card" = "Commitment Card",
   "Featured Insights" = "Featured Insights",
+  "Case Study" = "Case Study",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;

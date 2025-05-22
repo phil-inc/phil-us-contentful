@@ -41,7 +41,7 @@
   grid-template-columns: repeat(1, auto);
   justify-content: center;
 
-  margin: 80px auto;
+  margin: 0px auto;
 
   .metricLabel {
     font-family: Raleway;
@@ -112,6 +112,14 @@
     }
   }
 
+  .metricDescriptionRichText{
+    font-family: Lato;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 30px;
+      text-align: left;
+  }
+
   > .metricBox {
     border-bottom: 1.27px solid #e9e9e9;
 
@@ -120,6 +128,50 @@
     }
   }
 
+  > .singleRow{
+    display:flex;
+    flex-direction:column;
+    gap: 40px;
+    align-items: baseline;
+    border-bottom: 1.27px solid #e9e9e9;
+    border-right: none;
+
+  
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    >:first-child{
+      flex:1
+    }
+    >:last-child{
+      flex:2
+    }
+    
+    @media (min-width: $phil-breakpoint-sm) {
+      flex-direction:row;
+      gap:60px
+    }
+
+    .metricValue.titleWithoutDescription {
+      line-height: 20px;
+
+      > span{
+        font-family: Lato;
+        font-size: 24px;
+        font-weight: 900;
+        line-height: 20px;
+        letter-spacing: -0.06em;
+        text-align: center;
+
+        &:last-of-type {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+
+
   @media (min-width: $phil-breakpoint-sm) {
     display: grid;
     width: 100%;
@@ -127,7 +179,7 @@
     grid-template-columns: repeat(3, auto);
     justify-content: center;
 
-    margin: 80px auto;
+    margin: 0px auto;
 
     > .metricBox {
       border-bottom: none;
@@ -238,13 +290,53 @@
           }
         }
 
-        > .metricDescription {
+        >.metricDescription {
           font-family: Lato;
           font-size: 20px;
           font-weight: 700;
           line-height: 30px;
           text-align: left;
         }
+      }
+    }
+
+    &[data-columns="1"] {
+      display: block;
+      margin: -20px auto 0px;
+
+      >.singleRow {
+        padding: 0;
+        width: 100%;
+        display: flex;
+        border-bottom: 1.27px solid #e9e9e9;
+        border-right: none;
+
+        &:last-of-type {
+          border-bottom: none;
+        }
+
+        &::after {
+          border-right: none;
+        }
+
+        @media (min-width: $phil-breakpoint-sm) {
+          padding: 20px 40px;
+          max-width: 100%;
+        }
+
+        .metricValue.titleWithoutDescription {
+          >span:last-of-type {
+            font-size: 24px;
+          }
+        }
+  
+        > .metricDescription {
+          font-family: Lato;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 30px;
+          text-align: left;
+        } 
       }
     }
   }
@@ -290,6 +382,6 @@
       > .metricDescription {
         text-align: start;
       }
-    }
+    } 
   }
 }
