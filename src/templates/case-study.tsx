@@ -384,9 +384,12 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         const val = (node.content[0] as any).value;
 
         return (
-          <Title id={val} order={2} unstyled className={classes.header2}>
+        <>
+          <hr className={classes.sectionDivider}/>
+          <Title id={val} order={2} unstyled className={cx(classes.header2, classes.scrollSection)}>
             {children}
           </Title>
+        </>
         );
       },
       [BLOCKS.HEADING_3](node, children) {
@@ -464,7 +467,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
                   TABLE OF CONTENTS
                 </Text>
 
-                <Box ref={tocRef}>{TOC}</Box>
+                <Box className={classes.tableOfContent} ref={tocRef}>{TOC}</Box>
               </Box>
             </Box>
           </Grid.Col>

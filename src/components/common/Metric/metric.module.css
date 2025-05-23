@@ -42,7 +42,7 @@
   grid-template-columns: repeat(1, auto);
   justify-content: center;
 
-  margin: 0px auto;
+  margin: 10px auto 60px;
 
   .metricLabel {
     font-family: Raleway;
@@ -73,7 +73,8 @@
     }
 
     > span {
-      font-family: Lato;
+      font-family: Raleway, sans-serif;
+      font-variant-numeric: lining-nums;
       font-size: 60.68px;
       font-weight: 800;
       line-height: 60.68px;
@@ -158,7 +159,8 @@
       line-height: 20px;
 
       > span{
-        font-family: Lato;
+        font-family: Raleway, sans-serif;
+        font-variant-numeric: lining-nums;
         font-size: 24px;
         font-weight: 900;
         line-height: 20px;
@@ -180,7 +182,7 @@
     grid-template-columns: repeat(3, auto);
     justify-content: center;
 
-    margin: 0px auto;
+    margin: 10px auto 60px;
 
     > .metricBox {
       border-bottom: none;
@@ -276,14 +278,16 @@
         }
 
         > .metricValue {
-          font-family: Lato;
+          font-family: Raleway, sans-serif;
+          font-variant-numeric: lining-nums;
           font-size: 56px;
           font-weight: 800;
           line-height: 56px;
           text-align: left;
 
           > span:last-of-type {
-            font-family: Lato;
+            font-family: Raleway, sans-serif;
+            font-variant-numeric: lining-nums;
             font-size: 48.64px;
             font-weight: 900;
             line-height: 48.64px;
