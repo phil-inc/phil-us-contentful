@@ -35,6 +35,7 @@ import { TDownloadableResource } from "types/resource";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
 import Asset from "components/common/Asset/Asset";
+import BasicSection from "components/section/BasicSection/BasicSection";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -246,7 +247,7 @@ export type CaseStudy = {
 type CaseStudyProps = {
   data: {
     contentfulCaseStudy: CaseStudy;
-    allContentfulSection: { nodes: ISection[] };
+    contentfulSection: ISection
     allContentfulReferencedSection: { nodes: ISection[] };
     allContentfulDownloadableResource: { nodes: TDownloadableResource[] };
     allContentfulCaseStudy: { nodes: CaseStudy[] };
@@ -256,7 +257,7 @@ type CaseStudyProps = {
 const CaseStudy: React.FC<CaseStudyProps> = ({
   data: {
     contentfulCaseStudy: data,
-    allContentfulSection,
+    contentfulSection: demoBannerSection,
     allContentfulReferencedSection,
     allContentfulDownloadableResource,
     allContentfulCaseStudy,
@@ -265,7 +266,6 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
   const contentRef = React.useRef(null);
   const tocRef = React.useRef(null);
 
-  const bannerSection = allContentfulSection?.nodes?.[0];
   const newsletterSection = allContentfulReferencedSection?.nodes?.[0];
 
   const [TOC, setTOC] = React.useState<React.ReactNode[]>([]);
@@ -384,9 +384,12 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         const val = (node.content[0] as any).value;
 
         return (
-          <Title id={val} order={2} unstyled className={classes.header2}>
+        <>
+          <hr className={classes.sectionDivider}/>
+          <Title id={val} order={2} unstyled className={cx(classes.header2, classes.scrollSection)}>
             {children}
           </Title>
+        </>
         );
       },
       [BLOCKS.HEADING_3](node, children) {
@@ -409,7 +412,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   return (
     <Layout>
-      <Container fluid className={cx("container", classes.heroContainer)}size={"xl"}>
+      <Container className={cx("container", classes.heroContainer)}size={"xl"}>
         <Grid align="center">
           <Grid.Col span={{ base: 12, md: 6 }}>
             <Title order={1} className={classes.heroTitle}>
@@ -430,7 +433,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         </Grid>
       </Container>
 
-      <Container fluid className="container" size="xl">
+      <Container className="container" size="xl">
         <Grid align="center" justify="center">
           {data.metric?.map((metric) => (
             <Grid.Col
@@ -451,7 +454,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         color="#f4f4f4"
       />
 
-      <Container fluid className="container" pos={"relative"} size="xl">
+      <Container className="container" pos={"relative"} size="xl">
         <Grid justify="center" gutter={{ base: 0, md: 69 }} pos={"relative"}>
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
             <Box className={classes.sticky}>
@@ -464,7 +467,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
                   TABLE OF CONTENTS
                 </Text>
 
-                <Box ref={tocRef}>{TOC}</Box>
+                <Box className={classes.tableOfContent} ref={tocRef}>{TOC}</Box>
               </Box>
             </Box>
           </Grid.Col>
@@ -495,13 +498,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
       </Container>
 
       <Divider className={classes.divider} data-main-content-end={true} />
-      <Section
-        isPreviousBackgroundPure={false}
-        section={bannerSection}
-        index={0}
-        isEmbedFormTemplate={false}
-        pageTitle={bannerSection.title ?? ''}
-      />
+      <BasicSection section={demoBannerSection} index={0} isEmbedFormTemplate={false} />
 
       <Expanded id="featured-case-study" background="#f4f4f4">
       <Container className={cx("container")} size={"xl"}>
@@ -676,215 +673,22 @@ export const caseStudyQuery = graphql`
         url
       }
     }
-    allContentfulSection(
-      filter: {
-        metadata: {
-          tags: { elemMatch: { name: { in: ["CASE_STUDY_BANNER"] } } }
-        }
-      }
-      limit: 1
-    ) {
-      nodes {
-        id
-        isHidden
-        youtubeVideoUrl
-        body {
-          raw
-          references {
-            __typename
-            ... on ContentfulAsset {
-              id
-              contentful_id
-              description
-              gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-              file {
-                contentType
-                details {
-                  size
-                }
-                url
-              }
-              sys {
-                type
-              }
-            }
-            ... on ContentfulButton {
-              id
-              contentful_id
-              buttonText
-              buttonStyle
-              link {
-                linkLabel
-                name
-                externalUrl
-                internalContent {
-                  __typename
-                  ... on ContentfulPage {
-                    id
-                    title
-                    slug
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                  ... on ContentfulReferencedSection {
-                    id
-                    page {
-                      title
-                    }
-                    header
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                  ... on ContentfulSection {
-                    id
-                    page {
-                      title
-                    }
-                    header
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                  ... on ContentfulResource {
-                    id
-                    heading
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-              v2flag
-            }
-          }
-        }
-        isHubspotEmbed
-        isInsertSnippet
-        codeSnippet {
-          codeSnippet
-        }
-        asset {
-          gatsbyImageData(
-            resizingBehavior: SCALE
-            placeholder: BLURRED
-            layout: FULL_WIDTH
-            aspectRatio: 1
-          )
-          title
-          file {
-            contentType
-            details {
-              size
-            }
-            url
-          }
-        }
-        buttonText
-        header
-        sectionType
-        externalLink
-        automaticOrder
-        background
-        embedForm {
-          raw
-        }
-        sys {
-          contentType {
-            sys {
-              id
-            }
-          }
-        }
-        subHeader {
-          subHeader
-        }
-        internalLink {
-          ... on ContentfulPage {
+    # Fetch direct BookBannerSection with ID (DEMO_BANNER_BASIC_SECTION_ID)
+    contentfulSection(id:{eq:"3ba4ce2c-791a-5747-a7cd-7b5e9e03ca73"}) {
+      id
+      isHidden
+      isReverse
+      addBorder
+      youtubeVideoUrl
+      body {
+        raw
+        references {
+          __typename
+          ... on ContentfulAsset {
             id
-            title
-            sys {
-              contentType {
-                sys {
-                  type
-                  id
-                }
-              }
-            }
-          }
-          ... on ContentfulReferencedSection {
-            id
-            page {
-              title
-            }
-            header
-            sys {
-              contentType {
-                sys {
-                  type
-                  id
-                }
-              }
-            }
-          }
-          ... on ContentfulSection {
-            id
-            page {
-              title
-            }
-            header
-            sys {
-              contentType {
-                sys {
-                  type
-                  id
-                }
-              }
-            }
-          }
-          ... on ContentfulResource {
-            id
-            heading
-            sys {
-              contentType {
-                sys {
-                  type
-                  id
-                }
-              }
-            }
-          }
-        }
-        mediaItem {
-          name
-          media {
-            gatsbyImageData(
-              resizingBehavior: SCALE
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
-            title
+            contentful_id
+            description
+            gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
             file {
               contentType
               details {
@@ -892,28 +696,117 @@ export const caseStudyQuery = graphql`
               }
               url
             }
+            sys {
+              type
+            }
           }
-          youtubeLink
-          embedCode {
-            raw
-          }
-          id
-        }
-        stylingOptions {
-          background
-          id
-          name
-        }
-        v2Flag
-        renderOptions {
-          name
-          id
-          layoutOptions {
+          ... on ContentfulButton {
             id
-            name
-            numberOfColumns
-            shouldRenderCarousel
+            contentful_id
+            buttonText
+            buttonStyle
+            link {
+              linkLabel
+              name
+              externalUrl
+              internalContent {
+                __typename
+                ... on ContentfulPage {
+                  id
+                  title
+                  slug
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulReferencedSection {
+                  id
+                  page {
+                    title
+                  }
+                  header
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulSection {
+                  id
+                  page {
+                    title
+                  }
+                  header
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulResource {
+                  id
+                  heading
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            v2flag
           }
+        }
+      }
+      isHubspotEmbed
+      isInsertSnippet
+      automaticOrder
+      backgroundAssetImage {
+        id
+        gatsbyImageData(
+          resizingBehavior: SCALE
+          placeholder: BLURRED
+          layout: CONSTRAINED
+        )
+        title
+        file {
+          contentType
+          details {
+            size
+          }
+          url
+        }
+      }
+      header
+      sectionType
+      stylingOptions {
+        background
+        id
+        name
+      }
+      v2Flag
+      renderOptions {
+        name
+        id
+        layoutOptions {
+          id
+          name
+          numberOfColumns
+          shouldRenderCarousel
         }
       }
     }
