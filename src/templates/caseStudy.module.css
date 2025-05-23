@@ -133,6 +133,7 @@
 
 .heroTitle {
   font-size: 40px !important;
+  font-variant-numeric: lining-nums;
 
   @media (min-width: $phil-breakpoint-sm) {
     margin-top: 0 !important;

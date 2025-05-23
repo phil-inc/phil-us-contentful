@@ -412,7 +412,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   return (
     <Layout>
-      <Container fluid className={cx("container", classes.heroContainer)}size={"xl"}>
+      <Container className={cx("container", classes.heroContainer)}size={"xl"}>
         <Grid align="center">
           <Grid.Col span={{ base: 12, md: 6 }}>
             <Title order={1} className={classes.heroTitle}>
@@ -433,7 +433,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         </Grid>
       </Container>
 
-      <Container fluid className="container" size="xl">
+      <Container className="container" size="xl">
         <Grid align="center" justify="center">
           {data.metric?.map((metric) => (
             <Grid.Col
@@ -454,7 +454,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         color="#f4f4f4"
       />
 
-      <Container fluid className="container" pos={"relative"} size="xl">
+      <Container className="container" pos={"relative"} size="xl">
         <Grid justify="center" gutter={{ base: 0, md: 69 }} pos={"relative"}>
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
             <Box className={classes.sticky}>
