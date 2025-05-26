@@ -10,4 +10,5 @@ export const SLUGS = {
 
 export const PATH={
     SOLUTION: `/${SLUGS.SOLUTION}/`,
+    INSIGHTS_CASE_STUDIES: "/insights/case-studies/",
 }

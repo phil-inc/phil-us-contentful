@@ -37,6 +37,8 @@ import { useMediaQuery } from "@mantine/hooks";
 import Asset from "components/common/Asset/Asset";
 import BasicSection from "components/section/BasicSection/BasicSection";
 
+import { PATH } from "constants/routes";
+
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
 }> = ({ resource }) => {
@@ -64,7 +66,7 @@ const FeaturedCaseStudy: React.FC<{
               : "No description available"}
           </Text>
         </Box>
-        <Link className={classes.link} to={`/${resource.slug}`}>
+        <Link className={classes.link} to={`${PATH.INSIGHTS_CASE_STUDIES}${resource.slug}`}>
           <Text
             mr={7}
             span

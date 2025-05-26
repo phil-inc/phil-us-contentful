@@ -1,21 +1,12 @@
 .metricValue {
-  font-family: Raleway, sans-serif;
+  font-family: Raleway;
   font-variant-numeric: lining-nums;
   font-size: 65.41px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 78.49px;
   text-align: center;
 
   color: #00827e;
-
-  > span:last-of-type {
-    font-family: Lato;
-    font-size: 43.61px;
-    font-weight: 900;
-    line-height: 52.33px;
-    letter-spacing: -0.06em;
-    text-align: center;
-  }
 }
 
 .metricDescription {
@@ -63,30 +54,17 @@
     margin-top: 12px;
     margin-bottom: 12px;
 
-    @media (min-width: $phil-breakpoint-sm) {
-      margin-top: 29px;
-      margin-bottom: 29px;
-    }
-
     &:not([data-has-label="true"]) {
       margin-top: 0;
     }
 
     > span {
-      font-family: Raleway, sans-serif;
+      font-family: Raleway;
       font-variant-numeric: lining-nums;
       font-size: 60.68px;
-      font-weight: 800;
+      font-weight: 700;
       line-height: 60.68px;
       text-align: left;
-
-      &:last-of-type {
-        font-family: Lato;
-        font-size: 47.19px;
-        font-weight: 800;
-        line-height: 47.19px;
-        text-align: left;
-      }
     }
   }
 
@@ -159,17 +137,13 @@
       line-height: 20px;
 
       > span{
-        font-family: Raleway, sans-serif;
+        font-family: Raleway;
         font-variant-numeric: lining-nums;
         font-size: 24px;
-        font-weight: 900;
+        font-weight: 700;
         line-height: 20px;
         letter-spacing: -0.06em;
         text-align: center;
-
-        &:last-of-type {
-          font-size: 24px;
-        }
       }
     }
   }
@@ -278,21 +252,12 @@
         }
 
         > .metricValue {
-          font-family: Raleway, sans-serif;
+          font-family: Raleway;
           font-variant-numeric: lining-nums;
           font-size: 56px;
-          font-weight: 800;
+          font-weight: 700;
           line-height: 56px;
           text-align: left;
-
-          > span:last-of-type {
-            font-family: Raleway, sans-serif;
-            font-variant-numeric: lining-nums;
-            font-size: 48.64px;
-            font-weight: 900;
-            line-height: 48.64px;
-            text-align: left;
-          }
         }
 
         >.metricDescription {
