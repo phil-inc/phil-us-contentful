@@ -15,6 +15,7 @@ import { Metadata } from "types/section";
 import { IconArrowRight } from "@tabler/icons";
 
 import { RECENT_CLIENT_WINS } from "constants/section";
+import { PATH } from "constants/routes";
 
 type ArticleProps = {
   resource: TResource;
@@ -28,14 +29,10 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
   const { heading, subheading, body, hyperlink } = resource;
  
   const context = useContext(PageContext);
-  var customHyperLink = "";
-  if (hyperlink?.linkLabel === "Read Press Release") {
-    customHyperLink = "https://phil.us/philrx-drives-high-adoption-for-ophthalmology-brand/";
-  } else if (hyperlink?.linkLabel === "Read Case Study" && heading === "WOMEN'S HEALTH"){
-    customHyperLink = "https://phil.us/philrx-unlocks-90-dispense-coverage-for-womens-health-brand/";
-  } else if (hyperlink?.linkLabel === "Read Case Study" && heading === "NEUROLOGY"){ 
-    customHyperLink = "https://phil.us/philrx-launches-robust-channel-strategy-for-specialty-lite-migraine-brand/";
-  }
+  const customHyperLink =
+    hyperlink?.linkLabel === "Read Case Study"
+      ? `${PATH.INSIGHTS_CASE_STUDIES}${hyperlink?.externalUrl}`
+      : null;
 
   const options: Options = {
     renderNode: {
@@ -105,7 +102,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
                 }
               <div>
                 <Anchor
-                  href={customHyperLink !== "" ? customHyperLink:`/${hyperlink?.internalContent?.slug}`}
+                  href={customHyperLink ? customHyperLink : `/${hyperlink?.internalContent?.slug}`}
                 >
                   <span className="anchor-text">
                     {hyperlink?.linkLabel}
