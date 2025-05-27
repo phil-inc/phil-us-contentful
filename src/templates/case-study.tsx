@@ -401,7 +401,9 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         return <Title order={4}>{children}</Title>;
       },
       [BLOCKS.HEADING_5](node, children) {
-        return <Title className={classes.header5} order={5}>{children}</Title>;
+        return <div className= {classes.header5}>
+          <Title order={5}>{children}</Title>
+        </div> 
       },
       [BLOCKS.HEADING_6](node, children) {
         return <Title order={6}>{children}</Title>;

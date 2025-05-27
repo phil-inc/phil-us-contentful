@@ -139,7 +139,7 @@
       > span{
         font-family: Raleway;
         font-variant-numeric: lining-nums;
-        font-size: 24px;
+        font-size: 30px;
         font-weight: 700;
         line-height: 20px;
         letter-spacing: -0.06em;
@@ -295,12 +295,6 @@
           max-width: 100%;
         }
 
-        .metricValue.titleWithoutDescription {
-          >span:last-of-type {
-            font-size: 24px;
-          }
-        }
-  
         > .metricDescription {
           font-family: Lato;
           font-size: 20px;
