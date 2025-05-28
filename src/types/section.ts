@@ -91,6 +91,7 @@ export type ISection = {
   addBorder: boolean;
   isReverse: boolean;
   backgroundAssetImage?: TAsset;
+  isAssetImageAlignToWall?: boolean;
 };
 
 export enum ResourceBlocksEnum {

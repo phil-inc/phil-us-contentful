@@ -68,6 +68,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const HEADING_FIRST = 1;
   const HEADING_SECOND = 2;
   const context = React.useContext(PageContext);
+  const isImageAlignToWall = section.isAssetImageAlignToWall;
  
 
   const theme = useMantineTheme();
@@ -366,7 +367,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
     >
-      <>
+      <div className={classes.containSection}>
         <Grid
           align={
             section.isHubspotEmbed || section.embedForm
@@ -444,7 +445,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           {/* TODO: Refactor v2Flags and links */}
           {(section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) &&
           <Grid.Col
-            className={cx(classes.heroGridColumn, classes.embedFormTemplate)}
+            className={cx(classes.heroGridColumn, classes.embedFormTemplate, {[classes.hideDueToWallImage]: isImageAlignToWall})}
             ref={heroRef}
             order={imageColumnOrder}
             span={{ base: 12, md: span }}
@@ -503,7 +504,17 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               .replace("</script>", "")}
           </Script>
         ) : null}
-      </>
+
+        {(isImageAlignToWall && mediaItemOrAsset) && 
+          <div className={classes.wallImage}>
+            <Asset
+            className={classes.assetWallImage}
+              asset={mediaItemOrAsset}
+            />
+          </div>
+      }
+      </div>
+  
     </Container>
     </>
     </Box>
