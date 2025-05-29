@@ -315,7 +315,8 @@ export const query = graphql`
               url
             }
           }
-          isAssetImageAlignToWall
+          canShowAssetImageAlignToWall 
+          sectionTitle
           buttonText
           header
           sectionType

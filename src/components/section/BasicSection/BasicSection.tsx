@@ -68,7 +68,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const HEADING_FIRST = 1;
   const HEADING_SECOND = 2;
   const context = React.useContext(PageContext);
-  const isImageAlignToWall = section.isAssetImageAlignToWall;
+  const isImageAlignToWall = section?.canShowAssetImageAlignToWall;
  
 
   const theme = useMantineTheme();
@@ -338,7 +338,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
     return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink;
   };
-
+  
   const { media } = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
   return (
     <>
@@ -424,6 +424,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               </>
             ) : (
               <>
+                {section?.sectionTitle &&
+                  <div className={classes.sectionTitle}>{section.sectionTitle}</div>
+                }
                 {Boolean(section.body) && (
                   <Stack className={classes.portal}>
                     {isMobileView &&

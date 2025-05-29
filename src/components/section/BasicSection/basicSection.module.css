@@ -97,9 +97,10 @@
 
 		.wallImage{
 			display: none;
-			height: 90%;
+			height: 80%;
 			position: absolute;
-			top: 0;
+			top: 50%;
+			transform: translateY(-50%);
 			right: calc(var(--padding-section) * -1);;
 
 			>img{
@@ -112,6 +113,15 @@
 				width: 50%;
 			}
 		}
+	}
+
+	.sectionTitle {
+		font-family: Lato;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 36px;
+		letter-spacing: 0%;
+		margin-bottom: 16px;
 	}
 
 	@media (min-width: $phil-breakpoint-sm) {
