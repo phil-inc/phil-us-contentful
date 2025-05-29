@@ -4,6 +4,10 @@
 	height: 100%;
 	line-height: 27px;
 
+	&.noGap{
+		width: 100%;
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 48px 32px;
 	}

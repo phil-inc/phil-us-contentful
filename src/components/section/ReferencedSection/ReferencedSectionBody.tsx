@@ -4,12 +4,13 @@ import { Carousel } from "@mantine/carousel";
 import { Center, Container, Grid } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { ResourceCarousel } from "components/common/Carousel/ResourceCarousel";
-import { EMPLOYEE_SPOTLIGHT_TAG } from "constants/identifiers";
+import { EMPLOYEE_SPOTLIGHT_TAG, MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
 import { COMPANY_PAGE, HOME } from "constants/page";
 import PageContext from "contexts/PageContext";
 import useDeviceType from "hooks/useView";
 import React, { useContext } from "react";
 import { type IReferencedSection, ReferenceTypeEnum } from "types/section";
+import cx from 'clsx';
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -35,6 +36,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const isEmployeeTag = section.metadata?.tags?.some(
     (tag) => tag.name === EMPLOYEE_SPOTLIGHT_TAG,
   );
+  const isHeaderNameMedicationAccessSection = section.header === MEDICATION_ACCESS_SIMPLIFIED;
 
   const xs = useDeviceType("xs");
   const sm = useDeviceType("sm");
@@ -125,7 +127,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   }
 
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
-  
+
   return (
     <Grid
       grow
@@ -145,7 +147,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
     >
       {section.references.map((resource, index, array) => (   
         <Grid.Col
-          className={classes.column}
+          className={cx(classes.column,{[classes.removePaddingMargin]:isHeaderNameMedicationAccessSection})}
           p={
             section.referenceType === ReferenceTypeEnum.Investors
               ? 0
