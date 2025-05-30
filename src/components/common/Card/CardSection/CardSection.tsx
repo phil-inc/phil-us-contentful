@@ -1,7 +1,7 @@
 import { Paper, Title, Text, Stack, Group, Grid, Anchor } from "@mantine/core";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import type { FC } from "react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import type { TResource } from "types/resource";
 import { BLOCKS } from "@contentful/rich-text-types";
 import cx from 'clsx';
@@ -17,7 +17,8 @@ import { IconArrowRight } from "@tabler/icons";
 
 import { RECENT_CLIENT_WINS } from "constants/section";
 import { PATH } from "constants/routes";
-import { MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
+
+import Asset from "components/common/Asset/Asset";
 
 type ArticleProps = {
   resource: TResource;
@@ -29,6 +30,7 @@ type ArticleProps = {
 
 export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
   const { heading, subheading, body, hyperlink } = resource;
+  const [isCardHovered, setIsCardHovered] = useState(false);
  
   const context = useContext(PageContext);
   const customHyperLink =
@@ -36,7 +38,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
       ? `${PATH.INSIGHTS_CASE_STUDIES}${hyperlink?.externalUrl}`
       : null;
 
-  const isHeaderNameMedicationAccessSection = sectionHeader === MEDICATION_ACCESS_SIMPLIFIED;
+  const isImageAvaiable = Boolean(resource?.asset);
 
   const options: Options = {
     renderNode: {
@@ -61,24 +63,31 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
   return (
     <Group h={"100%"} gap={0}>
       <Paper
-        className={cx(classes.paper,{[classes.noGap]: isHeaderNameMedicationAccessSection})}
+        className={cx(classes.paper, {
+          [classes.noGap]: isImageAvaiable,
+        })}
         style={{
           background: getColorFromStylingOptions(
-            resource?.stylingOptions?.background,
+            isCardHovered && isImageAvaiable
+              ? resource?.hoverStylilngOption?.background
+              : resource?.stylingOptions?.background,
           ),
         }}
         radius={0}
         data-context={context.title}
+        onMouseEnter={() => setIsCardHovered(true)}
+        onMouseLeave={() => setIsCardHovered(false)}
       >
         <Grid
           gutter={0}
           classNames={{ inner: classes.gridInner, root: classes.gridRoot }}
         >
           <Grid.Col
+            className={cx({[classes.gridFirstCol]: isImageAvaiable})}
             span={{
-              base: 12,
-              sm: 12,
-              md: "auto",
+              base: isImageAvaiable ? 6 : 12,
+              sm: isImageAvaiable ? 6 : 12,
+              md: isImageAvaiable ? 6 : "auto",
             }}
           >
             {(sectionHeader === "Recent Client News" || sectionHeader === RECENT_CLIENT_WINS) && (
@@ -105,7 +114,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
                   hyperlink?.linkLabel === "Read Press Release"
                 }
               <div>
-                <Anchor
+              <Anchor
                   href={customHyperLink ? customHyperLink : `/${hyperlink?.internalContent?.slug}`}
                 >
                   <span className="anchor-text">
@@ -116,6 +125,15 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
               </div>
             </Stack>
           </Grid.Col>
+          {resource?.asset && (
+            <Grid.Col span={{ base: 6, sm: 6, md: 6}}>
+              <section className={classes.gridSecondCol}>
+                <div className={classes.imgCard}>
+                  <Asset asset={resource.asset} />
+                </div>
+              </section>
+            </Grid.Col>
+          )}
         </Grid>
       </Paper>
     </Group>

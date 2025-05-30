@@ -184,6 +184,7 @@ export type IReferencedSection = {
 
   stylingOptions?: StylingOptions;
   renderOptions?: RenderOptions;
+  mediaItem?: TAsset;
 };
 
 export type Reference = {
