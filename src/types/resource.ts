@@ -90,6 +90,7 @@ export type TResource = {
   slug?: string; // Populates only for static pages
 
   stylingOptions: StylingOptions;
+  hoverStylilngOption?: StylingOptions;
   media: MediaItem;
   renderOptions?: RenderOptions;
 };

@@ -91,6 +91,8 @@ export type ISection = {
   addBorder: boolean;
   isReverse: boolean;
   backgroundAssetImage?: TAsset;
+  canShowAssetImageAlignToWall?: boolean;
+  sectionTitle?: string;
 };
 
 export enum ResourceBlocksEnum {
@@ -182,6 +184,7 @@ export type IReferencedSection = {
 
   stylingOptions?: StylingOptions;
   renderOptions?: RenderOptions;
+  mediaItem?: TAsset;
 };
 
 export type Reference = {

@@ -1,4 +1,7 @@
 .basicSectionMainContainer {
+	--padding-section: 40px;
+	--img-outside-margin: 170px;
+
 	position: relative;
 	overflow: hidden;
 
@@ -53,7 +56,7 @@
 .basicSectionContainer {
 	position: relative;
 	z-index: 2;
-	padding:40px;
+	padding: var(--padding-section);
 	
 	&[data-index='0'] {
 		@media (min-width: $phil-breakpoint-sm) {
@@ -88,6 +91,38 @@
 			padding-top: 152px;
 			padding-bottom: 152px;
 		}
+	}
+
+	.containSection{
+		position: relative;
+
+		.wallImage{
+			display: none;
+			height: 80%;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right: calc(var(--img-outside-margin) * -1);
+
+			>img{
+				width: 100%;
+				height: 100%;
+			}
+
+			@media (min-width: $phil-breakpoint-md){
+				display: block;
+				width: 50%;
+			}
+		}
+	}
+
+	.sectionTitle {
+		font-family: Lato;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 36px;
+		letter-spacing: 0%;
+		margin-bottom: 16px;
 	}
 
 	@media (min-width: $phil-breakpoint-sm) {
@@ -185,6 +220,14 @@
 		@media (min-width: $phil-breakpoint-sm) {
 			padding-left: 32px;
 			padding-right: 32px;
+		}
+	}
+	
+	&.hideDueToWallImage{
+		visibility: visible;
+
+		@media (min-width: $phil-breakpoint-md) {
+			visibility: hidden;
 		}
 	}
 }
