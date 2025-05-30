@@ -94,6 +94,11 @@
     }
   }
 
+  &[data-is-home-first-card-section='true']{
+    margin-right: calc(var(--side-margin) * -1);
+    margin-left: calc(var(--side-margin) * -1);
+  }
+
   &[data-context="Field"] {
     margin-top: 0;
   }
@@ -235,4 +240,21 @@
 
 .customTestiominalFooter{
   margin-top: 80px;
+}
+
+.sectionImage{
+  height: 90%;
+  width: 90%;
+  margin: auto;
+
+  > img{
+    width: 100%;
+    height: 100%;
+  }
+
+  @media screen and (min-width: $phil-breakpoint-md) {
+    height: auto;
+    width: auto;
+
+  }
 }

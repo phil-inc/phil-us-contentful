@@ -4,12 +4,14 @@
 	height: 100%;
 	line-height: 27px;
 
-	&.noGap{
-		width: 100%;
-	}
-
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 48px 32px;
+	}
+
+	&.noGap{
+		padding: 0px;
+		width: 100%;
+		height: 100%;
 	}
 }
 
@@ -50,6 +52,34 @@
 .gridInner,
 .gridRoot {
 	height: 100%;
+
+	.gridFirstCol{
+		padding: 34px 0px 55px 24px;
+
+		@media (min-width: $phil-breakpoint-sm) {
+			padding: 48px 0px 48px 32px;
+		}
+	}
+	
+
+	.gridSecondCol{
+		position: relative;
+		margin-left: 2px;
+
+		.imgCard{
+			position: absolute;
+			top: 0px;
+			right: 0px;
+
+			>img{
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
+		}
+
+	
+	}
 }
 
 .faqHeading {

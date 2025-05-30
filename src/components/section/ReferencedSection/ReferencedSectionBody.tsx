@@ -21,11 +21,13 @@ type ReferencedSectionBodyProps = {
     sm: number;
     xs?: number;
   };
+  isHomePageFirstCardSection?: boolean;
 };
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   section,
   getSpan,
+  isHomePageFirstCardSection = false
 }) => {
   const { title } = useContext(PageContext);
 
@@ -36,7 +38,6 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const isEmployeeTag = section.metadata?.tags?.some(
     (tag) => tag.name === EMPLOYEE_SPOTLIGHT_TAG,
   );
-  const isHeaderNameMedicationAccessSection = section.header === MEDICATION_ACCESS_SIMPLIFIED;
 
   const xs = useDeviceType("xs");
   const sm = useDeviceType("sm");
@@ -128,52 +129,63 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
 
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
+  const getGridGutter = () => {
+    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"] || isHomePageFirstCardSection)
+      return 0;
+    return 36;
+  };
+
   return (
-    <Grid
-      grow
-      className={classes.grid}
-      gutter={
-        section.referenceType === ReferenceTypeEnum["Stepper Cards"] ? 0 : 36
-      }
-      justify="center"
-      align={title === COMPANY_PAGE ? "center" : "stretch"}
-      data-add-margin={addMargin}
-      data-context={title}
-      data-is-stepper-card={
-        section.referenceType === ReferenceTypeEnum["Stepper Cards"]
-      }
-      data-reference-type={section.referenceType}
-      data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
-    >
-      {section.references.map((resource, index, array) => (   
-        <Grid.Col
-          className={cx(classes.column,{[classes.removePaddingMargin]:isHeaderNameMedicationAccessSection})}
-          p={
-            section.referenceType === ReferenceTypeEnum.Investors
-              ? 0
-              : undefined
-          }
-          key={resource.id + "mapReferencedSectionResource"}
-          span={
-            section.v2flag
-              ? { base: 12, sm: span, md: span }
-              : getSpan(section.referenceType)
-          }
-          data-reference-type={section.referenceType}
-          data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
-        >
-          <RenderResource
-            arrayLength={array.length}
-            index={index}
-            referenceType={section.referenceType}
-            resource={resource}
-            sectionHeader={section.header}
-            isEmployeeTag={Boolean(isEmployeeTag)}
-            metadata={section.metadata}
-          />
-        </Grid.Col>
-      ))}
-    </Grid>
+      <Grid
+        grow
+        className={classes.grid}
+        gutter={getGridGutter()}
+        justify="center"
+        align={title === COMPANY_PAGE ? "center" : "stretch"}
+        data-add-margin={addMargin}
+        data-context={title}
+        data-is-stepper-card={
+          section.referenceType === ReferenceTypeEnum["Stepper Cards"]
+        }
+        data-reference-type={section.referenceType}
+        data-is-home-page-brand-outcome={
+          isBrandOutcomeCardSection && title === HOME
+        }
+        data-is-home-first-card-section={isHomePageFirstCardSection}
+      >
+        {section.references.map((resource, index, array) => (
+          <Grid.Col
+            className={cx(classes.column, {
+              [classes.removePaddingMargin]: isHomePageFirstCardSection,
+            })}
+            p={
+              section.referenceType === ReferenceTypeEnum.Investors
+                ? 0
+                : undefined
+            }
+            key={resource.id + "mapReferencedSectionResource"}
+            span={
+              section.v2flag
+                ? { base: 12, sm: isHomePageFirstCardSection ? 12 : span, md: span  }
+                : getSpan(section.referenceType)
+            }
+            data-reference-type={section.referenceType}
+            data-is-home-page-brand-outcome={
+              isBrandOutcomeCardSection && title === HOME
+            }
+          >
+            <RenderResource
+              arrayLength={array.length}
+              index={index}
+              referenceType={section.referenceType}
+              resource={resource}
+              sectionHeader={section.header}
+              isEmployeeTag={Boolean(isEmployeeTag)}
+              metadata={section.metadata}
+            />
+          </Grid.Col>
+        ))}
+      </Grid>
   );
 };
 
