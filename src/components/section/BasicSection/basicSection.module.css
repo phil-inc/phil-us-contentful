@@ -1,5 +1,6 @@
 .basicSectionMainContainer {
 	--padding-section: 40px;
+	--img-outside-margin: 170px;
 
 	position: relative;
 	overflow: hidden;
@@ -101,7 +102,7 @@
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
-			right: calc(var(--padding-section) * -1);;
+			right: calc(var(--img-outside-margin) * -1);
 
 			>img{
 				width: 100%;
