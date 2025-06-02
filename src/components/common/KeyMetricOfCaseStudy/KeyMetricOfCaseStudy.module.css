@@ -1,0 +1,29 @@
+.keyMetricSection {
+    display: flex;
+    margin-bottom: 30px;
+
+    .box {
+        &:not(:first-child) {
+            padding-left: 25px;
+        }
+
+        &:not(:last-child) {
+            border-right: 1.27px solid #E9E9E9;
+            padding-right: 25px;
+        }
+    }
+
+    .title {
+        color: #00827E;
+        font-family: Raleway;
+        font-weight: 700;
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+
+    .value {
+        font-family: Lato;
+        font-weight: 400;
+        font-size: 20px;
+    }
+}
