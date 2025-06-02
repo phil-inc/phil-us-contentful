@@ -36,6 +36,7 @@ import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
 import Asset from "components/common/Asset/Asset";
 import BasicSection from "components/section/BasicSection/BasicSection";
+import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetricOfCaseStudy";
 
 import { PATH } from "constants/routes";
 
@@ -244,6 +245,13 @@ export type CaseStudy = {
       };
     };
   };
+  keyMetricOfStudy?: {
+    contentful_id: string;
+    id: string;
+    metricLabel: string;
+    metricValue: string;
+    metricDescription?: string;
+  }[];
 };
 
 type CaseStudyProps = {
@@ -425,6 +433,9 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
           </Grid.Col>
           <Grid.Col span={"auto"}>
             <Box className={classes.box}>
+              {data?.keyMetricOfStudy?.length 
+                && <KeyMetricOfCaseStudy metrics={data.keyMetricOfStudy} />
+              }
               <Title order={2} className={classes.boxTitle}>
                 {data.subtitle?.subtitle}
               </Title>
@@ -577,6 +588,13 @@ export const caseStudyQuery = graphql`
       noIndex
       id
       title
+      keyMetricOfStudy{
+        contentful_id
+        id
+        metricLabel
+        metricValue
+        metricDescription
+      }
       metaDescription
       image {
         file {

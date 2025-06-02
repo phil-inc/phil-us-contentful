@@ -176,21 +176,16 @@
 
 .boxDescription {
   font-family: Lato;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 27px;
   text-align: left;
 
   @media (min-width: $phil-breakpoint-sm) {
     font-family: Lato;
-    font-size: 20px;
     font-weight: 400;
     line-height: 30px;
     text-align: left;
-  }
-
-@media screen and (min-width: 1080px) and (max-width: 1440px) {
-    font-size: 18px;
   }
 }
 
