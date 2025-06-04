@@ -1,6 +1,6 @@
 .basicSectionMainContainer {
 	--padding-section: 40px;
-	--img-outside-margin: 170px;
+	--img-outside-margin: 20px;
 
 	position: relative;
 	overflow: hidden;

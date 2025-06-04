@@ -1,5 +1,4 @@
 .container {
-	--padding-size : 100px;
 	background: #fff;
 	min-height: 100%;
 	max-width: 100%;
@@ -18,13 +17,6 @@
 	&[data-no-padding-bottom='true'] {
 		padding-bottom: 0px;
 	}
-
-	&[data-is-home-page-first-card-section='true'] {
-		padding-top: calc(var(--padding-size) - 40px);
-		padding-bottom: 0px;
-	}
-
- 
 
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 100px 0;

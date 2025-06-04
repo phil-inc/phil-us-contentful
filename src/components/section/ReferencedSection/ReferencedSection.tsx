@@ -205,7 +205,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             />
           )}
 
-        <ReferencedSectionBody getSpan={getSpan} section={section} isHomePageFirstCardSection={isHomePageFirstCardSection} />
+        <ReferencedSectionBody getSpan={getSpan} section={section}/>
       </>
     );
   }
@@ -222,50 +222,35 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       }
       fullWidth={section.referenceType === ReferenceTypeEnum["Image Carousel"]}
       data-context={context.title}
-        data-is-newsletter-component={isNewsLetterComponent}
-        data-no-padding-bottom={isFaqId && isProviderPage}
-        data-is-faq-section={isFaqSection}
-        data-disable-border-top={!isPreviousBackgroundPure || isProviderPage}
-        data-is-home-page-brand-outcome={
-          isBrandOutcomeCardSection && context.title === HOME
-        }
-        pt={section.header?.length > 0 ? undefined : 0}
-        data-is-home-page-first-card-section={isHomePageFirstCardSection}
-      >
-        <Container className={classes.container} size={"xl"}>
-          {isHomePageFirstCardSection && (
-            <Grid gutter={0} align="center">
-              <GridCol span={{ base: LAYOUT_12COL, md: Boolean(section?.mediaItem) ? 6 : LAYOUT_12COL }}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "20px",
-                  }}
-                >
-                  <h1 className={classes.title}>
-                    Medication Access,{" "}
-                    <span style={{ color: "#00827E" }}>Simplified</span>
-                  </h1>
-                  <p
-                    style={{marginBottom: "0px"}}
-                    className={classes.subHeading}
-                    data-reference-type="Card Section"
-                  >
-                    Solving access barriers in retail and specialty-lite to improve
-                    patient outcomes and drive commercial success.
-                  </p>
-                </div>
-              </GridCol>
-              {section?.mediaItem && (
-                <GridCol span={{ base: LAYOUT_12COL, md: 6 }}>
-                  <section className={classes.sectionImage}>
-                    <Asset asset={section.mediaItem} />
-                  </section>
-                </GridCol>
-              )}
-            </Grid>
-          )}
+      data-is-newsletter-component={isNewsLetterComponent}
+      data-no-padding-bottom={isFaqId && isProviderPage}
+      data-is-faq-section={isFaqSection}
+      data-disable-border-top={!isPreviousBackgroundPure || isProviderPage}
+      data-is-home-page-brand-outcome={
+        isBrandOutcomeCardSection && context.title === HOME
+      }
+      pt={section.header?.length > 0 ? undefined : 0}
+    >
+      <Container className={classes.container} size={"xl"}>
+      {context.title === HOME &&
+        section.referenceType === ReferenceTypeEnum["Card Section"] && (
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+          >
+            <h1 className={classes.title}>
+              Medication Access,{" "}
+              <span style={{ color: "#00827E" }}>Simplified</span>
+            </h1>
+            <p
+            style={{marginBottom: "0px"}}
+              className={classes.subHeading}
+              data-reference-type="Card Section"
+            >
+              Solving access barriers in retail and specialty-lite to improve
+              patient outcomes and drive commercial success.
+            </p>
+          </div>
+        )}
 
         {context.title === OUR_SOLUTIONS && section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div

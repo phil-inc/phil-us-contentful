@@ -21,13 +21,11 @@ type ReferencedSectionBodyProps = {
     sm: number;
     xs?: number;
   };
-  isHomePageFirstCardSection?: boolean;
 };
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   section,
   getSpan,
-  isHomePageFirstCardSection = false
 }) => {
   const { title } = useContext(PageContext);
 
@@ -130,7 +128,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
   const getGridGutter = () => {
-    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"] || isHomePageFirstCardSection)
+    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"])
       return 0;
     return 36;
   };
@@ -151,12 +149,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
         data-is-home-page-brand-outcome={
           isBrandOutcomeCardSection && title === HOME
         }
-        data-is-home-first-card-section={isHomePageFirstCardSection}
       >
         {section.references.map((resource, index, array) => (
           <Grid.Col
             className={cx(classes.column, {
-              [classes.removePaddingMargin]: isHomePageFirstCardSection,
             })}
             p={
               section.referenceType === ReferenceTypeEnum.Investors
@@ -166,7 +162,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
             key={resource.id + "mapReferencedSectionResource"}
             span={
               section.v2flag
-                ? { base: 12, sm: isHomePageFirstCardSection ? 12 : span, md: span  }
+                ? { base: 12, sm: span, md: span  }
                 : getSpan(section.referenceType)
             }
             data-reference-type={section.referenceType}

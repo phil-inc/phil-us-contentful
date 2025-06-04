@@ -858,12 +858,6 @@ export const query = graphql`
                 id
                 name
               }
-              hoverStylilngOption {
-                background
-                extraColor
-                id
-                name
-              }
               media {
                 name
                 media {
@@ -1089,22 +1083,6 @@ export const query = graphql`
               name
               numberOfColumns
               shouldRenderCarousel
-            }
-          }
-          mediaItem {
-            id
-            gatsbyImageData(
-              resizingBehavior: SCALE
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
-            title
-            file {
-              contentType
-              details {
-                size
-              }
-              url
             }
           }
         }

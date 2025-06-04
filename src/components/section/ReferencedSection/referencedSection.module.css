@@ -40,11 +40,6 @@
     display: flex;
     justify-content: center;
   }
-
-  &.removePaddingMargin{
-    margin: 0;
-    padding: 0;
-  }
 }
 
 .subHeading {
@@ -92,11 +87,6 @@
         margin-top: 40px;
       }
     }
-  }
-
-  &[data-is-home-first-card-section='true']{
-    margin-right: calc(var(--side-margin) * -1);
-    margin-left: calc(var(--side-margin) * -1);
   }
 
   &[data-context="Field"] {
