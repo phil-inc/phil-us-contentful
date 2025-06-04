@@ -14,15 +14,13 @@ import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, HCP_PAGE, HOME, LIFE_SCIENCES_PAGE, PATIENTS_PAGE,OUR_SOLUTIONS } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE,OUR_SOLUTIONS } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
 
 import * as classes from "./referencedSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
-import { LAYOUT_12COL } from "constants/global.constant";
-import Asset from "components/common/Asset/Asset";
 
 type ReferencedSectionProps = {
   section: IReferencedSection;

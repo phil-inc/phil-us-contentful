@@ -59,10 +59,6 @@
 	padding: var(--padding-section);
 	
 	&[data-index='0'] {
-		@media (min-width: $phil-breakpoint-sm) {
-			padding-top: 160px;
-			padding-bottom: 160px;
-		}
 
 		&[data-context='Company'] {
 			padding-top: 64px;
