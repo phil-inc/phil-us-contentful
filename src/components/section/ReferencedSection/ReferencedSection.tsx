@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "clsx";
 import { Button, Group, Anchor, Accordion, Text, Container, Divider, Grid, GridCol } from "@mantine/core";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
@@ -219,6 +220,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           : background
       }
       fullWidth={section.referenceType === ReferenceTypeEnum["Image Carousel"]}
+      backgroundAssetImage={section?.backgroundAssetImage ?? undefined}
       data-context={context.title}
       data-is-newsletter-component={isNewsLetterComponent}
       data-no-padding-bottom={isFaqId && isProviderPage}
@@ -229,19 +231,18 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       }
       pt={section.header?.length > 0 ? undefined : 0}
     >
-      <Container className={classes.container} size={"xl"}>
+      <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+          style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
-            <h1 className={classes.title}>
-              Medication Access,{" "}
-              <span style={{ color: "#00827E" }}>Simplified</span>
+            <h1 className={cx(classes.title,{[classes.isDarkBanner]: isHomePageFirstCardSection})}>
+              Medication Access, Simplified
             </h1>
             <p
             style={{marginBottom: "0px"}}
-              className={classes.subHeading}
+              className={cx(classes.subHeading,{[classes.isDarkBanner]: isHomePageFirstCardSection})}
               data-reference-type="Card Section"
             >
               Solving access barriers in retail and specialty-lite to improve

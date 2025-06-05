@@ -1,3 +1,8 @@
+.innerContainer{
+  position: relative;
+  z-index: 2;
+}
+
 .chevron {
   margin-left: 0;
   margin-right: 16px;
@@ -40,6 +45,7 @@
     display: flex;
     justify-content: center;
   }
+
 }
 
 .subHeading {
@@ -68,6 +74,10 @@
     font-weight: 400;
     line-height: 150%; /* 36px */
     margin: 0 0 20px 0;
+  }
+
+  &.isDarkBanner{
+    color:#FFFFFF
   }
 }
 
@@ -185,6 +195,11 @@
   font-weight: 700;
   line-height: normal;
   margin: 0;
+
+  &.isDarkBanner{
+    color:#FFFFFF
+  }
+
   @media (min-width: $phil-breakpoint-md) {
     font-size: 60px;
   }

@@ -112,15 +112,6 @@
 		}
 	}
 
-	.sectionTitle {
-		font-family: Lato;
-		font-weight: 400;
-		font-size: 14px;
-		line-height: 36px;
-		letter-spacing: 0%;
-		margin-bottom: 16px;
-	}
-
 	@media (min-width: $phil-breakpoint-sm) {
 		padding-top: 100px;
 		padding-bottom: 100px;

@@ -424,9 +424,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               </>
             ) : (
               <>
-                {section?.sectionTitle &&
-                  <div className={classes.sectionTitle}>{section.sectionTitle}</div>
-                }
                 {Boolean(section.body) && (
                   <Stack className={classes.portal}>
                     {isMobileView &&

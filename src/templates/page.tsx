@@ -316,7 +316,6 @@ export const query = graphql`
             }
           }
           canShowAssetImageAlignToWall 
-          sectionTitle
           buttonText
           header
           sectionType
@@ -447,6 +446,22 @@ export const query = graphql`
             tags {
               name
               id
+            }
+          }
+          backgroundAssetImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
             }
           }
           references {

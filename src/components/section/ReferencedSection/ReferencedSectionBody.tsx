@@ -152,8 +152,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
       >
         {section.references.map((resource, index, array) => (
           <Grid.Col
-            className={cx(classes.column, {
-            })}
+            className={cx(classes.column)}
             p={
               section.referenceType === ReferenceTypeEnum.Investors
                 ? 0

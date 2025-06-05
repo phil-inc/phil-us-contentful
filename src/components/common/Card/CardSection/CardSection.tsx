@@ -4,6 +4,7 @@ import type { FC } from "react";
 import React, { useContext } from "react";
 import type { TResource } from "types/resource";
 import { BLOCKS } from "@contentful/rich-text-types";
+import cx from 'clsx'
 
 import * as classes from "./cardSection.module.css";
 
@@ -16,6 +17,7 @@ import { IconArrowRight } from "@tabler/icons";
 
 import { RECENT_CLIENT_WINS } from "constants/section";
 import { PATH } from "constants/routes";
+import { MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
 
 type ArticleProps = {
   resource: TResource;
@@ -33,6 +35,8 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
     hyperlink?.linkLabel === "Read Case Study"
       ? `${PATH.INSIGHTS_CASE_STUDIES}${hyperlink?.externalUrl}`
       : null;
+
+  const isHeaderNameMedicationAccessSection = sectionHeader === MEDICATION_ACCESS_SIMPLIFIED;
 
   const options: Options = {
     renderNode: {
@@ -57,7 +61,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
   return (
     <Group h={"100%"} gap={0}>
       <Paper
-        className={classes.paper}
+        className={cx(classes.paper,{[classes.showHoverShadow]: isHeaderNameMedicationAccessSection})}
         style={{
           background: getColorFromStylingOptions(resource?.stylingOptions?.background),
         }}
