@@ -32,7 +32,7 @@ import { isProduction } from "utils/isProduction";
 import ContactForm from "components/ContactPageForm/ContactForm";
 import { useId, useViewportSize } from "@mantine/hooks";
 import PageContext from "contexts/PageContext";
-import { CONTACT_PAGE } from "constants/page";
+import { CONTACT_PAGE, OUR_SOLUTIONS } from "constants/page";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
 import { parseScript } from "utils/parseScript";
 
@@ -305,6 +305,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
   const isSectionV2 = section.v2Flag;
 
+  const maw = () => {
+    if(index === 0 && context.title === OUR_SOLUTIONS) {
+      return 'none';
+    }
+
+    return isBanner ? 300 : 400;
+  };
+
   const hasYoutubeLink = isSectionV2
     ? Boolean(section?.mediaItem?.youtubeLink)
     : Boolean(section.youtubeVideoUrl);
@@ -473,7 +481,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                   background={determineBackground()}
                   expanded={context.title === CONTACT_PAGE}
                   isVideo={isVideo()}
-                  maw={isBanner ? 300 : 400}
+                  maw={maw()}
                   data-index={index}
                   data-context={context.title}
                   isGatsbyImageData={Boolean(media?.gatsbyImageData)}
