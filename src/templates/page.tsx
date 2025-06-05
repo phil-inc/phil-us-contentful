@@ -186,6 +186,7 @@ export const query = graphql`
           isHidden
           isReverse
           addBorder
+          showBottomBorder
           youtubeVideoUrl
           body {
             raw

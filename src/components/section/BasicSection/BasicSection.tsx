@@ -518,6 +518,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     </Container>
     </>
     </Box>
+    {Boolean(section?.showBottomBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
     </>
   );
 };

@@ -93,6 +93,7 @@ export type ISection = {
   backgroundAssetImage?: TAsset;
   canShowAssetImageAlignToWall?: boolean;
   sectionTitle?: string;
+  showBottomBorder?: boolean;
 };
 
 export enum ResourceBlocksEnum {
