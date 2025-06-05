@@ -212,13 +212,6 @@
   border-top: 1px solid #F4F4F4;
 }
 
-#the-all-in-one-access-solution-for-retail-and-specialty-lite-success {
-  padding-bottom: 60px;
-
-  @media (min-width: $phil-breakpoint-sm) {
-    padding-bottom: 0px;
-  }
-}
 
 .trustpilotWidgetWrapper {
   margin-bottom: -40px;
