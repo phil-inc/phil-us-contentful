@@ -180,6 +180,11 @@ export const query = graphql`
               }
             }
           }
+          stylingOptions {
+            background
+            id
+            name
+          }
         }
         ... on ContentfulSection {
           id

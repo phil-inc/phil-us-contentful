@@ -206,6 +206,7 @@ export type ITextandTextColumns = {
   rightColumn: ReferenceBodyType;
   addBorder: boolean;
   header: string;
+  stylingOptions?: StylingOptions;
 };
 
 export type ISectionsArray = Array <ISection | IReferencedSection >;
