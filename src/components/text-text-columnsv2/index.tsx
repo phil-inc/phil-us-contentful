@@ -12,7 +12,6 @@ import {
 } from "@mantine/core";
 import { ITextandTextColumns, ReferenceBodyType } from "types/section";
 import {
-  documentToReactComponents,
   Options,
 } from "@contentful/rich-text-react-renderer";
 import * as classes from "./textandtext.module.css";
@@ -24,6 +23,8 @@ import cx from "clsx";
 import PageContext from "contexts/PageContext";
 import { getDescriptionFromRichtext } from "utils/getDescription";
 import{getPhilRxAccessSolution,getDataInsights} from "assets/images";
+
+import { getColorFromStylingOptions } from "utils/stylingOptions";
 
 interface CheckIconProps {
   size: number;
@@ -237,10 +238,12 @@ const renderRightColumn = (column: any, context: any) => {
 const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
-  const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header } = data;
+  const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header, stylingOptions } = data;
   return (
     <>
-      <div id={header === "Data & Insights" ? slugify("DATA AND INSIGHTS") : slugify(header)}>
+      <div id={header === "Data & Insights" ? slugify("DATA AND INSIGHTS") : slugify(header)}
+        style={{ backgroundColor: getColorFromStylingOptions(stylingOptions?.background)}}
+      >
       {addBorder && (
         <Container className={classes.container} size={"xl"}>
           <Divider size={"sm"} className={classes.divider} />

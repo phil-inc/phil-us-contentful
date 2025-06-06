@@ -38,7 +38,7 @@
   
   .phil-Anchor-root:hover{
     svg{
-      transform: rotate(-45deg);
+      transform: scale(1.1);
       transition: 0.4s var(--ease-out-expo);
     }
   }

@@ -3,6 +3,10 @@ import { Container, type MantineSpacing, type StyleProp } from "@mantine/core";
 
 import * as classes from "./expanded.module.css";
 
+import Asset from "components/common/Asset/Asset";
+
+import { TAsset } from "types/asset";
+
 type ExpandedProps = {
   id: string;
   children: React.ReactNode;
@@ -16,6 +20,7 @@ type ExpandedProps = {
   mb?: StyleProp<MantineSpacing>;
   mt?: StyleProp<MantineSpacing>;
   fullWidth?: boolean;
+  backgroundAssetImage?: TAsset;
 };
 
 /**
@@ -35,6 +40,7 @@ const Expanded: React.FC<ExpandedProps> = ({
   pb,
   px,
   fullWidth = false,
+  backgroundAssetImage = null,
   ...rest
 }) => (
   <Container
@@ -49,6 +55,13 @@ const Expanded: React.FC<ExpandedProps> = ({
     px={px ? px : fullWidth ? 0 : undefined}
     {...rest}
   >
+    {backgroundAssetImage && 
+      <div className={classes.rightBackgroundIcon}>
+        <Asset
+            asset={backgroundAssetImage}
+        />
+        </div>
+    }
     {children}
   </Container>
 );

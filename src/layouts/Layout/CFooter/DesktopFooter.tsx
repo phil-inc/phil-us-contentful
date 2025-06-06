@@ -11,7 +11,6 @@ import {
 } from "@mantine/core";
 import { CONTACT_PAGE, INSIGHTS } from "constants/page";
 import { Link } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 import slugify from "slugify";
 import { type TAsset } from "types/asset";
@@ -26,7 +25,9 @@ import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { Options } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 import cx from "clsx";
+
 import { EmailIcon } from "components/common/Buttons/SocialButtons/EmailIcon";
+import { ELinkedinIconDark } from "components/common/Buttons/SocialButtons/ElinkdedInDark";
 
 type TDesktopFooter = {
   pages: ContentfulPage[];
@@ -73,9 +74,9 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
         <div>{footer.address && renderRichText(footer.address, options)}</div>
 
         <div className={classes.socials}>
-          <Group gap={0}>
-            <EmailIcon />
-            <Anchor href="https://phil.us/contact/" className={classes.link}>
+          <Anchor href="https://phil.us/contact/" className={classes.link} >
+            <Group gap={0}>
+              <EmailIcon />
               <Text
                 unstyled
                 span
@@ -84,8 +85,8 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
               >
                 Contact Us
               </Text>
-            </Anchor>
-          </Group>
+            </Group>
+          </Anchor>
 
           <Anchor
             href="https://www.linkedin.com/company/phil-inc-"
@@ -95,10 +96,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
             style={{ textDecoration: "none" }}
           >
             <Group gap={0}>
-              <StaticImage
-                src="../../../assets/images/linkedin.svg"
-                alt="LinkedIn Icon"
-              />
+            <ELinkedinIconDark/>
               <Text
                 unstyled
                 span

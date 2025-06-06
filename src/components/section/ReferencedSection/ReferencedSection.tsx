@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Group, Anchor, Accordion, Text, Container, Divider } from "@mantine/core";
+import cx from "clsx";
+import { Button, Group, Anchor, Accordion, Text, Container, Divider, Grid, GridCol } from "@mantine/core";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {
@@ -14,7 +15,7 @@ import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, HCP_PAGE, HOME, LIFE_SCIENCES_PAGE, PATIENTS_PAGE,OUR_SOLUTIONS } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE,OUR_SOLUTIONS } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
@@ -120,7 +121,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           md: GRID_COLUMNS,
           sm: GRID_COLUMNS,
         };
-
+        
       default:
         return { xl: SPAN_LG, lg: SPAN_LG, md: GRID_COLUMNS, sm: GRID_COLUMNS };
     }
@@ -144,6 +145,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     section.referenceType === "Brand Outcome Card";
 
   const isProviderPage = context.title === HCP_PAGE;
+  const isHomePageFirstCardSection =context.title === HOME && section.referenceType === ReferenceTypeEnum["Card Section"];
 
   let sectionContent;
   if (context.title === FIELD_PAGE) {
@@ -202,14 +204,14 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             />
           )}
 
-        <ReferencedSectionBody getSpan={getSpan} section={section} />
+        <ReferencedSectionBody getSpan={getSpan} section={section}/>
       </>
     );
   }
 
   return (
     <>
-    {Boolean(section.addBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
+      {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     <Expanded
       id={slugify(section.header ?? section.id, { lower: true, strict: true })}
       background={
@@ -218,6 +220,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           : background
       }
       fullWidth={section.referenceType === ReferenceTypeEnum["Image Carousel"]}
+      backgroundAssetImage={section?.backgroundAssetImage ?? undefined}
       data-context={context.title}
       data-is-newsletter-component={isNewsLetterComponent}
       data-no-padding-bottom={isFaqId && isProviderPage}
@@ -228,19 +231,18 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       }
       pt={section.header?.length > 0 ? undefined : 0}
     >
-      <Container className={classes.container} size={"xl"}>
+      <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+          style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
-            <h1 className={classes.title}>
-              Medication Access,{" "}
-              <span style={{ color: "#00827E" }}>Simplified</span>
+            <h1 className={cx(classes.title,{[classes.isDarkBanner]: isHomePageFirstCardSection})}>
+              Medication Access, Simplified
             </h1>
             <p
             style={{marginBottom: "0px"}}
-              className={classes.subHeading}
+              className={cx(classes.subHeading,{[classes.isDarkBanner]: isHomePageFirstCardSection})}
               data-reference-type="Card Section"
             >
               Solving access barriers in retail and specialty-lite to improve
@@ -248,8 +250,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             </p>
           </div>
         )}
-      
-  
+
         {context.title === OUR_SOLUTIONS && section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
             style={{ display: "flex", justifyContent:"center"}}
@@ -258,45 +259,45 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               Recent Client News
             </Text>
           </div>
-        )}
-
-      {sectionContent}
-
-      {/* subheading */}
-      {section.subHeading &&
-        section.referenceType === ReferenceTypeEnum["Stepper Cards"] &&
-        context.title === PATIENTS_PAGE && (
-          <Group
-            className={classes.subHeading}
-            data-reference-type={section.referenceType}
-            justify="center"
-          >
-            <Text>{section.subHeading.subHeading}</Text>
-          </Group>
-        )}
-
-      {/* bottom buttons */}
-      {Boolean(section.buttonText?.length) &&
-        (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-          <Group justify="center" mt={isFaqSection ? 80 : 44}>
-            {isExternal ? (
-              <Anchor
-                className={classes.externalLink}
-                href={link}
-                target="_blank"
-              >
-                <Button variant="philDefault">{section.buttonText}</Button>
-              </Anchor>
-            ) : (
-              <Link className={classes.internalLink} to={link}>
-                <Button variant="philDefault">{section.buttonText}</Button>
-              </Link>
             )}
-          </Group>
-        )}
 
-        {/* philrx testimonial */}
-        {section.header === "What PhilRx Patients & Providers Say"  && (
+          {sectionContent}
+
+          {/* subheading */}
+          {section.subHeading &&
+            section.referenceType === ReferenceTypeEnum["Stepper Cards"] &&
+            context.title === PATIENTS_PAGE && (
+              <Group
+                className={classes.subHeading}
+                data-reference-type={section.referenceType}
+                justify="center"
+              >
+                <Text>{section.subHeading.subHeading}</Text>
+              </Group>
+            )}
+
+          {/* bottom buttons */}
+          {Boolean(section.buttonText?.length) &&
+            (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
+              <Group justify="center" mt={isFaqSection ? 80 : 44}>
+                {isExternal ? (
+                  <Anchor 
+                    className={classes.externalLink}
+                    href={link}
+                    target="_blank"
+                  >
+                    <Button variant="philDefault">{section.buttonText}</Button>
+                  </Anchor>
+                ) : (
+                  <Link className={classes.internalLink} to={link}>
+                    <Button variant="philDefault">{section.buttonText}</Button>
+                  </Link>
+                )}
+              </Group>
+            )}
+
+          {/* philrx testimonial */}
+          {section.header === "What PhilRx Patients & Providers Say"  && (
           <div className={classes.customTestiominalFooter}>
             <div className="trustpilot-widget" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%">
               <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>

@@ -91,6 +91,9 @@ export type ISection = {
   addBorder: boolean;
   isReverse: boolean;
   backgroundAssetImage?: TAsset;
+  canShowAssetImageAlignToWall?: boolean;
+  sectionTitle?: string;
+  showBottomBorder?: boolean;
 };
 
 export enum ResourceBlocksEnum {
@@ -182,6 +185,7 @@ export type IReferencedSection = {
 
   stylingOptions?: StylingOptions;
   renderOptions?: RenderOptions;
+  backgroundAssetImage?: TAsset;
 };
 
 export type Reference = {
@@ -202,6 +206,7 @@ export type ITextandTextColumns = {
   rightColumn: ReferenceBodyType;
   addBorder: boolean;
   header: string;
+  stylingOptions?: StylingOptions;
 };
 
 export type ISectionsArray = Array <ISection | IReferencedSection >;
