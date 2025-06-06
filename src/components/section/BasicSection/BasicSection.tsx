@@ -307,7 +307,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
   const maw = () => {
     if(index === 0 && context.title === OUR_SOLUTIONS) {
-      return 'none';
+      return 450;
     }
 
     return isBanner ? 300 : 400;
