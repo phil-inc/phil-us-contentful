@@ -350,7 +350,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const { media } = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
   return (
     <>
-   {Boolean(section.addBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
+   {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
 
     <Box style={{
       background: section.v2Flag
@@ -526,7 +526,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     </Container>
     </>
     </Box>
-    {Boolean(section?.showBottomBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
+    {Boolean(section?.showBottomBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     </>
   );
 };

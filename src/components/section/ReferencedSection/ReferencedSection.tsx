@@ -211,7 +211,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 
   return (
     <>
-      {Boolean(section.addBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
+      {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     <Expanded
       id={slugify(section.header ?? section.id, { lower: true, strict: true })}
       background={
