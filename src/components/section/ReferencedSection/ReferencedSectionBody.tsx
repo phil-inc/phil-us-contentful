@@ -4,12 +4,13 @@ import { Carousel } from "@mantine/carousel";
 import { Center, Container, Grid } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { ResourceCarousel } from "components/common/Carousel/ResourceCarousel";
-import { EMPLOYEE_SPOTLIGHT_TAG } from "constants/identifiers";
+import { EMPLOYEE_SPOTLIGHT_TAG, MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
 import { COMPANY_PAGE, HOME } from "constants/page";
 import PageContext from "contexts/PageContext";
 import useDeviceType from "hooks/useView";
 import React, { useContext } from "react";
 import { type IReferencedSection, ReferenceTypeEnum } from "types/section";
+import cx from 'clsx';
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -125,53 +126,61 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   }
 
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
-  
+
+  const getGridGutter = () => {
+    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"])
+      return 0;
+    return 36;
+  };
+
   return (
-    <Grid
-      grow
-      className={classes.grid}
-      gutter={
-        section.referenceType === ReferenceTypeEnum["Stepper Cards"] ? 0 : 36
-      }
-      justify="center"
-      align={title === COMPANY_PAGE ? "center" : "stretch"}
-      data-add-margin={addMargin}
-      data-context={title}
-      data-is-stepper-card={
-        section.referenceType === ReferenceTypeEnum["Stepper Cards"]
-      }
-      data-reference-type={section.referenceType}
-      data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
-    >
-      {section.references.map((resource, index, array) => (   
-        <Grid.Col
-          className={classes.column}
-          p={
-            section.referenceType === ReferenceTypeEnum.Investors
-              ? 0
-              : undefined
-          }
-          key={resource.id + "mapReferencedSectionResource"}
-          span={
-            section.v2flag
-              ? { base: 12, sm: span, md: span }
-              : getSpan(section.referenceType)
-          }
-          data-reference-type={section.referenceType}
-          data-is-home-page-brand-outcome={isBrandOutcomeCardSection && title === HOME}
-        >
-          <RenderResource
-            arrayLength={array.length}
-            index={index}
-            referenceType={section.referenceType}
-            resource={resource}
-            sectionHeader={section.header}
-            isEmployeeTag={Boolean(isEmployeeTag)}
-            metadata={section.metadata}
-          />
-        </Grid.Col>
-      ))}
-    </Grid>
+      <Grid
+        grow
+        className={classes.grid}
+        gutter={getGridGutter()}
+        justify="center"
+        align={title === COMPANY_PAGE ? "center" : "stretch"}
+        data-add-margin={addMargin}
+        data-context={title}
+        data-is-stepper-card={
+          section.referenceType === ReferenceTypeEnum["Stepper Cards"]
+        }
+        data-reference-type={section.referenceType}
+        data-is-home-page-brand-outcome={
+          isBrandOutcomeCardSection && title === HOME
+        }
+      >
+        {section.references.map((resource, index, array) => (
+          <Grid.Col
+            className={cx(classes.column)}
+            p={
+              section.referenceType === ReferenceTypeEnum.Investors
+                ? 0
+                : undefined
+            }
+            key={resource.id + "mapReferencedSectionResource"}
+            span={
+              section.v2flag
+                ? { base: 12, sm: span, md: span  }
+                : getSpan(section.referenceType)
+            }
+            data-reference-type={section.referenceType}
+            data-is-home-page-brand-outcome={
+              isBrandOutcomeCardSection && title === HOME
+            }
+          >
+            <RenderResource
+              arrayLength={array.length}
+              index={index}
+              referenceType={section.referenceType}
+              resource={resource}
+              sectionHeader={section.header}
+              isEmployeeTag={Boolean(isEmployeeTag)}
+              metadata={section.metadata}
+            />
+          </Grid.Col>
+        ))}
+      </Grid>
   );
 };
 

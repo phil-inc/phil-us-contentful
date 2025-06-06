@@ -1,4 +1,7 @@
 .basicSectionMainContainer {
+	--padding-section: 40px;
+	--img-outside-margin: 20px;
+
 	position: relative;
 	overflow: hidden;
 
@@ -53,13 +56,9 @@
 .basicSectionContainer {
 	position: relative;
 	z-index: 2;
-	padding:40px;
+	padding: var(--padding-section);
 	
 	&[data-index='0'] {
-		@media (min-width: $phil-breakpoint-sm) {
-			padding-top: 160px;
-			padding-bottom: 160px;
-		}
 
 		&[data-context='Company'] {
 			padding-top: 64px;
@@ -87,6 +86,29 @@
 		@media (min-width: $phil-breakpoint-sm) {
 			padding-top: 152px;
 			padding-bottom: 152px;
+		}
+	}
+
+	.containSection{
+		position: relative;
+
+		.wallImage{
+			display: none;
+			height: 80%;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right: calc(var(--img-outside-margin) * -1);
+
+			>img{
+				width: 100%;
+				height: 100%;
+			}
+
+			@media (min-width: $phil-breakpoint-md){
+				display: block;
+				width: 50%;
+			}
 		}
 	}
 
@@ -187,6 +209,14 @@
 			padding-right: 32px;
 		}
 	}
+	
+	&.hideDueToWallImage{
+		visibility: visible;
+
+		@media (min-width: $phil-breakpoint-md) {
+			visibility: hidden;
+		}
+	}
 }
 
 .formWrapper {
@@ -262,4 +292,10 @@
 	@media (min-width: $phil-breakpoint-sm) {
       padding-bottom: 0px;
     }
+}
+
+.dividerContainer{
+	.divider{
+		border-top: 1px solid #E6E6E6;
+	}	
 }

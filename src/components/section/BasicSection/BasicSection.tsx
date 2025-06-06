@@ -32,7 +32,7 @@ import { isProduction } from "utils/isProduction";
 import ContactForm from "components/ContactPageForm/ContactForm";
 import { useId, useViewportSize } from "@mantine/hooks";
 import PageContext from "contexts/PageContext";
-import { CONTACT_PAGE } from "constants/page";
+import { CONTACT_PAGE, OUR_SOLUTIONS } from "constants/page";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
 import { parseScript } from "utils/parseScript";
 
@@ -68,6 +68,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const HEADING_FIRST = 1;
   const HEADING_SECOND = 2;
   const context = React.useContext(PageContext);
+  const isImageAlignToWall = section?.canShowAssetImageAlignToWall;
  
 
   const theme = useMantineTheme();
@@ -304,6 +305,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
   const isSectionV2 = section.v2Flag;
 
+  const maw = () => {
+    if(index === 0 && context.title === OUR_SOLUTIONS) {
+      return 450;
+    }
+
+    return isBanner ? 300 : 400;
+  };
+
   const hasYoutubeLink = isSectionV2
     ? Boolean(section?.mediaItem?.youtubeLink)
     : Boolean(section.youtubeVideoUrl);
@@ -337,11 +346,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
     return isVideoContent(section?.asset?.file?.contentType) || hasYoutubeLink;
   };
-
+  
   const { media } = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
   return (
     <>
-   {Boolean(section.addBorder) && <Container className={classes.container} size={"xl"}><Divider size={'sm'} className={classes.divider}/></Container>}
+   {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
 
     <Box style={{
       background: section.v2Flag
@@ -366,7 +375,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
     >
-      <>
+      <div className={classes.containSection}>
         <Grid
           align={
             section.isHubspotEmbed || section.embedForm
@@ -444,7 +453,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           {/* TODO: Refactor v2Flags and links */}
           {(section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) &&
           <Grid.Col
-            className={cx(classes.heroGridColumn, classes.embedFormTemplate)}
+            className={cx(classes.heroGridColumn, classes.embedFormTemplate, {[classes.hideDueToWallImage]: isImageAlignToWall})}
             ref={heroRef}
             order={imageColumnOrder}
             span={{ base: 12, md: span }}
@@ -472,7 +481,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                   background={determineBackground()}
                   expanded={context.title === CONTACT_PAGE}
                   isVideo={isVideo()}
-                  maw={isBanner ? 300 : 400}
+                  maw={maw()}
                   data-index={index}
                   data-context={context.title}
                   isGatsbyImageData={Boolean(media?.gatsbyImageData)}
@@ -503,10 +512,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               .replace("</script>", "")}
           </Script>
         ) : null}
-      </>
+
+        {(isImageAlignToWall && mediaItemOrAsset) && 
+          <div className={classes.wallImage}>
+            <Asset
+            className={classes.assetWallImage}
+              asset={mediaItemOrAsset}
+            />
+          </div>
+      }
+      </div>
+  
     </Container>
     </>
     </Box>
+    {Boolean(section?.showBottomBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     </>
   );
 };

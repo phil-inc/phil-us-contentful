@@ -6,6 +6,8 @@
 
 :root {
   --navbar-height: 90px;
+  --side-margin: 32px;
+
 }
 
   .home{
@@ -118,7 +120,8 @@
 }
 
 #the-all-in-one-access-solution-for-retail-and-specialty-lite-success {
-	padding-bottom: 60px;
+  padding-top: 80px;
+	padding-bottom: 80px;
 }
 
 .demoBookPage{

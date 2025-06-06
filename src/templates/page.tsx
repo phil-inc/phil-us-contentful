@@ -180,12 +180,18 @@ export const query = graphql`
               }
             }
           }
+          stylingOptions {
+            background
+            id
+            name
+          }
         }
         ... on ContentfulSection {
           id
           isHidden
           isReverse
           addBorder
+          showBottomBorder
           youtubeVideoUrl
           body {
             raw
@@ -315,6 +321,7 @@ export const query = graphql`
               url
             }
           }
+          canShowAssetImageAlignToWall 
           buttonText
           header
           sectionType
@@ -445,6 +452,22 @@ export const query = graphql`
             tags {
               name
               id
+            }
+          }
+          backgroundAssetImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
             }
           }
           references {
