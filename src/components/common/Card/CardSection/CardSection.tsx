@@ -5,6 +5,7 @@ import React, { useContext } from "react";
 import type { TResource } from "types/resource";
 import { BLOCKS } from "@contentful/rich-text-types";
 import cx from 'clsx'
+import { navigate } from "gatsby";
 
 import * as classes from "./cardSection.module.css";
 
@@ -61,12 +62,25 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
   return (
     <Group h={"100%"} gap={0}>
       <Paper
-        className={cx(classes.paper,{[classes.showHoverShadow]: isHeaderNameMedicationAccessSection})}
+        className={cx(classes.paper, {
+          [classes.showHoverShadow]: isHeaderNameMedicationAccessSection,
+        })}
         style={{
-          background: getColorFromStylingOptions(resource?.stylingOptions?.background),
+          background: getColorFromStylingOptions(
+            resource?.stylingOptions?.background,
+          ),
         }}
         radius={0}
         data-context={context.title}
+        onClick={() => {
+          return isHeaderNameMedicationAccessSection
+            ? navigate(
+                customHyperLink
+                  ? customHyperLink
+                  : `/${hyperlink?.internalContent?.slug}`,
+              )
+            : null;
+        }}
       >
         <Grid
           gutter={0}
@@ -99,18 +113,31 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
               >
                 {body && renderRichText(body, options)}
               </div>
-                {
+              {
                   hyperlink?.linkLabel === "Read Press Release"
-                }
+              }
               <div>
-              <Anchor
-                  href={customHyperLink ? customHyperLink : `/${hyperlink?.internalContent?.slug}`}
-                >
-                  <span className="anchor-text">
-                    {hyperlink?.linkLabel}
-                  </span>
-                  <IconArrowRight size={16} />
-                </Anchor>
+                {isHeaderNameMedicationAccessSection ? (
+                  <div className={classes.anchorWrapper}>
+                    <span className={cx(classes.anchortext)}>
+                      {hyperlink?.linkLabel}
+                    </span>
+                    <span className={classes.iconWrapper}>
+                      <IconArrowRight size={16} />
+                    </span>
+                  </div>
+                ) : (
+                  <Anchor
+                    href={
+                      customHyperLink
+                        ? customHyperLink
+                        : `/${hyperlink?.internalContent?.slug}`
+                    }
+                  >
+                    <span className="anchor-text">{hyperlink?.linkLabel}</span>
+                    <IconArrowRight size={16} />
+                  </Anchor>
+                )}
               </div>
             </Stack>
           </Grid.Col>

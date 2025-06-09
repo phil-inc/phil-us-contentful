@@ -32,11 +32,39 @@
     font-size: 28px;
     font-weight: 700;
     color : #00827E;
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+
+    &[data-context="Our Solution"] {
+      &::after{
+        position: absolute;
+        content: "";
+        left: 20px;
+        display: block;
+        width: 95%;
+        height: 3px;
+        background: #00827E;
+        transition: 0.4s var(--ease-out-expo);
+        transform-origin: left;
+        transform: scaleX(0); /* Start hidden */
+        transition: transform 0.4s var(--ease-out-expo) 0s;
+      }
+    }
+
+    &:hover{
+      &[data-context="Our Solution"] {
+        &::after{
+          transform: scaleX(1); /* Animate to full underline on hover */
+        }
+      }
+    }
+ 
+
   }
 
   .noSubHeadingChooseBox {
     margin-bottom:16px;
     margin-top:16px;
+    position: relative;
   }
   
   .rightColumn {
