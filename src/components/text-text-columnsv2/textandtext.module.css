@@ -54,7 +54,6 @@
       &[data-context="Our Solution"] {
         &::after{
           transform: scaleX(1); /* Animate to full underline on hover */
-          transition-delay: 0.1s;
         }
       }
     }
