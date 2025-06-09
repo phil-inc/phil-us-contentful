@@ -42,7 +42,7 @@
         display: block;
         width: 95%;
         height: 3px;
-        background: var(--mantine-color-anchor);
+        background: #00827E;
         transition: 0.4s var(--ease-out-expo);
         transform-origin: left;
         transform: scaleX(0); /* Start hidden */
