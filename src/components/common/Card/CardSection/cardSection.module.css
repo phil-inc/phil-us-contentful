@@ -47,7 +47,6 @@
 				background: var(--mantine-color-anchor);
 				transition: 0.4s var(--ease-out-expo);
 				transform-origin: left;
-				transition-delay: 0.25s;
 			  }
 		  }
 
