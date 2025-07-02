@@ -87,6 +87,7 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({
     (section) => !section.isHidden && section.sectionType === "Basic Section",
   ) as ISection;
   const heroAsset = heroSection.asset;
+  const canShowHeroAssetAtSideWall = heroSection?.canShowAssetImageAlignToWall;
 
   const [careers, setCareers] = useState({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -121,6 +122,7 @@ const CareerTemplate: React.FC<CareerTemplateProps> = ({
         heroAsset={heroAsset}
         careers={careers}
         isLoading={isLoading}
+        canShowHeroAssetAtSideWall={canShowHeroAssetAtSideWall}
       />
     </Layout>
   );
@@ -161,6 +163,7 @@ export const query = graphql`
               url
             }
           }
+          canShowAssetImageAlignToWall
           buttonText
           header
           sectionType
