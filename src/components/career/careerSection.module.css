@@ -5,7 +5,6 @@
 
 		.assetHeight{
 			@media (min-width: $phil-breakpoint-md) {
-				border: 2px solid transparent;
 				position: relative;
 				min-height: var(--img-banner-height);
 
