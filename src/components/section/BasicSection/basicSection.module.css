@@ -58,14 +58,6 @@
 	z-index: 2;
 	padding: var(--padding-section);
 	
-	&[data-index='0'] {
-
-		&[data-context='Company'] {
-			padding-top: 64px;
-			padding-bottom: 64px;
-		}
-	}
-	
 	&[data-oneColumn="true"] {
 		color: #FFFFFF;
 
@@ -118,6 +110,14 @@
 
 		&[data-context='Company'] {
 			padding: 32px 100px;
+		}
+	}
+
+	@media (min-width: $phil-breakpoint-lg) {
+		&[data-index='0'] {
+			&[data-context='Company'] {
+				margin-top: -40px;
+			}
 		}
 	}
 }
