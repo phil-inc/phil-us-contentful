@@ -1,5 +1,24 @@
 .container {
+	--img-banner-height: 1045px;
+	--img-outside-margin: 64px;
 	margin-top: 36px;
+
+		.assetHeight{
+			@media (min-width: $phil-breakpoint-md) {
+				position: relative;
+				height: -webkit-fill-available;
+				height: -moz-available; /*firefox*/
+				min-height: var(--img-banner-height);
+
+				.wallImage{
+					position: absolute;
+					top: 50%;
+					right: calc(var(--img-outside-margin) * -1);
+					transform: translateY(-50%);
+					width: auto;
+				}
+			}
+		}
 }
 
 .center {

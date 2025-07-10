@@ -1,3 +1,4 @@
+import cx from "clsx";
 import {
   Box,
   Container,
@@ -6,7 +7,6 @@ import {
   Group,
   Loader,
   Title,
-  Text,
   useMantineTheme,
   Center,
 } from "@mantine/core";
@@ -23,12 +23,14 @@ type CareerSectionProps = {
   heroAsset: TAsset;
   careers: Record<string, Listing[]>;
   isLoading: boolean;
+  canShowHeroAssetAtSideWall?: boolean;
 };
 
 const CareerSection: React.FC<CareerSectionProps> = ({
   careers,
   isLoading,
   heroAsset,
+  canShowHeroAssetAtSideWall = false,
 }) => {
   const theme = useMantineTheme();
   
@@ -83,10 +85,25 @@ const CareerSection: React.FC<CareerSectionProps> = ({
               ))}
           </Box>
         </Grid.Col>
-        <Grid.Col order={{ sm: 2 }} span={{ base: 12, sm: 12, md: 6, lg: 6 }}>
-          <ImageContainer data-is-svg={isSVG} fluid maw={"100%"}>
+        <Grid.Col
+          className={cx({
+            [classes.assetHeight]: canShowHeroAssetAtSideWall,
+          })}
+          order={{ sm: 2 }}
+          span={{ base: 12, sm: 12, md: 6, lg: 6 }}
+        >
+          {Object.keys(careers).length > 0 &&
+          <ImageContainer
+            className={cx({
+              [classes.wallImage]: canShowHeroAssetAtSideWall,
+            })}
+            data-is-svg={isSVG}
+            fluid
+            maw={"100%"}
+          >
             <Asset asset={heroAsset} />
           </ImageContainer>
+          }
         </Grid.Col>
       </Grid>
     </Container>
