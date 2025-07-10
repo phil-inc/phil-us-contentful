@@ -92,7 +92,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({
           order={{ sm: 2 }}
           span={{ base: 12, sm: 12, md: 6, lg: 6 }}
         >
-          {!isLoading &&
+          {Object.keys(careers).length > 0 &&
           <ImageContainer
             className={cx({
               [classes.wallImage]: canShowHeroAssetAtSideWall,
