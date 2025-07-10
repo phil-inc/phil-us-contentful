@@ -108,3 +108,8 @@ dist
 public
 # Local Netlify folder
 .netlify
+
+# Ignore the Yarn cache directory to prevent storing package cache files in version control.
+.yarn/*
+.yarn/cache
+

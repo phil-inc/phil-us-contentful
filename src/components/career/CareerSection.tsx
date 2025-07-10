@@ -92,6 +92,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({
           order={{ sm: 2 }}
           span={{ base: 12, sm: 12, md: 6, lg: 6 }}
         >
+          {!isLoading &&
           <ImageContainer
             className={cx({
               [classes.wallImage]: canShowHeroAssetAtSideWall,
@@ -102,6 +103,7 @@ const CareerSection: React.FC<CareerSectionProps> = ({
           >
             <Asset asset={heroAsset} />
           </ImageContainer>
+          }
         </Grid.Col>
       </Grid>
     </Container>
