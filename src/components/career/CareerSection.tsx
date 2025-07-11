@@ -11,7 +11,6 @@ import {
   Center,
 } from "@mantine/core";
 import Asset from "components/common/Asset/Asset";
-import ImageContainer from "components/common/Container/ImageContainer";
 import React from "react";
 import type { TAsset } from "types/asset";
 import { handleSpacing } from "utils/handleSpacing";
@@ -34,7 +33,6 @@ const CareerSection: React.FC<CareerSectionProps> = ({
 }) => {
   const theme = useMantineTheme();
   
-  const isSVG = heroAsset?.file?.contentType === "image/svg+xml";
 
   return (
     <Container size={"xl"} id={"Career Section"} className={classes.container}>
@@ -87,22 +85,17 @@ const CareerSection: React.FC<CareerSectionProps> = ({
         </Grid.Col>
         <Grid.Col
           className={cx({
-            [classes.assetHeight]: canShowHeroAssetAtSideWall,
+            [classes.wallAsset]: canShowHeroAssetAtSideWall,
           })}
           order={{ sm: 2 }}
           span={{ base: 12, sm: 12, md: 6, lg: 6 }}
         >
           {Object.keys(careers).length > 0 &&
-          <ImageContainer
-            className={cx({
-              [classes.wallImage]: canShowHeroAssetAtSideWall,
-            })}
-            data-is-svg={isSVG}
-            fluid
-            maw={"100%"}
-          >
+          <div    className={cx({
+            [classes.parentImageContainer]: canShowHeroAssetAtSideWall,
+          })} >
             <Asset asset={heroAsset} />
-          </ImageContainer>
+          </div>
           }
         </Grid.Col>
       </Grid>
