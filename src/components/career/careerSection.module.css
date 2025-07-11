@@ -3,19 +3,15 @@
 	--img-outside-margin: 64px;
 	margin-top: 36px;
 
-		.assetHeight{
+		.wallAsset{
 			@media (min-width: $phil-breakpoint-md) {
-				position: relative;
-				height: -webkit-fill-available;
-				height: -moz-available; /*firefox*/
-				min-height: var(--img-banner-height);
+				padding-left: 80px;
+				position: sticky;
+				top:var(--navbar-height);
 
-				.wallImage{
-					position: absolute;
-					top: 50%;
+				.parentImageContainer{
+					position: relative;
 					right: calc(var(--img-outside-margin) * -1);
-					transform: translateY(-50%);
-					width: auto;
 				}
 			}
 		}
