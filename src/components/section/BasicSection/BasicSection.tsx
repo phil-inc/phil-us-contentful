@@ -249,6 +249,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         );
       },
 
+      [BLOCKS.HEADING_4](node, children) {
+        return (
+          <Title order={4} className={classes.title}>
+            {children}
+          </Title>
+        );
+      },
+
       [INLINES.HYPERLINK](node, children) {
         return (
           <Anchor href={node.data.uri as string} target="_blank">

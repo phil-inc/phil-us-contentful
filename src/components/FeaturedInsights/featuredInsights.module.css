@@ -156,9 +156,16 @@
 }
 
 .heading3 {
-	font-size: 20px;
+	&[data-context='Home'] {
+		font-size: 20px;
+	}
+	
 	&[data-context='Field'] {
 		font-size: 24px;
+	}
+
+	&[data-context='Company'] {
+		margin-bottom: -10px;
 	}
 }
 
