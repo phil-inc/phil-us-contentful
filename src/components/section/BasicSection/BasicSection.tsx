@@ -190,6 +190,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             type="unordered"
             className={classes.list}
             data-video={isVideo()}
+            data-index={index}
+            data-context={context.title}
           >
             {children}
           </List>
@@ -242,6 +244,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       [BLOCKS.HEADING_3](node, children) {
         return (
           <Title order={3} className={classes.title}>
+            {children}
+          </Title>
+        );
+      },
+
+      [BLOCKS.HEADING_4](node, children) {
+        return (
+          <Title order={4} className={classes.title}>
             {children}
           </Title>
         );

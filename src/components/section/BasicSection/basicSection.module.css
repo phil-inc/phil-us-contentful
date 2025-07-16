@@ -109,14 +109,14 @@
 		padding-bottom: 100px;
 
 		&[data-context='Company'] {
-			padding: 32px 100px;
+			padding: 80px var(--padding-section);
 		}
 	}
 
 	@media (min-width: $phil-breakpoint-lg) {
 		&[data-index='0'] {
 			&[data-context='Company'] {
-				margin-top: -40px;
+				margin-top: 20px;
 			}
 		}
 	}
@@ -188,6 +188,10 @@
 	&[data-oneColumn="true"] {
 		max-width: 100%;
 	}
+
+	&[data-context='Company'] {
+		margin-top: 40px;
+	}
 }
 
 .list {
@@ -196,6 +200,18 @@
 
 	&[data-video='true'] {
 		margin-bottom: 0px;
+	}
+
+		&[data-context='Company'] {
+		margin-top: 20px;
+	}
+
+	&[data-index='0'][data-context='Company'] {
+		li{
+			&::marker{
+				color: var(--primary-green-color);
+			}
+		}
 	}
 }
 

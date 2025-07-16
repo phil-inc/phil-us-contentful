@@ -155,7 +155,7 @@
   }
   > button:first-child {
     @media screen and (min-width: $phil-breakpoint-sm) {
-      margin-left: -66px;
+      margin-left: -56px;
     }
   }
 
