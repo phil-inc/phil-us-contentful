@@ -42,6 +42,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
   maw = 335,
   flexStart = false,
   isGatsbyImageData = false,
+  className,
   ...rest
 }) => {
   const context = React.useContext(PageContext);
@@ -55,7 +56,7 @@ const ImageContainer: React.FC<ImageContainerProps> = ({
       data-context={context.title}
       data-card={card}
       data-flex-start={flexStart}
-      className={classes.imageContainer}
+      className={`${classes.imageContainer} ${className ?? ""}`}
       maw={maw}
       {...rest}
     >

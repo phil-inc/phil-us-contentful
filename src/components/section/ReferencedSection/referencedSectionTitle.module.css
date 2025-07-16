@@ -13,7 +13,7 @@
 		font-size: 38px;
 
 		@media (min-width: $phil-breakpoint-sm) {
-			font-size: 60px;
+			font-size: 40px;
 		}
 	}
 
@@ -35,6 +35,10 @@
 	@media (min-width: $phil-breakpoint-sm) {
 		align-items: center;
 		gap: 40px;
+
+		&[data-context='Company'] {
+			gap: 30px;
+		}
 
 		&[data-context='Field'] {
 			align-items: start;

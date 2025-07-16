@@ -475,6 +475,7 @@ export const query = graphql`
             ... on ContentfulResource {
               id
               isFaq
+              isImageObjectContain
               externalLink
               internalLink {
                 ... on ContentfulPage {
