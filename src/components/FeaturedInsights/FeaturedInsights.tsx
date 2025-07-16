@@ -17,6 +17,7 @@ import React, { useContext } from "react";
 import type { TResource } from "types/resource";
 import { getLink } from "utils/getLink";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
+import cx from "clsx";
 
 import * as classes from "./featuredInsights.module.css";
 
@@ -49,6 +50,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
   const color = getColorFromStylingOptions(
     resource?.stylingOptions?.extraColor,
   );
+  const isObjectContain = resource?.isImageObjectContain || false;
 
   const isCenter = metadata?.tags?.some(
     (tag) => tag.name === CENTER_LIFE_SCIENCES_CARD_TAG,
@@ -252,7 +254,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
             >
               {/* // TODO: check regression with 1/2 ratio images */}
               <ImageContainer
-              className={classes.imageContainer}
+                className={cx(classes.imageContainer, {[classes.fitImgContain]: isObjectContain})}
                 isVideo={
                   isVideoContent(media?.file?.contentType) ||
                   Boolean(media?.youtubeLink)
@@ -263,7 +265,7 @@ export const FeaturedInsights: FC<ArticleProps> = ({
                 mx={0}
                 ratio={16 / 9}
               >
-                <Asset objectFit="cover" asset={media} />
+                <Asset objectFit={isObjectContain ? "contain" : "cover"} asset={media} />
               </ImageContainer>
             </Grid.Col>
           )}

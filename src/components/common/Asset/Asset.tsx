@@ -73,7 +73,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
 
       if (contentType.startsWith("image/")) {
         const image = getImage(media);
-        return <GatsbyImage objectFit="cover" image={image!} alt={title} className={classes.gatsbyImageContainer}  />;
+        return <GatsbyImage objectFit={objectFit || "cover"} image={image!} alt={title} className={classes.gatsbyImageContainer}  />;
       }
 
       return null;
