@@ -20,7 +20,10 @@ import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import { Options } from "@contentful/rich-text-react-renderer";
 import cx from "clsx";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
+
 import { ELinkedinIcon } from "components/common/Buttons/SocialButtons/ELinkedInIcon";
+import ImageContainer from "components/common/Container/ImageContainer";
+import Asset from "components/common/Asset/Asset";
 
 type LeadershipProps = {
   data: { contentfulPage: ContentfulPage };
@@ -62,8 +65,9 @@ const ECard = ({ reference }: any) => {
         width: "500px",
       }}
     >
-      <Image src={media.media.file.url} alt={media.media.title} />
-
+      <ImageContainer fluid contain card>
+        <Asset asset={media.media} />
+      </ImageContainer>
       <div
         style={{
           display: "flex",

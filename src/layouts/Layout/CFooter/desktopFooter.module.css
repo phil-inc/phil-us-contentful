@@ -76,6 +76,14 @@
 
 .headerCTA {
 	margin-right: 0px !important;
+
+	div:first-child{
+		width: 100%;
+
+		span:first-child{
+			width: 100%;;
+		}
+	}
 }
 
 .patientLoginButtonMobile:hover {
