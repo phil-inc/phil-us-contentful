@@ -100,6 +100,11 @@
 			@media (min-width: $phil-breakpoint-md){
 				display: block;
 				width: 50%;
+
+				&[data-index='0'][data-context='Company']{
+					width: 59%;
+					right: -50px;
+				}
 			}
 		}
 	}
@@ -109,14 +114,15 @@
 		padding-bottom: 100px;
 
 		&[data-context='Company'] {
-			padding: 80px var(--padding-section);
+			padding: 100px var(--padding-section);
 		}
 	}
 
 	@media (min-width: $phil-breakpoint-lg) {
 		&[data-index='0'] {
 			&[data-context='Company'] {
-				margin-top: 20px;
+				padding-top: 118px;
+				padding-bottom: 115px;
 			}
 		}
 	}
