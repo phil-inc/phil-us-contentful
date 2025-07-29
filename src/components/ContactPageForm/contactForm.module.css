@@ -60,3 +60,13 @@
 .fullWidth {
     width: 100%;
 }
+
+.header{
+    margin-top: 24px;
+
+    .title {
+        font-size: 35px;
+        overflow-wrap: break-word;
+        margin-bottom: 16px;
+    }
+}

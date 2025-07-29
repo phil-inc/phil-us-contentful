@@ -1,5 +1,5 @@
 import React from "react";
-import { Anchor, Button, Grid, Center, Loader, Text } from "@mantine/core";
+import { Anchor, Button, Grid, Center, Loader, Text, Title } from "@mantine/core";
 import type { ISection } from "types/section";
 import { parseScript } from "utils/parseScript";
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
@@ -130,9 +130,20 @@ const ContactForm: React.FC<{ section: ISection }> = ({ section }) => {
     <HubspotForm formProps={formProps} formTag={formTag} section={section} />
   ) : (
     <>
-      <Text m={0} mb={16}>
-        Who are you (select one below)
-      </Text>
+    <div className={classes.header}>
+      <Title
+        order={3}
+        className={classes.title}
+        >
+          Start a conversation
+        </Title>
+        <Text m={0} mb={16}>
+          We’d love to hear from you. Get started below and we will reply as soon as possible.
+        </Text>
+        <Text m={0} mb={16}>
+          Who are you (select one below)
+        </Text>
+      </div>
 
       <Grid gutter={"sm"}>
         <Grid.Col span={6}>
