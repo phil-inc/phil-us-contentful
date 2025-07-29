@@ -102,7 +102,8 @@
 				width: 50%;
 
 				&[data-index='0'][data-context='Company']{
-					width: 58%;
+					width: 59%;
+					right: -50px;
 				}
 			}
 		}
@@ -120,8 +121,8 @@
 	@media (min-width: $phil-breakpoint-lg) {
 		&[data-index='0'] {
 			&[data-context='Company'] {
-				padding-top: 110px;
-				padding-bottom: 110px;
+				padding-top: 118px;
+				padding-bottom: 115px;
 			}
 		}
 	}
