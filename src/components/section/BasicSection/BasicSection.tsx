@@ -416,13 +416,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                   )}
                 {context.title === CONTACT_PAGE && (
                   <>
-                    <Title
-                      order={3}
-                      data-context={context.title}
-                      className={classes.title}
-                    >
-                      Start a conversation
-                    </Title>
                     {Boolean(section.subHeader?.subHeader.length) && (
                       <div
                         className={classes.contactSubheader}
@@ -524,7 +517,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         ) : null}
 
         {(isImageAlignToWall && mediaItemOrAsset) && 
-          <div className={classes.wallImage}>
+          <div 
+            className={classes.wallImage}   
+            data-index={index}
+            data-context={context.title}
+          >
             <Asset
             className={classes.assetWallImage}
               asset={mediaItemOrAsset}

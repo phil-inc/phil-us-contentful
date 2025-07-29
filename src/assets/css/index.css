@@ -137,3 +137,19 @@
     }
   }
 }
+
+#hubspotContactForm{
+  form{
+    fieldset{
+      h1{
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+  .submitted-message{
+    h1{
+        margin-bottom: 16px;
+      }
+  }
+}
