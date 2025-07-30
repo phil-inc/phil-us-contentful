@@ -29,6 +29,11 @@
 
 .title {
 	overflow-wrap: break-word;
+	font-size: 48px;
+	
+	  @media (min-width: $phil-breakpoint-md) {
+			font-size: 60px;
+		}
 
 		&[data-is-embed-form-template='true'] {
 		font-size: 40px;
