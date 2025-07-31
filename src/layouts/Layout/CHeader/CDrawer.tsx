@@ -19,6 +19,7 @@ import HeaderContext from "contexts/HeaderProvider";
 import { COMPANY_PAGE, INSIGHTS, PATIENTS_PAGE } from "constants/page";
 import { getFinalIndex } from "utils/getFinalIndex";
 import { CAREERS } from "constants/routes";
+import clsx from "clsx";
 
 import * as classes from "./drawer.module.css";
 
@@ -43,11 +44,11 @@ const CDrawer: React.FC = () => {
       radius={0}
       variant={
         buttons?.[0].buttonStyle === "Primary"
-          ? buttonConfig.primary.variant
-          : buttonConfig.secondary.variant
+        ? buttonConfig.primary.variant
+        : buttonConfig.secondary.variant
       }
       px={4}
-      className={classes.patientLoginButtonMobile}
+      className={classes.button}
     >
       Patient Login
     </Button>
@@ -83,38 +84,25 @@ const CDrawer: React.FC = () => {
       size="100%"
       transitionProps={{ transition: "fade" }}
     >
-      <Group justify="space-between" wrap="nowrap" align="center" mb="sm">
-        {firstButton.internalLink ? (
-          <Box>
-            <Link to={`/${firstButton.internalLink.slug}`}>
-              {firstButtonComponent}{" "}
+      
+      <div className={classes.logoContainer}>
+        <Group justify="center" wrap="nowrap" align="center" mb="sm">
+          <Box className={classes.logo}>
+            <Link to="/">
+              <Asset asset={header.logo} objectFit="contain" />
             </Link>
           </Box>
-        ) : (
-          <Anchor
-            className={classes.hideOnLarge}
-            href={firstButton.externalLink}
-            target="_blank"
-            referrerPolicy="no-referrer"
-          >
-            {firstButtonComponent}
-          </Anchor>
-        )}
-
-        <Box className={classes.logo}>
-          <Link to="/">
-            <Asset asset={header.logo} objectFit="contain" />
-          </Link>
+        </Group>
+        <Box className={classes.crossBtn}>
+          <Burger
+            opened={true}
+            onClick={() => {
+              toggleDrawer();
+            }}
+            className={classes.burger}
+          />
         </Box>
-
-        <Burger
-          opened={true}
-          onClick={() => {
-            toggleDrawer();
-          }}
-          className={classes.burger}
-        />
-      </Group>
+      </div>
 
       <Accordion
         mb={16}
@@ -222,6 +210,22 @@ const CDrawer: React.FC = () => {
           ))}
       </Accordion>
 
+      {firstButton.internalLink ? (
+        <Box>
+          <Link to={`/${firstButton.internalLink.slug}`}>
+            {firstButtonComponent}{" "}
+          </Link>
+        </Box>
+      ) : (
+        <Anchor
+          className={clsx(classes.loginBtn, classes.hideOnLarge)}
+          href={firstButton.externalLink}
+          target="_blank"
+          referrerPolicy="no-referrer"
+        >
+          {firstButtonComponent}
+        </Anchor>
+      )}
       {secondButton.internalLink ? (
         <Box key={secondButton.id} mt={16}>
           <Link to={`/${secondButton.internalLink.slug}`}>
