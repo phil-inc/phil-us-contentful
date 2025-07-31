@@ -221,6 +221,7 @@ export const query = graphql`
                         resizingBehavior: SCALE
                         placeholder: BLURRED
                         layout: CONSTRAINED
+                        formats: [AUTO, WEBP, AVIF]
                       )
                       title
                       file {
@@ -240,6 +241,7 @@ export const query = graphql`
                     resizingBehavior: SCALE
                     placeholder: BLURRED
                     layout: CONSTRAINED
+                    formats: [AUTO, WEBP, AVIF]
                   )
                   title
                   file {
