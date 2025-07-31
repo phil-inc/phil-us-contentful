@@ -105,11 +105,6 @@
 			@media (min-width: $phil-breakpoint-md){
 				display: block;
 				width: 50%;
-
-				&[data-index='0'][data-context='Company']{
-					width: 59%;
-					right: -50px;
-				}
 			}
 		}
 	}
@@ -117,17 +112,24 @@
 	@media (min-width: $phil-breakpoint-sm) {
 		padding-top: 100px;
 		padding-bottom: 100px;
+	}
 
-		&[data-context='Company'] {
-			padding: 100px var(--padding-section);
+	@media (min-width: $phil-breakpoint-md) {
+		&[data-index='0'] {
+			&[data-context='Company'] {
+				margin-top: 0px;
+				margin-bottom: 0px;
+			}
 		}
 	}
 
 	@media (min-width: $phil-breakpoint-lg) {
 		&[data-index='0'] {
 			&[data-context='Company'] {
-				padding-top: 118px;
-				padding-bottom: 115px;
+				padding-top: 0px;
+				padding-bottom: 0px;
+				margin-top: 0px;
+				margin-bottom: -25px;
 			}
 		}
 	}
