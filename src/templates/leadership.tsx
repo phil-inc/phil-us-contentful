@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { graphql } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
-import React, { useState } from "react";
+import React, { ForwardedRef, useEffect, useRef, useState } from "react";
 import { ContentfulPage } from "types/page";
 
 import * as classes from "./leadership.module.css";
@@ -29,7 +29,8 @@ type LeadershipProps = {
   data: { contentfulPage: ContentfulPage };
 };
 
-const ECard = ({ reference }: any) => {
+const ECard = ({ reference, forwardRef }: {reference:any; forwardRef?: ForwardedRef<HTMLDivElement>;
+  }) => {
   const [hovered, setHovered] = useState(false);
 
   const { body, media, hyperlink } = reference;
@@ -57,6 +58,8 @@ const ECard = ({ reference }: any) => {
 
   return (
     <Box
+      ref={forwardRef} 
+      className={classes.imageSlide}
       style={{
         height: "auto",
         background: "#F5F6F8",
@@ -64,7 +67,7 @@ const ECard = ({ reference }: any) => {
         flexDirection: "column",
         width: "500px",
       }}
-    >
+      >
       <ImageContainer fluid contain card>
         <Asset asset={media.media} />
       </ImageContainer>
@@ -77,7 +80,7 @@ const ECard = ({ reference }: any) => {
           padding: "27px 30px",
           gap: "10px",
         }}
-      >
+        >
         <div>
           <Box>{body && renderRichText(body, options)}</Box>
         </div>
@@ -88,17 +91,17 @@ const ECard = ({ reference }: any) => {
             flexDirection: "column",
             gap: "32px",
           }}
-        >
+          >
           <Group gap={13}>
             {pastCompanies.map((company: any, index: number) => (
               <Image
-                key={index}
-                src={company.media.file.url}
-                alt={company.media.title}
-                height={20}
-                style={{ objectFit: "cover",
+              key={index}
+              src={company.media.file.url}
+              alt={company.media.title}
+              height={20}
+              style={{ objectFit: "cover",
                 width:"auto"
-                 }}
+              }}
               />
             ))}
           </Group>
@@ -110,7 +113,7 @@ const ECard = ({ reference }: any) => {
             className={classes.textDecorationNone}
             w={"100%"}
             h="100%"
-          >
+            >
             <Button
               size="lg"
               py={11}
@@ -121,7 +124,7 @@ const ECard = ({ reference }: any) => {
               className={classes.button}
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
-            >
+              >
               <Text lh={"16px"}>View LinkedIn Profile</Text>
             </Button>
           </Anchor>
@@ -135,6 +138,22 @@ const Leadership: React.FC<LeadershipProps> = ({
   data: { contentfulPage },
 }) => {
   const references = contentfulPage.sections[0].references;
+
+
+  // Using a ref to observe visibility of each card which allows us to apply animations or styles when they come into view(Slide up animation)
+  const refs = useRef<HTMLDivElement[]>([]);
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(classes.visible);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    refs.current.forEach((el) => el && observer.observe(el));
+  }, []);
 
   return (
     <Layout>
@@ -158,7 +177,12 @@ const Leadership: React.FC<LeadershipProps> = ({
               span={{ base: 12, sm: 6, md: 4 }}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <ECard reference={reference} />
+              <ECard 
+                reference={reference} 
+                forwardRef={(el) => {
+                  if (el) refs.current[index] = el;
+                }}
+              />
             </Grid.Col>
           ))}
         </Grid>
