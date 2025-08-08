@@ -36,6 +36,21 @@ export default function LeftRightContainer({
   return (
     <>
       <div className={classes.leftRightContainer}>
+        {sectionData?.leftWallBackgroundImage && 
+          <div className={classes.leftWallBgIcon}>
+            <Asset
+                asset={sectionData?.leftWallBackgroundImage}
+            />
+            </div>
+        }
+        {sectionData?.rightWallBackgroundImage && 
+          <div className={classes.rightWallBgIcon}>
+            <Asset
+                asset={sectionData?.rightWallBackgroundImage}
+            />
+            </div>
+        }
+
         <Box className={classes.philLogo}>
           <Container className="container" size={"xl"}>
             {renderPhilLogo(isLaptopScreen ? whiltePhilLogo : philLogo)}
