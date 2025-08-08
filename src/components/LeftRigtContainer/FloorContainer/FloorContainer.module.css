@@ -1,0 +1,79 @@
+.floorContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #ffffff;
+  flex-direction: column;
+
+  @media (min-width: $phil-breakpoint-md) {
+    flex-direction: row;
+  }
+
+  .flexLeft {
+    width: 100%;
+    padding-right: 52px;
+    margin-bottom: 40px;
+
+    @media (min-width: $phil-breakpoint-md) {
+      width: 40%;
+      margin-bottom: none;
+    }
+  }
+
+  .flexRight {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    border-top: 3px solid #569b98;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: $phil-breakpoint-md) {
+      border-top: none;
+      margin-bottom: none;
+      width: 60%;
+    }
+
+    @media (min-width: $phil-breakpoint-lg) {
+      grid-template-columns: repeat(4, 1fr);
+      padding: 20px;
+    }
+  }
+
+  .flexRight::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 3px solid #569b98;
+
+    @media (min-width: $phil-breakpoint-md) {
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left: 3px solid #569b98;
+      height: 80%;
+    }
+
+    @media (min-width: $phil-breakpoint-lg) {
+      height: 50%;
+    }
+  }
+
+  .titleH6 {
+    font-family: Lato;
+    font-weight: 700;
+    font-size: 22px;
+    color: #b8d6db;
+    margin-bottom: 26px;
+  }
+
+  .paragraph {
+    font-family: Lato;
+    font-weight: 600;
+    font-size: 22px;
+  }
+}

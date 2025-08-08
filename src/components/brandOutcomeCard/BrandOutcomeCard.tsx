@@ -32,7 +32,7 @@ export const BrandOutcomeCard: FC<StatsCardProps> = ({ resource }) => {
   const options = {
     renderNode: {
       [BLOCKS.PARAGRAPH](node, children) {
-        return <>{children}</>;
+        return <div className={classes.paragraph}>{children}</div>;
       },
 
       [BLOCKS.EMBEDDED_ASSET](node: { data: { target: TAsset } }) {
@@ -62,25 +62,30 @@ export const BrandOutcomeCard: FC<StatsCardProps> = ({ resource }) => {
           ),
         }}
       ></Box>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} data-context={context.title}>
         <Stack
           justify="center"
           align="center "
           className={classes.stack}
           gap={24}
+          data-context={context.title}
         >
           {resource.heading && (
             <Title className={cx(
               classes.title,
               context.title === HOME && classes.homeTitle,
-            )}>{resource.heading}</Title>
+            )}
+            data-context={context.title}
+            >{resource.heading}</Title>
           )}
 
           {resource.body && (
             <Text className={cx(
               classes.description,
               context.title === HOME && classes.homeDescription,
-            )}>
+            )}
+            data-context={context.title}
+            >
               {renderRichText(resource.body, options)}
             </Text>
           )}

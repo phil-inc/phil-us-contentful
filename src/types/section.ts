@@ -5,7 +5,7 @@ import type {
 } from "gatsby-source-contentful/rich-text";
 import type { TResource } from "./resource";
 
-type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns";
+type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns | Text and Text Columns with Footer";
 
 export type BodyType = RenderRichTextData<ContentfulRichTextGatsbyReference>;
 
@@ -207,6 +207,19 @@ export type ITextandTextColumns = {
   addBorder: boolean;
   header: string;
   stylingOptions?: StylingOptions;
+};
+
+export type ITextandTextColumnsWithFooterSection = {
+  id: string;
+  title?: string;
+  stylingOptions?: StylingOptions;
+  leftColumn: ReferenceBodyType;
+  rightColumn?: ReferenceBodyType;
+  leftWallBackgroundImage?:TAsset;
+  rightWallBackgroundImage?:TAsset;
+  footerColumn: ReferenceBodyType;
+  resourceReferences?: TResource[];
+  sectionType: SectionType;
 };
 
 export type ISectionsArray = Array <ISection | IReferencedSection >;
