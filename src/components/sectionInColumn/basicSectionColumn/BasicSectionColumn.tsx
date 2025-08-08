@@ -249,7 +249,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
 
       [BLOCKS.HEADING_3](node, children) {
         return (
-          <Title order={3} className={classes.title}>
+          <Title order={3} className={classes.titleH3}>
             {children}
           </Title>
         );

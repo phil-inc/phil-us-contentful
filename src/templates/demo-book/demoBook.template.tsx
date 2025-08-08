@@ -5,14 +5,12 @@ import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import type { ContenfulHeaderLogo, ContentfulPage } from "types/page";
 import { PAGE_WITHOUT_HEADER_FOOTER, PAGES_TITLE } from "constants/page";
-import { IReferencedSection, ISection } from "types/section";
 
 import { getLeftRightArrayFromSections } from "utils/utils";
 
 import Head from "components/common/Head/Head";
 import LeftRightContainer from "components/LeftRigtContainer/LeftRigthContainer";
-
-import { dottedCircleBackground } from "assets/images";
+import SectionColumn from "components/sectionInColumn/SectionInColumn";
 
 import { useIsLaptop } from "hooks/useIsLaptop";
 
@@ -33,11 +31,8 @@ const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
   const whiltePhilLogo = allContentfulHeader.nodes[0]?.whiteLogo || philLogo;
   const { sections, title, slug, id } = contentfulPage;
 
-  const canHideHeaderFooter = PAGE_WITHOUT_HEADER_FOOTER.includes(title);
+  const canHideHeader = PAGE_WITHOUT_HEADER_FOOTER.includes(title);
 
-  const LeftRightSections = getLeftRightArrayFromSections(
-    sections as Array<ISection | IReferencedSection>
-  );
   const isDemoPage = contentfulPage.title === PAGES_TITLE.DEMO;
   const isLaptopScreen = useIsLaptop();
 
@@ -60,19 +55,27 @@ const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
 
   return (
     <PageContext.Provider value={{ title }}>
-      <Layout minimal={false} canHideHeaderFooter={canHideHeaderFooter}>
+      <Layout minimal={false} canHideHeader={canHideHeader}>
         <main className="demoBookPage">
-          <LeftRightContainer
-            leftSection={LeftRightSections.leftSection}
-            rightSection={LeftRightSections.rightSection}
-            philLogo={philLogo}
-            whiltePhilLogo={whiltePhilLogo}
-          />
-          {isLaptopScreen && isDemoPage && (
-            <div className="bottomImage">
-              <img src={dottedCircleBackground} alt="dot circle" />
+
+          {sections.map((section, index, array) => (
+            <div
+              key={section.id + "mapSectionComponent"}
+            >
+              <SectionColumn
+                section={section}
+                isEmbedFormTemplate={false}
+                isPreviousBackgroundPure={Boolean(
+                  array[index - 1]?.stylingOptions?.background.includes(
+                    "#FFFFFF",
+                  ),
+                )}
+                addBorder={false}
+                philLogo={philLogo}
+                whiltePhilLogo={whiltePhilLogo}
+              />
             </div>
-          )}
+          ))}
         </main>
       </Layout>
     </PageContext.Provider>
@@ -369,11 +372,28 @@ export const query = graphql`
               id
             }
           }
+          backgroundAssetImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
           references {
             __typename
             ... on ContentfulResource {
               id
               isFaq
+              isImageObjectContain
               externalLink
               internalLink {
                 ... on ContentfulPage {
@@ -1004,6 +1024,304 @@ export const query = graphql`
               numberOfColumns
               shouldRenderCarousel
             }
+          }
+        }
+        ... on ContentfulTextAndTextColumnsWithFooterSection {
+          id
+          title
+          sectionType
+          leftColumn {
+            __typename
+            raw
+            references {
+              __typename
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                heading
+                subheading
+                choose
+              }
+            }
+          }
+          rightColumn {
+            __typename
+            raw
+            references {
+              ... on ContentfulSection {
+                __typename
+                id
+                isHidden
+                isReverse
+                addBorder
+                showBottomBorder
+                youtubeVideoUrl
+                body {
+                  raw
+                  references {
+                    __typename
+                    ... on ContentfulAsset {
+                      id
+                      contentful_id
+                      description
+                      gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+                      file {
+                        contentType
+                        details {
+                          size
+                        }
+                        url
+                      }
+                      sys {
+                        type
+                      }
+                    }
+                    ... on ContentfulButton {
+                      id
+                      contentful_id
+                      buttonText
+                      buttonStyle
+                      link {
+                        linkLabel
+                        name
+                        externalUrl
+                        internalContent {
+                          __typename
+                          ... on ContentfulPage {
+                            id
+                            title
+                            slug
+                            sys {
+                              contentType {
+                                sys {
+                                  type
+                                  id
+                                }
+                              }
+                            }
+                          }
+                          ... on ContentfulReferencedSection {
+                            id
+                            page {
+                              title
+                            }
+                            header
+                            sys {
+                              contentType {
+                                sys {
+                                  type
+                                  id
+                                }
+                              }
+                            }
+                          }
+                          ... on ContentfulSection {
+                            id
+                            page {
+                              title
+                            }
+                            header
+                            sys {
+                              contentType {
+                                sys {
+                                  type
+                                  id
+                                }
+                              }
+                            }
+                          }
+                          ... on ContentfulResource {
+                            id
+                            heading
+                            sys {
+                              contentType {
+                                sys {
+                                  type
+                                  id
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                      v2flag
+                    }
+                  }
+                }
+                isHubspotEmbed
+                isInsertSnippet
+                codeSnippet {
+                  codeSnippet
+                }
+                asset {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                backgroundAssetImage {
+                  id
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                canShowAssetImageAlignToWall
+                buttonText
+                header
+                sectionType
+                externalLink
+                automaticOrder
+                background
+                embedForm {
+                  raw
+                }
+                sys {
+                  contentType {
+                    sys {
+                      id
+                    }
+                  }
+                }
+                subHeader {
+                  subHeader
+                }
+                internalLink {
+                  ... on ContentfulPage {
+                    id
+                    title
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                  ... on ContentfulReferencedSection {
+                    id
+                    page {
+                      title
+                    }
+                    header
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                  ... on ContentfulSection {
+                    id
+                    page {
+                      title
+                    }
+                    header
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                  ... on ContentfulResource {
+                    id
+                    heading
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+                mediaItem {
+                  name
+                  media {
+                    gatsbyImageData(
+                      resizingBehavior: SCALE
+                      placeholder: BLURRED
+                      layout: CONSTRAINED
+                    )
+                    title
+                    file {
+                      contentType
+                      details {
+                        size
+                      }
+                      url
+                    }
+                  }
+                  youtubeLink
+                  embedCode {
+                    raw
+                  }
+                  id
+                }
+                stylingOptions {
+                  background
+                  id
+                  name
+                }
+                v2Flag
+                renderOptions {
+                  name
+                  id
+                  layoutOptions {
+                    id
+                    name
+                    numberOfColumns
+                    shouldRenderCarousel
+                  }
+                }
+              }
+            }
+          }
+          resourceReferences {
+            __typename
+            ... on ContentfulResource {
+              id
+              heading
+              body {
+                raw
+              }
+            }
+          }
+          footerColumn {
+            __typename
+            raw
           }
         }
       }
