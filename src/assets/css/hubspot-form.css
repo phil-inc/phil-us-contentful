@@ -87,14 +87,6 @@ input[type='submit']:hover {
 	max-width: 100%;
 }
 
-.book-demo-hubspot-form input {
-	border-radius: 8px;
-    border: 1px solid #838E8D;
-    height: 58px;
-    margin-bottom: 15px;
-    padding: 24px 14px;
-}
-
 .book-demo-hubspot-form .hs-submit .actions{
 	display: flex;
 	align-items: center;
@@ -124,6 +116,14 @@ input[type='submit']:hover {
 }
 
 .book-demo-hubspot-form{
+
+	input {
+		border-radius: 8px;
+		border: 1px solid #838E8D;
+		height: 52px;
+		margin-bottom: 15px;
+		padding: 24px 14px;
+	}
 
 	fieldset{
 		margin-bottom: 0px !important;

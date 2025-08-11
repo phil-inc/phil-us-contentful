@@ -29,7 +29,7 @@ import useDeviceType from "hooks/useView";
 
 import ImageContainer from "components/common/Container/ImageContainer";
 import Asset from "components/common/Asset/Asset";
-import HubspotForm from "components/common/HubspotForm/HubspotForm";
+import HubSpotFormV2 from "components/common/HubspotForm/HubspotFormV2";
 import TrustpilotWidget from "components/common/TrustpilotWidget/TrustPilotWidget";
 import RightArrowCircle from "components/icons/RightArrow.icon";
 
@@ -295,7 +295,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
           )}
           {section?.embedForm && (
             <Box className={classes.formSection}>
-              <HubspotForm
+              <HubSpotFormV2
                 formId={formId}
                 portalId={portalId}
                 classname="book-demo-hubspot-form"

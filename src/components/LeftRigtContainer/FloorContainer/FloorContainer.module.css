@@ -38,7 +38,7 @@
 
     @media (min-width: $phil-breakpoint-lg) {
       grid-template-columns: repeat(4, 1fr);
-      padding: 20px;
+      padding: 0px 20px;
     }
   }
 
@@ -66,7 +66,7 @@
   .titleH6 {
     font-family: Lato;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 20px;
     color: #b8d6db;
     margin-bottom: 26px;
   }
@@ -74,6 +74,6 @@
   .paragraph {
     font-family: Lato;
     font-weight: 600;
-    font-size: 22px;
+    font-size: 18px;
   }
 }
