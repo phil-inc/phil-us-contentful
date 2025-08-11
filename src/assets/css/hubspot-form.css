@@ -125,6 +125,10 @@ input[type='submit']:hover {
 
 .book-demo-hubspot-form{
 
+	fieldset{
+		margin-bottom: 0px !important;
+	}
+
 	.hs-form-field {
 		position: relative;
 
@@ -167,6 +171,8 @@ input[type='submit']:hover {
 		> label:first-child {
 			top:0%;
 		}
-
+	}
+		.hs-submit {
+		margin-top: 15px;
 	}
 }

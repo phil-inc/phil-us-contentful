@@ -194,7 +194,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
             icon={
               isThanksSection ? (
                 <Box className={classes.ulIcon}>
-                  <RightArrowCircle width="23px" height="23px" />
+                  <RightArrowCircle width="20px" height="20px" />
                 </Box>
               ) : undefined
             }

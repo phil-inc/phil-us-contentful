@@ -1,5 +1,5 @@
 .basicSectionColumn {
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 }
 
 .title {
@@ -62,7 +62,7 @@
   font-weight: 400;
   font-size: 20px;
   margin-top: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 19px;
 }
 .listItem:last-child {
   margin-bottom: 0px;
@@ -96,7 +96,7 @@
 }
 
 .bodyPart {
-  font-size: 22px;
+  font-size: 16px;
   margin-top: 24px;
 
   &[data-video="true"] {
@@ -160,6 +160,7 @@
 .formSection {
   padding: 6px 0px 0px;
   width: 100%;
+  margin-bottom: 36px;
 }
 
 .contactSubheader {
@@ -185,7 +186,7 @@
 }
 
 .linkAnchor {
-  font-size: 22px;
+  font-size: 16px;
 }
 
 .button {

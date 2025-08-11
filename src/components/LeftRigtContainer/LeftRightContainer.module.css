@@ -46,7 +46,7 @@
   }
 
   .philLogo {
-    padding: 22px 0;
+    padding: 22px 0 0;
     background-color: #ffffff;
 
     @media (min-width: $phil-breakpoint-md) {
