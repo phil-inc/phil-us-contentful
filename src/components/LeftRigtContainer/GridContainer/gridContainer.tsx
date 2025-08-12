@@ -96,7 +96,7 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
   return (
     <>
       <div className={classes.gridContainer}>
-        <Grid gutter={0} style={{ height: "100%" }}>
+        <Grid gutter={0} style={{ height: "100%" }} align="center">
           <Grid.Col
             className={cx(classes.gridBox, classes.left, {
               [classes.mobilePadding]: isMobileView,
