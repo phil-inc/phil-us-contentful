@@ -1,5 +1,5 @@
 .basicSectionColumn {
-  margin-bottom: 40px;
+  margin-bottom: 18px;
 }
 
 .title {
@@ -10,6 +10,13 @@
       max-width: 500px;
     }
   }
+}
+
+.titleH3 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 29px;
+  line-height: 32.54px;
 }
 
 .basicSectionContainer {
@@ -54,8 +61,11 @@
   line-height: 27px;
   font-weight: 400;
   font-size: 20px;
-  margin-top: 6px;
-  margin-bottom: 38px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+.listItem:last-child {
+  margin-bottom: 0px;
 }
 
 .listItemLabel {
@@ -86,8 +96,8 @@
 }
 
 .bodyPart {
-  font-size: 22px;
-  margin-top: 24px;
+  font-size: 16px;
+  margin-top: 5px;
 
   &[data-video="true"] {
     text-align: center;
@@ -148,7 +158,7 @@
 }
 
 .formSection {
-  padding: 48px 0px 0px;
+  padding: 6px 0px 0px;
   width: 100%;
 }
 
@@ -175,7 +185,7 @@
 }
 
 .linkAnchor {
-  font-size: 22px;
+  font-size: 16px;
 }
 
 .button {

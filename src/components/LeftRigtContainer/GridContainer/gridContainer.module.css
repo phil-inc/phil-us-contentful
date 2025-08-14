@@ -1,0 +1,73 @@
+.gridContainer {
+  height: inherit;
+  margin-bottom: 31px;
+  margin-top: -1px;
+
+  @media (min-width: $phil-breakpoint-md) {
+    padding-top: 36px;
+  }
+
+  .gridBox {
+    position: relative;
+  }
+
+  .left {
+    color: #ffffff;
+
+    .heading {
+      .titleH1 {
+        font-family: Raleway;
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 100%;
+        vertical-align: middle;
+        font-style: normal;
+        line-height: normal;
+        margin-bottom: 22px;
+      }
+    }
+
+    .listItem {
+      margin-bottom: 17px;
+
+      .listText {
+        font-family: Lato;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 150%;
+      }
+    }
+
+    @media (min-width: $phil-breakpoint-md) {
+      padding-right: var(--section-padding);
+    }
+  }
+
+  .right {
+    &[data-context="Demo Page"] {
+      padding-bottom: 20px;
+      background-color: #ffffff;
+
+      @media (min-width: $phil-breakpoint-md) {
+        background-color: transparent;
+        padding-bottom: 0px;
+
+        .border {
+          border-radius: 15px;
+          padding: 36px 36px 22px;
+          background-color: #ffffff;
+        }
+      }
+    }
+  }
+
+  .mobilePadding {
+    &[data-context="Demo Page"] {
+      padding: 60px 32px;
+    }
+  }
+
+  .rightSection {
+    position: relative;
+  }
+}
