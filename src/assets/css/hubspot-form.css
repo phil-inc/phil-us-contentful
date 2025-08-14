@@ -121,7 +121,7 @@ input[type='submit']:hover {
 		border-radius: 8px;
 		border: 1px solid #838E8D;
 		height: 52px;
-		margin-bottom: 10px;
+		margin-bottom: 11px;
 		padding: 24px 14px;
 	}
 
@@ -160,7 +160,12 @@ input[type='submit']:hover {
 			font-size: 13px;
 			opacity: 1;
 		}
-
+		
+		input:focus{
+			border: 2px solid #B7B7B7;
+			outline: none;
+		}
+		
 		input:focus::placeholder {
 			color: transparent;
 			transition: color 0.1s ease;
@@ -173,6 +178,6 @@ input[type='submit']:hover {
 		}
 	}
 		.hs-submit {
-		margin-top: 10px;
+		margin-top: 11px;
 	}
 }
