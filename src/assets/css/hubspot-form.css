@@ -87,26 +87,97 @@ input[type='submit']:hover {
 	max-width: 100%;
 }
 
-.book-demo-hubspot-form input {
-	border-radius: 8px;
-    border: 1px solid #838E8D;
-    height: 58px;
-    margin-bottom: 15px;
-    padding: 24px 14px;
+.book-demo-hubspot-form .hs-submit .actions{
+	display: flex;
+	align-items: center;
 }
 
 .book-demo-hubspot-form input[type="submit"] {
-	background-color: #0A0A0A;
+	background-color: #39817D;
     color: white;
     border-radius: 8px;
     padding: 12px 20px;
     font-size: 16px;
     cursor: pointer;
-    width: 100%;
     font-weight: 600;
     height: 48px;
+	margin:0 auto;
+
+	&:hover {
+		outline-color: #000;
+		background: #000;
+		color: #fff;
+	}
 }
 
 .book-demo-hubspot-form .hs-error-msgs {
 	margin-top : -20px !important;
+	transition: margin-top 0.2s ease;
+}
+
+.book-demo-hubspot-form{
+
+	input {
+		border-radius: 8px;
+		border: 1px solid #838E8D;
+		height: 52px;
+		margin-bottom: 11px;
+		padding: 24px 14px;
+	}
+
+	fieldset{
+		margin-bottom: 0px !important;
+	}
+
+	.hs-form-field {
+		position: relative;
+
+		.hs-input {
+			width: 100%;
+		}
+	}
+
+	/* Style the label to overlap inside the input initially */
+	.hs-form-field > label:first-child {
+		position: absolute;
+		left: 12px;
+		top: 0%;
+		transform: translateY(-50%);
+		background: #fff;
+		padding: 0 5px;
+		font-size: 16px;
+		color: #C3C3C3;
+		pointer-events: none;
+		opacity: 0;
+		transition: all 0.2s ease;
+	}
+
+	.hs-form-field:focus-within {
+		/* When input is focused, move label up */
+		> label:first-child {
+			top: 8%;
+			left: 10px;
+			font-size: 13px;
+			opacity: 1;
+		}
+		
+		input:focus{
+			border: 2px solid #B7B7B7;
+			outline: none;
+		}
+		
+		input:focus::placeholder {
+			color: transparent;
+			transition: color 0.1s ease;
+		}
+	}
+
+	.hs-email:focus-within{
+		> label:first-child {
+			top:0%;
+		}
+	}
+		.hs-submit {
+		margin-top: 11px;
+	}
 }

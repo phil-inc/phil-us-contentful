@@ -6,3 +6,6 @@ export const CENTER_LIFE_SCIENCES_CARD_TAG =
 export const THANKS_FOR_YOUR_INTEREST = "Thanks for your interest in PhilRx"
 
 export const MEDICATION_ACCESS_SIMPLIFIED = "Medication Access, Simplified"
+
+export const DEMO_FROM_SECTION = 'Demo form section';
+export const THANKS_FOR_YOUR_INTEREST_IN_PHILRX = "Thanks for your interest in PhilRx";
