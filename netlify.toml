@@ -45,28 +45,6 @@
 
 
 #
-# START - Domain level redirections
-# DO NOT MODIFY
-#
-[[redirects]]
-from = "http://philrx.us/"
-to = "https://phil.us/"
-status = 302
-
-[[redirects]]
-from = "https://philrx.us/"
-to = "https://phil.us/"
-status = 302
-
-[[redirects]]
-from = "https://philrx.us/phil_inc_1285995446.svg"
-to = "https://phil.us/phil_inc_1285995446.svg"
-status = 200
-#
-# END - Domain level redirections
-#
-
-#
 # platform redirection
 #
 [[redirects]]
@@ -125,11 +103,13 @@ status = 302
 from = "http://philrx.us/*"
 to = "https://phil.us/"
 status = 302
+force = true
 
 [[redirects]]
 from = "https://philrx.us/*"
 to = "https://phil.us/"
 status = 302
+force = true
 
 #
 # END - Domain level redirections
