@@ -57,30 +57,17 @@ const ECard = ({ reference, forwardRef }: {reference:any; forwardRef?: Forwarded
   };
 
   return (
-    <Box
-      ref={forwardRef} 
-      className={classes.imageSlide}
+   <Box
+      ref={forwardRef}
+      className={cx(classes.card,classes.imageSlide)}
       style={{
         height: "auto",
-        background: "#F5F6F8",
         display: "flex",
         flexDirection: "column",
         width: "500px",
       }}
-      >
-      <ImageContainer fluid contain card>
-        <Asset asset={media.media} />
-      </ImageContainer>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%",
-          padding: "27px 30px",
-          gap: "10px",
-        }}
-        >
+    >
+      <div className={classes.textContainer}>
         <div>
           <Box>{body && renderRichText(body, options)}</Box>
         </div>
@@ -91,44 +78,48 @@ const ECard = ({ reference, forwardRef }: {reference:any; forwardRef?: Forwarded
             flexDirection: "column",
             gap: "32px",
           }}
-          >
+        >
           <Group gap={13}>
             {pastCompanies.map((company: any, index: number) => (
               <Image
-              key={index}
-              src={company.media.file.url}
-              alt={company.media.title}
-              height={20}
-              style={{ objectFit: "cover",
-                width:"auto"
-              }}
+                key={index}
+                src={company.media.file.url}
+                alt={company.media.title}
+                height={20}
+                style={{ objectFit: "cover", width: "auto" }}
               />
             ))}
           </Group>
-
-          <Anchor
-            href={hyperlink.externalUrl}
-            underline="never"
-            target="_blank"
-            className={classes.textDecorationNone}
-            w={"100%"}
-            h="100%"
-            >
-            <Button
-              size="lg"
-              py={11}
-              leftSection={!hovered ? <ELinkedinIcon/> : <ELinkedinIcon firstFill="white" secondFill="#007EBB"/>}
-              fullWidth
-              variant="outline"
-              color="#007EBB"
-              className={classes.button}
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-              >
-              <Text lh={"16px"}>View LinkedIn Profile</Text>
-            </Button>
-          </Anchor>
         </div>
+      </div>
+
+      <ImageContainer fluid contain card className={classes.leaderImage}>
+        <Asset asset={media.media} />
+      </ImageContainer>
+
+      <div className={classes.buttonContainer}>
+        <Anchor
+          href={hyperlink.externalUrl}
+          underline="never"
+          target="_blank"
+          className={classes.textDecorationNone}
+          w={"100%"}
+          h="100%"
+        >
+          <Button
+            size="lg"
+            py={11}
+              leftSection={!hovered ? <ELinkedinIcon/> : <ELinkedinIcon firstFill="white" secondFill="#007EBB"/>}
+            fullWidth
+            variant="outline"
+            color="#007EBB"
+            className={classes.button}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            <Text lh={"16px"}>View LinkedIn Profile</Text>
+          </Button>
+        </Anchor>
       </div>
     </Box>
   );
