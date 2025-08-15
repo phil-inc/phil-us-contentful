@@ -1,4 +1,74 @@
-# general redirection
+# 
+# Core definitions
+#
+
+[[edge_functions]]
+  cache = "manual"
+  function = "getCareerListing"
+  path = "/api/get-career-listing"
+
+# Production context: all deploys from the Production branch
+# set in your site’s Branches settings in the UI will inherit
+# these settings. You can define environment variables
+# here but we recommend using the Netlify UI for sensitive
+# values to keep them out of your source repository.
+[context.production]
+  CONTENTFUL_ENVIRONMENT = "master"
+
+# Here is an example of how to define context-specific
+# environment variables. Be mindful when using this
+# option and avoid committing sensitive values to public
+# source repositories.
+[context.deploy-preview.environment]
+  NODE_ENV = "development"
+  
+# Branch Deploy context: all deploys that are not from
+# a pull/merge request or from the Production branch
+# will inherit these settings.
+[context.branch-deploy.environment]
+  NODE_ENV = "development"
+
+# Dev context: environment variables set here 
+# are available for local development environments 
+# run using Netlify Dev. These values can be 
+# overwritten on branches that have a more specific 
+# branch context configured.
+[context.develop.environment]
+  NODE_ENV = "development"
+  CONTENTFUL_ENVIRONMENT = "develop"
+
+# Specific branch context: all deploys from
+# this specific branch will inherit these settings.
+[context.stage.environment] # “staging” is a branch name
+  NODE_ENV = "development"
+  CONTENTFUL_ENVIRONMENT = "stage"
+
+
+#
+# START - Domain level redirections
+# DO NOT MODIFY
+#
+[[redirects]]
+from = "http://philrx.us/"
+to = "https://phil.us/"
+status = 302
+
+[[redirects]]
+from = "https://philrx.us/"
+to = "https://phil.us/"
+status = 302
+
+[[redirects]]
+from = "https://philrx.us/phil_inc_1285995446.svg"
+to = "https://phil.us/phil_inc_1285995446.svg"
+status = 200
+#
+# END - Domain level redirections
+#
+
+#
+# platform redirection
+#
 [[redirects]]
 from = "/r/*"
 to = "https://capi.phil.us/api/redirect/:splat"
@@ -28,6 +98,11 @@ to = "https://md.phil.us/enroll"
 status = 302
 
 [[redirects]]
+from = "/digihaler"
+to = "https://enroll.phil.us/digihaler"
+status = 301
+
+[[redirects]]
 from = "/stage/e/*"
 to = "https://enroll.stage.phil.us/landing/:splat"
 status = 302
@@ -37,7 +112,33 @@ from = "/dev/e/*"
 to = "https://enroll.dev.phil.us/landing/:splat"
 status = 302
 
-# faqs redirection
+
+#
+# START - Domain level redirections
+# DO NOT MODIFY
+#
+# Once platform level redirects are done, redirect all other paths 
+# to phil.us for all non phil.us domains
+#
+
+[[redirects]]
+from = "http://philrx.us/*"
+to = "https://phil.us/"
+status = 302
+
+[[redirects]]
+from = "https://philrx.us/*"
+to = "https://phil.us/"
+status = 302
+
+#
+# END - Domain level redirections
+#
+
+
+#
+# phil.us website content redirections
+#
 [[redirects]]
 from = "/faqs/*"
 to = "/insights/faqs/"
@@ -90,52 +191,6 @@ from = "https://blog.phil.us/*"
 to = "https://phil.us/:splat"
 status = 301
 force = true
-
-[[redirects]]
-from = "/digihaler"
-to = "https://enroll.phil.us/digihaler"
-status = 301
-
-[[edge_functions]]
-  cache = "manual"
-  function = "getCareerListing"
-  path = "/api/get-career-listing"
-
-# Production context: all deploys from the Production branch
-# set in your site’s Branches settings in the UI will inherit
-# these settings. You can define environment variables
-# here but we recommend using the Netlify UI for sensitive
-# values to keep them out of your source repository.
-[context.production]
-  CONTENTFUL_ENVIRONMENT = "master"
-
-# Here is an example of how to define context-specific
-# environment variables. Be mindful when using this
-# option and avoid committing sensitive values to public
-# source repositories.
-[context.deploy-preview.environment]
-  NODE_ENV = "development"
-  
-# Branch Deploy context: all deploys that are not from
-# a pull/merge request or from the Production branch
-# will inherit these settings.
-[context.branch-deploy.environment]
-  NODE_ENV = "development"
-
-# Dev context: environment variables set here 
-# are available for local development environments 
-# run using Netlify Dev. These values can be 
-# overwritten on branches that have a more specific 
-# branch context configured.
-[context.develop.environment]
-  NODE_ENV = "development"
-  CONTENTFUL_ENVIRONMENT = "develop"
-
-# Specific branch context: all deploys from
-# this specific branch will inherit these settings.
-[context.stage.environment] # “staging” is a branch name
-  NODE_ENV = "development"
-  CONTENTFUL_ENVIRONMENT = "stage"
 
 
 # Content redirects, more info: https://phildotus.atlassian.net/browse/MRTG-1075
