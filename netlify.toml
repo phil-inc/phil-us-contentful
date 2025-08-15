@@ -99,15 +99,27 @@ status = 302
 # to phil.us for all non phil.us domains
 #
 
+# philrx.com
 [[redirects]]
-from = "http://philrx.us/*"
-to = "https://phil.us/"
+from = "https://philrx.com/*"
+to = "https://philrx.com/"
 status = 302
 force = true
 
+# usephil.com BIMI assets - proxy to phil.us
 [[redirects]]
-from = "https://philrx.us/*"
-to = "https://phil.us/"
+from = "https://usephil.com/phil_inc_1285995446.pem"
+to = "https://phil.us/phil_inc_1285995446.pem"
+status = 200
+
+[[redirects]]
+from = "https://usephil.com/phil_inc_1285995446.svg"
+to = "https://phil.us/phil_inc_1285995446.svg"
+status = 200
+
+[[redirects]]
+from = "https://usephil.com/*"
+to = "https://usephil.com/"
 status = 302
 force = true
 
