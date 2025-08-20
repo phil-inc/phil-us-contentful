@@ -186,6 +186,7 @@ export type IReferencedSection = {
   stylingOptions?: StylingOptions;
   renderOptions?: RenderOptions;
   backgroundAssetImage?: TAsset;
+  canAlsoBeUseAsAutoCarousel?: boolean;
 };
 
 export type Reference = {
