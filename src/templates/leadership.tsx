@@ -1,137 +1,17 @@
-import {
-  Anchor,
-  Box,
-  Button,
-  Container,
-  Grid,
-  Group,
-  Image,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Box, Container, Grid, Title } from "@mantine/core";
 import { graphql } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
-import React, { ForwardedRef, useEffect, useRef, useState } from "react";
-import { ContentfulPage } from "types/page";
+import React, { useEffect, useRef } from "react";
 
 import * as classes from "./leadership.module.css";
 
-import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import { Options } from "@contentful/rich-text-react-renderer";
-import cx from "clsx";
-import { renderRichText } from "gatsby-source-contentful/rich-text";
+import LeaderProfileCard from "components/LeaderProfileCard/LeaderProfileCard";
 
-import { ELinkedinIcon } from "components/common/Buttons/SocialButtons/ELinkedInIcon";
-import ImageContainer from "components/common/Container/ImageContainer";
-import Asset from "components/common/Asset/Asset";
+import { ContentfulPage } from "types/page";
+import { TResource } from "types/resource";
 
 type LeadershipProps = {
   data: { contentfulPage: ContentfulPage };
-};
-
-const ECard = ({ reference, forwardRef }: {reference:any; forwardRef?: ForwardedRef<HTMLDivElement>;
-  }) => {
-  const [hovered, setHovered] = useState(false);
-
-  const { body, media, hyperlink } = reference;
-  const pastCompanies = body.references;
-
-  const options: Options = {
-    renderNode: {
-      [BLOCKS.HEADING_3](node, children) {
-        return (
-          <Title order={3} className={cx(classes.heading, classes.heading3)}>
-            {children}
-          </Title>
-        );
-      },
-      [BLOCKS.HEADING_6](node, children) {
-        return (
-          <Title order={6} className={cx(classes.heading, classes.heading6)}>
-            {children}
-          </Title>
-        );
-      },
-      [INLINES.EMBEDDED_ENTRY]: () => null,
-    },
-  };
-
-  return (
-    <Box
-      ref={forwardRef} 
-      className={classes.imageSlide}
-      style={{
-        height: "auto",
-        background: "#F5F6F8",
-        display: "flex",
-        flexDirection: "column",
-        width: "500px",
-      }}
-      >
-      <ImageContainer fluid contain card>
-        <Asset asset={media.media} />
-      </ImageContainer>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%",
-          padding: "27px 30px",
-          gap: "10px",
-        }}
-        >
-        <div>
-          <Box>{body && renderRichText(body, options)}</Box>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "32px",
-          }}
-          >
-          <Group gap={13}>
-            {pastCompanies.map((company: any, index: number) => (
-              <Image
-              key={index}
-              src={company.media.file.url}
-              alt={company.media.title}
-              height={20}
-              style={{ objectFit: "cover",
-                width:"auto"
-              }}
-              />
-            ))}
-          </Group>
-
-          <Anchor
-            href={hyperlink.externalUrl}
-            underline="never"
-            target="_blank"
-            className={classes.textDecorationNone}
-            w={"100%"}
-            h="100%"
-            >
-            <Button
-              size="lg"
-              py={11}
-              leftSection={!hovered ? <ELinkedinIcon/> : <ELinkedinIcon firstFill="white" secondFill="#007EBB"/>}
-              fullWidth
-              variant="outline"
-              color="#007EBB"
-              className={classes.button}
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-              >
-              <Text lh={"16px"}>View LinkedIn Profile</Text>
-            </Button>
-          </Anchor>
-        </div>
-      </div>
-    </Box>
-  );
 };
 
 const Leadership: React.FC<LeadershipProps> = ({
@@ -139,18 +19,20 @@ const Leadership: React.FC<LeadershipProps> = ({
 }) => {
   const references = contentfulPage.sections[0].references;
 
-
   // Using a ref to observe visibility of each card which allows us to apply animations or styles when they come into view(Slide up animation)
   const refs = useRef<HTMLDivElement[]>([]);
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add(classes.visible);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(classes.visible);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 },
+    );
 
     refs.current.forEach((el) => el && observer.observe(el));
   }, []);
@@ -171,18 +53,17 @@ const Leadership: React.FC<LeadershipProps> = ({
         </Box>
 
         <Grid gutter={36}>
-          {references.map((reference: any, index: number) => (
+          {references.map((reference: TResource, index: number) => (
             <Grid.Col
               key={index}
               span={{ base: 12, sm: 6, md: 4 }}
               style={{ display: "flex", justifyContent: "center" }}
+              className={classes.imageSlide}
+              ref={(el) => {
+                if (el) refs.current[index] = el;
+              }}
             >
-              <ECard 
-                reference={reference} 
-                forwardRef={(el) => {
-                  if (el) refs.current[index] = el;
-                }}
-              />
+              <LeaderProfileCard reference={reference} />
             </Grid.Col>
           ))}
         </Grid>
