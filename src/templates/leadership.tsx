@@ -63,7 +63,7 @@ const Leadership: React.FC<LeadershipProps> = ({
                 if (el) refs.current[index] = el;
               }}
             >
-              <LeaderProfileCard reference={reference} />
+              <LeaderProfileCard reference={reference} canShowLinkedInBtn={true}/>
             </Grid.Col>
           ))}
         </Grid>
