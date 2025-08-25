@@ -1,6 +1,5 @@
 .container {
-	--img-banner-height: 1045px;
-	--img-outside-margin: 64px;
+	--img-outside-margin: 46px;
 	margin-top: 36px;
 
 		.wallAsset{
@@ -13,6 +12,11 @@
 					position: relative;
 					right: calc(var(--img-outside-margin) * -1);
 				}
+			}
+
+			@media (min-width: $phil-breakpoint-xl) {
+				display: flex;
+				justify-content: right;
 			}
 		}
 }
