@@ -58,6 +58,11 @@ from = "/e/*"
 to = "https://enroll.phil.us/landing/:splat"
 status = 302
 
+[[redirects]]
+from = "/sign-up/*"
+to = "https://enroll.phil.us/landing/:splat"
+status = 302
+
 # /md/enroll redirection
 [[redirects]]
 from = "/md/enroll"
@@ -86,7 +91,17 @@ to = "https://enroll.stage.phil.us/landing/:splat"
 status = 302
 
 [[redirects]]
+from = "/stage/sign-up/*"
+to = "https://enroll.stage.phil.us/landing/:splat"
+status = 302
+
+[[redirects]]
 from = "/dev/e/*"
+to = "https://enroll.dev.phil.us/landing/:splat"
+status = 302
+
+[[redirects]]
+from = "/dev/sign-up/*"
 to = "https://enroll.dev.phil.us/landing/:splat"
 status = 302
 
