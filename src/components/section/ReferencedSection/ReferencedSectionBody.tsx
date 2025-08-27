@@ -50,7 +50,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
 
   if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
     const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
-    return (
+      return (
       <Container className="carousel__container" fluid  >
  
         <Carousel
@@ -68,7 +68,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           nextControlIcon={<IconChevronRight size={24} />}
           slideSize={{
             base: "95%",
-            sm: `calc(50% - 16px)`,
+            sm: section.referenceType === "People Behind Phil" ? `${95 / columns}%` : `calc(50% - 16px)`,
             md:
               section.referenceType === "Testimonial"
                 ? `${95 / columns}%`
@@ -90,6 +90,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
             (reference) =>
               reference?.sys?.contentType?.sys?.id === "mediaItem" ?? false,
           )}
+          data-context = {title}
           data-is-employee-tag={Boolean(isEmployeeTag)}
         >
           {section.header === "Recent Client News" ? (

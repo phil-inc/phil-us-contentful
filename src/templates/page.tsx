@@ -436,6 +436,7 @@ export const query = graphql`
               shouldRenderCarousel
             }
           }
+          canShowTextColumnToRight
         }
         ... on ContentfulReferencedSection {
           id

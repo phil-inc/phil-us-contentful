@@ -1,7 +1,7 @@
 .dividerContainer{
     .divider{
-      border-top: 1px solid #E6E6E6;
-    }	
+    border-top: 1px solid #E6E6E6;
+  }
 }
 
 .innerContainer{
@@ -88,7 +88,7 @@
 }
 
 .grid {
-  
+
   &[data-add-margin="true"] {
     margin-top: 40px;
 
@@ -138,24 +138,44 @@
       width: fit-content;
     }
   }
+
+  &[data-context="Company"] {
+    .controls {
+      >button {
+         @media screen and (min-width: $phil-breakpoint-lg) {
+
+          background-color: #09AAA5;
+          padding: 4px;
+
+          svg{
+            stroke: var(--primay-white-color);
+            }
+        }
+      }
+    }
+  }
+
 }
 
 .controls {
-  > button{
+  width: initial;
+
+  >button {
     @media screen and (max-width: $phil-breakpoint-sm) {
-    background-color: white;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      background-color: white;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     }
   }
-  > button:first-child {
+
+  >button:first-child {
     @media screen and (min-width: $phil-breakpoint-sm) {
-      margin-left: -56px;
+      margin-left: -46px;
     }
   }
 
@@ -215,7 +235,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
+
   @media (min-width: $phil-breakpoint-md) {
     align-items: center;
     flex-direction: row;
@@ -228,14 +248,14 @@
     padding: 0 60px;
     min-width: 360px;
     border-left: 1px solid #E6E6E6;
- }
+  }
 }
 
 .commitmentCardLeftSection{
   @media screen and (min-width: $phil-breakpoint-md) {
-      padding-right: 60px;
-      max-width: 900px;
- 
+    padding-right: 60px;
+    max-width: 900px;
+
   }
 
   h1{

@@ -235,7 +235,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
       [BLOCKS.HEADING_2](node, children) {
         return (
-          <Title order={2} className={classes.title}>
+          <Title order={2} className={cx(classes.title, classes.heading2)} data-context={context.title}>
             {children}
           </Title>
         );
@@ -277,6 +277,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   if (!section.automaticOrder) {
     textColumnOrder = ORDER_FIRST;
     imageColumnOrder = ORDER_SECOND;
+  }
+
+  if(section?.canShowTextColumnToRight){
+    textColumnOrder = ORDER_SECOND;
+    imageColumnOrder = ORDER_FIRST;
   }
 
   const isHeroSection = index === HERO_SECTION_INDEX;
