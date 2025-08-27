@@ -454,6 +454,7 @@ export const query = graphql`
               id
             }
           }
+          canAlsoBeUseAsAutoCarousel
           backgroundAssetImage {
             id
             gatsbyImageData(
