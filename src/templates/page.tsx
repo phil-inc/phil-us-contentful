@@ -444,6 +444,7 @@ export const query = graphql`
           hideNavigationAnchor
           hideHeader
           header
+          showBottomBorder
           subHeading {
             id
             subHeading
