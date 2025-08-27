@@ -12,6 +12,8 @@ import React, { useContext } from "react";
 import { type IReferencedSection, ReferenceTypeEnum } from "types/section";
 import cx from 'clsx';
 
+import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
+
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
   getSpan: (referenceType: string) => {
@@ -41,6 +43,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const sm = useDeviceType("sm");
   const md = useDeviceType("md");
   const lg = useDeviceType("lg");
+
+  if( title === COMPANY_PAGE && section?.canAlsoBeUseAsAutoCarousel){
+        return <AutoScrollCarousel section={section} />;
+  }
 
   if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
     const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;

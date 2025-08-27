@@ -1,6 +1,16 @@
 .card {
     --card-bg: #ECF9F8;
 
+    &[data-context='Company'] {
+        height: 100%;
+    }
+
+    .cardTitle {
+        &[data-context='Company'] {
+            color: #09AAA5;
+        }
+    }
+
     .textContainer {
         display: flex;
         flex-direction: column;
