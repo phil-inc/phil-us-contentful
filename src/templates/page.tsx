@@ -436,6 +436,7 @@ export const query = graphql`
               shouldRenderCarousel
             }
           }
+          canShowTextColumnToRight
         }
         ... on ContentfulReferencedSection {
           id
@@ -443,6 +444,7 @@ export const query = graphql`
           hideNavigationAnchor
           hideHeader
           header
+          showBottomBorder
           subHeading {
             id
             subHeading

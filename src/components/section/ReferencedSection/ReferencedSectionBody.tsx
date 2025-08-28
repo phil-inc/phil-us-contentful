@@ -45,14 +45,35 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const lg = useDeviceType("lg");
 
   if( title === COMPANY_PAGE && section?.canAlsoBeUseAsAutoCarousel){
-        return <AutoScrollCarousel section={section} />;
+    return <AutoScrollCarousel section={section} />;
   }
 
   if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
     const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
+    const getSlideSize = () => {
+      if (section.referenceType === "People Behind Phil") {
+        return {
+          base: "95%",
+          sm: `${100 / 2}%`,
+          md: `${95 / columns}%`,
+          lg: `${95 / columns}%`,
+          xl: `${95 / columns}%`,
+        };
+      }
+      
+      return {
+        base: "95%",
+        sm: `calc(50% - 16px)`,
+        md:
+          section.referenceType === "Testimonial"
+            ? `${95 / columns}%`
+            : "calc50% - 32px)",
+        xl: `${95 / columns}%`,
+      };
+    };
+
     return (
-      <Container className="carousel__container" fluid  >
- 
+      <Container className="carousel__container" fluid>
         <Carousel
           classNames={{
             root: classes.root,
@@ -66,17 +87,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           draggable={false}
           previousControlIcon={<IconChevronLeft size={24} />}
           nextControlIcon={<IconChevronRight size={24} />}
-          slideSize={{
-            base: "95%",
-            sm: `calc(50% - 16px)`,
-            md:
-              section.referenceType === "Testimonial"
-                ? `${95 / columns}%`
-                : "calc50% - 32px)",
-            xl: `${95 / columns}%`,
-          }}
+          slideSize={getSlideSize()}
           align={"start"}
-          // slideSize={{base: '320px', sm: "calc(50% - 16px)", md: "calc50% - 32px)"}} 
+          // slideSize={{base: '320px', sm: "calc(50% - 16px)", md: "calc50% - 32px)"}}
           // slidesToScroll={1}
           loop={false}
           slidesToScroll={
@@ -90,35 +103,36 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
             (reference) =>
               reference?.sys?.contentType?.sys?.id === "mediaItem" ?? false,
           )}
+          data-context = {title}
           data-is-employee-tag={Boolean(isEmployeeTag)}
         >
           {section.header === "Recent Client News" ? (
             section.references.map((resource, index, array) => {
-              return (
-                <Carousel.Slide key={resource.id + "carouselItem"}>
-                <RenderResource
-                  arrayLength={array.length}
-                  index={index}
-                  referenceType={section.referenceType}
-                  resource={resource}
-                  sectionHeader={section.header}
-                  isEmployeeTag={Boolean(isEmployeeTag)}
-                />
-              </Carousel.Slide>
+                return (
+                  <Carousel.Slide key={resource.id + "carouselItem"}>
+                    <RenderResource
+                      arrayLength={array.length}
+                      index={index}
+                      referenceType={section.referenceType}
+                      resource={resource}
+                      sectionHeader={section.header}
+                      isEmployeeTag={Boolean(isEmployeeTag)}
+                    />
+                  </Carousel.Slide>
               )
             }
           )): (
           section.references.map((resource, index, array) => (
-            <Carousel.Slide key={resource.id + "carouselItem"}>
-              <RenderResource
-                arrayLength={array.length}
-                index={index}
-                referenceType={section.referenceType}
-                resource={resource}
-                sectionHeader={section.header}
-                isEmployeeTag={Boolean(isEmployeeTag)}
-              />
-            </Carousel.Slide>
+                <Carousel.Slide key={resource.id + "carouselItem"}>
+                  <RenderResource
+                    arrayLength={array.length}
+                    index={index}
+                    referenceType={section.referenceType}
+                    resource={resource}
+                    sectionHeader={section.header}
+                    isEmployeeTag={Boolean(isEmployeeTag)}
+                  />
+                </Carousel.Slide>
           ))
         )}
         </Carousel>
@@ -140,53 +154,53 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   };
 
   return (
-      <Grid
-        grow
-        className={classes.grid}
-        gutter={getGridGutter()}
-        justify="center"
-        align={title === COMPANY_PAGE ? "center" : "stretch"}
-        data-add-margin={addMargin}
-        data-context={title}
-        data-is-stepper-card={
-          section.referenceType === ReferenceTypeEnum["Stepper Cards"]
-        }
-        data-reference-type={section.referenceType}
-        data-is-home-page-brand-outcome={
-          isBrandOutcomeCardSection && title === HOME
-        }
-      >
-        {section.references.map((resource, index, array) => (
-          <Grid.Col
-            className={cx(classes.column)}
-            p={
-              section.referenceType === ReferenceTypeEnum.Investors
-                ? 0
-                : undefined
-            }
-            key={resource.id + "mapReferencedSectionResource"}
-            span={
-              section.v2flag
+    <Grid
+      grow
+      className={classes.grid}
+      gutter={getGridGutter()}
+      justify="center"
+      align={title === COMPANY_PAGE ? "center" : "stretch"}
+      data-add-margin={addMargin}
+      data-context={title}
+      data-is-stepper-card={
+        section.referenceType === ReferenceTypeEnum["Stepper Cards"]
+      }
+      data-reference-type={section.referenceType}
+      data-is-home-page-brand-outcome={
+        isBrandOutcomeCardSection && title === HOME
+      }
+    >
+      {section.references.map((resource, index, array) => (
+        <Grid.Col
+          className={cx(classes.column)}
+          p={
+            section.referenceType === ReferenceTypeEnum.Investors
+              ? 0
+              : undefined
+          }
+          key={resource.id + "mapReferencedSectionResource"}
+          span={
+            section.v2flag
                 ? { base: 12, sm: span, md: span  }
-                : getSpan(section.referenceType)
-            }
-            data-reference-type={section.referenceType}
-            data-is-home-page-brand-outcome={
-              isBrandOutcomeCardSection && title === HOME
-            }
-          >
-            <RenderResource
-              arrayLength={array.length}
-              index={index}
-              referenceType={section.referenceType}
-              resource={resource}
-              sectionHeader={section.header}
-              isEmployeeTag={Boolean(isEmployeeTag)}
-              metadata={section.metadata}
-            />
-          </Grid.Col>
-        ))}
-      </Grid>
+              : getSpan(section.referenceType)
+          }
+          data-reference-type={section.referenceType}
+          data-is-home-page-brand-outcome={
+            isBrandOutcomeCardSection && title === HOME
+          }
+        >
+          <RenderResource
+            arrayLength={array.length}
+            index={index}
+            referenceType={section.referenceType}
+            resource={resource}
+            sectionHeader={section.header}
+            isEmployeeTag={Boolean(isEmployeeTag)}
+            metadata={section.metadata}
+          />
+        </Grid.Col>
+      ))}
+    </Grid>
   );
 };
 
