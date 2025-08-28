@@ -35,6 +35,7 @@ import PageContext from "contexts/PageContext";
 import { CONTACT_PAGE, OUR_SOLUTIONS } from "constants/page";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
 import { parseScript } from "utils/parseScript";
+import { IconArrowRight } from "@tabler/icons";
 
 import cx from "clsx";
 import * as classes from "./basicSection.module.css";
@@ -69,6 +70,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const HEADING_SECOND = 2;
   const context = React.useContext(PageContext);
   const isImageAlignToWall = section?.canShowAssetImageAlignToWall;
+  const isImageAlignToLeftWall = isImageAlignToWall && section?.canShowTextColumnToRight
  
 
   const theme = useMantineTheme();
@@ -258,9 +260,15 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       },
 
       [INLINES.HYPERLINK](node, children) {
+        const canShowArrowIcon = context?.title === "Company" && node?.content[0]?.value === "Explore Open Roles";
         return (
-          <Anchor href={node.data.uri as string} target="_blank">
+          <Anchor className="phil-hyperlink-underline" href={node.data.uri as string} target={canShowArrowIcon ? "_self" :"_blank"}>
             {children}
+            {canShowArrowIcon &&
+              <span className={classes.arrowIconWrapper}>
+                <IconArrowRight size={20} />
+              </span>
+            }
           </Anchor>
         );
       },
@@ -523,7 +531,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
         {(isImageAlignToWall && mediaItemOrAsset) && 
           <div 
-            className={classes.wallImage}   
+            className={cx(classes.wallImage, {[classes.leftWallImage]: isImageAlignToLeftWall})}   
             data-index={index}
             data-context={context.title}
           >

@@ -140,18 +140,30 @@
   }
 
   &[data-context="Company"] {
+    width: 100%;
     .controls {
       >button {
-         @media screen and (min-width: $phil-breakpoint-lg) {
-
           background-color: #09AAA5;
           padding: 4px;
 
           svg{
             stroke: var(--primay-white-color);
             }
-        }
       }
+      
+      >button:first-child {
+          margin-left: -9%;
+          @media screen and (min-width: $phil-breakpoint-xs) {
+            margin-left: -46px;
+          }
+        }
+
+        > button:nth-child(2) {
+          margin-right: -9%;
+          @media screen and (min-width: $phil-breakpoint-xs) {
+            margin-right: -46px;
+          }
+        }
     }
   }
 
