@@ -94,6 +94,7 @@ export type ISection = {
   canShowAssetImageAlignToWall?: boolean;
   sectionTitle?: string;
   showBottomBorder?: boolean;
+  canShowTextColumnToRight?: boolean;
 };
 
 export enum ResourceBlocksEnum {
@@ -133,6 +134,7 @@ export enum ReferenceTypeEnum {
   "Commitment Card" = "Commitment Card",
   "Featured Insights" = "Featured Insights",
   "Case Study" = "Case Study",
+  "People Behind Phil" = "People Behind Phil",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
@@ -186,6 +188,8 @@ export type IReferencedSection = {
   stylingOptions?: StylingOptions;
   renderOptions?: RenderOptions;
   backgroundAssetImage?: TAsset;
+  canAlsoBeUseAsAutoCarousel?: boolean;
+  showBottomBorder?: boolean;
 };
 
 export type Reference = {

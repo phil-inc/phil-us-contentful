@@ -1,0 +1,45 @@
+:where(html) {
+  --slide-spacing: 36px;
+  --slide-size-3card: 33.33333%;
+  --slide-size-2card: 50%;
+  --slide-size-1card: 100%;
+  --margin-size: 80px;
+  --section-margin-size: 100px;
+}
+
+.autoScrollSection {
+  padding: var(--section-margin-size) 0 0;
+
+  .title{
+    text-align: center;
+  }
+
+  /* --- Embla layout --- */
+  .embla {
+    overflow: hidden;
+    margin: var(--margin-size) 0 var(--margin-size);
+  }
+
+  .emblaContainer {
+    display: flex;
+    margin-left: calc(var(--slide-spacing) * -1);
+
+    .emblaSlide {
+      min-width: 0;
+      flex: 0 0 var(--slide-size-1card);
+      padding-left: var(--slide-spacing);
+
+      @media (min-width: $phil-breakpoint-md) {
+        flex: 0 0 var(--slide-size-2card);
+      }
+
+      @media (min-width: $phil-breakpoint-lg) {
+        flex: 0 0 var(--slide-size-3card, 33%);
+      }
+    }
+  }
+
+  .buttonContainer {
+    text-align: center;
+  }
+}

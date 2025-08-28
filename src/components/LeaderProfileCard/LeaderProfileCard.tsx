@@ -12,13 +12,18 @@ import PageContext from "contexts/PageContext";
 import { TResource } from "types/resource";
 
 type LeaderProfileCardProps = {
+  cardTitle?: string;
   reference: TResource;
+  canShowLinkedInBtn: boolean;
 };
 
 const LeaderProfileCard: React.FC<LeaderProfileCardProps> = ({
   reference,
+  cardTitle,
+  canShowLinkedInBtn = false,
 }) => {
   const [hovered, setHovered] = useState(false);
+  const { title } = useContext(PageContext);
 
   const { body, media, hyperlink } = reference;
   const pastCompanies = body.references;
@@ -47,13 +52,17 @@ const LeaderProfileCard: React.FC<LeaderProfileCardProps> = ({
     <Box
       className={cx(classes.card)}
       style={{
-        height: "auto",
         display: "flex",
         flexDirection: "column",
-        width: "500px",
       }}
+      data-context={title}
     >
       <div className={classes.textContainer}>
+        {Boolean(cardTitle) && (
+          <Title className={classes.cardTitle} data-context={title} order={6}>
+            {cardTitle}
+          </Title>
+        )}
         <div>
           <Box>{body && renderRichText(body, options)}</Box>
         </div>
@@ -66,7 +75,7 @@ const LeaderProfileCard: React.FC<LeaderProfileCardProps> = ({
           }}
         >
           <Group gap={13}>
-            {pastCompanies.map((company: any, index: number) => (
+            {pastCompanies?.map((company: any, index: number) => (
               <Image
                 key={index}
                 src={company.media.file.url}
@@ -83,36 +92,38 @@ const LeaderProfileCard: React.FC<LeaderProfileCardProps> = ({
         <Asset asset={media.media} />
       </ImageContainer>
 
-      <div className={classes.buttonContainer}>
-        <Anchor
-          href={hyperlink.externalUrl}
-          underline="never"
-          target="_blank"
-          className={classes.textDecorationNone}
-          w={"100%"}
-          h="100%"
-        >
-          <Button
-            size="lg"
-            py={11}
-            leftSection={
-              !hovered ? (
-                <ELinkedinIcon />
-              ) : (
-                <ELinkedinIcon firstFill="white" secondFill="#007EBB" />
-              )
-            }
-            fullWidth
-            variant="outline"
-            color="#007EBB"
-            className={classes.button}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+      {canShowLinkedInBtn && (
+        <div className={classes.buttonContainer}>
+          <Anchor
+            href={hyperlink.externalUrl}
+            underline="never"
+            target="_blank"
+            className={classes.textDecorationNone}
+            w={"100%"}
+            h="100%"
           >
-            <Text lh={"16px"}>View LinkedIn Profile</Text>
-          </Button>
-        </Anchor>
-      </div>
+            <Button
+              size="lg"
+              py={11}
+              leftSection={
+                !hovered ? (
+                  <ELinkedinIcon />
+                ) : (
+                  <ELinkedinIcon firstFill="white" secondFill="#007EBB" />
+                )
+              }
+              fullWidth
+              variant="outline"
+              color="#007EBB"
+              className={classes.button}
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+            >
+              <Text lh={"16px"}>View LinkedIn Profile</Text>
+            </Button>
+          </Anchor>
+        </div>
+      )}
     </Box>
   );
 };
