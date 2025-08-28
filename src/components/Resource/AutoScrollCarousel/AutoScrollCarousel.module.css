@@ -8,7 +8,7 @@
 }
 
 .autoScrollSection {
-  padding: var(--section-margin-size) 0 var(--section-margin-size);
+  padding: var(--section-margin-size) 0 0;
 
   .title{
     text-align: center;

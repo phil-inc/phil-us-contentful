@@ -12,3 +12,8 @@ export const BUTTON_STYLE = {
   Primary: "Primary",
   Secondary: "Secondary",
 };
+
+export const BUTTON_CONFIG = {
+  primary: { variant: "header-primary", size: "md", uppercase: true },
+  secondary: { variant: "header-secondary", size: "md", uppercase: true },
+};
