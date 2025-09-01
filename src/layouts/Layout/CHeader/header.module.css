@@ -1,7 +1,7 @@
 .header {
 	/* position: static !important; */
-	position: sticky;
 	box-shadow: 0px 4px 20.2px 0px #00000008;
+	top:auto;
 }
 
 .burger {

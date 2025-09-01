@@ -10,6 +10,8 @@ import "assets/css/index.css";
 
 import ZoominfoAnalytics from "analytics/ZoominfoAnalytics";
 
+import AnnoucementBar from "layouts/Layout/AnnoumentBar/AnnoucementBar";
+
 const isProduction = process.env.NODE_ENV === "production";
 
 export const Head: React.FC = () => <>{isProduction && <LinkedinInsights />}</>;
@@ -34,11 +36,14 @@ export function Layout({
           header={{
             height: HEADER_HEIGHT,
           }}
-        >
+          >
           {isProduction && <ZoominfoAnalytics />}
-          {!canHideHeader && <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />}
+          <div className="sticky-wrapper">
+            <AnnoucementBar/>
+            {!canHideHeader && <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />}
+          </div>
           <Box>{children}</Box>
-            <CFooter minimal={minimal} />
+          <CFooter minimal={minimal} />
         </AppShell>
       </HubspotProvider>
     </>
