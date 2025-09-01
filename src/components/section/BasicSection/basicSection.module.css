@@ -58,6 +58,12 @@
 	}
 }
 
+.heading2{
+		&[data-context='Company'] {
+			font-size: 40px;
+		}
+}
+
 .basicSectionContainer {
 	position: relative;
 	z-index: 2;
@@ -106,6 +112,17 @@
 				display: block;
 				width: 50%;
 			}
+
+			&.leftWallImage{
+				left: calc(var(--img-outside-margin) * -1);
+
+				&[data-context='Company'] {
+					left: -120px;
+					height: auto;
+				}
+
+			}
+
 		}
 	}
 
@@ -327,4 +344,9 @@
 	.divider{
 		border-top: 1px solid #E6E6E6;
 	}	
+}
+
+.arrowIconWrapper{
+	display: flex;
+	align-items: center;
 }

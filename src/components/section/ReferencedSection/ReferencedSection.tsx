@@ -306,6 +306,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         )}
         </Container>
     </Expanded>
+    {Boolean(section?.showBottomBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     </>
   );
 };
