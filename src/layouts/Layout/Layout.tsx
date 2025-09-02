@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AppShell, Box } from "@mantine/core";
 import CHeader, { HEADER_HEIGHT } from "./CHeader/CHeader";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
@@ -9,6 +9,12 @@ import LinkedinInsights from "analytics/LinkedinInsights";
 import "assets/css/index.css";
 
 import ZoominfoAnalytics from "analytics/ZoominfoAnalytics";
+
+import AnnoucementBar from "layouts/Layout/AnnoumentBar/AnnoucementBar";
+
+import PageContext from "contexts/PageContext";
+
+import { PAGES_TITLE } from "constants/page";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -27,6 +33,10 @@ export function Layout({
   headerTargetBlank = false,
   canHideHeader = false,
 }: LayoutProps) {
+    const context = useContext(PageContext);
+    const skipAnnoucementPageTitle = [PAGES_TITLE.DEMO];
+    const canShowAnnoucementBar = !(skipAnnoucementPageTitle.includes(context.title));
+
   return (
     <>
       <HubspotProvider>
@@ -34,11 +44,14 @@ export function Layout({
           header={{
             height: HEADER_HEIGHT,
           }}
-        >
+          >
           {isProduction && <ZoominfoAnalytics />}
-          {!canHideHeader && <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />}
+          <div className="sticky-wrapper">
+            {canShowAnnoucementBar && <AnnoucementBar/>}
+            {!canHideHeader && <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />}
+          </div>
           <Box>{children}</Box>
-            <CFooter minimal={minimal} />
+          <CFooter minimal={minimal} />
         </AppShell>
       </HubspotProvider>
     </>
