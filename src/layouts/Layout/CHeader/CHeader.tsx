@@ -230,7 +230,7 @@ const Navbar: React.FC<CHeaderProps> = ({
   };
 
   return (
-    <AppShell.Header className={classes.header} style={{ borderBottom: 0 }}>
+    <AppShell.Header className={classes.header} style={{ borderBottom: 0, position:'relative' }}>
       <Container size="xl">
       <Group
         align="center"

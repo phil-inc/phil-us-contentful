@@ -179,3 +179,9 @@
         }
     }
 }
+
+.sticky-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 110;
+}
