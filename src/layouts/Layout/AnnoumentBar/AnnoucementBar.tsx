@@ -1,11 +1,9 @@
 import React from "react";
-import { Container } from "@mantine/core";
-import { graphql, navigate, StaticQuery } from "gatsby";
-import { IconArrowRight } from "@tabler/icons";
+import { graphql, StaticQuery } from "gatsby";
 
 import { TopAnnouncementBarNode } from "types/annoucementBar";
 
-import * as classes from "./AnnoucementBar.module.css";
+import Annoucement from "layouts/Layout/AnnoumentBar/Annoument/Annoument";
 
 type AllContentfulTopAnnouncementBarQuery = {
   allContentfulTopAnnouncementBar: {
@@ -13,36 +11,15 @@ type AllContentfulTopAnnouncementBarQuery = {
   };
 };
 
-const Annoucement: React.FC<AllContentfulTopAnnouncementBarQuery> = ({
+const TopAnnoucement: React.FC<AllContentfulTopAnnouncementBarQuery> = ({
   allContentfulTopAnnouncementBar,
 }) => {
-  const [topAnnoucement] = allContentfulTopAnnouncementBar.nodes;
-  const { reference } = topAnnoucement || null;
-
-  if (allContentfulTopAnnouncementBar.nodes.length < 1 || !reference) {
+  const [topAnnoucement] = allContentfulTopAnnouncementBar?.nodes;
+  if (allContentfulTopAnnouncementBar?.nodes?.length < 1 || !(topAnnoucement?.reference?.canDisplay)) {
     return null;
   }
 
-  return (
-    <section className={classes.annoucementBar}>
-      <Container className={classes.msg} size="xl">
-        <>
-          {reference.title}
-          <div
-            className={classes.anchorWrapper}
-            onClick={() =>
-              navigate(`/${reference.hyperlink?.internalContent?.slug}`)
-            }
-          >
-            {reference.hyperlink?.linkLabel}
-            <span className={classes.iconWrapper}>
-              <IconArrowRight size={16} />
-            </span>
-          </div>
-        </>
-      </Container>
-    </section>
-  );
+  return <Annoucement reference={topAnnoucement.reference} />
 };
 
 export const query = graphql`
@@ -58,8 +35,7 @@ export const query = graphql`
             id
             header
             title
-            startDate
-            canForceDisplay
+            canDisplay
             hyperlink {
               ... on ContentfulLink {
                 id
@@ -89,7 +65,7 @@ export const query = graphql`
 `;
 
 const AnnoucementBar: React.FC<{}> = () => (
-  <StaticQuery query={query} render={(props) => <Annoucement {...props} />} />
+  <StaticQuery query={query} render={(props) => <TopAnnoucement {...props} />} />
 );
 
 export default AnnoucementBar;

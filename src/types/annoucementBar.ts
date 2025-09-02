@@ -23,18 +23,18 @@ type ContentfulLink = {
   };
 
 
-type Reference  = {
+export type AnnoucementReference  = {
   id: string;
   header?: string | null;
   title: string;
   startDate?: string | null;
-  canForceDisplay?: boolean | null;
+  canDisplay?: boolean | null;
   hyperlink?: ContentfulLink | null;
 }
 
 export type TopAnnouncementBarNode = {
   id: string;
   header?: string | null;
-  reference: Reference;
+  reference: AnnoucementReference;
 }
 
