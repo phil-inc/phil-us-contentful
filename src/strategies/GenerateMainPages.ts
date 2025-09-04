@@ -54,6 +54,12 @@ export default async function GenerateMainPages(
     }
   });
 
+   // Create a new static page at /dtp-chat
+  actions.createPage(createPageObject('dtp-chat', templateFactory('DTPChat'), {
+    id: 'dtp-chat-id',
+    title: 'Welcome to the New DTP Chat Page!',
+  }));
+
   callback(resourceSubPages);
 }
 

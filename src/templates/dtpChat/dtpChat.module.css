@@ -1,0 +1,100 @@
+.dptChat {
+    height: 100vh;
+
+    .section {
+        height: 100vh;
+    }
+
+    .top {}
+
+    .chatHistory {
+        height: 60vh;
+        background-color: rgb(249 250 251);
+        padding: 1rem;
+        border-radius: 0.75rem;
+        overflow-y: auto;
+        margin-bottom: 1rem;
+
+        .messageBubble {
+            padding: 1rem;
+            border-radius: 1.5rem;
+            max-width: 80%;
+            margin-bottom: 10px;
+
+            &.aiMessage {
+                text-align: left;
+                background-color: #e5e7eb;
+                color: #1f2937;
+                border-radius: 1.5rem;
+                /* border-b: 0.25rem; */
+                max-width: 80%;
+
+            }
+
+            &.userMessage {
+                text-align: right;
+                background-color: #3b82f6;
+                color: white;
+                border-radius: 1.5rem;
+                /* border-bottom-right-radius: 0.25rem; */
+                max-width: 80%;
+                margin-left: auto;
+            }
+
+        }
+
+    }
+
+    .inputArea {
+        /* display: flex; */
+        /* gap: 0.5rem; */
+
+        .form {
+            display: flex;
+            gap: 0.5rem;
+            transition: border-color 0.3s;
+
+            input{
+                padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 9999px;
+            /* Full rounded */
+            font-size: 1rem;
+            outline: none;
+            }
+
+            &:focus {
+                border-color: #3b82f6;
+                /* Blue border on focus */
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+                /* Optional shadow */
+            }
+
+
+            .sendBtn {
+                background: rgb(62, 116, 233);
+                border-radius: 50%;
+                padding: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background-color 0.3s;
+                border: none;
+
+            }
+        }
+
+    }
+}
+
+
+
+.gradient-button {
+    background-image: linear-gradient(to right, #6EE7B7, #3B82F6, #9333EA);
+    transition: all 0.3s ease;
+}
+
+.gradient-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
