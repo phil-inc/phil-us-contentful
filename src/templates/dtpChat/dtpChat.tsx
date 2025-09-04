@@ -1,10 +1,18 @@
 import { Box, Container } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
-import { GEMINI_API_URL } from "constants/api";
 import React, { useEffect, useRef, useState } from "react";
 import cx from "clsx";
 import * as classes from "./dtpChat.module.css";
-import { MSG_SENDER, TRAINNING_DATA } from "constants/trainned.constant";
+import { MSG_SENDER } from "constants/trainned.constant";
+import {
+  ChatSyncCommand,
+  ChatSyncCommandInput,
+  CreateAnonymousWebExperienceUrlCommand,
+  CreateAnonymousWebExperienceUrlCommandInput,
+  CreateWebExperienceCommand,
+  CreateWebExperienceCommandInput,
+  QBusinessClient,
+} from "@aws-sdk/client-qbusiness";
 
 type Props = {
   pageContext: {
@@ -52,44 +60,72 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
     setIsLoading(true);
 
     try {
-      const apiUrl = GEMINI_API_URL;
-      const payload = {
-        contents: [{ parts: [{ text: question }] }],
-        systemInstruction: {
-          parts: [{ text: TRAINNING_DATA }],
-        },
-      };
 
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      const applicationId = "b55eaa79-31ed-4fbc-8486-bd32f096bc8d"; // amazonQ application id
+      const client = new QBusinessClient({
+        region: process.env.GATSBY_AWS_REGION || "us-east-1",
+        credentials: {
+          accessKeyId: process.env.GATSBY_AWS_ACCESS_KEY_ID || "",
+          secretAccessKey: process.env.GATSBY_AWS_SECRET_ACCESS_KEY || "",
+        },
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      // Create Web Experience
+      const webExperienceInput: CreateWebExperienceCommandInput = {
+        applicationId,
+        title: "My Web Chat Experience",
+        subtitle: "Anonymous Chat",
+        welcomeMessage: "Welcome! How can I help you?",
+        origins: ["*"], // Allow all origins, change as needed
+        samplePromptsControlMode: "ENABLED",
+      };
+
+      const webExperienceCommand = new CreateWebExperienceCommand(
+        webExperienceInput,
+      );
+      const webExperienceResponse = await client.send(webExperienceCommand);
+      const webExperienceId = webExperienceResponse.webExperienceId;
+
+      if (!webExperienceId) {
+        throw new Error("Failed to create web experience.");
       }
 
-      const result = await response.json();
-      const candidate = result?.candidates?.[0];
-      const text = candidate?.content?.parts?.[0]?.text;
+      // Create Anonymous Web Experience URL
+      const anonymousUrlInput: CreateAnonymousWebExperienceUrlCommandInput = {
+        applicationId,
+        webExperienceId,
+        // Optional: sessionLengthInMinutes: 60
+      };
+
+      const anonymousUrlCommand = new CreateAnonymousWebExperienceUrlCommand(
+        anonymousUrlInput,
+      );
+      const anonymousUrlResponse = await client.send(anonymousUrlCommand);
+
+      const webExperienceUrl =
+        (anonymousUrlResponse as any).webExperienceUrlWithAuth ||
+        (anonymousUrlResponse as any).webExperienceUrl ||
+        "";
+
+      if (!webExperienceUrl) {
+        throw new Error("Failed to create anonymous web experience URL.");
+      }
+
+      //Anonymous Chat
+      const chatInput: ChatSyncCommandInput = {
+        applicationId,
+        userMessage: question,
+        };
+
+      const chatCommand = new ChatSyncCommand(chatInput);
+      const chatResponse = await client.send(chatCommand);
+
+      const answer = chatResponse.systemMessage || "";
 
       setIsLoading(false);
-
-      let aiResponse;
-      if (text && text.trim() === "INSUFFICIENT_INFO") {
-        aiResponse =
-          'Get in touch with the PHIL team for more information at <a href="https://www.phil.us/demo" target="_blank" rel="noopener noreferrer">www.phil.us/demo</a>';
-      } else if (text) {
-        aiResponse = text;
-      } else {
-        aiResponse =
-          "Sorry, I couldn't generate a response. Please try again later.";
-      }
-
       setMessages((prev) => [
         ...prev,
-        { sender: MSG_SENDER.AI, text: aiResponse },
+        { sender: MSG_SENDER.AI, text: answer },
       ]);
     } catch (error) {
       console.error("Error calling Gemini API:", error);

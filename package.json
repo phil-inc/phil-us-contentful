@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@aaronhayes/react-use-hubspot-form": "^2.1.1",
+    "@aws-sdk/client-qbusiness": "^3.879.0",
     "@contentful/rich-text-plain-text-renderer": "^16.2.1",
     "@fontsource/lato": "^5.0.21",
     "@fontsource/raleway": "^5.0.19",
