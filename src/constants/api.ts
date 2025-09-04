@@ -7,6 +7,6 @@ export const HUBSPOT_CHANNEL_COMPARISION_URL =
 export const CAREER_LISTING_URL = "https://phil.us/api/get-career-listing";
 
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY ?? "";
+const GEMINI_API_KEY = process.env.GATSBY_GEMINI_API_KEY ?? "";
 const GEMINI_MODEL = "gemini-2.5-flash";
 export const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
