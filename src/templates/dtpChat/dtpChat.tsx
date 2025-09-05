@@ -1,6 +1,5 @@
-import { Box, Container } from "@mantine/core";
-import { IconArrowRight } from "@tabler/icons";
 import React, { JSX, useEffect, useRef, useState } from "react";
+import { Box, Image, Loader } from "@mantine/core";
 import cx from "clsx";
 
 import { MSG_SENDER } from "constants/trainned.constant";
@@ -24,7 +23,7 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: MSG_SENDER.AI,
-      text: "Hello! I'm an AI assistant. How can I help you!",
+      text: "Hello! Ask me anything about Direct-to-Patient strategies.",
     },
   ]);
   const [inputValue, setInputValue] = useState("");
@@ -61,7 +60,7 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
         },
         body: JSON.stringify({ question: question }),
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -79,8 +78,7 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
       } else if (text) {
         aiResponse = text;
       } else {
-        aiResponse =
-          "Sorry, I couldn't generate a response. Please try again later.";
+        aiResponse = "Sorry, I encountered an error. Please try again.";
       }
 
       setMessages((prev) => [
@@ -126,6 +124,22 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
       /^\* (.*$)/gm,
       '<ul class="list-disc list-inside"><li>$1</li></ul>',
     );
+    formattedMessage = formattedMessage.replace(/^# (.*$)/gm, "<h1>$1</h1>");
+    formattedMessage = formattedMessage.replace(/^## (.*$)/gm, "<h2>$1</h2>");
+    formattedMessage = formattedMessage.replace(/^### (.*$)/gm, "<h3>$1</h3>");
+    formattedMessage = formattedMessage.replace(
+      /`([^`]+)`/g,
+      "<code>$1</code>",
+    );
+    formattedMessage = formattedMessage.replace(
+      /```([\s\S]*?)```/g,
+      "<pre><code>$1</code></pre>",
+    );
+    formattedMessage = formattedMessage.replace(
+      /^> (.*$)/gm,
+      "<blockquote>$1</blockquote>",
+    );
+
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     formattedMessage = formattedMessage.replace(
       urlRegex,
@@ -153,61 +167,69 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
 
   return (
     <>
-      <Container className={classes.dptChat}>
-        <section className={classes.section}>
-          <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6 flex flex-col">
-            <Box className={classes.top}>
-              <div>
-                <h1 className={classes.title}>
-                  Ask About Direct-to-Patient Strategy
-                </h1>
-                <h3 className={classes.subTitle}>
-                  This AI will answer questions based on PHIL's thought
-                  leadership.
-                </h3>
-              </div>
+      <section className={classes.dptChatSection}>
+        <div className={classes.chatContainer}>
+          <Box className={classes.top}>
+            <div>
+              <h1 className={classes.title}>
+                Ask About Direct-to-Patient Strategy
+              </h1>
+              <h3 className={classes.subTitle}>
+                This AI will answer questions based on PHIL's thought
+                leadership.
+              </h3>
+            </div>
+            <div className={classes.logoContainer}>
               <a
                 href="https://www.phil.us/demo"
                 target="_blank"
                 className="text-xl font-bold text-teal-600"
               >
-                PHIL
+                <Image
+                  className={classes.logo}
+                  src="https://images.ctfassets.net/2h91ja0efsni/2fqDgv1rXvEaIvGmf57rFc/d37f4c6b6a1165743aea1cd10ca56e62/PhilLogoGreen.svg"
+                  alt="PHIL Logo"
+                />
               </a>
-            </Box>
-
-            <div className={classes.chatHistory} ref={chatHistoryRef}>
-              {messages.map((message, index) => (
-                <ChatBubble
-                  index={index}
-                  sender={message.sender}
-                  message={message.text}
-                />
-              ))}
-              {isLoading && <LoadingDots />}
             </div>
+          </Box>
 
-            <div className={classes.inputArea}>
-              <form onSubmit={handleSubmit} className={classes.form}>
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Ask me a question..."
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
-                  disabled={isLoading}
-                />
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={classes.sendBtn}
-                >
-                  <IconArrowRight />
-                </button>
-              </form>
-            </div>
+          <div className={classes.chatHistory} ref={chatHistoryRef}>
+            {messages.map((message, index) => (
+              <ChatBubble
+                index={index}
+                sender={message.sender}
+                message={message.text}
+              />
+            ))}
+            {isLoading && <LoadingDots />}
           </div>
-        </section>
-      </Container>
+
+          <div className={classes.bottomInputArea}>
+            <form onSubmit={handleSubmit} className={classes.form}>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask a question..."
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={classes.sendBtn}
+              >
+                {isLoading ? (
+                  <Loader size="sm" color="white" />
+                ) : (
+                  <span>Send</span>
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
     </>
   );
 };
