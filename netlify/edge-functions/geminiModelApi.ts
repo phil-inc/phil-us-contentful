@@ -1,6 +1,15 @@
 import type { Config } from "https://edge.netlify.com";
 
 const geminiHandler = async (request: Request) => {
+  if (request.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
+      status: 405,
+      headers: {
+        "Content-Type": "application/json",
+        "Allow": "POST",
+      },
+    });
+  }
   const GEMINI_MODEL = "gemini-2.5-flash";
   const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
 
@@ -15,27 +24,28 @@ const geminiHandler = async (request: Request) => {
     });
   }
 
-  let origin: string;
-  try {
-    origin =
-      request.headers.get("origin") ||
-      new URL(request.headers.get("referer") || "").origin ||
-      "";
-  } catch (err) {
-    console.error("Unable to determine request origin from headers", err);
-    origin = "";
-  }
+  // ----------commented our for testing
+  // let origin: string;
+  // try {
+  //   origin =
+  //     request.headers.get("origin") ||
+  //     new URL(request.headers.get("referer") || "").origin ||
+  //     "";
+  // } catch (err) {
+  //   console.error("Unable to determine request origin from headers", err);
+  //   origin = "";
+  // }
 
-  const allowedOrigins = Deno.env.get("ALLOWED_ORIGINS")?.split(",") || [];
-  if (!allowedOrigins.includes(origin)) {
-    return new Response(JSON.stringify({ error: "Not allowed" }), {
-      status: 403,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": origin,
-      },
-    });
-  }
+  // const allowedOrigins = Deno.env.get("ALLOWED_ORIGINS")?.split(",") || [];
+  // if (!allowedOrigins.includes(origin)) {
+  //   return new Response(JSON.stringify({ error: "Not allowed" }), {
+  //     status: 403,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": origin,
+  //     },
+  //   });
+  // }
 
   const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
   const body = JSON.parse(request.body);
@@ -69,7 +79,6 @@ const geminiHandler = async (request: Request) => {
       headers: {
         "cache-control": "public, s-maxage=120",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": origin,
       },
     });
   } catch (err) {
