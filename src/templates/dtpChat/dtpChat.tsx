@@ -1,10 +1,12 @@
 import { Box, Container } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
-import { GEMINI_API_URL } from "constants/api";
-import React, { useEffect, useRef, useState } from "react";
+import React, { JSX, useEffect, useRef, useState } from "react";
 import cx from "clsx";
+
+import { MSG_SENDER } from "constants/trainned.constant";
+import { CALL_GEMINI_API_URL } from "constants/api";
+
 import * as classes from "./dtpChat.module.css";
-import { MSG_SENDER, TRAINNING_DATA } from "constants/trainned.constant";
 
 type Props = {
   pageContext: {
@@ -52,20 +54,14 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
     setIsLoading(true);
 
     try {
-      const apiUrl = GEMINI_API_URL;
-      const payload = {
-        contents: [{ parts: [{ text: question }] }],
-        systemInstruction: {
-          parts: [{ text: TRAINNING_DATA }],
-        },
-      };
-
-      const response = await fetch(apiUrl, {
+      const response = await fetch(CALL_GEMINI_API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ question: question }),
       });
-
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -79,7 +75,7 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
       let aiResponse;
       if (text && text.trim() === "INSUFFICIENT_INFO") {
         aiResponse =
-          'Get in touch with the PHIL team for more information at <a href="https://www.phil.us/demo" target="_blank" rel="noopener noreferrer">www.phil.us/demo</a>';
+          "Get in touch with the PHIL team for more information at https://www.phil.us/demo";
       } else if (text) {
         aiResponse = text;
       } else {
@@ -113,30 +109,79 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
     </div>
   );
 
+  const ChatBubble = ({
+    index,
+    sender,
+    message,
+  }: {
+    index: number;
+    sender: string;
+    message: string;
+  }): JSX.Element => {
+    let formattedMessage = message.replace(
+      /\*\*(.*?)\*\*/g,
+      "<strong>$1</strong>",
+    );
+    formattedMessage = formattedMessage.replace(
+      /^\* (.*$)/gm,
+      '<ul class="list-disc list-inside"><li>$1</li></ul>',
+    );
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    formattedMessage = formattedMessage.replace(
+      urlRegex,
+      '<a href="$1" target="_blank" class="text-blue-300 underline">$1</a>',
+    );
+
+    return (
+      <div
+        key={index}
+        className={cx(classes.messageBubble, {
+          [classes.userMessageBubble]: sender === MSG_SENDER.USER,
+          [classes.aiMessage.bubble]: sender !== MSG_SENDER.USER,
+        })}
+      >
+        <div
+          className={cx(classes.memessageBoxssage, {
+            [classes.userMessage]: sender === MSG_SENDER.USER,
+            [classes.aiMessage]: sender !== MSG_SENDER.USER,
+          })}
+          dangerouslySetInnerHTML={{ __html: formattedMessage }}
+        ></div>
+      </div>
+    );
+  };
+
   return (
     <>
       <Container className={classes.dptChat}>
         <section className={classes.section}>
           <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6 flex flex-col">
             <Box className={classes.top}>
-              <h1 className={classes.title}>Ask the PHIL Team</h1>
-              <h3 className={classes.subTitle}>
-                I am an AI assistant trained on PHIL's Direct To Patient. Ask me
-                anything!
-              </h3>
+              <div>
+                <h1 className={classes.title}>
+                  Ask About Direct-to-Patient Strategy
+                </h1>
+                <h3 className={classes.subTitle}>
+                  This AI will answer questions based on PHIL's thought
+                  leadership.
+                </h3>
+              </div>
+              <a
+                href="https://www.phil.us/demo"
+                target="_blank"
+                className="text-xl font-bold text-teal-600"
+              >
+                PHIL
+              </a>
             </Box>
 
             <div className={classes.chatHistory} ref={chatHistoryRef}>
               {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={cx(classes.messageBubble, {
-                    [classes.userMessage]: message.sender === MSG_SENDER.USER,
-                    [classes.aiMessage]: message.sender !== MSG_SENDER.USER,
-                  })}
-                >
-                  {message.text}
-                </div>
+                <ChatBubble
+                  index={index}
+                  sender={message.sender}
+                  message={message.text}
+                />
               ))}
               {isLoading && <LoadingDots />}
             </div>
