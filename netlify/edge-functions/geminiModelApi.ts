@@ -6,13 +6,13 @@ const geminiHandler = async (request: Request) => {
       status: 405,
       headers: {
         "Content-Type": "application/json",
-        "Allow": "POST",
+        Allow: "POST",
       },
     });
   }
   const GEMINI_MODEL = "gemini-2.5-flash";
   const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
-  console.log("Entering geminiHandler")
+  console.log("Entering geminiHandler and request data:", request);
 
   if (!GEMINI_API_KEY) {
     const error = "Failed to initiate function. GEMINI_API_KEY is undefined.";
@@ -25,6 +25,7 @@ const geminiHandler = async (request: Request) => {
     });
   }
 
+  console.log("Starting to origin check");
   let origin: string;
   try {
     origin =
@@ -49,11 +50,15 @@ const geminiHandler = async (request: Request) => {
   }
 
   const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
-  console.log("Payload",request)
+  console.log("Payload", request);
   try {
-    const body = JSON.parse(request.body);
+    console.log(
+      request?.body,
+      "--Checking body payload--",
+    );
+    const body = request?.body ? JSON.parse(request.body): {};
     const payload = {
-      contents: [{ parts: [{ text: body.question }] }],
+      contents: [{ parts: [{ text: body?.question || 'test' }] }],
       systemInstruction: {
         parts: [{ text: TRAINNING_DATA }],
       },
@@ -63,8 +68,7 @@ const geminiHandler = async (request: Request) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-      console.log("response:", response);
-
+    console.log("response:", response);
 
     if (!response.ok) {
       return new Response(JSON.stringify({ error }), {
