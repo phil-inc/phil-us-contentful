@@ -50,15 +50,12 @@ const geminiHandler = async (request: Request) => {
   }
 
   const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
-  console.log("Payload", request);
+  console.log("request", request);
   try {
-    console.log(
-      request?.body,
-      "--Checking body payload--",
-    );
-    const body = request?.body ? JSON.parse(request.body): {};
+    const body = await request?.json?.();
+    console.log("Request body:", body);
     const payload = {
-      contents: [{ parts: [{ text: body?.question || 'test' }] }],
+      contents: [{ parts: [{ text: body?.question || "" }] }],
       systemInstruction: {
         parts: [{ text: TRAINNING_DATA }],
       },
@@ -71,7 +68,7 @@ const geminiHandler = async (request: Request) => {
     console.log("response:", response);
 
     if (!response.ok) {
-      return new Response(JSON.stringify({ error }), {
+      return new Response(JSON.stringify({ error: "API request failed" }), {
         status: 500,
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +87,7 @@ const geminiHandler = async (request: Request) => {
       },
     });
   } catch (err) {
-    console.error(error);
+    console.log(err);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
       headers: {
