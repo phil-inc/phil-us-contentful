@@ -62,6 +62,8 @@ const geminiHandler = async (request: Request) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
+    console.log("response:", response);
+
 
     if (!response.ok) {
       return new Response(JSON.stringify({ error: "API request failed" }), {
@@ -73,13 +75,14 @@ const geminiHandler = async (request: Request) => {
     }
 
     const data = await response.json();
+    console.log("Gemini API response data:", data);
+
 
     return new Response(JSON.stringify(data), {
       status: 200,
       headers: {
         "cache-control": "public, s-maxage=120",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": origin,
       },
     });
   } catch (err) {
