@@ -54,10 +54,10 @@ export default async function GenerateMainPages(
     }
   });
 
-   // Create a new static page at /dtp-chat
-  actions.createPage(createPageObject('dtp-chat', templateFactory('DTPChat'), {
+   // Create a new static page at /ask-phil-ai
+  actions.createPage(createPageObject('ask-phil-ai', templateFactory('DTPChat'), {
     id: 'dtp-chat-id',
-    title: 'Welcome to the New DTP Chat Page!',
+    title: 'Welcome to the Ask Phil Chat Page!',
   }));
 
   callback(resourceSubPages);
