@@ -5,3 +5,5 @@ export const CHANNEL_COMPARISION_API =
 export const HUBSPOT_CHANNEL_COMPARISION_URL =
   "https://api.hsforms.com/submissions/v3/integration/submit/20880193/f2d019dc-fb08-4623-81c4-a9b416224a68";
 export const CAREER_LISTING_URL = "https://phil.us/api/get-career-listing";
+
+export const CALL_GEMINI_API_URL = "/api/get-gemini-chat";
