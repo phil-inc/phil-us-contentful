@@ -1,0 +1,37 @@
+    .messageBubble {
+
+        display: flex;
+
+        &.aiMessageBubble {
+            justify-content: flex-start;
+        }
+
+        &.userMessageBubble {
+            justify-content: flex-end;
+        }
+
+        .messageBoxssage {
+            max-width: 80%;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem 1rem;
+            word-wrap: break-word;
+            text-align: left;
+
+            &.aiMessage {
+                justify-content: flex-start;
+                background-color: #F3F4F6;
+                color: #1f2937;
+                border-color: #e5e7eb;;
+
+            }
+
+            &.userMessage {
+                justify-content: flex-end;
+                background-color: #3B82F6;
+                color: white;
+                margin-left: auto;
+            }
+        }
+
+    }

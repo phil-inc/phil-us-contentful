@@ -1,0 +1,23 @@
+.suggestionsBox {
+    text-align: center;
+    margin: 2rem 1rem 0;
+    border: 2px solid #f3efef;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    color: rgba(10, 13, 51, .6);
+
+
+    .chip {
+        margin: 0.5rem;
+        padding: 0.7rem 1rem;
+        border-radius: 1rem;
+        background-color: rgba(137, 141, 163, 0.06);
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(137, 141, 163, 0.1);
+            color: black;
+        }
+    }
+
+}

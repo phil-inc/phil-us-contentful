@@ -1,11 +1,16 @@
-import React, { JSX, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Image, Loader } from "@mantine/core";
-import cx from "clsx";
 
 import { MSG_SENDER } from "constants/trainned.constant";
 import { CALL_GEMINI_API_URL } from "constants/api";
+import { INITIAL_PROMPT_QUESTION } from "constants/global.constant";
+
+import ChatBubble from "templates/dtpChat/chatBubble/chatBubble";
 
 import * as classes from "./dtpChat.module.css";
+
+import { SEO } from "layouts/SEO/SEO";
+import SuggestionBox from "templates/dtpChat/suggestionBox/suggestionBox";
 
 type Props = {
   pageContext: {
@@ -19,6 +24,17 @@ type Message = {
   text: string;
 };
 
+export type suggestionItem = {
+  title: string;
+  func: () => void;
+};
+
+export const Head: React.FC = () => (
+  <SEO title={"PHIL AI"}>
+    <meta name="description" content={"PHIL chat bot."} />
+  </SEO>
+);
+
 const DTPChat: React.FC<Props> = ({ pageContext }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -26,23 +42,35 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
       text: "Hello! Ask me anything about Direct-to-Patient strategies.",
     },
   ]);
-  const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [canShowSuggestionBox, setCanShowSuggestionBox] =
+    useState<boolean>(true);
   const chatHistoryRef = useRef<HTMLDivElement | null>(null);
+  const initialSuggestions: suggestionItem[] = [
+    {
+      title: INITIAL_PROMPT_QUESTION.PROMPT1,
+      func: () => handleSendMessage(INITIAL_PROMPT_QUESTION.PROMPT1),
+    },
+    {
+      title: INITIAL_PROMPT_QUESTION.PROMPT2,
+      func: () => handleSendMessage(INITIAL_PROMPT_QUESTION.PROMPT2),
+    },
+    {
+      title: INITIAL_PROMPT_QUESTION.PROMPT3,
+      func: () => handleSendMessage(INITIAL_PROMPT_QUESTION.PROMPT3),
+    },
+  ];
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
     const container = chatHistoryRef.current;
-    if (container) {
+    if (container && messages.length > 1) {
       container.scrollTop = container.scrollHeight;
     }
   }, [messages, isLoading]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const question = inputValue.trim();
-    if (!question) return;
-
+  const handleSendMessage = async (question: string) => {
     // Add user message
     const newMessages = [
       ...messages,
@@ -70,6 +98,7 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
       const text = candidate?.content?.parts?.[0]?.text;
 
       setIsLoading(false);
+      setCanShowSuggestionBox(false);
 
       let aiResponse;
       if (text && text.trim() === "INSUFFICIENT_INFO") {
@@ -88,6 +117,7 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
     } catch (error) {
       console.error("Error calling Gemini API:", error);
       setIsLoading(false);
+      setCanShowSuggestionBox(false);
       setMessages((prev) => [
         ...prev,
         {
@@ -98,76 +128,16 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
     }
   };
 
-  const LoadingDots = () => (
-    <div className="ai-message message-bubble p-4 rounded-2xl self-start mr-auto text-left">
-      <span className="inline-block animate-pulse">Thinking</span>
-      <span className="animate-bounce inline-block ml-1">.</span>
-      <span className="animate-bounce inline-block ml-1 delay-100">.</span>
-      <span className="animate-bounce inline-block ml-1 delay-200">.</span>
-    </div>
-  );
-
-  const ChatBubble = ({
-    index,
-    sender,
-    message,
-  }: {
-    index: number;
-    sender: string;
-    message: string;
-  }): JSX.Element => {
-    let formattedMessage = message.replace(
-      /\*\*(.*?)\*\*/g,
-      "<strong>$1</strong>",
-    );
-    formattedMessage = formattedMessage.replace(
-      /^\* (.*$)/gm,
-      '<ul class="list-disc list-inside"><li>$1</li></ul>',
-    );
-    formattedMessage = formattedMessage.replace(/^# (.*$)/gm, "<h1>$1</h1>");
-    formattedMessage = formattedMessage.replace(/^## (.*$)/gm, "<h2>$1</h2>");
-    formattedMessage = formattedMessage.replace(/^### (.*$)/gm, "<h3>$1</h3>");
-    formattedMessage = formattedMessage.replace(
-      /`([^`]+)`/g,
-      "<code>$1</code>",
-    );
-    formattedMessage = formattedMessage.replace(
-      /```([\s\S]*?)```/g,
-      "<pre><code>$1</code></pre>",
-    );
-    formattedMessage = formattedMessage.replace(
-      /^> (.*$)/gm,
-      "<blockquote>$1</blockquote>",
-    );
-
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    formattedMessage = formattedMessage.replace(
-      urlRegex,
-      '<a href="$1" target="_blank" class="text-blue-300 underline">$1</a>',
-    );
-
-    return (
-      <div
-        key={index}
-        className={cx(classes.messageBubble, {
-          [classes.userMessageBubble]: sender === MSG_SENDER.USER,
-          [classes.aiMessage.bubble]: sender !== MSG_SENDER.USER,
-        })}
-      >
-        <div
-          className={cx(classes.memessageBoxssage, {
-            [classes.userMessage]: sender === MSG_SENDER.USER,
-            [classes.aiMessage]: sender !== MSG_SENDER.USER,
-          })}
-          dangerouslySetInnerHTML={{ __html: formattedMessage }}
-        ></div>
-      </div>
-    );
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const question = inputValue.trim();
+    if (!question) return;
+    handleSendMessage(question);
   };
 
   return (
     <>
-      <section className={classes.dptChatSection}>
+      <section id={pageContext.id} className={classes.dptChatSection}>
         <div className={classes.chatContainer}>
           <Box className={classes.top}>
             <div>
@@ -180,11 +150,7 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
               </h3>
             </div>
             <div className={classes.logoContainer}>
-              <a
-                href="https://www.phil.us/demo"
-                target="_blank"
-                className="text-xl font-bold text-teal-600"
-              >
+              <a href="https://www.phil.us/demo" target="_blank">
                 <Image
                   className={classes.logo}
                   src="https://images.ctfassets.net/2h91ja0efsni/2fqDgv1rXvEaIvGmf57rFc/d37f4c6b6a1165743aea1cd10ca56e62/PhilLogoGreen.svg"
@@ -202,7 +168,9 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
                 message={message.text}
               />
             ))}
-            {isLoading && <LoadingDots />}
+            {messages.length <= 1 && canShowSuggestionBox && (
+              <SuggestionBox suggestions={initialSuggestions} />
+            )}
           </div>
 
           <div className={classes.bottomInputArea}>

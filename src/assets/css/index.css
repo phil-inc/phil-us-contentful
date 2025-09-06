@@ -185,3 +185,14 @@
   top: 0;
   z-index: 110;
 }
+
+
+#dtp-chat-id{
+  .list-disc {
+    list-style-type: disc;
+  }
+
+  .list-inside {
+      list-style-position: inside;
+  }
+}
