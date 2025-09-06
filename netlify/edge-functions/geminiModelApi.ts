@@ -1,100 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHIL AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://phil.us/favicon-32x32.png" type="image/png"/>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .chat-bubble-user {
-            background-color: #3B82F6; /* blue-500 */
-            color: white;
-        }
-        .chat-bubble-ai {
-            background-color: #F3F4F6; /* gray-100 */
-            color: #1F2937; /* gray-800 */
-        }
-        .chat-bubble {
-            max-width: 80%;
-            padding: 0.75rem 1rem;
-            border-radius: 1rem;
-            margin-bottom: 0.5rem;
-            word-wrap: break-word;
-        }
-        #chat-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        #chat-container::-webkit-scrollbar-thumb {
-            background-color: #D1D5DB; /* gray-300 */
-            border-radius: 4px;
-        }
-        #chat-container::-webkit-scrollbar-track {
-            background-color: #F3F4F6; /* gray-100 */
-        }
-        .loader {
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            display: inline-block;
-            border-top: 2px solid #fff;
-            border-right: 2px solid transparent;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-        }
-        @keyframes rotation {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800 flex items-center justify-center min-h-screen">
+import type { Config } from "https://edge.netlify.com";
 
-    <div class="w-full max-w-3xl mx-auto p-4">
-        <!-- The input view has been removed, and the QA view is now the default -->
-        <div id="qa-view">
-            <div class="bg-white h-[90vh] flex flex-col rounded-2xl shadow-lg border border-gray-200">
-                <div class="p-6 border-b border-gray-200 flex justify-between items-center">
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-900">Ask About Direct-to-Patient Strategy</h1>
-                        <p class="text-gray-500 text-sm">This AI will answer questions based on PHIL's thought leadership.</p>
-                    </div>
-                    <!-- Added a logo/link for branding -->
-                    <a href="https://www.phil.us/demo" target="_blank" class="text-xl font-bold text-teal-600">PHIL</a>
-                </div>
-                <div id="chat-container" class="flex-1 p-6 overflow-y-auto">
-                    <!-- Chat messages will be appended here -->
-                </div>
-                <div class="p-6 border-t border-gray-200">
-                    <form id="chat-form" class="flex items-center space-x-3">
-                        <input type="text" id="question-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Ask a question..." autocomplete="off">
-                        <button id="ask-btn" type="submit" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition flex items-center justify-center disabled:bg-blue-300" style="min-width: 90px;">
-                           <span>Send</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+const geminiHandler = async (request: Request) => {
+  if (request.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
+      status: 405,
+      headers: {
+        "Content-Type": "application/json",
+        Allow: "POST",
+      },
+    });
+  }
+  const GEMINI_MODEL = "gemini-2.5-flash";
+  const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
 
-    <script>
-        // References to the input view have been removed
-        const qaView = document.getElementById('qa-view');
-        const chatContainer = document.getElementById('chat-container');
-        const chatForm = document.getElementById('chat-form');
-        const questionInput = document.getElementById('question-input');
-        const askBtn = document.getElementById('ask-btn');
+  if (!GEMINI_API_KEY) {
+    const error = "Failed to initiate function. GEMINI_API_KEY is undefined.";
+    console.error(error);
+    return new Response(JSON.stringify({ error }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 
-        // The content from your documents is now embedded directly in the app
-        const providedContent = `
+  console.log("Starting to origin check");
+  let origin: string;
+  try {
+    origin =
+      request.headers.get("origin") ||
+      new URL(request.headers.get("referer") || "").origin ||
+      "";
+  } catch (err) {
+    console.error("Unable to determine request origin from headers", err);
+    origin = "";
+  }
+
+  const allowedOrigins = Deno.env.get("ALLOWED_ORIGINS")?.split(",") || [];
+  if (!allowedOrigins.includes(origin)) {
+    return new Response(JSON.stringify({ error: "Not allowed" }), {
+      status: 403,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": origin,
+      },
+    });
+  }
+
+  const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
+  try {
+    const body = await request?.json?.();
+    console.log("Request body:", body);
+
+    const SYSTEM_PROMPT = `You are a helpful AI assistant for a company called PHIL. Your task is to answer the user's question based ONLY on the provided content below. Do not use any external knowledge. If the answer cannot be found within the content, you MUST respond with "Get in touch with PHIL for more information: https://phil.us/demo".
+      Here is the content:
+      ---
+      ${PROVIDED_CONTENT}
+      ---
+      `;
+
+    const payload = {
+      contents: [{ parts: [{ text: body?.question || "" }] }],
+      systemInstruction: {
+        parts: [{ text: SYSTEM_PROMPT }],
+      },
+    };
+    const response = await fetch(GEMINI_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    console.log("response:", response);
+
+    if (!response.ok) {
+      return new Response(JSON.stringify({ error: "API request failed" }), {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
+    const data = await response.json();
+    console.log("Gemini API response data:", data);
+
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: {
+        "cache-control": "public, s-maxage=120",
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+};
+
+export default geminiHandler;
+
+export const config: Config = {
+  path: "/api/get-gemini-chat",
+  cache: "manual",
+};
+
+const PROVIDED_CONTENT = `
 ## PHIL ‘Direct-To-Patient’
 
 PhilRx Direct-To-Patient Page Content
@@ -111,7 +126,7 @@ Results:
 
 -   2x Pull-Through vs. Other Channels
     
--   \>4x Net Sales vs. Other Channels
+-   4x Net Sales vs. Other Channels
     
 -   5x Refill Adherence vs. Other Channels
     
@@ -661,112 +676,5 @@ About the Authors:
     
 -   Sari Kaganoff, CEO
     
--   Accelerate Your Direct-to-Patient:        `;
-
-        // Gemini API Configuration
-        const API_KEY = atob("QUl6YVN5Qk50TVBUQ253Wm1kRWNFWU10Um1QUXBTVFc1dVlnTnRR"); // Leave empty, will be handled by the environment
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
-
-        // On page load, initialize the chat interface
-        window.addEventListener('load', () => {
-            initializeChat();
-        });
-
-        function initializeChat() {
-            addMessageToChat('ai', 'Hello! Ask me anything about Direct-to-Patient strategies.');
-        }
-
-        // Event listener for the chat form submission
-        chatForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const question = questionInput.value.trim();
-            if (!question) return;
-
-            addMessageToChat('user', question);
-            questionInput.value = '';
-            setLoading(true);
-
-            try {
-                const answer = await getAIResponse(question);
-                addMessageToChat('ai', answer);
-            } catch (error) {
-                console.error("Error getting AI response:", error);
-                addMessageToChat('ai', "Sorry, I encountered an error. Please try again.");
-            } finally {
-                setLoading(false);
-            }
-        });
-
-        function setLoading(isLoading) {
-            const askBtnSpan = askBtn.querySelector('span');
-            askBtn.disabled = isLoading;
-            if (isLoading) {
-                askBtnSpan.innerHTML = '<div class="loader"></div>';
-            } else {
-                askBtnSpan.textContent = 'Send';
-            }
-        }
-
-        function addMessageToChat(sender, message) {
-            const messageWrapper = document.createElement('div');
-            messageWrapper.classList.add('flex', sender === 'user' ? 'justify-end' : 'justify-start');
-            
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('chat-bubble', sender === 'user' ? 'chat-bubble-user' : 'chat-bubble-ai');
-            
-            // Basic markdown for bold text and lists, and link detection
-            let formattedMessage = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            formattedMessage = formattedMessage.replace(/^\* (.*$)/gm, '<ul class="list-disc list-inside"><li>$1</li></ul>');
-            // Regex to find URLs and wrap them in anchor tags
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            formattedMessage = formattedMessage.replace(urlRegex, '<a href="$1" target="_blank" class="text-blue-300 underline">$1</a>');
-
-
-            messageElement.innerHTML = formattedMessage;
-            messageWrapper.appendChild(messageElement);
-            chatContainer.appendChild(messageWrapper);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-
-        async function getAIResponse(question) {
-            const systemPrompt = `You are a helpful AI assistant for a company called PHIL. Your task is to answer the user's question based ONLY on the provided content below. Do not use any external knowledge. If the answer cannot be found within the content, you MUST respond with "Get in touch with PHIL for more information: www.phil.us/demo".
-
-            Here is the content:
-            ---
-            ${providedContent}
-            ---
-            `;
-            
-            const payload = {
-                contents: [{
-                    parts: [{ text: `Question: ${question}` }]
-                }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                }
-            };
-            
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                throw new Error(`API request failed with status ${response.status}`);
-            }
-
-            const data = await response.json();
-            
-            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
-                 return data.candidates[0].content.parts[0].text;
-            } else {
-                 return "I'm sorry, I couldn't generate a response. There might be an issue with the content or the request.";
-            }
-        }
-    </script>
-</body>
-</html>
-
+-   Accelerate Your Direct-to-Patient:        
+`;

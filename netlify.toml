@@ -7,6 +7,11 @@
   function = "getCareerListing"
   path = "/api/get-career-listing"
 
+[[edge_functions]]
+  cache = "manual"
+  function = "geminiHandler"
+  path = "/api/get-gemini-chat"
+
 # Production context: all deploys from the Production branch
 # set in your site’s Branches settings in the UI will inherit
 # these settings. You can define environment variables
