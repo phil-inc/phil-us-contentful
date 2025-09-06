@@ -17,3 +17,9 @@ export const BUTTON_CONFIG = {
   primary: { variant: "header-primary", size: "md", uppercase: true },
   secondary: { variant: "header-secondary", size: "md", uppercase: true },
 };
+
+export const INITIAL_PROMPT_QUESTION = {
+    "PROMPT1": "What are the core components of high performing direct-to-patient models?",
+    "PROMPT2": "What criteria should we use to decide if DTP is right for our brand? ",
+    "PROMPT3": "What are some best practices for standing up a successful direct-to-patient program?",
+}

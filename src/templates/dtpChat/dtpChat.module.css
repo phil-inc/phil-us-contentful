@@ -1,12 +1,14 @@
 .dptChatSection {
     height: inherit;
     margin: auto 4%;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
 
     --dpt-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --dpt-shadow-colored: 0 10px 15px -3px var(--dpt-shadow-color);
 
-    @media (min-width: $phil-breakpoint-md) {
-        margin: auto 30%;
+    @media (min-width: $phil-breakpoint-lg) {
+        margin: auto 22%;
     }
 
     .chatContainer {
@@ -36,7 +38,7 @@
         gap: 15px;
 
         .title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin: 5px 0 8px;
             line-height: normal;
@@ -47,6 +49,7 @@
             font-weight: 400;
             margin: 5px 0;
             line-height: normal;
+            color: rgb(107 114 128);
         }
 
         .logoContainer {
@@ -58,6 +61,10 @@
             flex-direction: row;
             align-items: center;
             gap: 10px;
+
+            .title {
+                font-size: 1.4rem;
+            }
 
             .logoContainer {
                 width: 120px;
@@ -72,46 +79,6 @@
         overflow-y: auto;
         margin-bottom: 1rem;
         flex: 1;
-
-        .messageBubble {
-
-            display: flex;
-
-            &.aiMessageBubble {
-                justify-content: flex-start;
-            }
-
-            &.userMessageBubble {
-                justify-content: flex-end;
-            }
-
-
-
-            .memessageBoxssage {
-                max-width: 80%;
-                border-radius: 1rem;
-                margin-bottom: 0.5rem;
-                padding: 0.75rem 1rem;
-                word-wrap: break-word;
-
-                &.aiMessage {
-                    justify-content: flex-start;
-                    text-align: left;
-                    background-color: #e5e7eb;
-                    color: #1f2937;
-
-                }
-
-                &.userMessage {
-                    justify-content: flex-end;
-                    text-align: right;
-                    background-color: #3B82F6;
-                    color: white;
-                    margin-left: auto;
-                }
-            }
-
-        }
 
     }
 
@@ -171,24 +138,4 @@
         }
     }
 
-    .loader {
-        width: 1rem;
-        height: 1rem;
-        border-radius: 50%;
-        display: inline-block;
-        border-top: 2px solid #fff;
-        border-right: 2px solid transparent;
-        box-sizing: border-box;
-        animation: rotation 1s linear infinite;
-    }
-
-    @keyframes rotation {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
 }
