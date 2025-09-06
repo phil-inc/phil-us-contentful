@@ -52,7 +52,7 @@ const geminiHandler = async (request: Request) => {
     const body = await request?.json?.();
     console.log("Request body:", body);
 
-    const SYSTEM_PROMPT = `You are a helpful AI assistant for a company called PHIL. Your task is to answer the user's question based ONLY on the provided content below. Do not use any external knowledge. If the answer cannot be found within the content, you MUST respond with "Get in touch with PHIL for more information: www.phil.us/demo".
+    const SYSTEM_PROMPT = `You are a helpful AI assistant for a company called PHIL. Your task is to answer the user's question based ONLY on the provided content below. Do not use any external knowledge. If the answer cannot be found within the content, you MUST respond with "Get in touch with PHIL for more information: https://phil.us/demo".
       Here is the content:
       ---
       ${PROVIDED_CONTENT}

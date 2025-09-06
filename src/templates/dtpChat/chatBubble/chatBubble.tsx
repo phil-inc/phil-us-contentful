@@ -43,12 +43,6 @@ export const ChatBubble: React.FC<chatBubbleProps> = ({
     '<a href="$1" target="_blank" class="text-blue-300 underline">$1</a>',
   );
 
-  const webRegex = /www\.[^\s]+/g;
-    formattedMessage = formattedMessage.replace(
-    webRegex,
-    '<a href="$1" target="_blank" class="text-blue-300 underline">$1</a>',
-  );
-
   return (
     <div
       key={index}
