@@ -20,11 +20,16 @@
         display: flex;
         flex-direction: column;
         height: calc(100vh - 30px);
+        @supports (height: 100dvh) {
+                height: calc(100dvh - 30px);
+        }
 
         @media (min-width: $phil-breakpoint-md) {
             margin: 30px auto;
             height: calc(100vh - 70px);
-
+            @supports (height: 100dvh) {
+                height: calc(100dvh - 70px);
+            }
         }
     }
 
