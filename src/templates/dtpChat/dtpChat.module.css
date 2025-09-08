@@ -19,14 +19,16 @@
         background-color: rgb(255 255 255);
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 30px);
+        height: calc(100vh - 30px); /* fallback value */
+        height: calc(100dvh - 30px); /* Will override if dvh is supported */
         @supports (height: 100dvh) {
-                height: calc(100dvh - 30px);
+            height: calc(100dvh - 30px);
         }
 
         @media (min-width: $phil-breakpoint-md) {
             margin: 30px auto;
             height: calc(100vh - 70px);
+            height: calc(100dvh - 70px);  /* Will override if dvh is supported */
             @supports (height: 100dvh) {
                 height: calc(100dvh - 70px);
             }
