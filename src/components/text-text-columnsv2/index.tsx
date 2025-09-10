@@ -205,6 +205,22 @@ const renderColumn = (column: ReferenceBodyType) => {
 
 const renderRightColumn = (column: any, context: any) => {
 
+  const getSectionLink = (index: number) => {
+    switch (index) {
+      case 0:
+        return "/solution/#direct-to-patient";
+      case 1:
+        return "/solution/#digital-hub";
+      case 2:
+        return "/solution/#dpharmacy-network";
+      case 3:
+        return "/solution/#data-and-insights";
+      default:
+        return "";
+    }
+    
+  };
+
   if (!column) return null;
   
   return (
@@ -221,12 +237,7 @@ const renderRightColumn = (column: any, context: any) => {
                 {
                   !item.subheading ? (
                     <a 
-                    href={
-                      index === 0
-                        ? "/solution/#digital-hub"
-                        : index === 1 
-                        ? "/solution/#pharmacy-network"
-                        : "/solution/#data-and-insights"
+                    href={getSectionLink(index)
                     }
                       style={{ textDecoration: "none" }}>
                        <Text data-context={context.title} 
