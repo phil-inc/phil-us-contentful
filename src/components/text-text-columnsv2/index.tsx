@@ -25,6 +25,7 @@ import { getDescriptionFromRichtext } from "utils/getDescription";
 import{getPhilRxAccessSolution,getDataInsights} from "assets/images";
 
 import { getColorFromStylingOptions } from "utils/stylingOptions";
+import { DIRECT_TO_PATIENT, WHY_BRANDS_WIN_WITH_PHILRX } from "constants/identifiers";
 
 interface CheckIconProps {
   size: number;
@@ -143,6 +144,11 @@ const renderColumn = (column: ReferenceBodyType) => {
                       <Image className={classes.dataAndInsightsImage} src={getDataInsights} />
                     )} 
                   </div>
+                   {entry?.belowSubHeading?.belowSubHeading && (
+                    <Text fz="md" className={cx(classes.leftColumnSubHeading, classes.belowSubHeading)}>
+                      {entry.belowSubHeading.belowSubHeading}
+                    </Text>
+                  )}
                   {entry.title === "DIGITAL HUB" && (
                       <div className={classes.leftColumnLinkContainer}>
                         <Anchor
@@ -160,6 +166,19 @@ const renderColumn = (column: ReferenceBodyType) => {
                         >
                           <span className={`anchor-text ${classes.leftColumnLink}`}>
                             {"Explore HCP Experience"}
+                          </span>
+                          <IconArrowRight size={16} />
+                        </Anchor>
+                      </div>
+                      )} 
+                  {entry.title === DIRECT_TO_PATIENT && (
+                      <div className={classes.leftColumnLinkContainer}>
+                        <Anchor
+                          className={classes.greenAnchor}
+                          href={"https://phil.us/"}
+                        >
+                          <span className={`anchor-text ${classes.leftColumnLink}`}>
+                            Read the DTP Success Story
                           </span>
                           <IconArrowRight size={16} />
                         </Anchor>
@@ -259,14 +278,14 @@ const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
             <Text className={classes.containerSubHeader}>{subHeadingText}</Text>
           </Box>
         )}
-        <Grid gutter={48}>
+        <Grid gutter={48} align={heading === WHY_BRANDS_WIN_WITH_PHILRX ? "center" : "start"}>
           <Grid.Col span={{ base: 12, md: 6 }}>
             {renderColumn(leftColumn)}
           </Grid.Col>
           <Grid.Col 
           span={{ base: 12, md: 6 }} 
           data-context={context.title} 
-          className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === "Why Brands Win with PhilRxs" && classes.philRxAccessSolutionNoBorder)}>
+          className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === WHY_BRANDS_WIN_WITH_PHILRX && classes.philRxAccessSolutionNoBorder)}>
             {renderRightColumn(rightColumn, context)}
           </Grid.Col>
         </Grid>

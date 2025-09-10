@@ -9,3 +9,6 @@ export const MEDICATION_ACCESS_SIMPLIFIED = "Medication Access, Simplified"
 
 export const DEMO_FROM_SECTION = 'Demo form section';
 export const THANKS_FOR_YOUR_INTEREST_IN_PHILRX = "Thanks for your interest in PhilRx";
+
+export const DIRECT_TO_PATIENT = "Direct to Patient";
+export const WHY_BRANDS_WIN_WITH_PHILRX = "Why Brands Win with PhilRx";

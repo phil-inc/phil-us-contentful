@@ -190,6 +190,10 @@ export type IReferencedSection = {
   backgroundAssetImage?: TAsset;
   canAlsoBeUseAsAutoCarousel?: boolean;
   showBottomBorder?: boolean;
+  belowSubHeading?: {
+    id: string;
+    belowSubHeading: string;
+  };
 };
 
 export type Reference = {

@@ -135,6 +135,10 @@ export const query = graphql`
                   id
                   subHeading
                 }
+                belowSubHeading{
+                  id
+                  belowSubHeading
+                }
                 referenceType
                 references {
                   ... on ContentfulResource {

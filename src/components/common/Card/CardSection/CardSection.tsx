@@ -16,7 +16,7 @@ import PageContext from "contexts/PageContext";
 import { Metadata } from "types/section";
 import { IconArrowRight } from "@tabler/icons";
 
-import { RECENT_CLIENT_WINS } from "constants/section";
+import { DTP_INSIGHTS, RECENT_CLIENT_WINS } from "constants/section";
 import { PATH } from "constants/routes";
 import { MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
 
@@ -93,7 +93,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
               md: "auto",
             }}
           >
-            {(sectionHeader === "Recent Client News" || sectionHeader === RECENT_CLIENT_WINS) && (
+            {(sectionHeader === "Recent Client News" || sectionHeader === RECENT_CLIENT_WINS || sectionHeader === DTP_INSIGHTS) && (
               <div >
                 <Text className={classes.recentClientNewsHeader}>
                   {heading}

@@ -256,7 +256,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             style={{ display: "flex", justifyContent:"center"}}
           >
             <Text className={classes.recentClientNewsHeader} data-reference-type="Our Solution">
-              Recent Client News
+              {section?.header || ''}
             </Text>
           </div>
             )}
