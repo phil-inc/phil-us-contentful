@@ -110,6 +110,21 @@ from = "/dev/sign-up/*"
 to = "https://enroll.dev.phil.us/landing/:splat"
 status = 302
 
+# phil-me redirection
+[[redirects]]
+from = "/checkout/*"
+to = "https://my.phil.us/gpa/:splat"
+status = 302
+
+[[redirects]]
+from = "/stage/checkout/*"
+to = "https://my.stage.phil.us/gpa/:splat"
+status = 302
+
+[[redirects]]
+from = "/dev/checkout/*"
+to = "https://my.dev.phil.us/gpa/:splat"
+status = 302
 
 #
 # START - Domain level redirections
