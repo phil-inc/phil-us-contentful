@@ -169,6 +169,7 @@ export const query = graphql`
                 heading
                 subheading
                 choose
+                anchorLink
               }
               ... on ContentfulResource {
                 sys {

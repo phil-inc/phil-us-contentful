@@ -11,6 +11,7 @@ export const OUR_SOLUTIONS = "Our Solution";
 export const PAGES_TITLE = {
     DEMO : "Demo Page",
     INSIGHTS_CASE_STUDIES: "/insights/case-studies/",
+    PHILRX_DIRECT :"PhilRx Direct"
 }
 
 export const PAGE_WITHOUT_HEADER_FOOTER:string[] = [

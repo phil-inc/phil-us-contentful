@@ -4,7 +4,7 @@ import BasicSection from "./BasicSection/BasicSection";
 import ReferencedSection from "./ReferencedSection/ReferencedSection";
 import TextAndTextColumns from "components/text-text-columns";
 import TextAndTextColunnsV2 from "components/text-text-columnsv2";
-import { OUR_SOLUTIONS } from "constants/page";
+import { OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 
 type SectionProps = {
   section: ISection | IReferencedSection;
@@ -46,7 +46,7 @@ const Section: React.FC<SectionProps> = ({
       );
 
       case "Text and Text Columns":
-        if (pageTitle == OUR_SOLUTIONS) {
+        if (pageTitle == OUR_SOLUTIONS || pageTitle == PAGES_TITLE.PHILRX_DIRECT) {
           return (
             <TextAndTextColunnsV2 data={section as ISection} index={index} 
             />

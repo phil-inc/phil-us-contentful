@@ -9,6 +9,7 @@ export type ContentfulPage = {
   displayTitle: string;
   noindex: boolean;
   slug: string;
+  navbarTitle?: string;
 };
 
 export type ContenfulHeaderLogo = {

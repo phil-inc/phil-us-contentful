@@ -91,7 +91,7 @@ const renderColumn = (column: ReferenceBodyType) => {
             <Image className={classes.philRxAccessSolutionPageImage} src={getPhilRxAccessSolution} />
           )
         } else {
-          if (entry.sys.contentType.sys.id === "referencedSection") {
+          if (entry.sys?.contentType.sys.id === "referencedSection") {
             return (
               <Box className={classes.referencedSectionBox}>
                 {entry.title === "All-in-One" ? (
@@ -204,23 +204,6 @@ const renderColumn = (column: ReferenceBodyType) => {
 };
 
 const renderRightColumn = (column: any, context: any) => {
-
-  const getSectionLink = (index: number) => {
-    switch (index) {
-      case 0:
-        return "/solution/#direct-to-patient";
-      case 1:
-        return "/solution/#digital-hub";
-      case 2:
-        return "/solution/#dpharmacy-network";
-      case 3:
-        return "/solution/#data-and-insights";
-      default:
-        return "";
-    }
-    
-  };
-
   if (!column) return null;
   
   return (
@@ -237,8 +220,7 @@ const renderRightColumn = (column: any, context: any) => {
                 {
                   !item.subheading ? (
                     <a 
-                    href={getSectionLink(index)
-                    }
+                    href={item?.anchorLink ?? ''}
                       style={{ textDecoration: "none" }}>
                        <Text data-context={context.title} 
                         className={item.subheading ? classes.heading : classes.noSubHeading}>
