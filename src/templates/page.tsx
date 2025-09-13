@@ -114,6 +114,9 @@ export const query = graphql`
           sectionType
           addBorder
           header
+          body {
+            raw
+          }
           leftColumn {
             raw
             references {
@@ -134,6 +137,10 @@ export const query = graphql`
                 subHeading {
                   id
                   subHeading
+                }
+                belowSubHeading{
+                  id
+                  belowSubHeading
                 }
                 referenceType
                 references {
@@ -165,6 +172,7 @@ export const query = graphql`
                 heading
                 subheading
                 choose
+                anchorLink
               }
               ... on ContentfulResource {
                 sys {

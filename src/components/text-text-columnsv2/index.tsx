@@ -25,6 +25,7 @@ import { getDescriptionFromRichtext } from "utils/getDescription";
 import{getPhilRxAccessSolution,getDataInsights} from "assets/images";
 
 import { getColorFromStylingOptions } from "utils/stylingOptions";
+import { AN_ALL_IN_ONE_ACCESS_SOLUTION, DIRECT_TO_PATIENT, WHY_BRANDS_WIN_WITH_PHILRX } from "constants/identifiers";
 
 interface CheckIconProps {
   size: number;
@@ -59,7 +60,7 @@ type TextAndTextColumnsProps = {
   data: ITextandTextColumns;
   index?: number;
 };
-
+ 
 const renderColumn = (column: ReferenceBodyType) => {
   if (!column) return null;
 
@@ -90,7 +91,7 @@ const renderColumn = (column: ReferenceBodyType) => {
             <Image className={classes.philRxAccessSolutionPageImage} src={getPhilRxAccessSolution} />
           )
         } else {
-          if (entry.sys.contentType.sys.id === "referencedSection") {
+          if (entry.sys?.contentType.sys.id === "referencedSection") {
             return (
               <Box className={classes.referencedSectionBox}>
                 {entry.title === "All-in-One" ? (
@@ -143,6 +144,11 @@ const renderColumn = (column: ReferenceBodyType) => {
                       <Image className={classes.dataAndInsightsImage} src={getDataInsights} />
                     )} 
                   </div>
+                   {entry?.belowSubHeading?.belowSubHeading && (
+                    <Text fz="md" className={cx(classes.leftColumnSubHeading, classes.belowSubHeading)}>
+                      {entry.belowSubHeading.belowSubHeading}
+                    </Text>
+                  )}
                   {entry.title === "DIGITAL HUB" && (
                       <div className={classes.leftColumnLinkContainer}>
                         <Anchor
@@ -185,7 +191,6 @@ const renderColumn = (column: ReferenceBodyType) => {
 };
 
 const renderRightColumn = (column: any, context: any) => {
-
   if (!column) return null;
   
   return (
@@ -202,13 +207,7 @@ const renderRightColumn = (column: any, context: any) => {
                 {
                   !item.subheading ? (
                     <a 
-                    href={
-                      index === 0
-                        ? "/solution/#digital-hub"
-                        : index === 1 
-                        ? "/solution/#pharmacy-network"
-                        : "/solution/#data-and-insights"
-                    }
+                    href={item?.anchorLink ?? ''}
                       style={{ textDecoration: "none" }}>
                        <Text data-context={context.title} 
                         className={item.subheading ? classes.heading : classes.noSubHeading}>
@@ -239,6 +238,38 @@ const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
   const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header, stylingOptions } = data;
+
+  const richTextOptions: Options = {
+    renderNode: {
+      [BLOCKS.PARAGRAPH](node, children) {
+        return (
+          <Text
+            data-index={index}
+            data-context={context.title}
+            className={classes.headerBody}
+            >
+            {children}
+          </Text>
+        );
+      },
+
+      [INLINES.HYPERLINK](node, children) {
+        const { uri } = node.data as { uri: string };
+        return (
+          <Anchor
+            href={uri}
+            target="_blank"
+            className={classes.anchor}
+            underline="never"
+            referrerPolicy="no-referrer"
+          >
+            {children}
+          </Anchor>
+        );
+      },
+    },
+  };
+
   return (
     <>
       <div id={header === "Data & Insights" ? slugify("DATA AND INSIGHTS") : slugify(header)}
@@ -252,21 +283,22 @@ const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
 
       <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
       { heading !== "PhilRx Access Solution" && (
-          <Box className={classes.containerHeaderBox}>
+          <Box className={classes.containerHeaderBox} data-context={context.title}>
             <Title className={classes.containerHeader} order={2} mb={20}>
               {heading}
             </Title>
             <Text className={classes.containerSubHeader}>{subHeadingText}</Text>
+            {data?.body && <Box className={classes.containerBody}>{renderRichText(data.body, richTextOptions)}</Box>}
           </Box>
         )}
-        <Grid gutter={48}>
+        <Grid gutter={48} align={heading === WHY_BRANDS_WIN_WITH_PHILRX ? "center" : "start"}>
           <Grid.Col span={{ base: 12, md: 6 }}>
             {renderColumn(leftColumn)}
           </Grid.Col>
           <Grid.Col 
           span={{ base: 12, md: 6 }} 
           data-context={context.title} 
-          className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === "Why Brands Win with PhilRxs" && classes.philRxAccessSolutionNoBorder)}>
+          className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === WHY_BRANDS_WIN_WITH_PHILRX && classes.philRxAccessSolutionNoBorder)}>
             {renderRightColumn(rightColumn, context)}
           </Grid.Col>
         </Grid>

@@ -190,6 +190,10 @@ export type IReferencedSection = {
   backgroundAssetImage?: TAsset;
   canAlsoBeUseAsAutoCarousel?: boolean;
   showBottomBorder?: boolean;
+  belowSubHeading?: {
+    id: string;
+    belowSubHeading: string;
+  };
 };
 
 export type Reference = {
@@ -206,6 +210,7 @@ export type ITextandTextColumns = {
   id: string;
   heading: string;
   subHeadingText: string;
+  body?: BodyType;
   leftColumn: ReferenceBodyType;
   rightColumn: ReferenceBodyType;
   addBorder: boolean;

@@ -23,9 +23,6 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation(); 
-                      if(page.slug === SLUGS.SOLUTION){ 
-                        navigate(PATH.SOLUTION);
-                      }
                     }}
                     className={cx(classes.navLink, {
                     
@@ -63,7 +60,7 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
                                   to={path}
                                   className={classes.dropdownLink}
                                 >
-                                  {section.header ?? section.title}
+                                  {section?.navbarTitle ?? (section?.header ?? section.title)}
                                 </Link>
                               </li>
                             </div>
