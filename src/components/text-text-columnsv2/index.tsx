@@ -16,7 +16,6 @@ import {
 } from "@contentful/rich-text-react-renderer";
 import * as classes from "./textandtext.module.css";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import { Link } from "gatsby";
 import { IconArrowRight } from "@tabler/icons";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import cx from "clsx";
@@ -25,7 +24,9 @@ import { getDescriptionFromRichtext } from "utils/getDescription";
 import{getPhilRxAccessSolution,getDataInsights} from "assets/images";
 
 import { getColorFromStylingOptions } from "utils/stylingOptions";
-import { AN_ALL_IN_ONE_ACCESS_SOLUTION, DIRECT_TO_PATIENT, WHY_BRANDS_WIN_WITH_PHILRX } from "constants/identifiers";
+import {WHY_BRANDS_WIN_WITH_PHILRX } from "constants/identifiers";
+
+import Asset from "components/common/Asset/Asset";
 
 interface CheckIconProps {
   size: number;
@@ -59,9 +60,10 @@ const CheckIcon = ({ size, color }: CheckIconProps) => {
 type TextAndTextColumnsProps = {
   data: ITextandTextColumns;
   index?: number;
+  sectionIndex: number;
 };
  
-const renderColumn = (column: ReferenceBodyType) => {
+const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIndex: number) => {
   if (!column) return null;
 
   const referenceMap = new Map<string, any>();
@@ -72,6 +74,20 @@ const renderColumn = (column: ReferenceBodyType) => {
 
   const options: Options = {
     renderNode: {
+      [BLOCKS.HEADING_6](node, children) {
+        return (
+          <Title className={classes.leftColumnTitle}>
+            {children}
+          </Title>
+        );
+      },
+      [BLOCKS.HEADING_2](node, children) {
+        return (
+          <Title order={2} lh={"normal"}>
+            {children}
+          </Title>
+        );
+      },
       [INLINES.ENTRY_HYPERLINK]: (node) => {
         const entry = referenceMap.get(node.data.target?.sys.id);
         if (!entry) return null;
@@ -181,6 +197,14 @@ const renderColumn = (column: ReferenceBodyType) => {
 
         return null;
       },
+      [BLOCKS.EMBEDDED_ASSET](node,children) {
+        return (
+          <Box className={classes.embededAsset} data-context={contentTitle} data-index={sectionIndex}>
+            <Asset asset={node.data.target} />
+            {children}
+          </Box>
+        );
+      },
     },
   };
   return (
@@ -234,7 +258,7 @@ const renderRightColumn = (column: any, context: any) => {
   );
 };
 
-const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
+const TextAndTextColumns = ({ data, index, sectionIndex }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
   const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header, stylingOptions } = data;
@@ -293,7 +317,7 @@ const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
         )}
         <Grid gutter={48} align={heading === WHY_BRANDS_WIN_WITH_PHILRX ? "center" : "start"}>
           <Grid.Col span={{ base: 12, md: 6 }}>
-            {renderColumn(leftColumn)}
+            {renderColumn(leftColumn, context.title, sectionIndex)}
           </Grid.Col>
           <Grid.Col 
           span={{ base: 12, md: 6 }} 

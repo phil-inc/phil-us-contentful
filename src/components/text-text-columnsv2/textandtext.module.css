@@ -51,7 +51,7 @@
     }
 
     &:hover{
-      &[data-context="Our Solution"] {
+      &[data-context="Our Solution"], &[data-context="Phil Direct"]  {
         &::after{
           transform: scaleX(1); /* Animate to full underline on hover */
         }
@@ -203,6 +203,22 @@
   .philRxAccessSolutionPageImage {
     width: 64%;
     margin: auto;
+  }
+
+  .embededAsset{
+    display: flex;
+		justify-content: center;
+
+    &[data-context="Phil Direct"]{
+      margin: 20px 20px;
+
+      &[data-index='5']{
+        margin: 20px auto;
+        display: inline-flex;
+        width: 50%;
+      }
+    }
+      
   }
 
   .rightColumnContainer {

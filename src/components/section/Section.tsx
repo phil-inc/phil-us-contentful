@@ -12,6 +12,7 @@ type SectionProps = {
   isEmbedFormTemplate: boolean;
   isPreviousBackgroundPure: boolean;
   pageTitle: string;
+  sectionIndex?: number;
 };
 
 /**
@@ -25,6 +26,7 @@ const Section: React.FC<SectionProps> = ({
   isEmbedFormTemplate,
   isPreviousBackgroundPure,
   pageTitle,
+  sectionIndex = 0
 }) => {
   switch (section.sectionType) {
     case "Basic Section":
@@ -48,7 +50,7 @@ const Section: React.FC<SectionProps> = ({
       case "Text and Text Columns":
         if (pageTitle == OUR_SOLUTIONS || pageTitle == PAGES_TITLE.PHIL_DIRECT) {
           return (
-            <TextAndTextColunnsV2 data={section as ISection} index={index} 
+            <TextAndTextColunnsV2 data={section as ISection} index={index} sectionIndex={sectionIndex}
             />
           ) 
         } else {

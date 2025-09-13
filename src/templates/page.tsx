@@ -90,6 +90,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
                 array[index - 1]?.stylingOptions?.background.includes("#FFFFFF")
               )}
               pageTitle={title}
+              sectionIndex={index}
             />
           ))}
       </Layout>
@@ -151,6 +152,22 @@ export const query = graphql`
                       raw
                     }
                   }
+                }
+              }
+              ... on ContentfulAsset {
+                id
+                contentful_id
+                description
+                gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+                sys {
+                  type
                 }
               }
             }
