@@ -210,6 +210,7 @@ export type ITextandTextColumns = {
   id: string;
   heading: string;
   subHeadingText: string;
+  body?: BodyType;
   leftColumn: ReferenceBodyType;
   rightColumn: ReferenceBodyType;
   addBorder: boolean;

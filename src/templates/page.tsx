@@ -114,6 +114,9 @@ export const query = graphql`
           sectionType
           addBorder
           header
+          body {
+            raw
+          }
           leftColumn {
             raw
             references {

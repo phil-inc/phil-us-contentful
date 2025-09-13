@@ -25,7 +25,7 @@ import { getDescriptionFromRichtext } from "utils/getDescription";
 import{getPhilRxAccessSolution,getDataInsights} from "assets/images";
 
 import { getColorFromStylingOptions } from "utils/stylingOptions";
-import { DIRECT_TO_PATIENT, WHY_BRANDS_WIN_WITH_PHILRX } from "constants/identifiers";
+import { AN_ALL_IN_ONE_ACCESS_SOLUTION, DIRECT_TO_PATIENT, WHY_BRANDS_WIN_WITH_PHILRX } from "constants/identifiers";
 
 interface CheckIconProps {
   size: number;
@@ -60,7 +60,7 @@ type TextAndTextColumnsProps = {
   data: ITextandTextColumns;
   index?: number;
 };
-
+ 
 const renderColumn = (column: ReferenceBodyType) => {
   if (!column) return null;
 
@@ -171,19 +171,6 @@ const renderColumn = (column: ReferenceBodyType) => {
                         </Anchor>
                       </div>
                       )} 
-                  {entry.title === DIRECT_TO_PATIENT && (
-                      <div className={classes.leftColumnLinkContainer}>
-                        <Anchor
-                          className={classes.greenAnchor}
-                          href={"https://phil.us/"}
-                        >
-                          <span className={`anchor-text ${classes.leftColumnLink}`}>
-                            Read the DTP Success Story
-                          </span>
-                          <IconArrowRight size={16} />
-                        </Anchor>
-                      </div>
-                      )} 
                   </>
                 )}
               </Box>
@@ -251,6 +238,38 @@ const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
   const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header, stylingOptions } = data;
+
+  const richTextOptions: Options = {
+    renderNode: {
+      [BLOCKS.PARAGRAPH](node, children) {
+        return (
+          <Text
+            data-index={index}
+            data-context={context.title}
+            className={classes.headerBody}
+            >
+            {children}
+          </Text>
+        );
+      },
+
+      [INLINES.HYPERLINK](node, children) {
+        const { uri } = node.data as { uri: string };
+        return (
+          <Anchor
+            href={uri}
+            target="_blank"
+            className={classes.anchor}
+            underline="never"
+            referrerPolicy="no-referrer"
+          >
+            {children}
+          </Anchor>
+        );
+      },
+    },
+  };
+
   return (
     <>
       <div id={header === "Data & Insights" ? slugify("DATA AND INSIGHTS") : slugify(header)}
@@ -264,11 +283,12 @@ const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
 
       <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
       { heading !== "PhilRx Access Solution" && (
-          <Box className={classes.containerHeaderBox}>
+          <Box className={classes.containerHeaderBox} data-context={context.title}>
             <Title className={classes.containerHeader} order={2} mb={20}>
               {heading}
             </Title>
             <Text className={classes.containerSubHeader}>{subHeadingText}</Text>
+            {data?.body && <Box className={classes.containerBody}>{renderRichText(data.body, richTextOptions)}</Box>}
           </Box>
         )}
         <Grid gutter={48} align={heading === WHY_BRANDS_WIN_WITH_PHILRX ? "center" : "start"}>

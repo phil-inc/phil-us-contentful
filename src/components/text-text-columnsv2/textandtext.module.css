@@ -34,7 +34,7 @@
     color : #00827E;
     --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
 
-    &[data-context="Our Solution"] {
+    &[data-context="Our Solution"], &[data-context="Phil Direct"] {
       &::after{
         position: absolute;
         content: "";
@@ -66,7 +66,13 @@
     margin-top:16px;
     position: relative;
   }
-  
+
+  .containerBody{
+    .headerBody{
+      font-size: 18px;
+    }
+  }
+
   .rightColumn {
     border-top: 1px solid #e6e6e6;
     padding-top: 20px;
@@ -210,6 +216,15 @@
 
     @media (min-width: $phil-breakpoint-sm) {
       margin-bottom: 100px;
+    }
+
+    &[data-context='Phil Direct'] {
+      text-align: center;
+
+      @media (min-width: $phil-breakpoint-sm) {
+        margin-left: 50px;
+        margin-right: 50px;
+      }
     }
   }
 

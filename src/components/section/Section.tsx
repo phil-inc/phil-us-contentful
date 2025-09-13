@@ -46,7 +46,7 @@ const Section: React.FC<SectionProps> = ({
       );
 
       case "Text and Text Columns":
-        if (pageTitle == OUR_SOLUTIONS || pageTitle == PAGES_TITLE.PHILRX_DIRECT) {
+        if (pageTitle == OUR_SOLUTIONS || pageTitle == PAGES_TITLE.PHIL_DIRECT) {
           return (
             <TextAndTextColunnsV2 data={section as ISection} index={index} 
             />

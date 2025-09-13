@@ -79,7 +79,7 @@ const renderColumn = (column: ReferenceBodyType) => {
         const entry = referenceMap.get(node.data.target?.sys.id);
         if (!entry) return null;
 
-        if (entry.sys.contentType.sys.id === "referencedSection") {
+        if (entry.sys?.contentType.sys.id === "referencedSection") {
           return (
             <Box className={classes.referencedSectionBox}>
               <Title order={3}>{entry.title}</Title>
