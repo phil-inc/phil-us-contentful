@@ -112,17 +112,17 @@ status = 302
 
 # phil-me redirection
 [[redirects]]
-from = "/checkout/*"
+from = "https://philrx.com/checkout/*"
 to = "https://my.phil.us/gpa/:splat"
 status = 302
 
 [[redirects]]
-from = "/stage/checkout/*"
+from = "https://philrx.com/stage/checkout/*"
 to = "https://my.stage.phil.us/gpa/:splat"
 status = 302
 
 [[redirects]]
-from = "/dev/checkout/*"
+from = "https://philrx.com/dev/checkout/*"
 to = "https://my.dev.phil.us/gpa/:splat"
 status = 302
 
