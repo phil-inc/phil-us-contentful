@@ -216,6 +216,7 @@ export type ITextandTextColumns = {
   addBorder: boolean;
   header: string;
   stylingOptions?: StylingOptions;
+  showBottomBorder?: boolean;
 };
 
 export type ITextandTextColumnsWithFooterSection = {

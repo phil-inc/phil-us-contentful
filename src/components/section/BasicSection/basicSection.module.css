@@ -102,6 +102,10 @@
 			top: 50%;
 			transform: translateY(-50%);
 			right: calc(var(--img-outside-margin) * -1);
+			
+			&[data-context='Phil Direct'] {
+				height: 110%;
+			}
 
 			>img{
 				width: 100%;

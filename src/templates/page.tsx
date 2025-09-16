@@ -114,6 +114,7 @@ export const query = graphql`
           subHeadingText: subHeading
           sectionType
           addBorder
+          showBottomBorder
           header
           body {
             raw

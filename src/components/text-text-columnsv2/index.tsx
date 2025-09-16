@@ -261,7 +261,7 @@ const renderRightColumn = (column: any, context: any) => {
 const TextAndTextColumns = ({ data, index, sectionIndex }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
-  const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header, stylingOptions } = data;
+  const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header, stylingOptions, showBottomBorder } = data;
 
   const richTextOptions: Options = {
     renderNode: {
@@ -301,7 +301,7 @@ const TextAndTextColumns = ({ data, index, sectionIndex }: TextAndTextColumnsPro
       >
       {addBorder && (
         <Container className={classes.container} size={"xl"}>
-          <Divider size={"sm"} className={classes.divider} />
+          <Divider size={"xs"} className={classes.divider} />
         </Container>
       )}
 
@@ -316,18 +316,29 @@ const TextAndTextColumns = ({ data, index, sectionIndex }: TextAndTextColumnsPro
           </Box>
         )}
         <Grid gutter={48} align={heading === WHY_BRANDS_WIN_WITH_PHILRX ? "center" : "start"}>
-          <Grid.Col span={{ base: 12, md: 6 }}>
+          <Grid.Col
+            span={{ base: 12, md: 6 }} 
+            className={classes.leftColumn}
+            data-context={context.title} 
+            data-index={sectionIndex}
+          >
             {renderColumn(leftColumn, context.title, sectionIndex)}
           </Grid.Col>
           <Grid.Col 
           span={{ base: 12, md: 6 }} 
           data-context={context.title} 
+          data-index={sectionIndex}
           className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === WHY_BRANDS_WIN_WITH_PHILRX && classes.philRxAccessSolutionNoBorder)}>
             {renderRightColumn(rightColumn, context)}
           </Grid.Col>
         </Grid>
       </Container>
       </div>
+      {showBottomBorder && (
+        <Container className={classes.container} size={"xl"}>
+          <Divider size={"xs"} />
+        </Container>
+      )}
     </>
   );
 };

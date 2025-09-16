@@ -14,7 +14,7 @@ import AnnoucementBar from "layouts/Layout/AnnoumentBar/AnnoucementBar";
 
 import PageContext from "contexts/PageContext";
 
-import { OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
+import { HCP_PAGE, PAGES_TITLE, PATIENTS_PAGE } from "constants/page";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -34,7 +34,7 @@ export function Layout({
   canHideHeader = false,
 }: LayoutProps) {
     const context = useContext(PageContext);
-    const skipAnnoucementPageTitle = [PAGES_TITLE.DEMO, OUR_SOLUTIONS];
+    const skipAnnoucementPageTitle = [PAGES_TITLE.DEMO, PAGES_TITLE.PHIL_DIRECT, HCP_PAGE, PATIENTS_PAGE];
     const canShowAnnoucementBar = !(skipAnnoucementPageTitle.includes(context.title));
 
   return (
