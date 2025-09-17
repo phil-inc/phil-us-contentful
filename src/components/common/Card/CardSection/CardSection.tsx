@@ -33,7 +33,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
  
   const context = useContext(PageContext);
   const customHyperLink =
-    hyperlink?.linkLabel === "Read Case Study"
+    resource.hyperlink?.internalContent?.__typename === "ContentfulDownloadableResource"
       ? `${PATH.INSIGHTS_CASE_STUDIES}${hyperlink?.externalUrl}`
       : null;
 
@@ -134,8 +134,10 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
                         : `/${hyperlink?.internalContent?.slug}`
                     }
                   >
-                    <span className="anchor-text">{hyperlink?.linkLabel}</span>
-                    <IconArrowRight size={16} />
+                    <div className="anchor-text">
+                      {hyperlink?.linkLabel}
+                      <IconArrowRight size={16} />
+                    </div>
                   </Anchor>
                 )}
               </div>
