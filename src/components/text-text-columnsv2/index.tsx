@@ -122,10 +122,10 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
                     <Anchor
                       href={`/pharma/#a-dedicated-partner-for-retail-and-specialty-lite`}
                     >
-                      <span className="anchor-text">
+                      <div className="anchor-text">
                         {"See Supported Products"}
-                      </span>
-                      <IconArrowRight size={16} />
+                        <IconArrowRight size={16} />
+                      </div>
                     </Anchor>
                   </div>
                   </>
@@ -171,26 +171,54 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
                           className={classes.greenAnchor}
                           href={"https://phil.us/patients/"}
                         >
-                          <span className={`anchor-text ${classes.leftColumnLink}`}>
+                          <div className={`anchor-text ${classes.leftColumnLink}`}>
                             {"Explore Patient Experience"}
-                          </span>
-                          <IconArrowRight size={16} />
+                            <IconArrowRight size={16} />
+                          </div>
                         </Anchor>
                         <Anchor
                           className={classes.greenAnchor}
                           href={"https://phil.us/providers/#sending-a-script-to-philrx-is-easy"}
                         >
-                          <span className={`anchor-text ${classes.leftColumnLink}`}>
+                          <div className={`anchor-text ${classes.leftColumnLink}`}>
                             {"Explore HCP Experience"}
-                          </span>
-                          <IconArrowRight size={16} />
+                            <IconArrowRight size={16} />
+                          </div>
                         </Anchor>
                       </div>
-                      )} 
+                      )}
+                      {entry.title === "HUB & FULFILLMENT MODEL" && 
+                        <div className={classes.leftColumnLinkContainer}>
+                          <Anchor
+                            className={classes.greenAnchor}
+                            href={"https://phil.us/solution/"}
+                          >
+                            <div className={`anchor-text ${classes.leftColumnLink}`}>
+                              {"Explore PHIL Core "}
+                              <IconArrowRight size={16} />
+                            </div>
+                          </Anchor>
+                        </div>
+                      }
                   </>
                 )}
               </Box>
             );
+          }
+          else if(entry.sys?.contentType.sys.id === "link") {
+            return (
+              <div className={classes.leftColumnLinkContainer}>
+                <Anchor
+                  className={classes.greenAnchor}
+                  href={`/${entry?.internalContent?.slug}`}
+                  >
+                  <div className={`anchor-text ${classes.leftColumnLink}`}>
+                    {entry?.linkLabel || ""}
+                    <IconArrowRight size={16} />
+                  </div>
+                </Anchor>
+              </div>
+            )
           }
         }
        

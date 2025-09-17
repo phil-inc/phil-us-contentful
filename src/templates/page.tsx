@@ -121,6 +121,7 @@ export const query = graphql`
           }
           leftColumn {
             raw
+            __typename
             references {
               __typename
 
@@ -169,6 +170,34 @@ export const query = graphql`
                 }
                 sys {
                   type
+                }
+              }
+              ... on ContentfulLink {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  ... on ContentfulPage {
+                    id
+                    title
+                    slug
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -584,6 +613,7 @@ export const query = graphql`
                 externalUrl
                 internalContent {
                   ... on ContentfulPage {
+                    __typename
                     slug
                     id
                     title
@@ -597,6 +627,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulReferencedSection {
+                    __typename
                     id
                     page {
                       title
@@ -612,6 +643,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulSection {
+                    __typename
                     id
                     page {
                       title
@@ -627,6 +659,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulResource {
+                    __typename
                     id
                     heading
                     slug
@@ -640,6 +673,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulEventRegistration {
+                    __typename
                     id
                     heading
                     slug
@@ -653,6 +687,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulDownloadableResource {
+                    __typename
                     id
                     heading
                     slug
