@@ -1,3 +1,5 @@
+import { BodyType, StylingOptions } from "types/section";
+
 type ContentfulLink = {
     contentful_id: string;
     id: string;
@@ -26,10 +28,11 @@ type ContentfulLink = {
 export type AnnoucementReference  = {
   id: string;
   header?: string | null;
-  title: string;
   startDate?: string | null;
   canDisplay?: boolean | null;
   hyperlink?: ContentfulLink | null;
+  stylingOptions?: StylingOptions
+  body: BodyType
 }
 
 export type TopAnnouncementBarNode = {

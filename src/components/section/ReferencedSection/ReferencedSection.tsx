@@ -15,7 +15,7 @@ import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE,OUR_SOLUTIONS } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE,OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
@@ -251,12 +251,12 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           </div>
         )}
 
-        {context.title === OUR_SOLUTIONS && section.referenceType === ReferenceTypeEnum["Card Section"] && (
+        {(context.title === OUR_SOLUTIONS || context.title === PAGES_TITLE.PHIL_DIRECT) && section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
             style={{ display: "flex", justifyContent:"center"}}
           >
             <Text className={classes.recentClientNewsHeader} data-reference-type="Our Solution">
-              Recent Client News
+              {section?.header || ''}
             </Text>
           </div>
             )}

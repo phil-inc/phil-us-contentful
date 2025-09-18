@@ -90,6 +90,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
                 array[index - 1]?.stylingOptions?.background.includes("#FFFFFF")
               )}
               pageTitle={title}
+              sectionIndex={index}
             />
           ))}
       </Layout>
@@ -113,9 +114,14 @@ export const query = graphql`
           subHeadingText: subHeading
           sectionType
           addBorder
+          showBottomBorder
           header
+          body {
+            raw
+          }
           leftColumn {
             raw
+            __typename
             references {
               __typename
 
@@ -135,6 +141,10 @@ export const query = graphql`
                   id
                   subHeading
                 }
+                belowSubHeading{
+                  id
+                  belowSubHeading
+                }
                 referenceType
                 references {
                   ... on ContentfulResource {
@@ -142,6 +152,50 @@ export const query = graphql`
                     heading
                     body {
                       raw
+                    }
+                  }
+                }
+              }
+              ... on ContentfulAsset {
+                id
+                contentful_id
+                description
+                gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+                sys {
+                  type
+                }
+              }
+              ... on ContentfulLink {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  ... on ContentfulPage {
+                    id
+                    title
+                    slug
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
                     }
                   }
                 }
@@ -165,6 +219,7 @@ export const query = graphql`
                 heading
                 subheading
                 choose
+                anchorLink
               }
               ... on ContentfulResource {
                 sys {
@@ -558,6 +613,7 @@ export const query = graphql`
                 externalUrl
                 internalContent {
                   ... on ContentfulPage {
+                    __typename
                     slug
                     id
                     title
@@ -571,6 +627,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulReferencedSection {
+                    __typename
                     id
                     page {
                       title
@@ -586,6 +643,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulSection {
+                    __typename
                     id
                     page {
                       title
@@ -601,6 +659,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulResource {
+                    __typename
                     id
                     heading
                     slug
@@ -614,6 +673,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulEventRegistration {
+                    __typename
                     id
                     heading
                     slug
@@ -627,6 +687,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulDownloadableResource {
+                    __typename
                     id
                     heading
                     slug

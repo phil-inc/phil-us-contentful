@@ -245,10 +245,10 @@ export const PhilPeople: React.FC<Props> = ({ resource }) => {
                   underline="never"
                   className={classes.link}
                 >
-                  <span className="anchor-text">
+                  <div className="anchor-text">
                     {resource.hyperlink?.linkLabel}
-                  </span>
-                  <IconArrowRight size={18} />
+                    <IconArrowRight size={18} />
+                  </div>
                 </Anchor>
               )}
             </div>
