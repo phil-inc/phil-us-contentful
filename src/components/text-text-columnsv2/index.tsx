@@ -90,7 +90,7 @@ const renderColumn = (column: ReferenceBodyType) => {
             <Image className={classes.philRxAccessSolutionPageImage} src={getPhilRxAccessSolution} />
           )
         } else {
-          if (entry.sys.contentType.sys.id === "referencedSection") {
+          if (entry?.sys?.contentType?.sys.id === "referencedSection") {
             return (
               <Box className={classes.referencedSectionBox}>
                 {entry.title === "All-in-One" ? (
