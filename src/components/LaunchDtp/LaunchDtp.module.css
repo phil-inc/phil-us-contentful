@@ -58,6 +58,8 @@
         }
 
         .right {
+            display: none;
+
             .imageWrapper {
                 padding: 30px;
                 background-color: #F6F7F9;
@@ -73,6 +75,7 @@
             }
 
             @media (min-width: $phil-breakpoint-md) {
+                display: block;
                 flex: 0 0 40%;
                 position: relative;
 
