@@ -179,13 +179,17 @@
     gap:36px;
     margin-top: 40px;
 
-    @media (min-width: $phil-breakpoint-sm) {
-      flex-direction: row;
+    .greenAnchor {
+      display: inline-flex;
+      align-items: center;
     }
 
-    .greenAnchor{
-      display: inline-block;
-      align-items: center;
+    @media (min-width: $phil-breakpoint-sm) {
+      flex-direction: row;
+
+      .greenAnchor{
+        display: inline-block;
+      }
     }
   }
 

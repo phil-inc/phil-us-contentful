@@ -227,8 +227,8 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                             <List.Item>
                               <Link to={path} className={classes.link}>
                                 <Text unstyled>
-                                  {(section.header ?? section?.title).replace(
-                                    ":",
+                                  {(section?.navbarTitle ?? section.header ?? section?.title).replace(
+                                    ":", 
                                     "",
                                   )}
                                 </Text>

@@ -248,6 +248,7 @@ const query = graphql`
               id
               title
               slug
+              navbarTitle
             }
             ... on ContentfulTextAndTextColumns {
               id
