@@ -1,9 +1,6 @@
 .annoucement {
-    padding: 36px 0;
+    padding: 28px 0;
     text-align: center;
-    position: relative;
-
-
 
     .msg {
         font-family: Raleway;
@@ -14,10 +11,10 @@
         justify-content: space-between;
         align-items: center;
         flex-direction: column;
-        row-gap: 25px;
-        width: 100%;
+        row-gap: 22px;
+        position: relative;
 
-        .title {
+        .left {
             font-family: Raleway;
             font-weight: 600;
             font-size: 22px;
@@ -27,10 +24,12 @@
             font-weight: 800;
         }
 
-        .buttonWrapper {
-            .btn {
+        .right {
+            width: 100%;
 
-                padding: 23px 38px;
+            .btn {
+                padding: 23px 32px 23px 38px;
+                width: 100%;
 
                 .btnText {
                     font-family: Lato;
@@ -42,21 +41,24 @@
                     gap: 5px;
                 }
             }
+
+            @media (min-width: $phil-breakpoint-sm) {
+                width: auto;
+            }
         }
 
+        @media (min-width: $phil-breakpoint-lg) {
+            padding-right: 32px;
 
-
-        @media (min-width: $phil-breakpoint-md) {
-            flex-direction: row;
-
-            .title {
+            .left {
                 font-size: 30px;
-                margin: 0 0.5rem 0 auto;
-
             }
 
-            .buttonWrapper {
-                margin-left: auto;
+            .right {
+                position: absolute;
+                right: 32px;
+                top: 50%;
+                transform: translateY(-50%);
 
                 .btn {
                     .btnText {
