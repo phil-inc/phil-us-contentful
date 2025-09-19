@@ -54,6 +54,7 @@ export type TResource = {
     name: string;
 
     internalContent: {
+      __typename?: string;
       slug?: string;
       id: string;
       page: Array<{ title: string }>;

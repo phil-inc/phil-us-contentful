@@ -56,10 +56,10 @@ export const CommitmentCard: FC<ArticleProps> = ({ resource }) => {
           <Anchor
             href={path}
             className={classes.link}>
-            <span className="anchor-text">
+            <div className="anchor-text">
               {hyperlink?.linkLabel}
-            </span>
-            <IconArrowRight size={18} />
+              <IconArrowRight size={18} />
+            </div>
           </Anchor>
         </div>
       </Paper>

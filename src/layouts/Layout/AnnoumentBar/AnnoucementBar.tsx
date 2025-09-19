@@ -34,7 +34,9 @@ export const query = graphql`
           ... on ContentfulAnnouncement {
             id
             header
-            title
+            body {
+              raw
+            }
             canDisplay
             hyperlink {
               ... on ContentfulLink {
@@ -56,6 +58,12 @@ export const query = graphql`
                   }
                 }
               }
+            }
+            stylingOptions {
+              id
+              background
+              name
+              background
             }
           }
         }

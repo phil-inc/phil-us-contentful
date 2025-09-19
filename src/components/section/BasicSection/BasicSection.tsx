@@ -245,7 +245,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
       [BLOCKS.HEADING_3](node, children) {
         return (
-          <Title order={3} className={classes.title}>
+          <Title order={3}>
             {children}
           </Title>
         );

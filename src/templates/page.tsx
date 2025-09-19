@@ -6,11 +6,13 @@ import { Layout } from "layouts/Layout/Layout";
 
 import type { ContentfulPage } from "types/page";
 import type { ISection } from "types/section";
+import { AllContentfulModalQuery } from "types/modal";
 
 import Section from "components/section/Section";
 import Expanded from "components/common/Expanded/Expanded";
 import Head from "components/common/Head/Head";
 import PageContext from "contexts/PageContext";
+import DTPModal from "components/Modal/dtpModal/dtpModal";
 
 
 import * as classes from "./page.module.css";
@@ -18,6 +20,7 @@ import * as classes from "./page.module.css";
 type PageTemplateProps = {
   data: {
     contentfulPage: ContentfulPage;
+    allContentfulModal: AllContentfulModalQuery;
   };
 };
 
@@ -74,6 +77,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
             </Title>
           </Container>
         )}
+        <DTPModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
         {sections
           .filter((section) => !section.isHidden)
           .map((section, index, array) => (
@@ -90,6 +94,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
                 array[index - 1]?.stylingOptions?.background.includes("#FFFFFF")
               )}
               pageTitle={title}
+              sectionIndex={index}
             />
           ))}
       </Layout>
@@ -113,9 +118,14 @@ export const query = graphql`
           subHeadingText: subHeading
           sectionType
           addBorder
+          showBottomBorder
           header
+          body {
+            raw
+          }
           leftColumn {
             raw
+            __typename
             references {
               __typename
 
@@ -135,6 +145,10 @@ export const query = graphql`
                   id
                   subHeading
                 }
+                belowSubHeading{
+                  id
+                  belowSubHeading
+                }
                 referenceType
                 references {
                   ... on ContentfulResource {
@@ -142,6 +156,50 @@ export const query = graphql`
                     heading
                     body {
                       raw
+                    }
+                  }
+                }
+              }
+              ... on ContentfulAsset {
+                id
+                contentful_id
+                description
+                gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+                sys {
+                  type
+                }
+              }
+              ... on ContentfulLink {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  ... on ContentfulPage {
+                    id
+                    title
+                    slug
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
                     }
                   }
                 }
@@ -165,6 +223,7 @@ export const query = graphql`
                 heading
                 subheading
                 choose
+                anchorLink
               }
               ... on ContentfulResource {
                 sys {
@@ -558,6 +617,7 @@ export const query = graphql`
                 externalUrl
                 internalContent {
                   ... on ContentfulPage {
+                    __typename
                     slug
                     id
                     title
@@ -571,6 +631,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulReferencedSection {
+                    __typename
                     id
                     page {
                       title
@@ -586,6 +647,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulSection {
+                    __typename
                     id
                     page {
                       title
@@ -601,6 +663,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulResource {
+                    __typename
                     id
                     heading
                     slug
@@ -614,6 +677,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulEventRegistration {
+                    __typename
                     id
                     heading
                     slug
@@ -627,6 +691,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulDownloadableResource {
+                    __typename
                     id
                     heading
                     slug
@@ -1111,6 +1176,74 @@ export const query = graphql`
             }
           }
         }
+      }
+    }
+    allContentfulModal(filter: { node_locale: { eq: "en-US" } }) {
+      nodes {
+        id
+        body {
+          raw
+        }
+        logo {
+          gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+          title
+          file {
+            contentType
+            details {
+              size
+            }
+            url
+          }
+        }
+        hyperlink {
+          ... on ContentfulLink {
+            id
+            linkLabel
+            internalContent {
+              ... on ContentfulPage {
+                slug
+                id
+                title
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        image {
+          gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+          title
+          file {
+            contentType
+            details {
+              size
+            }
+            url
+          }
+        }
+        pagesToDisplay {
+          __typename
+          ... on ContentfulPage {
+            slug
+            id
+            title
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+        }
+        canDisplayModal
       }
     }
   }

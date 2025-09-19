@@ -16,7 +16,6 @@ import {
 } from "@contentful/rich-text-react-renderer";
 import * as classes from "./textandtext.module.css";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import { Link } from "gatsby";
 import { IconArrowRight } from "@tabler/icons";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import cx from "clsx";
@@ -25,6 +24,9 @@ import { getDescriptionFromRichtext } from "utils/getDescription";
 import{getPhilRxAccessSolution,getDataInsights} from "assets/images";
 
 import { getColorFromStylingOptions } from "utils/stylingOptions";
+import {WHY_BRANDS_WIN_WITH_PHILRX } from "constants/identifiers";
+
+import Asset from "components/common/Asset/Asset";
 
 interface CheckIconProps {
   size: number;
@@ -58,9 +60,10 @@ const CheckIcon = ({ size, color }: CheckIconProps) => {
 type TextAndTextColumnsProps = {
   data: ITextandTextColumns;
   index?: number;
+  sectionIndex: number;
 };
-
-const renderColumn = (column: ReferenceBodyType) => {
+ 
+const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIndex: number) => {
   if (!column) return null;
 
   const referenceMap = new Map<string, any>();
@@ -71,6 +74,20 @@ const renderColumn = (column: ReferenceBodyType) => {
 
   const options: Options = {
     renderNode: {
+      [BLOCKS.HEADING_6](node, children) {
+        return (
+          <Title className={classes.leftColumnTitle}>
+            {children}
+          </Title>
+        );
+      },
+      [BLOCKS.HEADING_2](node, children) {
+        return (
+          <Title order={2} lh={"normal"}>
+            {children}
+          </Title>
+        );
+      },
       [INLINES.ENTRY_HYPERLINK]: (node) => {
         const entry = referenceMap.get(node.data.target?.sys.id);
         if (!entry) return null;
@@ -105,10 +122,10 @@ const renderColumn = (column: ReferenceBodyType) => {
                     <Anchor
                       href={`/pharma/#a-dedicated-partner-for-retail-and-specialty-lite`}
                     >
-                      <span className="anchor-text">
+                      <div className="anchor-text">
                         {"See Supported Products"}
-                      </span>
-                      <IconArrowRight size={16} />
+                        <IconArrowRight size={16} />
+                      </div>
                     </Anchor>
                   </div>
                   </>
@@ -143,37 +160,78 @@ const renderColumn = (column: ReferenceBodyType) => {
                       <Image className={classes.dataAndInsightsImage} src={getDataInsights} />
                     )} 
                   </div>
+                   {entry?.belowSubHeading?.belowSubHeading && (
+                    <Text fz="md" className={cx(classes.leftColumnSubHeading, classes.belowSubHeading)}>
+                      {entry.belowSubHeading.belowSubHeading}
+                    </Text>
+                  )}
                   {entry.title === "DIGITAL HUB" && (
                       <div className={classes.leftColumnLinkContainer}>
                         <Anchor
                           className={classes.greenAnchor}
                           href={"https://phil.us/patients/"}
                         >
-                          <span className={`anchor-text ${classes.leftColumnLink}`}>
+                          <div className={`anchor-text ${classes.leftColumnLink}`}>
                             {"Explore Patient Experience"}
-                          </span>
-                          <IconArrowRight size={16} />
+                            <IconArrowRight size={16} />
+                          </div>
                         </Anchor>
                         <Anchor
                           className={classes.greenAnchor}
                           href={"https://phil.us/providers/#sending-a-script-to-philrx-is-easy"}
                         >
-                          <span className={`anchor-text ${classes.leftColumnLink}`}>
+                          <div className={`anchor-text ${classes.leftColumnLink}`}>
                             {"Explore HCP Experience"}
-                          </span>
-                          <IconArrowRight size={16} />
+                            <IconArrowRight size={16} />
+                          </div>
                         </Anchor>
                       </div>
-                      )} 
+                      )}
+                      {entry.title === "HUB & FULFILLMENT MODEL" && 
+                        <div className={classes.leftColumnLinkContainer}>
+                          <Anchor
+                            className={classes.greenAnchor}
+                            href={"https://phil.us/solution/"}
+                          >
+                            <div className={`anchor-text ${classes.leftColumnLink}`}>
+                              {"Explore PHIL Core "}
+                              <IconArrowRight size={16} />
+                            </div>
+                          </Anchor>
+                        </div>
+                      }
                   </>
                 )}
               </Box>
             );
           }
+          else if(entry.sys?.contentType.sys.id === "link") {
+            return (
+              <div className={classes.leftColumnLinkContainer}>
+                <Anchor
+                  className={classes.greenAnchor}
+                  href={`/${entry?.internalContent?.slug}`}
+                  >
+                  <div className={`anchor-text ${classes.leftColumnLink}`}>
+                    {entry?.linkLabel || ""}
+                    <IconArrowRight size={16} />
+                  </div>
+                </Anchor>
+              </div>
+            )
+          }
         }
        
 
         return null;
+      },
+      [BLOCKS.EMBEDDED_ASSET](node,children) {
+        return (
+          <Box className={classes.embededAsset} data-context={contentTitle} data-index={sectionIndex}>
+            <Asset asset={node.data.target} />
+            {children}
+          </Box>
+        );
       },
     },
   };
@@ -185,7 +243,6 @@ const renderColumn = (column: ReferenceBodyType) => {
 };
 
 const renderRightColumn = (column: any, context: any) => {
-
   if (!column) return null;
   
   return (
@@ -202,13 +259,7 @@ const renderRightColumn = (column: any, context: any) => {
                 {
                   !item.subheading ? (
                     <a 
-                    href={
-                      index === 0
-                        ? "/solution/#digital-hub"
-                        : index === 1 
-                        ? "/solution/#pharmacy-network"
-                        : "/solution/#data-and-insights"
-                    }
+                    href={item?.anchorLink ?? ''}
                       style={{ textDecoration: "none" }}>
                        <Text data-context={context.title} 
                         className={item.subheading ? classes.heading : classes.noSubHeading}>
@@ -235,10 +286,42 @@ const renderRightColumn = (column: any, context: any) => {
   );
 };
 
-const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
+const TextAndTextColumns = ({ data, index, sectionIndex }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
-  const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header, stylingOptions } = data;
+  const { heading, subHeadingText, leftColumn, rightColumn,addBorder, header, stylingOptions, showBottomBorder } = data;
+
+  const richTextOptions: Options = {
+    renderNode: {
+      [BLOCKS.PARAGRAPH](node, children) {
+        return (
+          <Text
+            data-index={index}
+            data-context={context.title}
+            className={classes.headerBody}
+            >
+            {children}
+          </Text>
+        );
+      },
+
+      [INLINES.HYPERLINK](node, children) {
+        const { uri } = node.data as { uri: string };
+        return (
+          <Anchor
+            href={uri}
+            target="_blank"
+            className={classes.anchor}
+            underline="never"
+            referrerPolicy="no-referrer"
+          >
+            {children}
+          </Anchor>
+        );
+      },
+    },
+  };
+
   return (
     <>
       <div id={header === "Data & Insights" ? slugify("DATA AND INSIGHTS") : slugify(header)}
@@ -246,32 +329,44 @@ const TextAndTextColumns = ({ data, index }: TextAndTextColumnsProps) => {
       >
       {addBorder && (
         <Container className={classes.container} size={"xl"}>
-          <Divider size={"sm"} className={classes.divider} />
+          <Divider size={"xs"} className={classes.divider} />
         </Container>
       )}
 
       <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
       { heading !== "PhilRx Access Solution" && (
-          <Box className={classes.containerHeaderBox}>
+          <Box className={classes.containerHeaderBox} data-context={context.title}>
             <Title className={classes.containerHeader} order={2} mb={20}>
               {heading}
             </Title>
             <Text className={classes.containerSubHeader}>{subHeadingText}</Text>
+            {data?.body && <Box className={classes.containerBody}>{renderRichText(data.body, richTextOptions)}</Box>}
           </Box>
         )}
-        <Grid gutter={48}>
-          <Grid.Col span={{ base: 12, md: 6 }}>
-            {renderColumn(leftColumn)}
+        <Grid gutter={48} align={heading === WHY_BRANDS_WIN_WITH_PHILRX ? "center" : "start"}>
+          <Grid.Col
+            span={{ base: 12, md: 6 }} 
+            className={classes.leftColumn}
+            data-context={context.title} 
+            data-index={sectionIndex}
+          >
+            {renderColumn(leftColumn, context.title, sectionIndex)}
           </Grid.Col>
           <Grid.Col 
           span={{ base: 12, md: 6 }} 
           data-context={context.title} 
-          className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === "Why Brands Win with PhilRxs" && classes.philRxAccessSolutionNoBorder)}>
+          data-index={sectionIndex}
+          className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === WHY_BRANDS_WIN_WITH_PHILRX && classes.philRxAccessSolutionNoBorder)}>
             {renderRightColumn(rightColumn, context)}
           </Grid.Col>
         </Grid>
       </Container>
       </div>
+      {showBottomBorder && (
+        <Container className={classes.container} size={"xl"}>
+          <Divider size={"xs"} />
+        </Container>
+      )}
     </>
   );
 };
