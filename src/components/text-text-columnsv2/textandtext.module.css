@@ -230,9 +230,14 @@
 
       &[data-index='5']{
         justify-content: left;
-        margin: 20px auto;
-        display: inline-flex;
+        margin: 20px auto 30px;
+        display: flex;
         width: 50%;
+        
+        @media (min-width: $phil-breakpoint-sm) {
+          display: inline-flex;
+          margin: 20px auto;
+        }
       }
     }
       
