@@ -10,7 +10,7 @@
         padding: 3px;
         border-radius: 50%;
         box-shadow: 0px 2.16px 5.07px 0px #0000001A;
-        z-index: 10;
+        z-index: 1;
 
         &:hover {
             cursor: pointer;
@@ -49,6 +49,9 @@
             }
 
             .btn {
+                &:hover{
+                    background-color: var(--phil-black);
+                }
 
                 .buttonText {
                     display: flex;

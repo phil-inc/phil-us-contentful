@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "gatsby";
 import { IconArrowRight } from "@tabler/icons";
-import { Button, Container} from "@mantine/core";
+import { Button, Container } from "@mantine/core";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types";
 import { Options } from "@contentful/rich-text-react-renderer";
@@ -18,7 +18,6 @@ type AnnoucementProps = {
 };
 
 const Annoucement: React.FC<AnnoucementProps> = ({ reference }) => {
-
   const options: Options = {
     renderMark: {
       [MARKS.BOLD]: (text) => (
@@ -42,31 +41,29 @@ const Annoucement: React.FC<AnnoucementProps> = ({ reference }) => {
       className={classes.annoucement}
     >
       <Container className={classes.msg} size="xl">
-        <>
-          <div className={classes.title}>
-            {renderRichText(reference?.body, options)}
-          </div>
-          <div className={classes.buttonWrapper}>
-            <Link
-              className={classes.internalLink}
-              to={`/${reference.hyperlink?.internalContent?.slug}`}
+        <div className={classes.left}>
+          {renderRichText(reference?.body, options)}
+        </div>
+        <div className={classes.right}>
+          <Link
+            className={classes.internalLink}
+            to={`/${reference.hyperlink?.internalContent?.slug}`}
+          >
+            <Button
+              color="white"
+              className={cx(classes.btn, {})}
+              variant={"outline"}
+              radius={"xl"}
             >
-              <Button
-                color="white"
-                className={cx(classes.btn, {})}
-                variant={"outline"}
-                radius={"xl"}
-              >
-                <div className={classes.btnText}>
-                  <span className={classes.text}>
-                    {reference.hyperlink?.linkLabel || ""}
-                  </span>
-                  <IconArrowRight size={16} />
-                </div>
-              </Button>
-            </Link>
-          </div>
-        </>
+              <div className={classes.btnText}>
+                <span className={classes.text}>
+                  {reference.hyperlink?.linkLabel || ""}
+                </span>
+                <IconArrowRight size={16} />
+              </div>
+            </Button>
+          </Link>
+        </div>
       </Container>
     </section>
   );

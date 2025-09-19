@@ -33,6 +33,7 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
   }, [width]);
 
   const modalData = contentfulModalNodes[0];
+  const canDisplayModal = Boolean(modalData?.canDisplayModal);
 
   useEffect(() => {
     // Check if modal has already been shown in this session
@@ -47,7 +48,7 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
     sessionStorage.setItem(SHOW_DTP_MODAL, "true"); // set flag so it won't reopen
   };
 
-  if (contentfulModalNodes.length === 0 || !isHomePage) {
+  if (contentfulModalNodes.length === 0 || !canDisplayModal || !isHomePage) {
     return null;
   }
 
