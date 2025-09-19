@@ -23,3 +23,5 @@ export const INITIAL_PROMPT_QUESTION = {
     "PROMPT2": "What criteria should we use to decide if DTP is right for our brand? ",
     "PROMPT3": "What are some best practices for standing up a successful direct-to-patient program?",
 }
+
+export const SHOW_DTP_MODAL = 'showDtpModal';
