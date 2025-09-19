@@ -164,11 +164,11 @@ const CDrawer: React.FC = () => {
                                   cursor: "pointer",
                                 }}
                               >
-                                {section.header ?? section.title}
+                                {section?.navbarTitle ?? section.header ?? section.title}
                               </ScrollToElement>
                             ) : (
                               <Link to={path} className={classes.link}>
-                                {section.header ?? section.title}
+                                {section?.navbarTitle ?? section.header ?? section.title}
                               </Link>
                             )}
                           </List.Item>
