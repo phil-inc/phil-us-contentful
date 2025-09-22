@@ -1,5 +1,5 @@
 import React from "react";
-import type { IReferencedSection, ISection } from "types/section";
+import type { IReferencedSection, ISection, ITextandTextColumns } from "types/section";
 import BasicSection from "./BasicSection/BasicSection";
 import ReferencedSection from "./ReferencedSection/ReferencedSection";
 import TextAndTextColumns from "components/text-text-columns";
@@ -7,7 +7,7 @@ import TextAndTextColunnsV2 from "components/text-text-columnsv2";
 import { OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 
 type SectionProps = {
-  section: ISection | IReferencedSection;
+  section: ISection | IReferencedSection | ITextandTextColumns;
   index?: number;
   isEmbedFormTemplate: boolean;
   isPreviousBackgroundPure: boolean;

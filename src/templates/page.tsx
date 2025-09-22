@@ -113,6 +113,7 @@ export const query = graphql`
       description
       sections {
         ... on ContentfulTextAndTextColumns {
+          sectionName
           id
           heading
           subHeadingText: subHeading
@@ -176,6 +177,29 @@ export const query = graphql`
                   type
                 }
               }
+              ... on ContentfulMediaItem {
+                name
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                youtubeLink
+                embedCode {
+                  raw
+                }
+                id
+              }
               ... on ContentfulLink {
                 sys {
                   contentType {
@@ -237,12 +261,56 @@ export const query = graphql`
                 id
                 heading
               }
+              ... on ContentfulMediaItem {
+                name
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                youtubeLink
+                embedCode {
+                  raw
+                }
+                id
+              }
             }
           }
           stylingOptions {
             background
             id
             name
+          }
+          link {
+            ... on ContentfulLink {
+              id
+              linkLabel
+              internalContent {
+                ... on ContentfulPage {
+                  slug
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
         ... on ContentfulSection {
