@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import {
   Anchor,
   Box,
+  Button,
   Container,
   Divider,
   Flex,
@@ -16,11 +17,14 @@ import {
 } from "@contentful/rich-text-react-renderer";
 import * as classes from "./textandtext.module.css";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import { Link } from "gatsby";
+import {  navigate } from "gatsby";
 import { IconArrowRight } from "@tabler/icons";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import cx from "clsx";
 import PageContext from "contexts/PageContext";
+import Asset from "components/common/Asset/Asset";
+import ImageContainer from "components/common/Container/ImageContainer";
+import { BUTTON_CONFIG } from "constants/global.constant";
 
 interface CheckIconProps {
   size: number;
@@ -53,7 +57,7 @@ type TextAndTextColumnsProps = {
   data: ITextandTextColumns;
 };
 
-const renderColumn = (column: ReferenceBodyType) => {
+const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
   if (!column) return null;
 
   const referenceMap = new Map<string, any>();
@@ -91,6 +95,24 @@ const renderColumn = (column: ReferenceBodyType) => {
             </Box>
           );
         }
+        else if(entry?.__typename === "ContentfulMediaItem") {
+            const youtubeVideoUrl = entry?.youtubeLink
+            if(youtubeVideoUrl){
+              const mediaItemOrAsset = entry
+
+            return (<>
+              <div className={cx({[classes.rightColumnVideoWrapper]:isFromRightColumn})}>
+                <Asset
+                  asset={mediaItemOrAsset}
+                  objectFit="contain"
+                  youtubeVideoURL={youtubeVideoUrl}
+                  />
+                </div>
+              </>)
+            }
+
+            return null;
+        }
 
         return null;
       },
@@ -105,6 +127,9 @@ const renderColumn = (column: ReferenceBodyType) => {
 };
 
 const renderRightColumn = (column: any, context: any) => {
+  if(column?.references?.length > 0 && column?.references[0]?.__typename === "ContentfulMediaItem") {
+    return renderColumn(column, true);
+  }
 
   if (!column) return null;
 
@@ -162,6 +187,17 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
             {renderRightColumn(rightColumn, context)}
           </Grid.Col>
         </Grid>
+
+        {/* TODO: if possible use button instead of link in contentful */}
+        {Boolean(data?.link?.internalContent) && (
+          <div className={classes.btnContainer}>
+            <Button variant={"philDefault"} radius={0} className={classes.btn} onClick={() => navigate(`/${data?.link?.internalContent?.slug}`)}>
+              <div className={classes.buttonText}>
+                {data?.link?.linkLabel || ""}
+              </div>
+            </Button>
+          </div>
+        )}
       </Container>
     </>
   );

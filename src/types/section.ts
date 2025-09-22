@@ -4,6 +4,7 @@ import type {
   ContentfulRichTextGatsbyReference,
 } from "gatsby-source-contentful/rich-text";
 import type { TResource } from "./resource";
+import { Hyperlink } from "types/modal";
 
 type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns | Text and Text Columns with Footer";
 
@@ -217,6 +218,8 @@ export type ITextandTextColumns = {
   header: string;
   stylingOptions?: StylingOptions;
   showBottomBorder?: boolean;
+  sectionName?: string;
+  link?: Hyperlink;
 };
 
 export type ITextandTextColumnsWithFooterSection = {

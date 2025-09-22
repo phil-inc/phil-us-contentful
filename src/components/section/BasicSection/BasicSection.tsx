@@ -145,6 +145,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                 </Link>
               </Portal>
             ) : (
+            <div className ={classes.bottomSection}>
               <Link
                 data-video={isVideo()}
                 data-oneColumn={isOneColumn}
@@ -153,6 +154,22 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               >
                 {button}
               </Link>
+
+              {/* TODO: better to handle from contentful instead of hardcoding */}
+              {index === 0 && context.title === OUR_SOLUTIONS && 
+                <div className={classes.greenAnchorContainer}>
+                  <Anchor
+                    className={classes.greenAnchor}
+                    href={"https://phil.us/solution/direct"}
+                  >
+                    <div className={`anchor-text ${classes.leftColumnLink}`}>
+                      {"Explore PHIL Direct"}
+                      <IconArrowRight size={16} />
+                    </div>
+                  </Anchor>
+                </div>
+              }
+            </div>
             );
           }
 
@@ -163,7 +180,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               target="_blank"
               referrerPolicy="no-referrer"
               data-video={isVideo()}
-            >
+              >
               {button}
             </Anchor>
           );

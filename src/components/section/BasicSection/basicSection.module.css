@@ -354,3 +354,15 @@
 	display: flex;
 	align-items: center;
 }
+
+.bottomSection{
+	display: flex;
+	margin-top: 20px;
+	column-gap: 20px;
+	align-items: center;
+
+	.internalLink{
+		margin-top: 0px;
+		width: auto;
+	}
+}
