@@ -39,6 +39,20 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
 
   const isHeaderNameMedicationAccessSection = sectionHeader === MEDICATION_ACCESS_SIMPLIFIED;
 
+  const getLink = () => {
+    const title= "Direct-to-Patient 2.0: What Pharma Leaders Needs to Know "
+    const title2="From Launch Challenge to Market Leadership: A DTP Success Story"
+        if(subheading === title){
+          return "https://www.businesswire.com/news/home/20250922836527/en/PHIL-Launches-Direct-to-Patient-2.0-Platform-to-Transform-Access-Affordability-and-Adherence-in-Pharma"
+        }
+        else if(subheading === title2){
+          return "https://phil.us/insights/case-studies/philrx-designs-transformative-telemedicine-channel-for-womens-health-brand/"
+        }
+    return customHyperLink
+                            ? customHyperLink
+                            : `/${hyperlink?.internalContent?.slug}`
+  }
+
   const options: Options = {
     renderNode: {
       [BLOCKS.PARAGRAPH](node, children) {
@@ -128,10 +142,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
                   </div>
                 ) : (
                   <Anchor
-                    href={
-                      customHyperLink
-                        ? customHyperLink
-                        : `/${hyperlink?.internalContent?.slug}`
+                    href={getLink()
                     }
                   >
                     <div className="anchor-text">
