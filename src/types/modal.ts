@@ -17,7 +17,7 @@ type InternalContentPage = {
   sys: SysContentType;
 };
 
-type Hyperlink = {
+export type Hyperlink = {
   id: string;
   linkLabel: string;
   internalContent?: InternalContentPage | null;
