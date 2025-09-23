@@ -36,8 +36,8 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({ videoId, title }) => (
     <LiteYouTubeEmbed
       id={videoId}
       rel="0"
+      params="rel=0"
       title={title}
-      params="rel=0&autoplay=1&mute=1"
       noCookie={false}
 
     />
