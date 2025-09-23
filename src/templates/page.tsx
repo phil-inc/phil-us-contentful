@@ -103,7 +103,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
 };
 
 export const query = graphql`
-  query getPages($id: String!) {
+query getPages($id: String!) {
     contentfulPage(id: { eq: $id }) {
       noindex
       slug
@@ -762,6 +762,19 @@ export const query = graphql`
                     __typename
                     id
                     heading
+                    slug
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                  ... on ContentfulCaseStudy {
+                    __typename
+                    id
                     slug
                     sys {
                       contentType {

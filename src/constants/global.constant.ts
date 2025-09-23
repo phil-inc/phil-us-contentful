@@ -19,9 +19,17 @@ export const BUTTON_CONFIG = {
 };
 
 export const INITIAL_PROMPT_QUESTION = {
-    "PROMPT1": "What are the core components of high performing direct-to-patient models?",
-    "PROMPT2": "What criteria should we use to decide if DTP is right for our brand? ",
-    "PROMPT3": "What are some best practices for standing up a successful direct-to-patient program?",
-}
+  PROMPT1:
+    "What are the core components of high performing direct-to-patient models?",
+  PROMPT2:
+    "What criteria should we use to decide if DTP is right for our brand? ",
+  PROMPT3:
+    "What are some best practices for standing up a successful direct-to-patient program?",
+};
 
-export const SHOW_DTP_MODAL = 'showDtpModal';
+export const SHOW_DTP_MODAL = "showDtpModal";
+
+export const CONTENTFUL_TYPES = {
+  CASE_STUDY: "ContentfulCaseStudy",
+  DOWNLABLE_RESOURCE: "ContentfulDownloadableResource",
+};

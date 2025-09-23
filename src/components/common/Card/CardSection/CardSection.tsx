@@ -19,6 +19,7 @@ import { IconArrowRight } from "@tabler/icons";
 import { DIVE_INTO_THE_LATEST_DTP, RECENT_CLIENT_WINS } from "constants/section";
 import { PATH } from "constants/routes";
 import { MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
+import { CONTENTFUL_TYPES } from "constants/global.constant";
 
 type ArticleProps = {
   resource: TResource;
@@ -32,25 +33,20 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
   const { heading, subheading, body, hyperlink } = resource;
  
   const context = useContext(PageContext);
-  const customHyperLink =
-    resource.hyperlink?.internalContent?.__typename === "ContentfulDownloadableResource"
-      ? `${PATH.INSIGHTS_CASE_STUDIES}${hyperlink?.externalUrl}`
-      : null;
-
   const isHeaderNameMedicationAccessSection = sectionHeader === MEDICATION_ACCESS_SIMPLIFIED;
 
+  //Check interenalContent link first else externalUrl
   const getLink = () => {
-    const title= "Direct-to-Patient 2.0: What Pharma Leaders Needs to Know "
-    const title2="From Launch Challenge to Market Leadership: A DTP Success Story"
-        if(subheading === title){
-          return resource.hyperlink?.externalUrl || "";
-        }
-        else if(subheading === title2){
-          return resource.hyperlink?.externalUrl || "";
-        }
-    return customHyperLink
-                            ? customHyperLink
-                            : `/${hyperlink?.internalContent?.slug}`
+    if(hyperlink?.internalContent?.__typename === CONTENTFUL_TYPES.DOWNLABLE_RESOURCE || hyperlink?.internalContent?.__typename === CONTENTFUL_TYPES.CASE_STUDY)
+      return hyperlink?.internalContent?.slug ? `${PATH.INSIGHTS_CASE_STUDIES}${hyperlink?.internalContent?.slug}` : "";
+
+    else if(hyperlink?.internalContent){
+      return hyperlink?.internalContent?.slug ? `${hyperlink?.internalContent?.slug}` : "";
+    }
+    else if(hyperlink?.externalUrl){
+      return hyperlink?.externalUrl ? hyperlink?.externalUrl : "";
+    }
+    return null;
   }
 
   const options: Options = {
@@ -87,11 +83,9 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
         radius={0}
         data-context={context.title}
         onClick={() => {
+          const slug = getLink()
           return isHeaderNameMedicationAccessSection
-            ? navigate(
-                customHyperLink
-                  ? customHyperLink
-                  : `/${hyperlink?.internalContent?.slug}`,
+            ? navigate(slug? slug : ""
               )
             : null;
         }}
@@ -142,8 +136,7 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
                   </div>
                 ) : (
                   <Anchor
-                    href={getLink()
-                    }
+                    href={getLink()}
                   >
                     <div className="anchor-text">
                       {hyperlink?.linkLabel}
