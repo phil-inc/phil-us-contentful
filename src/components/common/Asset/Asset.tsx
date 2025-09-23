@@ -35,11 +35,11 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({ videoId, title }) => (
   <AspectRatio ratio={16 / 9}>
     <LiteYouTubeEmbed
       id={videoId}
-      adNetwork
-      params="rel=0"
       rel="0"
       title={title}
-      noCookie
+      params="rel=0&autoplay=1&mute=1"
+      noCookie={false}
+
     />
   </AspectRatio>
 );
