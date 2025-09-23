@@ -10,9 +10,9 @@
 	transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
 
 	&:hover{
-		cursor: pointer;
 		
 		&.showHoverShadow {
+			cursor: pointer;
 			box-shadow: 0px 0px 80.7px 0px #0000003B;
 			transform: translateY(-4px);
 		}
