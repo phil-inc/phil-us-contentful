@@ -14,6 +14,8 @@ import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import { type MediaItem } from "types/section";
 import { extractAssetData } from "utils/asset";
 
+import LoadingIndicator from "components/common/LoadingIndicator/LoadingIndicator";
+
 import * as classes from "./asset.module.css";
 
 const LiteYouTubeEmbed = loadable(() => import("react-lite-youtube-embed"));
@@ -35,7 +37,6 @@ export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({ videoId, title }) => (
   <AspectRatio ratio={16 / 9}>
     <LiteYouTubeEmbed
       id={videoId}
-      rel="0"
       params="rel=0"
       title={title}
       noCookie={false}
@@ -50,13 +51,23 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       asset,
       youtubeVideoURL,
     );
+    const [isYtReady, setIsYtReady] = React.useState(false);
 
-    const renderContent = () => {
-      if (videoURL) {
+    React.useEffect(() => {
+        const timer = setTimeout(() => setIsYtReady(true), 1500); // wait 1.5s
+
+      return () => clearTimeout(timer);
+    })
+
+    const renderContent = React.useCallback(() => {
+        if (videoURL) {
         const videoId = getYouTubeId(videoURL);
-        return videoId ? (
+
+        if(!videoId) return null;
+
+        return isYtReady ? (
           <YouTubeEmbed videoId={videoId} title={title} />
-        ) : null;
+        ) : <LoadingIndicator size="xl"/>;
       }
 
       if (isVideoContent(contentType)) {
@@ -77,7 +88,8 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       }
 
       return null;
-    };
+    }, [isYtReady]);
+
 
     return (
       <Suspense fallback={<div>Loading...</div>}>{renderContent()}</Suspense>
