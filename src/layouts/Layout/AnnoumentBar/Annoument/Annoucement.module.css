@@ -1,5 +1,5 @@
 .annoucement {
-    padding: 28px 0;
+    padding: 16px 0;
     text-align: center;
 
     .msg {
@@ -11,13 +11,13 @@
         justify-content: space-between;
         align-items: center;
         flex-direction: column;
-        row-gap: 22px;
+        row-gap: 16px;
         position: relative;
 
         .left {
             font-family: Raleway;
             font-weight: 600;
-            font-size: 22px;
+            font-size: 18px;
         }
 
         .boldText {
@@ -28,17 +28,17 @@
             width: 100%;
 
             .btn {
-                padding: 23px 32px 23px 38px;
+                padding: 18px 26px 18px 32px;
                 width: 100%;
 
                 .btnText {
                     font-family: Lato;
                     font-weight: 600;
-                    font-size: 18px;
+                    font-size: 16px;
                     display: flex;
                     align-items: center;
                     justify-items: center;
-                    gap: 5px;
+                    gap: 3px;
                 }
             }
 
@@ -51,7 +51,7 @@
             padding-right: 32px;
 
             .left {
-                font-size: 30px;
+                font-size: 22px;
             }
 
             .right {
@@ -62,10 +62,15 @@
 
                 .btn {
                     .btnText {
-                        font-size: 22px;
+                        font-size: 18px;
                     }
                 }
             }
         }
     }
+
+    @media (min-width: $phil-breakpoint-lg) {
+        padding: 18px 0;
+    }
+
 }
