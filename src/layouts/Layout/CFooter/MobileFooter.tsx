@@ -137,7 +137,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => {
                           <List.Item>
                             <Link to={path} className={classes.footerLink}>
                               <Text className={classes.footerSection}>
-                                {(section.header ?? section.title).replace(
+                                {(section?.navbarTitle ?? section.header ?? section.title).replace(
                                   ":",
                                   "",
                                 )}

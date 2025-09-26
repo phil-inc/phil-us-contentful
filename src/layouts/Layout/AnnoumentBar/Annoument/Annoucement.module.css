@@ -47,7 +47,7 @@
             }
         }
 
-        @media (min-width: $phil-breakpoint-lg) {
+        @media (min-width: $phil-breakpoint-md) {
             padding-right: 32px;
 
             .left {
