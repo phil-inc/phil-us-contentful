@@ -15,6 +15,7 @@ import { type MediaItem } from "types/section";
 import { extractAssetData } from "utils/asset";
 
 import LoadingIndicator from "components/common/LoadingIndicator/LoadingIndicator";
+import HybridYouTube from "components/common/Asset/HybridYoutube";
 
 import * as classes from "./asset.module.css";
 
@@ -40,7 +41,6 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       youtubeVideoURL,
     );
     const [isYtReady, setIsYtReady] = React.useState(false);
-    const [error, setError] = React.useState(false);
 
 
     React.useEffect(() => {
@@ -49,21 +49,6 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       return () => clearTimeout(timer);
     },[]);
     
-    React.useEffect(() => {
-      const observer = new MutationObserver(() => {
-        const videoId = getYouTubeId(videoURL) ?? "";
-
-        const iframe = document.querySelector<HTMLIFrameElement>(
-          `iframe[src*="${videoId}"]`
-        );
-        if (iframe) {
-          iframe.onerror = () => setError(true);
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-
-      return () => observer.disconnect();
-    }, [videoURL]);
 
     const renderContent = React.useCallback(() => {
         if (videoURL) {
@@ -71,21 +56,8 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
 
         if(!videoId) return null;
 
-        return isYtReady 
-        ? ( error ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${videoId}?rel=0`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />) 
-            : (<LiteYouTubeEmbed
-              id={videoId}
-              title="video"
-              params="rel=0"
-              noCookie={false}
-            />)
-          ) 
+        return isYtReady ?
+        <HybridYouTube videoId={videoId} title={title || "YouTube video"} />
         : <LoadingIndicator size="xl"/>;
       }
 
