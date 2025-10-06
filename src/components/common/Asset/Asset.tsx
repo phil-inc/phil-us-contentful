@@ -14,9 +14,10 @@ import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import { type MediaItem } from "types/section";
 import { extractAssetData } from "utils/asset";
 
+import YouTubeVideo from "components/common/Asset/YoutubeVideo";
+
 import * as classes from "./asset.module.css";
 
-const LiteYouTubeEmbed = loadable(() => import("react-lite-youtube-embed"));
 const PDFViewer = loadable(() => import("../PDFViewer/PDFViewer"));
 
 type AssetProps = {
@@ -25,24 +26,6 @@ type AssetProps = {
   width?: number;
   objectFit?: GatsbyImageProps["objectFit"];
 };
-
-type YouTubeEmbedProps = {
-  videoId: string;
-  title: string;
-};
-
-export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({ videoId, title }) => (
-  <AspectRatio ratio={16 / 9}>
-    <LiteYouTubeEmbed
-      id={videoId}
-      adNetwork
-      params="rel=0"
-      rel="0"
-      title={title}
-      noCookie
-    />
-  </AspectRatio>
-);
 
 const Asset = forwardRef<HTMLDivElement, AssetProps>(
   ({ asset, youtubeVideoURL, width, objectFit }, ref) => {
@@ -54,8 +37,9 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
     const renderContent = () => {
       if (videoURL) {
         const videoId = getYouTubeId(videoURL);
-        return videoId ? (
-          <YouTubeEmbed videoId={videoId} title={title} />
+
+         return videoId ? (
+          <YouTubeVideo videoId={videoId} title={title} />
         ) : null;
       }
 
@@ -77,7 +61,8 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       }
 
       return null;
-    };
+    }
+
 
     return (
       <Suspense fallback={<div>Loading...</div>}>{renderContent()}</Suspense>
