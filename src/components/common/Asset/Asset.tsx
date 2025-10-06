@@ -14,12 +14,10 @@ import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import { type MediaItem } from "types/section";
 import { extractAssetData } from "utils/asset";
 
-import LoadingIndicator from "components/common/LoadingIndicator/LoadingIndicator";
-import HybridYouTube from "components/common/Asset/HybridYoutube";
+import YouTubeVideo from "components/common/Asset/YoutubeVideo";
 
 import * as classes from "./asset.module.css";
 
-const LiteYouTubeEmbed = loadable(() => import("react-lite-youtube-embed"));
 const PDFViewer = loadable(() => import("../PDFViewer/PDFViewer"));
 
 type AssetProps = {
@@ -29,36 +27,20 @@ type AssetProps = {
   objectFit?: GatsbyImageProps["objectFit"];
 };
 
-type YouTubeEmbedProps = {
-  videoId: string;
-  title: string;
-};
-
 const Asset = forwardRef<HTMLDivElement, AssetProps>(
   ({ asset, youtubeVideoURL, width, objectFit }, ref) => {
     const { media, url, title, contentType, videoURL } = extractAssetData(
       asset,
       youtubeVideoURL,
     );
-    const [isYtReady, setIsYtReady] = React.useState(false);
 
-
-    React.useEffect(() => {
-        const timer = setTimeout(() => setIsYtReady(true), 1500); // wait 1.5s
-
-      return () => clearTimeout(timer);
-    },[]);
-    
-
-    const renderContent = React.useCallback(() => {
-        if (videoURL) {
+    const renderContent = () => {
+      if (videoURL) {
         const videoId = getYouTubeId(videoURL);
 
-        if(!videoId) return null;
-
-        return isYtReady ?
-        <HybridYouTube videoId={videoId} title={title || "YouTube video"} />
-        : <LoadingIndicator size="xl"/>;
+         return videoId ? (
+          <YouTubeVideo videoId={videoId} title={title} />
+        ) : null;
       }
 
       if (isVideoContent(contentType)) {
@@ -79,7 +61,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       }
 
       return null;
-    }, [isYtReady]);
+    }
 
 
     return (
