@@ -33,18 +33,6 @@ type YouTubeEmbedProps = {
   title: string;
 };
 
-export const YouTubeEmbed: FC<YouTubeEmbedProps> = ({ videoId, title }) => (
-  <AspectRatio ratio={16 / 9}>
-    <LiteYouTubeEmbed
-      id={videoId}
-      params="rel=0"
-      title={title}
-      noCookie={false}
-
-    />
-  </AspectRatio>
-);
-
 const Asset = forwardRef<HTMLDivElement, AssetProps>(
   ({ asset, youtubeVideoURL, width, objectFit }, ref) => {
     const { media, url, title, contentType, videoURL } = extractAssetData(
@@ -52,12 +40,30 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       youtubeVideoURL,
     );
     const [isYtReady, setIsYtReady] = React.useState(false);
+    const [error, setError] = React.useState(false);
+
 
     React.useEffect(() => {
         const timer = setTimeout(() => setIsYtReady(true), 1500); // wait 1.5s
 
       return () => clearTimeout(timer);
-    })
+    },[]);
+    
+    React.useEffect(() => {
+      const observer = new MutationObserver(() => {
+        const videoId = getYouTubeId(videoURL) ?? "";
+
+        const iframe = document.querySelector<HTMLIFrameElement>(
+          `iframe[src*="${videoId}"]`
+        );
+        if (iframe) {
+          iframe.onerror = () => setError(true);
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      return () => observer.disconnect();
+    }, [videoURL]);
 
     const renderContent = React.useCallback(() => {
         if (videoURL) {
@@ -65,9 +71,22 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
 
         if(!videoId) return null;
 
-        return isYtReady ? (
-          <YouTubeEmbed videoId={videoId} title={title} />
-        ) : <LoadingIndicator size="xl"/>;
+        return isYtReady 
+        ? ( error ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />) 
+            : (<LiteYouTubeEmbed
+              id={videoId}
+              title="video"
+              params="rel=0"
+              noCookie={false}
+            />)
+          ) 
+        : <LoadingIndicator size="xl"/>;
       }
 
       if (isVideoContent(contentType)) {
