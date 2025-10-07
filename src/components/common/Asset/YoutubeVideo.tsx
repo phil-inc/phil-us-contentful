@@ -41,12 +41,12 @@ export default function YouTubeVideo({
     };
 
     return (
-      <div className="youtube-fallback">
-        <AspectRatio ratio={16 / 9}>
+      <div className="youtube-video">
+        <AspectRatio ratio={16 / 9} style={{ width: "100%" }}>
           <YouTube
             videoId={videoId}
             opts={opts}
-            onError={(e) => console.error("YouTube fallback error:", e.data)}
+            onError={(e) => console.error("YouTube player error:", e.data)}
           />
         </AspectRatio>
       </div>
