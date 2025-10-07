@@ -4,7 +4,7 @@ import { Layout } from "layouts/Layout/Layout";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import type { TResource } from "types/resource";
 import { SEO } from "layouts/SEO/SEO";
-import Asset, { YouTubeEmbed } from "components/common/Asset/Asset";
+import Asset from "components/common/Asset/Asset";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import type { TAsset } from "types/asset";
 import { Script, graphql } from "gatsby";
@@ -20,6 +20,8 @@ import { Options } from "@contentful/rich-text-react-renderer";
 
 import * as classes from "./blog.module.css";
 import cx from "clsx";
+
+import YouTubeVideo from "components/common/Asset/YoutubeVideo";
 
 type HelmetProps = {
   data: {
@@ -189,7 +191,7 @@ const BlogTemplate: React.FC<PageTemplateProps> = ({ data }) => {
         if (content?.url?.length) {
           const vid = getYouTubeId(content.url);
           if (vid) {
-            return <YouTubeEmbed videoId={vid} title={content.title} />;
+            return <YouTubeVideo videoId={vid} title={content.title} />;
           }
         }
 
