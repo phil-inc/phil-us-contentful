@@ -63,7 +63,6 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       return null;
     }
 
-
     return (
       <Suspense fallback={<div>Loading...</div>}>{renderContent()}</Suspense>
     );
