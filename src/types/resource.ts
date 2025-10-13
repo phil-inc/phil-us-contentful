@@ -94,6 +94,7 @@ export type TResource = {
   media: MediaItem;
   renderOptions?: RenderOptions;
   isImageObjectContain?: boolean;
+  publishDate?: string;
 };
 
 export type DownloadableAsset = {
