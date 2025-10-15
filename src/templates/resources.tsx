@@ -451,6 +451,7 @@ export const resourcesQuery = graphql`
       sectionType
       references {
         ... on ContentfulResource {
+          publishDate
           externalLink
           internalLink {
             ... on ContentfulPage {
