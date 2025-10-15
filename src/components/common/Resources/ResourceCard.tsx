@@ -19,6 +19,8 @@ import { getDescriptionFromRichtext } from "utils/getDescription";
 import * as classes from "./resourceCard.module.css";
 import { CaseStudy } from "templates/case-study";
 
+import { convertDateToCustomFormat } from "utils/date";
+
 type ResourceCardProps = {
   resource: TResource | CaseStudy;
   isFaq?: boolean;
@@ -37,11 +39,16 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
     (resource.heading as React.ReactNode) ??
     (resource.title as React.ReactNode);
 
+  const publishedDate = (resource as TResource)?.publishDate 
+    ? convertDateToCustomFormat((resource as TResource)?.publishDate || '')
+    : null;
+
   return (
     <Paper radius={0} className={classes.card}>
       <Grid justify="start" align="start">
         <Grid.Col>
           <Box className={classes.box}>
+            {publishedDate && <Text className={classes.date}>{publishedDate}</Text>}
             {isCaseStudy &&  <Link to={link} className={classes.textDecorationNone}>
               <Title order={3} className={classes.title}>
                 {heading}
