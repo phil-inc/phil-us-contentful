@@ -13,7 +13,7 @@ import { getLink } from "utils/getLink";
 import useDeviceType from "hooks/useView";
 import { PageContextType } from "contexts/PageContext";
 import TrustpilotWidget from "components/common/TrustpilotWidget/TrustPilotWidget";
-import { extractTrustpilotHtml } from "utils/utils";
+import { extractTrustpilotHtml } from "utils/extractTrustpilotHtml";
 import cx from "clsx";
 import "./RichTextRenderer.css";
 

@@ -6,8 +6,6 @@ import PageContext from "contexts/PageContext";
 import type { ContenfulHeaderLogo, ContentfulPage } from "types/page";
 import { PAGE_WITHOUT_HEADER_FOOTER, PAGES_TITLE } from "constants/page";
 
-import { getLeftRightArrayFromSections } from "utils/utils";
-
 import Head from "components/common/Head/Head";
 import LeftRightContainer from "components/LeftRigtContainer/LeftRigthContainer";
 import SectionColumn from "components/sectionInColumn/SectionInColumn";

@@ -10,7 +10,7 @@ import {
   Title,
 } from "@mantine/core";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
-import { BLOCKS, INLINES } from "@contentful/rich-text-types";
+import { BLOCKS, INLINES, Paragraph } from "@contentful/rich-text-types";
 import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image";
 import { Link } from "gatsby";
 import cx from "clsx";
@@ -21,7 +21,8 @@ import { ISection, MediaItem } from "types/section";
 import { getLink } from "utils/getLink";
 import { isVideoContent } from "utils/isVideoContent";
 import { extractAssetData } from "utils/asset";
-import { extractTrustpilotHtml, getHubspotFormDetails } from "utils/utils";
+import { getHubspotFormDetails } from "utils/utils";
+import { extractTrustpilotHtml } from "utils/extractTrustpilotHtml";
 
 import PageContext from "contexts/PageContext";
 
@@ -157,7 +158,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
         return null;
       },
 
-      [BLOCKS.PARAGRAPH](node, children) {
+      [BLOCKS.PARAGRAPH](node: Paragraph, children) {
         const trustpilotHtml = extractTrustpilotHtml(node);
 
         if (trustpilotHtml && trustpilotHtml.includes("trustpilot-widget")) {
