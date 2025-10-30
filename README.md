@@ -8,6 +8,7 @@ The project uses [Mantine](https://mantine.dev) as UI library.
 - `yarn start` – start project locally in development environment
 - `yarn build` – export project for production
 - `yarn serve` – serve production build locally
+- `yarn test` – run tests
 
 ## Development Notes
 
