@@ -10,6 +10,9 @@
   --primary-green-color: #00827E;
   --primay-white-color: #FFFFFF;
 
+  --transition-base: 0.3s ease;
+  --transition-color-bg: color 0.25s ease, background-color 0.25s ease;
+  --transition-button-bg: outline 0.25s ease-out, background-color 0.25s ease, color 0.25s ease;
 }
 
   .home{
