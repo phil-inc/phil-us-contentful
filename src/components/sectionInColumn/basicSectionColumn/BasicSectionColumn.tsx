@@ -12,7 +12,7 @@ import {
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS, INLINES, Paragraph } from "@contentful/rich-text-types";
 import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image";
-import { Link } from "gatsby";
+import { Link, navigate } from "gatsby";
 import cx from "clsx";
 
 import { TAsset } from "types/asset";
@@ -300,6 +300,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
                 formId={formId}
                 portalId={portalId}
                 classname="book-demo-hubspot-form"
+                callbackFn={() => navigate("/sharpen-your-access-and-commercialization-efforts")}
               />
             </Box>
           )}

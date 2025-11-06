@@ -26,7 +26,7 @@ import { renderRichText } from "gatsby-source-contentful/rich-text";
 import SocialShare from "components/Blog/SocialShare/SocialShare";
 import MetricBox from "components/common/Metric/Metric";
 import CaseStudyTestimonial from "components/common/Testimonials/CaseStudyTestimonial";
-import { ISection } from "types/section";
+import { BodyType, ISection } from "types/section";
 import Section from "components/section/Section";
 import { SEO } from "layouts/SEO/SEO";
 import { TAsset } from "types/asset";
@@ -39,6 +39,9 @@ import BasicSection from "components/section/BasicSection/BasicSection";
 import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetricOfCaseStudy";
 
 import { PATH } from "constants/routes";
+import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
+import { getHubspotFormDetails } from "utils/utils";
+import { DownloadPdfBox } from "components/common/DownloadPdfBox/DownloadPdfBox";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -252,6 +255,7 @@ export type CaseStudy = {
     metricValue: string;
     metricDescription?: string;
   }[];
+  embedForm?: BodyType
 };
 
 type CaseStudyProps = {
@@ -493,20 +497,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
           </Grid.Col>
           <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
             {data?.files && data.files.length > 0 && (
-              <Box p={24} className={classes.box}>
-                <Text size="14px" fw={700}>
-                  Get the PDF of this blog
-                </Text>
-                <Anchor
-                  href={data.files[0].url}
-                  target="_blank"
-                  referrerPolicy="no-referrer"
-                >
-                  <Button variant="philDefault" w={"100%"} mt={20}>
-                    Download PDF
-                  </Button>
-                </Anchor>
-              </Box>
+              <DownloadPdfBox fileUrl={data?.files?.[0].url && data.files[0].url} embeddedForm={data?.embedForm} />
             )}
           </Grid.Col>
         </Grid>
@@ -693,6 +684,9 @@ export const caseStudyQuery = graphql`
       files {
         mimeType
         url
+      }
+      embedForm {
+        raw
       }
     }
     # Fetch direct BookBannerSection with ID (DEMO_BANNER_BASIC_SECTION_ID)

@@ -1,0 +1,14 @@
+.box {
+  padding: 40px 20px;
+  background: #f7f7f7;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    padding: 52px;
+    font-size: 20px;
+  }
+
+	.divider{
+		border-top: 1px solid #5ABEA4;
+    margin-bottom: 20px;
+	}	
+}
