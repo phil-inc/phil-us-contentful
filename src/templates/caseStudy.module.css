@@ -4,7 +4,7 @@
   @media (min-width: $phil-breakpoint-md) {
     display: block;
     position: sticky;
-    top: var(--navbar-height);
+    top: calc(var(--announcment-bar-height) + var(--navbar-height));
     height: fit-content;
   }
 }
@@ -261,7 +261,7 @@
 }
 
 .scrollSection{
-  scroll-margin-top:  calc(var(--navbar-height) + 20px); /* Offset for sticky navbar */
+  scroll-margin-top:  calc(var(--navbar-height) + 20px + var(--announcment-bar-height)); /* Offset for sticky navbar */
 }
 
 .list {

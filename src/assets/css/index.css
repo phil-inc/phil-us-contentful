@@ -6,6 +6,7 @@
 
 :root {
   --navbar-height: 90px;
+  --announcment-bar-height: 70px; /* Assume the height of the announcement bar */
   --side-margin: 32px;
   --primary-green-color: #00827E;
   --primay-white-color: #FFFFFF;
