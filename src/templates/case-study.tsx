@@ -37,11 +37,9 @@ import { useMediaQuery } from "@mantine/hooks";
 import Asset from "components/common/Asset/Asset";
 import BasicSection from "components/section/BasicSection/BasicSection";
 import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetricOfCaseStudy";
+import { DownloadPdfBox } from "components/common/DownloadPdfBox/DownloadPdfBox";
 
 import { PATH } from "constants/routes";
-import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
-import { getHubspotFormDetails } from "utils/utils";
-import { DownloadPdfBox } from "components/common/DownloadPdfBox/DownloadPdfBox";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -475,7 +473,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
       <Container className="container" pos={"relative"} size="xl">
         <Grid justify="center" gutter={{ base: 0, md: 69 }} pos={"relative"}>
-          <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
+          <Grid.Col span={{ base: "auto", md: 3 }} className={cx(classes.sticky, classes.hideTocColumn)}>
             <Box className={classes.sticky}>
               <Box>
                 <SocialShare text="Share" gap={8} radius={"sm"} />
@@ -495,7 +493,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
               {data.body && renderRichText(data.body, options)}
             </Box>
           </Grid.Col>
-          <Grid.Col span={{ base: "auto", md: 3 }} className={classes.sticky}>
+          <Grid.Col span={{ base: "auto", md: 3 }} className={cx(classes.sticky, classes.downloadPdfColumn)}>
             {data?.files && data.files.length > 0 && (
               <DownloadPdfBox fileUrl={data?.files?.[0].url && data.files[0].url} embeddedForm={data?.embedForm} />
             )}

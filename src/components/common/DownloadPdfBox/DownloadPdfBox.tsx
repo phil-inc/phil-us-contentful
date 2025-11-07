@@ -4,6 +4,7 @@ import { Anchor, Box, Button, Divider, Text } from "@mantine/core";
 import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
 
 import { BodyType } from "types/section";
+import { IS_CASE_STUDY_EMAIL_SUBMITTED, TRUE_STRING } from "constants/global.constant";
 
 import { getHubspotFormDetails } from "utils/utils";
 
@@ -21,8 +22,8 @@ export function DownloadPdfBox(props: IDownloadPdfBoxProps) {
   const { formId, portalId } = getHubspotFormDetails(embeddedForm);
 
   React.useEffect(() => {
-    const already = sessionStorage.getItem("caseStudyEmailSubmitted");
-    if (already === "true") {
+    const already = sessionStorage.getItem(IS_CASE_STUDY_EMAIL_SUBMITTED);
+    if (already === TRUE_STRING) {
       setIsHubspotSubmitted(true);
     }
   }, []);
@@ -30,16 +31,14 @@ export function DownloadPdfBox(props: IDownloadPdfBoxProps) {
     if (!fileUrl) return;
     window.open(fileUrl, "_blank", "noopener,noreferrer");
     setIsHubspotSubmitted(true);
-    sessionStorage.setItem("caseStudyEmailSubmitted", "true");
+    sessionStorage.setItem(IS_CASE_STUDY_EMAIL_SUBMITTED, TRUE_STRING);
   };
 
   return (
-    <div>
-      <Box p={24} className={classes.box}>
-        <Text size="14px" fw={700} mb={20}>
+      <Box p={24} className={classes.downloadPdfbox}>
+        <Text size="14px" fw={700} className={classes.title}>
           Get the PDF of this blog
         </Text>
-        <Divider className={classes.divider} mt={8} />
 
         {isHubspotSubmitted ? (
           <Anchor href={fileUrl} target="_blank" referrerPolicy="no-referrer">
@@ -48,7 +47,8 @@ export function DownloadPdfBox(props: IDownloadPdfBoxProps) {
             </Button>
           </Anchor>
         ) : (
-          <div>
+          <div className={classes.formContainer}>
+            <Divider className={classes.divider}/>
             <Text size="14px" fw={700} mb={18}>
               To Access the full case study
             </Text>
@@ -57,11 +57,11 @@ export function DownloadPdfBox(props: IDownloadPdfBoxProps) {
                 formId={formId}
                 portalId={portalId}
                 callbackFn={handleDownload}
+                classname="case-study-form"
               />
             )}
           </div>
         )}
       </Box>
-    </div>
   );
 }

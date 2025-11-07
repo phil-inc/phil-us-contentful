@@ -1,4 +1,4 @@
-.box {
+.downloadPdfbox {
   padding: 40px 20px;
   background: #f7f7f7;
 
@@ -7,8 +7,12 @@
     font-size: 20px;
   }
 
-	.divider{
-		border-top: 1px solid #5ABEA4;
-    margin-bottom: 20px;
-	}	
+  .formContainer {
+    margin-top: 20px;
+
+    .divider {
+      border-top: 1px solid #5ABEA4;
+      margin-bottom: 20px;
+    }
+  }
 }
