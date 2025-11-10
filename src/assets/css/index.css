@@ -6,6 +6,7 @@
 
 :root {
   --navbar-height: 90px;
+  --announcment-bar-height: 70px; /* Assume the height of the announcement bar */
   --side-margin: 32px;
   --primary-green-color: #00827E;
   --primay-white-color: #FFFFFF;
@@ -197,5 +198,16 @@
 
   .list-inside {
       list-style-position: inside;
+  }
+}
+
+.case-study-form{
+  .hs-error-msgs{
+    line-height: 16px;
+    font-size: 12px;
+  }
+
+  .hs-submit{
+    margin-top: 20px;
   }
 }

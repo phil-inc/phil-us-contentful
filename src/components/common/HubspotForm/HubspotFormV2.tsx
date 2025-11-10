@@ -8,6 +8,8 @@ type HubSpotFormProps = {
   portalId: string;
   formId: string;
   classname?: string;
+  callbackFn?: () => void;
+  formMinHeight?: string;
 };
 
 // Inner component that only renders when DOM is ready
@@ -16,6 +18,7 @@ const HubSpotFormInner: React.FC<HubSpotFormProps & { targetId: string }> = ({
   formId,
   classname = "",
   targetId,
+  callbackFn,
 }) => {
   const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 
@@ -25,7 +28,7 @@ const HubSpotFormInner: React.FC<HubSpotFormProps & { targetId: string }> = ({
     formId,
     cssClass: classname,
     onFormSubmitted() {
-      navigate("/sharpen-your-access-and-commercialization-efforts");
+      callbackFn ? callbackFn() : null;
     },
   });
 
@@ -80,9 +83,12 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
   portalId,
   formId,
   classname = "",
+  callbackFn,
+  formMinHeight = "1px",
 }) => {
   const uuid = useId();
-  const [shouldRenderForm, setShouldRenderForm] = React.useState<boolean>(false);
+  const [shouldRenderForm, setShouldRenderForm] =
+    React.useState<boolean>(false);
   const elementRef = React.useRef<HTMLDivElement>(null);
 
   React.useLayoutEffect(() => {
@@ -93,11 +99,11 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
   }, []);
 
   return (
-    <Box 
+    <Box
       ref={elementRef}
-      className={classname} 
+      className={classname}
       id={uuid}
-      style={{ minHeight: '200px' }}
+      style={{ minHeight: formMinHeight }}
     >
       {shouldRenderForm ? (
         <HubSpotFormInner
@@ -105,6 +111,7 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
           formId={formId}
           classname={classname}
           targetId={uuid}
+          callbackFn={callbackFn}
         />
       ) : (
         <Center>
