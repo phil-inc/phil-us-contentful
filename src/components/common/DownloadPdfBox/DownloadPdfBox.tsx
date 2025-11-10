@@ -37,7 +37,7 @@ export function DownloadPdfBox(props: IDownloadPdfBoxProps) {
   return (
       <Box p={24} className={classes.downloadPdfbox}>
         <Text size="14px" fw={700} className={classes.title}>
-          Get the PDF of this blog
+          Download the case study
         </Text>
 
         {isHubspotSubmitted ? (
@@ -49,8 +49,8 @@ export function DownloadPdfBox(props: IDownloadPdfBoxProps) {
         ) : (
           <div className={classes.formContainer}>
             <Divider className={classes.divider}/>
-            <Text size="14px" fw={700} mb={18}>
-              To Access the full case study
+            <Text className={classes.formTitle}>
+              To access the PDF version, please enter your business email
             </Text>
             {Boolean(embeddedForm) && (
               <HubspotFormV2

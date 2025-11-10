@@ -200,3 +200,14 @@
       list-style-position: inside;
   }
 }
+
+.case-study-form{
+  .hs-error-msgs{
+    line-height: 16px;
+    font-size: 12px;
+  }
+
+  .hs-submit{
+    margin-top: 20px;
+  }
+}

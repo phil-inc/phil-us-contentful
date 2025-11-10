@@ -9,6 +9,7 @@ type HubSpotFormProps = {
   formId: string;
   classname?: string;
   callbackFn?: () => void;
+  formMinHeight?: string;
 };
 
 // Inner component that only renders when DOM is ready
@@ -83,6 +84,7 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
   formId,
   classname = "",
   callbackFn,
+  formMinHeight = "1px",
 }) => {
   const uuid = useId();
   const [shouldRenderForm, setShouldRenderForm] =
@@ -101,7 +103,7 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
       ref={elementRef}
       className={classname}
       id={uuid}
-      style={{ minHeight: "200px" }}
+      style={{ minHeight: formMinHeight }}
     >
       {shouldRenderForm ? (
         <HubSpotFormInner

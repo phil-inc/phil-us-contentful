@@ -301,6 +301,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
                 portalId={portalId}
                 classname="book-demo-hubspot-form"
                 callbackFn={() => navigate("/sharpen-your-access-and-commercialization-efforts")}
+                formMinHeight="200px"
               />
             </Box>
           )}
