@@ -27,7 +27,10 @@ export const INITIAL_PROMPT_QUESTION = {
     "What are some best practices for standing up a successful direct-to-patient program?",
 };
 
+//sessionStorage keys
+export const TRUE_STRING = "true";
 export const SHOW_DTP_MODAL = "showDtpModal";
+export const IS_CASE_STUDY_EMAIL_SUBMITTED = "caseStudyEmailSubmitted";
 
 export const CONTENTFUL_TYPES = {
   CASE_STUDY: "ContentfulCaseStudy",
