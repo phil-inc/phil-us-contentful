@@ -191,7 +191,7 @@
 }
 
 
-#dtp-chat-id{
+#dtp-chat-id {
   .list-disc {
     list-style-type: disc;
   }
@@ -201,13 +201,21 @@
   }
 }
 
-.case-study-form{
-  .hs-error-msgs{
+.case-study-form {
+  .hs-input {
+    border-radius: 4px;
+  }
+
+  .hs-error-msgs {
     line-height: 16px;
     font-size: 12px;
   }
 
-  .hs-submit{
+  .hs-submit {
     margin-top: 20px;
+    
+    .hs-button {
+      width: 100%;
+    }
   }
 }
