@@ -12,7 +12,19 @@ Given a raw rich text field, this function extracts the first three sentences as
 export const getDescriptionFromRichtext = (
   rawRichTextField: string,
 ): string => {
-  const document: Document = JSON.parse(rawRichTextField) as Document;
+  if (rawRichTextField === '') {
+    return '';
+  }
+  let document: Document | null = null;
+  try {
+    document = JSON.parse(rawRichTextField) as Document;
+    if (!document || typeof document !== 'object') {
+      throw new Error('Invalid document structure');
+    }
+  } catch (error) {
+    console.error('Failed to parse rawRichTextField:', error);
+    return ''; // Return a fallback message in case of an error
+  }
 
   const plainText = documentToPlainTextString(document);
   const re = /[.!?]\s/g;
