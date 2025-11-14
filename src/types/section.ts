@@ -236,3 +236,20 @@ export type ITextandTextColumnsWithFooterSection = {
 };
 
 export type ISectionsArray = Array <ISection | IReferencedSection >;
+
+export type IContentfulList = {
+  __typename: string;
+  sys: {
+    contentType: {
+      sys: {
+        type: string;
+        id: string;
+      };
+    };
+  };
+  id: string;
+  heading: string;
+  subheading: string | null;
+  choose: boolean;
+  anchorLink: string;
+}

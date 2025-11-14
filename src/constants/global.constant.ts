@@ -35,6 +35,8 @@ export const IS_CASE_STUDY_EMAIL_SUBMITTED = "caseStudyEmailSubmitted";
 export const CONTENTFUL_TYPES = {
   CASE_STUDY: "ContentfulCaseStudy",
   DOWNLABLE_RESOURCE: "ContentfulDownloadableResource",
+  LIST : "ContentfulList",
+  LINK: "ContentfulLink",
 };
 
 export const TIME_ZONE_USA = "America/Los_Angeles";

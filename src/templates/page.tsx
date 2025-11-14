@@ -986,6 +986,50 @@ query getPages($id: String!) {
                       }
                     }
                   }
+                  ... on ContentfulList {
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                    id
+                    heading
+                    subheading
+                    choose
+                    anchorLink
+                  }
+                  ... on ContentfulLink {
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                    id
+                    linkLabel
+                    name
+                    externalUrl
+                    internalContent {
+                      ... on ContentfulPage {
+                        id
+                        title
+                        slug
+                        sys {
+                          contentType {
+                            sys {
+                              type
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
               author {
