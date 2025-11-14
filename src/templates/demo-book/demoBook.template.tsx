@@ -4,13 +4,11 @@ import { graphql } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import type { ContenfulHeaderLogo, ContentfulPage } from "types/page";
-import { PAGE_WITHOUT_HEADER_FOOTER, PAGES_TITLE } from "constants/page";
+import { PAGE_WITHOUT_HEADER_FOOTER } from "constants/page";
 
 import Head from "components/common/Head/Head";
-import LeftRightContainer from "components/LeftRigtContainer/LeftRigthContainer";
 import SectionColumn from "components/sectionInColumn/SectionInColumn";
 
-import { useIsLaptop } from "hooks/useIsLaptop";
 
 type DemoBookTemplateProps = {
   data: {
@@ -31,8 +29,6 @@ const DemoBookTemplate: React.FC<DemoBookTemplateProps> = ({
 
   const canHideHeader = PAGE_WITHOUT_HEADER_FOOTER.includes(title);
 
-  const isDemoPage = contentfulPage.title === PAGES_TITLE.DEMO;
-  const isLaptopScreen = useIsLaptop();
 
 
   useEffect(() => {
