@@ -18,7 +18,8 @@
     "format": "prettier . --write",
     "prettify": "prettier --write \"src/**/*.{ts,tsx}\"",
     "prepare": "husky install",
-    "preload-fonts": "gatsby-preload-fonts"
+    "preload-fonts": "gatsby-preload-fonts",
+    "postinstall": "npm rebuild sharp"
   },
   "dependencies": {
     "@aaronhayes/react-use-hubspot-form": "^2.1.1",
