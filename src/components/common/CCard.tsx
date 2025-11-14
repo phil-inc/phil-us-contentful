@@ -311,6 +311,7 @@ export const CCard: FC<ArticleProps> = ({
                       data-context={context.title}
                       color="#D9D9D9"
                       size="lg"
+                      radius="md"
                     >
                       {item.heading}
                     </Badge>
