@@ -1,6 +1,7 @@
 import { BodyType, StylingOptions } from "types/section";
 
-type ContentfulLink = {
+export type IContentfulLink = {
+    __typename?: "ContentfulLink";
     contentful_id: string;
     id: string;
     externalUrl?: string;
@@ -30,7 +31,7 @@ export type AnnoucementReference  = {
   header?: string | null;
   startDate?: string | null;
   canDisplay?: boolean | null;
-  hyperlink?: ContentfulLink | null;
+  hyperlink?: IContentfulLink | null;
   stylingOptions?: StylingOptions
   body: BodyType
 }

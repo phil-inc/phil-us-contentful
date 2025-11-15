@@ -1,0 +1,16 @@
+.accessSection {
+    position: relative;
+    padding: 32px;
+
+    .logo {
+        margin-bottom: 30px;
+    }
+
+    .h3 {
+        font-family: Raleway;
+        font-weight: 700;
+        font-size: 24px;
+        margin-bottom: 20px;
+
+    }
+}
