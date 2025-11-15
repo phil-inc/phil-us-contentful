@@ -44,6 +44,7 @@ const Section: React.FC<SectionProps> = ({
           isEmbedFormTemplate={isEmbedFormTemplate}
           isPreviousBackgroundPure={isPreviousBackgroundPure}
           addBorder
+          index={index}
         />
       );
 

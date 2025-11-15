@@ -60,6 +60,10 @@
 .stack {
 	justify-content: flex-start;
 
+	.badge{
+		color: #0A0A0A;
+	}
+
 	> * {
 		&:not(:first-child) {
 			margin-top: 20px;

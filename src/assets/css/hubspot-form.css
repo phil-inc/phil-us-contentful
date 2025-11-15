@@ -181,3 +181,15 @@ input[type='submit']:hover {
 		margin-top: 11px;
 	}
 }
+
+.DTP-resource-form {
+	 input[type="submit"] {
+		background-color: #09AAA5;
+		color: white;
+		width: 100%;
+
+		&:hover {
+			background-color: #000;
+		}
+	}
+}

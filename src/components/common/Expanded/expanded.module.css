@@ -19,7 +19,7 @@
 	&[data-no-padding-bottom='true'] {
 		padding-bottom: 0px;
 	}
-  
+
 	.rightBackgroundIcon {
 	  display: none;
 	  
@@ -39,6 +39,14 @@
 		object-fit: cover;
 		object-position: 0% 50%;
 	  }
+	}
+
+	&[data-context='DtpResources'] {
+		.rightBackgroundIcon {
+			@media (min-width: $phil-breakpoint-md) {
+				height: auto;
+			}
+		}
 	}
 
 	@media (min-width: $phil-breakpoint-sm) {

@@ -32,6 +32,24 @@
 		align-items: start;
 	}
 
+	&[data-index='0']&[data-context='DtpResources'] {
+		.heading,.subHeading{
+			color: var(--primay-white-color);
+			text-align: center;
+		}
+
+		.subHeading{
+			@media (min-width: $phil-breakpoint-md) {
+				font-size: 24px;
+			}
+		}
+
+		@media (min-width: $phil-breakpoint-md) {
+			margin-left: 5%;
+			margin-right: 5%;
+		}
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		align-items: center;
 		gap: 40px;
