@@ -77,7 +77,9 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
             </Title>
           </Container>
         )}
-        <DTPModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
+        <div style={{ position: 'fixed', zIndex: 9999 }}>
+          <DTPModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
+        </div>
         {sections
           .filter((section) => !section.isHidden)
           .map((section, index, array) => (
