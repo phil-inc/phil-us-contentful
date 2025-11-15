@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { graphql } from "gatsby";
-import { Box, Container, Grid, Title } from "@mantine/core";
+import { Box, Center, Container, Grid, Loader, Title } from "@mantine/core";
 
 import { Layout } from "layouts/Layout/Layout";
 
@@ -16,6 +16,9 @@ import DTPModal from "components/Modal/dtpModal/dtpModal";
 
 
 import * as classes from "./page.module.css";
+
+import { DTP_RESOURCES_EMAIL_SUBMITTED } from "constants/global.constant";
+import { PAGES_TITLE } from "constants/page";
 
 type PageTemplateProps = {
   data: {
@@ -36,6 +39,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
     Boolean((section as ISection)?.embedForm?.raw),
   );
 
+  // Loader state for DTP Resources page
+  const [canShowLoader, setCanShowLoader] = React.useState(true);
+  const context = useContext(PageContext);
+
+
   useEffect(() => {
     const slug = data?.contentfulPage?.slug;
 
@@ -55,6 +63,21 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
       document.body.classList.remove("home");
     };
   }, [data?.contentfulPage?.slug]);
+
+  useEffect(() => {
+    const isDtpResourcesEmailSubmissionPending = sessionStorage.getItem(DTP_RESOURCES_EMAIL_SUBMITTED) !== "true" &&  context.title === PAGES_TITLE.DTP_RESOURCES; 
+    if(!isDtpResourcesEmailSubmissionPending){
+      setCanShowLoader(false);
+      return
+    }
+
+    const timer = setTimeout(() => {
+      setCanShowLoader(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  },[])
+
 
   return (
     <PageContext.Provider value={{ title }}>
@@ -79,8 +102,12 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
         )}
         <div style={{ position: 'fixed', zIndex: 9999 }}>
           <DTPModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
-        </div>
-        {sections
+        </div>PagesToDisplay
+        { canShowLoader
+        ? (<Center>
+            <Loader mt={0} size="lg" />
+          </Center>)
+        : (sections
           .filter((section) => !section.isHidden)
           .map((section, index, array) => (
             <Section
@@ -98,7 +125,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
               pageTitle={title}
               sectionIndex={index}
             />
-          ))}
+          )))}
       </Layout>
     </PageContext.Provider>
   );
