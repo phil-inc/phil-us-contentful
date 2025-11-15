@@ -600,6 +600,22 @@ query getPages($id: String!) {
               url
             }
           }
+          leftBackgroundAssetImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
           references {
             __typename
             ... on ContentfulResource {
@@ -1352,7 +1368,7 @@ query getPages($id: String!) {
             url
           }
         }
-        pagesToDisplay {
+        pageToDisplay {
           __typename
           ... on ContentfulPage {
             slug
@@ -1369,6 +1385,9 @@ query getPages($id: String!) {
           }
         }
         canDisplayModal
+        embedForm{
+          raw
+        }
       }
     }
   }
