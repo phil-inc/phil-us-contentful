@@ -233,6 +233,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         isBrandOutcomeCardSection && context.title === HOME
       }
       pt={section.header?.length > 0 ? undefined : 0}
+      leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
     >
       <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
       {context.title === HOME &&

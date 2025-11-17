@@ -195,6 +195,7 @@ export type IReferencedSection = {
     id: string;
     belowSubHeading: string;
   };
+  leftBackgroundAssetImage?: TAsset;
 };
 
 export type Reference = {
