@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
+import { useLocation } from "@reach/router";
 import { graphql } from "gatsby";
-import { Box, Container, Grid, Title } from "@mantine/core";
+import { Box, Center, Container, Grid, Loader, Title } from "@mantine/core";
 
 import { Layout } from "layouts/Layout/Layout";
 
 import type { ContentfulPage } from "types/page";
 import type { ISection } from "types/section";
 import { AllContentfulModalQuery } from "types/modal";
+
+import { DTP_RESOURCES_EMAIL_SUBMITTED } from "constants/global.constant";
+import { PAGES_ROUTES } from "constants/page";
 
 import Section from "components/section/Section";
 import Expanded from "components/common/Expanded/Expanded";
@@ -32,6 +36,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
 
   let basicSectionCount = 0;
 
+ // Manual Loader state for DTP Resources page
+  const location = useLocation();
+  const isDtpPageRoute = location.pathname=== PAGES_ROUTES.DTP_RESOURCES;
+  const [canShowLoader, setCanShowLoader] = React.useState(isDtpPageRoute);
+
   const isEmbedFormTemplate = sections.some((section) =>
     Boolean((section as ISection)?.embedForm?.raw),
   );
@@ -56,6 +65,21 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
     };
   }, [data?.contentfulPage?.slug]);
 
+  // Show manual loader for on DTP Resources page
+  useEffect(() => {
+    const isDtpResourcesEmailSubmissionPending = sessionStorage.getItem(DTP_RESOURCES_EMAIL_SUBMITTED) !== "true" &&  isDtpPageRoute; 
+    if(!isDtpResourcesEmailSubmissionPending){
+      setCanShowLoader(false);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setCanShowLoader(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  },[])
+
   return (
     <PageContext.Provider value={{ title }}>
       <Layout minimal={false}>
@@ -78,7 +102,12 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
           </Container>
         )}
         <DTPModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
-        {sections
+        {canShowLoader
+        ? (<Center>
+            <Loader mt={0} size="lg" />
+          </Center>
+          )
+        : sections
           .filter((section) => !section.isHidden)
           .map((section, index, array) => (
             <Section
