@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle } from "react";
 import { Modal } from "@mantine/core";
 
-import { useSessionModal } from "hooks/useModal";
+import { useSessionModal } from "hooks/useSessionModal";
 
 type SessionModalProps = {
   sessionKey: string;
@@ -9,6 +9,7 @@ type SessionModalProps = {
   withCloseButton?: boolean;
   autoOpen?: boolean;
   closeOnClickOutside?: boolean;
+  modalSize: string;
 };
 
 export type SessionModalRef = {
@@ -24,10 +25,11 @@ const SessionModal = forwardRef<SessionModalRef, SessionModalProps>(
       withCloseButton = false,
       autoOpen = false,
       closeOnClickOutside = true,
+      modalSize,
     },
     ref,
   ) => {
-    const { opened, handleClose, openModal, modalSize } = useSessionModal(
+    const { opened, handleClose, openModal } = useSessionModal(
       sessionKey,
       {
         autoOpen,
@@ -46,7 +48,7 @@ const SessionModal = forwardRef<SessionModalRef, SessionModalProps>(
         onClose={handleClose}
         withCloseButton={withCloseButton}
         centered
-        // size={modalSize}
+        size={modalSize}
         padding={0}
         radius="md"
         overlayProps={{

@@ -23,9 +23,7 @@ const AccessDtpResource: React.FC<AccessDtpResourceProps> = ({
 }) => {
   const { logo, body, embedForm } = modalData;
   const { formId, portalId } = getHubspotFormDetails(embedForm);
-  console.log("embeddedForm", embedForm);
 
-  console.log("modalData", modalData);
   const options: Options = {
     renderMark: {
       [MARKS.BOLD]: (text) => <span className={classes.extraText}>{text}</span>,

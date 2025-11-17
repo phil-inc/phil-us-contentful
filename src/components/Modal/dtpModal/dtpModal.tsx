@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Modal } from "@mantine/core";
 import { DTP_RESOURCES_EMAIL_SUBMITTED, SCREEN_SIZES, SHOW_DTP_MODAL } from "constants/global.constant";
-import { useViewportSize } from "@mantine/hooks";
 
 import LaunchDtp from "components/LaunchDtp/LaunchDtp";
 import SessionModal, {
@@ -13,6 +12,7 @@ import PageContext from "contexts/PageContext";
 
 import { ContentfulModal } from "types/modal";
 import { HOME, PAGES_TITLE } from "constants/page";
+import { useModalSize } from "hooks/useModalSize";
 
 type DTPModalProps = {
   contentfulModalNodes: ContentfulModal[];
@@ -22,19 +22,7 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
   const context = useContext(PageContext);
   const isHomePage = context.title === HOME;
   const [opened, setOpened] = useState(false);
-
-  const { width } = useViewportSize();
-  const modalSize = useMemo(() => {
-    if (width <= SCREEN_SIZES.MOBILE) {
-      return "auto";
-    } else if (width <= SCREEN_SIZES.DESKTOP) {
-      return "80%";
-    } else if (width <= SCREEN_SIZES.LARGE_DESKTOP) {
-      return "70%";
-    } else {
-      return "auto";
-    }
-  }, [width]);
+  const { wideModalSize, normalModalSize } = useModalSize();
 
   const homeData = contentfulModalNodes.find(
     (node) =>
@@ -77,7 +65,7 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
           onClose={handleClose}
           withCloseButton={false} // hides close button
           centered
-          size={modalSize}
+          size={wideModalSize}
           padding={0}
           radius={"md"}
           overlayProps={{
@@ -88,12 +76,14 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
           <LaunchDtp modalData={homeData} closeModal={handleClose} />
         </Modal>
       )}
+
       {dtpResourceData && isDtpResourcePageModal && (
         <SessionModal
           ref={dtpResourceModalRef}
           sessionKey={DTP_RESOURCES_EMAIL_SUBMITTED}
           autoOpen
           closeOnClickOutside={false}
+          modalSize={normalModalSize}
         >
           <div>
             <AccessDtpResource

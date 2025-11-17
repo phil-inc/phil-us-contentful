@@ -1,7 +1,7 @@
 import { BodyType, StylingOptions } from "types/section";
 
 export type IContentfulLink = {
-    __typename?: "ContentfulLink";
+    __typename?: string;
     contentful_id: string;
     id: string;
     externalUrl?: string;

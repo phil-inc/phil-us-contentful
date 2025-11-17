@@ -58,7 +58,7 @@ export const CCard: FC<ArticleProps> = ({
     (tag) => tag.name === CENTER_LIFE_SCIENCES_CARD_TAG,
   );
 
-    //Check interenalContent link first else externalUrl
+    //Check internalContent link first else externalUrl
     const getLinkFromItem = (item: IContentfulLink) => {
       if(item?.internalContent){
         return item?.internalContent?.slug ? `/${item?.internalContent?.slug}` : "";
