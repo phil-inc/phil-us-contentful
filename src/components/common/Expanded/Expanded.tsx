@@ -21,6 +21,7 @@ type ExpandedProps = {
   mt?: StyleProp<MantineSpacing>;
   fullWidth?: boolean;
   backgroundAssetImage?: TAsset;
+  leftBackgroundAssetImage?: TAsset;
 };
 
 /**
@@ -41,6 +42,7 @@ const Expanded: React.FC<ExpandedProps> = ({
   px,
   fullWidth = false,
   backgroundAssetImage = null,
+  leftBackgroundAssetImage = null,
   ...rest
 }) => (
   <Container
@@ -59,6 +61,13 @@ const Expanded: React.FC<ExpandedProps> = ({
       <div className={classes.rightBackgroundIcon}>
         <Asset
             asset={backgroundAssetImage}
+        />
+        </div>
+    }
+    {leftBackgroundAssetImage && 
+      <div className={classes.leftBackgroundIcon}>
+        <Asset
+            asset={leftBackgroundAssetImage}
         />
         </div>
     }

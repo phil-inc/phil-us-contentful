@@ -37,8 +37,9 @@ export type ContentfulModal = {
   logo?: TAsset | null;
   hyperlink?: Hyperlink | null;
   image?: TAsset | null;
-  pagesToDisplay?: ModalPageToDisplay[] | null;
+  pageToDisplay?: ModalPageToDisplay | null;
   canDisplayModal?: boolean;
+  embedForm?: BodyType;
 };
 
 

@@ -28,6 +28,7 @@ type ReferencedSectionProps = {
   isEmbedFormTemplate: boolean;
   isPreviousBackgroundPure: boolean;
   addBorder: boolean
+  index?: number;
 };
 
 /**
@@ -39,7 +40,8 @@ type ReferencedSectionProps = {
 const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   section,
   isEmbedFormTemplate,
-  isPreviousBackgroundPure, 
+  isPreviousBackgroundPure,
+  index,
 }) => { 
   const params = new URLSearchParams(getWindowProperty("location.search", {}));
   const GRID_COLUMNS = 12;
@@ -201,6 +203,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               section={section}
               isEmbedFormTemplate={isEmbedFormTemplate}
               textColor={textColor}
+              index={index}
             />
           )}
 
@@ -230,6 +233,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         isBrandOutcomeCardSection && context.title === HOME
       }
       pt={section.header?.length > 0 ? undefined : 0}
+      leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
     >
       <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
       {context.title === HOME &&

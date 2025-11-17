@@ -600,6 +600,22 @@ query getPages($id: String!) {
               url
             }
           }
+          leftBackgroundAssetImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
           references {
             __typename
             ... on ContentfulResource {
@@ -986,6 +1002,50 @@ query getPages($id: String!) {
                       }
                     }
                   }
+                  ... on ContentfulList {
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                    id
+                    heading
+                    subheading
+                    choose
+                    anchorLink
+                  }
+                  ... on ContentfulLink {
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                    id
+                    linkLabel
+                    name
+                    externalUrl
+                    internalContent {
+                      ... on ContentfulPage {
+                        id
+                        title
+                        slug
+                        sys {
+                          contentType {
+                            sys {
+                              type
+                              id
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
               author {
@@ -1308,7 +1368,7 @@ query getPages($id: String!) {
             url
           }
         }
-        pagesToDisplay {
+        pageToDisplay {
           __typename
           ... on ContentfulPage {
             slug
@@ -1325,6 +1385,9 @@ query getPages($id: String!) {
           }
         }
         canDisplayModal
+        embedForm{
+          raw
+        }
       }
     }
   }

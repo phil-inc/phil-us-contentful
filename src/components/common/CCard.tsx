@@ -9,6 +9,7 @@ import {
   Group,
   Grid,
   Center,
+  Badge,
 } from "@mantine/core";
 import { Link } from "gatsby";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
@@ -28,8 +29,11 @@ import { type Options } from "@contentful/rich-text-react-renderer";
 import { isVideoContent } from "utils/isVideoContent";
 import PageContext from "contexts/PageContext";
 import { COMPANY_PAGE, LIFE_SCIENCES_PAGE } from "constants/page";
-import { Metadata } from "types/section";
+import { IContentfulList, Metadata } from "types/section";
 import { CENTER_LIFE_SCIENCES_CARD_TAG } from "constants/identifiers";
+import { CONTENTFUL_TYPES } from "constants/global.constant";
+import { IconArrowRight } from "@tabler/icons";
+import { IContentfulLink } from "types/annoucementBar";
 
 type ArticleProps = {
   resource: TResource;
@@ -48,10 +52,23 @@ export const CCard: FC<ArticleProps> = ({
   const color = getColorFromStylingOptions(
     resource?.stylingOptions?.extraColor,
   );
+  const referencesList = (body?.references ?? []) as unknown as (IContentfulList | IContentfulLink)[];
 
   const isCenter = metadata?.tags?.some(
     (tag) => tag.name === CENTER_LIFE_SCIENCES_CARD_TAG,
   );
+
+    //Check internalContent link first else externalUrl
+    const getLinkFromItem = (item: IContentfulLink) => {
+      if(item?.internalContent){
+        return item?.internalContent?.slug ? `/${item?.internalContent?.slug}` : "";
+      }
+      else if(item?.externalUrl){
+        return item?.externalUrl ? item?.externalUrl : "";
+      }
+      return null;
+    }
+
 
   const options: Options = {
     renderNode: {
@@ -130,7 +147,7 @@ export const CCard: FC<ArticleProps> = ({
       },
       [BLOCKS.PARAGRAPH](node, children) {
         return (
-          <Text data-is-center={isCenter} className={classes.paragraph}>
+          <Text data-is-center={isCenter} className={classes.paragraph} data-context={context.title}>
             {children}
           </Text>
         );
@@ -283,8 +300,46 @@ export const CCard: FC<ArticleProps> = ({
               gap={0}
               data-is-center={isCenter}
             >
+              {/* Badge */}
+              {referencesList.length > 0 &&
+                (referencesList as IContentfulList[])
+                  .filter((item) => item && item.__typename === CONTENTFUL_TYPES.LIST)
+                  .map((item: IContentfulList, index: number) => (
+                    <Badge
+                      key={item.id ?? index}
+                      className={classes.badge}
+                      data-context={context.title}
+                      color="#D9D9D9"
+                      size="lg"
+                      radius="md"
+                    >
+                      {item.heading}
+                    </Badge>
+                  ))
+                }
+
               {body && renderRichText(body, options)}
 
+              {/* Links */}
+              {referencesList.length > 0 &&
+                (referencesList as IContentfulLink[])
+                  .filter((item) => item && item.__typename === CONTENTFUL_TYPES.LINK)
+                  .map((item, index: number) => (
+                    <>
+                      <Anchor
+                          href={getLinkFromItem(item)}
+                          key={item.id ?? index}
+                          target={item?.internalContent ? "_self" : "_blank"}
+                          rel={item?.internalContent ? undefined : "noopener noreferrer"}
+                      >
+                        <div className="anchor-text">
+                          {item?.linkLabel ?? ""}
+                          <IconArrowRight size={16} />
+                        </div>
+                      </Anchor>
+                    </>
+                  ))
+              }
             </Stack>
           </Grid.Col>
         </Grid>
