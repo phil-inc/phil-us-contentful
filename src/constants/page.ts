@@ -19,3 +19,7 @@ export const PAGE_WITHOUT_HEADER_FOOTER:string[] = [
     PAGES_TITLE.DEMO
 ]
 
+export const PAGES_ROUTES = {
+    DTP_RESOURCES : "/dtp-resources/",
+}
+
