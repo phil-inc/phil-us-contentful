@@ -32,6 +32,7 @@ export type suggestionItem = {
 export const Head: React.FC = () => (
   <SEO title={"PHIL AI"}>
     <meta name="description" content={"PHIL chat bot."} />
+    <meta name="robots" content="noindex,nofollow" />
   </SEO>
 );
 
