@@ -115,7 +115,7 @@ const config: GatsbyConfig = {
             policy: [{userAgent: '*', disallow: ['/']}],
           },
           production: {
-            policy: [{userAgent: '*', allow: '/'}],
+            policy: [{userAgent: '*', allow: '/', disallow: ['/ask-phil-ai']}],
           },
         },
       },
