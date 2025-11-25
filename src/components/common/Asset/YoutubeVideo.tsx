@@ -1,11 +1,9 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import YouTube from "react-youtube";
+import React, { useState, useEffect, Suspense } from "react";
 import { AspectRatio } from "@mantine/core";
-
-
 import LoadingIndicator from "components/common/LoadingIndicator/LoadingIndicator";
-// const LiteYouTubeEmbed = loadable(() => import("react-lite-youtube-embed"));
+
+// Dynamic import for react-youtube (client-side only)
+const YouTube = React.lazy(() => import("react-youtube"));
 
 interface YouTubeVideoProps {
   videoId: string;
@@ -16,42 +14,40 @@ export default function YouTubeVideo({
   videoId,
   title = "YouTube video",
 }: YouTubeVideoProps) {
-  const [isYtReady, setIsYtReady] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
+  // Ensure component only renders on client
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    timer = setTimeout(() => {
-      setIsYtReady(true); // Wait 2 seconds
-    }, 2000);
+    setIsClient(true);
+  }, []);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [videoId]);
+  if (!isClient) {
+    return <LoadingIndicator size="xl" />;
+  }
 
-  if (isYtReady) {
-    const opts = {
-      width: "100%",
-      height: "100%",
-      playerVars: {
-        rel: 0,
-        autoplay: 0,
-        modestbranding: 1,
-      },
-    };
+  const opts = {
+    width: "100%",
+    height: "100%",
+    playerVars: {
+      rel: 0,
+      autoplay: 0,
+      modestbranding: 1,
+      enablejsapi: 1,
+      playsinline: 1, // Important for Safari/iOS
+    },
+  };
 
-    return (
-      <div className="youtube-video">
-        <AspectRatio ratio={16 / 9} style={{ width: "100%" }}>
+  return (
+    <div className="youtube-video" data-title={title}>
+      <AspectRatio ratio={16 / 9} style={{ width: "100%" }}>
+        <Suspense fallback={<LoadingIndicator size="xl" />}>
           <YouTube
             videoId={videoId}
             opts={opts}
-            onError={(e) => console.error("YouTube player error:", e.data)}
+            onError={(e: any) => console.error("YouTube player error:", e.data)}
           />
-        </AspectRatio>
-      </div>
-    );
-  }
-
-  return <LoadingIndicator size="xl" />;
+        </Suspense>
+      </AspectRatio>
+    </div>
+  );
 }
