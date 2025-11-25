@@ -478,3 +478,11 @@ status = 301
 from = "/resources/*"
 to= "/insights"
 status = 301
+
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Referrer-Policy = "no-referrer-when-downgrade"
+    X-Frame-Options = "ALLOWALL"
+    Content-Security-Policy = "frame-ancestors https://www.youtube.com https://*.youtube.com https://www.youtube-nocookie.com https://*.youtube-nocookie.com;"
