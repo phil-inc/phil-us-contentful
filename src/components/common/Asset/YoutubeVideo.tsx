@@ -1,29 +1,25 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useEffect, useState } from "react";
 import { AspectRatio } from "@mantine/core";
-import LoadingIndicator from "components/common/LoadingIndicator/LoadingIndicator";
 
-// Dynamic import for react-youtube (client-side only)
-const YouTube = React.lazy(() => import("react-youtube"));
+// Safari-safe dynamic import
+let YouTube: any = null;
+if (typeof window !== "undefined") {
+  YouTube = require("react-youtube").default; // IMPORTANT FIX fir safari error
+}
 
 interface YouTubeVideoProps {
   videoId: string;
   title?: string;
 }
 
-export default function YouTubeVideo({
-  videoId,
-  title = "YouTube video",
-}: YouTubeVideoProps) {
+export default function YouTubeVideo({ videoId, title }: YouTubeVideoProps) {
   const [isClient, setIsClient] = useState(false);
 
-  // Ensure component only renders on client
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
-    return <LoadingIndicator size="xl" />;
-  }
+  if (!isClient || !YouTube) return null;
 
   const opts = {
     width: "100%",
@@ -33,20 +29,18 @@ export default function YouTubeVideo({
       autoplay: 0,
       modestbranding: 1,
       enablejsapi: 1,
-      playsinline: 1, // Important for Safari/iOS
+      playsinline: 1,
     },
   };
 
   return (
-    <div className="youtube-video" data-title={title}>
+    <div className="youtube-video" data-title={title || "YouTube Video"}>
       <AspectRatio ratio={16 / 9} style={{ width: "100%" }}>
-        <Suspense fallback={<LoadingIndicator size="xl" />}>
-          <YouTube
-            videoId={videoId}
-            opts={opts}
-            onError={(e: any) => console.error("YouTube player error:", e.data)}
-          />
-        </Suspense>
+        <YouTube
+          videoId={videoId}
+          opts={opts}
+          onError={(e: any) => console.error("YouTube Error:", e.data)}
+        />
       </AspectRatio>
     </div>
   );
