@@ -1,30 +1,31 @@
+import Decimal from "decimal.js";
+
+import { RoiInputsDec } from "types/roi";
+
 import {
-  PatientEnrollmentInputs,
   PatientEnrollmentRF,
   PatientEnrollmentStats,
 } from "utils/Patient enrollment/IpatientEnrollment";
+import { toDecimal } from "../../utils/decimal/decimal.utils";
 
 /**
  * Patient Enrollment Calculator (Base Class For ROI Calculation)
  */
 abstract class PatientEnrollment {
   private static defaultStatistics: PatientEnrollmentStats = {
-    coveredOutrightPercent: 0.15, //15%
-    paApprovedPercent: 0.55, //55%
-    paymentApprovalRateCovered: 0.9, //90%
-    paymentApprovalRateUncovered: 0.47, //47%
-    enrolledWithoutInsurancePercent: 0.2, //20%
-    paymentApprovalRateCash: 0.47, //47%
+    coveredOutrightPercent: toDecimal(0.15), //15%
+    paApprovedPercent: toDecimal(0.55), //55%
+    paymentApprovalRateCovered: toDecimal(0.9), //90%
+    paymentApprovalRateUncovered: toDecimal(0.47), //47%
+    enrolledWithoutInsurancePercent: toDecimal(0.2), //20%
+    paymentApprovalRateCash: toDecimal(0.47), //47%
   };
 
-  private inputs: PatientEnrollmentInputs;
+  private inputs: RoiInputsDec;
   private defaultStats: PatientEnrollmentStats;
   private refillStats: PatientEnrollmentRF;
 
-  constructor(
-    PEinputs: PatientEnrollmentInputs,
-    refillStats: PatientEnrollmentRF,
-  ) {
+  constructor(PEinputs: RoiInputsDec, refillStats: PatientEnrollmentRF) {
     this.inputs = PEinputs;
     this.defaultStats = {
       ...PatientEnrollment.defaultStatistics,
@@ -33,24 +34,23 @@ abstract class PatientEnrollment {
   }
 
   // new Rx
-  private get NRx() {
+  private get NRx(): Decimal {
     return this.inputs.nRx;
   }
 
   //patientEnrollment
-  private get PatientEnrollmentRate() {
+  private get PatientEnrollmentRate(): Decimal {
     return this.inputs.patientEnagedPercentage;
   }
 
   private get EnrolledWithInsurancePercentage() {
-    return (
-      this.PatientEnrollmentRate -
-      this.defaultStats.enrolledWithoutInsurancePercent
+    return this.PatientEnrollmentRate.sub(
+      this.defaultStats.enrolledWithoutInsurancePercent,
     );
   }
 
   private get EnrolledWithInsurance() {
-    return this.NRx * this.EnrolledWithInsurancePercentage;
+    return this.NRx.mul(this.EnrolledWithInsurancePercentage);
   }
 
   //coverage check
@@ -59,16 +59,16 @@ abstract class PatientEnrollment {
   }
 
   private get CovererdOutRight() {
-    return this.EnrolledWithInsurance * this.CoveredOutRightPercentage;
+    return this.EnrolledWithInsurance.mul(this.CoveredOutRightPercentage);
   }
 
   //PA
   private get RequiresPAPercentage() {
-    return (1 - this.CoveredOutRightPercentage);
+    return toDecimal(1).sub(this.CoveredOutRightPercentage);
   }
 
   private get RequiresPA() {
-    return this.EnrolledWithInsurance * this.RequiresPAPercentage;
+    return this.EnrolledWithInsurance.mul(this.RequiresPAPercentage);
   }
 
   private get PASubmittedRate() {
@@ -76,7 +76,7 @@ abstract class PatientEnrollment {
   }
 
   private get PASubmitted() {
-    return this.RequiresPA * this.PASubmittedRate;
+    return this.RequiresPA.mul(this.PASubmittedRate);
   }
 
   // PA Approval
@@ -85,12 +85,12 @@ abstract class PatientEnrollment {
   }
 
   private get PAApproved() {
-    return this.PASubmitted * this.PAApprovedRate;
+    return this.PASubmitted.mul(this.PAApprovedRate);
   }
 
   //Patients Reaching covered Copay
   private get PatientsReachingCoveredCopay() {
-    return this.PAApproved + this.CovererdOutRight;
+    return this.PAApproved.add(this.CovererdOutRight);
   }
 
   private get PaymentApprovalRateCovered() {
@@ -98,14 +98,15 @@ abstract class PatientEnrollment {
   }
 
   private get CoveredFFDispensed() {
-    return this.PatientsReachingCoveredCopay * this.PaymentApprovalRateCovered;
+    return this.PatientsReachingCoveredCopay.mul(
+      this.PaymentApprovalRateCovered,
+    );
   }
 
   //Patients Reaching uncovered Copay
   private get PatientsReachingUncoveredCopay() {
-    return (
-      (this.PASubmitted - this.PAApproved) + (this.RequiresPA - this.PASubmitted)
-    );
+    return (this.PASubmitted.sub(this.PAApproved)).add(
+      (this.RequiresPA.sub(this.PASubmitted)));
   }
 
   private get PaymentApprovalRateUncovered() {
@@ -113,8 +114,8 @@ abstract class PatientEnrollment {
   }
 
   private get UncoveredFFDispensed() {
-    return (
-      this.PatientsReachingUncoveredCopay * this.PaymentApprovalRateUncovered
+    return this.PatientsReachingUncoveredCopay.mul(
+      this.PaymentApprovalRateUncovered,
     );
   }
 
@@ -124,31 +125,32 @@ abstract class PatientEnrollment {
   }
 
   private get EnrolledWithoutInsurance() {
-    return this.NRx * this.EnrolledWithoutInsurancePercentage;
+    return this.NRx.mul(this.EnrolledWithoutInsurancePercentage);
   }
   private get PaymentApprovalRateCash() {
     return this.defaultStats.paymentApprovalRateCash;
   }
   private get CashFFDispensed() {
-    return this.EnrolledWithoutInsurance * this.PaymentApprovalRateCash;
+    
+    return this.EnrolledWithoutInsurance.mul(this.PaymentApprovalRateCash);
   }
 
   // not enrolled patients
   private get NotEnrolledPercentage() {
-    return (1 - this.inputs.patientEnagedPercentage);
+    return toDecimal(1).sub(this.inputs.patientEnagedPercentage);
   }
 
   // Total First Fill Dispensed
   public get TotalFFDispensed() {
-    return (
-      this.CoveredFFDispensed + this.UncoveredFFDispensed + this.CashFFDispensed
+    return this.CoveredFFDispensed.add(this.UncoveredFFDispensed).add(
+      this.CashFFDispensed,
     );
   }
   public get OverallPTRpercentage() {
-    return this.TotalFFDispensed / this.NRx;
+    return this.TotalFFDispensed.div(this.NRx);
   }
   private get CoveredFFPercentage() {
-    return this.CoveredFFDispensed / this.TotalFFDispensed;
+    return this.CoveredFFDispensed.div(this.TotalFFDispensed);
   }
 
   //refills
@@ -164,19 +166,19 @@ abstract class PatientEnrollment {
 
   // total Rx
   public get CoveredTRx() {
-    return this.CoveredFFDispensed * (this.CoveredRF + 1);
+    return this.CoveredFFDispensed.mul(this.CoveredRF.add(1));
   }
   private get UncoveredTRx() {
-    return this.UncoveredFFDispensed * (this.UncoveredRF + 1);
+    return this.UncoveredFFDispensed.mul(this.UncoveredRF.add(1));
   }
   private get CashTRx() {
-    return this.CashFFDispensed * (this.CashRF + 1);
+    return this.CashFFDispensed.mul(this.CashRF.add(1));
   }
   public get TotalTRx() {
-    return this.CoveredTRx + this.UncoveredTRx + this.CashTRx;
+    return this.CoveredTRx.add(this.UncoveredTRx).add(this.CashTRx);
   }
   public get CoveredTRxPercentage() {
-    return this.CoveredTRx / this.TotalTRx;
+    return this.CoveredTRx.div(this.TotalTRx);
   }
 }
 

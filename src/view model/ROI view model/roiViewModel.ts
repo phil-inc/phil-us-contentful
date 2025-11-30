@@ -1,39 +1,43 @@
-import { PHIL_ROI_DEFAULT_INPUTS, RF_DEFAULT_STATS } from "constants/roi.constant";
-import { ProgramType } from "enum/global.enum";
-import { ROIinputs } from "types/roi";
-import GrossRevenue from "utils/Gross Revenue/GrossRevenue";
+import { ProgramType } from "../../enum/global.enum";
+import { RoiInputsNum, RoiInputsDec } from "types/roi";
+import { PHIL_ROI_DEFAULT_INPUTS, RF_DEFAULT_STATS } from "../../constants/roi.constant";
+
+import { toDecimal } from './../../utils/decimal/decimal.utils';
+import GrossRevenue from "../../utils/Gross Revenue/GrossRevenue";
 
 
 export class RoiViewModel {
-  private philInputs: ROIinputs;
-  private retailInputs: ROIinputs;
+  private philInputs: RoiInputsDec;
+  private retailInputs: RoiInputsDec;
 
-  constructor(rInputs: ROIinputs) {
+  constructor(rInputs: RoiInputsNum) {
     this.retailInputs = {
-      ...rInputs,
-      patientEnagedPercentage: rInputs.patientEnagedPercentage / 100, // in decimal
-      paSubmissionRate: rInputs.paSubmissionRate / 100,
+      wac: toDecimal(rInputs.wac),
+      nRx: toDecimal(rInputs.nRx),
+      patientEnagedPercentage: toDecimal(rInputs.patientEnagedPercentage).div(100), // in decimal
+      paSubmissionRate: toDecimal(rInputs.paSubmissionRate).div(100),
+      averageRefillsPerNRx: toDecimal(rInputs.averageRefillsPerNRx),
     };
     this.philInputs = {
-      wac: rInputs.wac,
-      nRx: rInputs.nRx,
-      patientEnagedPercentage: PHIL_ROI_DEFAULT_INPUTS.patientEnagedPercentage / 100,
-      paSubmissionRate: PHIL_ROI_DEFAULT_INPUTS.paSubmissionRate / 100,
-      averageRefillsPerNRx: PHIL_ROI_DEFAULT_INPUTS.averageRefillsPerNRx,
+      wac: toDecimal(rInputs.wac),
+      nRx: toDecimal(rInputs.nRx),
+      patientEnagedPercentage: toDecimal(PHIL_ROI_DEFAULT_INPUTS.patientEnagedPercentage).div(100),
+      paSubmissionRate: toDecimal(PHIL_ROI_DEFAULT_INPUTS.paSubmissionRate).div(100),
+      averageRefillsPerNRx: toDecimal(0), // will be calculated
     };
   }
-
+  
   public get philROI() {
     const philGrossRevenue = new GrossRevenue(ProgramType.PHIL, this.philInputs, RF_DEFAULT_STATS.PHIL);
-
+    
     return {
-      wac: this.philInputs.wac,
-      estNrx: this.philInputs.nRx,
-      patientsEngagedPercentage: this.philInputs.patientEnagedPercentage,
-      paSubmittedPercentage: this.philInputs.paSubmissionRate,
+      wac: this.philInputs.wac, //input from user
+      estNrx: this.philInputs.nRx, //input from user
+      patientsEngagedPercentage: this.philInputs.patientEnagedPercentage, //input from user
+      paSubmittedPercentage: this.philInputs.paSubmissionRate, //input from user
       coveredDispensesPercentage: philGrossRevenue.CoveredDispensesPercentage,
       patientsStartingPercentage: philGrossRevenue.PatientsStartingPercentage,
-      averageRefillsPerNRx: philGrossRevenue.AverageRefillsPerNRx,
+      averageRefillsPerNRx: philGrossRevenue.AverageRefillsPerNRx, // calculated for PHIL amd input for retail user
       totalRx: philGrossRevenue.TRx,
       totaCoveredFills: philGrossRevenue.TotalCoveredFills(),
       estGrossRevenue: philGrossRevenue.EstGrossRevenue(),
@@ -44,13 +48,13 @@ export class RoiViewModel {
     const retailGrossRevenue = new GrossRevenue(ProgramType.RETAIL, this.retailInputs, RF_DEFAULT_STATS.RETAIL);
 
     return {
-      wac: this.retailInputs.wac,
-      estNrx: this.retailInputs.nRx,
-      patientsEngagedPercentage: this.retailInputs.patientEnagedPercentage,
-      paSubmittedPercentage: this.retailInputs.paSubmissionRate,
+      wac: this.retailInputs.wac, //input from user
+      estNrx: this.retailInputs.nRx, //input from user
+      patientsEngagedPercentage: this.retailInputs.patientEnagedPercentage, //input from user
+      paSubmittedPercentage: this.retailInputs.paSubmissionRate, //input from user
       coveredDispensesPercentage: retailGrossRevenue.CoveredDispensesPercentage,
       patientsStartingPercentage: retailGrossRevenue.PatientsStartingPercentage,
-      averageRefillsPerNRx: this.retailInputs.averageRefillsPerNRx,
+      averageRefillsPerNRx: this.retailInputs.averageRefillsPerNRx, //input from user
       totalRx: retailGrossRevenue.TRx,
       totalCoveredFills: retailGrossRevenue.TotalCoveredFills(),
       estGrossRevenue: retailGrossRevenue.EstGrossRevenue(),
@@ -62,55 +66,51 @@ export class RoiViewModel {
     const roiImprovement = {
       estNrx: 0,
       patientsEngagedPercentage:
-        (this.philROI.patientsEngagedPercentage -
-          this.retailROI.patientsEngagedPercentage) /
-          this.retailROI.patientsEngagedPercentage +
-        1,
+        ((this.philROI.patientsEngagedPercentage.sub(this.retailROI.patientsEngagedPercentage))
+        .div(this.retailROI.patientsEngagedPercentage))
+        .add(1),
       paSubmittedPercentage:
-        (this.philROI.paSubmittedPercentage -
-          this.retailROI.paSubmittedPercentage) /
-          this.retailROI.paSubmittedPercentage +
-        1,
+        ((this.philROI.paSubmittedPercentage.sub(this.retailROI.paSubmittedPercentage))
+        .div(this.retailROI.paSubmittedPercentage))
+        .add(1),
       coveredDispensesPercentage:
-        (this.philROI.coveredDispensesPercentage -
-          this.retailROI.coveredDispensesPercentage) /
-          this.retailROI.coveredDispensesPercentage +
-        1,
+        ((this.philROI.coveredDispensesPercentage.sub(this.retailROI.coveredDispensesPercentage))
+        .div(this.retailROI.coveredDispensesPercentage))
+        .add(1),
       patientsStartingPercentage:
-        (this.philROI.patientsStartingPercentage -
-          this.retailROI.patientsStartingPercentage) /
-          this.retailROI.patientsStartingPercentage +
-        1,
+        ((this.philROI.patientsStartingPercentage.sub(this.retailROI.patientsStartingPercentage))
+        .div(this.retailROI.patientsStartingPercentage))
+        .add(1),
       averageRefillsPerNRx:
-        (this.philROI.averageRefillsPerNRx -
-          this.retailROI.averageRefillsPerNRx) /
-          this.retailROI.averageRefillsPerNRx +
-        1,
+        ((this.philROI.averageRefillsPerNRx.sub(this.retailROI.averageRefillsPerNRx))
+        .div(this.retailROI.averageRefillsPerNRx))
+        .add(1),
       totalRx:
-        (this.philROI.totalRx - this.retailROI.totalRx) /
-          this.retailROI.totalRx +
-        1,
+        ((this.philROI.totalRx.sub(this.retailROI.totalRx))
+        .div(this.retailROI.totalRx))
+        .add(1),
       estGrossRevenue:
-        (this.philROI.estGrossRevenue - this.retailROI.estGrossRevenue) /
-          this.retailROI.estGrossRevenue +
-        1,
+        ((this.philROI.estGrossRevenue.sub(this.retailROI.estGrossRevenue))
+        .div(this.retailROI.estGrossRevenue))
+        .add(1),
     };
 
     return roiImprovement;
   }
 
   public get finalEstimation() {
-    const philEstCostWithDSAsaving = this.philROI.estGrossRevenue * 0.08;
+    const philEstCostWithDSAsaving = this.philROI.estGrossRevenue.mul(0.08); // 8% DSA saving
 
     const roiEstimate = {
-      estPhilCostWithDSAsaving: philEstCostWithDSAsaving,
+      estPhilCostWithDSAsaving: philEstCostWithDSAsaving.toNumber(),
       estimatedROI:
-        (this.philROI.estGrossRevenue - this.retailROI.estGrossRevenue) /
-        philEstCostWithDSAsaving,
+        (this.philROI.estGrossRevenue.sub(this.retailROI.estGrossRevenue))
+        .div(philEstCostWithDSAsaving)
+        .toNumber(),
     };
 
     return {
-      philEstCostWithDSAsaving,
+      philEstCostWithDSAsaving: philEstCostWithDSAsaving.toNumber(),
       roiEstimate,
     };
   }

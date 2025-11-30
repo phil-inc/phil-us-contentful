@@ -8,12 +8,12 @@ import { RoiViewModel } from "view model/ROI view model/roiViewModel";
 
 import { ROI_INPUT_CONFIG } from "constants/roi.constant";
 
-import { ROIinputs } from "types/roi";
+import { RoiInputsNum } from "types/roi";
 
 type RoiTemplateProps = {};
 
 const Roitemplate: React.FC<RoiTemplateProps> = ({}) => {
-  const [roiInputs, setRoiInputs] = React.useState<ROIinputs>({
+  const [roiInputs, setRoiInputs] = React.useState<RoiInputsNum>({
     wac: ROI_INPUT_CONFIG.wac.preset,
     nRx: ROI_INPUT_CONFIG.nRx.preset,
     patientEnagedPercentage: ROI_INPUT_CONFIG.patientEnagedPercentage.preset,
@@ -21,7 +21,7 @@ const Roitemplate: React.FC<RoiTemplateProps> = ({}) => {
     averageRefillsPerNRx: ROI_INPUT_CONFIG.averageRefillsPerNRx.preset,
   });
 
-  const handleChange = (key: keyof ROIinputs, value: number) => {
+  const handleChange = (key: keyof RoiInputsNum, value: number) => {
     setRoiInputs((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -34,7 +34,7 @@ const Roitemplate: React.FC<RoiTemplateProps> = ({}) => {
           <div>
             <Stack>
               <div>
-                <div>{roiVM.finalEstimation.roiEstimate.estimatedROI}</div>
+                {/* <div>{roiVM.finalEstimation.roiEstimate.estimatedROI}</div> */}
                 <Text fw={600}>WAC: {roiInputs.wac}</Text>
                 <Slider
                   value={roiInputs.wac}

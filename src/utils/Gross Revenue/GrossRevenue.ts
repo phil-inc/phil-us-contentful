@@ -1,6 +1,12 @@
-import { ProgramType } from "enum/global.enum";
-import { PatientEnrollmentInputs, PatientEnrollmentRF } from "utils/Patient enrollment/IpatientEnrollment";
-import PatientEnrollment from "utils/Patient enrollment/PatientEnrollment";
+import Decimal from "decimal.js";
+
+
+import { ProgramType } from "../../enum/global.enum";
+import { RoiInputsDec } from "types/roi";
+
+import { toDecimalRounded } from './../decimal/decimal.utils';
+import { PatientEnrollmentRF } from "../../utils/Patient enrollment/IpatientEnrollment";
+import PatientEnrollment from "../../utils/Patient enrollment/PatientEnrollment";
 
 
 
@@ -9,47 +15,47 @@ import PatientEnrollment from "utils/Patient enrollment/PatientEnrollment";
  */
 class GrossRevenue  extends PatientEnrollment {
     private programType: ProgramType;
-    private gInputs: PatientEnrollmentInputs;
+    private gInputs: RoiInputsDec;
 
 
-    constructor(programType: ProgramType, inputs: PatientEnrollmentInputs, refillStats: PatientEnrollmentRF) {
+    constructor(programType: ProgramType, inputs: RoiInputsDec, refillStats: PatientEnrollmentRF) {
         super(inputs,refillStats );
         this.programType = programType;
         this.gInputs = inputs;
     }
 
-    public get AnnualNRx(): number {
+    public get AnnualNRx(): Decimal {
         return this.gInputs.nRx;
     }
-    public get PatientsEngagedPercentage(): number {
+    public get PatientsEngagedPercentage(): Decimal {
         return this.gInputs.patientEnagedPercentage;
     }
-    public get PAsSubmittedPercentage(): number {
+    public get PAsSubmittedPercentage(): Decimal {
         return this.gInputs.paSubmissionRate;
     }
-    public get CoveredDispensesPercentage(): number {
+    public get CoveredDispensesPercentage(): Decimal {
         return this.CoveredTRxPercentage;
     }
-    public get PatientsStartingPercentage(): number {
+    public get PatientsStartingPercentage(): Decimal {
         return this.OverallPTRpercentage;
     }
-    public get AverageRefillsPerNRx(): number {
+    public get AverageRefillsPerNRx(): Decimal {
         if(this.programType === ProgramType.PHIL) {
-            const value = (this.TotalTRx / this.TotalFFDispensed) - 1;
-            return Number(value.toFixed(1))
+            const value = (this.TotalTRx.div(this.TotalFFDispensed)).sub(1);
+            return toDecimalRounded(value,1)
         }
 
         return this.gInputs.averageRefillsPerNRx;
     }
     
-    public get TRx(): number {
+    public get TRx(): Decimal {
         return this.TotalTRx;
     }
-    public TotalCoveredFills(): number {
+    public TotalCoveredFills(): Decimal {
         return this.CoveredTRx;
     }
-    public EstGrossRevenue(): number {
-        return (this.gInputs.wac * this.TRx) / 1000000;
+    public EstGrossRevenue(): Decimal {
+        return (this.gInputs.wac.mul(this.TRx)).div(1000000);
     }
 }
 

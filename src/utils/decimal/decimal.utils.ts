@@ -1,14 +1,13 @@
-import Decimal from 'decimal.js';
+import Decimal from "decimal.js";
 
 export const toDecimal = (input: number | string | Decimal): Decimal => {
-  return new Decimal(input);
+  return new Decimal(input ?? 0);
 };
 
-export const getAbsoluteDifference = (a: Decimal, b: Decimal): Decimal => {
-  return a.sub(b).abs();
-};
-
-export const toDecimalRounded = (input: number | string | Decimal): Decimal => {
+export const toDecimalRounded = (
+  input: number | string | Decimal,
+  precision = 2,
+): Decimal => {
   const decimalValue = toDecimal(input);
-  return decimalValue.toDecimalPlaces(2, Decimal.ROUND_HALF_UP);
+  return decimalValue.toDecimalPlaces(precision, Decimal.ROUND_HALF_UP);
 };

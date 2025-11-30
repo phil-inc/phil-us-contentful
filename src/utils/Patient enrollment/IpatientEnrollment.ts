@@ -1,23 +1,25 @@
+import Decimal from "decimal.js";
+
 export type PatientEnrollmentInputs = {
-    wac: number;
-    nRx: number;
-    patientEnagedPercentage: number;
-    paSubmissionRate: number;
-    averageRefillsPerNRx: number;
+    wac: Decimal;
+    nRx: Decimal;
+    patientEnagedPercentage: Decimal;
+    paSubmissionRate: Decimal;
+    averageRefillsPerNRx: Decimal;
 }
 
 export type PatientEnrollmentStats = {
-    coveredOutrightPercent: number;
-    paApprovedPercent: number;
-    paymentApprovalRateCovered: number;
-    paymentApprovalRateUncovered: number;
-    enrolledWithoutInsurancePercent: number;
-    paymentApprovalRateCash: number;
+    coveredOutrightPercent: Decimal;
+    paApprovedPercent: Decimal;
+    paymentApprovalRateCovered: Decimal;
+    paymentApprovalRateUncovered: Decimal;
+    enrolledWithoutInsurancePercent: Decimal;
+    paymentApprovalRateCash: Decimal;
 }
 
 export type PatientEnrollmentRF = {
-    coveredRf: number;
-    uncoveredRf: number;
-    cashRf: number;
+    coveredRf: Decimal;
+    uncoveredRf: Decimal;
+    cashRf: Decimal;
 }
 

@@ -1,4 +1,5 @@
-import { ROIinputs } from "types/roi";
+import { toDecimal } from 'utils/decimal/decimal.utils';
+import { RoiInputsNum } from "types/roi";
 
 type ROIInputRange = {
   min: number;
@@ -8,7 +9,7 @@ type ROIInputRange = {
   subIncrement?: number;
 };
 
-export const ROI_INPUT_CONFIG: Record<keyof ROIinputs, ROIInputRange> = {
+export const ROI_INPUT_CONFIG: Record<keyof RoiInputsNum, ROIInputRange> = {
   wac: {
     min: 0,
     max: 5000,
@@ -42,18 +43,16 @@ export const ROI_INPUT_CONFIG: Record<keyof ROIinputs, ROIInputRange> = {
 export const PHIL_ROI_DEFAULT_INPUTS = {
     patientEnagedPercentage: 91,
     paSubmissionRate: 90,
-    // averageRefillsPerNRx: 4.8,
-    averageRefillsPerNRx: 500,
 }
 export const RF_DEFAULT_STATS = {
     PHIL : {
-        coveredRf: 6,
-        uncoveredRf: 3,
-        cashRf: 3,
+        coveredRf: toDecimal(6),
+        uncoveredRf: toDecimal(3),
+        cashRf: toDecimal(3),
     },
     RETAIL : {
-        coveredRf: 3,
-        uncoveredRf: 2.5,
-        cashRf: 2.5,
+        coveredRf: toDecimal(3),
+        uncoveredRf: toDecimal(2.5),
+        cashRf: toDecimal(2.5),
     }
 }
