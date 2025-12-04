@@ -37,6 +37,7 @@
     "@types/marked": "^5.0.2",
     "classnames": "^2.5.1",
     "date-fns-tz": "^2.0.0",
+    "decimal.js": "^10.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.1.6",
     "extract-json-from-string": "^1.0.1",
