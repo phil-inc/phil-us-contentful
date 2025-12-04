@@ -31,8 +31,8 @@ const RoiTemplate: React.FC<RoiTemplateProps> = ({
 
   return (
     <PageContext.Provider value={{ title }}>
-      <Layout minimal={false} canHideHeader={false}>
-        <Container fluid={true} p={10}>
+      <Layout>
+        <Container className="container" size={"xl"}>
           <main className="roi-page">
               <RoiCalculator section={firstSection}/>
           </main>

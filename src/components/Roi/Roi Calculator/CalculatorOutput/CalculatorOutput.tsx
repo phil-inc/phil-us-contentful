@@ -33,7 +33,7 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
         value: roiVM.roiImprovementInString.totalRx,
       },
       {
-        key: "C2",
+        key: "C4",
         title: "Total Covered Fills",
         description: "with PHIL",
         value: roiVM.roiImprovementInString.totatCoveredFills,
