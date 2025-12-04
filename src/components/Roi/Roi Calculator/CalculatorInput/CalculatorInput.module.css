@@ -1,0 +1,21 @@
+.inputContainer {
+    padding: 32px;
+
+    .disclaimer {
+        display: flex;
+        gap: 10px;
+        background: #00827E1A;
+        border-radius: 4px;
+        padding:12px;
+        margin-bottom: 30px;
+        color: #0A0A0A;
+
+        .icon{
+            margin-top: 3px ;
+
+            svg{
+                fill:#525252;
+            }
+        }
+    }
+}

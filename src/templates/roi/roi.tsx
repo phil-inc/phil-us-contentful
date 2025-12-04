@@ -1,101 +1,294 @@
-import React, { useMemo } from "react";
-import { Slider, Stack, Text } from "@mantine/core";
+import React from "react";
+import { graphql } from "gatsby";
 import { Container } from "@mantine/core";
 
 import { Layout } from "layouts/Layout/Layout";
 
-import { RoiViewModel } from "view model/ROI view model/roiViewModel";
+import RoiCalculator from "components/Roi/Roi Calculator/RoiCalculator";
 
-import { ROI_INPUT_CONFIG } from "constants/roi.constant";
+import PageContext from "contexts/PageContext";
 
-import { RoiInputsNum } from "types/roi";
+import Head from "components/common/Head/Head";
 
-type RoiTemplateProps = {};
+import { ContentfulPage } from "types/page";
+import { ISection } from "types/section";
 
-const Roitemplate: React.FC<RoiTemplateProps> = ({}) => {
-  const [roiInputs, setRoiInputs] = React.useState<RoiInputsNum>({
-    wac: ROI_INPUT_CONFIG.wac.preset,
-    nRx: ROI_INPUT_CONFIG.nRx.preset,
-    patientEnagedPercentage: ROI_INPUT_CONFIG.patientEnagedPercentage.preset,
-    paSubmissionRate: ROI_INPUT_CONFIG.paSubmissionRate.preset,
-    averageRefillsPerNRx: ROI_INPUT_CONFIG.averageRefillsPerNRx.preset,
-  });
+type RoiTemplateProps = {
+    data: {
+      contentfulPage: ContentfulPage;
+    };
+};
 
-  const handleChange = (key: keyof RoiInputsNum, value: number) => {
-    setRoiInputs((prev) => ({ ...prev, [key]: value }));
-  };
+export { Head };
 
-  const roiVM = useMemo(() => new RoiViewModel(roiInputs), [roiInputs]);
+const RoiTemplate: React.FC<RoiTemplateProps> = ({
+    data: { contentfulPage },
+
+}) => {
+  const { sections, title } = contentfulPage;
+  const firstSection = sections[0] as ISection;
+
 
   return (
-    <Layout minimal={false} canHideHeader={false}>
-      <Container fluid={true} p={10}>
-        <main className="roi-page">
-          <div>
-            <Stack>
-              <div>
-                {/* <div>{roiVM.finalEstimation.roiEstimate.estimatedROI}</div> */}
-                <Text fw={600}>WAC: {roiInputs.wac}</Text>
-                <Slider
-                  value={roiInputs.wac}
-                  onChange={(v) => handleChange("wac", v)}
-                  min={ROI_INPUT_CONFIG.wac.min}
-                  max={ROI_INPUT_CONFIG.wac.max}
-                  step={ROI_INPUT_CONFIG.wac.increment}
-                />
-              </div>
-              <div>
-                <Text fw={600}>NRx: {roiInputs.nRx}</Text>
-                <Slider
-                  value={roiInputs.nRx}
-                  onChange={(v) => handleChange("nRx", v)}
-                  min={ROI_INPUT_CONFIG.nRx.min}
-                  max={ROI_INPUT_CONFIG.nRx.max}
-                  step={ROI_INPUT_CONFIG.nRx.increment}
-                />
-              </div>
-              <div>
-                <Text fw={600}>
-                  Patient Engaged %: {roiInputs.patientEnagedPercentage}
-                </Text>
-                <Slider
-                  value={roiInputs.patientEnagedPercentage}
-                  onChange={(v) => handleChange("patientEnagedPercentage", v)}
-                  min={ROI_INPUT_CONFIG.patientEnagedPercentage.min}
-                  max={ROI_INPUT_CONFIG.patientEnagedPercentage.max}
-                  step={ROI_INPUT_CONFIG.patientEnagedPercentage.increment}
-                />
-              </div>
-              <div>
-                <Text fw={600}>
-                  PA Submission Rate: {roiInputs.paSubmissionRate}
-                </Text>
-                <Slider
-                  value={roiInputs.paSubmissionRate}
-                  onChange={(v) => handleChange("paSubmissionRate", v)}
-                  min={ROI_INPUT_CONFIG.paSubmissionRate.min}
-                  max={ROI_INPUT_CONFIG.paSubmissionRate.max}
-                  step={ROI_INPUT_CONFIG.paSubmissionRate.increment}
-                />
-              </div>
-              <div>
-                <Text fw={600}>
-                  Avg Refills / NRx: {roiInputs.averageRefillsPerNRx}
-                </Text>
-                <Slider
-                  value={roiInputs.averageRefillsPerNRx}
-                  onChange={(v) => handleChange("averageRefillsPerNRx", v)}
-                  min={ROI_INPUT_CONFIG.averageRefillsPerNRx.min}
-                  max={ROI_INPUT_CONFIG.averageRefillsPerNRx.max}
-                  step={ROI_INPUT_CONFIG.averageRefillsPerNRx.increment}
-                />
-              </div>
-            </Stack>{" "}
-          </div>
-        </main>
-      </Container>
-    </Layout>
+    <PageContext.Provider value={{ title }}>
+      <Layout minimal={false} canHideHeader={false}>
+        <Container fluid={true} p={10}>
+          <main className="roi-page">
+              <RoiCalculator section={firstSection}/>
+          </main>
+        </Container>
+      </Layout>
+    </PageContext.Provider>
+
   );
 };
 
-export default React.memo(Roitemplate);
+export const query = graphql`
+  query getPages($id: String!) {
+    contentfulPage(id: { eq: $id }) {
+      noindex
+      slug
+      id
+      title
+      displayTitle
+      description
+      sections {
+        ... on ContentfulSection {
+          id
+          isHidden
+          isReverse
+          addBorder
+          youtubeVideoUrl
+          body {
+            raw
+            references {
+              __typename
+              ... on ContentfulAsset {
+                id
+                contentful_id
+                description
+                gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+                sys {
+                  type
+                }
+              }
+              ... on ContentfulButton {
+                id
+                contentful_id
+                buttonText
+                buttonStyle
+                link {
+                  linkLabel
+                  name
+                  externalUrl
+                  internalContent {
+                    __typename
+                    ... on ContentfulPage {
+                      id
+                      title
+                      slug
+                      sys {
+                        contentType {
+                          sys {
+                            type
+                            id
+                          }
+                        }
+                      }
+                    }
+                    ... on ContentfulReferencedSection {
+                      id
+                      page {
+                        title
+                      }
+                      header
+                      sys {
+                        contentType {
+                          sys {
+                            type
+                            id
+                          }
+                        }
+                      }
+                    }
+                    ... on ContentfulSection {
+                      id
+                      page {
+                        title
+                      }
+                      header
+                      sys {
+                        contentType {
+                          sys {
+                            type
+                            id
+                          }
+                        }
+                      }
+                    }
+                    ... on ContentfulResource {
+                      id
+                      heading
+                      sys {
+                        contentType {
+                          sys {
+                            type
+                            id
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                v2flag
+              }
+            }
+          }
+          isHubspotEmbed
+          isInsertSnippet
+          codeSnippet {
+            codeSnippet
+          }
+          asset {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          buttonText
+          header
+          sectionType
+          externalLink
+          automaticOrder
+          background
+          embedForm {
+            raw
+          }
+          sys {
+            contentType {
+              sys {
+                id
+              }
+            }
+          }
+          subHeader {
+            subHeader
+          }
+          internalLink {
+            ... on ContentfulPage {
+              id
+              title
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulReferencedSection {
+              id
+              page {
+                title
+              }
+              header
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulSection {
+              id
+              page {
+                title
+              }
+              header
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+            ... on ContentfulResource {
+              id
+              heading
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
+                  }
+                }
+              }
+            }
+          }
+          mediaItem {
+            name
+            media {
+              gatsbyImageData(
+                resizingBehavior: SCALE
+                placeholder: BLURRED
+                layout: CONSTRAINED
+              )
+              title
+              file {
+                contentType
+                details {
+                  size
+                }
+                url
+              }
+            }
+            youtubeLink
+            embedCode {
+              raw
+            }
+            id
+          }
+          stylingOptions {
+            background
+            id
+            name
+          }
+          v2Flag
+          renderOptions {
+            name
+            id
+            layoutOptions {
+              id
+              name
+              numberOfColumns
+              shouldRenderCarousel
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default React.memo(RoiTemplate);

@@ -15,3 +15,16 @@ export type RoiInputsDec = {
     paSubmissionRate: Decimal;
     averageRefillsPerNRx: Decimal;
 }
+
+export type SliderConfig = {
+  keyName: string;
+  title: string;
+  actualValue: number;
+  actulValueInString: string;
+  changeValue: (v: number) => void;
+  min: number;
+  max: number;
+  step: number;
+  marks: { value: number; label: string }[];
+  tootipMsg?: string;
+};

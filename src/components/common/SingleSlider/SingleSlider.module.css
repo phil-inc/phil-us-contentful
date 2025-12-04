@@ -1,0 +1,18 @@
+.singleSlider{
+    .label{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 18px;
+
+        .titleLabel{
+            display: flex;
+            gap: 12px;
+            font-size: 16px;
+
+            .icon{
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}

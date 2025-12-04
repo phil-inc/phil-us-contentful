@@ -1,0 +1,12 @@
+.roiCalculator{
+    height: 100%;
+
+    .left{
+        padding: 10px;
+    }
+
+    .right{
+        padding: 10px;
+        height: -webkit-fill-available;
+    }
+}
