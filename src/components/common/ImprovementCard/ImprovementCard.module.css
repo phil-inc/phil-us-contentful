@@ -1,0 +1,16 @@
+.improvementCard {
+    color: #FFFFFF;
+    background-color: #00827E;
+    border: 2px solid #9E9E9E;
+    border-radius: 8px;
+    padding: 20px;
+
+    .title {
+        margin-bottom: 27px;
+    }
+
+    .value {
+        font-size: 28px;
+        margin-top: 7px;
+    }
+}
