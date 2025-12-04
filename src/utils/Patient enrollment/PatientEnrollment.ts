@@ -6,7 +6,7 @@ import {
   PatientEnrollmentRF,
   PatientEnrollmentStats,
 } from "utils/Patient enrollment/IpatientEnrollment";
-import { toDecimal } from "../../utils/decimal/decimal.utils";
+import { toDecimal, toDecimalRounded } from "../../utils/decimal/decimal.utils";
 
 /**
  * Patient Enrollment Calculator (Base Class For ROI Calculation)
@@ -50,7 +50,7 @@ abstract class PatientEnrollment {
   }
 
   private get EnrolledWithInsurance() {
-    return this.NRx.mul(this.EnrolledWithInsurancePercentage);
+    return toDecimalRounded(this.NRx.mul(this.EnrolledWithInsurancePercentage),0);
   }
 
   //coverage check
@@ -59,7 +59,7 @@ abstract class PatientEnrollment {
   }
 
   private get CovererdOutRight() {
-    return this.EnrolledWithInsurance.mul(this.CoveredOutRightPercentage);
+    return toDecimalRounded(this.EnrolledWithInsurance.mul(this.CoveredOutRightPercentage),0);
   }
 
   //PA
@@ -68,7 +68,7 @@ abstract class PatientEnrollment {
   }
 
   private get RequiresPA() {
-    return this.EnrolledWithInsurance.mul(this.RequiresPAPercentage);
+    return toDecimalRounded(this.EnrolledWithInsurance.mul(this.RequiresPAPercentage),0);
   }
 
   private get PASubmittedRate() {
@@ -76,7 +76,7 @@ abstract class PatientEnrollment {
   }
 
   private get PASubmitted() {
-    return this.RequiresPA.mul(this.PASubmittedRate);
+    return toDecimalRounded(this.RequiresPA.mul(this.PASubmittedRate),0);
   }
 
   // PA Approval
@@ -85,7 +85,7 @@ abstract class PatientEnrollment {
   }
 
   private get PAApproved() {
-    return this.PASubmitted.mul(this.PAApprovedRate);
+    return toDecimalRounded(this.PASubmitted.mul(this.PAApprovedRate),0);
   }
 
   //Patients Reaching covered Copay
@@ -98,9 +98,9 @@ abstract class PatientEnrollment {
   }
 
   private get CoveredFFDispensed() {
-    return this.PatientsReachingCoveredCopay.mul(
+    return toDecimalRounded(this.PatientsReachingCoveredCopay.mul(
       this.PaymentApprovalRateCovered,
-    );
+    ),0);
   }
 
   //Patients Reaching uncovered Copay
@@ -114,9 +114,9 @@ abstract class PatientEnrollment {
   }
 
   private get UncoveredFFDispensed() {
-    return this.PatientsReachingUncoveredCopay.mul(
+    return toDecimalRounded(this.PatientsReachingUncoveredCopay.mul(
       this.PaymentApprovalRateUncovered,
-    );
+    ),0);
   }
 
   // Cash/Self-Pay Patients
@@ -125,14 +125,13 @@ abstract class PatientEnrollment {
   }
 
   private get EnrolledWithoutInsurance() {
-    return this.NRx.mul(this.EnrolledWithoutInsurancePercentage);
+    return toDecimalRounded(this.NRx.mul(this.EnrolledWithoutInsurancePercentage),0);
   }
   private get PaymentApprovalRateCash() {
     return this.defaultStats.paymentApprovalRateCash;
   }
   private get CashFFDispensed() {
-    
-    return this.EnrolledWithoutInsurance.mul(this.PaymentApprovalRateCash);
+    return toDecimalRounded(this.EnrolledWithoutInsurance.mul(this.PaymentApprovalRateCash),0);
   }
 
   // not enrolled patients

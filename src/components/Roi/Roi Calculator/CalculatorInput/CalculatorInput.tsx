@@ -45,11 +45,11 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         marks: [
           {
             value: ROI_INPUT_CONFIG.nRx.min,
-            label: `$${ROI_INPUT_CONFIG.nRx.min}`,
+            label: ROI_INPUT_CONFIG.nRx.min,
           },
           {
             value: ROI_INPUT_CONFIG.nRx.max,
-            label: `$${ROI_INPUT_CONFIG.nRx.max}`,
+            label: ROI_INPUT_CONFIG.nRx.max,
           },
         ],
         tootipMsg: "Total number of new prescriptions expected per year",
@@ -66,11 +66,11 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         marks: [
           {
             value: ROI_INPUT_CONFIG.wac.min,
-            label: `$${ROI_INPUT_CONFIG.wac.min}`,
+            label: getInDollar(ROI_INPUT_CONFIG.wac.min),
           },
           {
             value: ROI_INPUT_CONFIG.wac.max,
-            label: `$${ROI_INPUT_CONFIG.wac.max}`,
+            label: getInDollar(ROI_INPUT_CONFIG.wac.max),
           },
         ],
         tootipMsg: "Wholesale Average Cost per prescription",
@@ -87,11 +87,11 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         marks: [
           {
             value: ROI_INPUT_CONFIG.patientEnagedPercentage.min,
-            label: `$${ROI_INPUT_CONFIG.patientEnagedPercentage.min}`,
+            label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.min),
           },
           {
             value: ROI_INPUT_CONFIG.patientEnagedPercentage.max,
-            label: `$${ROI_INPUT_CONFIG.patientEnagedPercentage.max}`,
+            label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.max),
           },
         ],
         tootipMsg: "Percentage of patients who enroll in your  program",
@@ -108,11 +108,11 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         marks: [
           {
             value: ROI_INPUT_CONFIG.paSubmissionRate.min,
-            label: `$${ROI_INPUT_CONFIG.paSubmissionRate.min}`,
+            label: getInPercent(ROI_INPUT_CONFIG.paSubmissionRate.min),
           },
           {
             value: ROI_INPUT_CONFIG.paSubmissionRate.max,
-            label: `$${ROI_INPUT_CONFIG.paSubmissionRate.max}`,
+            label: getInPercent(ROI_INPUT_CONFIG.paSubmissionRate.max),
           },
         ],
         tootipMsg:
@@ -130,11 +130,11 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         marks: [
           {
             value: ROI_INPUT_CONFIG.averageRefillsPerNRx.min,
-            label: `$${ROI_INPUT_CONFIG.averageRefillsPerNRx.min}`,
+            label: getInX(ROI_INPUT_CONFIG.averageRefillsPerNRx.min),
           },
           {
             value: ROI_INPUT_CONFIG.averageRefillsPerNRx.max,
-            label: `$${ROI_INPUT_CONFIG.averageRefillsPerNRx.max}`,
+            label: getInX(ROI_INPUT_CONFIG.averageRefillsPerNRx.max),
           },
         ],
         tootipMsg: "Average number of refills per patient",
@@ -154,7 +154,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         </div>
       )}
 
-      <Stack gap={"lg"}>
+      <Stack gap={"lg"} className={classes.sliderContainer}>
         {slidersData.map((slider) => (
           <SingleSlider sliderProps={slider} key={slider.keyName} />
         ))}
