@@ -23,6 +23,8 @@ import { getSectionColors } from "./RenderResource";
 import * as classes from "./referencedSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 
+import Asset from "components/common/Asset/Asset";
+
 type ReferencedSectionProps = {
   section: IReferencedSection;
   isEmbedFormTemplate: boolean;
@@ -148,6 +150,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 
   const isProviderPage = context.title === HCP_PAGE;
   const isHomePageFirstCardSection =context.title === HOME && section.referenceType === ReferenceTypeEnum["Card Section"];
+  const topImage = section.topAsset
 
   let sectionContent;
   if (context.title === FIELD_PAGE) {
@@ -236,6 +239,14 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
     >
       <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
+      {topImage &&
+        <div className={classes.topImage}>
+          <Asset
+            asset={topImage}
+            objectFit="contain"
+          />
+         </div>
+      }
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
@@ -280,29 +291,40 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               </Group>
             )}
 
+          {/* parent div for button */}
+          <div
+            style={{background: section?.divColorOfBtnParent?.background ? getColorFromStylingOptions(section.divColorOfBtnParent.background) : undefined}} 
+            className={cx({[classes.parentBtnDiv]: Boolean(section?.divColorOfBtnParent)})}
+          >
           {/* bottom buttons */}
           {Boolean(section.buttonText?.length) &&
             (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
               <Group justify="center" mt={isFaqSection ? 80 : 44}>
                 {isExternal ? (
                   <Anchor 
-                    className={classes.externalLink}
-                    href={link}
-                    target="_blank"
+                  className={classes.externalLink}
+                  href={link}
+                  target="_blank"
                   >
-                    <Button variant="philDefault">{section.buttonText}</Button>
+                    <Button variant={Boolean(section?.divColorOfBtnParent) ? "white" : "philDefault"}>{section.buttonText}</Button>
                   </Anchor>
                 ) : (
                   <Link className={classes.internalLink} to={link}>
-                    <Button variant="philDefault">{section.buttonText}</Button>
+                    <Button variant={Boolean(section?.divColorOfBtnParent) ? "white" : "philDefault"}>{section.buttonText}</Button>
                   </Link>
                 )}
               </Group>
+              )}
+            {section?.belowSubHeading?.belowSubHeading && (
+              <Text className={classes.belowSubHeading}>
+                {section.belowSubHeading.belowSubHeading}
+              </Text>
             )}
+          </div>
 
           {/* philrx testimonial */}
           {section.header === "What PhilRx Patients & Providers Say"  && (
-          <div className={classes.customTestiominalFooter}>
+            <div className={classes.customTestiominalFooter}>
             <div className="trustpilot-widget" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%">
               <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>
             </div>

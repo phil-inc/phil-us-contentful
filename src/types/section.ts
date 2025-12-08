@@ -149,6 +149,7 @@ export type IReferencedSection = {
   id: string;
   title: string;
   metaDescription: string;
+  topAsset?: TAsset;
   hideHeader: boolean;
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
   header: string;
@@ -157,6 +158,7 @@ export type IReferencedSection = {
     id: string;
     subHeading: string;
   };
+  addBorder: boolean;
   references: TResource[];
   metadata?: Metadata;
   buttonText?: string;
@@ -196,6 +198,7 @@ export type IReferencedSection = {
     belowSubHeading: string;
   };
   leftBackgroundAssetImage?: TAsset;
+  divColorOfBtnParent?: StylingOptions;
 };
 
 export type Reference = {

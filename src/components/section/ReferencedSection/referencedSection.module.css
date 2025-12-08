@@ -4,6 +4,13 @@
   }
 }
 
+.topImage{
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;
+  margin-bottom: 50px;
+}
+
 .innerContainer{
   position: relative;
   z-index: 2;
@@ -85,6 +92,29 @@
   &.isDarkBanner{
     color:#FFFFFF
   }
+}
+
+.parentBtnDiv{
+  margin-top: 50px;
+  padding: 16px 36px 36px;
+  border-radius: 16px;
+
+  button{
+    color: #0A0A0A;
+    width: 100%;
+    border-radius: 0;
+
+    @media (min-width: $phil-breakpoint-md) {
+      width: auto;
+    }
+  }
+}
+
+.belowSubHeading{
+  margin-top: 28px;
+  text-align: center;
+  color: var(--primay-white-color, #FFF);
+  font-size: 18px;
 }
 
 .grid {

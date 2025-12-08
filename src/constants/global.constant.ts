@@ -41,3 +41,7 @@ export const CONTENTFUL_TYPES = {
 };
 
 export const TIME_ZONE_USA = "America/Los_Angeles";
+
+export const ONE = 1;
+
+export const NOT_AVAILABLE = "N/A";
