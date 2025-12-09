@@ -1,0 +1,29 @@
+.inputContainer {
+    padding: 32px;
+    background-color: #FFFFFF;
+    border: 2px solid #D9D9D9;
+    border-radius: 8px;
+
+
+    .disclaimer {
+        display: flex;
+        gap: 10px;
+        background: #00827E1A;
+        border-radius: 4px;
+        padding: 12px;
+        margin-bottom: 30px;
+        color: #0A0A0A;
+
+        .icon {
+            margin-top: 3px;
+
+            svg {
+                fill: #525252;
+            }
+        }
+    }
+
+    .sliderContainer {
+        margin-bottom: 32px;
+    }
+}

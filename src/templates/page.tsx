@@ -598,6 +598,22 @@ query getPages($id: String!) {
           id
           isHidden
           hideNavigationAnchor
+          addBorder
+          topAsset {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
           hideHeader
           header
           showBottomBorder
@@ -1344,6 +1360,16 @@ query getPages($id: String!) {
               numberOfColumns
               shouldRenderCarousel
             }
+          }
+          belowSubHeading{
+            id
+            belowSubHeading
+          }
+          divColorOfBtnParent {
+            background
+            extraColor
+            id
+            name
           }
         }
       }
