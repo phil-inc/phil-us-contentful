@@ -115,6 +115,15 @@
 .demo:hover {
   background-color: #005a4f;
 }
+
+.badge{
+  color: #0A0A0A;
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 4px;
+  padding: 7px;
+}
+
 /* Indicator arrow above the submenu */
 .indicator {
   position: absolute;

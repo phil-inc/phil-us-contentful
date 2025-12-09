@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { ContentfulPage } from "types/page";
 import cx from "clsx";
 import { Link } from "gatsby";
+import { Badge } from "@mantine/core";
 
 import * as classes from "./navigation.module.css";
 import { getPathForSectionAndPage } from "utils/links";
@@ -62,6 +63,17 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
                                   className={classes.dropdownLink}
                                 >
                                   {section?.navbarTitle ?? (section?.header ?? section.title)}
+                                  {section?.canShowNew  && 
+                                    <Badge
+                                      key={section.id}
+                                      className={classes.badge}
+                                      color="#EDBE3D"
+                                      size="lg"
+                                      radius="md"
+                                    >
+                                      NEW
+                                    </Badge>
+                                  }
                                 </Link>
                               </li>
                             </div>

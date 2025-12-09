@@ -467,6 +467,7 @@ const query = graphql`
             title
             slug
             navbarTitle
+            canShowNew
           }
         }
       }

@@ -11,6 +11,7 @@ export type ContentfulPage = {
   noindex: boolean;
   slug: string;
   navbarTitle?: string;
+  canShowNew?: boolean;
 };
 
 export type ContenfulHeaderLogo = {
