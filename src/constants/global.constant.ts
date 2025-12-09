@@ -57,3 +57,6 @@ export const REFERENCE_SECTION = {
   THREE: 3,
   FOUR: 4,
 };
+export const ONE = 1;
+
+export const NOT_AVAILABLE = "N/A";

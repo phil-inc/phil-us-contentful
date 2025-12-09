@@ -226,3 +226,19 @@
     }
   }
 }
+
+.phil-singleSlider{
+
+  .sliderLabel{
+    margin-top: 4px;
+  }
+
+  .phil-Slider-markWrapper:first-of-type .sliderLabel {
+    transform: translateX(0px) translateY(12px);
+  }
+
+
+  .phil-Slider-markWrapper:last-of-type .sliderLabel {
+    transform: translateX(-77%) translateY(12px);
+  }
+}

@@ -55,6 +55,7 @@
   @media screen and (min-width: $phil-breakpoint-xl) {
       justify-content: center;
   }
+  margin-bottom: 50px;
 }
 
 .innerContainer{
