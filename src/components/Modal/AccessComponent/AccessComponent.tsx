@@ -10,14 +10,14 @@ import { SessionModalRef } from "components/SessionModal/SessionModal";
 
 import { getHubspotFormDetails } from "utils/utils";
 
-import * as classes from "./AccessDtpResource.module.css";
+import * as classes from "./AccessComponent.module.css";
 
-type AccessDtpResourceProps = {
+type AccessComponentProps = {
   modalData: ContentfulModal;
   modalRef?: React.RefObject<SessionModalRef | null>;
 };
 
-const AccessDtpResource: React.FC<AccessDtpResourceProps> = ({
+const AccessComponent: React.FC<AccessComponentProps> = ({
   modalData,
   modalRef,
 }) => {
@@ -62,4 +62,4 @@ const AccessDtpResource: React.FC<AccessDtpResourceProps> = ({
   );
 };
 
-export default AccessDtpResource;
+export default AccessComponent;

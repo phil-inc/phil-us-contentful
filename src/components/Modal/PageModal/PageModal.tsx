@@ -10,7 +10,7 @@ import LaunchDtp from "components/LaunchDtp/LaunchDtp";
 import SessionModal, {
   SessionModalRef,
 } from "components/SessionModal/SessionModal";
-import AccessDtpResource from "components/Modal/AccessDtpResource/AccessDtpResource";
+import AccessComponent from "components/Modal/AccessComponent/AccessComponent";
 
 import PageContext from "contexts/PageContext";
 
@@ -18,11 +18,11 @@ import { ContentfulModal } from "types/modal";
 import { HOME, PAGES_TITLE } from "constants/page";
 import { useModalSize } from "hooks/useModalSize";
 
-type DTPModalProps = {
+type PageModalProps = {
   contentfulModalNodes: ContentfulModal[];
 };
 
-const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
+const PageModal: React.FC<PageModalProps> = ({ contentfulModalNodes }) => {
   const context = useContext(PageContext);
   const isHomePage = context.title === HOME;
   const [opened, setOpened] = useState(false);
@@ -100,7 +100,7 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
           modalSize={normalModalSize}
         >
           <div>
-            <AccessDtpResource
+            <AccessComponent
               modalRef={modelRef.dtpResource}
               modalData={dtpResourceData}
             />
@@ -116,7 +116,7 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
           modalSize={normalModalSize}
         >
           <div>
-            <AccessDtpResource modalRef={modelRef.roi} modalData={roiData} />
+            <AccessComponent modalRef={modelRef.roi} modalData={roiData} />
           </div>
         </SessionModal>
       )}
@@ -124,4 +124,4 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
   );
 };
 
-export default DTPModal;
+export default PageModal;

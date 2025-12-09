@@ -9,7 +9,7 @@ import RoiCalculator from "components/Roi/Roi Calculator/RoiCalculator";
 import PageContext from "contexts/PageContext";
 
 import Head from "components/common/Head/Head";
-import DTPModal from "components/Modal/dtpModal/dtpModal";
+import PageModal from "components/Modal/PageModal/PageModal";
 
 import { ContentfulPage } from "types/page";
 import { ISection } from "types/section";
@@ -36,7 +36,7 @@ const RoiTemplate: React.FC<RoiTemplateProps> = ({
     <PageContext.Provider value={{ title }}>
       <Layout>
         <Container className="container" size={"xl"}>
-          <DTPModal contentfulModalNodes={allContentfulModal?.nodes || []}/>
+          <PageModal contentfulModalNodes={allContentfulModal?.nodes || []}/>
           <main className="roi-page">
               <RoiCalculator section={firstSection}/>
           </main>
