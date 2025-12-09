@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Modal } from "@mantine/core";
-import { DTP_RESOURCES_EMAIL_SUBMITTED, SCREEN_SIZES, SHOW_DTP_MODAL } from "constants/global.constant";
+import {
+  DTP_RESOURCES_EMAIL_SUBMITTED,
+  ROI_EMAIL_SUBMITTED,
+  SHOW_DTP_MODAL,
+} from "constants/global.constant";
 
 import LaunchDtp from "components/LaunchDtp/LaunchDtp";
 import SessionModal, {
@@ -33,12 +37,22 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
       node.canDisplayModal === true &&
       node?.pageToDisplay?.title === PAGES_TITLE.DTP_RESOURCES,
   );
+  const roiData = contentfulModalNodes.find(
+    (node) =>
+      node.canDisplayModal === true &&
+      node?.pageToDisplay?.title === PAGES_TITLE.ROI,
+  );
+
   const isHomePageModal = isHomePage && homeData?.canDisplayModal;
   const isDtpResourcePageModal =
     context.title === PAGES_TITLE.DTP_RESOURCES &&
     dtpResourceData?.canDisplayModal;
+  const isRoiPageModal = context.title === PAGES_TITLE.ROI && roiData;
 
-  const dtpResourceModalRef = React.useRef<SessionModalRef>(null);
+  const modelRef = {
+    dtpResource: React.useRef<SessionModalRef>(null),
+    roi: React.useRef<SessionModalRef>(null),
+  };
 
   useEffect(() => {
     // Check if modal has already been shown in this session
@@ -79,7 +93,7 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
 
       {dtpResourceData && isDtpResourcePageModal && (
         <SessionModal
-          ref={dtpResourceModalRef}
+          ref={modelRef.dtpResource}
           sessionKey={DTP_RESOURCES_EMAIL_SUBMITTED}
           autoOpen
           closeOnClickOutside={false}
@@ -87,9 +101,22 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
         >
           <div>
             <AccessDtpResource
-              modalRef={dtpResourceModalRef}
+              modalRef={modelRef.dtpResource}
               modalData={dtpResourceData}
             />
+          </div>
+        </SessionModal>
+      )}
+      {roiData && isRoiPageModal && (
+        <SessionModal
+          ref={modelRef.roi}
+          sessionKey={ROI_EMAIL_SUBMITTED}
+          autoOpen
+          closeOnClickOutside={false}
+          modalSize={normalModalSize}
+        >
+          <div>
+            <AccessDtpResource modalRef={modelRef.roi} modalData={roiData} />
           </div>
         </SessionModal>
       )}

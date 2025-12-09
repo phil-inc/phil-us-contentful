@@ -1,11 +1,14 @@
+import slugify from "slugify"
+;
 import { HOME, INSIGHTS } from "constants/page";
-import slugify from "slugify";
+import { CONTENTFUL_TYPES } from "constants/global.constant";
 
 export const getPathForSectionAndPage = (
   pageTitle: string,
   sectionHeader: string,
   slug: string,
   sectionPath?: string,
+  typename?: string
 ): string => {
 // Set path based on page and section
 
@@ -16,8 +19,13 @@ export const getPathForSectionAndPage = (
   }
 
   if (pageTitle === INSIGHTS) {
-    const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
-    path += `/${sectionSlug}`;
+    if(typename === CONTENTFUL_TYPES.PAGE && sectionPath){
+      const pageSlug = slugify(sectionPath, { lower: true, strict: true });
+      path = `/${pageSlug}`;
+    } else{
+      const sectionSlug = slugify(sectionHeader, { lower: true, strict: true });
+      path += `/${sectionSlug}`;
+    }
   } else if(sectionPath){
     path = `/${sectionPath}`;
   }else{

@@ -42,6 +42,7 @@ export type RenderOptions = {
 
 export type ISection = {
   id: string;
+  __typename?: string;
   sectionType: SectionType;
   header: string;
   youtubeVideoUrl?: string;
@@ -147,6 +148,7 @@ export type Metadata = {
 export type IReferencedSection = {
   [x: string]: any;
   id: string;
+  __typename?: string;
   title: string;
   metaDescription: string;
   topAsset?: TAsset;
@@ -213,6 +215,7 @@ export type ReferenceBodyType = {
 
 export type ITextandTextColumns = {
   id: string;
+  __typename?: string;
   heading: string;
   subHeadingText: string;
   body?: BodyType;
@@ -228,6 +231,7 @@ export type ITextandTextColumns = {
 
 export type ITextandTextColumnsWithFooterSection = {
   id: string;
+  __typename?: string;
   title?: string;
   stylingOptions?: StylingOptions;
   leftColumn: ReferenceBodyType;

@@ -143,7 +143,8 @@ const CDrawer: React.FC = () => {
                         page.title,
                         section.header ?? section.title,
                         page.slug,
-                        section.slug
+                        section.slug,
+                        section?.__typename,
                       );
 
                       return (

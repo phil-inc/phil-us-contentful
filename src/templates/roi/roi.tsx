@@ -9,30 +9,34 @@ import RoiCalculator from "components/Roi/Roi Calculator/RoiCalculator";
 import PageContext from "contexts/PageContext";
 
 import Head from "components/common/Head/Head";
+import DTPModal from "components/Modal/dtpModal/dtpModal";
 
 import { ContentfulPage } from "types/page";
 import { ISection } from "types/section";
+import { AllContentfulModalQuery } from "types/modal";
 
 type RoiTemplateProps = {
     data: {
       contentfulPage: ContentfulPage;
+      allContentfulModal: AllContentfulModalQuery;
     };
 };
 
 export { Head };
 
 const RoiTemplate: React.FC<RoiTemplateProps> = ({
-    data: { contentfulPage },
+    data: { contentfulPage, allContentfulModal },
 
 }) => {
   const { sections, title } = contentfulPage;
   const firstSection = sections[0] as ISection;
 
-
+  
   return (
     <PageContext.Provider value={{ title }}>
       <Layout>
         <Container className="container" size={"xl"}>
+          <DTPModal contentfulModalNodes={allContentfulModal?.nodes || []}/>
           <main className="roi-page">
               <RoiCalculator section={firstSection}/>
           </main>
@@ -285,6 +289,79 @@ export const query = graphql`
               shouldRenderCarousel
             }
           }
+        }
+      }
+    }
+    allContentfulModal(
+      filter: {node_locale: {eq: "en-US"}, pageToDisplay: {slug: {in: ["roi"]}}}
+    ) {
+      nodes {
+        id
+        body {
+          raw
+        }
+        logo {
+          gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+          title
+          file {
+            contentType
+            details {
+              size
+            }
+            url
+          }
+        }
+        hyperlink {
+          ... on ContentfulLink {
+            id
+            linkLabel
+            internalContent {
+              ... on ContentfulPage {
+                slug
+                id
+                title
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        image {
+          gatsbyImageData(placeholder: BLURRED, layout: CONSTRAINED)
+          title
+          file {
+            contentType
+            details {
+              size
+            }
+            url
+          }
+        }
+        pageToDisplay {
+          __typename
+          ... on ContentfulPage {
+            slug
+            id
+            title
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+        }
+        canDisplayModal
+        embedForm{
+          raw
         }
       }
     }

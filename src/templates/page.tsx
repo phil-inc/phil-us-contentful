@@ -18,7 +18,6 @@ import Head from "components/common/Head/Head";
 import PageContext from "contexts/PageContext";
 import DTPModal from "components/Modal/dtpModal/dtpModal";
 
-
 import * as classes from "./page.module.css";
 
 type PageTemplateProps = {
@@ -132,7 +131,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
 };
 
 export const query = graphql`
-query getPages($id: String!) {
+  query getPages($id: String!) {
     contentfulPage(id: { eq: $id }) {
       noindex
       slug
@@ -1374,7 +1373,9 @@ query getPages($id: String!) {
         }
       }
     }
-    allContentfulModal(filter: { node_locale: { eq: "en-US" } }) {
+    allContentfulModal(
+      filter: {node_locale: {eq: "en-US"}, pageToDisplay: {slug: {in: ["/","dtp-resources"]}}}
+    ) {
       nodes {
         id
         body {

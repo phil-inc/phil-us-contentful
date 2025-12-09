@@ -128,6 +128,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => {
                         section.header ?? section.title,
                         page.slug,
                         section.slug,
+                        section?.__typename,
                       );
 
                       return (
