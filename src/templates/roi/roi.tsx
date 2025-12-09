@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { graphql } from "gatsby";
-import { Container } from "@mantine/core";
+import { Center, Container, Loader } from "@mantine/core";
 
 import { Layout } from "layouts/Layout/Layout";
 
@@ -14,6 +14,8 @@ import PageModal from "components/Modal/PageModal/PageModal";
 import { ContentfulPage } from "types/page";
 import { ISection } from "types/section";
 import { AllContentfulModalQuery } from "types/modal";
+
+import { ROI_EMAIL_SUBMITTED } from "constants/global.constant";
 
 type RoiTemplateProps = {
     data: {
@@ -31,15 +33,38 @@ const RoiTemplate: React.FC<RoiTemplateProps> = ({
   const { sections, title } = contentfulPage;
   const firstSection = sections[0] as ISection;
 
+   // Manual Loader state for ROI page
+    const [canShowLoader, setCanShowLoader] = React.useState(true);
+
+    useEffect(() => {
+      const isRoiEmailSubmissionPending = sessionStorage.getItem(ROI_EMAIL_SUBMITTED) !== "true"; 
+      if(!isRoiEmailSubmissionPending){
+        setCanShowLoader(false);
+        return;
+      }
+  
+      const timer = setTimeout(() => {
+        setCanShowLoader(false);
+      }, 1000);
+  
+      return () => clearTimeout(timer);
+    },[])
+
   
   return (
     <PageContext.Provider value={{ title }}>
       <Layout>
         <Container className="container" size={"xl"}>
           <PageModal contentfulModalNodes={allContentfulModal?.nodes || []}/>
-          <main className="roi-page">
-              <RoiCalculator section={firstSection}/>
-          </main>
+           {canShowLoader
+              ? <Center>
+                  <Loader mt={"xl"} mb={"xl"} size="lg" />
+                </Center>
+                
+              :<main className="roi-page">
+                  <RoiCalculator section={firstSection}/>
+              </main>
+          }
         </Container>
       </Layout>
     </PageContext.Provider>
