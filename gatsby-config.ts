@@ -19,7 +19,8 @@ interface RootDirsConfig {
 
 const rootDirsConfig: RootDirsConfig = {};
 
-
+// Add custom alias for Addyi page
+rootDirsConfig['@addyi'] = path.resolve(__dirname, 'src', 'pages', 'addyi');
 
 srcDirs.forEach((srcDir: string) => {
   rootDirsConfig[srcDir] = path.resolve(__dirname, 'src', srcDir);

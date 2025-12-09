@@ -108,13 +108,13 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
           </Center>
           )
         : sections
-          .filter((section) => !section.isHidden)
+          .filter((section) => !(section as ISection)?.isHidden)
           .map((section, index, array) => (
             <Section
               key={section.id + "mapSectionComponent"}
-              section={section}
+              section={section as ISection}
               index={
-                section.sectionType === "Basic Section"
+                (section as ISection)?.sectionType === "Basic Section"
                   ? basicSectionCount++
                   : basicSectionCount
               }

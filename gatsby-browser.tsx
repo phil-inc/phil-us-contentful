@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '@fontsource/inter'; // Defaults to 400
+import '@fontsource/inter/800.css';
 import '@fontsource/raleway'; // Defaults to 400
 import '@fontsource/raleway/600.css';
 import '@fontsource/raleway/700.css';

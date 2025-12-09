@@ -1,0 +1,2 @@
+export { addyiTheme } from "./theme";
+
