@@ -47,7 +47,7 @@ const Annoucement: React.FC<AnnoucementProps> = ({ reference }) => {
         <div className={classes.right}>
           <Link
             className={classes.internalLink}
-            to={`/${reference.hyperlink?.internalContent?.slug}`}
+            to={`/${reference.hyperlink?.internalContent?.slug || ""}`}
           >
             <Button
               color="white"

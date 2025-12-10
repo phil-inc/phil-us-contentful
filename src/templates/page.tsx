@@ -103,7 +103,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
         <PageModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
         {canShowLoader
         ? (<Center>
-            <Loader mt={0} size="lg" />
+            <Loader  mt={"xl"} mb={"xl"} size="lg" />
           </Center>
           )
         : sections

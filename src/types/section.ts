@@ -189,7 +189,6 @@ export type IReferencedSection = {
       "generateStaticPage" | "id" | "heading" | "externalLink" | "internalLink"
     >
   >;
-
   stylingOptions?: StylingOptions;
   renderOptions?: RenderOptions;
   backgroundAssetImage?: TAsset;
@@ -201,7 +200,24 @@ export type IReferencedSection = {
   };
   leftBackgroundAssetImage?: TAsset;
   divColorOfBtnParent?: StylingOptions;
+  announcementItems: AnnouncementItems
 };
+
+  export type AnnouncementItems = Array<
+    Pick<
+      TResource,
+      | "generateStaticPage"
+      | "id"
+      | "heading"
+      | "externalLink"
+      | "internalLink"
+      | "body"
+      | "asset"
+      | "buttonText"
+    >
+  >;
+  
+
 
 export type Reference = {
   id: string;
