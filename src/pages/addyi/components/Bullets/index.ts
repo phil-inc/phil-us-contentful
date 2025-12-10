@@ -1,1 +1,3 @@
-export { Bullets } from "./Bullets";
+import { Bullets } from "./Bullets";
+
+export default Bullets;

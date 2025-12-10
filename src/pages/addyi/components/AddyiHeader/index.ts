@@ -1,2 +1,3 @@
-export { AddyiHeader } from "./Header";
+import { AddyiHeader } from "./Header";
 
+export default AddyiHeader;

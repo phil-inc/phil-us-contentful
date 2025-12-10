@@ -1,1 +1,3 @@
-export { AboutAddyiSection } from "./AboutAddyiSection";
+import { AboutAddyiSection } from "./AboutAddyiSection";
+
+export default AboutAddyiSection;

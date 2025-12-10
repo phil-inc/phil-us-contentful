@@ -1,1 +1,3 @@
-export { SearchSend } from "./SearchSend";
+import { SearchSend } from "./SearchSend";
+
+export default SearchSend;

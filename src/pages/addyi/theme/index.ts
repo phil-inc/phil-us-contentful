@@ -1,2 +1,3 @@
-export { addyiTheme } from "./theme";
+import { addyiTheme }from "./theme";
 
+export default addyiTheme;

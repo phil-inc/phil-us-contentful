@@ -1,1 +1,3 @@
-export { HowToPrescribe } from "./HowToPrescribe";
+import { HowToPrescribe } from "./HowToPrescribe";
+
+export default HowToPrescribe;

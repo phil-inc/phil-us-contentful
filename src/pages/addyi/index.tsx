@@ -1,16 +1,16 @@
 import React from "react";
 import { Box, MantineProvider } from "@mantine/core";
 import { SEO } from "layouts/SEO/SEO";
-import { addyiTheme } from "@addyi/theme";
-import { AddyiHeader } from "@addyi/components/AddyiHeader";
-import { HeroSection } from "@addyi/components/HeroSection";
-import { Bullets } from "@addyi/components/Bullets";
-import { AboutAddyiSection } from "@addyi/components/AboutAddyiSection";
-import { TestimonialBubbles } from "@addyi/components/TestimonialBubbles";
-import { HowToPrescribe } from "@addyi/components/HowToPrescribe";
-import { SearchSend } from "@addyi/components/SearchSend";
-import { SafetyInformation } from "@addyi/components/SafetyInformation";
-import { Footer } from "@addyi/components/Footer";
+import addyiTheme from "@addyi/theme";
+import AddyiHeader from "@addyi/components/AddyiHeader";
+import HeroSection from "@addyi/components/HeroSection";
+import Bullets from "@addyi/components/Bullets";
+import AboutAddyiSection from "@addyi/components/AboutAddyiSection";
+import TestimonialBubbles from "@addyi/components/TestimonialBubbles";
+import HowToPrescribe from "@addyi/components/HowToPrescribe";
+import SearchSend from "@addyi/components/SearchSend";
+import SafetyInformation from "@addyi/components/SafetyInformation";
+import Footer from "@addyi/components/Footer";
 
 import * as classes from "@addyi/styles/styles.module.css";
 

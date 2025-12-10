@@ -1,1 +1,3 @@
-export { TestimonialBubbles } from "./TestimonialBubbles";
+import { TestimonialBubbles } from "./TestimonialBubbles";
+
+export default TestimonialBubbles;

@@ -1,1 +1,3 @@
-export { SafetyInformation } from "./SafetyInformation";
+import { SafetyInformation } from "./SafetyInformation";
+
+export default SafetyInformation;
