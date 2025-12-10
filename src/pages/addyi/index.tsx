@@ -11,6 +11,7 @@ import { SEO } from "layouts/SEO/SEO";
 import { addyiTheme } from "@addyi/theme";
 import { AddyiHeader } from "@addyi/components/AddyiHeader";
 import womanWithAddyiBottle from "@addyi/assets/images/woman-holding-addyi-bottle.png";
+import checkmarkIcon from "@addyi/assets/icons/checkmark.svg";
 
 import * as classes from "@addyi/styles/styles.module.css";
 
@@ -41,7 +42,7 @@ const AddyiPage = () => {
 
           {/* Patient Information Section */}
           <Box className={classes.patientInformation}>
-            <Container size="xl" className={classes.patientInformationContainer}>
+            <Box className={classes.patientInformationContainer}>
               {/* For Patients Section */}
               <Box className={classes.forPatientsSection}>
                 <Box className={classes.forPatientsContent}>
@@ -52,18 +53,18 @@ const AddyiPage = () => {
                     WHY I CHOOSE PHILRX PHARMACY FOR MY ADDYI<sup>®</sup> PRESCRIPTION
                   </Title>
                 </Box>
+
                 <Box className={classes.patientImageContainer}>
                   <img
                     src={womanWithAddyiBottle}
                     alt="Woman with Addyi bottle"
                     className={classes.patientImage}
-                  />
+                    />
                 </Box>
               </Box>
-
-              {/* Patient Testimonial Section */}
-              <Box className={classes.patientTestimonialSection}>
-                <Text className={classes.testimonialQuote}>
+            {/* Patient Testimonial Section */}
+            <Box className={classes.patientTestimonialSection}>
+                <Text unstyled className={classes.testimonialQuote}>
                   "I transferred my Addyi<sup>®</sup> prescription to PhilRx and not
                   only did they save me over $250, they shipped my Addyi<sup>®</sup>
                   directly to my house, and their refill process has been
@@ -71,11 +72,55 @@ const AddyiPage = () => {
                   the pharmacy down the road. This has been a great
                   experience!"
                 </Text>
-                <Text className={classes.testimonialAuthor}>
+                <Text unstyled className={classes.testimonialAuthor}>
                   Jennifer 37, actual Addyi<sup>®</sup> patient
                 </Text>
               </Box>
-            </Container>
+              
+            </Box>
+          </Box>
+
+          {/* Patient Benefits Section */}
+          <Box className={classes.patientBenefits}>
+            <Box className={classes.patientBenefitsContainer}>
+              <Box className={classes.benefitItem}>
+                <Box className={classes.benefitIcon}>
+                  <img
+                    src={checkmarkIcon}
+                    alt="Checkmark"
+                    width="18"
+                    height="14"
+                  />
+                </Box>
+                <Box className={classes.benefitContent}>
+                  <Text unstyled className={classes.benefitTitle}>
+                    Free home delivery
+                  </Text>
+                  <Text unstyled className={classes.benefitDescription}>
+                    (Most convenient way to get Addyi®)
+                  </Text>
+                </Box>
+              </Box>
+
+              <Box className={classes.benefitItem}>
+                <Box className={classes.benefitIcon}>
+                  <img
+                    src={checkmarkIcon}
+                    alt="Checkmark"
+                    width="18"
+                    height="14"
+                  />
+                </Box>
+                <Box className={classes.benefitContent}>
+                  <Text unstyled className={classes.benefitTitle}>
+                    Refills made simple
+                  </Text>
+                  <Text unstyled className={classes.benefitDescription}>
+                    (For the best pharmacy experience)
+                  </Text>
+                </Box>
+              </Box>
+            </Box>
           </Box>
 
           {/* About Addyi Section */}
