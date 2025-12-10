@@ -1,0 +1,216 @@
+/* Safety Information Section */
+.safetySection {
+  width: 100%;
+  background-color: #FFFFFF;
+}
+
+/* Accordion Header - Source height: 60px */
+.accordionHeader {
+  width: 100%;
+  height: 60px;
+  background-color: #E0097E;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.accordionTitle {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 32px !important;
+  line-height: normal !important;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin: 0 auto 0 67px;
+}
+
+.accordionIcon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  margin-right: 67px;
+}
+
+.accordionIcon.open {
+  transform: rotate(45deg);
+}
+
+/* Safety Content */
+.safetyContentWrapper {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 30px 92px;
+}
+
+.safetyColumnsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+
+.safetyColumn {
+  flex: 1;
+}
+
+.safetyColumn:first-child {
+  max-width: 400px;
+}
+
+.safetyColumn:last-child {
+  max-width: 500px;
+}
+
+/* Section Titles */
+.sectionTitle {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  color: #E0097E;
+  margin-bottom: 16px;
+}
+
+/* Safety Text */
+.safetyText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #1E1E1E;
+  margin-bottom: 16px;
+}
+
+.safetyTextBold {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #1E1E1E;
+  margin-bottom: 16px;
+}
+
+/* Safety Lists */
+.safetyList {
+  list-style: disc;
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.safetyList li {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #1E1E1E;
+  margin-bottom: 8px;
+}
+
+.safetyList li strong {
+  font-weight: 700;
+}
+
+.safetyList ul {
+  list-style: disc;
+  padding-left: 24px;
+  margin-top: 8px;
+}
+
+/* Links */
+.link {
+  color: #1E1E1E;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
+/* Box Image */
+.boxImageContainer {
+  margin-top: 40px;
+  width: 457px;
+  height: 240px;
+}
+
+.boxImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 64em) {
+  .accordionHeader {
+    padding: 0 24px;
+  }
+
+  .accordionTitle {
+    font-size: 20px !important;
+    margin-left: 0;
+  }
+
+  .accordionIcon {
+    margin-right: 0;
+  }
+
+  .safetyContentWrapper {
+    padding: 24px;
+  }
+
+  .safetyColumnsContainer {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .safetyColumn:first-child,
+  .safetyColumn:last-child {
+    max-width: 100%;
+  }
+
+  .boxImageContainer {
+    width: 100%;
+    max-width: 457px;
+    height: auto;
+    aspect-ratio: 457 / 240;
+  }
+}
+
+@media (max-width: 48em) {
+  .accordionTitle {
+    font-size: 16px !important;
+  }
+
+  .accordionIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .accordionIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sectionTitle {
+    font-size: 14px !important;
+  }
+
+  .safetyText,
+  .safetyTextBold,
+  .safetyList li {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

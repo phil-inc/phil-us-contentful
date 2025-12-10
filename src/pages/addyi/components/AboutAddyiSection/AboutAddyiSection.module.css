@@ -1,0 +1,293 @@
+/* About Addyi Section - Source: top 1045px to ~1400px, height ~355px for this part */
+.aboutSection {
+  width: 100%;
+  background-color: #FFE7F9;
+  padding: 72px 0 50px 0;
+}
+
+.aboutContainer {
+  max-width: 1170px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  position: relative;
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.rightColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 83px;
+}
+
+/* Title and Buttons Section */
+.titleButtonsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-left: 115px;
+}
+
+.aboutTitle {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal;
+  font-weight: 800 !important;
+  font-size: 40px !important;
+  line-height: normal !important;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #E0097E;
+  width: 384px;
+}
+
+/* Red Buttons */
+.redButtonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prescriptionButton {
+  width: 238px;
+  height: 40px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 21px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.buttonPink {
+  border: 1px solid #E0097E;
+  color: #E0097E;
+  background: #FFFFFF;
+}
+
+.buttonPink:hover {
+  background: rgba(224, 9, 126, 0.1);
+}
+
+.buttonWhite {
+  border: 1px solid #FFFFFF;
+  color: #FFFFFF;
+  background: transparent;
+}
+
+/* Bottle Container */
+.bottleContainer {
+  position: relative;
+  width: 498px;
+  height: 524px;
+  margin-left: -57px;
+}
+
+.bottleImageWrapper {
+  width: 380px;
+  height: 423px;
+  transform: rotate(-19.2deg);
+  position: absolute;
+  left: 50px;
+  top: 50px;
+}
+
+.bottleImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sealContainer {
+  position: absolute;
+  left: 288px;
+  top: 38px;
+  width: 170px;
+  height: 170px;
+  filter: drop-shadow(-5px 5px 2px rgba(0, 0, 0, 0.17));
+}
+
+.sealImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dosage Container */
+.dosageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dosageText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #E0097E;
+  width: 474px;
+}
+
+.dosageText .underline {
+  text-decoration: underline;
+}
+
+.disclaimerText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  color: #000000;
+  width: 460px;
+}
+
+/* PDF Links */
+.pdfLinksContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 42px;
+}
+
+.pdfLink {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #E0097E;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.pdfLink:hover {
+  opacity: 0.8;
+}
+
+.downloadIcon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Responsive */
+@media (max-width: 64em) {
+  .aboutSection {
+    padding: 40px 24px;
+  }
+
+  .aboutContainer {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .leftColumn {
+    align-items: center;
+  }
+
+  .titleButtonsSection {
+    padding-left: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .aboutTitle {
+    width: 100%;
+    text-align: center;
+    font-size: 32px !important;
+  }
+
+  .redButtonContainer {
+    align-items: center;
+  }
+
+  .bottleContainer {
+    width: 100%;
+    max-width: 400px;
+    height: 400px;
+    margin-left: 0;
+  }
+
+  .bottleImageWrapper {
+    width: 280px;
+    height: 320px;
+    left: 30px;
+    top: 30px;
+  }
+
+  .sealContainer {
+    left: 200px;
+    top: 20px;
+    width: 120px;
+    height: 120px;
+  }
+
+  .rightColumn {
+    padding-top: 0;
+    align-items: center;
+  }
+
+  .dosageText {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .disclaimerText {
+    width: 100%;
+    text-align: center;
+  }
+
+  .pdfLinksContainer {
+    align-items: center;
+  }
+}
+
+@media (max-width: 48em) {
+  .aboutTitle {
+    font-size: 28px !important;
+  }
+
+  .bottleContainer {
+    max-width: 300px;
+    height: 300px;
+  }
+
+  .bottleImageWrapper {
+    width: 200px;
+    height: 240px;
+    left: 20px;
+    top: 20px;
+  }
+
+  .sealContainer {
+    left: 150px;
+    top: 10px;
+    width: 100px;
+    height: 100px;
+  }
+
+  .dosageText {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}

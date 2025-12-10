@@ -1,0 +1,135 @@
+/* Testimonials Section - Part of pink background section */
+.testimonialsSection {
+  width: 100%;
+  background-color: #FFE7F9;
+  padding: 0 0 80px 0;
+}
+
+.testimonialsContainer {
+  max-width: 1170px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-left: 495px;
+}
+
+/* Testimonial Bubble Wrapper */
+.testimonialBubbleWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Testimonial Bubble */
+.testimonialBubble {
+  background-color: #E0097E;
+  border-radius: 0 20px 50px 50px;
+  padding: 29px 40px;
+  width: 400px;
+  min-height: 165px;
+  display: flex;
+  align-items: center;
+}
+
+.bubbleText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21px;
+  color: #FFFFFF;
+}
+
+/* Decorative Dots */
+.decorativeDots {
+  position: absolute;
+  width: 109px;
+  height: 100px;
+}
+
+.dotsImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dotsChristine {
+  right: -80px;
+  top: 94px;
+}
+
+.dotsShannon {
+  right: -5px;
+  top: 94px;
+}
+
+/* Author Info */
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-self: flex-end;
+  text-align: right;
+  width: 326px;
+  padding-right: 74px;
+}
+
+.authorName {
+  font-family: 'Inter', sans-serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21px;
+  color: #E0097E;
+}
+
+.authorDescription {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 21px;
+  color: #1E1E1E;
+}
+
+/* Responsive */
+@media (max-width: 64em) {
+  .testimonialsContainer {
+    padding: 0 24px;
+    align-items: center;
+  }
+
+  .testimonialBubble {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .decorativeDots {
+    display: none;
+  }
+
+  .authorInfo {
+    padding-right: 0;
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 48em) {
+  .testimonialBubble {
+    padding: 24px;
+    min-height: auto;
+  }
+
+  .bubbleText {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .authorName,
+  .authorDescription {
+    font-size: 14px;
+  }
+}

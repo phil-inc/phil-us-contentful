@@ -1,0 +1,197 @@
+/* Search/Send Section - Source: top 2722px, ~539px height */
+.searchSendSection {
+  width: 100%;
+  background-color: #FFFFFF;
+  padding: 52px 0 80px 0;
+}
+
+.searchSendContainer {
+  max-width: 1170px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.leftColumn {
+  flex: 1;
+  padding-left: 93px;
+}
+
+.rightColumn {
+  flex-shrink: 0;
+}
+
+/* EMR Search Section */
+.emrSearchSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.emrSearchTitle {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 32px !important;
+  line-height: normal !important;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #E0097E;
+  width: 669px;
+}
+
+.searchInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.searchLine {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 28px;
+  color: #E0097E;
+}
+
+.searchLabel {
+  font-weight: 700;
+}
+
+.searchValue {
+  font-weight: 500;
+}
+
+/* Send RX Section */
+.sendRxSection {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sendRxTitle {
+  font-family: 'Inter', sans-serif !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 32px !important;
+  line-height: 32px !important;
+  letter-spacing: -0.03em;
+  color: #E0097E;
+  width: 653px;
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.contactLine {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 28px;
+  color: #E0097E;
+}
+
+.contactLabel {
+  font-weight: 700;
+}
+
+.contactValue {
+  font-weight: 600;
+}
+
+/* Notepad Container */
+.notepadContainer {
+  position: relative;
+  width: 319px;
+  height: 476px;
+}
+
+.notepadImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.philrxOverlay {
+  position: absolute;
+  bottom: 60px;
+  right: 10px;
+  background-color: #FFFFFF;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.philrxText {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2F2E33;
+  letter-spacing: 0.02em;
+}
+
+/* Responsive */
+@media (max-width: 64em) {
+  .searchSendSection {
+    padding: 40px 24px;
+  }
+
+  .searchSendContainer {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .leftColumn {
+    padding-left: 0;
+  }
+
+  .emrSearchTitle {
+    width: 100%;
+    font-size: 24px !important;
+  }
+
+  .sendRxTitle {
+    width: 100%;
+    font-size: 24px !important;
+  }
+
+  .rightColumn {
+    display: flex;
+    justify-content: center;
+  }
+
+  .notepadContainer {
+    width: 100%;
+    max-width: 319px;
+    height: auto;
+    aspect-ratio: 319 / 476;
+  }
+}
+
+@media (max-width: 48em) {
+  .emrSearchTitle {
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+
+  .sendRxTitle {
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+
+  .searchLine,
+  .contactLine {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .notepadContainer {
+    max-width: 280px;
+  }
+}
