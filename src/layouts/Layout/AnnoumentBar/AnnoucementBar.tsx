@@ -17,12 +17,12 @@ const TopAnnoucement: React.FC<AllContentfulTopAnnouncementBarQuery> = ({
 }) => {
   const location = useLocation();
   const currentLocationSlug = location.pathname.replace(/^\/|\/$/g, "");
-  
+
   const [topAnnoucement] = allContentfulTopAnnouncementBar?.nodes;
   const isCurrentLocationSameToAnnoucementLink = currentLocationSlug === topAnnoucement?.reference?.hyperlink?.internalContent?.slug;
 
   if (allContentfulTopAnnouncementBar?.nodes?.length < 1 || !(topAnnoucement?.reference?.canDisplay) || isCurrentLocationSameToAnnoucementLink) {
-    return null;
+    return <></>;
   }
 
   return <Annoucement reference={topAnnoucement.reference} />
