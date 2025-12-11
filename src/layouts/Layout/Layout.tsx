@@ -34,7 +34,7 @@ export function Layout({
   canHideHeader = false,
 }: LayoutProps) {
     const context = useContext(PageContext);
-    const skipAnnoucementPageTitle = [PAGES_TITLE.DEMO, PAGES_TITLE.PHIL_DIRECT, HCP_PAGE, PATIENTS_PAGE];
+    const skipAnnoucementPageTitle = [PAGES_TITLE.DEMO, HCP_PAGE, PATIENTS_PAGE];
     const canShowAnnoucementBar = !(skipAnnoucementPageTitle.includes(context.title));
 
   return (

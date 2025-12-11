@@ -4,6 +4,7 @@ import { graphql, StaticQuery } from "gatsby";
 import { TopAnnouncementBarNode } from "types/annoucementBar";
 
 import Annoucement from "layouts/Layout/AnnoumentBar/Annoument/Annoument";
+import { useLocation } from "@reach/router";
 
 type AllContentfulTopAnnouncementBarQuery = {
   allContentfulTopAnnouncementBar: {
@@ -14,9 +15,14 @@ type AllContentfulTopAnnouncementBarQuery = {
 const TopAnnoucement: React.FC<AllContentfulTopAnnouncementBarQuery> = ({
   allContentfulTopAnnouncementBar,
 }) => {
+  const location = useLocation();
+  const currentLocationSlug = location.pathname.replace(/^\/|\/$/g, "");
+
   const [topAnnoucement] = allContentfulTopAnnouncementBar?.nodes;
-  if (allContentfulTopAnnouncementBar?.nodes?.length < 1 || !(topAnnoucement?.reference?.canDisplay)) {
-    return null;
+  const isCurrentLocationSameToAnnoucementLink = currentLocationSlug === topAnnoucement?.reference?.hyperlink?.internalContent?.slug;
+
+  if (allContentfulTopAnnouncementBar?.nodes?.length < 1 || !(topAnnoucement?.reference?.canDisplay) || isCurrentLocationSameToAnnoucementLink) {
+    return <></>;
   }
 
   return <Annoucement reference={topAnnoucement.reference} />

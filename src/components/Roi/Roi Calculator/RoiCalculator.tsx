@@ -29,7 +29,7 @@ const RoiCalculator: React.FC<RoiCalculatorProps> = ({section}) => {
 
   return (
     <section>
-      <Grid className={classes.roiCalculator} gutter={0} align="flex-start">
+      <Grid className={classes.roiCalculator} gutter={0} align="stretch">
         <Grid.Col span={{ base: 12, md: 6 }} className={classes.left} >
           <CalculatorInput section={section} roiInputs={roiInputs} setRoiInputs={setRoiInputs} />
         </Grid.Col>

@@ -13,6 +13,7 @@ export const PAGES_TITLE = {
     INSIGHTS_CASE_STUDIES: "/insights/case-studies/",
     PHIL_DIRECT :"Phil Direct",
     DTP_RESOURCES :"DtpResources",
+    ROI: "ROI"
 }
 
 export const PAGE_WITHOUT_HEADER_FOOTER:string[] = [
