@@ -37,6 +37,17 @@ const config: GatsbyConfig = {
   },
  adapter: adapter(),
   plugins: [
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/pages`,
+        ignore: [
+          `**/components/**`, // Ignore all component directories
+          `**/assets/**`, // Ignore asset directories
+          `**/styles/**`, // Ignore style directories
+        ],
+      },
+    },
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-inline-svg`,
