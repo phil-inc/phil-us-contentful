@@ -1,0 +1,41 @@
+.itemBox {
+  background: linear-gradient(180deg, #006B68 0%, #00827e 100%);
+  padding: 22px 20px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (min-width: $phil-breakpoint-md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+
+  .detail {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+
+    .body {
+      color: white;
+    }
+  }
+
+  .heading6 {
+    margin-bottom: 3px;
+  }
+
+  .btnContainer {
+    padding: 5px 0px;
+
+    .btn {
+      width: 100%;
+
+      @media (min-width: $phil-breakpoint-md) {
+        width: auto;
+      }
+    }
+  }
+
+}

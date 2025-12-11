@@ -442,6 +442,7 @@ const query = graphql`
         sections {
           ... on ContentfulReferencedSection {
             id
+            __typename
             header
             headerAlias
             isHidden
@@ -449,20 +450,24 @@ const query = graphql`
           }
           ... on ContentfulSection {
             id
+            __typename
             header
             isHidden
             hideNavigationAnchor
           }
           ... on ContentfulTextAndTextColumns {
             id
+            __typename
             header
             hideNavigationAnchor
           }
           ... on ContentfulPage {
             id
+            __typename
             title
             slug
             navbarTitle
+            canShowNew
           }
         }
       }

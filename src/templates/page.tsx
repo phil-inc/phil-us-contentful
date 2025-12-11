@@ -16,8 +16,7 @@ import Section from "components/section/Section";
 import Expanded from "components/common/Expanded/Expanded";
 import Head from "components/common/Head/Head";
 import PageContext from "contexts/PageContext";
-import DTPModal from "components/Modal/dtpModal/dtpModal";
-
+import PageModal from "components/Modal/PageModal/PageModal";
 
 import * as classes from "./page.module.css";
 
@@ -101,10 +100,10 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
             </Title>
           </Container>
         )}
-        <DTPModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
+        <PageModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
         {canShowLoader
         ? (<Center>
-            <Loader mt={0} size="lg" />
+            <Loader  mt={"xl"} mb={"xl"} size="lg" />
           </Center>
           )
         : sections
@@ -132,7 +131,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
 };
 
 export const query = graphql`
-query getPages($id: String!) {
+  query getPages($id: String!) {
     contentfulPage(id: { eq: $id }) {
       noindex
       slug
@@ -1850,7 +1849,9 @@ query getPages($id: String!) {
         }
       }
     }
-    allContentfulModal(filter: { node_locale: { eq: "en-US" } }) {
+    allContentfulModal(
+      filter: {node_locale: {eq: "en-US"}, pageToDisplay: {slug: {in: ["/","dtp-resources"]}}}
+    ) {
       nodes {
         id
         body {

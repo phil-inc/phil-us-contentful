@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Modal } from "@mantine/core";
-import { DTP_RESOURCES_EMAIL_SUBMITTED, SCREEN_SIZES, SHOW_DTP_MODAL } from "constants/global.constant";
+import {
+  DTP_RESOURCES_EMAIL_SUBMITTED,
+  ROI_EMAIL_SUBMITTED,
+  SHOW_DTP_MODAL,
+} from "constants/global.constant";
 
 import LaunchDtp from "components/LaunchDtp/LaunchDtp";
 import SessionModal, {
   SessionModalRef,
 } from "components/SessionModal/SessionModal";
-import AccessDtpResource from "components/Modal/AccessDtpResource/AccessDtpResource";
+import AccessComponent from "components/Modal/AccessComponent/AccessComponent";
 
 import PageContext from "contexts/PageContext";
 
@@ -14,11 +18,11 @@ import { ContentfulModal } from "types/modal";
 import { HOME, PAGES_TITLE } from "constants/page";
 import { useModalSize } from "hooks/useModalSize";
 
-type DTPModalProps = {
+type PageModalProps = {
   contentfulModalNodes: ContentfulModal[];
 };
 
-const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
+const PageModal: React.FC<PageModalProps> = ({ contentfulModalNodes }) => {
   const context = useContext(PageContext);
   const isHomePage = context.title === HOME;
   const [opened, setOpened] = useState(false);
@@ -33,12 +37,22 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
       node.canDisplayModal === true &&
       node?.pageToDisplay?.title === PAGES_TITLE.DTP_RESOURCES,
   );
+  const roiData = contentfulModalNodes.find(
+    (node) =>
+      node.canDisplayModal === true &&
+      node?.pageToDisplay?.title === PAGES_TITLE.ROI,
+  );
+
   const isHomePageModal = isHomePage && homeData?.canDisplayModal;
   const isDtpResourcePageModal =
     context.title === PAGES_TITLE.DTP_RESOURCES &&
     dtpResourceData?.canDisplayModal;
+  const isRoiPageModal = context.title === PAGES_TITLE.ROI && roiData;
 
-  const dtpResourceModalRef = React.useRef<SessionModalRef>(null);
+  const modelRef = {
+    dtpResource: React.useRef<SessionModalRef>(null),
+    roi: React.useRef<SessionModalRef>(null),
+  };
 
   useEffect(() => {
     // Check if modal has already been shown in this session
@@ -79,17 +93,30 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
 
       {dtpResourceData && isDtpResourcePageModal && (
         <SessionModal
-          ref={dtpResourceModalRef}
+          ref={modelRef.dtpResource}
           sessionKey={DTP_RESOURCES_EMAIL_SUBMITTED}
           autoOpen
           closeOnClickOutside={false}
           modalSize={normalModalSize}
         >
           <div>
-            <AccessDtpResource
-              modalRef={dtpResourceModalRef}
+            <AccessComponent
+              modalRef={modelRef.dtpResource}
               modalData={dtpResourceData}
             />
+          </div>
+        </SessionModal>
+      )}
+      {roiData && isRoiPageModal && (
+        <SessionModal
+          ref={modelRef.roi}
+          sessionKey={ROI_EMAIL_SUBMITTED}
+          autoOpen
+          closeOnClickOutside={false}
+          modalSize={normalModalSize}
+        >
+          <div>
+            <AccessComponent modalRef={modelRef.roi} modalData={roiData} />
           </div>
         </SessionModal>
       )}
@@ -97,4 +124,4 @@ const DTPModal: React.FC<DTPModalProps> = ({ contentfulModalNodes }) => {
   );
 };
 
-export default DTPModal;
+export default PageModal;

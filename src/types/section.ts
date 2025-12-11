@@ -43,6 +43,7 @@ export type RenderOptions = {
 
 export type ISection = {
   id: string;
+  __typename?: string;
   sectionType: SectionType;
   header: string;
   canShowHeader?: boolean;
@@ -161,6 +162,7 @@ export type Metadata = {
 export type IReferencedSection = {
   [x: string]: any;
   id: string;
+  __typename?: string;
   title: string;
   metaDescription: string;
   topAsset?: TAsset;
@@ -203,7 +205,6 @@ export type IReferencedSection = {
       "generateStaticPage" | "id" | "heading" | "externalLink" | "internalLink"
     >
   >;
-
   stylingOptions?: StylingOptions;
   addBorder: boolean;
   renderOptions?: RenderOptions;
@@ -227,7 +228,24 @@ export type IReferencedSection = {
   fourthReferenceType?: ReferenceType;
   referenceFourthRenderOptions?: RenderOptions;
   eyebrowHeading?: string;
+  announcementItems: AnnouncementItems
 };
+
+  export type AnnouncementItems = Array<
+    Pick<
+      TResource,
+      | "generateStaticPage"
+      | "id"
+      | "heading"
+      | "externalLink"
+      | "internalLink"
+      | "body"
+      | "asset"
+      | "buttonText"
+    >
+  >;
+  
+
 
 export type Reference = {
   id: string;
@@ -241,6 +259,7 @@ export type ReferenceBodyType = {
 
 export type ITextandTextColumns = {
   id: string;
+  __typename?: string;
   heading: string;
   subHeadingText: string;
   body?: BodyType;
@@ -256,6 +275,7 @@ export type ITextandTextColumns = {
 
 export type ITextandTextColumnsWithFooterSection = {
   id: string;
+  __typename?: string;
   title?: string;
   stylingOptions?: StylingOptions;
   leftColumn: ReferenceBodyType;

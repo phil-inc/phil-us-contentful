@@ -33,12 +33,14 @@ export const TRUE_STRING = "true";
 export const SHOW_DTP_MODAL = "showDtpModal";
 export const IS_CASE_STUDY_EMAIL_SUBMITTED = "caseStudyEmailSubmitted";
 export const DTP_RESOURCES_EMAIL_SUBMITTED = "dtpResourcesEmailSubmitted";
+export const ROI_EMAIL_SUBMITTED = "roiEmailSubmitted";
 
 export const CONTENTFUL_TYPES = {
   CASE_STUDY: "ContentfulCaseStudy",
   DOWNLABLE_RESOURCE: "ContentfulDownloadableResource",
   LIST : "ContentfulList",
   LINK: "ContentfulLink",
+  PAGE: "ContentfulPage",
 };
 
 export const TIME_ZONE_USA = "America/Los_Angeles";
