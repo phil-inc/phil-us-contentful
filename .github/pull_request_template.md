@@ -1,12 +1,11 @@
-# Pull Request Template
+### JIRA
+<!-- Replace this line with Ticket link -->
 
 ## Description
 <!-- Please include a summary of the changes and the related issue. -->
-<!-- Example: "Fixed the login bug that prevented users from signing in." -->
 
-## Related Issue(s)
+## Related PRs
 <!-- Link the issues this PR closes or relates to -->
-<!-- Example: Closes #123 -->
 
 ## Type of Change
 <!-- Please delete options that are not relevant. -->
@@ -30,3 +29,9 @@
 
 ## Additional Notes
 <!-- Any extra information you want the reviewers to know -->
+
+### After Merging
+
+- Notify QA (#\_ready_for_qa)
+- Update JIRA tickets
+- Github actions build verified
