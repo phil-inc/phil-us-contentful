@@ -21,6 +21,8 @@ const rootDirsConfig: RootDirsConfig = {};
 
 // Add custom alias for Addyi page
 rootDirsConfig['@addyi'] = path.resolve(__dirname, 'src', 'pages', 'addyi');
+// Add custom alias for Addyi theme
+rootDirsConfig['@addyi-theme'] = path.resolve(__dirname, 'src', 'themes', 'addyi');
 
 srcDirs.forEach((srcDir: string) => {
   rootDirsConfig[srcDir] = path.resolve(__dirname, 'src', srcDir);

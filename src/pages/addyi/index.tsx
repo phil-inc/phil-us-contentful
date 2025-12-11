@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, MantineProvider } from "@mantine/core";
 import { SEO } from "layouts/SEO/SEO";
-import addyiTheme from "@addyi/theme";
+import addyiTheme from "@addyi-theme";
 import AddyiHeader from "@addyi/components/AddyiHeader";
 import HeroSection from "@addyi/components/HeroSection";
 import AddyiBenefitsSection from "@addyi/components/AddyiBenefits";
