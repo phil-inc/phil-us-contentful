@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Box, Text, Title } from "@mantine/core";
+import { Box } from "@mantine/core";
 
 import imgAddyiBox from "@addyi/assets/images/eed18cbd949fc9f2aeaa778cd983beecb6f61620.png";
 
 import * as classes from "./SafetyInformation.module.css";
 
-// Source: According - Plus/minus toggle icon
-function According({ isOpen }: { isOpen: boolean }) {
+function AccordionIcon({ isOpen }: { isOpen: boolean }) {
   return (
     <Box className={`${classes.accordionIcon} ${isOpen ? classes.open : ""}`}>
       <svg
@@ -33,8 +32,7 @@ function According({ isOpen }: { isOpen: boolean }) {
   );
 }
 
-// Source: TC - Accordion header
-function TC({
+function AccordionHeader({
   isOpen,
   onToggle,
 }: {
@@ -43,41 +41,42 @@ function TC({
 }) {
   return (
     <Box className={classes.accordionHeader} onClick={onToggle}>
-      <Title order={3} className={classes.accordionTitle}>
+      <Box className={classes.accordionHeaderContent}>
+      <h3 className={classes.accordionTitle}>
         Important Safety Information
-      </Title>
-      <According isOpen={isOpen} />
+      </h3>
+      <AccordionIcon isOpen={isOpen} />
+      </Box>
     </Box>
   );
 }
 
-// Source: Copy - Safety content (left column)
 function WhatIsAddyi() {
   return (
     <Box className={classes.safetyColumn}>
-      <Title order={4} className={classes.sectionTitle}>
+      <h4 className={classes.sectionTitle}>
         What is ADDYI® (add-ee) (flibanserin) Tablets?
-      </Title>
-      <Text className={classes.safetyText}>
+      </h4>
+      <p className={classes.safetyText}>
         ADDYI® is a prescription medicine used to treat hypoactive (low) sexual
         desire disorder (HSDD) in women who have not gone through menopause, who
         have not had problems with low sexual desire in the past, and who have
         low sexual desire no matter the type of sexual activity, the situation,
         or the sexual partner. Women with HSDD have low sexual desire that is
         troubling to them. Their low sexual desire is not due to:
-      </Text>
+      </p>
       <ul className={classes.safetyList}>
         <li>a medical or mental health problem</li>
         <li>problems in the relationship</li>
         <li>medicine or other drug use.</li>
       </ul>
-      <Text className={classes.safetyText}>
+      <p className={classes.safetyText}>
         ADDYI® is not for use for the treatment of HSDD in women who have gone
         through menopause, in men or in children.
-      </Text>
-      <Text className={classes.safetyText}>
+      </p>
+      <p className={classes.safetyText}>
         ADDYI® is not for use to improve sexual performance.
-      </Text>
+      </p>
     </Box>
   );
 }
@@ -86,15 +85,15 @@ function WhatIsAddyi() {
 function ImportantSafetyInfo() {
   return (
     <Box className={classes.safetyColumn}>
-      <Title order={4} className={classes.sectionTitle}>
+      <h4 className={classes.sectionTitle}>
         IMPORTANT SAFETY INFORMATION
-      </Title>
+      </h4>
 
-      <Text className={classes.safetyTextBold}>
+      <p className={classes.safetyTextBold}>
         What is the most important information I should know about ADDYI®? Your
         risk of severe low blood pressure and fainting (loss of consciousness)
         is increased:
-      </Text>
+      </p>
 
       <ul className={classes.safetyList}>
         <li>
@@ -110,10 +109,10 @@ function ImportantSafetyInfo() {
         </li>
       </ul>
 
-      <Text className={classes.safetyTextBold}>
+      <p className={classes.safetyTextBold}>
         To lower your risk of low blood pressure and fainting (loss of
         consciousness):
-      </Text>
+      </p>
 
       <ul className={classes.safetyList}>
         <li>
@@ -143,9 +142,9 @@ function ImportantSafetyInfo() {
         </li>
       </ul>
 
-      <Text className={classes.safetyText}>
+      <p className={classes.safetyText}>
         Examples of 1 standard alcoholic drink include:
-      </Text>
+      </p>
 
       <ul className={classes.safetyList}>
         <li>one 12-ounce regular beer</li>
@@ -153,7 +152,7 @@ function ImportantSafetyInfo() {
         <li>1.5 ounces of distilled spirits or shot</li>
       </ul>
 
-      <Text className={classes.safetyText}>
+      <p className={classes.safetyText}>
         <strong>
           Tell your doctor about other medicines you take. Do not take or start
           taking any prescription or over-the-counter medicines, or herbal
@@ -162,26 +161,26 @@ function ImportantSafetyInfo() {
         without first talking to your doctor. Your doctor will tell you if it is
         safe to take other medicines or herbal supplements while you are taking
         ADDYI®.
-      </Text>
+      </p>
 
-      <Text className={classes.safetyText}>
+      <p className={classes.safetyText}>
         Do not take ADDYI® if you have liver problems.
-      </Text>
+      </p>
 
-      <Text className={classes.safetyText}>
+      <p className={classes.safetyText}>
         If you take ADDYI® and you feel lightheaded or dizzy, lie down right
         away. Get emergency medical help or ask someone to get emergency medical
         help for you if the symptoms do not go away or if you feel like you
         could faint (lose consciousness). If you faint, tell your doctor as soon
         as you can.
-      </Text>
+      </p>
 
-      <Text className={classes.safetyTextBold}>
+      <p className={classes.safetyTextBold}>
         Who should not take ADDYI®?
-      </Text>
-      <Text className={classes.safetyTextBold}>
+      </p>
+      <p className={classes.safetyTextBold}>
         Do not take ADDYI® if you:
-      </Text>
+      </p>
 
       <ul className={classes.safetyList}>
         <li>
@@ -219,13 +218,13 @@ function ImportantSafetyInfo() {
         </li>
       </ul>
 
-      <Text className={classes.safetyTextBold}>
+      <p className={classes.safetyTextBold}>
         What should I tell my doctor before taking ADDYI®?
-      </Text>
-      <Text className={classes.safetyTextBold}>
+      </p>
+      <p className={classes.safetyTextBold}>
         Before you take ADDYI®, tell your doctor about all of your medical
         conditions, including if you:
-      </Text>
+      </p>
 
       <ul className={classes.safetyList}>
         <li>
@@ -247,22 +246,22 @@ function ImportantSafetyInfo() {
         </li>
       </ul>
 
-      <Text className={classes.safetyText}>
+      <p className={classes.safetyText}>
         <strong>Tell your doctor</strong> if you have had an allergic reaction
         such as hives, itching, or trouble breathing during or after receiving a
         dose of ADDYI®.
-      </Text>
-      <Text className={classes.safetyText}>
+      </p>
+      <p className={classes.safetyText}>
         <strong>Tell your doctor about all of the medicines you take,</strong>{" "}
         including prescription and over-the-counter medicines, vitamins, and
         herbal supplements. ADDYI® can affect the way other medicines work, and
         other medicines can affect the way ADDYI® works, and can cause serious
         side effects.
-      </Text>
+      </p>
 
-      <Text className={classes.safetyTextBold}>
+      <p className={classes.safetyTextBold}>
         What should I avoid while taking ADDYI®?
-      </Text>
+      </p>
 
       <ul className={classes.safetyList}>
         <li>
@@ -293,12 +292,12 @@ function ImportantSafetyInfo() {
         </li>
       </ul>
 
-      <Text className={classes.safetyTextBold}>
+      <p className={classes.safetyTextBold}>
         What are the possible side effects of ADDYI®?
-      </Text>
-      <Text className={classes.safetyTextBold}>
+      </p>
+      <p className={classes.safetyTextBold}>
         ADDYI® can cause serious side effects, including:
-      </Text>
+      </p>
 
       <ul className={classes.safetyList}>
         <li>
@@ -317,9 +316,9 @@ function ImportantSafetyInfo() {
         </li>
       </ul>
 
-      <Text className={classes.safetyTextBold}>
+      <p className={classes.safetyTextBold}>
         The most common side effects of ADDYI® include:
-      </Text>
+      </p>
 
       <ul className={classes.safetyList}>
         <li>Dizziness</li>
@@ -329,7 +328,7 @@ function ImportantSafetyInfo() {
         <li>Tiredness</li>
       </ul>
 
-      <Text className={classes.safetyText}>
+      <p className={classes.safetyText}>
         These are not all of the possible side effects of ADDYI®. Call your
         doctor for medical advice about side effects. You are encouraged to
         report negative side effects of prescription drugs to the FDA. Visit{" "}
@@ -346,9 +345,9 @@ function ImportantSafetyInfo() {
           1-800-FDA-1088
         </a>
         .
-      </Text>
+      </p>
 
-      <Text className={classes.safetyTextBold}>
+      <p className={classes.safetyTextBold}>
         See full Prescribing Information, including Boxed Warning regarding
         severe low blood pressure and fainting in certain settings, and
         Medication Guide at{" "}
@@ -361,17 +360,16 @@ function ImportantSafetyInfo() {
           addyi.com/pi
         </a>
         .
-      </Text>
+      </p>
 
-      <Text className={classes.safetyText}>
+      <p className={classes.safetyText}>
         This information does not take the place of talking with your doctor.
-      </Text>
+      </p>
     </Box>
   );
 }
 
-// Source: TC1 - Safety content with box image
-function TC1() {
+function AccordionContent() {
   return (
     <Box className={classes.safetyContentWrapper}>
       <Box className={classes.safetyColumnsContainer}>
@@ -389,14 +387,13 @@ function TC1() {
   );
 }
 
-// Source: Group22 - Main safety section
 export const SafetyInformation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Box className={classes.safetySection}>
-      <TC isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
-      {isOpen && <TC1 />}
+      <AccordionHeader isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
+      {isOpen && <AccordionContent />}
     </Box>
   );
 };

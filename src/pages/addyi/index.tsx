@@ -4,9 +4,8 @@ import { SEO } from "layouts/SEO/SEO";
 import addyiTheme from "@addyi/theme";
 import AddyiHeader from "@addyi/components/AddyiHeader";
 import HeroSection from "@addyi/components/HeroSection";
-import Bullets from "@addyi/components/Bullets";
+import AddyiBenefitsSection from "@addyi/components/AddyiBenefits";
 import AboutAddyiSection from "@addyi/components/AboutAddyiSection";
-import TestimonialBubbles from "@addyi/components/TestimonialBubbles";
 import HowToPrescribe from "@addyi/components/HowToPrescribe";
 import SearchSend from "@addyi/components/SearchSend";
 import SafetyInformation from "@addyi/components/SafetyInformation";
@@ -34,21 +33,10 @@ const AddyiPage = () => {
   return (
     <MantineProvider theme={addyiTheme}>
       <Box className={classes.root}>
-        {/* Header Section */}
         <AddyiHeader />
-
-        {/* Hero Section - For Patients + Jennifer Testimonial */}
         <HeroSection />
-
-        {/* Benefits Bullets - Free delivery, Refills */}
-        <Bullets />
-
-        {/* About Addyi Section - Pink background with bottle, buttons, dosage info */}
+        <AddyiBenefitsSection />
         <AboutAddyiSection />
-
-        {/* Testimonial Bubbles - Christine and Shannon */}
-        <TestimonialBubbles />
-
         {/* How To Prescribe Section - For Providers */}
         <HowToPrescribe />
 

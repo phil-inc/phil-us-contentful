@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Title } from "@mantine/core";
+import { Box } from "@mantine/core";
 
 import imgNotepad from "@addyi/assets/images/c1c538fafc963f2f9a58eef4aac8d51e3aa020b2.png";
 
@@ -9,7 +9,7 @@ import * as classes from "./SearchSend.module.css";
 function Philrx() {
   return (
     <Box className={classes.philrxOverlay}>
-      <Text className={classes.philrxText}>PHILRX</Text>
+      <span className={classes.philrxText}>PHILRX</span>
     </Box>
   );
 }
@@ -32,18 +32,18 @@ function Notepad() {
 function Group4() {
   return (
     <Box className={classes.sendRxSection}>
-      <Title order={3} className={classes.sendRxTitle}>
+      <h3 className={classes.sendRxTitle}>
         SEND AN RX VIA PHONE OR FAX:
-      </Title>
+      </h3>
       <Box className={classes.contactInfo}>
-        <Text className={classes.contactLine}>
+        <p className={classes.contactLine}>
           <span className={classes.contactLabel}>Phone:</span>{" "}
           <span className={classes.contactValue}>(855) 977-0975, Option 1</span>
-        </Text>
-        <Text className={classes.contactLine}>
+        </p>
+        <p className={classes.contactLine}>
           <span className={classes.contactLabel}>Fax:</span>{" "}
           <span className={classes.contactValue}>(888) 975-0603</span>
-        </Text>
+        </p>
       </Box>
     </Box>
   );
@@ -53,24 +53,24 @@ function Group4() {
 function Group3() {
   return (
     <Box className={classes.emrSearchSection}>
-      <Title order={3} className={classes.emrSearchTitle}>
+      <h3 className={classes.emrSearchTitle}>
         SEARCH "PHILRX" IN THE EMR'S RETAIL PHARMACY FINDER OR SEARCH BY:
-      </Title>
+      </h3>
       <Box className={classes.searchInfo}>
-        <Text className={classes.searchLine}>
+        <p className={classes.searchLine}>
           <span className={classes.searchLabel}>Phone:</span>{" "}
           <span className={classes.searchValue}>(855) 977-0975</span>
-        </Text>
-        <Text className={classes.searchLine}>
+        </p>
+        <p className={classes.searchLine}>
           <span className={classes.searchLabel}>NPI:</span>{" "}
           <span className={classes.searchValue}>487163598</span>
-        </Text>
-        <Text className={classes.searchLine}>
+        </p>
+        <p className={classes.searchLine}>
           <span className={classes.searchLabel}>Address:</span>{" "}
           <span className={classes.searchValue}>
             150 E. Campus View Blvd, Suite 210, Columbus OH 43235
           </span>
-        </Text>
+        </p>
       </Box>
       <Group4 />
     </Box>

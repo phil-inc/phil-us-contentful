@@ -47,6 +47,8 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	width: 500px;
+	height: 40px;
 	gap: 15px;
 }
 

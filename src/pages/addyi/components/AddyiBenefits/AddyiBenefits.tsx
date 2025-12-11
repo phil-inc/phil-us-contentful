@@ -1,12 +1,11 @@
 import React from "react";
-import { Box, Text } from "@mantine/core";
+import { Box } from "@mantine/core";
 
 import checkmarkIcon from "@addyi/assets/icons/checkmark-bullet.svg";
 
-import * as classes from "./Bullets.module.css";
+import * as classes from "./AddyiBenefits.module.css";
 
-// Source: Bullets component
-export const Bullets: React.FC = () => {
+export const AddyiBenefitsSection: React.FC = () => {
   return (
     <Box className={classes.bulletsSection}>
       <Box className={classes.bulletsContainer}>
@@ -15,10 +14,10 @@ export const Bullets: React.FC = () => {
             <img src={checkmarkIcon} alt="Checkmark" width="18" height="14" />
           </Box>
           <Box className={classes.bulletContent}>
-            <Text className={classes.bulletTitle}>Free home delivery</Text>
-            <Text className={classes.bulletDescription}>
+            <p className={classes.bulletTitle}>Free home delivery</p>
+            <p className={classes.bulletDescription}>
               (Most convenient way to get Addyi®)
-            </Text>
+            </p>
           </Box>
         </Box>
 
@@ -27,10 +26,10 @@ export const Bullets: React.FC = () => {
             <img src={checkmarkIcon} alt="Checkmark" width="18" height="14" />
           </Box>
           <Box className={classes.bulletContent}>
-            <Text className={classes.bulletTitle}>Refills made simple</Text>
-            <Text className={classes.bulletDescription}>
+            <p className={classes.bulletTitle}>Refills made simple</p>
+            <p className={classes.bulletDescription}>
               (For the best pharmacy experience)
-            </Text>
+            </p>
           </Box>
         </Box>
       </Box>

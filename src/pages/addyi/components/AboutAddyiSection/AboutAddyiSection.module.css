@@ -25,6 +25,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  width: 576px;
   padding-top: 83px;
 }
 
@@ -33,15 +34,14 @@
   display: flex;
   flex-direction: column;
   gap: 28px;
-  padding-left: 115px;
 }
 
 .aboutTitle {
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
-  font-weight: 800 !important;
-  font-size: 40px !important;
-  line-height: normal !important;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: normal;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   color: #E0097E;
@@ -98,8 +98,8 @@
 }
 
 .bottleImageWrapper {
-  width: 380px;
-  height: 423px;
+  width: 468px;
+  height: 524px;
   transform: rotate(-19.2deg);
   position: absolute;
   left: 50px;
@@ -135,7 +135,7 @@
 }
 
 .dosageText {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
@@ -149,7 +149,7 @@
 }
 
 .disclaimerText {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -163,11 +163,10 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: 42px;
 }
 
 .pdfLink {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -182,6 +181,11 @@
 
 .pdfLink:hover {
   opacity: 0.8;
+}
+
+/* Testimonial Bubbles Container */
+.testimonialBubblesContainer {
+  margin-top: 40px;
 }
 
 .downloadIcon {
@@ -213,7 +217,7 @@
   .aboutTitle {
     width: 100%;
     text-align: center;
-    font-size: 32px !important;
+    font-size: 32px;
   }
 
   .redButtonContainer {
@@ -264,7 +268,7 @@
 
 @media (max-width: 48em) {
   .aboutTitle {
-    font-size: 28px !important;
+    font-size: 28px;
   }
 
   .bottleContainer {

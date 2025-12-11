@@ -30,15 +30,16 @@
 }
 
 .emrSearchTitle {
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
-  font-weight: 700 !important;
-  font-size: 32px !important;
-  line-height: normal !important;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: normal;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   color: #E0097E;
   width: 669px;
+  margin: 0;
 }
 
 .searchInfo {
@@ -53,6 +54,7 @@
   font-size: 18px;
   line-height: 28px;
   color: #E0097E;
+  margin: 0;
 }
 
 .searchLabel {
@@ -72,14 +74,15 @@
 }
 
 .sendRxTitle {
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
-  font-weight: 700 !important;
-  font-size: 32px !important;
-  line-height: 32px !important;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 32px;
   letter-spacing: -0.03em;
   color: #E0097E;
   width: 653px;
+  margin: 0;
 }
 
 .contactInfo {
@@ -94,6 +97,7 @@
   font-size: 18px;
   line-height: 28px;
   color: #E0097E;
+  margin: 0;
 }
 
 .contactLabel {
@@ -153,12 +157,12 @@
 
   .emrSearchTitle {
     width: 100%;
-    font-size: 24px !important;
+    font-size: 24px;
   }
 
   .sendRxTitle {
     width: 100%;
-    font-size: 24px !important;
+    font-size: 24px;
   }
 
   .rightColumn {
@@ -176,13 +180,13 @@
 
 @media (max-width: 48em) {
   .emrSearchTitle {
-    font-size: 20px !important;
-    line-height: 26px !important;
+    font-size: 20px;
+    line-height: 26px;
   }
 
   .sendRxTitle {
-    font-size: 20px !important;
-    line-height: 26px !important;
+    font-size: 20px;
+    line-height: 26px;
   }
 
   .searchLine,

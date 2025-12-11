@@ -7,26 +7,29 @@
 /* Accordion Header - Source height: 60px */
 .accordionHeader {
   width: 100%;
-  height: 60px;
   background-color: #E0097E;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
   cursor: pointer;
   box-sizing: border-box;
 }
 
+.accordionHeaderContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1170px;
+  height: 60px;
+  margin: 0 auto;
+}
+
 .accordionTitle {
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Inter';
   font-style: normal;
-  font-weight: 700 !important;
-  font-size: 32px !important;
-  line-height: normal !important;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: normal;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   color: #FFFFFF;
-  margin: 0 auto 0 67px;
 }
 
 .accordionIcon {
@@ -36,7 +39,6 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
-  margin-right: 67px;
 }
 
 .accordionIcon.open {
@@ -70,18 +72,18 @@
 
 /* Section Titles */
 .sectionTitle {
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'Inter';
   font-style: normal;
-  font-weight: 700 !important;
-  font-size: 16px !important;
-  line-height: 24px !important;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
   color: #E0097E;
   margin-bottom: 16px;
 }
 
 /* Safety Text */
 .safetyText {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -91,7 +93,7 @@
 }
 
 .safetyTextBold {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -108,7 +110,7 @@
 }
 
 .safetyList li {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -158,7 +160,7 @@
   }
 
   .accordionTitle {
-    font-size: 20px !important;
+    font-size: 20px;
     margin-left: 0;
   }
 
@@ -190,7 +192,7 @@
 
 @media (max-width: 48em) {
   .accordionTitle {
-    font-size: 16px !important;
+    font-size: 16px;
   }
 
   .accordionIcon {
@@ -204,7 +206,7 @@
   }
 
   .sectionTitle {
-    font-size: 14px !important;
+    font-size: 14px;
   }
 
   .safetyText,
