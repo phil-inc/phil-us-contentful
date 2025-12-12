@@ -17,9 +17,6 @@ export const PrescriptionModal: React.FC<PrescriptionModalProps> = ({
 }) => {
   useEffect(() => {
     if (opened) {
-      // Prevent body scroll when modal is open
-      document.body.style.overflow = "hidden";
-      
       // Handle ESC key press
       const handleEscape = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
@@ -30,7 +27,6 @@ export const PrescriptionModal: React.FC<PrescriptionModalProps> = ({
       document.addEventListener("keydown", handleEscape);
       
       return () => {
-        document.body.style.overflow = "";
         document.removeEventListener("keydown", handleEscape);
       };
     }
