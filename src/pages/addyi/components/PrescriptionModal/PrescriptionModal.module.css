@@ -1,0 +1,306 @@
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Container */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  max-width: 90vw;
+  height: 565px;
+  max-height: 90vh;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+/* Header */
+.header {
+  display: flex;
+  width: 100%;
+  height: 125.105px;
+  padding: 6px 30px;
+  justify-content: space-between;
+  align-items: center;
+  background: #E0097E;
+  position: relative;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.logo {
+  height: auto;
+  width: auto;
+  max-height: 60px;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.poweredByIcon {
+  height: auto;
+  width: auto;
+  max-height: 20px;
+}
+
+.headerRight {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.headerTitle {
+  margin: 0;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.headerDescription {
+  margin: 0;
+  color: #fff;
+  max-width: 370px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.closeIcon {
+  width: 28px;
+  height: 23px;
+  display: block;
+}
+
+.closeButton:hover {
+  opacity: 0.8;
+}
+
+/* Body */
+.body {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: #FFF;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+}
+
+.bodyTitle {
+  margin-top: 52px;
+  margin-bottom: 26px;
+  color: #E0097E;
+  font-family: 'Inter';
+  max-width: 414px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.bodyText {
+  margin-bottom: 23px;
+  color: #333;
+  max-width: 414px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.phoneLink {
+  color: #E0097E;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.phoneLink:hover {
+  opacity: 0.8;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  padding: 13px 24px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+  border: 1px solid #E4E4E4;
+  background: #FFF;
+}
+
+.closeFooterButton {
+  padding: 10px 24px;
+  background: #E0097E;
+  height: 50px;
+  width: 120px;
+  color: #fff;
+  border: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.closeFooterButton:hover {
+  background: #c0086b;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .modal {
+    width: 90vw;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .header {
+    height: auto;
+    min-height: 125px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .headerLeft {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .headerRight {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .headerTitle {
+    font-size: 18px;
+  }
+
+  .headerDescription {
+    font-size: 12px;
+  }
+
+  .closeButton {
+    top: 12px;
+    right: 20px;
+  }
+
+  .body {
+    padding: 20px;
+    min-height: auto;
+  }
+
+  .bodyTitle {
+    font-size: 16px;
+  }
+
+  .bodyText {
+    font-size: 13px;
+  }
+
+  .footer {
+    height: auto;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    position: fixed;
+  top: 35%;
+  left: 50%;
+}
+  
+  .header {
+    padding: 10px 15px;
+  }
+
+  .headerTitle {
+    font-size: 16px;
+  }
+
+  .headerDescription {
+    font-size: 11px;
+  }
+
+  .body {
+    padding: 15px;
+  }
+
+  .bodyTitle {
+    font-size: 14px;
+  }
+
+  .bodyText {
+    font-size: 12px;
+  }
+
+  .footer {
+    padding: 10px 15px;
+  }
+
+  .closeFooterButton {
+    width: 100%;
+  }
+}

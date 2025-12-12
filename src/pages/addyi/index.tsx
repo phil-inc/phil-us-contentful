@@ -10,11 +10,13 @@ import HowToPrescribe from "@addyi/components/HowToPrescribe";
 import SearchSend from "@addyi/components/SearchSend";
 import SafetyInformation from "@addyi/components/SafetyInformation";
 import Footer from "@addyi/components/Footer";
+import favicon from "@addyi/assets/favicon.svg";
 
 import * as classes from "@addyi/styles/styles.module.css";
 
 export const Head: React.FC = () => (
   <SEO title="Addyi Prescription">
+    <link rel="icon" type="image/svg+xml" href={favicon} />
     <meta
       name="description"
       content="Addyi - Empowering women's health and wellness through PhilRx Pharmacy"

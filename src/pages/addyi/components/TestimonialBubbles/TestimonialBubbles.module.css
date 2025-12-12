@@ -28,7 +28,37 @@
   position: relative;
   background-color: #E0097E;
   border-radius: 0 20px 50px 50px;
-  margin-right: 76px;
+  /* CSS Variables using em units - scales with font size and viewport */
+  /* Using em for semantic scaling (respects user font size preferences) */
+  /* Width: ~5.852em (93.638px) at 320px, ~6.812em (109px) at 1170px+ */
+  /* Assuming base font size of 16px: 1em = 16px */
+  --dots-width: clamp(
+    5.852em,
+    5.852em + 0.96em * ((100vw - 20em) / 53.125em),
+    6.812em
+  );
+  /* Height: ~5.369em (85.906px) at 320px, ~6.25em (100px) at 1170px+ */
+  --dots-height: clamp(
+    5.369em,
+    5.369em + 0.881em * ((100vw - 20em) / 53.125em),
+    6.25em
+  );
+  /* Scale offsets proportionally */
+  /* Right offset: -2.125em (-34px) at 320px, -2.375em (-38px) at 1170px+ */
+  --dots-right-offset: clamp(
+    -2.125em,
+    -2.125em + (-0.25em) * ((100vw - 20em) / 53.125em),
+    -2.375em
+  );
+  /* Bottom offset: -1.75em (-28px) at 320px, -1.688em (-27px) at 1170px+ */
+  --dots-bottom-offset: clamp(
+    -1.75em,
+    -1.75em + 0.063em * ((100vw - 20em) / 53.125em),
+    -1.688em
+  );
+  --dots-buffer: 5px;
+  /* Calculate margin-right dynamically: dots width - absolute right offset + buffer */
+  margin-right: calc(var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer));
   padding: 29px 40px;
   width: 400px;
   min-height: 165px;
@@ -49,11 +79,11 @@
 /* Decorative Dots */
 .decorativeDots {
   position: absolute;
-  width: 109px;
-  height: 100px;
+  width: var(--dots-width);
+  height: var(--dots-height);
   pointer-events: none;
-  right: -38px;
-  bottom: -27px;
+  right: var(--dots-right-offset);
+  bottom: var(--dots-bottom-offset);
 }
 
 .dotsImage {
@@ -105,15 +135,10 @@
   }
 
   .testimonialBubble {
+    /* Dots size scales dynamically via clamp() - no need to override */
+    /* margin-right is now calculated dynamically */
     width: 100%;
     max-width: 400px;
-  }
-
-  .decorativeDots {
-    right: -38px;
-    bottom: -27px;
-    width: 80px;
-    height: 75px;
   }
 
   .authorInfo {
@@ -124,7 +149,31 @@
 }
 
 @media (max-width: 48em) {
+  .testimonialsContainer {
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .testimonialBubbleWrapper {
+    max-width: 100%;
+    width: 100%;
+    /* Allow overflow for decorative dots */
+    overflow: visible;
+  }
+
+  .alignRight,
+  .alignLeft {
+    align-self: flex-end;
+    text-align: right;
+  }
+
   .testimonialBubble {
+    /* Dots size scales dynamically via clamp() - no need to override */
+    /* Use calc to account for dynamic margin-right - subtract the calculated margin-right */
+    width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
+    max-width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
+    /* margin-right is now calculated dynamically */
     padding: 24px;
     min-height: auto;
   }
@@ -134,15 +183,50 @@
     line-height: 20px;
   }
 
-  .decorativeDots {
-    right: -30px;
-    bottom: -10px;
-    width: 60px;
-    height: 55px;
+  .authorInfo {
+    padding-right: 0;
+    width: 100%;
+    max-width: 100%;
+    align-self: flex-end;
+    text-align: right;
   }
 
   .authorName,
   .authorDescription {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 320px) {
+  .testimonialsContainer {
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .testimonialBubbleWrapper {
+    max-width: 100%;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .testimonialBubble {
+    /* Dots size scales dynamically via clamp() - at 320px it will be 93.638px x 85.906px */
+    /* Use calc to account for dynamic margin-right - subtract the calculated margin-right */
+    width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
+    max-width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
+    /* margin-right is now calculated dynamically */
+    padding: 20px;
+  }
+
+  .bubbleText {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .authorName,
+  .authorDescription {
+    font-size: 13px;
+    line-height: 18px;
   }
 }
