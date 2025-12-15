@@ -7,16 +7,10 @@ import * as classes from "./Footer.module.css";
 function FooterLinks() {
   return (
     <Box className={classes.footerLinks}>
-      <Text className={classes.footerCopyright}>© Phil, Inc.</Text>
-      <Text component="a" href="/terms" className={classes.footerLink}>
-        Terms of Use
-      </Text>
-      <Text component="a" href="/privacy" className={classes.footerLink}>
-        Privacy Policy
-      </Text>
-      <Text component="a" href="/hipaa" className={classes.footerLink}>
-        HIPAA Policy
-      </Text>
+      <p className={classes.footerCopyright}>© Phil, Inc.</p>
+      <p className={classes.footerLink}>Terms of Use</p>
+      <p className={classes.footerLink}>Privacy Policy</p>
+      <p className={classes.footerLink}>HIPAA Policy</p>
     </Box>
   );
 }

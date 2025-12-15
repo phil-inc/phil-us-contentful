@@ -77,6 +77,16 @@ function WhatIsAddyi() {
       <p className={classes.safetyText}>
         ADDYI® is not for use to improve sexual performance.
       </p>
+
+      <Box className={classes.boxImageContainer}>
+        <Box className={classes.boxImageWrapper}>
+          <img
+            src={imgAddyiBox}
+            alt="Addyi bottles and box"
+            className={classes.boxImage}
+          />
+        </Box>
+      </Box>
     </Box>
   );
 }
@@ -375,13 +385,6 @@ function AccordionContent() {
       <Box className={classes.safetyColumnsContainer}>
         <WhatIsAddyi />
         <ImportantSafetyInfo />
-      </Box>
-      <Box className={classes.boxImageContainer}>
-        <img
-          src={imgAddyiBox}
-          alt="Addyi bottles and box"
-          className={classes.boxImage}
-        />
       </Box>
     </Box>
   );
