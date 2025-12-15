@@ -144,7 +144,6 @@
 
   .heroBannerContainer {
     flex-direction: column;
-    align-items: center;
   }
 
   .forPatientsContent {
@@ -213,6 +212,8 @@
   }
 
   .heroBannerContainer {
+    flex-direction: column;
+    align-items: center;
     padding: 0 24px;
     gap: 0px;
   }

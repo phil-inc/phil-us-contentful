@@ -11,7 +11,7 @@
   max-width: 1170px;
   width: 100%;
   margin: 0 auto;
-  padding-left: 273px;
+  padding-left: 290px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -79,25 +79,25 @@
   }
 
   .bulletsContainer {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0 24px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
     gap: 24px;
-  }
-
-  .bulletItem {
-    width: 100%;
   }
 }
 
-@media (max-width: 48em) {
+@media (max-width: 40em) {
+  .bulletsContainer {
+    padding-left: 31px;
+  }
+
   .bulletTitle {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 22px;
+    font-weight: 700;
   }
 
   .bulletDescription {
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 12px;
   }
 }
