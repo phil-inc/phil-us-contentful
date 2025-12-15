@@ -61,7 +61,7 @@
   margin-right: calc(var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer));
   padding: 29px 40px;
   width: 400px;
-  min-height: 165px;
+  height: 165px;
   display: flex;
   align-items: center;
   overflow: visible;
@@ -146,9 +146,13 @@
     width: 100%;
     max-width: 400px;
   }
+
+  .bubbleText {
+    padding-right: 10px;
+  }
 }
 
-@media (max-width: 48em) {
+@media (max-width: 40em) {
   .testimonialsContainer {
     padding: 0;
     width: 100%;
@@ -175,12 +179,15 @@
     max-width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
     /* margin-right is now calculated dynamically */
     padding: 24px;
-    min-height: auto;
+    height: auto;
+    min-height: 0;
   }
 
   .bubbleText {
+    margin: 0;
     font-size: 14px;
     line-height: 20px;
+    font-weight: 600;
   }
 
   .authorInfo {
@@ -194,39 +201,5 @@
   .authorName,
   .authorDescription {
     font-size: 14px;
-  }
-}
-
-@media (max-width: 320px) {
-  .testimonialsContainer {
-    padding: 0;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .testimonialBubbleWrapper {
-    max-width: 100%;
-    width: 100%;
-    overflow: visible;
-  }
-
-  .testimonialBubble {
-    /* Dots size scales dynamically via clamp() - at 320px it will be 93.638px x 85.906px */
-    /* Use calc to account for dynamic margin-right - subtract the calculated margin-right */
-    width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
-    max-width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
-    /* margin-right is now calculated dynamically */
-    padding: 20px;
-  }
-
-  .bubbleText {
-    font-size: 13px;
-    line-height: 18px;
-  }
-
-  .authorName,
-  .authorDescription {
-    font-size: 13px;
-    line-height: 18px;
   }
 }

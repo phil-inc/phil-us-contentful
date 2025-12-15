@@ -25,7 +25,8 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 12px;
-  width: 381px;
+  width: 100%;
+  max-width: 381px;
   min-height: 54px;
 }
 
@@ -88,6 +89,8 @@
 
 @media (max-width: 40em) {
   .bulletsContainer {
+    flex-direction: column;
+    align-items: flex-start;
     padding-left: 31px;
   }
 
