@@ -326,7 +326,8 @@
   .aboutContainer {
     flex-direction: column;
     margin: 34px 0px;
-    padding: 0px 24px;
+    padding-left: 24px;
+    padding-right: 8px;
     gap: 20px;
   }
 
@@ -373,7 +374,6 @@
     width: 100%;
     max-width: 100%;
     padding-left: 10px;
-    padding-right: 10px;
   }
 
   .dosageContainer {

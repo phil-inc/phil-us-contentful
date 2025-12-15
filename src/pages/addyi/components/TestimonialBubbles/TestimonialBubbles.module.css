@@ -172,11 +172,15 @@
     text-align: right;
   }
 
+  .rightColumn {
+    padding-right: 0px;
+  }
+
   .testimonialBubble {
     /* Dots size scales dynamically via clamp() - no need to override */
     /* Use calc to account for dynamic margin-right - subtract the calculated margin-right */
-    width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
-    max-width: calc(100% - (var(--dots-width) + var(--dots-right-offset) + var(--dots-buffer)));
+    width: calc(100% - 34px);
+    max-width: calc(100% - 34px);
     /* margin-right is now calculated dynamically */
     padding: 24px;
     height: auto;
