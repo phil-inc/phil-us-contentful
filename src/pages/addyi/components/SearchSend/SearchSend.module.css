@@ -2,7 +2,8 @@
 .searchSendSection {
   width: 100%;
   background-color: #FFFFFF;
-  padding: 52px 0 80px 0;
+  padding: 0px;
+  margin-bottom: 92px;
 }
 
 .searchSendContainer {
@@ -16,17 +17,18 @@
 .leftColumn {
   flex: 1;
   padding-left: 93px;
+  padding-top: 148px;
 }
 
 .rightColumn {
   flex-shrink: 0;
+  padding-top: 12px;
 }
 
 /* EMR Search Section */
 .emrSearchSection {
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
 .emrSearchTitle {
@@ -45,11 +47,12 @@
 .searchInfo {
   display: flex;
   flex-direction: column;
+  margin-top: 14px;
   gap: 0;
 }
 
 .searchLine {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-size: 18px;
   line-height: 28px;
@@ -67,14 +70,13 @@
 
 /* Send RX Section */
 .sendRxSection {
-  margin-top: 48px;
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 .sendRxTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
@@ -88,7 +90,7 @@
 .contactInfo {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  margin-top: 14px;
 }
 
 .contactLine {
@@ -143,7 +145,8 @@
 /* Responsive */
 @media (max-width: 64em) {
   .searchSendSection {
-    padding: 40px 24px;
+    padding: 30px 24px;
+    margin-bottom: 0px;
   }
 
   .searchSendContainer {
@@ -152,7 +155,8 @@
   }
 
   .leftColumn {
-    padding-left: 0;
+    padding-left: 10px;
+    padding-top: 0;
   }
 
   .emrSearchTitle {
@@ -178,15 +182,61 @@
   }
 }
 
-@media (max-width: 48em) {
+@media (max-width: 40em) {
   .emrSearchTitle {
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: 700;
     line-height: 26px;
+  }
+
+  .searchSendSection {
+    padding: 0px 24px;
+    margin-bottom: 50px;
+  }
+
+  .searchInfo {
+    margin-top: 20px;
+  }
+
+  .leftColumn {
+    padding-top: 46px;
   }
 
   .sendRxTitle {
     font-size: 20px;
     line-height: 26px;
+  }
+
+  .searchLabel {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+  }
+
+  .searchValue {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+
+  .sendRxSection {
+    margin-top: 40px;
+  }
+
+  .contactInfo {
+    margin-top: 20px;
+  }
+
+  .contactLabel {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+  }
+
+  .contactValue {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
   }
 
   .searchLine,
@@ -196,6 +246,7 @@
   }
 
   .notepadContainer {
-    max-width: 280px;
+    max-width: 254px;
+    height: 380px;
   }
 }
