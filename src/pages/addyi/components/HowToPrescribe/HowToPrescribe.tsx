@@ -37,14 +37,14 @@ export const HowToPrescribe: React.FC = () => {
           </Box>
           <Box className={classes.doctorTestimonial}>
             <p className={classes.testimonialText}>
-              "Getting Addyi<sup>®</sup> should not be difficult. And unfortunately
+              "Getting Addyi® should not be difficult. And unfortunately
               that's what my patients were experiencing with the big box pharmacies. I
-              only prescribe Addyi<sup>®</sup> through PhilRx and the process is great
-              - more of my patients are getting their Addyi<sup>®</sup> covered and
+              only prescribe Addyi® through PhilRx and the process is great
+              - more of my patients are getting their Addyi® covered and
               less hassle for my staff and me. It's a win win!"
             </p>
             <p className={classes.testimonialAuthor}>
-              Dr. Miller, Addyi<sup>®</sup>
+              Dr. Miller, Addyi<span className={classes.testimonialAuthorSup}>®</span>
             </p>
           </Box>
         </Box>
