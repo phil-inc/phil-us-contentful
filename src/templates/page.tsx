@@ -6,11 +6,11 @@ import { Box, Center, Container, Grid, Loader, Title } from "@mantine/core";
 import { Layout } from "layouts/Layout/Layout";
 
 import type { ContentfulPage } from "types/page";
-import type { ISection } from "types/section";
+import type { IReferencedSection, ISection } from "types/section";
 import { AllContentfulModalQuery } from "types/modal";
 
 import { DTP_RESOURCES_EMAIL_SUBMITTED } from "constants/global.constant";
-import { PAGES_ROUTES } from "constants/page";
+import { PAGES_ROUTES, PAGES_TITLE } from "constants/page";
 
 import Section from "components/section/Section";
 import Expanded from "components/common/Expanded/Expanded";
@@ -638,6 +638,7 @@ export const query = graphql`
         }
         ... on ContentfulReferencedSection {
           id
+          title
           isHidden
           hideNavigationAnchor
           addBorder

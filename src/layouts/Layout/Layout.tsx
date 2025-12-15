@@ -50,7 +50,7 @@ export function Layout({
             {canShowAnnoucementBar && <AnnoucementBar/>}
             {!canHideHeader && <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />}
           </div>
-          <Box>{children}</Box>
+          <>{children}</>
           <CFooter minimal={minimal} />
         </AppShell>
       </HubspotProvider>

@@ -126,16 +126,16 @@ export const FaqAccordion = ({ resource }: any) => {
         }
       }}
     >
-      <Accordion.Item value={resource.header}>
-        <Accordion.Control>{resource.header}</Accordion.Control>
+      <Accordion.Item value={resource?.header ?? ""}>
+        <Accordion.Control>{resource?.header ?? ""}</Accordion.Control>
         <Accordion.Panel>
           {resource.references?.map((reference: any, index: any) => {
-            const referenceBody = reference.body.references[0]?.body;
+            const referenceBody = reference?.body?.references[0]?.body;
             return (
               <AccordionContent
                 key={index}
                 referenceBackground={reference?.stylingOptions?.background}
-                referenceHeading={reference.heading}
+                referenceHeading={reference?.heading}
                 referenceBody={referenceBody}
               />
             );

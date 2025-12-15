@@ -1,0 +1,11 @@
+.parent{
+    position: relative;
+}
+
+.faqTitlebar{
+    display: block;
+    position: sticky;
+    top: calc(var(--announcment-bar-height) + var(--navbar-height));
+    height: fit-content;
+    z-index: 100;
+}
