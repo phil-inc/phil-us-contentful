@@ -22,13 +22,14 @@
   flex-direction: column;
   gap: 0;
   max-width: 474px;
+  margin-left: 109px;
   padding-top: 110px;
   z-index: 2;
   position: relative;
 }
 
 .forPatientsLabel {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 800;
   font-size: 24px;
@@ -40,7 +41,7 @@
 }
 
 .heroTitle {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 800;
   font-size: 48px;
@@ -59,7 +60,7 @@
 
 .heroImageContainer {
   position: absolute;
-  right: 0;
+  left: 472px;
   top: 3px;
   width: 756px;
   height: 489px;
@@ -71,7 +72,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center 20%;
+  aspect-ratio: 252/163;
 }
 
 /* Patient Testimonial Section - Source height: 293px */
@@ -103,6 +105,13 @@
   max-width: 886px;
 }
 
+.testimonialQuoteContainer {
+  display: flex;
+  margin-left: 109px;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .testimonialQuote sup {
   font-size: 14px;
   vertical-align: super;
@@ -110,7 +119,7 @@
 }
 
 .testimonialAuthor {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: italic;
   font-weight: 700;
   font-size: 18px;
@@ -129,22 +138,28 @@
 @media (max-width: 64em) {
   .heroBanner {
     height: auto;
-    min-height: 400px;
-    padding: 40px 24px;
+    padding: 40px 24px 0 24px;
+    background: linear-gradient(270.01deg, rgba(252, 231, 246, 0) -168.71%, #E0097E 61.39%);
   }
 
   .heroBannerContainer {
     flex-direction: column;
+    align-items: center;
   }
 
   .forPatientsContent {
     padding-top: 0;
+    margin-left: 15px;
     max-width: 100%;
   }
 
   .forPatientsLabel {
     font-size: 20px;
     line-height: 32px;
+  }
+
+  .testimonialQuoteContainer {
+    margin-left: 15px;
   }
 
   .heroTitle {
@@ -155,8 +170,12 @@
   .heroImageContainer {
     position: relative;
     width: 100%;
-    height: 300px;
+    height: auto;
     margin-top: 24px;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
   }
 
   .testimonialSection {
@@ -174,7 +193,7 @@
   }
 }
 
-@media (max-width: 48em) {
+@media (max-width: 40em) {  
   .heroTitle {
     font-size: 28px;
     line-height: 34px;
@@ -183,22 +202,58 @@
   .heroTitle sup {
     font-size: 16px;
   }
+  
+  .forPatientsContent {
+    margin-left: 0;
+  }
 
   .heroBanner {
-    padding-bottom: 0;
+    padding: 0;
     background: linear-gradient(270.01deg, rgba(252, 231, 246, 0) -168.71%, #E0097E 61.39%);
   }
 
+  .heroBannerContainer {
+    padding: 0 24px;
+    gap: 0px;
+  }
+
+  .forPatientsLabel {
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .heroTitle {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
   .heroImageContainer {
-    height: 250px;
+    width: 312px;
+    height: 202px;
+    aspect-ratio: 156/101;
+    margin-top: 4px;
+    top: 0;
+    left: 0;
+  }
+
+  .testimonialContainer {
+    padding: 30px 24px;
+  }
+
+  .testimonialQuoteContainer {
+    margin-left: 0;
   }
 
   .testimonialQuote {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFF;
+    font-weight: 500;
+    margin: 0;
   }
 
   .testimonialAuthor {
-    font-size: 16px;
+    font-size: 12px;
+    line-height: 14px;
   }
 }

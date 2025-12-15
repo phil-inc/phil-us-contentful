@@ -12,7 +12,7 @@ function ForPatientsSection() {
         <Box className={classes.forPatientsContent}>
           <span className={classes.forPatientsLabel}>FOR PATIENTS:</span>
           <h1 className={classes.heroTitle}>
-            WHY I CHOOSE PHILRX PHARMACY FOR MY ADDYI® PRESCRIPTION
+            WHY I CHOOSE <br /> PHILRX PHARMACY FOR MY ADDYI® PRESCRIPTION
           </h1>
         </Box>
         <Box className={classes.heroImageContainer}>
@@ -32,6 +32,7 @@ function PatientTestimonialSection() {
   return (
     <Box className={classes.testimonialSection}>
       <Box className={classes.testimonialContainer}>
+        <Box className={classes.testimonialQuoteContainer}>
         <p className={classes.testimonialQuote}>
           "I transferred my Addyi® prescription to PhilRx and not
           only did they save me over $250, they shipped my Addyi®{" "}
@@ -42,6 +43,7 @@ function PatientTestimonialSection() {
         <p className={classes.testimonialAuthor}>
           Jennifer 37, actual Addyi® patient
         </p>
+        </Box>
       </Box>
     </Box>
   );

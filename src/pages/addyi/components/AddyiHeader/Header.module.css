@@ -128,7 +128,7 @@
 }
 
 /* Tablet and smaller (<= 768px) - adjust spacing but keep horizontal layout */
-@media (max-width: 48em) {
+@media (max-width: 64em) {
 	.header {
 		padding: 16px 24px;
 		height: auto;
