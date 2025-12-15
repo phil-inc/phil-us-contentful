@@ -1,0 +1,16 @@
+.paragraph {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.anchor {
+  color: #00827e;
+  font-size: 18px;
+}
+
+.chevron {
+  > svg {
+		width: 28px;
+		height: 28px;
+	}
+}

@@ -6,17 +6,18 @@ import { Box, Center, Container, Grid, Loader, Title } from "@mantine/core";
 import { Layout } from "layouts/Layout/Layout";
 
 import type { ContentfulPage } from "types/page";
-import type { ISection } from "types/section";
+import type { IReferencedSection, ISection } from "types/section";
 import { AllContentfulModalQuery } from "types/modal";
 
 import { DTP_RESOURCES_EMAIL_SUBMITTED } from "constants/global.constant";
-import { PAGES_ROUTES } from "constants/page";
+import { PAGES_ROUTES, PAGES_TITLE } from "constants/page";
 
 import Section from "components/section/Section";
 import Expanded from "components/common/Expanded/Expanded";
 import Head from "components/common/Head/Head";
 import PageContext from "contexts/PageContext";
 import DTPModal from "components/Modal/dtpModal/dtpModal";
+import FaqTitleBar from "components/common/FaqTitleBar/FaqTitleBar";
 
 
 import * as classes from "./page.module.css";
@@ -102,6 +103,9 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
           </Container>
         )}
         <DTPModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
+
+        {title === PAGES_TITLE.FAQs && <FaqTitleBar sections={sections as IReferencedSection[]}/>}
+
         {canShowLoader
         ? (<Center>
             <Loader mt={0} size="lg" />
@@ -596,6 +600,7 @@ query getPages($id: String!) {
         }
         ... on ContentfulReferencedSection {
           id
+          title
           isHidden
           hideNavigationAnchor
           hideHeader

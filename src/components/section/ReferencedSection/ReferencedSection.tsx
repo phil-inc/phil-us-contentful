@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "clsx";
-import { Button, Group, Anchor, Accordion, Text, Container, Divider, Grid, GridCol } from "@mantine/core";
+import { Button, Group, Anchor, Accordion, Text, Container, Divider, Grid, GridCol, Box } from "@mantine/core";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {
@@ -215,12 +215,14 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   return (
     <>
       {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
+    
+    <div className={classes.section} id ={slugify(section.title ?? "", { lower: true, strict: true })}>
     <Expanded
       id={slugify(section.header ?? section.id, { lower: true, strict: true })}
       background={
         section.v2flag
-          ? getColorFromStylingOptions(section?.stylingOptions?.background)
-          : background
+        ? getColorFromStylingOptions(section?.stylingOptions?.background)
+        : background
       }
       fullWidth={section.referenceType === ReferenceTypeEnum["Image Carousel"]}
       backgroundAssetImage={section?.backgroundAssetImage ?? undefined}
@@ -234,7 +236,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       }
       pt={section.header?.length > 0 ? undefined : 0}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
-    >
+      >
       <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
@@ -246,8 +248,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             </h1>
             <p
             style={{marginBottom: "0px"}}
-              className={cx(classes.subHeading,{[classes.isDarkBanner]: isHomePageFirstCardSection})}
-              data-reference-type="Card Section"
+            className={cx(classes.subHeading,{[classes.isDarkBanner]: isHomePageFirstCardSection})}
+            data-reference-type="Card Section"
             >
               Solving access barriers in retail and specialty-lite to improve
               patient outcomes and drive commercial success.
@@ -257,7 +259,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 
         {(context.title === OUR_SOLUTIONS || context.title === PAGES_TITLE.PHIL_DIRECT) && section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
-            style={{ display: "flex", justifyContent:"center"}}
+          style={{ display: "flex", justifyContent:"center"}}
           >
             <Text className={classes.recentClientNewsHeader} data-reference-type="Our Solution">
               {section?.header || ''}
@@ -272,9 +274,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             section.referenceType === ReferenceTypeEnum["Stepper Cards"] &&
             context.title === PATIENTS_PAGE && (
               <Group
-                className={classes.subHeading}
-                data-reference-type={section.referenceType}
-                justify="center"
+              className={classes.subHeading}
+              data-reference-type={section.referenceType}
+              justify="center"
               >
                 <Text>{section.subHeading.subHeading}</Text>
               </Group>
@@ -286,9 +288,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               <Group justify="center" mt={isFaqSection ? 80 : 44}>
                 {isExternal ? (
                   <Anchor 
-                    className={classes.externalLink}
-                    href={link}
-                    target="_blank"
+                  className={classes.externalLink}
+                  href={link}
+                  target="_blank"
                   >
                     <Button variant="philDefault">{section.buttonText}</Button>
                   </Anchor>
@@ -302,7 +304,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 
           {/* philrx testimonial */}
           {section.header === "What PhilRx Patients & Providers Say"  && (
-          <div className={classes.customTestiominalFooter}>
+            <div className={classes.customTestiominalFooter}>
             <div className="trustpilot-widget" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%">
               <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>
             </div>
@@ -310,6 +312,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         )}
         </Container>
     </Expanded>
+    </div>
     {Boolean(section?.showBottomBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     </>
   );
