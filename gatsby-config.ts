@@ -45,6 +45,7 @@ const config: GatsbyConfig = {
           `**/components/**`, // Ignore all component directories
           `**/assets/**`, // Ignore asset directories
           `**/styles/**`, // Ignore style directories
+          `**/constants/**`, // Ignore constants directories
         ],
       },
     },
