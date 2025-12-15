@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@mantine/core";
 import addyiLogoWhite from "@addyi/assets/logos/addyi-logo-white.svg";
 import addyiLogoPink from "@addyi/assets/logos/addyi-logo-pink.svg";
+import poweredByIconWhite from "@addyi/assets/logos/powered-by-icon-white.svg";
+import poweredByIconPink from "@addyi/assets/logos/powered-by-icon-pink.svg";
 
 import * as classes from "./Header.module.css";
 import { PrescriptionModal } from "../PrescriptionModal";
@@ -39,6 +41,11 @@ export const AddyiHeader: React.FC = () => {
               </Box>
             <Box className={classes.poweredByContainer}>
           <span className={classes.poweredByText}>Powered by PHIL, Inc.</span>
+          <img
+            src={isScrolled ? poweredByIconPink : poweredByIconWhite}
+            alt="Powered by PHIL, Inc."
+            className={classes.poweredByIcon}
+          />
         </Box>
           </Box>
 

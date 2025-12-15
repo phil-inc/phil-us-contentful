@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box } from "@mantine/core";
 import addyiLogoWhite from "@addyi/assets/logos/addyi-logo-white.svg";
-import poweredByIcon from "@addyi/assets/logos/powered-by-icon.svg";
+import poweredByIcon from "@addyi/assets/logos/powered-by-icon-white.svg";
 import closeIcon from "@addyi/assets/icons/close-icon.svg";
 
 import * as classes from "./PrescriptionModal.module.css";

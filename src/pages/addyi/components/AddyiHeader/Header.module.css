@@ -35,7 +35,8 @@
 }
 
 .logoImageContainer {
-	margin-left: 24px;
+	margin-left: 120px;
+	max-height: 70px;
 }
 
 .logo {
@@ -99,12 +100,13 @@
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	margin-top: 8px;
+	margin-top: 7px;
+	margin-left: 96px;
 	padding: 0 12px;
 }
 
 .poweredByText {
-	font-family: 'Lato', sans-serif;
+	font-family: 'Lato';
 	font-style: normal;
 	font-weight: 400;
 	font-size: 12px;
@@ -121,7 +123,12 @@
 	color: #E0097E;
 }
 
-@media (max-width: 64em) {
+.poweredByIcon {
+	display: none;
+}
+
+/* Tablet and smaller (<= 768px) - adjust spacing but keep horizontal layout */
+@media (max-width: 48em) {
 	.header {
 		padding: 16px 24px;
 		height: auto;
@@ -130,6 +137,29 @@
 		width: 100%;
 	}
 
+	.logoImageContainer {
+		margin-left: 15px;
+	}
+
+	.poweredByContainer {
+		margin-left: 10px;
+		padding: 0;
+	}
+
+	.buttonsContainer {
+		width: auto;
+		gap: 10px;
+	}
+
+	.button {
+		width: auto;
+		min-width: 200px;
+		padding: 0 16px;
+	}
+}
+
+/* Mobile (<= 640px) - stack vertically */
+@media (max-width: 40em) {
 	.headerContent {
 		flex-direction: column;
 		align-items: flex-start;
@@ -147,7 +177,16 @@
 	}
 
 	.logoImageContainer {
-		margin-left: 0;
+		margin-left: 10px;
+		max-height: 40px;
+		display: flex;
+		align-items: flex-start;
+	}
+
+	.logo {
+		width: 62px;
+		height: 40px;
+		aspect-ratio: 61.93/40.23;
 	}
 
 	.buttonsContainer {
@@ -160,8 +199,25 @@
 	}
 
 	.button {
-		width: 240px;
+		width: 272px;
 		flex-shrink: 0;
+	}
+
+	.poweredByContainer {
+		margin-top: 1px;
+		margin-left: 5px;
+		padding: 0;
+	}
+
+	.poweredByText {
+		display: none;
+	}
+
+	.poweredByIcon {
+		display: block;
+		width: 68px;
+		height: 7px;
+		object-fit: contain;
 	}
 
 	.poweredBy {
