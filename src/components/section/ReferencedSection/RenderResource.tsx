@@ -32,6 +32,7 @@ import { CardSection } from "components/common/Card/CardSection/CardSection";
 import { CommitmentCard } from "components/CommitmentCard/CommitmentCard";
 import { FeaturedInsights } from "components/FeaturedInsights/FeaturedInsights";
 import { PhilPeople } from "components/common/PhilPeople/PhilPeople";
+import { FaqAccordionSingle } from "components/common/AccordionSingle/FaqAccordionSingle";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -203,6 +204,10 @@ const FaqAccordianComponent: ComponentFunction = ({ resource }) => (
   <FaqAccordion resource={resource} />
 );
 
+const FaqAccordianSingleComponent: ComponentFunction = ({ resource }) => (
+  <FaqAccordionSingle resource={resource} />
+);
+
 const CardSectionComponent: ComponentFunction = ({
   resource,
   isEmployeeTag,
@@ -269,6 +274,7 @@ const getComponent = (
     [ReferenceTypeEnum["Brand Outcome Card"]]: BrandOutcomeCardComponent,
     [ReferenceTypeEnum.Cell]: CellComponent,
     [ReferenceTypeEnum["FAQ Accordion"]]: FaqAccordianComponent,
+    [ReferenceTypeEnum["FAQ Accordion Single"]]: FaqAccordianSingleComponent,
     [ReferenceTypeEnum["Card Section"]]: CardSectionComponent,
     [ReferenceTypeEnum["Commitment Card"]]: CommitmentCardComponent,
     [ReferenceTypeEnum["Featured Insights"]]: FeaturedInsightsComponent,
