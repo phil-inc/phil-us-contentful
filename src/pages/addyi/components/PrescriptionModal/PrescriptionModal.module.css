@@ -265,8 +265,9 @@
 @media (max-width: 40em) {
   .modal {
     position: fixed;
-    top: 40%;
+    top: 25%;
     left: 50%;
+    transform: translate(-50%, 0);
   }
   
   .header {
