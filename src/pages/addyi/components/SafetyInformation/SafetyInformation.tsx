@@ -75,7 +75,7 @@ function WhatIsAddyi() {
         <Box className={classes.boxImageWrapper}>
           <img
             src={imgAddyiBox}
-            alt="Addyi bottles and box"
+            alt="addyi"
             className={classes.boxImage}
           />
         </Box>

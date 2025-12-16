@@ -49,21 +49,21 @@ export const AboutAddyiSection: React.FC = () => {
                 <Box className={classes.bottleImageWrapper}>
                   <img
                     src={imgAddyiBottle}
-                    alt="Addyi bottle"
+                    alt="addyi"
                     className={classes.bottleImage}
                   />
                 </Box>
                 <Box className={classes.sealContainer}>
                   <img
                     src={imgPrescribedSeal}
-                    alt="#1 Prescribed Seal"
+                    alt="addyi"
                     className={classes.sealImage}
                   />
                 </Box>
                 <Box className={classes.mobileBottleWrapper}>
                   <img
                     src={imgAddyiBottleWithSealMobile}
-                    alt="Addyi bottle with #1 Prescribed Seal"
+                    alt="addyi"
                     className={classes.mobileBottleImage}
                   />
                 </Box>

@@ -14,7 +14,7 @@ export const HowToPrescribe: React.FC = () => {
             <Box className={classes.imageWrapper}>
               <img
                 src={imgDoctorImage}
-                alt="Healthcare provider"
+                alt="addyi"
                 className={classes.doctorImage}
               />
             </Box>

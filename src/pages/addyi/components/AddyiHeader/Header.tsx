@@ -35,7 +35,7 @@ export const AddyiHeader: React.FC = () => {
               <Box className={classes.logoImageContainer}>    
             <img
               src={isScrolled ? addyiLogoPink : addyiLogoWhite}
-              alt="Addyi Logo"
+              alt="addyi"
               className={classes.logo}
             />
               </Box>

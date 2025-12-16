@@ -50,7 +50,7 @@ export const PrescriptionModal: React.FC<PrescriptionModalProps> = ({
           <Box className={classes.headerLeft}>
             <img
               src={addyiLogoWhite}
-              alt="Addyi Logo"
+              alt="addyi"
               className={classes.logo}
             />
             <img

@@ -18,7 +18,7 @@ function ForPatientsSection() {
         <Box className={classes.heroImageContainer}>
           <img
             src={imgWomanWithAddyiBottle}
-            alt="Addyi"
+            alt="addyi"
             className={classes.heroImage}
           />
         </Box>
