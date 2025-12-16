@@ -6,9 +6,11 @@ import { DISCLAIMER_ROI_TEXT } from "constants/identifiers";
 
 import SingleSlider from "components/common/SingleSlider/SingleSlider";
 import RoiHeading from "components/Roi/Roi Heading/RoiHeading";
+import SwitchField from "components/common/SwitchField/SwitchField";
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
 
-import { RoiInputsNum, SliderConfig } from "types/roi";
+import { FieldConfig, RoiInputsNum } from "types/roi";
+import { INPUT_TYPE } from "enum/global.enum";
 import { ISection } from "types/section";
 import { getInDollar, getInPercent, getInX } from "utils/utils";
 
@@ -26,16 +28,18 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
   setRoiInputs,
 }) => {
   const [showDisclaimer, setShowDisclaimer] = React.useState<boolean>(true);
-  const handleChange = (key: keyof RoiInputsNum, value: number) => {
+  const handleChange = (key: keyof RoiInputsNum, value: number | boolean) => {
     setRoiInputs((prev) => ({ ...prev, [key]: value }));
     setShowDisclaimer(false);
   };
 
-  const slidersData = useMemo<SliderConfig[]>(() => {
+  const inputFields = useMemo<FieldConfig[]>(() => {
     return [
+      // --sliders
       {
         keyName: "nRx",
         title: "NRx Volume",
+        type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.nRx,
         actulValueInString: roiInputs.nRx.toString(),
         changeValue: (v: number) => handleChange("nRx", v),
@@ -52,11 +56,12 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: ROI_INPUT_CONFIG.nRx.max,
           },
         ],
-        tootipMsg: "Total number of new prescriptions expected per year",
+        tooltipMsg: "Total number of new prescriptions expected per year",
       },
       {
         keyName: "wac",
         title: "WAC Estimate",
+        type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.wac,
         actulValueInString: getInDollar(roiInputs.wac),
         changeValue: (v: number) => handleChange("wac", v),
@@ -73,11 +78,12 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInDollar(ROI_INPUT_CONFIG.wac.max),
           },
         ],
-        tootipMsg: "Wholesale Average Cost per prescription",
+        tooltipMsg: "Wholesale Average Cost per prescription",
       },
       {
-        keyName: "patientEnagedPercentage",
+        keyName: "patientEnagedPercentage", // TODO:remove this
         title: "Patient Enrollment Rate",
+        type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.patientEnagedPercentage,
         actulValueInString: getInPercent(roiInputs.patientEnagedPercentage),
         changeValue: (v: number) => handleChange("patientEnagedPercentage", v),
@@ -94,11 +100,12 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.max),
           },
         ],
-        tootipMsg: "Percentage of patients who enroll in your  program",
+        tooltipMsg: "Percentage of patients who enroll in your  program",
       },
       {
         keyName: "paSubmissionRate",
         title: "PA Submission Rate",
+        type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.paSubmissionRate,
         actulValueInString: getInPercent(roiInputs.paSubmissionRate),
         changeValue: (v: number) => handleChange("paSubmissionRate", v),
@@ -115,12 +122,13 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInPercent(ROI_INPUT_CONFIG.paSubmissionRate.max),
           },
         ],
-        tootipMsg:
+        tooltipMsg:
           "Rate of successfully submitted prior authorization requests.",
       },
       {
         keyName: "averageRefillsPerNRx",
         title: "Refill Mutiplier",
+        type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.averageRefillsPerNRx,
         actulValueInString: getInX(roiInputs.averageRefillsPerNRx),
         changeValue: (v: number) => handleChange("averageRefillsPerNRx", v),
@@ -137,7 +145,32 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInX(ROI_INPUT_CONFIG.averageRefillsPerNRx.max),
           },
         ],
-        tootipMsg: "Average number of refills per patient",
+        tooltipMsg: "Average number of refills per patient",
+      },
+      //---switches
+      {
+        keyName: "haveHubService",
+        title: "Have Hub Services",
+        type: INPUT_TYPE.SWITCH,
+        actualValue: ROI_INPUT_CONFIG.haveHubService,
+        changeValue: (v: boolean) => handleChange("haveHubService", v),
+        tooltipMsg: "Indicates whether the brand offers dedicated hub services.",
+      },
+      {
+        keyName: "haveCoverCouponOffer",
+        title: "Cover Coupon Offer",
+        type: INPUT_TYPE.SWITCH,
+        actualValue: ROI_INPUT_CONFIG.haveCoverCouponOffer,
+        changeValue: (v: boolean) => handleChange("haveCoverCouponOffer", v),
+        tooltipMsg: "Indicates whether a co-pay coupon is offered.",
+      },
+      {
+        keyName: "haveUncoverCouponOffer",
+        title: "Uncovered Commercial Cash Offer",
+        type: INPUT_TYPE.SWITCH,
+        actualValue: ROI_INPUT_CONFIG.haveUncoverCouponOffer,
+        changeValue: (v: boolean) => handleChange("haveUncoverCouponOffer", v),
+        tooltipMsg: "Indicates whether a cash offer is available for commercially uninsured patients.",
       },
     ];
   }, [roiInputs]);
@@ -155,9 +188,18 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
       )}
 
       <Stack gap={"lg"} className={classes.sliderContainer}>
-        {slidersData.map((slider) => (
-          <SingleSlider sliderProps={slider} key={slider.keyName} />
-        ))}
+        {inputFields.map((field) => {
+          switch (field.type) {
+            case INPUT_TYPE.SWITCH:
+              return <SwitchField key={field.keyName} switchData={field} />;
+
+            case INPUT_TYPE.SLIDER:
+              return <SingleSlider key={field.keyName} sliderProps={field} />;
+
+            default:
+              return null;
+          }
+        })}
       </Stack>
     </div>
   );

@@ -1,11 +1,16 @@
 import Decimal from "decimal.js";
 
+import { INPUT_TYPE } from "enum/global.enum";
+
 export type RoiInputsNum = {
   wac: number;
   nRx: number;
   patientEnagedPercentage: number;
   paSubmissionRate: number;
   averageRefillsPerNRx: number;
+  haveHubService: boolean;
+  haveCoverCouponOffer: boolean;
+  haveUncoverCouponOffer: boolean;
 };
 
 export type RoiInputsDec = {
@@ -16,15 +21,28 @@ export type RoiInputsDec = {
   averageRefillsPerNRx: Decimal;
 };
 
-export type SliderConfig = {
+//input Fields
+type BaseField = {
   keyName: string;
   title: string;
+  tooltipMsg?: string;
+};
+
+export type ISwitchField = BaseField & {
+  type: INPUT_TYPE.SWITCH;
+  actualValue: boolean;
+  changeValue: (v: boolean) => void;
+};
+
+export type ISliderField = BaseField & {
+  type: INPUT_TYPE.SLIDER;
   actualValue: number;
   actulValueInString: string;
-  changeValue: (v: number) => void;
   min: number;
   max: number;
   step: number;
   marks: { value: number; label: string | number }[];
-  tootipMsg?: string;
+  changeValue: (v: number) => void;
 };
+
+export type FieldConfig = ISwitchField | ISliderField;
