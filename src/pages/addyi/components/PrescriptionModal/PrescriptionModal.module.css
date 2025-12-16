@@ -265,7 +265,7 @@
 @media (max-width: 40em) {
   .modal {
     position: fixed;
-    top: 25%;
+    top: 40%;
     left: 50%;
   }
   
