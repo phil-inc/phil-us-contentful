@@ -42,10 +42,8 @@ function AccordionHeader({
   return (
     <Box className={classes.accordionHeader} onClick={onToggle}>
       <Box className={classes.accordionHeaderContent}>
-      <h3 className={classes.accordionTitle}>
-        Important Safety Information
-      </h3>
-      <AccordionIcon isOpen={isOpen} />
+        <h3 className={classes.accordionTitle}>Important Safety Information</h3>
+        <AccordionIcon isOpen={isOpen} />
       </Box>
     </Box>
   );
@@ -57,24 +55,19 @@ function WhatIsAddyi() {
       <h4 className={classes.sectionTitle}>
         What is ADDYI® (add-ee) (flibanserin) Tablets?
       </h4>
-      <p className={classes.safetyText}>
-        ADDYI® is a prescription medicine used to treat hypoactive (low) sexual
-        desire disorder (HSDD) in women who have not gone through menopause, who
-        have not had problems with low sexual desire in the past, and who have
-        low sexual desire no matter the type of sexual activity, the situation,
-        or the sexual partner. Women with HSDD have low sexual desire that is
-        troubling to them. Their low sexual desire is not due to:
+      <p className={classes.safetyText} style={{ marginBottom: "0px" }}>
+        ADDYI® is indicated for the treatment of women less than 65 years of age
+        with acquired, generalized hypoactive sexual desire disorder (HSDD) as
+        characterized by low sexual desire that causes marked distress or
+        interpersonal difficulty and is not due to:
       </p>
-      <ul className={classes.safetyList}>
+      <ul className={classes.safetyList} style={{ margin: "0px" }}>
         <li>a medical or mental health problem</li>
         <li>problems in the relationship</li>
         <li>medicine or other drug use.</li>
       </ul>
-      <p className={classes.safetyText}>
-        ADDYI® is not for use for the treatment of HSDD in women who have gone
-        through menopause, in men or in children.
-      </p>
-      <p className={classes.safetyText}>
+      <p className={classes.safetyText} style={{ margin: "0px" }}>ADDYI® is not indicated in men.</p>
+      <p className={classes.safetyText} style={{ margin: "0px" }}>
         ADDYI® is not for use to improve sexual performance.
       </p>
 
@@ -95,9 +88,7 @@ function WhatIsAddyi() {
 function ImportantSafetyInfo() {
   return (
     <Box className={classes.safetyColumn}>
-      <h4 className={classes.sectionTitle}>
-        IMPORTANT SAFETY INFORMATION
-      </h4>
+      <h4 className={classes.sectionTitle}>IMPORTANT SAFETY INFORMATION</h4>
 
       <p className={classes.safetyTextBold}>
         What is the most important information I should know about ADDYI®? Your
@@ -185,12 +176,8 @@ function ImportantSafetyInfo() {
         as you can.
       </p>
 
-      <p className={classes.safetyTextBold}>
-        Who should not take ADDYI®?
-      </p>
-      <p className={classes.safetyTextBold}>
-        Do not take ADDYI® if you:
-      </p>
+      <p className={classes.safetyTextBold}>Who should not take ADDYI®?</p>
+      <p className={classes.safetyTextBold}>Do not take ADDYI® if you:</p>
 
       <ul className={classes.safetyList}>
         <li>
@@ -317,7 +304,9 @@ function ImportantSafetyInfo() {
           medicines or herbal supplements.
         </li>
         <li>
-          <strong>Low blood pressure and fainting (loss of consciousness)</strong>{" "}
+          <strong>
+            Low blood pressure and fainting (loss of consciousness)
+          </strong>{" "}
           can happen when you take ADDYI® even if you do not drink alcohol or
           take other medicines or herbal supplements. Your risk of low blood
           pressure and fainting (loss of consciousness) is increased if ADDYI®

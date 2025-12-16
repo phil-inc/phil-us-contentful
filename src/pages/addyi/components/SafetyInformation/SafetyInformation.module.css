@@ -143,7 +143,7 @@
 /* Box Image */
 .boxImageContainer {
   position: relative;
-  margin-top: 66px;
+  margin-top: 234px;
   width: 457px;
   height: 240px;
 }
@@ -220,6 +220,10 @@
 
   .sectionTitle {
     font-size: 14px;
+  }
+
+  .boxImageContainer {
+    margin-top: 30px;
   }
 
   .boxImageWrapper {
