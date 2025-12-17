@@ -72,7 +72,7 @@ export const AboutAddyiSection: React.FC = () => {
             <Box className={classes.rightColumn}>
               <Box className={classes.dosageContainer}>
                 <p className={classes.dosageText}>
-                  Take <span className={classes.underline}>Addyi</span>® once daily, at
+                  Take <a href={ADDYI_URLS.ADDYI_WEBSITE} target="_blank" rel="noopener noreferrer">Addyi</a>® once daily, at
                   bedtime, for two months to realize the full ongoing benefits.*
                 </p>
                 <p className={classes.disclaimerText}>

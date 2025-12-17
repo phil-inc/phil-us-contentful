@@ -173,8 +173,10 @@
   margin: 0;
 }
 
-.dosageText .underline {
+.dosageText a {
   text-decoration: underline;
+  color: #E0097E;
+  cursor: pointer;
 }
 
 .disclaimerText {

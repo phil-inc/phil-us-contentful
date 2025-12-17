@@ -2,32 +2,19 @@ import React, { useState } from "react";
 import { Box } from "@mantine/core";
 
 import imgAddyiBox from "@addyi/assets/images/eed18cbd949fc9f2aeaa778cd983beecb6f61620.png";
+import plusIcon from "@addyi/assets/icons/plus-icon.svg";
+import minusIcon from "@addyi/assets/icons/minus-icon.svg";
 
 import * as classes from "./SafetyInformation.module.css";
 
 function AccordionIcon({ isOpen }: { isOpen: boolean }) {
   return (
-    <Box className={`${classes.accordionIcon} ${isOpen ? classes.open : ""}`}>
-      <svg
-        width="25"
-        height="25"
-        viewBox="0 0 29 29"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M14.5 2V27"
-          stroke="white"
-          strokeLinecap="round"
-          strokeWidth="4"
-        />
-        <path
-          d="M27 14.5L2 14.5"
-          stroke="white"
-          strokeLinecap="round"
-          strokeWidth="4"
-        />
-      </svg>
+    <Box className={classes.accordionIcon}>
+      <img
+        src={isOpen ? minusIcon : plusIcon}
+        alt={isOpen ? "Minus" : "Plus"}
+        className={classes.accordionIconImage}
+      />
     </Box>
   );
 }
@@ -385,7 +372,9 @@ export const SafetyInformation: React.FC = () => {
   return (
     <Box className={classes.safetySection}>
       <AccordionHeader isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
-      {isOpen && <AccordionContent />}
+      <Box className={`${classes.accordionContent} ${isOpen ? classes.accordionContentOpen : ""}`}>
+        <AccordionContent />
+      </Box>
     </Box>
   );
 };

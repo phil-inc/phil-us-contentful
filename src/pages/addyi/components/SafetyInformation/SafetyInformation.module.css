@@ -2,6 +2,7 @@
 .safetySection {
   width: 100%;
   background-color: #FFFFFF;
+  contain: layout;
 }
 
 /* Accordion Header - Source height: 60px */
@@ -39,17 +40,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
 }
 
-.accordionIcon.open {
-  transform: rotate(45deg);
+.accordionIconImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Accordion Content Container */
+.accordionContent {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+}
+
+.accordionContent > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.accordionContentOpen {
+  grid-template-rows: 1fr;
 }
 
 /* Safety Content */
 .safetyContentWrapper {
   max-width: 1170px;
   margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.accordionContentOpen .safetyContentWrapper {
   padding: 30px 92px;
 }
 
@@ -181,7 +204,7 @@
     margin-right: 0;
   }
 
-  .safetyContentWrapper {
+  .accordionContentOpen .safetyContentWrapper {
     padding: 30px;
   }
 
@@ -214,7 +237,7 @@
     height: 20px;
   }
 
-  .accordionIcon svg {
+  .accordionIconImage {
     width: 20px;
     height: 20px;
   }
