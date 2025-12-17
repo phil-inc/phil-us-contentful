@@ -9,7 +9,6 @@ import { trackGaEvent } from "utils/analytics";
 import {
   GA_EVENT_ACTION,
   GA_EVENT_CATEGORY,
-  GA_EVENT_LABEL,
 } from "constants/analytics";
 
 import * as classes from "@addyi/components/SafetyInformation/SafetyInformation.module.css";
@@ -353,7 +352,6 @@ function ImportantSafetyInfo() {
             trackGaEvent(
               GA_EVENT_ACTION.CLICK_ADDYI_LINK,
               GA_EVENT_CATEGORY.ADDYI_LINK,
-              GA_EVENT_LABEL.ADDYI_COM_PI
             )
           }
         >

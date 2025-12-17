@@ -14,7 +14,6 @@ import { trackGaEvent } from "utils/analytics";
 import {
   GA_EVENT_ACTION,
   GA_EVENT_CATEGORY,
-  GA_EVENT_LABEL,
 } from "constants/analytics";
 
 import * as classes from "@addyi/components/AboutAddyiSection/AboutAddyiSection.module.css";
@@ -26,7 +25,6 @@ export const AboutAddyiSection: React.FC = () => {
     trackGaEvent(
       GA_EVENT_ACTION.CLICK_HAVE_PRESCRIPTION,
       GA_EVENT_CATEGORY.ADDYI_CTA,
-      GA_EVENT_LABEL.BODY
     );
     setIsModalOpen(true);
   };
@@ -35,7 +33,6 @@ export const AboutAddyiSection: React.FC = () => {
     trackGaEvent(
       GA_EVENT_ACTION.CLICK_NEED_PRESCRIPTION,
       GA_EVENT_CATEGORY.ADDYI_CTA,
-      GA_EVENT_LABEL.BODY
     );
     window.open(ADDYI_URLS.NEED_PRESCRIPTION, "_blank", "noopener,noreferrer");
   };
@@ -103,7 +100,6 @@ export const AboutAddyiSection: React.FC = () => {
                       trackGaEvent(
                         GA_EVENT_ACTION.CLICK_ADDYI_LINK,
                         GA_EVENT_CATEGORY.ADDYI_LINK,
-                        GA_EVENT_LABEL.ADDYI_HOMEPAGE_LINK
                       )
                     }
                   >
@@ -121,13 +117,6 @@ export const AboutAddyiSection: React.FC = () => {
                     className={classes.pdfLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() =>
-                      trackGaEvent(
-                        GA_EVENT_ACTION.CLICK_ADDYI_LINK,
-                        GA_EVENT_CATEGORY.ADDYI_LINK,
-                        GA_EVENT_LABEL.PRESCRIBING_INFO_PDF
-                      )
-                    }
                   >
                     Prescribing Information.pdf
                     <img src={downloadIcon} alt="" className={classes.downloadIcon} />
@@ -137,13 +126,6 @@ export const AboutAddyiSection: React.FC = () => {
                     className={classes.pdfLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() =>
-                      trackGaEvent(
-                        GA_EVENT_ACTION.CLICK_ADDYI_LINK,
-                        GA_EVENT_CATEGORY.ADDYI_LINK,
-                        GA_EVENT_LABEL.MEDICATION_GUIDE_PDF
-                      )
-                    }
                   >
                     Medication Guide.pdf
                     <img src={downloadIcon} alt="" className={classes.downloadIcon} />
