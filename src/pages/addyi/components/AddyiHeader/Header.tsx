@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mantine/core";
+
 import addyiLogoWhite from "@addyi/assets/logos/addyi-logo-white.svg";
 import addyiLogoPink from "@addyi/assets/logos/addyi-logo-pink.svg";
 import poweredByIconWhite from "@addyi/assets/logos/powered-by-icon-white.svg";
 import poweredByIconPink from "@addyi/assets/logos/powered-by-icon-pink.svg";
 
-import * as classes from "./Header.module.css";
-import { PrescriptionModal } from "../PrescriptionModal";
-import { ADDYI_URLS } from "../../constants/urls";
+import { PrescriptionModal } from "@addyi/components/PrescriptionModal";
+import { ADDYI_URLS } from "@addyi/constants/urls";
+
+import { trackGaEvent } from "utils/analytics";
+import {
+  GA_EVENT_ACTION,
+  GA_EVENT_CATEGORY,
+  GA_EVENT_LABEL,
+} from "constants/analytics";
+
+import * as classes from "@addyi/components/AddyiHeader/Header.module.css";
 
 export const AddyiHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,7 +32,21 @@ export const AddyiHeader: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleHavePrescriptionClick = () => {
+    trackGaEvent(
+      GA_EVENT_ACTION.CLICK_HAVE_PRESCRIPTION,
+      GA_EVENT_CATEGORY.ADDYI_CTA,
+      GA_EVENT_LABEL.HEADER
+    );
+    setIsModalOpen(true);
+  };
+
   const handleNeedPrescriptionClick = () => {
+    trackGaEvent(
+      GA_EVENT_ACTION.CLICK_NEED_PRESCRIPTION,
+      GA_EVENT_CATEGORY.ADDYI_CTA,
+      GA_EVENT_LABEL.HEADER
+    );
     window.open(ADDYI_URLS.NEED_PRESCRIPTION, "_blank", "noopener,noreferrer");
   };
 
@@ -52,7 +75,7 @@ export const AddyiHeader: React.FC = () => {
           <Box className={classes.buttonsContainer}>
             <button 
               className={classes.button}
-              onClick={() => setIsModalOpen(true)}
+              onClick={handleHavePrescriptionClick}
             >
               HAVE AN ADDYI® PRESCRIPTION
             </button>

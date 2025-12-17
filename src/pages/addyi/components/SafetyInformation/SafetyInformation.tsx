@@ -5,7 +5,14 @@ import imgAddyiBox from "@addyi/assets/images/eed18cbd949fc9f2aeaa778cd983beecb6
 import plusIcon from "@addyi/assets/icons/plus-icon.svg";
 import minusIcon from "@addyi/assets/icons/minus-icon.svg";
 
-import * as classes from "./SafetyInformation.module.css";
+import { trackGaEvent } from "utils/analytics";
+import {
+  GA_EVENT_ACTION,
+  GA_EVENT_CATEGORY,
+  GA_EVENT_LABEL,
+} from "constants/analytics";
+
+import * as classes from "@addyi/components/SafetyInformation/SafetyInformation.module.css";
 
 function AccordionIcon({ isOpen }: { isOpen: boolean }) {
   return (
@@ -342,6 +349,13 @@ function ImportantSafetyInfo() {
           className={classes.link}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() =>
+            trackGaEvent(
+              GA_EVENT_ACTION.CLICK_ADDYI_LINK,
+              GA_EVENT_CATEGORY.ADDYI_LINK,
+              GA_EVENT_LABEL.ADDYI_COM_PI
+            )
+          }
         >
           addyi.com/pi
         </a>

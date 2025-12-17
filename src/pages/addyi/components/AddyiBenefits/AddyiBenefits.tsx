@@ -3,7 +3,7 @@ import { Box } from "@mantine/core";
 
 import checkmarkIcon from "@addyi/assets/icons/checkmark-bullet.svg";
 
-import * as classes from "./AddyiBenefits.module.css";
+import * as classes from "@addyi/components/AddyiBenefits/AddyiBenefits.module.css";
 
 export const AddyiBenefitsSection: React.FC = () => {
   return (

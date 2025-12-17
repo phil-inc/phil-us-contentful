@@ -3,7 +3,7 @@ import { Box } from "@mantine/core";
 
 import imgDoctorImage from "@addyi/assets/images/75366f9d40e2c95d068311b00b03a8c331a5152d.png";
 
-import * as classes from "./HowToPrescribe.module.css";
+import * as classes from "@addyi/components/HowToPrescribe/HowToPrescribe.module.css";
 
 export const HowToPrescribe: React.FC = () => {
   return (

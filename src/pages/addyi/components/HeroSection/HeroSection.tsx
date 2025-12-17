@@ -3,7 +3,7 @@ import { Box } from "@mantine/core";
 
 import imgWomanWithAddyiBottle from "@addyi/assets/images/9f27b177d6960b8efcc248be57c62dbe9bb6d6b5.png";
 
-import * as classes from "./HeroSection.module.css";
+import * as classes from "@addyi/components/HeroSection/HeroSection.module.css";
 
 function ForPatientsSection() {
   return (

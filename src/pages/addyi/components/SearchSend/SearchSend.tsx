@@ -3,7 +3,7 @@ import { Box } from "@mantine/core";
 
 import imgNotepad from "@addyi/assets/images/c1c538fafc963f2f9a58eef4aac8d51e3aa020b2.png";
 
-import * as classes from "./SearchSend.module.css";
+import * as classes from "@addyi/components/SearchSend/SearchSend.module.css";
 
 // Source: SearchSend component
 export const SearchSend: React.FC = () => {

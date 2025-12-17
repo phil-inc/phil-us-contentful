@@ -3,7 +3,7 @@ import { Box } from "@mantine/core";
 
 import decorativeDots from "@addyi/assets/icons/decorative-dots.svg";
 
-import * as classes from "./TestimonialBubbles.module.css";
+import * as classes from "@addyi/components/TestimonialBubbles/TestimonialBubbles.module.css";
 
 // Source: Group9/Group10 - Decorative dots
 function DecorativeDots() {

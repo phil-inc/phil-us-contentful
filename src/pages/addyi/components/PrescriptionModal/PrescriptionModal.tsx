@@ -4,7 +4,14 @@ import addyiLogoWhite from "@addyi/assets/logos/addyi-logo-white.svg";
 import poweredByIcon from "@addyi/assets/logos/powered-by-icon-white.svg";
 import closeIcon from "@addyi/assets/icons/close-icon.svg";
 
-import * as classes from "./PrescriptionModal.module.css";
+import { trackGaEvent } from "utils/analytics";
+import {
+  GA_EVENT_ACTION,
+  GA_EVENT_CATEGORY,
+  GA_EVENT_LABEL,
+} from "constants/analytics";
+
+import * as classes from "@addyi/components/PrescriptionModal/PrescriptionModal.module.css";
 
 interface PrescriptionModalProps {
   opened: boolean;
@@ -81,7 +88,17 @@ export const PrescriptionModal: React.FC<PrescriptionModalProps> = ({
           </h3>
           <p className={classes.bodyText}>
             To receive the lowest price for your Addyi® prescription, call{" "}
-            <a href="tel:855-522-3244" className={classes.phoneLink}>
+            <a
+              href="tel:855-522-3244"
+              className={classes.phoneLink}
+              onClick={() =>
+                trackGaEvent(
+                  GA_EVENT_ACTION.CLICK_TRANSFER_IN_PHONE,
+                  GA_EVENT_CATEGORY.ADDYI_CTA,
+                  GA_EVENT_LABEL.TRANSFER_PHONE
+                )
+              }
+            >
               855-522-3244
             </a>
             , and a Customer Support Rep will connect you with PhilRx Pharmacy to complete your request.

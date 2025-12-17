@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "@mantine/core";
 
-import * as classes from "./Footer.module.css";
+import * as classes from "@addyi/components/Footer/Footer.module.css";
 
 // Source: Footer component - Links
 function FooterLinks() {
