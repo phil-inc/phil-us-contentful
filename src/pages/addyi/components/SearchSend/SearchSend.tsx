@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mantine/core";
 
-import imgNotepad from "@addyi/assets/images/c1c538fafc963f2f9a58eef4aac8d51e3aa020b2.png";
+import imgNotepad from "@addyi/assets/images/notepad_prescription.png";
 
 import * as classes from "@addyi/components/SearchSend/SearchSend.module.css";
 
