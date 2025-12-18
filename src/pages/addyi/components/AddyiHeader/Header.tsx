@@ -47,11 +47,15 @@ export const AddyiHeader: React.FC = () => {
     window.open(ADDYI_URLS.NEED_PRESCRIPTION, "_blank", "noopener,noreferrer");
   };
 
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <>
       <Box className={`${classes.header} ${isScrolled ? classes.scrolled : ""}`}>
         <Box className={classes.headerContent}>
-          <Box className={classes.logoContainer}>
+          <Box className={classes.logoContainer} onClick={handleLogoClick} style={{ cursor: "pointer" }}>
               <Box className={classes.logoImageContainer}>    
             <img
               src={isScrolled ? addyiLogoPink : addyiLogoWhite}
