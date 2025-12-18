@@ -118,7 +118,7 @@ export const AboutAddyiSection: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Prescribing Information.pdf
+                    <span>Prescribing Information.pdf</span>
                     <img src={downloadIcon} alt="" className={classes.downloadIcon} />
                   </a>
                   <a 
@@ -127,7 +127,7 @@ export const AboutAddyiSection: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Medication Guide.pdf
+                    <span>Medication Guide.pdf</span>
                     <img src={downloadIcon} alt="" className={classes.downloadIcon} />
                   </a>
                 </Box>

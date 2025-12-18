@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Text } from "@mantine/core";
+import { Box } from "@mantine/core";
+import { Link } from "gatsby";
 
 import * as classes from "@addyi/components/Footer/Footer.module.css";
 
@@ -8,9 +9,9 @@ function FooterLinks() {
   return (
     <Box className={classes.footerLinks}>
       <p className={classes.footerCopyright}>© Phil, Inc.</p>
-      <p className={classes.footerLink}>Terms of Use</p>
-      <p className={classes.footerLink}>Privacy Policy</p>
-      <p className={classes.footerLink}>HIPAA Policy</p>
+      <Link to="/terms" className={classes.footerLink}>Terms of Use</Link>
+      <Link to="/privacy" className={classes.footerLink}>Privacy Policy</Link>
+      <Link to="/hipaa" className={classes.footerLink}>HIPAA Notice</Link>
     </Box>
   );
 }
