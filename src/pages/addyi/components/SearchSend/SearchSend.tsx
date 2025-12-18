@@ -57,9 +57,6 @@ export const SearchSend: React.FC = () => {
               alt="addyi"
               className={classes.notepadImage}
             />
-            <Box className={classes.philrxOverlay}>
-              <span className={classes.philrxText}>PHILRX</span>
-            </Box>
           </Box>
         </Box>
       </Box>

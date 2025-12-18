@@ -59,8 +59,9 @@ function WhatIsAddyi() {
         <li>problems in the relationship</li>
         <li>medicine or other drug use.</li>
       </ul>
-      <p className={classes.safetyText} style={{ margin: "0px" }}>ADDYI® is not indicated in men.</p>
       <p className={classes.safetyText} style={{ margin: "0px" }}>
+        ADDYI® is not indicated in men.
+        <br />
         ADDYI® is not for use to improve sexual performance.
       </p>
 
@@ -158,10 +159,7 @@ function ImportantSafetyInfo() {
       </p>
 
       <p className={classes.safetyText}>
-        Do not take ADDYI® if you have liver problems.
-      </p>
-
-      <p className={classes.safetyText}>
+        Do not take ADDYI® if you have liver problems.<br />
         If you take ADDYI® and you feel lightheaded or dizzy, lie down right
         away. Get emergency medical help or ask someone to get emergency medical
         help for you if the symptoms do not go away or if you feel like you
@@ -169,8 +167,10 @@ function ImportantSafetyInfo() {
         as you can.
       </p>
 
-      <p className={classes.safetyTextBold}>Who should not take ADDYI®?</p>
-      <p className={classes.safetyTextBold}>Do not take ADDYI® if you:</p>
+      <p className={classes.safetyTextBold}>
+        Who should not take ADDYI®? <br />
+        Do not take ADDYI® if you:
+      </p>
 
       <ul className={classes.safetyList}>
         <li>
@@ -209,9 +209,7 @@ function ImportantSafetyInfo() {
       </ul>
 
       <p className={classes.safetyTextBold}>
-        What should I tell my doctor before taking ADDYI®?
-      </p>
-      <p className={classes.safetyTextBold}>
+        What should I tell my doctor before taking ADDYI®? <br />
         Before you take ADDYI®, tell your doctor about all of your medical
         conditions, including if you:
       </p>
@@ -240,8 +238,7 @@ function ImportantSafetyInfo() {
         <strong>Tell your doctor</strong> if you have had an allergic reaction
         such as hives, itching, or trouble breathing during or after receiving a
         dose of ADDYI®.
-      </p>
-      <p className={classes.safetyText}>
+        <br />
         <strong>Tell your doctor about all of the medicines you take,</strong>{" "}
         including prescription and over-the-counter medicines, vitamins, and
         herbal supplements. ADDYI® can affect the way other medicines work, and
@@ -257,16 +254,16 @@ function ImportantSafetyInfo() {
         <li>
           <strong>
             Do not drink alcohol close to the time you take your ADDYI® dose
-          </strong>{" "}
-          because this increases your risk of severe low blood pressure and
-          fainting (loss of consciousness).
+            because this increases your risk of severe low blood pressure and
+            fainting (loss of consciousness).
+          </strong>
         </li>
         <li>
           <strong>
             Do not drive, operate machinery, or do things that require clear
             thinking until at least 6 hours after you take ADDYI®
-          </strong>{" "}
-          and until you know how ADDYI® affects you.
+            and until you know how ADDYI® affects you.
+          </strong>
         </li>
         <li>
           Do not drink grapefruit juice if you take ADDYI®. Drinking grapefruit
@@ -284,8 +281,7 @@ function ImportantSafetyInfo() {
 
       <p className={classes.safetyTextBold}>
         What are the possible side effects of ADDYI®?
-      </p>
-      <p className={classes.safetyTextBold}>
+      <br />
         ADDYI® can cause serious side effects, including:
       </p>
 
