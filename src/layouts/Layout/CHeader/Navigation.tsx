@@ -4,7 +4,7 @@ import cx from "clsx";
 import { ContentfulPage } from "types/page";
 import { Link, navigate } from "gatsby";
 import { getPathForSectionAndPage } from "utils/links";
-import {  PATH, SLUGS } from "constants/routes";
+import { PATH, SLUGS, SOLUTION_HEADER_SLUG } from "constants/routes";
 
 export function Navigation({ pages }: { pages: ContentfulPage[] }) {
   const [visibleIndex, setVisibleIndex] = useState<number | null>(null);
@@ -23,6 +23,9 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation(); 
+                      if(page.slug === SOLUTION_HEADER_SLUG){ 
+                        navigate(PATH.SOLUTION_MAIN);
+                      }
                     }}
                     className={cx(classes.navLink, {
                     

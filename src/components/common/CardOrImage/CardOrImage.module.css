@@ -1,0 +1,56 @@
+.cardContainer {
+    .cardOrImage {
+        box-shadow: 0px 4px 10px 0px #0000001A;
+        padding: 64px 32px;
+
+        .content {
+            margin-bottom: 32px;
+        }
+
+        .title {
+            font-family: Raleway;
+            font-weight: 700;
+            font-style: Bold;
+            font-size: 24px;
+            margin-bottom: 32px;
+
+        }
+
+        .paragraph {
+            font-family: Lato;
+            font-weight: 400;
+            font-style: Regular;
+            font-size: 16px;
+
+        }
+
+        .anchor {
+            font-family: Lato;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            color: var(--primary-green-color);
+
+            .textwrapper {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+        }
+    }
+}
+
+.imageOnly{
+    padding: 40px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+        padding: 0;
+    }
+    @media (min-width: $phil-breakpoint-md) {
+        padding: 40px;
+    }
+
+
+
+}

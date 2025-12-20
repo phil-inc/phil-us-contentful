@@ -48,7 +48,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const SPAN_LG = GRID_COLUMNS / section.references.length;
   const { link, isExternal } = getLink(section);
   const context = React.useContext(PageContext);
-
+console.log(section)
   React.useEffect(() => {
     try {
       const isFromSMSIntro = params.get("isFromSMSIntro");
@@ -232,10 +232,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       data-is-home-page-brand-outcome={
         isBrandOutcomeCardSection && context.title === HOME
       }
+      data-referenceType={section.referenceType}
       pt={section.header?.length > 0 ? undefined : 0}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
     >
-      <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
+      <Container className={cx(classes.container, classes.innerContainer, {[classes.topPaddingWithoutHeader]: (!section.header?.length) && section.referenceType === ReferenceTypeEnum["Card Or Image"] && context.title === PAGES_TITLE.SOLUTION_MAIN})} size={"xl"}>
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div

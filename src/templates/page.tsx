@@ -1141,6 +1141,7 @@ query getPages($id: String!) {
                 }
                 id
               }
+              canShowImageOnly
             }
             ... on ContentfulDownloadableResource {
               id

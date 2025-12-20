@@ -71,7 +71,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const context = React.useContext(PageContext);
   const isImageAlignToWall = section?.canShowAssetImageAlignToWall;
   const isImageAlignToLeftWall = isImageAlignToWall && section?.canShowTextColumnToRight
- 
 
   const theme = useMantineTheme();
 
@@ -102,14 +101,24 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const imageData = richTextImages[node.data.target.sys.id];
         const image = getImage(imageData.image as ImageDataLike);
+        const targetImage= node.data?.target;
+
         return (
-          <GatsbyImage
-            style={{
-              marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`,
-            }}
-            image={image!}
-            alt={""}
-          />
+          <>
+          {image 
+          ? <GatsbyImage
+              style={{
+                marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`,
+              }}
+              image={image!}
+              alt={""}
+              />
+            : (targetImage &&
+              <div>
+                <Asset asset={targetImage} />
+              </div>)
+          }
+          </>
         );
       },
 

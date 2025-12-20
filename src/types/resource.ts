@@ -95,6 +95,7 @@ export type TResource = {
   renderOptions?: RenderOptions;
   isImageObjectContain?: boolean;
   publishDate?: string;
+  canShowImageOnly?: boolean;
 };
 
 export type DownloadableAsset = {
