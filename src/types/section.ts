@@ -136,6 +136,7 @@ export enum ReferenceTypeEnum {
   "Featured Insights" = "Featured Insights",
   "Case Study" = "Case Study",
   "People Behind Phil" = "People Behind Phil",
+  "Card Or Image" = "Card Or Image",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
@@ -149,6 +150,7 @@ export type IReferencedSection = {
   id: string;
   title: string;
   metaDescription: string;
+  topAsset?: TAsset;
   hideHeader: boolean;
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
   header: string;
@@ -187,6 +189,7 @@ export type IReferencedSection = {
   >;
 
   stylingOptions?: StylingOptions;
+  addBorder: boolean;
   renderOptions?: RenderOptions;
   backgroundAssetImage?: TAsset;
   canAlsoBeUseAsAutoCarousel?: boolean;
@@ -196,6 +199,7 @@ export type IReferencedSection = {
     belowSubHeading: string;
   };
   leftBackgroundAssetImage?: TAsset;
+  divColorOfBtnParent?: StylingOptions;
 };
 
 export type Reference = {
