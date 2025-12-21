@@ -22,6 +22,7 @@ import { getSectionColors } from "./RenderResource";
 
 import * as classes from "./referencedSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
+import Asset from "components/common/Asset/Asset";
 
 type ReferencedSectionProps = {
   section: IReferencedSection;
@@ -48,7 +49,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const SPAN_LG = GRID_COLUMNS / section.references.length;
   const { link, isExternal } = getLink(section);
   const context = React.useContext(PageContext);
-
+console.log(section)
   React.useEffect(() => {
     try {
       const isFromSMSIntro = params.get("isFromSMSIntro");
@@ -148,6 +149,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 
   const isProviderPage = context.title === HCP_PAGE;
   const isHomePageFirstCardSection =context.title === HOME && section.referenceType === ReferenceTypeEnum["Card Section"];
+  const topImage = section.topAsset;
 
   let sectionContent;
   if (context.title === FIELD_PAGE) {
@@ -232,10 +234,22 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       data-is-home-page-brand-outcome={
         isBrandOutcomeCardSection && context.title === HOME
       }
+      data-referenceType={section.referenceType}
       pt={section.header?.length > 0 ? undefined : 0}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
     >
-      <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
+      <Container 
+        className={cx(classes.container, classes.innerContainer, {[classes.topPaddingWithoutHeader]: (!section.header?.length) && section.referenceType === ReferenceTypeEnum["Card Or Image"] && context.title === PAGES_TITLE.SOLUTION_MAIN})} 
+        size={"xl"}
+      >
+        {topImage &&
+        <div className={classes.topImage}>
+          <Asset
+            asset={topImage}
+            objectFit="contain"
+          />
+         </div>
+      }
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
@@ -279,26 +293,38 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
                 <Text>{section.subHeading.subHeading}</Text>
               </Group>
             )}
+            
+          {/* parent div for button */}
+          <div
+            style={{background: section?.divColorOfBtnParent?.background ? getColorFromStylingOptions(section.divColorOfBtnParent.background) : undefined}} 
+            className={cx({[classes.parentBtnDiv]: Boolean(section?.divColorOfBtnParent)})}
+          >
 
-          {/* bottom buttons */}
-          {Boolean(section.buttonText?.length) &&
-            (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-              <Group justify="center" mt={isFaqSection ? 80 : 44}>
-                {isExternal ? (
-                  <Anchor 
+            {/* bottom buttons */}
+            {Boolean(section.buttonText?.length) &&
+              (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
+                <Group justify="center" mt={isFaqSection ? 80 : 44}>
+                  {isExternal ? (
+                    <Anchor 
                     className={classes.externalLink}
                     href={link}
                     target="_blank"
-                  >
-                    <Button variant="philDefault">{section.buttonText}</Button>
-                  </Anchor>
-                ) : (
-                  <Link className={classes.internalLink} to={link}>
-                    <Button variant="philDefault">{section.buttonText}</Button>
-                  </Link>
-                )}
-              </Group>
-            )}
+                    >
+                      <Button variant={Boolean(section?.divColorOfBtnParent) ? "white" : "philDefault"}>{section.buttonText}</Button>
+                    </Anchor>
+                  ) : (
+                    <Link className={classes.internalLink} to={link}>
+                      <Button variant={Boolean(section?.divColorOfBtnParent) ? "white" : "philDefault"}>{section.buttonText}</Button>
+                    </Link>
+                  )}
+                </Group>
+              )}
+              {section?.belowSubHeading?.belowSubHeading && (
+                <Text className={classes.belowSubHeading}>
+                  {section.belowSubHeading.belowSubHeading}
+                </Text>
+              )}
+            </div>
 
           {/* philrx testimonial */}
           {section.header === "What PhilRx Patients & Providers Say"  && (

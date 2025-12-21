@@ -32,6 +32,7 @@ import { CardSection } from "components/common/Card/CardSection/CardSection";
 import { CommitmentCard } from "components/CommitmentCard/CommitmentCard";
 import { FeaturedInsights } from "components/FeaturedInsights/FeaturedInsights";
 import { PhilPeople } from "components/common/PhilPeople/PhilPeople";
+import CardOrImage from "components/common/CardOrImage/CardOrImage";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -227,6 +228,10 @@ const PeopleBehindPhilComponent: ComponentFunction = ({ resource }) => (
   <PhilPeople resource={resource} />
 );
 
+const CardOrImageComponent: ComponentFunction = ({ resource,index }) => (
+  <CardOrImage resource={resource} index={index ?? 0}/>
+);
+
 const getComponent = (
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum,
   resource: TResource,
@@ -273,6 +278,7 @@ const getComponent = (
     [ReferenceTypeEnum["Commitment Card"]]: CommitmentCardComponent,
     [ReferenceTypeEnum["Featured Insights"]]: FeaturedInsightsComponent,
     [ReferenceTypeEnum["People Behind Phil"]]: PeopleBehindPhilComponent,
+    [ReferenceTypeEnum["Card Or Image"]]: CardOrImageComponent,
   };
 
   const componentFunction = componentMappings[referenceType];
