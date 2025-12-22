@@ -147,6 +147,13 @@
       }
     }
   }
+  &[data-remove-top-margin="true"] {
+    margin-top: 0px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-top: 0px;
+    }
+  }
 
   &[data-context="Field"] {
     margin-top: 0;

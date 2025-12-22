@@ -104,7 +104,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         const targetImage= node.data?.target;
 
         return (
-          <>
+          <div className={classes.embeddedAsset}>
             {image 
             ? <GatsbyImage
                 style={{
@@ -118,7 +118,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                 <Asset asset={targetImage} />
               </div>
             )}
-          </>
+          </div>
         );
       },
 

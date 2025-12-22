@@ -31,13 +31,16 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
 }) => {
   const { title } = useContext(PageContext);
 
-  const span =
-    12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
+  const isFiveLayout =  section?.renderOptions?.layoutOptions?.numberOfColumns === 5;
+  const span = isFiveLayout
+    ? 2
+    : 12 / (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
   const addMargin =
-    section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
+  section?.header?.length > 0 || section?.subHeading?.subHeading?.length > 0;
   const isEmployeeTag = section.metadata?.tags?.some(
     (tag) => tag.name === EMPLOYEE_SPOTLIGHT_TAG,
   );
+  const canRemoveTopMargin = section?.header === "The Script Journey";
 
   const xs = useDeviceType("xs");
   const sm = useDeviceType("sm");
@@ -161,6 +164,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
       justify="center"
       align={title === COMPANY_PAGE ? "center" : "stretch"}
       data-add-margin={addMargin}
+      data-remove-top-margin={canRemoveTopMargin}
       data-context={title}
       data-is-stepper-card={
         section.referenceType === ReferenceTypeEnum["Stepper Cards"]

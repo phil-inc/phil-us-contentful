@@ -58,6 +58,10 @@
 	}
 }
 
+.embeddedAsset{
+	margin-bottom: 40px;
+}
+
 .heading2{
 		&[data-context='Company'] {
 			font-size: 40px;
@@ -71,6 +75,10 @@
 	
 	&[data-oneColumn="true"] {
 		color: #FFFFFF;
+
+		&[data-context='Solution'] {
+			color: #000000;
+		}
 
 		@media (min-width: $phil-breakpoint-sm) {
 			text-align: center;
