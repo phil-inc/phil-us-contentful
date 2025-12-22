@@ -24,6 +24,8 @@ import * as classes from "./referencedSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 import Asset from "components/common/Asset/Asset";
 
+import { useIsSmallDevice } from "hooks/useIsSmallDevice";
+
 type ReferencedSectionProps = {
   section: IReferencedSection;
   isEmbedFormTemplate: boolean;
@@ -49,7 +51,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const SPAN_LG = GRID_COLUMNS / section.references.length;
   const { link, isExternal } = getLink(section);
   const context = React.useContext(PageContext);
-console.log(section)
+  const isSmallDevice = useIsSmallDevice();
+
   React.useEffect(() => {
     try {
       const isFromSMSIntro = params.get("isFromSMSIntro");
@@ -149,7 +152,9 @@ console.log(section)
 
   const isProviderPage = context.title === HCP_PAGE;
   const isHomePageFirstCardSection =context.title === HOME && section.referenceType === ReferenceTypeEnum["Card Section"];
-  const topImage = section.topAsset;
+  const topImage = section?.topAsset;
+  const asset = section?.asset;
+  const assetMobile = section?.assetForMobile;
 
   let sectionContent;
   if (context.title === FIELD_PAGE) {
@@ -269,7 +274,7 @@ console.log(section)
           </div>
         )}
 
-        {(context.title === OUR_SOLUTIONS || context.title === PAGES_TITLE.PHIL_DIRECT) && section.referenceType === ReferenceTypeEnum["Card Section"] && (
+        {(context.title === OUR_SOLUTIONS || context.title === PAGES_TITLE.PHIL_DIRECT || context.title === PAGES_TITLE.SOLUTION_MAIN) && section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
             style={{ display: "flex", justifyContent:"center"}}
           >
@@ -277,7 +282,29 @@ console.log(section)
               {section?.header || ''}
             </Text>
           </div>
-            )}
+        )}
+        {
+          isSmallDevice 
+          ? (assetMobile &&
+            <div className={classes.topImage}>
+              <Asset
+                asset={assetMobile}
+                objectFit="contain"
+              />
+            </div>
+            )
+          :(asset &&
+            <div className={classes.topImage}>
+              <Asset
+                asset={asset}
+                objectFit="contain"
+              />
+            </div>
+          )
+        }
+
+
+
 
           {sectionContent}
 

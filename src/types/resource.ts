@@ -21,6 +21,7 @@ export type TResource = {
   subheading: string;
   noindex?: boolean;
   metadata?: Metadata;
+  icon?: TAsset;
   description: {
     id: string;
     description: string;

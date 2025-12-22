@@ -92,6 +92,7 @@ export type ISection = {
   addBorder: boolean;
   isReverse: boolean;
   backgroundAssetImage?: TAsset;
+  topBackgroundAsset?: TAsset;
   canShowAssetImageAlignToWall?: boolean;
   sectionTitle?: string;
   showBottomBorder?: boolean;
@@ -159,6 +160,8 @@ export type IReferencedSection = {
     id: string;
     subHeading: string;
   };
+  asset?: TAsset;
+  assetForMobile?: TAsset;
   references: TResource[];
   metadata?: Metadata;
   buttonText?: string;

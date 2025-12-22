@@ -16,6 +16,7 @@ import { getColorFromStylingOptions } from "utils/stylingOptions";
 import { getLink } from "utils/getLink";
 
 import * as classes from "./CardOrImage.module.css";
+
 type Props = {
   resource: TResource;
   index: number;
@@ -24,6 +25,7 @@ type Props = {
 const CardOrImage: React.FC<Props> = ({ resource, index }) => {
   const {
     heading,
+    icon,
     asset,
     body,
     buttonText,
@@ -33,6 +35,7 @@ const CardOrImage: React.FC<Props> = ({ resource, index }) => {
   } = resource;
 
   const { link, isExternal } = getLink(resource);
+  console.log(resource, "+++++ CardOrImage resource");
 
   const options: Options = {
     renderNode: {
@@ -75,29 +78,36 @@ const CardOrImage: React.FC<Props> = ({ resource, index }) => {
             radius={0}
           >
             <Box className={classes.content}>
+              {icon && (
+                <Box className={classes.icon}>
+                  <Asset objectFit="contain" asset={icon as TAsset} />
+                </Box>
+              )}
               <Text className={classes.title}>{heading}</Text>
               {body && renderRichText(body, options)}
             </Box>
 
-            <Box>
-              {isExternal ? (
-                <Anchor
-                  href={link}
-                  target="_blank"
-                  className={classes.anchor}
-                  underline="never"
-                >
-                  <Text>{buttonText || hyperlink?.linkLabel || ""}</Text>
-                </Anchor>
-              ) : (
-                <Link to={link} className={classes.anchor}>
-                  <div className={classes.textwrapper}>
-                    {buttonText || internalLink?.title || ""}
-                    <IconArrowRight size={16} />
-                  </div>
-                </Link>
-              )}
-            </Box>
+            {(buttonText || internalLink?.title) && (
+              <Box>
+                {isExternal ? (
+                  <Anchor
+                    href={link}
+                    target="_blank"
+                    className={classes.anchor}
+                    underline="never"
+                  >
+                    <Text>{buttonText || hyperlink?.linkLabel || ""}</Text>
+                  </Anchor>
+                ) : (
+                  <Link to={link} className={classes.anchor}>
+                    <div className={classes.textwrapper}>
+                      {buttonText || internalLink?.title || ""}
+                      <IconArrowRight size={16} />
+                    </div>
+                  </Link>
+                )}
+              </Box>
+            )}
           </Paper>
         </Group>
       )}

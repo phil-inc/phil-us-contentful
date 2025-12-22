@@ -621,6 +621,36 @@ query getPages($id: String!) {
             id
             subHeading
           }
+          asset {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          assetForMobile {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
           sectionType
           metadata {
             tags {
@@ -861,6 +891,21 @@ query getPages($id: String!) {
               description {
                 id
                 description
+              }
+              icon {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
               }
               body {
                 raw
