@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, MantineProvider } from "@mantine/core";
 import { SEO } from "layouts/SEO/SEO";
+
 import addyiTheme from "@addyi-theme";
+
 import AddyiHeader from "@addyi/components/AddyiHeader";
 import HeroSection from "@addyi/components/HeroSection";
 import AddyiBenefitsSection from "@addyi/components/AddyiBenefits";
@@ -10,13 +12,17 @@ import HowToPrescribe from "@addyi/components/HowToPrescribe";
 import SearchSend from "@addyi/components/SearchSend";
 import SafetyInformation from "@addyi/components/SafetyInformation";
 import Footer from "@addyi/components/Footer";
-import favicon from "@addyi/assets/favicon.svg";
+
+import favicon32 from "@addyi/assets/icons/favicon-32x32.png";
+import appleTouchIcon from "@addyi/assets/icons/favicon-180x180.png";
 
 import * as classes from "@addyi/styles/styles.module.css";
 
 export const Head: React.FC = () => (
   <SEO title="Addyi Prescription">
-    <link rel="icon" type="image/svg+xml" href={favicon} />
+    <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+    <link rel="shortcut icon" type="image/png" href={favicon32} />
+    <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
     <meta
       name="description"
       content="Addyi - Empowering women's health and wellness through PhilRx Pharmacy"
