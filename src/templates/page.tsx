@@ -480,6 +480,7 @@ query getPages($id: String!) {
           canShowAssetImageAlignToWall 
           buttonText
           header
+          canShowHeader
           sectionType
           externalLink
           automaticOrder

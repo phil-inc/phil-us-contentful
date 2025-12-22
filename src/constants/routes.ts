@@ -12,4 +12,8 @@ export const PATH={
     SOLUTION: `/${SLUGS.SOLUTION}/`,
     INSIGHTS_CASE_STUDIES: "/insights/case-studies/",
     LEADERSHIP: "/leadership/",
+    SOLUTION_MAIN: "/solution/",
+    // SOLUTION_MAIN: "/solution-main/",
 }
+
+export const SOLUTION_HEADER_SLUG = "solution-header"

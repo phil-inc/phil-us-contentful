@@ -302,22 +302,22 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   };
 
   const heroRef = React.useRef(null);
-
+  
   // Determine if the index is an even column
   const isEvenColumn = index % NUMBER_OF_COLUMNS === 0;
   let textColumnOrder = isEvenColumn ? ORDER_FIRST : ORDER_SECOND;
   let imageColumnOrder = isEvenColumn ? ORDER_SECOND : ORDER_FIRST;
-
+  
   if (!section.automaticOrder) {
     textColumnOrder = ORDER_FIRST;
     imageColumnOrder = ORDER_SECOND;
   }
-
+  
   if(section?.canShowTextColumnToRight){
     textColumnOrder = ORDER_SECOND;
     imageColumnOrder = ORDER_FIRST;
   }
-
+  
   const isHeroSection = index === HERO_SECTION_INDEX;
   const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
   const ref = React.useRef();
@@ -325,6 +325,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const isBanner = section?.metadata?.tags?.some(
     ({ name }) => name === "BANNER_SECTION",
   );
+  const isSolutionEmpowerFieldTeamsSection = section?.header === "Empower Field Teams with Real-Time Insights";
+  const isSolutionGainEndToEndVisibilitySection = section?.header === "Gain End-to-End Visibility Across the Patient Journey";
+  const isSolutionDrivingBrandSection = section?.header === "Driving Brand Success Through Outcomes-Based Partnership PHIL’s Client Insights Team";
 
   let formId = "";
   let portalId = "";
@@ -405,7 +408,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       background: section.v2Flag
         ? getColorFromStylingOptions(section.stylingOptions?.background)
         : sectionBackground(section.background),
-    }} className={cx(classes.basicSectionMainContainer, section.slug)}
+      }} className={cx(classes.basicSectionMainContainer, section.slug)}
     >
       <>
       {section?.backgroundAssetImage && 
@@ -418,13 +421,18 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     <Container
       id={slugify(section.header, { lower: true, strict: true })}
       size={"xl"}
-      className={classes.basicSectionContainer}
+      className={cx(classes.basicSectionContainer,{
+        [classes.empowerSection]: isSolutionEmpowerFieldTeamsSection,
+        [classes.gainSection]: isSolutionGainEndToEndVisibilitySection,
+        [classes.drivingSection]: isSolutionDrivingBrandSection,
+      })}
       data-index={index}
       data-context={context.title}
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
     >
       <div className={classes.containSection}>
+        {section?.canShowHeader && <Title className={classes.header} data-context={context.title}>{section.header}</Title>}
         <Grid
           align={
             section.isHubspotEmbed || section.embedForm
@@ -476,9 +484,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               <>
                 {Boolean(section.body) && (
                   <Stack className={classes.portal}>
-                    {isMobileView &&
-                      context.title === "Demo Page" &&
-                      index === 0 && <Title>{section.header}</Title>}
                     {heroRef.current && isMobileView && section.embedForm
                       ? createPortal(
                           renderRichText(section.body, options),
