@@ -35,7 +35,6 @@ const CardOrImage: React.FC<Props> = ({ resource, index }) => {
   } = resource;
 
   const { link, isExternal } = getLink(resource);
-  console.log(resource, "+++++ CardOrImage resource");
 
   const options: Options = {
     renderNode: {

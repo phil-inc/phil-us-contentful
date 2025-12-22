@@ -44,6 +44,7 @@ export type ISection = {
   id: string;
   sectionType: SectionType;
   header: string;
+  canShowHeader?: boolean;
   youtubeVideoUrl?: string;
   title?:string;
   slug?: string;

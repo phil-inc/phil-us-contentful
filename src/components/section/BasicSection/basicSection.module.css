@@ -27,6 +27,14 @@
 	}
 }
 
+.header{
+	&[data-context='Solution'] {
+		font-size: 32px;
+		margin-bottom: 100px;
+		text-align: center;
+	}
+}
+
 .title {
 	overflow-wrap: break-word;
 	font-size: 48px;
@@ -63,7 +71,7 @@
 }
 
 .heading2{
-		&[data-context='Company'] {
+		&[data-context='Company'],&[data-context='Solution'] {
 			font-size: 40px;
 		}
 }
@@ -162,6 +170,16 @@
 			}
 		}
 	}
+}
+
+.basicSectionContainer.empowerSection{
+		padding-bottom: 0px;
+}
+.basicSectionContainer.gainSection{
+		padding-bottom: 0px;
+}
+.basicSectionContainer.drivingSection{
+		padding-top: 50px;
 }
 
 .listItem {
