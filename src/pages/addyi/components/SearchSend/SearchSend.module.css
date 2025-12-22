@@ -203,7 +203,8 @@
   }
 
   .sendRxTitle {
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: 700;
     line-height: 26px;
   }
 
@@ -235,7 +236,7 @@
 
   .contactValue {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 28px;
   }
 

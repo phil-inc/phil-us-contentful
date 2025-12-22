@@ -229,8 +229,15 @@
 }
 
 @media (max-width: 40em) {
+  .accordionHeaderContent {
+    padding-left: 0px;
+    height: auto;
+  }
+
   .accordionTitle {
-    font-size: 16px;
+    margin: 16px 0px;
+    font-size: 24px;
+    font-weight: 700;
   }
 
   .accordionIcon {
@@ -245,6 +252,7 @@
 
   .sectionTitle {
     font-size: 16px;
+    font-weight: 700;
   }
 
   .boxImageContainer {
@@ -258,7 +266,7 @@
   .safetyText,
   .safetyTextBold,
   .safetyList li {
-    font-size: 14px;
-    line-height: 22px;
+    font-size: 16px;
+    line-height: 24px;
   }
 }
