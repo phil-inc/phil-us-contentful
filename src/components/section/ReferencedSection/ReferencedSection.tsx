@@ -305,7 +305,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         }
         {section?.assetCaption && 
           <Text className={classes.assetCaption}>
-            <span className={classes.icon}>
+            <span className={classes.infoIcon}>
               <InfoCircleIcon size={18} />
             </span>
             {section.assetCaption}
