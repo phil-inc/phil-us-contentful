@@ -20,6 +20,11 @@
   justify-content: center;
   margin-top: 10px;
   margin-bottom: 30px;
+
+  .infoIcon{
+    display: flex;
+    align-items: center;
+  }
   
   @media screen and (min-width: $phil-breakpoint-sm) {
     justify-content: start;
