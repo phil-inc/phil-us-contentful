@@ -16,13 +16,16 @@ type RoiCalculatorProps = {
   section: ISection;
 };
 
-const RoiCalculator: React.FC<RoiCalculatorProps> = ({section}) => {
+const RoiCalculator: React.FC<RoiCalculatorProps> = ({ section }) => {
   const [roiInputs, setRoiInputs] = React.useState<RoiInputsNum>({
     wac: ROI_INPUT_CONFIG.wac.preset,
     nRx: ROI_INPUT_CONFIG.nRx.preset,
     patientEnagedPercentage: ROI_INPUT_CONFIG.patientEnagedPercentage.preset,
     paSubmissionRate: ROI_INPUT_CONFIG.paSubmissionRate.preset,
     averageRefillsPerNRx: ROI_INPUT_CONFIG.averageRefillsPerNRx.preset,
+    haveCoverCouponOffer: ROI_INPUT_CONFIG.haveCoverCouponOffer,
+    haveHubService: ROI_INPUT_CONFIG.haveHubService,
+    haveUncoverCouponOffer: ROI_INPUT_CONFIG.haveUncoverCouponOffer,
   });
 
   const roiVM = useMemo(() => new RoiViewModel(roiInputs), [roiInputs]);
@@ -30,8 +33,12 @@ const RoiCalculator: React.FC<RoiCalculatorProps> = ({section}) => {
   return (
     <section>
       <Grid className={classes.roiCalculator} gutter={0} align="stretch">
-        <Grid.Col span={{ base: 12, md: 6 }} className={classes.left} >
-          <CalculatorInput section={section} roiInputs={roiInputs} setRoiInputs={setRoiInputs} />
+        <Grid.Col span={{ base: 12, md: 6 }} className={classes.left}>
+          <CalculatorInput
+            section={section}
+            roiInputs={roiInputs}
+            setRoiInputs={setRoiInputs}
+          />
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6 }} className={classes.right}>
           <CalculatorOutput roiVM={roiVM} />

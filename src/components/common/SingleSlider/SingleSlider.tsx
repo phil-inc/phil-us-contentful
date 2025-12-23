@@ -4,12 +4,12 @@ import { Slider, Text, Tooltip } from "@mantine/core";
 
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
 
-import { SliderConfig } from "types/roi";
+import { ISliderField } from "types/roi";
 
 import * as classes from "./SingleSlider.module.css";
 
 export type SingleSliderProps = {
-  sliderProps: SliderConfig;
+  sliderProps: ISliderField;
 };
 const SingleSlider: React.FC<SingleSliderProps> = ({ sliderProps }) => {
   const {
@@ -21,16 +21,16 @@ const SingleSlider: React.FC<SingleSliderProps> = ({ sliderProps }) => {
     step,
     marks,
     actulValueInString,
-    tootipMsg,
+    tooltipMsg,
   } = sliderProps;
   return (
     <div className={cx("phil-singleSlider", classes.singleSlider)}>
       <div className={classes.label}>
         <div className={classes.titleLabel}>
           <Text>{title}</Text>
-          {tootipMsg && (
+          {tooltipMsg && (
             <Tooltip
-              label={tootipMsg}
+              label={tooltipMsg}
               arrowPosition="side"
               arrowOffset={10}
               arrowSize={5}

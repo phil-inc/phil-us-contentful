@@ -8,7 +8,7 @@ type ROIInputRange = {
   increment: number;
 };
 
-export const ROI_INPUT_CONFIG: Record<keyof RoiInputsNum, ROIInputRange> = {
+export const ROI_INPUT_CONFIG = {
   wac: {
     min: 100,
     max: 5000,
@@ -39,6 +39,10 @@ export const ROI_INPUT_CONFIG: Record<keyof RoiInputsNum, ROIInputRange> = {
     preset: 2.5,
     increment: 0.1,
   },
+  haveHubService: false,
+  haveCoverCouponOffer: false,
+  haveUncoverCouponOffer: false,
+  
 };
 
 export const PHIL_ROI_DEFAULT_INPUTS = {
