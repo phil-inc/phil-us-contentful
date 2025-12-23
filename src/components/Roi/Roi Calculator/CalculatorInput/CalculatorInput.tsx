@@ -56,7 +56,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: ROI_INPUT_CONFIG.nRx.max,
           },
         ],
-        tooltipMsg: "Total number of new prescriptions expected per year",
+        tooltipMsg: "Total number of new prescriptions expected per month",
       },
       {
         keyName: "wac",
@@ -126,12 +126,12 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
           "Rate of successfully submitted prior authorization requests.",
       },
       {
-        keyName: "averageRefillsPerNRx",
+        keyName: "inputAverageRefillsPerNRx",
         title: "Refill Mutiplier",
         type: INPUT_TYPE.SLIDER,
-        actualValue: roiInputs.averageRefillsPerNRx,
-        actulValueInString: getInX(roiInputs.averageRefillsPerNRx),
-        changeValue: (v: number) => handleChange("averageRefillsPerNRx", v),
+        actualValue: roiInputs.inputAverageRefillsPerNRx,
+        actulValueInString: getInX(roiInputs.inputAverageRefillsPerNRx),
+        changeValue: (v: number) => handleChange("inputAverageRefillsPerNRx", v),
         min: ROI_INPUT_CONFIG.averageRefillsPerNRx.min,
         max: ROI_INPUT_CONFIG.averageRefillsPerNRx.max,
         step: ROI_INPUT_CONFIG.averageRefillsPerNRx.increment,
@@ -146,6 +146,28 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
           },
         ],
         tooltipMsg: "Average number of refills per patient",
+      },
+      {
+        keyName: "commerciallyInsuredPercentage",
+        title: "Commercially Insured Patients",
+        type: INPUT_TYPE.SLIDER,
+        actualValue: roiInputs.commerciallyInsuredPercentage,
+        actulValueInString: getInPercent(roiInputs.commerciallyInsuredPercentage),
+        changeValue: (v: number) => handleChange("commerciallyInsuredPercentage", v),
+        min: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.min,
+        max: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max,
+        step: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.increment,
+        marks: [
+          {
+            value: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.min,
+            label: getInPercent(ROI_INPUT_CONFIG.commerciallyInsuredPercentage.min),
+          },
+          {
+            value: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max,
+            label: getInPercent(ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max),
+          },
+        ],
+        tooltipMsg: "Percentage of patients covered by commercial insurance",
       },
       //---switches
       {

@@ -45,7 +45,8 @@ class GrossRevenue  extends PatientEnrollment {
             return toDecimalRounded(value,1)
         }
 
-        return this.gInputs.averageRefillsPerNRx;
+        // For non-PHIL programs, use the inputAverageRefillsPerNRx directly
+        return this.gInputs.inputAverageRefillsPerNRx;
     }
     
     public get TRx(): Decimal {

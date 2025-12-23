@@ -13,12 +13,12 @@ export const ROI_INPUT_CONFIG = {
     min: 100,
     max: 5000,
     preset: 500,
-    increment: 100,
+    increment: 50,
   },
   nRx: {
-    min: 1000,
+    min: 0,
     max: 100000,
-    preset: 25000,
+    preset: 2000,
     increment: 1000,
   },
   patientEnagedPercentage: {
@@ -38,6 +38,12 @@ export const ROI_INPUT_CONFIG = {
     max: 4,
     preset: 2.5,
     increment: 0.1,
+  },
+  commerciallyInsuredPercentage: {
+    min: 0,
+    max: 100,
+    preset: 80,
+    increment: 1,
   },
   haveHubService: false,
   haveCoverCouponOffer: false,

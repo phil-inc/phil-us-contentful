@@ -7,10 +7,11 @@ export type RoiInputsNum = {
   nRx: number;
   patientEnagedPercentage: number;
   paSubmissionRate: number;
-  averageRefillsPerNRx: number;
+  inputAverageRefillsPerNRx: number;
   haveHubService: boolean;
   haveCoverCouponOffer: boolean;
   haveUncoverCouponOffer: boolean;
+  commerciallyInsuredPercentage: number;
 };
 
 export type RoiInputsDec = {
@@ -18,7 +19,8 @@ export type RoiInputsDec = {
   nRx: Decimal;
   patientEnagedPercentage: Decimal;
   paSubmissionRate: Decimal;
-  averageRefillsPerNRx: Decimal;
+  inputAverageRefillsPerNRx: Decimal;
+  commerciallyInsuredPercentage: Decimal;
 };
 
 //input Fields
