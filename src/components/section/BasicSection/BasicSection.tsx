@@ -327,7 +327,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   );
   const isSolutionEmpowerFieldTeamsSection = section?.header === "Empower Field Teams with Real-Time Insights";
   const isSolutionGainEndToEndVisibilitySection = section?.header === "Gain End-to-End Visibility Across the Patient Journey";
-  const isSolutionDrivingBrandSection = section?.header === "Driving Brand Success Through Outcomes-Based Partnership PHIL’s Client Insights Team";
+  const isSolutionDrivingBrandSection = section?.header === "Driving Brand Success Through Outcomes-Based Partnership";
 
   let formId = "";
   let portalId = "";
