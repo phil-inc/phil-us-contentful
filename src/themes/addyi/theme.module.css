@@ -1,0 +1,114 @@
+.root {
+	--addyi-white: #FFF;
+	--addyi-black: #000;
+	--addyi-pink-light: #FFE7F9;
+	--addyi-pink-main: #E0097E;
+	--addyi-pink-primary: #E0097E;
+	--addyi-pink-dark: #A00758;
+	--addyi-header-bg: #E0097E;
+	--addyi-section-bg: #FFE7F9;
+	
+	&[data-variant='addyiPrimary'] {
+		background-color: var(--addyi-header-bg);
+		color: #fff;
+		font-weight: 600;
+		position: relative;
+		line-height: 1;
+		font-family: Lato;
+		display: inline-block;
+		width: 100%;
+		font-size: 16px;
+		height: 100%;
+		padding: 12px 24px;
+		transition: var(--transition-button-bg);
+		border-radius: 0;
+		overflow: visible;
+
+		&:hover {
+			outline: 1px solid var(--addyi-header-bg);
+			outline-offset: -1px;
+			background-color: transparent;
+			color: var(--addyi-header-bg);
+			font-weight: 600;
+		}
+
+		@media (min-width: '320px') {
+			width: auto;
+		}
+	}
+
+	&[data-variant='addyiSecondary'] {
+		color: var(--addyi-header-bg);
+		font-weight: 600;
+		position: relative;
+		font-family: Lato;
+		-webkit-tap-highlight-color: transparent;
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		padding: 12px 24px;
+		transition: var(--transition-button-bg);
+		border-radius: 0;
+		overflow: visible;
+		outline: 1px solid var(--addyi-header-bg);
+		outline-offset: -1px;
+		background-color: transparent;
+		font-size: 16px;
+		font-style: normal;
+		line-height: 16px; /* 100% */
+
+		&:hover {
+			outline-color: var(--addyi-pink-dark);
+			background-color: var(--addyi-header-bg);
+			color: #fff;
+		}
+
+		@media (min-width: $phil-breakpoint-sm) {
+			width: auto;
+		}
+	}
+
+	&[data-variant='addyiDefault'] {
+		background-color: #000;
+		color: #fff;
+		font-weight: 600;
+		position: relative;
+		line-height: 1;
+		font-family: Lato;
+		display: inline-block;
+		width: 100%;
+		font-size: 16px;
+		height: 100%;
+		padding: 12px 24px;
+		transition: var(--transition-button-bg);
+		border-radius: 0;
+		overflow: visible;
+
+		&:hover {
+			outline: 1px solid var(--addyi-header-bg);
+			outline-offset: -1px;
+			background-color: transparent;
+			color: var(--addyi-header-bg);
+			font-weight: 600;
+		}
+
+		@media (min-width: $phil-breakpoint-sm) {
+			width: auto;
+		}
+	}
+}
+
+.label {
+	overflow: visible;
+	white-space: unset;
+	text-align: start;
+}
+
+.loader {
+	pointer-events: none;
+}
+
+b {
+	font-weight: 700;
+}
+

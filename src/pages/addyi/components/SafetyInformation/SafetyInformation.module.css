@@ -1,0 +1,272 @@
+/* Safety Information Section */
+.safetySection {
+  width: 100%;
+  background-color: #FFFFFF;
+  contain: layout;
+}
+
+/* Accordion Header - Source height: 60px */
+.accordionHeader {
+  width: 100%;
+  background-color: #E0097E;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.accordionHeaderContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1170px;
+  height: 60px;
+  margin: 0 auto;
+  padding-left: 93px;
+}
+
+.accordionTitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: normal;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.accordionIcon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accordionIconImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Accordion Content Container */
+.accordionContent {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+}
+
+.accordionContent > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.accordionContentOpen {
+  grid-template-rows: 1fr;
+}
+
+/* Safety Content */
+.safetyContentWrapper {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.accordionContentOpen .safetyContentWrapper {
+  padding: 30px 92px;
+  margin-bottom: 81px;
+}
+
+.safetyColumnsContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+
+.safetyColumn {
+  flex: 1;
+}
+
+.safetyColumn:first-child {
+  max-width: 400px;
+}
+
+.safetyColumn:last-child {
+  max-width: 500px;
+}
+
+/* Section Titles */
+.sectionTitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #E0097E;
+  margin: 0px;
+}
+
+/* Safety Text */
+.safetyText {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #1E1E1E;
+  margin-bottom: 16px;
+}
+
+.safetyTextBold {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #1E1E1E;
+  margin-bottom: 16px;
+}
+
+/* Safety Lists */
+.safetyList {
+  list-style: disc;
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.safetyList li {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #1E1E1E;
+}
+
+.safetyList li strong {
+  font-weight: 700;
+}
+
+.safetyList ul {
+  list-style: disc;
+  padding-left: 24px;
+  margin-top: 8px;
+}
+
+/* Links */
+.link {
+  color: #1E1E1E;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
+/* Box Image */
+.boxImageContainer {
+  position: relative;
+  margin-top: 234px;
+  width: 457px;
+  height: 240px;
+}
+
+.boxImageWrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 70px;
+  top: 0;
+}
+
+.boxImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 64em) {
+  .accordionHeader {
+    padding: 0 24px;
+  }
+
+  .accordionHeaderContent {
+    padding-left: 20px;
+  }
+
+  .accordionTitle {
+    font-size: 20px;
+    margin-left: 0;
+  }
+
+  .accordionIcon {
+    margin-right: 0;
+  }
+
+  .accordionContentOpen .safetyContentWrapper {
+    padding: 30px;
+  }
+
+  .safetyColumnsContainer {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .safetyColumn:first-child,
+  .safetyColumn:last-child {
+    max-width: 100%;
+  }
+
+  .boxImageContainer {
+    width: 100%;
+    max-width: 457px;
+    height: auto;
+    aspect-ratio: 457 / 240;
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 40em) {
+  .accordionHeaderContent {
+    padding-left: 0px;
+    height: auto;
+  }
+
+  .accordionTitle {
+    margin: 16px 0px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .accordionIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .accordionIconImage {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sectionTitle {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .boxImageContainer {
+    margin-top: 30px;
+  }
+
+  .boxImageWrapper {
+    right: 0;
+  }
+
+  .safetyText,
+  .safetyTextBold,
+  .safetyList li {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

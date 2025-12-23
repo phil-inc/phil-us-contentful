@@ -1,0 +1,9 @@
+.root {
+	padding: 0;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	--addyi-header-bg: #E0097E;
+	--addyi-section-bg: #FFE7F9;
+}

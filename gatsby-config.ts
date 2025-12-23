@@ -19,7 +19,10 @@ interface RootDirsConfig {
 
 const rootDirsConfig: RootDirsConfig = {};
 
-
+// Add custom alias for Addyi page
+rootDirsConfig['@addyi'] = path.resolve(__dirname, 'src', 'pages', 'addyi');
+// Add custom alias for Addyi theme
+rootDirsConfig['@addyi-theme'] = path.resolve(__dirname, 'src', 'themes', 'addyi');
 
 srcDirs.forEach((srcDir: string) => {
   rootDirsConfig[srcDir] = path.resolve(__dirname, 'src', srcDir);
@@ -34,6 +37,18 @@ const config: GatsbyConfig = {
   },
  adapter: adapter(),
   plugins: [
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/pages`,
+        ignore: [
+          `**/components/**`, // Ignore all component directories
+          `**/assets/**`, // Ignore asset directories
+          `**/styles/**`, // Ignore style directories
+          `**/constants/**`, // Ignore constants directories
+        ],
+      },
+    },
     `gatsby-plugin-image`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-inline-svg`,

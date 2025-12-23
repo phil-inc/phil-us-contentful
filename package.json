@@ -24,6 +24,7 @@
   "dependencies": {
     "@aaronhayes/react-use-hubspot-form": "^2.1.1",
     "@contentful/rich-text-plain-text-renderer": "^16.2.1",
+    "@fontsource/inter": "^5.0.19",
     "@fontsource/lato": "^5.0.21",
     "@fontsource/raleway": "^5.0.19",
     "@fullstory/browser": "^2.0.5",

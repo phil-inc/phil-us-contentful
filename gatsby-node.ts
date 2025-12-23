@@ -42,6 +42,14 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
 
 // Gatsby onCreateWebpackConfig API
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ actions, loaders, stage }) => {
+    actions.setWebpackConfig({
+        resolve: {
+            alias: {
+                '@addyi': require('path').resolve(__dirname, 'src/pages/addyi'),
+            },
+        },
+    });
+
     if (stage === 'build-html' || stage === 'develop-html') {
         actions.setWebpackConfig({
             module: {
