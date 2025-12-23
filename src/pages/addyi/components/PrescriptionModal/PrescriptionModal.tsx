@@ -8,7 +8,6 @@ import { trackGaEvent } from "utils/analytics";
 import {
   GA_EVENT_ACTION,
   GA_EVENT_CATEGORY,
-  GA_EVENT_LABEL,
 } from "constants/analytics";
 
 import * as classes from "@addyi/components/PrescriptionModal/PrescriptionModal.module.css";
@@ -94,8 +93,7 @@ export const PrescriptionModal: React.FC<PrescriptionModalProps> = ({
               onClick={() =>
                 trackGaEvent(
                   GA_EVENT_ACTION.CLICK_TRANSFER_IN_PHONE,
-                  GA_EVENT_CATEGORY.ADDYI_CTA,
-                  GA_EVENT_LABEL.TRANSFER_PHONE
+                  GA_EVENT_CATEGORY.ADDYI_CTA
                 )
               }
             >
