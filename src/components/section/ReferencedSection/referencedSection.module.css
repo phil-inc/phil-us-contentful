@@ -29,6 +29,9 @@
   @media screen and (min-width: $phil-breakpoint-md) {
     margin-left: 80px;
   }
+  @media screen and (min-width: $phil-breakpoint-xl) {
+      justify-content: center;
+  }
 }
 
 .innerContainer{
