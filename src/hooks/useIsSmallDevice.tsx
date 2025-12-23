@@ -1,12 +1,19 @@
-import { useMemo } from "react";
-import { useViewportSize } from "@mantine/hooks";
-
+import { useEffect, useState } from "react";
 import { SCREEN_SIZES } from "constants/global.constant";
 
 export const useIsSmallDevice = () => {
-  const { width } = useViewportSize();
+  const [isSmall, setIsSmall] = useState(false);
 
-  const isSmall = useMemo(() => width <= SCREEN_SIZES.TABLET, [width]);
+  useEffect(() => {
+    const checkSize = () => {
+      setIsSmall(window.innerWidth <= SCREEN_SIZES.TABLET);
+    };
+
+    checkSize(); // initial check
+    window.addEventListener("resize", checkSize);
+
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
 
   return isSmall;
 };
