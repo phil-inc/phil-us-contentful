@@ -67,7 +67,7 @@
 }
 
 .embeddedAsset{
-	margin-bottom: 40px;
+	margin: 0px auto 40px;
 }
 
 .heading2{
@@ -173,13 +173,16 @@
 }
 
 .basicSectionContainer.empowerSection{
-		padding-bottom: 0px;
+	@media (min-width: $phil-breakpoint-md) {
+		padding-bottom: 90px;
+	}
 }
 .basicSectionContainer.gainSection{
+		padding-top: 30px;
 		padding-bottom: 0px;
 }
 .basicSectionContainer.drivingSection{
-		padding-top: 50px;
+		padding-top: 60px;
 }
 
 .listItem {

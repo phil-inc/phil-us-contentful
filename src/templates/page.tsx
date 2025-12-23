@@ -652,6 +652,7 @@ query getPages($id: String!) {
               url
             }
           }
+          assetCaption
           sectionType
           metadata {
             tags {
