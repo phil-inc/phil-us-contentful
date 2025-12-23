@@ -163,6 +163,7 @@ export type IReferencedSection = {
   };
   asset?: TAsset;
   assetForMobile?: TAsset;
+  assetCaption?: string;
   references: TResource[];
   metadata?: Metadata;
   buttonText?: string;

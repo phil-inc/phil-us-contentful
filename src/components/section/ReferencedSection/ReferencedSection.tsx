@@ -23,6 +23,7 @@ import { getSectionColors } from "./RenderResource";
 import * as classes from "./referencedSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 import Asset from "components/common/Asset/Asset";
+import InfoCircleIcon from "assets/images/icons/component/info-circle";
 
 import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
@@ -254,7 +255,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             objectFit="contain"
           />
          </div>
-      }
+        }
       {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
@@ -290,21 +291,26 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               <Asset
                 asset={assetMobile}
                 objectFit="contain"
-              />
+                />
             </div>
             )
-          :(asset &&
-            <div className={classes.topImage}>
+            :(asset &&
+              <div className={classes.topImage}>
               <Asset
                 asset={asset}
                 objectFit="contain"
-              />
+                />
             </div>
           )
         }
-
-
-
+        {section?.assetCaption && 
+          <Text className={classes.assetCaption}>
+            <span className={classes.icon}>
+              <InfoCircleIcon size={18} />
+            </span>
+            {section.assetCaption}
+          </Text>
+        }
 
           {sectionContent}
 
@@ -319,7 +325,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               >
                 <Text>{section.subHeading.subHeading}</Text>
               </Group>
-            )}
+            )
+          }
             
           {/* parent div for button */}
           <div
@@ -337,11 +344,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
                     href={link}
                     target="_blank"
                     >
-                      <Button variant={Boolean(section?.divColorOfBtnParent) ? "white" : "philDefault"}>{section.buttonText}</Button>
+                      <Button variant="philDefault">{section.buttonText}</Button>
                     </Anchor>
                   ) : (
                     <Link className={classes.internalLink} to={link}>
-                      <Button variant={Boolean(section?.divColorOfBtnParent) ? "white" : "philDefault"}>{section.buttonText}</Button>
+                      <Button variant="philDefault">{section.buttonText}</Button>
                     </Link>
                   )}
                 </Group>
