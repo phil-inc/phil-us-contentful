@@ -2,6 +2,7 @@ import Decimal from "decimal.js";
 import { toDecimal } from "utils/decimal/decimal.utils";
 import { RoiInputsDec } from "types/roi";
 import { RoiAssumptions } from "config/roiAssumptions.config";
+import { ProgramType } from "enum/global.enum";
 import { getApprovalRate } from "./ApprovalRateLookup";
 
 /**
@@ -519,33 +520,45 @@ function calculateUninsuredTRx(
 export function getVolumeCalculations(
   inputs: RoiInputsDec,
   assumptions: RoiAssumptions,
-  haveUncoverCouponOffer: boolean
+  haveUncoverCouponOffer: boolean,
+  programType: ProgramType,
+  haveHubService: boolean
 ): VolumeCalculationsResult {
   // C.P.1: Annual NRx
   const annualNRx = calculateAnnualNRx(inputs.nRx);
 
-  // Get assumption values
-  const enrollmentRateAtPhil = assumptions.getEnrollmentRateAtPhil();
+  // Get assumption values (program-specific where applicable)
+  const enrollmentRate =
+    programType === ProgramType.PHIL
+      ? assumptions.getEnrollmentRateAtPhil()
+      : assumptions.getEnrollmentRateAtOther(haveHubService);
   const enrollWithInsuranceRate = assumptions.getEnrollWithInsuranceRate();
   const coveredOutrightRate = assumptions.getCoveredOutrightRate();
-  const paSubmissionRateForPhil = assumptions.getPASubmissionRateForPhil();
-  const paApprovalRateForPhilAndRetail = assumptions.getPAApprovalRateForPhilAndRetail();
+  const paSubmissionRate =
+    programType === ProgramType.PHIL
+      ? assumptions.getPASubmissionRateForPhil()
+      : inputs.paSubmissionRate;
+  const paApprovalRate =
+    programType === ProgramType.PHIL
+      ? assumptions.getPAApprovalRateForPhilAndRetail()
+      : assumptions.getPAApprovalRateForRetailOther();
   const averageCoveredCopay = assumptions.getAverageCoveredCopay();
   const uncoveredBuydown = assumptions.getUncoveredBuydown();
-  const bumpInRefillRate = assumptions.getBumpInRefillRate();
+  const bumpInRefillRate =
+    programType === ProgramType.PHIL ? assumptions.getBumpInRefillRate() : toDecimal(0);
   const discountToRefills = assumptions.getDiscountToRefills(haveUncoverCouponOffer);
 
   // C.P.2: Enroll with insurance
   const enrollWithInsurance = calculateEnrollWithInsurance(
     annualNRx,
-    enrollmentRateAtPhil,
+    enrollmentRate,
     enrollWithInsuranceRate
   );
 
   // C.P.3: Enroll without insurance
   const enrollWithoutInsurance = calculateEnrollWithoutInsurance(
     annualNRx,
-    enrollmentRateAtPhil,
+    enrollmentRate,
     enrollWithInsuranceRate
   );
 
@@ -559,13 +572,13 @@ export function getVolumeCalculations(
   const requiresPA = calculateRequiresPA(enrollWithInsurance, coveredOutright);
 
   // C.P.7: PA Submitted
-  const paSubmitted = calculatePASubmitted(requiresPA, paSubmissionRateForPhil);
+  const paSubmitted = calculatePASubmitted(requiresPA, paSubmissionRate);
 
   // C.P.8: PA not submitted
   const paNotSubmitted = calculatePANotSubmitted(requiresPA, paSubmitted);
 
   // C.P.9: PA Approved
-  const paApproved = calculatePAApproved(paSubmitted, paApprovalRateForPhilAndRetail);
+  const paApproved = calculatePAApproved(paSubmitted, paApprovalRate);
 
   // C.P.10: PA Denied
   const paDenied = calculatePADenied(paSubmitted, paApproved);
@@ -623,16 +636,24 @@ export function getVolumeCalculations(
   const uninsuredFirstFills = calculateUninsuredFirstFills(uninsuredPriceShown);
 
   // C.P.21: Average Refills per patient input
-  console.log("=== Volume Calc - Average Refills Inputs ===");
-  console.log(
-    "inputs.averageRefillsPerNRx:",
-    inputs.inputAverageRefillsPerNRx.toString()
-  );
-  console.log("bumpInRefillRate (A.5):", bumpInRefillRate.toString());
-  const averageRefillsPerPatient = calculateAverageRefillsPerPatient(
-    inputs.inputAverageRefillsPerNRx,
-    bumpInRefillRate
-  );
+  if (programType === ProgramType.PHIL) {
+    console.log("=== Volume Calc - Phil Average Refills Inputs ===");
+    console.log(
+      "inputs.inputAverageRefillsPerNRx:",
+      inputs.inputAverageRefillsPerNRx.toString()
+    );
+    console.log("bumpInRefillRate (A.5):", bumpInRefillRate.toString());
+  } else {
+    console.log("=== Volume Calc - Retail Average Refills Inputs ===");
+    console.log(
+      "inputs.inputAverageRefillsPerNRx:",
+      inputs.inputAverageRefillsPerNRx.toString()
+    );
+  }
+  const averageRefillsPerPatient =
+    programType === ProgramType.PHIL
+      ? calculateAverageRefillsPerPatient(inputs.inputAverageRefillsPerNRx, bumpInRefillRate)
+      : inputs.inputAverageRefillsPerNRx;
   console.log(
     "averageRefillsPerPatient (C.P.21):",
     averageRefillsPerPatient.toString()

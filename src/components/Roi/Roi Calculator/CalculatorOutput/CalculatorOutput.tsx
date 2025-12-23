@@ -16,27 +16,27 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
     return [
       {
         key: "C1",
-        title: "Covered Dispenses",
-        description: "with PHIL",
-        value: roiVM.roiImprovementInString.coveredDispensesPercentage,
+        title: "Patient Starts",
+        description: "Phil vs retail",
+        value: roiVM.roiImprovementInString.patientStarts,
       },
       {
         key: "C2",
-        title: "Patient Starting",
-        description: "with PHIL",
-        value: roiVM.roiImprovementInString.patientsStartingPercentage,
+        title: "Covered Dispenses",
+        description: "Phil vs retail",
+        value: roiVM.roiImprovementInString.coveredDispenses,
       },
       {
         key: "C3",
-        title: "Total Rx Fills",
-        description: "with PHIL",
-        value: roiVM.roiImprovementInString.totalRx,
+        title: "Gross Revenue",
+        description: "Phil vs retail",
+        value: roiVM.roiImprovementInString.grossRevenue,
       },
       {
         key: "C4",
-        title: "Total Covered Fills",
-        description: "with PHIL",
-        value: roiVM.roiImprovementInString.totatCoveredFills,
+        title: "Net Revenue",
+        description: "Phil vs retail",
+        value: roiVM.roiImprovementInString.netRevenue,
       },
     ];
   }, [roiVM]);

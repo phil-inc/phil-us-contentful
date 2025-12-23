@@ -80,28 +80,28 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         ],
         tooltipMsg: "Wholesale Average Cost per prescription",
       },
-      {
-        keyName: "patientEnagedPercentage", // TODO:remove this
-        title: "Patient Enrollment Rate",
-        type: INPUT_TYPE.SLIDER,
-        actualValue: roiInputs.patientEnagedPercentage,
-        actulValueInString: getInPercent(roiInputs.patientEnagedPercentage),
-        changeValue: (v: number) => handleChange("patientEnagedPercentage", v),
-        min: ROI_INPUT_CONFIG.patientEnagedPercentage.min,
-        max: ROI_INPUT_CONFIG.patientEnagedPercentage.max,
-        step: ROI_INPUT_CONFIG.patientEnagedPercentage.increment,
-        marks: [
-          {
-            value: ROI_INPUT_CONFIG.patientEnagedPercentage.min,
-            label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.min),
-          },
-          {
-            value: ROI_INPUT_CONFIG.patientEnagedPercentage.max,
-            label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.max),
-          },
-        ],
-        tooltipMsg: "Percentage of patients who enroll in your  program",
-      },
+      // {
+      //   keyName: "patientEnagedPercentage", // TODO:remove this
+      //   title: "Patient Enrollment Rate",
+      //   type: INPUT_TYPE.SLIDER,
+      //   actualValue: roiInputs.patientEnagedPercentage,
+      //   actulValueInString: getInPercent(roiInputs.patientEnagedPercentage),
+      //   changeValue: (v: number) => handleChange("patientEnagedPercentage", v),
+      //   min: ROI_INPUT_CONFIG.patientEnagedPercentage.min,
+      //   max: ROI_INPUT_CONFIG.patientEnagedPercentage.max,
+      //   step: ROI_INPUT_CONFIG.patientEnagedPercentage.increment,
+      //   marks: [
+      //     {
+      //       value: ROI_INPUT_CONFIG.patientEnagedPercentage.min,
+      //       label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.min),
+      //     },
+      //     {
+      //       value: ROI_INPUT_CONFIG.patientEnagedPercentage.max,
+      //       label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.max),
+      //     },
+      //   ],
+      //   tooltipMsg: "Percentage of patients who enroll in your  program",
+      // },
       {
         keyName: "paSubmissionRate",
         title: "PA Submission Rate",
