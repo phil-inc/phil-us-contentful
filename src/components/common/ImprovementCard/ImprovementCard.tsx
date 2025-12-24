@@ -6,16 +6,15 @@ type ImprovementCardProps = {
   title: string;
   description: string;
   value: string;
-  key?: string;
 };
+
 const ImprovementCard: React.FC<ImprovementCardProps> = ({
   title,
   description,
   value,
-  key
 }) => {
   return (
-    <article key ={key ?? title} className={classes.improvementCard}>
+    <article className={classes.improvementCard}>
       <div className={classes.title}>{title}</div>
       <div>{description}</div>
       <div className={classes.value}>{value}</div>
