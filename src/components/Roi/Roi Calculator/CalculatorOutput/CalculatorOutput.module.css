@@ -11,8 +11,7 @@
         display: flex;
         justify-content: space-between;
         padding-bottom: 27px;
-        border-bottom: 1px solid #9E9E9E;
-
+        
         .roiValue{
             font-size: 52px;
             font-weight: 700;

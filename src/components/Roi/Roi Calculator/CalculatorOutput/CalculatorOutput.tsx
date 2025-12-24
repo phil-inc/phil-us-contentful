@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Grid } from "@mantine/core";
-// import { StaticImage } from "gatsby-plugin-image";
+import { StaticImage } from "gatsby-plugin-image";
 
 import { RoiViewModel } from "view model/ROI view model/roiViewModel";
 
@@ -17,25 +17,25 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
       {
         key: "C1",
         title: "Patient Start Improvement",
-        description: "Phil vs retail",
+        description: "with Phil",
         value: roiVM.roiImprovementInString.patientStarts,
       },
       {
         key: "C2",
         title: "Covered Dispense Improvement",
-        description: "Phil vs retail",
+        description: "with Phil",
         value: roiVM.roiImprovementInString.coveredDispenses,
       },
       {
         key: "C3",
         title: "Gross Revenue Improvement",
-        description: "Phil vs retail",
+        description: "with Phil",
         value: roiVM.roiImprovementInString.grossRevenue,
       },
       {
         key: "C4",
         title: "Net Revenue Improvement",
-        description: "Phil vs retail",
+        description: "with Phil",
         value: roiVM.roiImprovementInString.netRevenue,
       },
     ];
@@ -43,13 +43,13 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
 
   return (
     <section className={classes.calculatorOutput}>
-      {/* <div className={classes.heading}>
-        <div className={classes.result}>
+      <div className={classes.heading}>
+        {/* <div className={classes.result}>
           <div className={classes.title}>Estimated ROI</div>
           <div className={classes.roiValue}>
             {roiVM.finalEstimationInString.estimatedROI}
           </div>
-        </div>
+        </div> */}
         <div>
           <StaticImage
             src={"../../../../assets/images/trend-up.svg"}
@@ -58,7 +58,7 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
           />
         </div>
       </div>
-
+{/* 
       <div className={classes.subHeading}>
         <div className={classes.subHeadingTitle}>Estimated Gross Revenue</div>
         <Grid>

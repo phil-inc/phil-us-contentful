@@ -7,10 +7,35 @@
 
     .title {
         margin-bottom: 27px;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .valueContainer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 7px;
+    }
+
+    .triangle {
+        display: inline-flex;
+        align-items: center;
+        line-height: 1;
+        
+        img {
+            width: 21px;
+            height: 18px;
+            display: block;
+        }
+    }
+
+    .triangleRotated {
+        transform: rotate(180deg);
     }
 
     .value {
         font-size: 28px;
-        margin-top: 7px;
+        font-weight: 700;
     }
 }
