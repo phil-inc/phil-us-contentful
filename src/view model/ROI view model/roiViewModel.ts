@@ -1,10 +1,11 @@
+import Decimal from "decimal.js";
 import { ProgramType } from "../../enum/global.enum";
 import { RoiInputsNum, RoiInputsDec } from "types/roi";
 import { PHIL_ROI_DEFAULT_INPUTS, RF_DEFAULT_STATS } from "../../constants/roi.constant";
 
 import { toDecimal, toDecimalRounded } from './../../utils/decimal/decimal.utils';
 import GrossRevenue from "../../utils/Gross Revenue/GrossRevenue";
-import { getInDollar, getInX, getTrendArrow } from "utils/utils";
+import { getInDollar, getInX } from "utils/utils";
 import { RoiAssumptions } from "config/roiAssumptions.config";
 import { getVolumeCalculations } from "utils/ROI/VolumeCalculations";
 import { RoiFinalCalculations } from "utils/ROI/RoiFinalCalculations";
@@ -140,8 +141,11 @@ export class RoiViewModel {
     const philFinal = this.philFinalOutputs.getFinalOutputs();
     const retailFinal = this.retailFinalOutputs.getFinalOutputs();
 
-    const safeRatio = (philValue: any, retailValue: any) =>
-      retailValue.eq(0) ? toDecimal(0) : philValue.div(retailValue);
+    const safeRatio = (philValue: string | number | Decimal, retailValue: string | number | Decimal) => {
+      const philDecimal = toDecimal(philValue);
+      const retailDecimal = toDecimal(retailValue);
+      return retailDecimal.eq(0) ? toDecimal(0) : philDecimal.div(retailDecimal);
+    };
 
     return {
       patientStarts: safeRatio(philFinal.patientStarts, retailFinal.patientStarts),

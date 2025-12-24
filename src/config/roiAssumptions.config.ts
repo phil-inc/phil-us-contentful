@@ -9,24 +9,24 @@ import { ProgramType } from "enum/global.enum";
  * Some assumptions depend on inputs and are calculated dynamically
  */
 
-export type WACRange = "a" | "b" | "c";
+export type WACRange = "tierOne" | "tierTwo" | "tierThree";
 
 /**
  * Get WAC range based on WAC price
- * a. Range 1: >=$100 and <$300
- * b. Range 2: >=$300 and <$700
- * c. Range 3: >=$700 and <=$5000
+ * tierOne: >=$100 and <$300
+ * tierTwo: >=$300 and <$700
+ * tierThree: >=$700 and <=$5000
  */
 export function getWACRange(wac: Decimal): WACRange {
   if (wac.gte(100) && wac.lt(300)) {
-    return "a";
+    return "tierOne";
   } else if (wac.gte(300) && wac.lt(700)) {
-    return "b";
+    return "tierTwo";
   } else if (wac.gte(700) && wac.lte(5000)) {
-    return "c";
+    return "tierThree";
   }
-  // Default to range a if outside expected bounds
-  return "a";
+  // Default to tierOne if outside expected bounds
+  return "tierOne";
 }
 
 /**
@@ -140,54 +140,54 @@ export class RoiAssumptions {
 
   /**
    * Average covered Copay
-   * $10: wac falls in range a (>=$100 and <$300)
-   * $25: wac falls in range b (>=$300 and <$700)
-   * $40: wac falls in range c (>=$700 and <=$5000)
+   * $10: wac falls in tierOne (>=$100 and <$300)
+   * $25: wac falls in tierTwo (>=$300 and <$700)
+   * $40: wac falls in tierThree (>=$700 and <=$5000)
    */
   getAverageCoveredCopay(): Decimal {
     const range = getWACRange(this.inputs.wac);
-    switch (range) {
-      case "a":
+    switch (range as WACRange) {
+      case "tierOne":
         return toDecimal(10);
-      case "b":
+      case "tierTwo":
         return toDecimal(25);
-      case "c":
+      case "tierThree":
         return toDecimal(40);
     }
   }
 
   /**
    * Covered Buydown rate
-   * 0%: wac falls in range a (>=$100 and <$300)
-   * 40%: wac falls in range b (>=$300 and <$700)
-   * 60%: wac falls in range c (>=$700 and <=$5000)
+   * 0%: wac falls in tierOne (>=$100 and <$300)
+   * 40%: wac falls in tierTwo (>=$300 and <$700)
+   * 60%: wac falls in tierThree (>=$700 and <=$5000)
    */
   getCoveredBuydown(): Decimal {
     const range = getWACRange(this.inputs.wac);
-    switch (range) {
-      case "a":
+    switch (range as WACRange) {
+      case "tierOne":
         return toDecimal(0);
-      case "b":
+      case "tierTwo":
         return toDecimal(0.4); // 40%
-      case "c":
+      case "tierThree":
         return toDecimal(0.6); // 60%
     }
   }
 
   /**
    * Uncovered Buydown amount
-   * $20: wac falls in range a (>=$100 and <$300)
-   * $50: wac falls in range b (>=$300 and <$700)
-   * $80: wac falls in range c (>=$700 and <=$5000)
+   * $20: wac falls in tierOne (>=$100 and <$300)
+   * $50: wac falls in tierTwo (>=$300 and <$700)
+   * $80: wac falls in tierThree (>=$700 and <=$5000)
    */
   getUncoveredBuydown(): Decimal {
     const range = getWACRange(this.inputs.wac);
-    switch (range) {
-      case "a":
+    switch (range as WACRange) {
+      case "tierOne":
         return toDecimal(20);
-      case "b":
+      case "tierTwo":
         return toDecimal(50);
-      case "c":
+      case "tierThree":
         return toDecimal(80);
     }
   }
@@ -200,9 +200,9 @@ export class RoiAssumptions {
 
   /**
    * WAC Ranges - handled by getWACRange function
-   * a. Range 1: >=$100 and <$300
-   * b. Range 2: >=$300 and <$700
-   * c. Range 3: >=$700 and <=$5000
+   * tierOne: >=$100 and <$300
+   * tierTwo: >=$300 and <$700
+   * tierThree: >=$700 and <=$5000
    */
   getWACRange(): WACRange {
     return getWACRange(this.inputs.wac);
