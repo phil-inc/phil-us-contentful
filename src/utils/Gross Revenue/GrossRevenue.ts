@@ -4,7 +4,7 @@ import Decimal from "decimal.js";
 import { ProgramType } from "../../enum/global.enum";
 import { RoiInputsDec } from "types/roi";
 
-import { toDecimalRounded } from './../decimal/decimal.utils';
+import { toDecimal, toDecimalRounded } from './../decimal/decimal.utils';
 import { PatientEnrollmentRF } from "../../utils/Patient enrollment/IpatientEnrollment";
 import PatientEnrollment from "../../utils/Patient enrollment/PatientEnrollment";
 
@@ -27,8 +27,9 @@ class GrossRevenue  extends PatientEnrollment {
     public get AnnualNRx(): Decimal {
         return this.gInputs.nRx;
     }
+    // Note: patientEnagedPercentage has been removed. Using default enrollment rate of 80%
     public get PatientsEngagedPercentage(): Decimal {
-        return this.gInputs.patientEnagedPercentage;
+        return toDecimal(0.8);
     }
     public get PAsSubmittedPercentage(): Decimal {
         return this.gInputs.paSubmissionRate;

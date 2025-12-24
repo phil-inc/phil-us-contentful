@@ -39,8 +39,9 @@ abstract class PatientEnrollment {
   }
 
   //patientEnrollment
+  // Note: patientEnagedPercentage has been removed. Using default enrollment rate of 80%
   private get PatientEnrollmentRate(): Decimal {
-    return this.inputs.patientEnagedPercentage;
+    return toDecimal(0.8);
   }
 
   private get EnrolledWithInsurancePercentage() {
@@ -135,8 +136,9 @@ abstract class PatientEnrollment {
   }
 
   // not enrolled patients
+  // Note: patientEnagedPercentage has been removed. Using default enrollment rate of 80%
   private get NotEnrolledPercentage() {
-    return toDecimal(1).sub(this.inputs.patientEnagedPercentage);
+    return toDecimal(1).sub(this.PatientEnrollmentRate);
   }
 
   // Total First Fill Dispensed

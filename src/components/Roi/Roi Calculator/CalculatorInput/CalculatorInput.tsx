@@ -38,7 +38,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
       // --sliders
       {
         keyName: "nRx",
-        title: "NRx Volume",
+        title: "NRx per Month",
         type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.nRx,
         actulValueInString: roiInputs.nRx.toString(),
@@ -49,18 +49,18 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         marks: [
           {
             value: ROI_INPUT_CONFIG.nRx.min,
-            label: ROI_INPUT_CONFIG.nRx.min,
+            label: ROI_INPUT_CONFIG.nRx.min.toString(),
           },
           {
             value: ROI_INPUT_CONFIG.nRx.max,
-            label: ROI_INPUT_CONFIG.nRx.max,
+            label: ROI_INPUT_CONFIG.nRx.max.toString(),
           },
         ],
-        tooltipMsg: "Total number of new prescriptions expected per month",
+        tooltipMsg: "How many new scripts do you see per month?",
       },
       {
         keyName: "wac",
-        title: "WAC Estimate",
+        title: "WAC Price for 30 Day Supply",
         type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.wac,
         actulValueInString: getInDollar(roiInputs.wac),
@@ -78,30 +78,8 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInDollar(ROI_INPUT_CONFIG.wac.max),
           },
         ],
-        tooltipMsg: "Wholesale Average Cost per prescription",
+        tooltipMsg: "What is your current WAC price for 30 days of supply?",
       },
-      // {
-      //   keyName: "patientEnagedPercentage", // TODO:remove this
-      //   title: "Patient Enrollment Rate",
-      //   type: INPUT_TYPE.SLIDER,
-      //   actualValue: roiInputs.patientEnagedPercentage,
-      //   actulValueInString: getInPercent(roiInputs.patientEnagedPercentage),
-      //   changeValue: (v: number) => handleChange("patientEnagedPercentage", v),
-      //   min: ROI_INPUT_CONFIG.patientEnagedPercentage.min,
-      //   max: ROI_INPUT_CONFIG.patientEnagedPercentage.max,
-      //   step: ROI_INPUT_CONFIG.patientEnagedPercentage.increment,
-      //   marks: [
-      //     {
-      //       value: ROI_INPUT_CONFIG.patientEnagedPercentage.min,
-      //       label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.min),
-      //     },
-      //     {
-      //       value: ROI_INPUT_CONFIG.patientEnagedPercentage.max,
-      //       label: getInPercent(ROI_INPUT_CONFIG.patientEnagedPercentage.max),
-      //     },
-      //   ],
-      //   tooltipMsg: "Percentage of patients who enroll in your  program",
-      // },
       {
         keyName: "paSubmissionRate",
         title: "PA Submission Rate",
@@ -123,11 +101,11 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
           },
         ],
         tooltipMsg:
-          "Rate of successfully submitted prior authorization requests.",
+          "What is your current prior authorization(PA) submission rate?",
       },
       {
         keyName: "inputAverageRefillsPerNRx",
-        title: "Refill Mutiplier",
+        title: "Average Refills per Patient",
         type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.inputAverageRefillsPerNRx,
         actulValueInString: getInX(roiInputs.inputAverageRefillsPerNRx),
@@ -145,11 +123,11 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInX(ROI_INPUT_CONFIG.averageRefillsPerNRx.max),
           },
         ],
-        tooltipMsg: "Average number of refills per patient",
+        tooltipMsg: "How many average refills do you typically see per patient?",
       },
       {
         keyName: "commerciallyInsuredPercentage",
-        title: "Commercially Insured Patients",
+        title: "How many patients are commercially insured?",
         type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.commerciallyInsuredPercentage,
         actulValueInString: getInPercent(roiInputs.commerciallyInsuredPercentage),
@@ -167,32 +145,32 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInPercent(ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max),
           },
         ],
-        tooltipMsg: "Percentage of patients covered by commercial insurance",
+        tooltipMsg: "How many patients are commercially insured?",
       },
       //---switches
       {
         keyName: "haveHubService",
-        title: "Have Hub Services",
+        title: "Do You Have Hub Services and/or Specialty Partner?",
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveHubService,
         changeValue: (v: boolean) => handleChange("haveHubService", v),
-        tooltipMsg: "Indicates whether the brand offers dedicated hub services.",
+        tooltipMsg: "Do you currently have a Hub Services and/or specialty Pharmacy (SP) partner?",
       },
       {
         keyName: "haveCoverCouponOffer",
-        title: "Cover Coupon Offer",
+        title: "Do You Offer a Coupon when Patient is Covered by Insurance?",
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveCoverCouponOffer,
         changeValue: (v: boolean) => handleChange("haveCoverCouponOffer", v),
-        tooltipMsg: "Indicates whether a co-pay coupon is offered.",
+        tooltipMsg: "If a patient is covered by insurance (commercial), do you offer a coupon?",
       },
       {
         keyName: "haveUncoverCouponOffer",
-        title: "Uncovered Commercial Cash Offer",
+        title: "Do You Offer a Cash Price when Patient is Not Covered by Insurance?",
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveUncoverCouponOffer,
         changeValue: (v: boolean) => handleChange("haveUncoverCouponOffer", v),
-        tooltipMsg: "Indicates whether a cash offer is available for commercially uninsured patients.",
+        tooltipMsg: "If a patient is not covered by insurance (commercial), do you offer a cash price?",
       },
     ];
   }, [roiInputs]);

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Grid } from "@mantine/core";
-import { StaticImage } from "gatsby-plugin-image";
+// import { StaticImage } from "gatsby-plugin-image";
 
 import { RoiViewModel } from "view model/ROI view model/roiViewModel";
 
@@ -16,25 +16,25 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
     return [
       {
         key: "C1",
-        title: "Patient Starts",
+        title: "Patient Start Improvement",
         description: "Phil vs retail",
         value: roiVM.roiImprovementInString.patientStarts,
       },
       {
         key: "C2",
-        title: "Covered Dispenses",
+        title: "Covered Dispense Improvement",
         description: "Phil vs retail",
         value: roiVM.roiImprovementInString.coveredDispenses,
       },
       {
         key: "C3",
-        title: "Gross Revenue",
+        title: "Gross Revenue Improvement",
         description: "Phil vs retail",
         value: roiVM.roiImprovementInString.grossRevenue,
       },
       {
         key: "C4",
-        title: "Net Revenue",
+        title: "Net Revenue Improvement",
         description: "Phil vs retail",
         value: roiVM.roiImprovementInString.netRevenue,
       },
@@ -43,7 +43,7 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
 
   return (
     <section className={classes.calculatorOutput}>
-      <div className={classes.heading}>
+      {/* <div className={classes.heading}>
         <div className={classes.result}>
           <div className={classes.title}>Estimated ROI</div>
           <div className={classes.roiValue}>
@@ -78,7 +78,7 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
             </div>
           </Grid.Col>
         </Grid>
-      </div>
+      </div> */}
 
       <Grid className={classes.cardSection}>
         {cardDetails.map((card) => (

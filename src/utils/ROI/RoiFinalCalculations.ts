@@ -66,63 +66,16 @@ export class RoiFinalCalculations {
     this.haveUncoverCouponOffer = haveUncoverCouponOffer;
 
     this.calculateGrossRevenues();
-    console.log("=== RoiFinal - GrossRevenue Inputs ===");
-    console.log("wac (I.2):", this.inputs.wac.toString());
-    console.log(
-      "C.P.25 (coveredTRx):",
-      this.volumeCalculations.coveredTRx.amount.toString()
-    );
-    console.log(
-      "C.P.23 (uncoveredTRx):",
-      this.volumeCalculations.uncoveredTRx.amount.toString()
-    );
-    console.log(
-      "C.P.27 (uninsuredTRx):",
-      this.volumeCalculations.uninsuredTRx.amount.toString()
-    );
-    console.log("GrossRevenueCovered:", this.grossRevenueCovered.toString());
-    console.log("GrossRevenueUncovered:", this.grossRevenueUncovered.toString());
-    console.log("GrossRevenueUninsured:", this.grossRevenueUninsured.toString());
     this.calculateBuydowns();
-    console.log("=== RoiFinal - Buydowns Inputs ===");
-    console.log("haveCoverCouponOffer (I.6):", this.haveCoverCouponOffer);
-    console.log("haveUncoverCouponOffer (I.7):", this.haveUncoverCouponOffer);
-    console.log("A.12 (avgCoveredCopay):", this.assumptions.getAverageCoveredCopay().toString());
-    console.log("A.13 (coveredBuydownRate):", this.assumptions.getCoveredBuydown().toString());
-    console.log("A.14 (uncoveredBuydown $):", this.assumptions.getUncoveredBuydown().toString());
-    console.log("BuydownCovered:", this.buydownCovered.toString());
-    console.log("BuydownUncovered:", this.buydownUncovered.toString());
-    console.log("BuydownUninsured:", this.buydownUninsured.toString());
     this.calculateDSAs();
-    console.log("=== RoiFinal - DSAs Inputs ===");
-    console.log("DSA rate (A.7.a):", this.assumptions.getDSA().toString());
-    console.log("DSA Covered:", this.dsaCovered.toString());
-    console.log("DSA Uncovered:", this.dsaUncovered.toString());
-    console.log("DSA Uninsured:", this.dsaUninsured.toString());
     this.calculatePayerRebates();
-    console.log("=== RoiFinal - PayerRebates Inputs ===");
-    console.log(
-      "PayerRebate rate (A.11):",
-      this.assumptions.getAveragePayerRebate().toString()
-    );
-    console.log(
-      "PayerRebateCovered (A.11 * GrossRevenueCovered):",
-      this.payerRebateCovered.toString()
-    );
-    console.log(
-      "PayerRebateUncovered (A.11 * GrossRevenueUncovered):",
-      this.payerRebateUncovered.toString()
-    );
-    console.log("PayerRebateUninsured (should be 0):", this.payerRebateUninsured.toString());
   }
 
   /**
    * Gross Revenues:
-   * 1. Covered amount: C.P.25 amount * I.2
-   * 2. Uncovered amount: C.P.23 amount * I.2
-   *    Note: Spec says C.P.26, but C.P.26 is "Uninsured Refills", not "Uncovered TRx"
-   *    C.P.23 is "Uncovered TRx", which is the correct value to use
-   * 3. Uninsured amount: C.P.27 amount * I.2
+   * 1. Covered amount: coveredTRx amount * wac
+   * 2. Uncovered amount: uncoveredTRx amount * wac
+   * 3. Uninsured amount: uninsuredTRx amount * wac
    */
   private calculateGrossRevenues(): void {
     const coveredTRx = this.volumeCalculations.coveredTRx.amount; // Covered TRx
@@ -137,11 +90,11 @@ export class RoiFinalCalculations {
   /**
    * Buydowns:
    * 1. Covered amount:
-   *    Case if I.6 is false: value 0
-   *    Case if I.6 is true: A.12 * A.13 * C.P.25 amount
+   *    Case if haveCoverCouponOffer is false: value 0
+   *    Case if haveCoverCouponOffer is true: averageCoveredCopay * coveredBuydownRate * coveredTRx amount
    * 2. Uncovered amount:
-   *    Case if I.7 is false: value 0
-   *    Case if I.7 is true: (I.2 - A.14) * C.P.23 amount
+   *    Case if haveUncoverCouponOffer is false: value 0
+   *    Case if haveUncoverCouponOffer is true: (wac - uncoveredBuydown) * uncoveredTRx amount
    * 3. Uninsured amount: {0}
    */
   private calculateBuydowns(): void {
@@ -171,9 +124,9 @@ export class RoiFinalCalculations {
 
   /**
    * DSAs:
-   * 1. Covered amount: A.7.a * Gross Revenue's covered amount
-   * 2. Uncovered amount: A.7.a * Gross Revenue's uncovered amount
-   * 3. Uninsured amount: A.7.a * Gross Revenue's uninsured amount
+   * 1. Covered amount: dsaRate * Gross Revenue's covered amount
+   * 2. Uncovered amount: dsaRate * Gross Revenue's uncovered amount
+   * 3. Uninsured amount: dsaRate * Gross Revenue's uninsured amount
    */
   private calculateDSAs(): void {
     const dsaRate = this.assumptions.getDSA();
@@ -185,23 +138,23 @@ export class RoiFinalCalculations {
 
   /**
    * Payer Rebates:
-   * 1. Covered amount: A.11 * Gross Revenue's covered amount
-   * 2. Uncovered amount: A.11 * Gross Revenue's uncovered amount
-   * 3. Uninsured amount: {0}
+   * 1. Covered amount: payerRebateRate * Gross Revenue's covered amount
+   * 2. Uncovered amount: 0
+   * 3. Uninsured amount: 0
    */
   private calculatePayerRebates(): void {
     const payerRebateRate = this.assumptions.getAveragePayerRebate();
 
     this.payerRebateCovered = payerRebateRate.mul(this.grossRevenueCovered);
-    this.payerRebateUncovered = payerRebateRate.mul(this.grossRevenueUncovered);
+    this.payerRebateUncovered = toDecimal(0);
     this.payerRebateUninsured = toDecimal(0);
   }
 
   /**
    * Final Outputs:
-   * 1. Patient Starts: C.P.16 amount + C.P.17 amount + C.P.18 amount + C.P.19 amount + C.P.20 amount
-   * 2. Covered dispenses: C.P.25 amount
-   * 3. Total Dispenses: C.P.25 amount + C.P.23 amount + C.P.27 amount
+   * 1. Patient Starts: coveredOutrightFirstFills + coveredAfterPAApprovedFirstFills + uncoveredAfterPADeniedFirstFills + uncoveredAfterNoPASubmittedFirstFills + uninsuredFirstFills
+   * 2. Covered dispenses: coveredTRx amount
+   * 3. Total Dispenses: coveredTRx amount + uncoveredTRx amount + uninsuredTRx amount
    * 4. Gross Revenue: Gross Revenues.1 + Gross Revenues.2 + Gross Revenues.3
    * 5. Gross Buydown: Buydowns.1 + Buydowns.2 + Buydowns.3
    * 6. Gross DSA: DSA.1 + DSA.2 + DSA.3
@@ -218,27 +171,6 @@ export class RoiFinalCalculations {
     const coveredTRx = this.volumeCalculations.coveredTRx.amount;
     const uninsuredTRx = this.volumeCalculations.uninsuredTRx.amount;
 
-    console.log("=== RoiFinal - FinalOutputs Inputs (C.P.* & component sums) ===");
-    console.log("C.P.16 amount (Covered Outright FF):", coveredOutrightFirstFills.toString());
-    console.log("C.P.17 amount (Covered after PA FF):", coveredAfterPAApprovedFirstFills.toString());
-    console.log("C.P.18 amount (Uncovered after PA denied FF):", uncoveredAfterPADeniedFirstFills.toString());
-    console.log("C.P.19 amount (Uncovered after no PA FF):", uncoveredAfterNoPASubmittedFirstFills.toString());
-    console.log("C.P.20 amount (Uninsured FF):", uninsuredFirstFills.toString());
-    console.log("C.P.23 amount (Uncovered TRx):", uncoveredTRx.toString());
-    console.log("C.P.25 amount (Covered TRx):", coveredTRx.toString());
-    console.log("C.P.27 amount (Uninsured TRx):", uninsuredTRx.toString());
-    console.log("GrossRevenueCovered:", this.grossRevenueCovered.toString());
-    console.log("GrossRevenueUncovered:", this.grossRevenueUncovered.toString());
-    console.log("GrossRevenueUninsured:", this.grossRevenueUninsured.toString());
-    console.log("BuydownCovered:", this.buydownCovered.toString());
-    console.log("BuydownUncovered:", this.buydownUncovered.toString());
-    console.log("BuydownUninsured:", this.buydownUninsured.toString());
-    console.log("DSA Covered:", this.dsaCovered.toString());
-    console.log("DSA Uncovered:", this.dsaUncovered.toString());
-    console.log("DSA Uninsured:", this.dsaUninsured.toString());
-    console.log("PayerRebateCovered:", this.payerRebateCovered.toString());
-    console.log("PayerRebateUncovered:", this.payerRebateUncovered.toString());
-    console.log("PayerRebateUninsured:", this.payerRebateUninsured.toString());
     const patientStarts = coveredOutrightFirstFills
       .add(coveredAfterPAApprovedFirstFills)
       .add(uncoveredAfterPADeniedFirstFills)

@@ -3,7 +3,6 @@ import Decimal from "decimal.js";
 export type PatientEnrollmentInputs = {
     wac: Decimal;
     nRx: Decimal;
-    patientEnagedPercentage: Decimal;
     paSubmissionRate: Decimal;
     averageRefillsPerNRx: Decimal;
 }

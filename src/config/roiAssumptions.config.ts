@@ -5,14 +5,14 @@ import { ProgramType } from "enum/global.enum";
 
 /**
  * ROI Assumptions Configuration
- * Contains all assumptions (A.1-A.16) from calculation.md
+ * Contains all assumptions used in ROI calculations
  * Some assumptions depend on inputs and are calculated dynamically
  */
 
 export type WACRange = "a" | "b" | "c";
 
 /**
- * Get WAC range based on WAC price (A.16)
+ * Get WAC range based on WAC price
  * a. Range 1: >=$100 and <$300
  * b. Range 2: >=$300 and <$700
  * c. Range 3: >=$700 and <=$5000
@@ -43,40 +43,40 @@ export class RoiAssumptions {
   }
 
   /**
-   * A.1: Enrollment rate at other
-   * I.3 true - 80%
-   * I.3 false - 65%
+   * Enrollment rate at other
+   * haveHubService true - 80%
+   * haveHubService false - 65%
    */
   getEnrollmentRateAtOther(haveHubService: boolean): Decimal {
     return haveHubService ? toDecimal(0.8) : toDecimal(0.65);
   }
 
   /**
-   * A.2: Enrollment rate at Phil: 90%
+   * Enrollment rate at Phil: 90%
    */
   getEnrollmentRateAtPhil(): Decimal {
     return toDecimal(0.9);
   }
 
   /**
-   * A.3: Enroll with insurance for both Other and Phil: 95%
+   * Enroll with insurance for both Other and Phil: 95%
    */
   getEnrollWithInsuranceRate(): Decimal {
     return toDecimal(0.95);
   }
 
   /**
-   * A.4: Number of patients covered outright: 20%
+   * Number of patients covered outright: 20%
    */
   getCoveredOutrightRate(): Decimal {
     return toDecimal(0.2);
   }
 
   /**
-   * A.5: Bump in refill rate vs retail
-   * I.5 < 2: 100%
-   * I.5 >= 2 and I.5 < 4: 67%
-   * I.5 >= 4: 33%
+   * Bump in refill rate vs retail
+   * inputAverageRefillsPerNRx < 2: 100%
+   * inputAverageRefillsPerNRx >= 2 and < 4: 67%
+   * inputAverageRefillsPerNRx >= 4: 33%
    */
   getBumpInRefillRate(): Decimal {
     const avgRefills = this.inputs.inputAverageRefillsPerNRx;
@@ -91,16 +91,16 @@ export class RoiAssumptions {
   }
 
   /**
-   * A.6: Discount to "Average refills per patient"
-   * 67% if I.7 false
-   * 20% if I.7 true
+   * Discount to "Average refills per patient"
+   * 67% if haveUncoverCouponOffer false
+   * 20% if haveUncoverCouponOffer true
    */
   getDiscountToRefills(haveUncoverCouponOffer: boolean): Decimal {
     return haveUncoverCouponOffer ? toDecimal(0.2) : toDecimal(0.67);
   }
 
   /**
-   * A.7: DSA
+   * DSA (Direct Service Agreement) rate
    * 7% for Phil
    * 10% for MFR
    */
@@ -111,38 +111,38 @@ export class RoiAssumptions {
   }
 
   /**
-   * A.8: PA Submission rate for Phil: 90%
+   * PA Submission rate for Phil: 90%
    */
   getPASubmissionRateForPhil(): Decimal {
     return toDecimal(0.9);
   }
 
   /**
-   * A.9: PA Approval rate for Phil and Retail: 45%
+   * PA Approval rate for Phil and Retail: 45%
    */
   getPAApprovalRateForPhilAndRetail(): Decimal {
     return toDecimal(0.45);
   }
 
   /**
-   * A.10: PA Approval rate for Retail/Other: 40%
+   * PA Approval rate for Retail/Other: 40%
    */
   getPAApprovalRateForRetailOther(): Decimal {
     return toDecimal(0.4);
   }
 
   /**
-   * A.11: Average Payer Rebate: 40%
+   * Average Payer Rebate: 40%
    */
   getAveragePayerRebate(): Decimal {
     return toDecimal(0.4);
   }
 
   /**
-   * A.12: Average covered Copay
-   * $10: I.2 falls in A.16 a
-   * $25: I.2 falls in A.16 b
-   * $40: I.2 falls in A.16 c
+   * Average covered Copay
+   * $10: wac falls in range a (>=$100 and <$300)
+   * $25: wac falls in range b (>=$300 and <$700)
+   * $40: wac falls in range c (>=$700 and <=$5000)
    */
   getAverageCoveredCopay(): Decimal {
     const range = getWACRange(this.inputs.wac);
@@ -157,10 +157,10 @@ export class RoiAssumptions {
   }
 
   /**
-   * A.13: Covered Buydown
-   * 0%: I.2 falls in A.16 a
-   * 40%: I.2 falls in A.16 b
-   * 60%: I.2 falls in A.16 c
+   * Covered Buydown rate
+   * 0%: wac falls in range a (>=$100 and <$300)
+   * 40%: wac falls in range b (>=$300 and <$700)
+   * 60%: wac falls in range c (>=$700 and <=$5000)
    */
   getCoveredBuydown(): Decimal {
     const range = getWACRange(this.inputs.wac);
@@ -175,10 +175,10 @@ export class RoiAssumptions {
   }
 
   /**
-   * A.14: Uncovered Buydown
-   * $20: I.2 falls in A.16 a
-   * $50: I.2 falls in A.16 b
-   * $80: I.2 falls in A.16 c
+   * Uncovered Buydown amount
+   * $20: wac falls in range a (>=$100 and <$300)
+   * $50: wac falls in range b (>=$300 and <$700)
+   * $80: wac falls in range c (>=$700 and <=$5000)
    */
   getUncoveredBuydown(): Decimal {
     const range = getWACRange(this.inputs.wac);
@@ -193,13 +193,13 @@ export class RoiAssumptions {
   }
 
   /**
-   * A.15: Payment approval rate lookup - handled by ApprovalRateLookup utility
+   * Payment approval rate lookup - handled by ApprovalRateLookup utility
    * This is just a reference, actual lookup is done in ApprovalRateLookup.ts
    */
   // Payment approval rate is handled separately via lookup table
 
   /**
-   * A.16: WAC Ranges - handled by getWACRange function
+   * WAC Ranges - handled by getWACRange function
    * a. Range 1: >=$100 and <$300
    * b. Range 2: >=$300 and <$700
    * c. Range 3: >=$700 and <=$5000

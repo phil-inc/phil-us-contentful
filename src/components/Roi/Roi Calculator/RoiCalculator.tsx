@@ -20,7 +20,6 @@ const RoiCalculator: React.FC<RoiCalculatorProps> = ({ section }) => {
   const [roiInputs, setRoiInputs] = React.useState<RoiInputsNum>({
     wac: ROI_INPUT_CONFIG.wac.preset,
     nRx: ROI_INPUT_CONFIG.nRx.preset,
-    patientEnagedPercentage: ROI_INPUT_CONFIG.patientEnagedPercentage.preset,
     paSubmissionRate: ROI_INPUT_CONFIG.paSubmissionRate.preset,
     inputAverageRefillsPerNRx: ROI_INPUT_CONFIG.averageRefillsPerNRx.preset,
     commerciallyInsuredPercentage: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.preset,

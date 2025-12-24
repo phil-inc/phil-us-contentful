@@ -5,7 +5,6 @@ import { INPUT_TYPE } from "enum/global.enum";
 export type RoiInputsNum = {
   wac: number;
   nRx: number;
-  patientEnagedPercentage: number;
   paSubmissionRate: number;
   inputAverageRefillsPerNRx: number;
   haveHubService: boolean;
@@ -17,7 +16,6 @@ export type RoiInputsNum = {
 export type RoiInputsDec = {
   wac: Decimal;
   nRx: Decimal;
-  patientEnagedPercentage: Decimal;
   paSubmissionRate: Decimal;
   inputAverageRefillsPerNRx: Decimal;
   commerciallyInsuredPercentage: Decimal;

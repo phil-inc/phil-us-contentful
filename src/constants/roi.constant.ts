@@ -12,32 +12,26 @@ export const ROI_INPUT_CONFIG = {
   wac: {
     min: 100,
     max: 5000,
-    preset: 500,
+    preset: 650,
     increment: 50,
   },
   nRx: {
     min: 0,
     max: 100000,
-    preset: 2000,
+    preset: 12000,
     increment: 1000,
-  },
-  patientEnagedPercentage: {
-    min: 0,
-    max: 100,
-    preset: 65,
-    increment: 1,
   },
   paSubmissionRate: {
     min: 0,
     max: 100,
-    preset: 50,
+    preset: 80,
     increment: 1,
   },
   averageRefillsPerNRx: {
     min: 1,
-    max: 4,
-    preset: 2.5,
-    increment: 0.1,
+    max: 10,
+    preset: 3,
+    increment: 1,
   },
   commerciallyInsuredPercentage: {
     min: 0,
@@ -45,14 +39,13 @@ export const ROI_INPUT_CONFIG = {
     preset: 80,
     increment: 1,
   },
-  haveHubService: false,
-  haveCoverCouponOffer: false,
+  haveHubService: true,
+  haveCoverCouponOffer: true,
   haveUncoverCouponOffer: false,
   
 };
 
 export const PHIL_ROI_DEFAULT_INPUTS = {
-  patientEnagedPercentage: 91,
   paSubmissionRate: 90,
 };
 
