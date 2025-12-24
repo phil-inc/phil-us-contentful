@@ -172,7 +172,7 @@
 	}
 }
 
-.basicSectionContainer.empowerSection{
+/* .basicSectionContainer.empowerSection{
 	@media (min-width: $phil-breakpoint-md) {
 		padding-bottom: 90px;
 	}
@@ -198,7 +198,7 @@
 	@media (min-width: $phil-breakpoint-lg) {
 		padding-top: 60px;
 	}
-}
+} */
 
 .listItem {
 	color: #000;
