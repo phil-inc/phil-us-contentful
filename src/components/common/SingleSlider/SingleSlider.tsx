@@ -34,6 +34,13 @@ const SingleSlider: React.FC<SingleSliderProps> = ({ sliderProps }) => {
               arrowPosition="side"
               arrowOffset={10}
               arrowSize={5}
+              w={220}
+              styles={{
+                tooltip: {
+                  whiteSpace: 'normal',
+                  textAlign: 'left',
+                },
+              }}
               withArrow
             >
               <span className={classes.icon}>

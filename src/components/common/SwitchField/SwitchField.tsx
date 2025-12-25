@@ -24,6 +24,13 @@ const SwitchField: React.FC<SwitchFieldProps> = ({ switchData }) => {
               arrowPosition="side"
               arrowOffset={10}
               arrowSize={5}
+              w={220}
+              styles={{
+                tooltip: {
+                  whiteSpace: 'normal',
+                  textAlign: 'left',
+                },
+              }}
               withArrow
             >
               <span className={classes.icon}>

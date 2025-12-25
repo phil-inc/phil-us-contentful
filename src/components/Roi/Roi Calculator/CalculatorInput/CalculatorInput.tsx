@@ -56,7 +56,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: ROI_INPUT_CONFIG.nRx.max.toString(),
           },
         ],
-        tooltipMsg: "How many new scripts do you see per month?",
+        tooltipMsg: "Manufacturers often estimate this using dispensed NRx from IQVIA. Alternatively, if you have estimates of New Patients, that also works. ",
       },
       {
         keyName: "wac",
@@ -78,7 +78,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInDollar(ROI_INPUT_CONFIG.wac.max),
           },
         ],
-        tooltipMsg: "What is your current WAC price for 30 days of supply?",
+        tooltipMsg: "30-DoS is the standard used for this calculator, but we can customize our estimates to your brand's most common days-of-supply.",
       },
       {
         keyName: "paSubmissionRate",
@@ -101,7 +101,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
           },
         ],
         tooltipMsg:
-          "What is your current prior authorization(PA) submission rate?",
+          "Of all PAs required, how many do you typically see end up getting submitted? ",
       },
       {
         keyName: "inputAverageRefillsPerNRx",
@@ -123,7 +123,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInX(ROI_INPUT_CONFIG.averageRefillsPerNRx.max),
           },
         ],
-        tooltipMsg: "How many average refills do you typically see per patient?",
+        tooltipMsg: "Manufacturers often estimate this by taking TRx volumes divided by dispensed NRx volumes minus one (TRx/NRx-1)",
       },
       {
         keyName: "commerciallyInsuredPercentage",
@@ -145,7 +145,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInPercent(ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max),
           },
         ],
-        tooltipMsg: "How many patients are commercially insured?",
+        tooltipMsg: "Manfuacturers often obtain this through IQVIA data",
       },
       //---switches
       {
@@ -154,7 +154,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveHubService,
         changeValue: (v: boolean) => handleChange("haveHubService", v),
-        tooltipMsg: "Do you currently have a Hub Services and/or specialty Pharmacy (SP) partner?",
+        tooltipMsg: "Do you currently have a Hub Services and/or Speciality Pharmacy (SP) partner?",
       },
       {
         keyName: "haveCoverCouponOffer",
@@ -162,7 +162,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveCoverCouponOffer,
         changeValue: (v: boolean) => handleChange("haveCoverCouponOffer", v),
-        tooltipMsg: "If a patient is covered by insurance (commercial), do you offer a coupon?",
+        tooltipMsg: `E.g., "Pay-as-low-as $0 for qualifying commercial insurance plans after obtaining coverage"`,
       },
       {
         keyName: "haveUncoverCouponOffer",
@@ -170,7 +170,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveUncoverCouponOffer,
         changeValue: (v: boolean) => handleChange("haveUncoverCouponOffer", v),
-        tooltipMsg: "If a patient is not covered by insurance (commercial), do you offer a cash price?",
+        tooltipMsg: `E.g., "If your commercial insurance won't cover your drug, some patients are eligible for an $X cash price"`,
       },
     ];
   }, [roiInputs]);
