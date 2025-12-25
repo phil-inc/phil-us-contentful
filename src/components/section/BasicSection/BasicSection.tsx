@@ -41,9 +41,12 @@ import cx from "clsx";
 import * as classes from "./basicSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 import useDeviceType from "hooks/useView";
+import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 import { extractAssetData } from "utils/asset";
 
-import { BUTTON_STYLE, LAYOUT_12COL } from "constants/global.constant";
+import { BUTTON_STYLE, COLORS, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
+
+import InfoCircleIcon from "assets/images/icons/component/info-circle";
 
 type BasicSectionProps = {
   section: ISection;
@@ -71,7 +74,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const context = React.useContext(PageContext);
   const isImageAlignToWall = section?.canShowAssetImageAlignToWall;
   const isImageAlignToLeftWall = isImageAlignToWall && section?.canShowTextColumnToRight
-
   const theme = useMantineTheme();
 
   const richTextImages: Record<string, any> = {};
@@ -85,6 +87,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
   const isOneColumn =
     section?.renderOptions?.layoutOptions?.numberOfColumns === 1;
+
+  const bgColor = getColorFromStylingOptions(section.stylingOptions?.background)
+  const isBgColorLight = LIGHT_COLOR_LIST.includes(bgColor ?? COLORS.LIGHT); 
 
   // eslint-disable-next-line array-callback-return
   section?.body?.references?.map((reference: any) => {
@@ -207,6 +212,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             data-video={isVideo()}
             className={classes.body}
             data-oneColumn={isOneColumn}
+            data-is-bgcolor-light={isBgColorLight}
             >
             {children}
           </Text>
@@ -338,6 +344,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     formId = formProps.formId;
     portalId = formProps.portalId;
   }
+  const isSmallDevice = useIsSmallDevice();
+  
 
   React.useEffect(() => {
     if (ref.current) {
@@ -431,8 +439,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
     >
+      {section?.canShowHeader && <Title className={classes.header} data-context={context.title}>{section.header}</Title>}
       <div className={classes.containSection}>
-        {section?.canShowHeader && <Title className={classes.header} data-context={context.title}>{section.header}</Title>}
         <Grid
           align={
             section.isHubspotEmbed || section.embedForm
@@ -491,14 +499,17 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                         )
                       : renderRichText(section.body, options)}
                   </Stack>
+
                 )}
+                {section?.sectionTitle && <Box className={classes.belowBodySection} data-context={context.title}>{section.sectionTitle}</Box>}
               </>
             )}
           </Grid.Col>
           {/* Hero Grid Column */}
           {/* TODO:: Handle in css */}
           {/* TODO: Refactor v2Flags and links */}
-          {(section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) &&
+          {/* {((section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) && !isImageAlignToWall) && */}
+          {((section.embedForm  || mediaItemOrAsset || youtubeVideoUrl)) &&
           <Grid.Col
             className={cx(classes.heroGridColumn, classes.embedFormTemplate, {[classes.hideDueToWallImage]: isImageAlignToWall})}
             ref={heroRef}
@@ -520,27 +531,42 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                 <Box className={classes.formWrapper}>
                   <HubspotForm formId={formId} portalId={portalId} />
                 </Box>
-              ) : (
-                <ImageContainer
-                  containerRef={ref}
-                  contain
-                  ratio={calculateAspectRatio()}
-                  background={determineBackground()}
-                  expanded={context.title === CONTACT_PAGE}
-                  isVideo={isVideo()}
-                  maw={maw()}
-                  data-index={index}
-                  data-context={context.title}
-                  isGatsbyImageData={Boolean(media?.gatsbyImageData)}
-                >
-                  <Asset
-                    asset={mediaItemOrAsset}
-                    objectFit="contain"
-                    youtubeVideoURL={youtubeVideoUrl}
-                  />
-                </ImageContainer>
-              )}
+              ) : ((isSmallDevice) && section?.assetForMobile 
+                    ? <div>
+                        <Asset
+                          className={classes.assetWallImage}
+                          asset={section.assetForMobile}
+                          />
+                    </div>
+                    :<ImageContainer
+                      containerRef={ref}
+                      contain
+                      ratio={calculateAspectRatio()}
+                      background={determineBackground()}
+                      expanded={context.title === CONTACT_PAGE}
+                      isVideo={isVideo()}
+                      maw={maw()}
+                      data-index={index}
+                      data-context={context.title}
+                      isGatsbyImageData={Boolean(media?.gatsbyImageData)}
+                      >
+                        <Asset
+                          asset={mediaItemOrAsset}
+                          objectFit="contain"
+                          youtubeVideoURL={youtubeVideoUrl}
+                          />
+                    </ImageContainer>
+                  )
+                }
             </Group>
+             {section?.assetCaption && 
+                <Text className={cx(classes.assetCaption,{[classes.darkText]: isBgColorLight, [classes.lightText]: !isBgColorLight})}>
+                <span className={classes.infoIcon}>
+                <InfoCircleIcon size={18} />
+                </span>
+                {section.assetCaption}
+                </Text>
+              }
           </Grid.Col>
           }
         </Grid>
@@ -562,14 +588,23 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
         {(isImageAlignToWall && mediaItemOrAsset) && 
           <div 
-            className={cx(classes.wallImage, {[classes.leftWallImage]: isImageAlignToLeftWall})}   
+            className={cx(classes.wallImage, {[classes.leftWallImage]: isImageAlignToLeftWall, [classes.imageAdjust]:isImageAlignToWall})}   
             data-index={index}
             data-context={context.title}
+            data-oneColumn={isOneColumn}
           >
             <Asset
-            className={classes.assetWallImage}
+              className={classes.assetWallImage}
               asset={mediaItemOrAsset}
             />
+            {section?.assetCaption && 
+              <Text className={cx(classes.assetCaption,{[classes.darkText]: isBgColorLight, [classes.lightText]: !isBgColorLight})}>
+                <span className={classes.infoIcon}>
+                  <InfoCircleIcon size={18} />
+                </span>
+                {section.assetCaption}
+              </Text>
+            }
           </div>
       }
       </div>

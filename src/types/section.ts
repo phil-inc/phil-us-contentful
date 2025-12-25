@@ -84,7 +84,7 @@ export type ISection = {
     youtubeLink: string;
     emdedForm: BodyType;
   };
-
+  
   stylingOptions?: StylingOptions;
 
   renderOptions?: RenderOptions;
@@ -98,6 +98,8 @@ export type ISection = {
   sectionTitle?: string;
   showBottomBorder?: boolean;
   canShowTextColumnToRight?: boolean;
+  assetForMobile?: TAsset;
+  assetCaption?: string;
 };
 
 export enum ResourceBlocksEnum {

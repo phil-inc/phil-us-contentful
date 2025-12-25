@@ -577,6 +577,23 @@ query getPages($id: String!) {
             }
             id
           }
+          sectionTitle
+          assetForMobile {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          assetCaption
           stylingOptions {
             background
             id
