@@ -54,7 +54,7 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
           <StaticImage
             src={"../../../../assets/images/trend-up.svg"}
             loading="lazy"
-            alt="LinkedIn Icon"
+            alt="Trend Icon"
           />
         </div>
       </div>
@@ -82,7 +82,7 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
 
       <Grid className={classes.cardSection}>
         {cardDetails.map((card) => (
-          <Grid.Col key={card.key} span={{ xs: 12, sm: 6 }}>
+          <Grid.Col key={card.key} span={{ xs: 12, sm: 12 }}>
             <ImprovementCard
               key={card.key}
               title={card.title}
