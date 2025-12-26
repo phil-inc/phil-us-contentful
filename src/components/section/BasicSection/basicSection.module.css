@@ -85,7 +85,7 @@
 }
 
 .heading2{
-		&[data-context='Company'],&[data-context='Solution'] {
+		&[data-context='Company'],&[data-context='Solution'],&[data-context='Phil Direct'] {
 			font-size: 40px;
 		}
 }
