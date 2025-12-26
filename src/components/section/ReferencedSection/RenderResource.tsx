@@ -33,6 +33,7 @@ import { CommitmentCard } from "components/CommitmentCard/CommitmentCard";
 import { FeaturedInsights } from "components/FeaturedInsights/FeaturedInsights";
 import { PhilPeople } from "components/common/PhilPeople/PhilPeople";
 import CardOrImage from "components/common/CardOrImage/CardOrImage";
+import BulletList from "components/BulletList/BulletList";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -231,6 +232,9 @@ const PeopleBehindPhilComponent: ComponentFunction = ({ resource }) => (
 const CardOrImageComponent: ComponentFunction = ({ resource,index }) => (
   <CardOrImage resource={resource} index={index ?? 0}/>
 );
+const BulletListComponent: ComponentFunction = ({ resource,index }) => (
+  <BulletList resource={resource} index={index ?? 0}/>
+);
 
 const getComponent = (
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum,
@@ -279,6 +283,7 @@ const getComponent = (
     [ReferenceTypeEnum["Featured Insights"]]: FeaturedInsightsComponent,
     [ReferenceTypeEnum["People Behind Phil"]]: PeopleBehindPhilComponent,
     [ReferenceTypeEnum["Card Or Image"]]: CardOrImageComponent,
+    [ReferenceTypeEnum["Bullet list"]]: BulletListComponent,
   };
 
   const componentFunction = componentMappings[referenceType];
