@@ -150,9 +150,6 @@ query getPages($id: String!) {
           addBorder
           showBottomBorder
           header
-          body {
-            raw
-          }
           leftColumn {
             raw
             __typename
@@ -190,22 +187,6 @@ query getPages($id: String!) {
                   }
                 }
               }
-              ... on ContentfulAsset {
-                id
-                contentful_id
-                description
-                gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-                file {
-                  contentType
-                  details {
-                    size
-                  }
-                  url
-                }
-                sys {
-                  type
-                }
-              }
               ... on ContentfulMediaItem {
                 name
                 media {
@@ -228,34 +209,6 @@ query getPages($id: String!) {
                   raw
                 }
                 id
-              }
-              ... on ContentfulLink {
-                sys {
-                  contentType {
-                    sys {
-                      type
-                      id
-                    }
-                  }
-                }
-                linkLabel
-                name
-                externalUrl
-                internalContent {
-                  ... on ContentfulPage {
-                    id
-                    title
-                    slug
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                }
               }
             }
           }
