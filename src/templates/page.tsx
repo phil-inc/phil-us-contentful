@@ -1415,6 +1415,12 @@ query getPages($id: String!) {
             id
             name
           }
+          innerBackgroundStyling {
+            background
+            extraColor
+            id
+            name
+          }
           v2flag
           renderOptions {
             name

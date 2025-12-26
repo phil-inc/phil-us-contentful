@@ -209,6 +209,7 @@ export type IReferencedSection = {
   };
   leftBackgroundAssetImage?: TAsset;
   divColorOfBtnParent?: StylingOptions;
+  innerBackgroundStyling?: StylingOptions;
 };
 
 export type Reference = {

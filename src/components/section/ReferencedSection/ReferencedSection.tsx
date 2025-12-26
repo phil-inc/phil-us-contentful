@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "clsx";
-import { Button, Group, Anchor, Accordion, Text, Container, Divider, Grid, GridCol } from "@mantine/core";
+import { Button, Group, Anchor, Accordion, Text, Container, Divider, Box } from "@mantine/core";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {
@@ -213,9 +213,16 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               textColor={textColor}
               index={index}
             />
-          )}
+          )
+        }
 
-        <ReferencedSectionBody getSpan={getSpan} section={section}/>
+        <Box 
+          className={cx({[classes.innerSection]: Boolean(section?.innerBackgroundStyling)})}
+          style={{background: section?.innerBackgroundStyling?.background ? getColorFromStylingOptions(section.innerBackgroundStyling.background) : undefined}} 
+        >
+          <ReferencedSectionBody getSpan={getSpan} section={section}/>
+        </Box>
+
       </>
     );
   }
@@ -256,7 +263,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           />
          </div>
         }
-      {context.title === HOME &&
+        {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
           style={{ display: "flex", flexDirection: "column", gap: "20px" }}
