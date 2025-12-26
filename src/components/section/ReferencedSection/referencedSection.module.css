@@ -51,6 +51,10 @@
       }
 
   }
+
+  .innerSection{
+    padding: 0px 26px;
+  }
 }
 
 .chevron {

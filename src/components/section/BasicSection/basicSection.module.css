@@ -27,10 +27,24 @@
 	}
 }
 
+.darkText {
+	color: #000000;
+}
+.lightText {
+	color: #FFFFFF;
+}
+
 .header{
 	&[data-context='Solution'] {
 		font-size: 32px;
 		margin-bottom: 100px;
+		text-align: center;
+	}
+
+	&[data-context='Phil Direct'] {
+		color: #0A0A0A;
+		font-size: 40px;
+		margin-bottom: 50px;
 		text-align: center;
 	}
 }
@@ -141,6 +155,14 @@
 					height: auto;
 				}
 
+			}
+			&.imageAdjust[data-oneColumn='true']{
+				position: relative;
+				width: auto;
+				height: 100%;
+				top: auto;
+				transform: none;
+				right: 0;
 			}
 
 		}
@@ -270,6 +292,13 @@
 	&[data-context='Company'] {
 		margin-top: 40px;
 	}
+	&[data-context='Phil Direct'][data-is-bgcolor-light='true'] {
+		color: #000000;
+	}
+	
+	&[data-context='Phil Direct'][data-is-bgcolor-light='false'] {
+		color: var(--primary-white-color);
+	}	
 }
 
 .list {
@@ -293,6 +322,20 @@
 	}
 }
 
+.belowBodySection{
+	&[data-context='Phil Direct'] {
+		margin-top: 100px;
+		margin-bottom: 62px;
+		color: #525252;
+		font-family: Raleway;
+		font-weight: 700;
+		font-style: Bold;
+		font-size: 36px;
+
+	}
+
+}
+
 .heroGridColumn {
 	&[data-is-embed-form-template='true'] {
 		padding-left: 0px;
@@ -306,9 +349,11 @@
 	
 	&.hideDueToWallImage{
 		visibility: visible;
+		display: block;
 
 		@media (min-width: $phil-breakpoint-md) {
 			visibility: hidden;
+			display: none;
 		}
 	}
 }
@@ -378,6 +423,34 @@
 	&[data-is-video='true'] {
 		justify-content: start;
 	}
+}
+
+.assetCaption{
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  color: #525252;
+
+  .infoIcon{
+    display: flex;
+    align-items: center;
+  }
+  
+  @media screen and (min-width: $phil-breakpoint-sm) {
+    justify-content: start;
+    margin-top: 20px;
+  }
+
+  @media screen and (min-width: $phil-breakpoint-md) {
+    margin-left: 80px;
+  }
+  @media screen and (min-width: $phil-breakpoint-xl) {
+      justify-content: center;
+  }
 }
 
 #the-all-in-one-access-solution-for-retail-and-specialty-lite-success {

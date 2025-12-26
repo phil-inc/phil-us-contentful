@@ -41,3 +41,11 @@ export const CONTENTFUL_TYPES = {
 };
 
 export const TIME_ZONE_USA = "America/Los_Angeles";
+
+
+export const COLORS = {
+  DARK: "#0A0A0A",
+  LIGHT: "#FFFFFF",
+}
+
+export const LIGHT_COLOR_LIST = [COLORS.LIGHT]
