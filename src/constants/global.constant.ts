@@ -1,3 +1,4 @@
+import { Reference } from './../types/section';
 export const SCREEN_SIZES = {
   MOBILE: 480,
   TABLET: 768,
@@ -48,4 +49,11 @@ export const COLORS = {
   LIGHT: "#FFFFFF",
 }
 
-export const LIGHT_COLOR_LIST = [COLORS.LIGHT]
+export const LIGHT_COLOR_LIST = [COLORS.LIGHT];
+
+export const REFERENCE_SECTION = {
+  ONE: 1,
+  TWO: 2,
+  THREE: 3,
+  FOUR: 4,
+};

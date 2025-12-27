@@ -15,6 +15,7 @@ import { Link } from "gatsby";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import type { FC } from "react";
 import React, { useContext } from "react";
+import cx from 'clsx'
 import type { TResource } from "types/resource";
 import { getLink } from "utils/getLink";
 import Asset from "./Asset/Asset";
@@ -47,7 +48,7 @@ export const CCard: FC<ArticleProps> = ({
   metadata,
   arrayLength,
 }) => {
-  const { body, asset } = resource;
+  const { body, asset, subheading, description } = resource;
   const context = useContext(PageContext);
   const color = getColorFromStylingOptions(
     resource?.stylingOptions?.extraColor,
@@ -189,6 +190,19 @@ export const CCard: FC<ArticleProps> = ({
     },
   };
 
+  const isSubHeadingAndDescriptionPresent = Boolean(subheading) && Boolean(description?.description);
+  
+  const SmallCardComponent = () => (
+    <div className={classes.smallCard}>
+      <Text className={classes.subheading}>
+        {subheading}
+      </Text>
+      <Text className={classes.description}>
+        {description.description}
+      </Text>
+    </div>
+  );
+
   // TODO: handle any
   let media: any = asset;
   if (resource?.media) {
@@ -234,7 +248,7 @@ export const CCard: FC<ArticleProps> = ({
         data-has-asset={Boolean(media)}
       ></Box>
       <Paper
-        className={classes.paper}
+        className={cx(classes.paper,{[classes.smallPaper]: isSubHeadingAndDescriptionPresent})}
         style={{
           background: getColorFromStylingOptions(
             resource?.stylingOptions?.background,
@@ -316,6 +330,10 @@ export const CCard: FC<ArticleProps> = ({
                       {item.heading}
                     </Badge>
                   ))
+                }
+
+                {isSubHeadingAndDescriptionPresent && 
+                  <SmallCardComponent />
                 }
 
               {body && renderRichText(body, options)}

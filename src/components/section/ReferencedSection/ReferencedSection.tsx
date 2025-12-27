@@ -6,6 +6,7 @@ import { Link } from "gatsby";
 import {
   type IReferencedSection,
   ReferenceTypeEnum,
+  RenderOptions,
   ResourceBlocksEnum,
 } from "types/section";
 import { getLink } from "utils/getLink";
@@ -24,8 +25,11 @@ import * as classes from "./referencedSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 import Asset from "components/common/Asset/Asset";
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
+import CommonReferencedSectionBody from "components/section/ReferencedSection/CommonReferencedSectionBody/CommonReferencedSectionBody";
 
 import { useIsSmallDevice } from "hooks/useIsSmallDevice";
+
+import { REFERENCE_SECTION } from "constants/global.constant";
 
 type ReferencedSectionProps = {
   section: IReferencedSection;
@@ -217,10 +221,45 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         }
 
         <Box 
-          className={cx({[classes.innerSection]: Boolean(section?.innerBackgroundStyling)})}
+          className={cx({[classes.innerBgSection]: Boolean(section?.innerBackgroundStyling)})}
           style={{background: section?.innerBackgroundStyling?.background ? getColorFromStylingOptions(section.innerBackgroundStyling.background) : undefined}} 
         >
           <ReferencedSectionBody getSpan={getSpan} section={section}/>
+
+          {/* New references section */}
+          { Boolean(section?.referenceSecond) && Boolean(section?.secondReferenceType) && Boolean(section?.referenceSecondRenderOptions) &&
+            <CommonReferencedSectionBody 
+              header={section.header  }
+              references={section.referenceSecond ?? []}
+              referenceType={section.secondReferenceType as ReferenceTypeEnum | ResourceBlocksEnum}
+              renderOptions={section.referenceSecondRenderOptions as RenderOptions}
+              v2flag={section.v2flag}
+              getSpan={getSpan}
+              order={REFERENCE_SECTION.TWO}
+            />
+          }
+          { Boolean(section?.referenceThird) && Boolean(section?.thirdReferenceType) && Boolean(section?.referenceThirdRenderOptions) &&
+            <CommonReferencedSectionBody 
+              header={section.header  }
+              references={section.referenceThird ?? []}
+              referenceType={section.thirdReferenceType as ReferenceTypeEnum | ResourceBlocksEnum}
+              renderOptions={section.referenceThirdRenderOptions as RenderOptions}
+              v2flag={section.v2flag}
+              getSpan={getSpan}
+              order={REFERENCE_SECTION.TWO}
+            />
+          }
+          { Boolean(section?.referenceFourth) && Boolean(section?.fourthReferenceType) && Boolean(section?.referenceFourthRenderOptions) &&
+            <CommonReferencedSectionBody 
+              header={section.header  }
+              references={section.referenceFourth ?? []}
+              referenceType={section.fourthReferenceType as ReferenceTypeEnum | ResourceBlocksEnum}
+              renderOptions={section.referenceFourthRenderOptions as RenderOptions}
+              v2flag={section.v2flag}
+              getSpan={getSpan}
+              order={REFERENCE_SECTION.TWO}
+            />
+          }
         </Box>
 
       </>

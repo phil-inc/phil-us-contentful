@@ -16,6 +16,13 @@
   --transition-button-bg: outline 0.3s ease-out, background-color 0.3s ease, color 0.3s ease;
 }
 
+.darkText {
+	color: #000000;
+}
+.lightText {
+	color: var(--primay-white-color);
+}
+
   .home{
     .phil-Carousel-slide{
       --carousel-slide-size: calc(100% - var(--carousel-slide-gap));

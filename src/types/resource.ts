@@ -97,6 +97,7 @@ export type TResource = {
   isImageObjectContain?: boolean;
   publishDate?: string;
   canShowImageOnly?: boolean;
+  isFirstItem?: boolean;
 };
 
 export type DownloadableAsset = {

@@ -1,0 +1,67 @@
+.singleMetricCard {
+  display: flex;
+  align-items: center;
+
+  .paper {
+    border-radius: 70px;
+    padding: 12px 25px 12px 25px;
+    height: 100%;
+    width: 100%;
+
+    .content {
+      display: flex;
+      gap: 20px;
+      height: 100%;
+      width: 100%;
+
+      .icon {
+        display: flex;
+        align-items: center;
+      }
+
+      .titleContainer {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .title {
+          font-weight: 700;
+          font-size: 24px;
+          font-family: Lato;
+          color: #00827e;
+        }
+
+        .subheading {
+          font-family: Lato;
+          font-weight: 400;
+          font-size: 16px;
+          color: #005a57;
+        }
+      }
+
+      .paragraph {
+        font-family: Lato;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+        color: #005a57;
+      }
+    }
+
+    &.firstItem {
+      border-radius: 20px;
+      padding: 10px 10px 10px 15px;
+      border: 3px solid #e6f4f4;
+
+      .content {
+        gap: 10px;
+
+        .titleContainer {
+          .title {
+            font-size: 19px;
+          }
+        }
+      }
+    }
+  }
+}

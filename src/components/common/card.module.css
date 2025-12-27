@@ -15,8 +15,16 @@
 		width: 100%;
 	}
 
+	&.smallPaper{
+		padding: 0px 0px 0px 16px;
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 64px 32px;
+
+		&.smallPaper{
+			padding: 0px 0px 0px 16px;
+		}
 	}
 }
 
@@ -164,6 +172,23 @@
 .heading3 {
 	&[data-context='Field'] {
 		font-size: 24px;
+	}
+}
+
+.smallCard{
+	.subheading{
+		font-family: Lato;
+		font-weight: 700;
+		font-style: Bold;
+		font-size: 28px;
+		color: #005A57;
+	}
+
+	.description{
+		font-family: Lato;
+		font-weight: 400;
+		font-size: 16px;
+		color: #005A57;
 	}
 }
 

@@ -143,6 +143,8 @@ export enum ReferenceTypeEnum {
   "People Behind Phil" = "People Behind Phil",
   "Card Or Image" = "Card Or Image",
   "Bullet list" = "Bullet list",
+  "Metric card" = "Metric card",
+  "Single line Metric card" = "Single line Metric card",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
@@ -210,6 +212,15 @@ export type IReferencedSection = {
   leftBackgroundAssetImage?: TAsset;
   divColorOfBtnParent?: StylingOptions;
   innerBackgroundStyling?: StylingOptions;
+  referenceSecond?: TResource[];  
+  secondReferenceType?: ReferenceType;
+  referenceSecondRenderOptions?: RenderOptions;
+  referenceThird?: TResource[];  
+  thirdReferenceType?: ReferenceType;
+  referenceThirdRenderOptions?: RenderOptions;
+  referenceFourth?: TResource[];  
+  fourthReferenceType?: ReferenceType;
+  referenceFourthRenderOptions?: RenderOptions;
 };
 
 export type Reference = {

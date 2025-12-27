@@ -34,6 +34,8 @@ import { FeaturedInsights } from "components/FeaturedInsights/FeaturedInsights";
 import { PhilPeople } from "components/common/PhilPeople/PhilPeople";
 import CardOrImage from "components/common/CardOrImage/CardOrImage";
 import BulletList from "components/BulletList/BulletList";
+import MetricCard from "components/common/MetricCardComponent/MetricCardComponent";
+import SingleLineMetricCard from "components/common/SingleLineMetricCard/SingleLineMetricCard";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -235,6 +237,12 @@ const CardOrImageComponent: ComponentFunction = ({ resource,index }) => (
 const BulletListComponent: ComponentFunction = ({ resource,index }) => (
   <BulletList resource={resource} index={index ?? 0}/>
 );
+const MetricCardComponent: ComponentFunction = ({ resource,index }) => (
+  <MetricCard resource={resource} index={index ?? 0}/>
+);
+const SingleLineMetricCardComponent: ComponentFunction = ({ resource,index }) => (
+  <SingleLineMetricCard resource={resource} index={index ?? 0}/>
+);
 
 const getComponent = (
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum,
@@ -284,6 +292,8 @@ const getComponent = (
     [ReferenceTypeEnum["People Behind Phil"]]: PeopleBehindPhilComponent,
     [ReferenceTypeEnum["Card Or Image"]]: CardOrImageComponent,
     [ReferenceTypeEnum["Bullet list"]]: BulletListComponent,
+    [ReferenceTypeEnum["Metric card"]]: MetricCardComponent,
+    [ReferenceTypeEnum["Single line Metric card"]]: SingleLineMetricCardComponent,
   };
 
   const componentFunction = componentMappings[referenceType];

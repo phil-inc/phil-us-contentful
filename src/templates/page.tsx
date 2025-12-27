@@ -1395,6 +1395,410 @@ query getPages($id: String!) {
             id
             name
           }
+          referenceSecond {
+            __typename
+            ... on ContentfulResource {
+              id
+              isFaq
+              isImageObjectContain
+              externalLink
+              internalLink {
+                ... on ContentfulPage {
+                  slug
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+              buttonText
+              hyperlink {
+                contentful_id
+                id
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  ... on ContentfulPage {
+                    __typename
+                    slug
+                    id
+                    title
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              heading
+              subheading
+              hubspotEmbed {
+                raw
+              }
+              isHubspotEmbed
+              isInsertSnippet
+              codeSnippet {
+                codeSnippet
+              }
+              description {
+                id
+                description
+              }
+              icon {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              body {
+                raw
+              }
+              asset {
+                gatsbyImageData(
+                  placeholder: BLURRED
+                  layout: FULL_WIDTH
+                  resizingBehavior: FILL
+                )
+                id
+                file {
+                  contentType
+                  url
+                }
+              }
+              stylingOptions {
+                background
+                extraColor
+                id
+                name
+              }
+              media {
+                name
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                youtubeLink
+                embedCode {
+                  raw
+                }
+                id
+              }
+              canShowImageOnly
+              isFirstItem
+            }
+          }
+          referenceSecondRenderOptions {
+            name
+            id
+            layoutOptions {
+              id
+              name
+              numberOfColumns
+              shouldRenderCarousel
+            }
+          }
+          secondReferenceType
+
+          referenceThird {
+            __typename
+            ... on ContentfulResource {
+              id
+              isFaq
+              isImageObjectContain
+              externalLink
+              internalLink {
+                ... on ContentfulPage {
+                  slug
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+              buttonText
+              hyperlink {
+                contentful_id
+                id
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  ... on ContentfulPage {
+                    __typename
+                    slug
+                    id
+                    title
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              heading
+              subheading
+              hubspotEmbed {
+                raw
+              }
+              isHubspotEmbed
+              isInsertSnippet
+              codeSnippet {
+                codeSnippet
+              }
+              description {
+                id
+                description
+              }
+              icon {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              body {
+                raw
+              }
+              asset {
+                gatsbyImageData(
+                  placeholder: BLURRED
+                  layout: FULL_WIDTH
+                  resizingBehavior: FILL
+                )
+                id
+                file {
+                  contentType
+                  url
+                }
+              }
+              stylingOptions {
+                background
+                extraColor
+                id
+                name
+              }
+              media {
+                name
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                youtubeLink
+                embedCode {
+                  raw
+                }
+                id
+              }
+              canShowImageOnly
+              isFirstItem
+            }
+          }
+          referenceThirdRenderOptions {
+            name
+            id
+            layoutOptions {
+              id
+              name
+              numberOfColumns
+              shouldRenderCarousel
+            }
+          }
+          thirdReferenceType
+
+          referenceFourth {
+            __typename
+            ... on ContentfulResource {
+              id
+              isFaq
+              isImageObjectContain
+              externalLink
+              internalLink {
+                ... on ContentfulPage {
+                  slug
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+              buttonText
+              hyperlink {
+                contentful_id
+                id
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  ... on ContentfulPage {
+                    __typename
+                    slug
+                    id
+                    title
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              heading
+              subheading
+              hubspotEmbed {
+                raw
+              }
+              isHubspotEmbed
+              isInsertSnippet
+              codeSnippet {
+                codeSnippet
+              }
+              description {
+                id
+                description
+              }
+              icon {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              body {
+                raw
+              }
+              asset {
+                gatsbyImageData(
+                  placeholder: BLURRED
+                  layout: FULL_WIDTH
+                  resizingBehavior: FILL
+                )
+                id
+                file {
+                  contentType
+                  url
+                }
+              }
+              stylingOptions {
+                background
+                extraColor
+                id
+                name
+              }
+              media {
+                name
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                youtubeLink
+                embedCode {
+                  raw
+                }
+                id
+              }
+              canShowImageOnly
+              isFirstItem
+            }
+          }
+          referenceFourthRenderOptions {
+            name
+            id
+            layoutOptions {
+              id
+              name
+              numberOfColumns
+              shouldRenderCarousel
+            }
+          }
+          fourthReferenceType
         }
       }
     }
