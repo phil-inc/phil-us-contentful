@@ -323,7 +323,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     textColumnOrder = ORDER_SECOND;
     imageColumnOrder = ORDER_FIRST;
   }
-  
+
   const isHeroSection = index === HERO_SECTION_INDEX;
   const titleOrdering = isHeroSection ? HEADING_FIRST : HEADING_SECOND;
   const ref = React.useRef();
@@ -509,7 +509,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           {/* TODO:: Handle in css */}
           {/* TODO: Refactor v2Flags and links */}
           {/* {((section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) && !isImageAlignToWall) && */}
-          {((section.embedForm  || mediaItemOrAsset || youtubeVideoUrl)) &&
+          {(section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) &&
           <Grid.Col
             className={cx(classes.heroGridColumn, classes.embedFormTemplate, {[classes.hideDueToWallImage]: isImageAlignToWall})}
             ref={heroRef}

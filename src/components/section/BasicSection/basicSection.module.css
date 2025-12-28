@@ -349,11 +349,9 @@
 	
 	&.hideDueToWallImage{
 		visibility: visible;
-		display: block;
 
 		@media (min-width: $phil-breakpoint-md) {
 			visibility: hidden;
-			display: none;
 		}
 	}
 }
