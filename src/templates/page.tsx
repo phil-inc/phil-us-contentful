@@ -230,6 +230,8 @@ query getPages($id: String!) {
                 subheading
                 choose
                 anchorLink
+                linkText
+                listType
               }
               ... on ContentfulResource {
                 sys {
@@ -302,6 +304,7 @@ query getPages($id: String!) {
           addBorder
           showBottomBorder
           youtubeVideoUrl
+          eyebrowHeading
           body {
             raw
             references {
@@ -448,6 +451,9 @@ query getPages($id: String!) {
               }
             }
           }
+          headerDescription {
+            headerDescription
+          }
           subHeader {
             subHeader
           }
@@ -570,6 +576,7 @@ query getPages($id: String!) {
           isHidden
           hideNavigationAnchor
           addBorder
+          eyebrowHeading
           topAsset {
             gatsbyImageData(
               resizingBehavior: SCALE
@@ -1267,6 +1274,7 @@ query getPages($id: String!) {
                 raw
               }
               id
+              canShowMediaWidthFull
             }
             ... on ContentfulReferencedSection {
               id
@@ -1516,6 +1524,46 @@ query getPages($id: String!) {
               }
               canShowImageOnly
               isFirstItem
+            }
+            ... on ContentfulMediaItem {
+              metadata {
+                tags {
+                  name
+                  id
+                }
+              }
+              sys {
+                contentType {
+                  sys {
+                    id
+                    type
+                  }
+                }
+              }
+              contentful_id
+              name
+              name
+              media {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              youtubeLink
+              embedCode {
+                raw
+              }
+              id
+              canShowMediaWidthFull
             }
           }
           referenceSecondRenderOptions {

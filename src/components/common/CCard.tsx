@@ -48,7 +48,7 @@ export const CCard: FC<ArticleProps> = ({
   metadata,
   arrayLength,
 }) => {
-  const { body, asset, subheading, description } = resource;
+  const { body, asset, subheading, description, canShowMediaWidthFull } = resource;
   const context = useContext(PageContext);
   const color = getColorFromStylingOptions(
     resource?.stylingOptions?.extraColor,
@@ -192,6 +192,11 @@ export const CCard: FC<ArticleProps> = ({
 
   const isSubHeadingAndDescriptionPresent = Boolean(subheading) && Boolean(description?.description);
   
+  const getMaxWidthForMedia = () => {
+    if(canShowMediaWidthFull) return "100%";
+    return (context.title === COMPANY_PAGE && arrayLength === 9) ? 300 : 900;
+  }
+  
   const SmallCardComponent = () => (
     <div className={classes.smallCard}>
       <Text className={classes.subheading}>
@@ -224,7 +229,7 @@ export const CCard: FC<ArticleProps> = ({
           }
           fluid
           contain
-          maw={context.title === COMPANY_PAGE && arrayLength === 9 ? 300 : 900}
+          maw={getMaxWidthForMedia()}
           ratio={16 / 9}
           data-media-item={true}
         >

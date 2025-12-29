@@ -28,6 +28,8 @@ import {WHY_BRANDS_WIN_WITH_PHILRX } from "constants/identifiers";
 
 import Asset from "components/common/Asset/Asset";
 
+import { CONTENTFUL_TYPES } from "constants/global.constant";
+
 interface CheckIconProps {
   size: number;
   color: string;
@@ -74,6 +76,13 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
 
   const options: Options = {
     renderNode: {
+       [BLOCKS.HR]: () => {
+          return (
+            <div className={classes.hrContainer}>
+              <hr className={classes.hr}/>
+            </div>
+          );
+        },
       [BLOCKS.HEADING_6](node, children) {
         return (
           <Title className={classes.leftColumnTitle}>
@@ -251,35 +260,63 @@ const renderRightColumn = (column: any, context: any) => {
 
       <div>
         {column.references?.map((item: any, index :any) => {
-          
-          return (
-            <Flex gap={8} key={item.id} className={classes.listCheckIcon}>
-              {!item.choose && <CheckIcon size={28} color="#00827E" />}
-              <div className={cx(item.choose && classes.border, !item.subheading && classes.noSubHeadingChooseBox)}>
-                {
-                  !item.subheading ? (
-                    <a 
-                    href={item?.anchorLink ?? ''}
-                      style={{ textDecoration: "none" }}>
-                       <Text data-context={context.title} 
-                        className={item.subheading ? classes.heading : classes.noSubHeading}>
-                        {item.heading}
-                      </Text>
-                    </a>
-                  ): (
-                    <>
-                    <Text data-context={context.title} 
-                      className={item.subheading ? classes.heading : classes.noSubHeading}>
-                      {item.heading}
-                    </Text>
-                    <Text className={classes.subheading}>
-                      {item.subheading}
-                    </Text>
-                  </>
-                )}
-              </div>
-            </Flex>
-          );
+          console.log(item,"item",item?.__typename,CONTENTFUL_TYPES.LIST);
+
+          if(item?.__typename === CONTENTFUL_TYPES.LIST){
+            switch (item.listType) {
+              case 'Menu list':
+                return (
+                  <Flex gap={8} key={item.id} className={classes.listCheckIcon}>
+                    {!item.choose && <CheckIcon size={28} color="#00827E" />}
+                    <div className={cx(item.choose && classes.border, !item.subheading && classes.noSubHeadingChooseBox)}>
+                        <a 
+                        href={item?.anchorLink ?? ''}
+                          style={{ textDecoration: "none" }}>
+                          <Text data-context={context.title} 
+                            className={item.subheading ? classes.heading : classes.noSubHeading}>
+                            {item.heading}
+                          </Text>
+                        </a>
+                    </div>
+                  </Flex>
+                );
+            
+              case 'Feature list':
+                return (
+                  <Box key={item.id} className={classes.listCheckIcon}>
+                    <Flex gap={8}>
+                      {!item.choose && <CheckIcon size={28} color="#00827E" />}
+                      <div className={cx(item.choose && classes.border, !item.subheading && classes.noSubHeadingChooseBox)}>
+                        <Text data-context={context.title} 
+                          className={item.subheading ? classes.heading : classes.noSubHeading}>
+                          {item.heading}
+                        </Text>
+                        <Text className={classes.subheading}>
+                          {item.subheading}
+                        </Text>
+                      </div>
+                    </Flex>
+                    {item.linkText && 
+                      <div className={cx(classes.featureListLinkContainer)}>
+                        <Anchor
+                          className={classes.featureListAnchor}
+                          href={item?.anchorLink ?? ''}
+                        >
+                        <div className={cx("anchor-text",classes.textwrapper)} data-context={context.title}>
+                            {item.linkText}<IconArrowRight size={16} />
+                          </div>
+                        </Anchor>
+                      </div>
+                    }
+                  </Box>
+                );
+
+              default:
+                return <></>;
+
+            }
+          }
+          else return <></>;
         })}
       </div>
     </div>

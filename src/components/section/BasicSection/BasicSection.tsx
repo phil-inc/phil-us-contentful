@@ -43,6 +43,7 @@ import { getColorFromStylingOptions } from "utils/stylingOptions";
 import useDeviceType from "hooks/useView";
 import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 import { extractAssetData } from "utils/asset";
+import { getIdSlugifyForDiv } from "utils/utils";
 
 import { BUTTON_STYLE, COLORS, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
 
@@ -412,11 +413,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     <>
    {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
 
-    <Box style={{
-      background: section.v2Flag
-        ? getColorFromStylingOptions(section.stylingOptions?.background)
-        : sectionBackground(section.background),
-      }} className={cx(classes.basicSectionMainContainer, section.slug)}
+    <Box 
+      id={getIdSlugifyForDiv(section?.eyebrowHeading || "")}
+      style={{
+        background: section.v2Flag
+          ? getColorFromStylingOptions(section.stylingOptions?.background)
+          : sectionBackground(section?.background as BackgroundType),
+        }} 
+      className={cx(classes.basicSectionMainContainer, section.slug, classes.scrollSection)}
     >
       <>
       {section?.backgroundAssetImage && 
@@ -439,7 +443,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
     >
+
+      {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title}>{section.eyebrowHeading}</Text>}
       {section?.canShowHeader && <Title className={classes.header} data-context={context.title}>{section.header}</Title>}
+      {section?.headerDescription?.headerDescription && <Text className={classes.headerDescription} data-context={context.title}>{section.headerDescription.headerDescription}</Text>}
       <div className={classes.containSection}>
         <Grid
           align={

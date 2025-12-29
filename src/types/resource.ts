@@ -98,6 +98,7 @@ export type TResource = {
   publishDate?: string;
   canShowImageOnly?: boolean;
   isFirstItem?: boolean;
+  canShowMediaWidthFull?: boolean; // this is in the media item not in resource directly
 };
 
 export type DownloadableAsset = {

@@ -21,9 +21,9 @@
       }
     }
   }
-  &[data-order="2"],
-  &[data-order="3"],
-  &[data-order="4"] {
+  &[data-context="Phil Direct"][data-order="2"],
+  &[data-context="Phil Direct"][data-order="3"],
+  &[data-context="Phil Direct"][data-order="4"] {
     margin-top: 40px;
   }
 }

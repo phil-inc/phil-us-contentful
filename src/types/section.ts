@@ -18,6 +18,7 @@ export type MediaItem = {
   media?: TAsset;
   youtubeLink?: string;
   emdedForm?: BodyType;
+  canShowMediaWidthFull?: boolean;
 };
 
 export type StylingOptions = {
@@ -100,6 +101,10 @@ export type ISection = {
   canShowTextColumnToRight?: boolean;
   assetForMobile?: TAsset;
   assetCaption?: string;
+  eyebrowHeading?: string;
+  headerDescription?: { 
+    headerDescription: string 
+  }
 };
 
 export enum ResourceBlocksEnum {
@@ -221,6 +226,7 @@ export type IReferencedSection = {
   referenceFourth?: TResource[];  
   fourthReferenceType?: ReferenceType;
   referenceFourthRenderOptions?: RenderOptions;
+  eyebrowHeading?: string;
 };
 
 export type Reference = {

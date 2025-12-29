@@ -1,6 +1,7 @@
 import React from "react";
 import cx from "clsx";
 import { Button, Group, Anchor, Accordion, Text, Container, Divider, Box } from "@mantine/core";
+import { IconArrowRight } from "@tabler/icons";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {
@@ -14,6 +15,7 @@ import slugify from "slugify";
 import { getWindowProperty } from "utils/getWindowProperty";
 import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
+import { getIdSlugifyForDiv } from "utils/utils";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
 import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE,OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
@@ -220,6 +222,31 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           )
         }
 
+
+        {/* TODO: if possible use the contentful here */}
+        {section?.eyebrowHeading === "DIGITAL HUB" && (
+          <div className={classes.extraLinkContainer}>
+            <Anchor
+              className={classes.greenAnchor}
+              href={"https://phil.us/patients/"}
+            >
+              <div className={`anchor-text ${classes.leftColumnLink}`}>
+                {"Explore Patient Experience"}
+                <IconArrowRight size={16} />
+              </div>
+            </Anchor>
+            <Anchor
+              className={classes.greenAnchor}
+              href={"https://phil.us/providers/#sending-a-script-to-philrx-is-easy"}
+            >
+              <div className={`anchor-text ${classes.leftColumnLink}`}>
+                {"Explore HCP Experience"}
+                <IconArrowRight size={16} />
+              </div>
+            </Anchor>
+          </div>
+        )}
+
         <Box 
           className={cx({[classes.innerBgSection]: Boolean(section?.innerBackgroundStyling)})}
           style={{background: section?.innerBackgroundStyling?.background ? getColorFromStylingOptions(section.innerBackgroundStyling.background) : undefined}} 
@@ -270,7 +297,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     <>
       {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     <Expanded
-      id={slugify(section.header ?? section.id, { lower: true, strict: true })}
+      id={getIdSlugifyForDiv(section?.eyebrowHeading || "")}
       background={
         section.v2flag
           ? getColorFromStylingOptions(section?.stylingOptions?.background)
@@ -289,11 +316,18 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       data-referenceType={section.referenceType}
       pt={section.header?.length > 0 ? undefined : 0}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
+      className = {classes.scrollSection}
     >
       <Container 
+        id={slugify(section.header ?? section.id, { lower: true, strict: true })}
         className={cx(classes.container, classes.innerContainer, {[classes.topPaddingWithoutHeader]: (!section.header?.length) && section.referenceType === ReferenceTypeEnum["Card Or Image"] && context.title === PAGES_TITLE.SOLUTION_MAIN})} 
         size={"xl"}
       >
+        {section?.eyebrowHeading && (
+          <Text className={classes.eyebrowHeading} data-context={context.title}>
+            {section.eyebrowHeading}
+          </Text>
+        )}
         {topImage &&
         <div className={classes.topImage}>
           <Asset

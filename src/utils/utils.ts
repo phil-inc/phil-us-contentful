@@ -13,4 +13,9 @@ export type ISectionsArray = Array<ISection | IReferencedSection>;
     };
   };
 
+ export const getIdSlugifyForDiv = (str: string): string => {
+  if (str === undefined || str === null || str === "") return "";
+  return str.toLowerCase().replace(/\s+/g, '-');
+};
+
 

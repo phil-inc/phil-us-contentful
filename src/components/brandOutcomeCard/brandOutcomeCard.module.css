@@ -42,7 +42,7 @@
 
 	}
 
-	&[data-context='Solution'] {
+	&[data-context='Solution'], &[data-context='Our Solution'] {
 		color: var(--primary-green-color, #00827E);
 	}
 }
