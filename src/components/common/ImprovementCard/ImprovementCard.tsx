@@ -23,8 +23,6 @@ const ImprovementCard: React.FC<ImprovementCardProps> = ({
     ? toDecimal(numericValue).gt(1) 
     : null;
   
-  console.log(isBeneficial, numericValue);
-
   return (
     <article className={classes.improvementCard}>
       <div className={classes.title}>{title}</div>

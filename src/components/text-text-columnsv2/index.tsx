@@ -260,8 +260,6 @@ const renderRightColumn = (column: any, context: any) => {
 
       <div>
         {column.references?.map((item: any, index :any) => {
-          console.log(item,"item",item?.__typename,CONTENTFUL_TYPES.LIST);
-
           if(item?.__typename === CONTENTFUL_TYPES.LIST){
             switch (item.listType) {
               case 'Menu list':
