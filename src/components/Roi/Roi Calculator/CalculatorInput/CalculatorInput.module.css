@@ -23,6 +23,12 @@
         }
     }
 
+    .disclaimerLink{
+        color: var(--mantine-color-anchor);
+          text-decoration: none;
+          font-weight: 700;
+    }
+
     .sliderContainer {
         margin-bottom: 32px;
     }

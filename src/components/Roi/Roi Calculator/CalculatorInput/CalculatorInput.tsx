@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Stack } from "@mantine/core";
+import { Anchor, Stack } from "@mantine/core";
 
 import { ROI_INPUT_CONFIG } from "constants/roi.constant";
 import { DISCLAIMER_ROI_TEXT } from "constants/identifiers";
@@ -56,7 +56,8 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: ROI_INPUT_CONFIG.nRx.max.toString(),
           },
         ],
-        tooltipMsg: "Manufacturers often estimate this using dispensed NRx from IQVIA. Alternatively, if you have estimates of New Patients, that also works. ",
+        tooltipMsg:
+"Manufacturers often estimate this using dispensed NRx from IQVIA. Alternatively, if you have estimates of New Patients, that also works. ",
       },
       {
         keyName: "wac",
@@ -78,7 +79,8 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInDollar(ROI_INPUT_CONFIG.wac.max),
           },
         ],
-        tooltipMsg: "30-DoS is the standard used for this calculator, but we can customize our estimates to your brand's most common days-of-supply. Get in touch for more.",
+        tooltipMsg:
+          "30-DoS is the standard used for this calculator, but we can customize our estimates to your brand's most common days-of-supply. Get in touch for more.",
       },
       {
         keyName: "paSubmissionRate",
@@ -100,8 +102,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInPercent(ROI_INPUT_CONFIG.paSubmissionRate.max),
           },
         ],
-        tooltipMsg:
-          "Of all PAs required, how many typically get submitted?",
+        tooltipMsg: "Of all PAs required, how many typically get submitted?",
       },
       {
         keyName: "inputAverageRefillsPerNRx",
@@ -109,7 +110,8 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.inputAverageRefillsPerNRx,
         actulValueInString: getInX(roiInputs.inputAverageRefillsPerNRx),
-        changeValue: (v: number) => handleChange("inputAverageRefillsPerNRx", v),
+        changeValue: (v: number) =>
+          handleChange("inputAverageRefillsPerNRx", v),
         min: ROI_INPUT_CONFIG.averageRefillsPerNRx.min,
         max: ROI_INPUT_CONFIG.averageRefillsPerNRx.max,
         step: ROI_INPUT_CONFIG.averageRefillsPerNRx.increment,
@@ -123,26 +125,34 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInX(ROI_INPUT_CONFIG.averageRefillsPerNRx.max),
           },
         ],
-        tooltipMsg: "Manufacturers often estimate this by taking TRx volumes divided by dispensed NRx volumes minus one (TRx/NRx-1)",
+        tooltipMsg:
+          "Manufacturers often estimate this by taking TRx volumes divided by dispensed NRx volumes minus one (TRx/NRx-1)",
       },
       {
         keyName: "commerciallyInsuredPercentage",
         title: "How Many Patients are Commercially Insured?",
         type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.commerciallyInsuredPercentage,
-        actulValueInString: getInPercent(roiInputs.commerciallyInsuredPercentage),
-        changeValue: (v: number) => handleChange("commerciallyInsuredPercentage", v),
+        actulValueInString: getInPercent(
+          roiInputs.commerciallyInsuredPercentage,
+        ),
+        changeValue: (v: number) =>
+          handleChange("commerciallyInsuredPercentage", v),
         min: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.min,
         max: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max,
         step: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.increment,
         marks: [
           {
             value: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.min,
-            label: getInPercent(ROI_INPUT_CONFIG.commerciallyInsuredPercentage.min),
+            label: getInPercent(
+              ROI_INPUT_CONFIG.commerciallyInsuredPercentage.min,
+            ),
           },
           {
             value: ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max,
-            label: getInPercent(ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max),
+            label: getInPercent(
+              ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max,
+            ),
           },
         ],
         tooltipMsg: "Manufacturers often obtain this through IQVIA data",
@@ -154,7 +164,8 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveHubService,
         changeValue: (v: boolean) => handleChange("haveHubService", v),
-        tooltipMsg: "This could include other digital hub providers, digital pharmacies, and/or direct-to-patient solutions",
+        tooltipMsg:
+          "This could include other digital hub providers, digital pharmacies, and/or direct-to-patient solutions",
       },
       {
         keyName: "haveCoverCouponOffer",
@@ -166,7 +177,8 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
       },
       {
         keyName: "haveUncoverCouponOffer",
-        title: "Do You Offer a Cash Price when Patient is Not Covered by Insurance?",
+        title:
+          "Do You Offer a Cash Price when Patient is Not Covered by Insurance?",
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveUncoverCouponOffer,
         changeValue: (v: boolean) => handleChange("haveUncoverCouponOffer", v),
@@ -183,7 +195,17 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
           <span className={classes.icon}>
             <InfoCircleIcon size={18} />
           </span>
-          <div>{DISCLAIMER_ROI_TEXT}</div>
+          <div>
+            {DISCLAIMER_ROI_TEXT}
+            <Anchor
+              href="/contact"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.disclaimerLink}
+            >
+              here. 
+            </Anchor>
+          </div>
         </div>
       )}
 

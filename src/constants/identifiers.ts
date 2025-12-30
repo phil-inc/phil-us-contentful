@@ -15,4 +15,4 @@ export const WHY_BRANDS_WIN_WITH_PHILRX = "Why Brands Win with PhilRx";
 
 export const AN_ALL_IN_ONE_ACCESS_SOLUTION = "An All-in-One Access Solution";
 
-export const DISCLAIMER_ROI_TEXT = "Displayed metrics reflect a standard PHIL program benchmarks vs. traditional channels. Adjust the sliders to model outcomes for your specific brand.";
+export const DISCLAIMER_ROI_TEXT = "Displayed metrics benchmark a standard PHIL program vs. traditional access channels. For a more detailed performance estimate, please get in touch ";
