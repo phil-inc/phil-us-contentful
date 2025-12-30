@@ -145,7 +145,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInPercent(ROI_INPUT_CONFIG.commerciallyInsuredPercentage.max),
           },
         ],
-        tooltipMsg: "Manfuacturers often obtain this through IQVIA data",
+        tooltipMsg: "Manufacturers often obtain this through IQVIA data",
       },
       //---switches
       {
