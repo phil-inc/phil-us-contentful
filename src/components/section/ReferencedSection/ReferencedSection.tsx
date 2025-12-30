@@ -33,8 +33,6 @@ import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
 import { REFERENCE_SECTION } from "constants/global.constant";
 
-import Asset from "components/common/Asset/Asset";
-
 type ReferencedSectionProps = {
   section: IReferencedSection;
   isEmbedFormTemplate: boolean;

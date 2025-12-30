@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ContentfulPage } from "types/page";
 import cx from "clsx";
-import { Link } from "gatsby";
+import { Link, navigate } from "gatsby";
 import { Badge } from "@mantine/core";
 
 import * as classes from "./navigation.module.css";
