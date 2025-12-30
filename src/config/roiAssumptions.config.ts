@@ -166,11 +166,11 @@ export class RoiAssumptions {
     const range = getWACRange(this.inputs.wac);
     switch (range as WACRange) {
       case "tierOne":
-        return toDecimal(0);
+        return toDecimal(0.1); // 10%
       case "tierTwo":
-        return toDecimal(0.4); // 40%
+        return toDecimal(0.2); // 20%
       case "tierThree":
-        return toDecimal(0.6); // 60%
+        return toDecimal(0.3); // 30%
     }
   }
 

@@ -103,9 +103,10 @@ export class RoiFinalCalculations {
 
     // Covered buydown
     if (this.haveCoverCouponOffer) {
-      const avgCoveredCopay = this.assumptions.getAverageCoveredCopay();
+      // const avgCoveredCopay = this.assumptions.getAverageCoveredCopay();
       const coveredBuydownRate = this.assumptions.getCoveredBuydown();
-      this.buydownCovered = avgCoveredCopay.mul(coveredBuydownRate).mul(coveredTRx);
+      this.buydownCovered = this.inputs.wac.mul(coveredBuydownRate).mul(coveredTRx).mul(this.inputs.commerciallyInsuredPercentage);
+      // this.buydownCovered = avgCoveredCopay.mul(coveredBuydownRate).mul(coveredTRx);
     } else {
       this.buydownCovered = toDecimal(0);
     }
@@ -113,7 +114,7 @@ export class RoiFinalCalculations {
     // Uncovered buydown
     if (this.haveUncoverCouponOffer) {
       const uncoveredBuydown = this.assumptions.getUncoveredBuydown();
-      this.buydownUncovered = this.inputs.wac.sub(uncoveredBuydown).mul(uncoveredTRx);
+      this.buydownUncovered = this.inputs.wac.sub(uncoveredBuydown).mul(uncoveredTRx).mul(this.inputs.commerciallyInsuredPercentage);
     } else {
       this.buydownUncovered = toDecimal(0);
     }

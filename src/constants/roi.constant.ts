@@ -16,10 +16,10 @@ export const ROI_INPUT_CONFIG = {
     increment: 50,
   },
   nRx: {
-    min: 0,
+    min: 50,
     max: 100000,
-    preset: 12000,
-    increment: 1000,
+    preset: 20000,
+    increment: 50,
   },
   paSubmissionRate: {
     min: 0,
@@ -30,18 +30,18 @@ export const ROI_INPUT_CONFIG = {
   averageRefillsPerNRx: {
     min: 1,
     max: 10,
-    preset: 3,
+    preset: 2,
     increment: 1,
   },
   commerciallyInsuredPercentage: {
     min: 0,
     max: 100,
-    preset: 80,
+    preset: 90,
     increment: 1,
   },
   haveHubService: true,
   haveCoverCouponOffer: true,
-  haveUncoverCouponOffer: false,
+  haveUncoverCouponOffer: true,
   
 };
 

@@ -43,13 +43,13 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
 
   return (
     <section className={classes.calculatorOutput}>
-      <div className={classes.heading}>
-        {/* <div className={classes.result}>
+      {/* <div className={classes.heading}>
+        <div className={classes.result}>
           <div className={classes.title}>Estimated ROI</div>
           <div className={classes.roiValue}>
             {roiVM.finalEstimationInString.estimatedROI}
           </div>
-        </div> */}
+        </div>
         <div>
           <StaticImage
             src={"../../../../assets/images/trend-up.svg"}
@@ -58,7 +58,7 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
           />
         </div>
       </div>
-{/* 
+
       <div className={classes.subHeading}>
         <div className={classes.subHeadingTitle}>Estimated Gross Revenue</div>
         <Grid>

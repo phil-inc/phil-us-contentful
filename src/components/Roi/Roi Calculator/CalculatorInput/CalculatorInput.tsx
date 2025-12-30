@@ -78,7 +78,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
             label: getInDollar(ROI_INPUT_CONFIG.wac.max),
           },
         ],
-        tooltipMsg: "30-DoS is the standard used for this calculator, but we can customize our estimates to your brand's most common days-of-supply.",
+        tooltipMsg: "30-DoS is the standard used for this calculator, but we can customize our estimates to your brand's most common days-of-supply. Get in touch for more.",
       },
       {
         keyName: "paSubmissionRate",
@@ -101,7 +101,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
           },
         ],
         tooltipMsg:
-          "Of all PAs required, how many do you typically see end up getting submitted? ",
+          "Of all PAs required, how many typically get submitted?",
       },
       {
         keyName: "inputAverageRefillsPerNRx",
@@ -127,7 +127,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
       },
       {
         keyName: "commerciallyInsuredPercentage",
-        title: "How many patients are commercially insured?",
+        title: "How Many Patients are Commercially Insured?",
         type: INPUT_TYPE.SLIDER,
         actualValue: roiInputs.commerciallyInsuredPercentage,
         actulValueInString: getInPercent(roiInputs.commerciallyInsuredPercentage),
@@ -154,7 +154,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
         type: INPUT_TYPE.SWITCH,
         actualValue: ROI_INPUT_CONFIG.haveHubService,
         changeValue: (v: boolean) => handleChange("haveHubService", v),
-        tooltipMsg: "Do you currently have a Hub Services and/or Speciality Pharmacy (SP) partner?",
+        tooltipMsg: "This could include other digital hub providers, digital pharmacies, and/or direct-to-patient solutions",
       },
       {
         keyName: "haveCoverCouponOffer",
