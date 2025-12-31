@@ -318,7 +318,7 @@ export const query = graphql`
       }
     }
     allContentfulModal(
-      filter: {node_locale: {eq: "en-US"}, pageToDisplay: {slug: {in: ["roi"]}}}
+      filter: {node_locale: {eq: "en-US"}, pageToDisplay: {slug: {in: ["gtn"]}}}
     ) {
       nodes {
         id

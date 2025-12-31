@@ -36,29 +36,29 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
   const inputFields = useMemo<FieldConfig[]>(() => {
     return [
       // --sliders
-      {
-        keyName: "nRx",
-        title: "NRx per Month",
-        type: INPUT_TYPE.SLIDER,
-        actualValue: roiInputs.nRx,
-        actulValueInString: roiInputs.nRx.toString(),
-        changeValue: (v: number) => handleChange("nRx", v),
-        min: ROI_INPUT_CONFIG.nRx.min,
-        max: ROI_INPUT_CONFIG.nRx.max,
-        step: ROI_INPUT_CONFIG.nRx.increment,
-        marks: [
-          {
-            value: ROI_INPUT_CONFIG.nRx.min,
-            label: ROI_INPUT_CONFIG.nRx.min.toString(),
-          },
-          {
-            value: ROI_INPUT_CONFIG.nRx.max,
-            label: ROI_INPUT_CONFIG.nRx.max.toString(),
-          },
-        ],
-        tooltipMsg:
-"Manufacturers often estimate this using dispensed NRx from IQVIA. Alternatively, if you have estimates of New Patients, that also works. ",
-      },
+//       {
+//         keyName: "nRx",
+//         title: "NRx per Month",
+//         type: INPUT_TYPE.SLIDER,
+//         actualValue: roiInputs.nRx,
+//         actulValueInString: roiInputs.nRx.toString(),
+//         changeValue: (v: number) => handleChange("nRx", v),
+//         min: ROI_INPUT_CONFIG.nRx.min,
+//         max: ROI_INPUT_CONFIG.nRx.max,
+//         step: ROI_INPUT_CONFIG.nRx.increment,
+//         marks: [
+//           {
+//             value: ROI_INPUT_CONFIG.nRx.min,
+//             label: ROI_INPUT_CONFIG.nRx.min.toString(),
+//           },
+//           {
+//             value: ROI_INPUT_CONFIG.nRx.max,
+//             label: ROI_INPUT_CONFIG.nRx.max.toString(),
+//           },
+//         ],
+//         tooltipMsg:
+// "Manufacturers often estimate this using dispensed NRx from IQVIA. Alternatively, if you have estimates of New Patients, that also works. ",
+//       },
       {
         keyName: "wac",
         title: "WAC Price for 30 Day Supply",

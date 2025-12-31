@@ -13,7 +13,7 @@ export const PAGES_TITLE = {
     INSIGHTS_CASE_STUDIES: "/insights/case-studies/",
     PHIL_DIRECT :"Phil Direct",
     DTP_RESOURCES :"DtpResources",
-    ROI: "ROI",
+    GTN: "GTN",
     SOLUTION_MAIN:"Solution",
 }
 

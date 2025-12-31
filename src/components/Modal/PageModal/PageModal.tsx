@@ -40,14 +40,14 @@ const PageModal: React.FC<PageModalProps> = ({ contentfulModalNodes }) => {
   const roiData = contentfulModalNodes.find(
     (node) =>
       node.canDisplayModal === true &&
-      node?.pageToDisplay?.title === PAGES_TITLE.ROI,
+      node?.pageToDisplay?.title === PAGES_TITLE.GTN,
   );
 
   const isHomePageModal = isHomePage && homeData?.canDisplayModal;
   const isDtpResourcePageModal =
     context.title === PAGES_TITLE.DTP_RESOURCES &&
     dtpResourceData?.canDisplayModal;
-  const isRoiPageModal = context.title === PAGES_TITLE.ROI && roiData;
+  const isRoiPageModal = context.title === PAGES_TITLE.GTN && roiData;
 
   const modelRef = {
     dtpResource: React.useRef<SessionModalRef>(null),
