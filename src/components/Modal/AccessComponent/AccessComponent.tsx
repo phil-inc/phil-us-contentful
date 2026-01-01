@@ -3,6 +3,7 @@ import { ContentfulModal } from "types/modal";
 import { Options } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
+import { Text } from "@mantine/core";
 
 import Asset from "components/common/Asset/Asset";
 import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
@@ -33,7 +34,7 @@ const AccessComponent: React.FC<AccessComponentProps> = ({
         return <div className={classes.paragraph}>{children}</div>;
       },
       [BLOCKS.HEADING_3](node: Node, children: React.ReactNode) {
-        return <div className={classes.h3}>{children}</div>;
+        return <Text className={classes.h3}>{children}</Text>;
       },
     },
   };

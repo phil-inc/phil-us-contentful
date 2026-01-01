@@ -334,7 +334,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   );
   const isSolutionEmpowerFieldTeamsSection = section?.header === "Empower Field Teams with Real-Time Insights";
   const isSolutionGainEndToEndVisibilitySection = section?.header === "Gain End-to-End Visibility Across the Patient Journey";
-  const isSolutionDrivingBrandSection = section?.header === "Driving Brand Success Through Outcomes-Based Partnership";
+  const isSolutionDrivingBrandSection = section?.header === "Driving Brand Success Through Outcomes-Based Partnership PHIL’s Client Insights Team";
 
   let formId = "";
   let portalId = "";
@@ -342,8 +342,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   if (section.embedForm) {
     const [formProps] = parseScript(section.embedForm);
 
-    formId = formProps.formId;
-    portalId = formProps.portalId;
+    formId = formProps?.formId;
+    portalId = formProps?.portalId;
   }
   const isSmallDevice = useIsSmallDevice();
   
@@ -442,6 +442,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-context={context.title}
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
+      data-is-bgcolor-dark={!isBgColorLight}
     >
 
       {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title}>{section.eyebrowHeading}</Text>}

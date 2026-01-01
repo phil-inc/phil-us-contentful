@@ -26,4 +26,8 @@
   &[data-context="Phil Direct"][data-order="4"] {
     margin-top: 40px;
   }
+
+  &[data-context="Solution"][data-reference-type="Code Snippet"]{
+    margin-top: 80px;
+  }
 }

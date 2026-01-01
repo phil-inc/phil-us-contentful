@@ -48,13 +48,6 @@
     justify-content: start;
     margin-top: 20px;
   }
-
-  @media screen and (min-width: $phil-breakpoint-md) {
-    margin-left: 80px;
-  }
-  @media screen and (min-width: $phil-breakpoint-xl) {
-      justify-content: center;
-  }
   margin-bottom: 50px;
 }
 

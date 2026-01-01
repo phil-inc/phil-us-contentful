@@ -127,6 +127,10 @@
 
 		&[data-context='Solution'] {
 			color: #000000;
+
+			&[data-is-bgcolor-dark="true"]{
+				color: #FFFFFF;
+			}
 		}
 
 		@media (min-width: $phil-breakpoint-sm) {
@@ -162,6 +166,9 @@
 			
 			&[data-context='Phil Direct'] {
 				height: 110%;
+			}
+			&[data-context='Solution'] {
+				height: auto;
 			}
 
 			>img{
@@ -221,33 +228,18 @@
 	}
 }
 
-/* .basicSectionContainer.empowerSection{
+.basicSectionContainer.empowerSection{
 	@media (min-width: $phil-breakpoint-md) {
-		padding-bottom: 90px;
-	}
-	@media (min-width: $phil-breakpoint-lg) {
-		padding-bottom: 150px;
+		padding-bottom: 55px;
 	}
 }
 .basicSectionContainer.gainSection{
-		padding-top: 20px;
-		padding-bottom: 0px;
-
-	@media (min-width: $phil-breakpoint-lg) {
 		padding-top: 50px;
-	}
+		padding-bottom: 50px;
 }
 .basicSectionContainer.drivingSection{
-		padding-top: 80px;
-
-	@media (min-width: $phil-breakpoint-md) {
-		padding-bottom: 60px;
-	}
-
-	@media (min-width: $phil-breakpoint-lg) {
-		padding-top: 60px;
-	}
-} */
+		padding-top: 40px;
+}
 
 .listItem {
 	color: #000;
