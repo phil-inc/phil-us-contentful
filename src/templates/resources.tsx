@@ -955,6 +955,85 @@ export const resourcesQuery = graphql`
           }
         }
       }
+      announcementItems{
+        id
+        heading
+        generateStaticPage
+        buttonText
+        body{
+          raw
+        }
+        asset {
+          gatsbyImageData(
+            placeholder: BLURRED
+            layout: FULL_WIDTH
+            resizingBehavior: FILL
+          )
+          id
+          file {
+            contentType
+            url
+          }
+        }
+        externalLink
+        internalLink {
+          ... on ContentfulPage {
+            id
+            slug
+            title
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+          ... on ContentfulReferencedSection {
+            id
+            page {
+              title
+            }
+            header
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+          ... on ContentfulSection {
+            id
+            page {
+              title
+            }
+            header
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+          ... on ContentfulResource {
+            id
+            heading
+            sys {
+              contentType {
+                sys {
+                  type
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
     }
     contentfulPage(title: { eq: "News & Insights" }) {
       id
