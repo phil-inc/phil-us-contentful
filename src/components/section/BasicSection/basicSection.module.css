@@ -230,7 +230,7 @@
 
 .basicSectionContainer.empowerSection{
 	@media (min-width: $phil-breakpoint-md) {
-		padding-bottom: 55px;
+		padding-bottom: 60px;
 	}
 }
 .basicSectionContainer.gainSection{
