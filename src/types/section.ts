@@ -97,7 +97,6 @@ export type ISection = {
   backgroundAssetImage?: TAsset;
   topBackgroundAsset?: TAsset;
   canShowAssetImageAlignToWall?: boolean;
-  sectionTitle?: string;
   showBottomBorder?: boolean;
   canShowTextColumnToRight?: boolean;
   assetForMobile?: TAsset;

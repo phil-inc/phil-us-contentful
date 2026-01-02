@@ -160,7 +160,7 @@
     gap: 25px;
 
     @media (min-width: $phil-breakpoint-md) {
-      gap: 16px;
+      gap: 2px;
     }
   }
 

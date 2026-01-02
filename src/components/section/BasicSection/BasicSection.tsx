@@ -45,7 +45,7 @@ import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 import { extractAssetData } from "utils/asset";
 import { getIdSlugifyForDiv } from "utils/utils";
 
-import { BUTTON_STYLE, COLORS, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
+import { BASIC_SECTION, BUTTON_STYLE, COLORS, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
 
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
 
@@ -53,6 +53,7 @@ type BasicSectionProps = {
   section: ISection;
   index: number;
   isEmbedFormTemplate: boolean;
+  sectionIndex?: number
 };
 
 /**
@@ -64,7 +65,8 @@ type BasicSectionProps = {
 const BasicSection: React.FC<BasicSectionProps> = ({
   section,
   index,
-  isEmbedFormTemplate, 
+  isEmbedFormTemplate,
+  sectionIndex=0
 }) => {
   const HERO_SECTION_INDEX = 0; // Hero section index is always 0
   const NUMBER_OF_COLUMNS = 2; // Basic section will always have 2 columns
@@ -367,8 +369,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const isSectionV2 = section.v2Flag;
 
   const maw = () => {
-    if(index === 0 && context.title === OUR_SOLUTIONS) {
-      return 450;
+    if(context.title === OUR_SOLUTIONS && section?.sectionType ===  BASIC_SECTION){
+      const solutionSectionIndex = [1,2,3,4]
+      if(index === 0) {
+        return 450;
+      }
+      if(solutionSectionIndex.includes(index)){
+        return 600;
+      }
     }
 
     return isBanner ? 300 : 400;
@@ -445,8 +453,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-bgcolor-dark={!isBgColorLight}
     >
 
-      {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title}>{section.eyebrowHeading}</Text>}
-      {section?.canShowHeader && <Title className={classes.header} data-context={context.title}>{section.header}</Title>}
+      {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>{section.eyebrowHeading}</Text>}
+      {section?.canShowHeader && <Title className={classes.header} data-context={context.title} section-index={sectionIndex}>{section.header}</Title>}
       {section?.headerDescription?.headerDescription && <Text className={classes.headerDescription} data-context={context.title}>{section.headerDescription.headerDescription}</Text>}
       <div className={classes.containSection}>
         <Grid
@@ -509,7 +517,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                   </Stack>
 
                 )}
-                {section?.sectionTitle && <Box className={classes.belowBodySection} data-context={context.title}>{section.sectionTitle}</Box>}
               </>
             )}
           </Grid.Col>

@@ -196,6 +196,10 @@ export const CCard: FC<ArticleProps> = ({
     if(canShowMediaWidthFull) return "100%";
     return (context.title === COMPANY_PAGE && arrayLength === 9) ? 300 : 900;
   }
+  const getAspectRatio = () => {
+    if (canShowMediaWidthFull) return 16 / 6;
+    return 16 / 9;
+  }
   
   const SmallCardComponent = () => (
     <div className={classes.smallCard}>
@@ -230,7 +234,7 @@ export const CCard: FC<ArticleProps> = ({
           fluid
           contain
           maw={getMaxWidthForMedia()}
-          ratio={16 / 9}
+          ratio={getAspectRatio()}
           data-media-item={true}
         >
           <Asset objectFit="contain" asset={media} />

@@ -30,4 +30,8 @@
   &[data-context="Solution"][data-reference-type="Code Snippet"]{
     margin-top: 80px;
   }
+
+  &[data-context="Our Solution"][data-reference-type="Code Snippet"]{
+    margin-top: 40px;
+  }
 }

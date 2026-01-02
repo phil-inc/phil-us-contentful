@@ -62,3 +62,5 @@ export const REFERENCE_SECTION = {
 export const ONE = 1;
 
 export const NOT_AVAILABLE = "N/A";
+
+export const BASIC_SECTION = "Basic Section"

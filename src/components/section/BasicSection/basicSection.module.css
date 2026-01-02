@@ -46,14 +46,26 @@
 	text-align: center;
 	margin-bottom: 40px;
 
-	&[data-context='Our Solution'] {
+	&[data-context='Our Solution'], &[data-context="Phil Direct"] {
 		color: #09AAA5;
+	}
+
+	&[data-context="Phil Direct"][section-index="3"]{
+		@media (min-width: $phil-breakpoint-md) {
+			margin-bottom: 70px;
+		}
 	}
 }
 
 .header{
 	&[data-context='Solution'] {
 		font-size: 32px;
+		margin-bottom: 100px;
+		text-align: center;
+	}
+
+	&[data-context="Our Solution"][section-index="4"] {
+		font-size: 40px;
 		margin-bottom: 100px;
 		text-align: center;
 	}
@@ -197,6 +209,7 @@
 				top: auto;
 				transform: none;
 				right: 0;
+				margin-top: 50px;
 			}
 
 		}
@@ -464,12 +477,6 @@
     margin-top: 20px;
   }
 
-  @media screen and (min-width: $phil-breakpoint-md) {
-    margin-left: 80px;
-  }
-  @media screen and (min-width: $phil-breakpoint-xl) {
-      justify-content: center;
-  }
 }
 
 #the-all-in-one-access-solution-for-retail-and-specialty-lite-success {

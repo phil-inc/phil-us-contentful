@@ -535,7 +535,6 @@ export const query = graphql`
             }
             id
           }
-          sectionTitle
           assetForMobile {
             gatsbyImageData(
               resizingBehavior: SCALE
@@ -1375,12 +1374,6 @@ export const query = graphql`
             id
             name
           }
-          innerBackgroundStyling {
-            background
-            extraColor
-            id
-            name
-          }
           v2flag
           renderOptions {
             name
@@ -1404,126 +1397,6 @@ export const query = graphql`
           }
           referenceSecond {
             __typename
-            ... on ContentfulResource {
-              id
-              isFaq
-              isImageObjectContain
-              externalLink
-              internalLink {
-                ... on ContentfulPage {
-                  slug
-                  id
-                  title
-                  sys {
-                    contentType {
-                      sys {
-                        type
-                        id
-                      }
-                    }
-                  }
-                }
-              }
-              buttonText
-              hyperlink {
-                contentful_id
-                id
-                linkLabel
-                name
-                externalUrl
-                internalContent {
-                  ... on ContentfulPage {
-                    __typename
-                    slug
-                    id
-                    title
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-              heading
-              subheading
-              hubspotEmbed {
-                raw
-              }
-              isHubspotEmbed
-              isInsertSnippet
-              codeSnippet {
-                codeSnippet
-              }
-              description {
-                id
-                description
-              }
-              icon {
-                gatsbyImageData(
-                  resizingBehavior: SCALE
-                  placeholder: BLURRED
-                  layout: CONSTRAINED
-                )
-                title
-                file {
-                  contentType
-                  details {
-                    size
-                  }
-                  url
-                }
-              }
-              body {
-                raw
-              }
-              asset {
-                gatsbyImageData(
-                  placeholder: BLURRED
-                  layout: FULL_WIDTH
-                  resizingBehavior: FILL
-                )
-                id
-                file {
-                  contentType
-                  url
-                }
-              }
-              stylingOptions {
-                background
-                extraColor
-                id
-                name
-              }
-              media {
-                name
-                media {
-                  gatsbyImageData(
-                    resizingBehavior: SCALE
-                    placeholder: BLURRED
-                    layout: CONSTRAINED
-                  )
-                  title
-                  file {
-                    contentType
-                    details {
-                      size
-                    }
-                    url
-                  }
-                }
-                youtubeLink
-                embedCode {
-                  raw
-                }
-                id
-              }
-              canShowImageOnly
-              isFirstItem
-            }
             ... on ContentfulMediaItem {
               metadata {
                 tags {
@@ -1698,6 +1571,46 @@ export const query = graphql`
               }
               canShowImageOnly
               isFirstItem
+            }
+            ... on ContentfulMediaItem {
+              metadata {
+                tags {
+                  name
+                  id
+                }
+              }
+              sys {
+                contentType {
+                  sys {
+                    id
+                    type
+                  }
+                }
+              }
+              contentful_id
+              name
+              name
+              media {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              youtubeLink
+              embedCode {
+                raw
+              }
+              id
+              canShowMediaWidthFull
             }
           }
           referenceThirdRenderOptions {
