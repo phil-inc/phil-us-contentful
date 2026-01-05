@@ -41,6 +41,7 @@ export const CONTENTFUL_TYPES = {
   LIST : "ContentfulList",
   LINK: "ContentfulLink",
   PAGE: "ContentfulPage",
+  BUTTON_GROUP: "ContentfulButtonGroup"
 };
 
 export const TIME_ZONE_USA = "America/Los_Angeles";

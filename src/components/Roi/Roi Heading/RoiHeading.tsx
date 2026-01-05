@@ -1,9 +1,8 @@
 import React from "react";
-import { BLOCKS } from "@contentful/rich-text-types";
+import { BLOCKS, MARKS } from "@contentful/rich-text-types";
 import { Text, Title } from "@mantine/core";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { Options } from "@contentful/rich-text-react-renderer";
-4
 import PageContext from "contexts/PageContext";
 import { ISection } from "types/section";
 
@@ -16,6 +15,9 @@ const RoiHeading: React.FC<RoiHeadingProps> = ({ section }) => {
   const context = React.useContext(PageContext);
 
   const options: Options = {
+    renderMark: {
+      [MARKS.BOLD]: (text) => <span className={classes.boldText}>{text}</span>,
+    },
     renderNode: {
       [BLOCKS.PARAGRAPH](node, children: React.ReactNode) {
         return (

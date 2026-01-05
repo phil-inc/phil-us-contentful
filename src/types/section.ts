@@ -5,6 +5,7 @@ import type {
 } from "gatsby-source-contentful/rich-text";
 import type { TResource } from "./resource";
 import { Hyperlink } from "types/modal";
+import { ContentfulButton } from "layouts/Layout/CHeader/CHeader";
 
 type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns | Text and Text Columns with Footer";
 
@@ -303,4 +304,24 @@ export type IContentfulList = {
   subheading: string | null;
   choose: boolean;
   anchorLink: string;
+}
+
+export type ISys = {
+    contentType: {
+      sys: {
+        type: string;
+        id: string;
+      };
+    };
+  };
+
+
+export type IContentfulButtonGroup = {
+  __typename: string;
+  id: string;
+  contentful_id: string;
+  title: string;
+  button1: ContentfulButton;
+  button2: ContentfulButton;
+  sys: ISys;
 }

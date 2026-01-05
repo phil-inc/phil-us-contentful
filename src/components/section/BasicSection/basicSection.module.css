@@ -51,8 +51,9 @@
 	}
 
 	&[data-context="Phil Direct"][section-index="3"]{
+		text-align: left;
 		@media (min-width: $phil-breakpoint-md) {
-			margin-bottom: 70px;
+			margin-bottom: 20px;
 		}
 	}
 }

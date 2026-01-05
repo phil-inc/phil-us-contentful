@@ -32,10 +32,12 @@ import { isProduction } from "utils/isProduction";
 import ContactForm from "components/ContactPageForm/ContactForm";
 import { useId, useViewportSize } from "@mantine/hooks";
 import PageContext from "contexts/PageContext";
-import { CONTACT_PAGE, OUR_SOLUTIONS } from "constants/page";
+import { CONTACT_PAGE, OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
 import { parseScript } from "utils/parseScript";
 import { IconArrowRight } from "@tabler/icons";
+
+import BtnGroup from "components/BtnGroup/BtnGroup";
 
 import cx from "clsx";
 import * as classes from "./basicSection.module.css";
@@ -45,7 +47,7 @@ import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 import { extractAssetData } from "utils/asset";
 import { getIdSlugifyForDiv } from "utils/utils";
 
-import { BASIC_SECTION, BUTTON_STYLE, COLORS, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
+import { BASIC_SECTION, BUTTON_STYLE, COLORS, CONTENTFUL_TYPES, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
 
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
 
@@ -146,6 +148,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               {node.data.target.buttonText}
             </Button>
           );
+
+          if(target?.__typename === CONTENTFUL_TYPES.BUTTON_GROUP){
+            return <BtnGroup data={node.data.target}/>
+          }
 
           if (target?.link?.internalContent) {
             const { link } = getLink(target, true);
@@ -378,6 +384,12 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         return 600;
       }
     }
+
+    if(context.title === PAGES_TITLE.PHIL_DIRECT && section?.sectionType ===  BASIC_SECTION){
+      const direcSectionIndex = [3];
+      if(direcSectionIndex.includes(index)) return 600;
+    }
+
 
     return isBanner ? 300 : 400;
   };

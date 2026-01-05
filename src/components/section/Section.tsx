@@ -46,6 +46,7 @@ const Section: React.FC<SectionProps> = ({
           isPreviousBackgroundPure={isPreviousBackgroundPure}
           addBorder
           index={index}
+          sectionIndex={sectionIndex}
         />
       );
 

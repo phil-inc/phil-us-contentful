@@ -394,6 +394,73 @@ export const query = graphql`
                 }
                 v2flag
               }
+              ... on ContentfulButtonGroup {
+                id
+                contentful_id
+                title
+                button1 {
+                  __typename
+                  ... on ContentfulButton {
+                    id
+                    contentful_id
+                    buttonText
+                    buttonStyle
+                    link {
+                      linkLabel
+                      name
+                      externalUrl
+                      internalContent {
+                        __typename
+                        ... on ContentfulPage {
+                          id
+                          title
+                          slug
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    v2flag
+                  }
+                }
+                button2 {
+                  __typename
+                  ... on ContentfulButton {
+                    id
+                    contentful_id
+                    buttonText
+                    buttonStyle
+                    link {
+                      linkLabel
+                      name
+                      externalUrl
+                      internalContent {
+                        __typename
+                        ... on ContentfulPage {
+                          id
+                          title
+                          slug
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    v2flag
+                  }
+                }
+              }
             }
           }
           isHubspotEmbed

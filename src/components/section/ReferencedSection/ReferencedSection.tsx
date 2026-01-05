@@ -39,6 +39,7 @@ type ReferencedSectionProps = {
   isPreviousBackgroundPure: boolean;
   addBorder: boolean
   index?: number;
+  sectionIndex?: number;
 };
 
 /**
@@ -52,6 +53,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   isEmbedFormTemplate,
   isPreviousBackgroundPure,
   index,
+  sectionIndex=0
 }) => { 
   const params = new URLSearchParams(getWindowProperty("location.search", {}));
   const GRID_COLUMNS = 12;
@@ -324,7 +326,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         size={"xl"}
       >
         {section?.eyebrowHeading && (
-          <Text className={classes.eyebrowHeading} data-context={context.title}>
+          <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>
             {section.eyebrowHeading}
           </Text>
         )}
