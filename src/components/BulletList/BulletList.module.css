@@ -1,0 +1,27 @@
+.bulletListCard {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 1px 0 20px;
+
+  &.border {
+    border-left: 4px solid #35ada7;
+  }
+
+  .heading {
+    font-family: Lato;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  .description {
+    margin-top: 8px;
+    font-family: Lato;
+    font-weight: 400;
+    font-size: 16px;
+  }
+
+}
+
+.divider {
+  border-top: 1px solid #e6e6e6;
+}

@@ -10,4 +10,11 @@ import { Paragraph } from '@contentful/rich-text-types';
     }
     return null
   }
+  
+  export const extractTrustpilotHtmlFromString = (content:string ) => {
+    if (content.includes('trustpilot-widget')) {
+      return content
+    }
+    return null
+  }
 

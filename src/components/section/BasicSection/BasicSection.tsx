@@ -32,23 +32,30 @@ import { isProduction } from "utils/isProduction";
 import ContactForm from "components/ContactPageForm/ContactForm";
 import { useId, useViewportSize } from "@mantine/hooks";
 import PageContext from "contexts/PageContext";
-import { CONTACT_PAGE, OUR_SOLUTIONS } from "constants/page";
+import { CONTACT_PAGE, OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
 import { parseScript } from "utils/parseScript";
 import { IconArrowRight } from "@tabler/icons";
+
+import BtnGroup from "components/BtnGroup/BtnGroup";
 
 import cx from "clsx";
 import * as classes from "./basicSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 import useDeviceType from "hooks/useView";
+import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 import { extractAssetData } from "utils/asset";
+import { getIdSlugifyForDiv } from "utils/utils";
 
-import { BUTTON_STYLE, LAYOUT_12COL } from "constants/global.constant";
+import { BASIC_SECTION, BUTTON_STYLE, COLORS, CONTENTFUL_TYPES, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
+
+import InfoCircleIcon from "assets/images/icons/component/info-circle";
 
 type BasicSectionProps = {
   section: ISection;
   index: number;
   isEmbedFormTemplate: boolean;
+  sectionIndex?: number
 };
 
 /**
@@ -60,7 +67,8 @@ type BasicSectionProps = {
 const BasicSection: React.FC<BasicSectionProps> = ({
   section,
   index,
-  isEmbedFormTemplate, 
+  isEmbedFormTemplate,
+  sectionIndex=0
 }) => {
   const HERO_SECTION_INDEX = 0; // Hero section index is always 0
   const NUMBER_OF_COLUMNS = 2; // Basic section will always have 2 columns
@@ -71,8 +79,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const context = React.useContext(PageContext);
   const isImageAlignToWall = section?.canShowAssetImageAlignToWall;
   const isImageAlignToLeftWall = isImageAlignToWall && section?.canShowTextColumnToRight
- 
-
   const theme = useMantineTheme();
 
   const richTextImages: Record<string, any> = {};
@@ -86,6 +92,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     (section?.renderOptions?.layoutOptions?.numberOfColumns ?? 1);
   const isOneColumn =
     section?.renderOptions?.layoutOptions?.numberOfColumns === 1;
+
+  const bgColor = getColorFromStylingOptions(section.stylingOptions?.background)
+  const isBgColorLight = LIGHT_COLOR_LIST.includes(bgColor ?? COLORS.LIGHT); 
 
   // eslint-disable-next-line array-callback-return
   section?.body?.references?.map((reference: any) => {
@@ -102,14 +111,24 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const imageData = richTextImages[node.data.target.sys.id];
         const image = getImage(imageData.image as ImageDataLike);
+        const targetImage= node.data?.target;
+
         return (
-          <GatsbyImage
-            style={{
-              marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`,
-            }}
-            image={image!}
-            alt={""}
-          />
+          <div className={classes.embeddedAsset}>
+            {image 
+            ? <GatsbyImage
+                style={{
+                  marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`,
+                }}
+                image={image!}
+                alt={""}
+                />
+            : (targetImage &&
+              <div>
+                <Asset asset={targetImage} />
+              </div>
+            )}
+          </div>
         );
       },
 
@@ -129,6 +148,10 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               {node.data.target.buttonText}
             </Button>
           );
+
+          if(target?.__typename === CONTENTFUL_TYPES.BUTTON_GROUP){
+            return <BtnGroup data={node.data.target}/>
+          }
 
           if (target?.link?.internalContent) {
             const { link } = getLink(target, true);
@@ -198,6 +221,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             data-video={isVideo()}
             className={classes.body}
             data-oneColumn={isOneColumn}
+            data-is-bgcolor-light={isBgColorLight}
             >
             {children}
           </Text>
@@ -293,17 +317,17 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   };
 
   const heroRef = React.useRef(null);
-
+  
   // Determine if the index is an even column
   const isEvenColumn = index % NUMBER_OF_COLUMNS === 0;
   let textColumnOrder = isEvenColumn ? ORDER_FIRST : ORDER_SECOND;
   let imageColumnOrder = isEvenColumn ? ORDER_SECOND : ORDER_FIRST;
-
+  
   if (!section.automaticOrder) {
     textColumnOrder = ORDER_FIRST;
     imageColumnOrder = ORDER_SECOND;
   }
-
+  
   if(section?.canShowTextColumnToRight){
     textColumnOrder = ORDER_SECOND;
     imageColumnOrder = ORDER_FIRST;
@@ -316,6 +340,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const isBanner = section?.metadata?.tags?.some(
     ({ name }) => name === "BANNER_SECTION",
   );
+  const isSolutionEmpowerFieldTeamsSection = section?.header === "Empower Field Teams with Real-Time Insights";
+  const isSolutionGainEndToEndVisibilitySection = section?.header === "Gain End-to-End Visibility Across the Patient Journey";
+  const isSolutionDrivingBrandSection = section?.header === "Driving Brand Success Through Outcomes-Based Partnership PHIL’s Client Insights Team";
 
   let formId = "";
   let portalId = "";
@@ -323,9 +350,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   if (section.embedForm) {
     const [formProps] = parseScript(section.embedForm);
 
-    formId = formProps.formId;
-    portalId = formProps.portalId;
+    formId = formProps?.formId;
+    portalId = formProps?.portalId;
   }
+  const isSmallDevice = useIsSmallDevice();
+  
 
   React.useEffect(() => {
     if (ref.current) {
@@ -346,9 +375,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const isSectionV2 = section.v2Flag;
 
   const maw = () => {
-    if(index === 0 && context.title === OUR_SOLUTIONS) {
-      return 450;
+    if(context.title === OUR_SOLUTIONS && section?.sectionType ===  BASIC_SECTION){
+      const solutionSectionIndex = [1,2,3,4]
+      if(index === 0) {
+        return 450;
+      }
+      if(solutionSectionIndex.includes(index)){
+        return 600;
+      }
     }
+
+    if(context.title === PAGES_TITLE.PHIL_DIRECT && section?.sectionType ===  BASIC_SECTION){
+      const direcSectionIndex = [3];
+      if(direcSectionIndex.includes(index)) return 600;
+    }
+
 
     return isBanner ? 300 : 400;
   };
@@ -392,11 +433,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     <>
    {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
 
-    <Box style={{
-      background: section.v2Flag
-        ? getColorFromStylingOptions(section.stylingOptions?.background)
-        : sectionBackground(section.background),
-    }} className={cx(classes.basicSectionMainContainer, section.slug)}
+    <Box 
+      id={getIdSlugifyForDiv(section?.eyebrowHeading || "")}
+      style={{
+        background: section.v2Flag
+          ? getColorFromStylingOptions(section.stylingOptions?.background)
+          : sectionBackground(section?.background as BackgroundType),
+        }} 
+      className={cx(classes.basicSectionMainContainer, section.slug, classes.scrollSection)}
     >
       <>
       {section?.backgroundAssetImage && 
@@ -409,12 +453,21 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     <Container
       id={slugify(section.header, { lower: true, strict: true })}
       size={"xl"}
-      className={classes.basicSectionContainer}
+      className={cx(classes.basicSectionContainer,{
+        [classes.empowerSection]: isSolutionEmpowerFieldTeamsSection,
+        [classes.gainSection]: isSolutionGainEndToEndVisibilitySection,
+        [classes.drivingSection]: isSolutionDrivingBrandSection,
+      })}
       data-index={index}
       data-context={context.title}
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
+      data-is-bgcolor-dark={!isBgColorLight}
     >
+
+      {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>{section.eyebrowHeading}</Text>}
+      {section?.canShowHeader && <Title className={classes.header} data-context={context.title} section-index={sectionIndex}>{section.header}</Title>}
+      {section?.headerDescription?.headerDescription && <Text className={classes.headerDescription} data-context={context.title}>{section.headerDescription.headerDescription}</Text>}
       <div className={classes.containSection}>
         <Grid
           align={
@@ -467,9 +520,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               <>
                 {Boolean(section.body) && (
                   <Stack className={classes.portal}>
-                    {isMobileView &&
-                      context.title === "Demo Page" &&
-                      index === 0 && <Title>{section.header}</Title>}
                     {heroRef.current && isMobileView && section.embedForm
                       ? createPortal(
                           renderRichText(section.body, options),
@@ -477,6 +527,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                         )
                       : renderRichText(section.body, options)}
                   </Stack>
+
                 )}
               </>
             )}
@@ -484,6 +535,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           {/* Hero Grid Column */}
           {/* TODO:: Handle in css */}
           {/* TODO: Refactor v2Flags and links */}
+          {/* {((section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) && !isImageAlignToWall) && */}
           {(section.embedForm  || mediaItemOrAsset || youtubeVideoUrl) &&
           <Grid.Col
             className={cx(classes.heroGridColumn, classes.embedFormTemplate, {[classes.hideDueToWallImage]: isImageAlignToWall})}
@@ -506,27 +558,42 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                 <Box className={classes.formWrapper}>
                   <HubspotForm formId={formId} portalId={portalId} />
                 </Box>
-              ) : (
-                <ImageContainer
-                  containerRef={ref}
-                  contain
-                  ratio={calculateAspectRatio()}
-                  background={determineBackground()}
-                  expanded={context.title === CONTACT_PAGE}
-                  isVideo={isVideo()}
-                  maw={maw()}
-                  data-index={index}
-                  data-context={context.title}
-                  isGatsbyImageData={Boolean(media?.gatsbyImageData)}
-                >
-                  <Asset
-                    asset={mediaItemOrAsset}
-                    objectFit="contain"
-                    youtubeVideoURL={youtubeVideoUrl}
-                  />
-                </ImageContainer>
-              )}
+              ) : ((isSmallDevice) && section?.assetForMobile 
+                    ? <div>
+                        <Asset
+                          className={classes.assetWallImage}
+                          asset={section.assetForMobile}
+                          />
+                    </div>
+                    :<ImageContainer
+                      containerRef={ref}
+                      contain
+                      ratio={calculateAspectRatio()}
+                      background={determineBackground()}
+                      expanded={context.title === CONTACT_PAGE}
+                      isVideo={isVideo()}
+                      maw={maw()}
+                      data-index={index}
+                      data-context={context.title}
+                      isGatsbyImageData={Boolean(media?.gatsbyImageData)}
+                      >
+                        <Asset
+                          asset={mediaItemOrAsset}
+                          objectFit="contain"
+                          youtubeVideoURL={youtubeVideoUrl}
+                          />
+                    </ImageContainer>
+                  )
+                }
             </Group>
+             {section?.assetCaption && 
+                <Text className={cx(classes.assetCaption,{[classes.darkText]: isBgColorLight, [classes.lightText]: !isBgColorLight})}>
+                <span className={classes.infoIcon}>
+                <InfoCircleIcon size={18} />
+                </span>
+                {section.assetCaption}
+                </Text>
+              }
           </Grid.Col>
           }
         </Grid>
@@ -548,14 +615,23 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
         {(isImageAlignToWall && mediaItemOrAsset) && 
           <div 
-            className={cx(classes.wallImage, {[classes.leftWallImage]: isImageAlignToLeftWall})}   
+            className={cx(classes.wallImage, {[classes.leftWallImage]: isImageAlignToLeftWall, [classes.imageAdjust]:isImageAlignToWall})}   
             data-index={index}
             data-context={context.title}
+            data-oneColumn={isOneColumn}
           >
             <Asset
-            className={classes.assetWallImage}
+              className={classes.assetWallImage}
               asset={mediaItemOrAsset}
             />
+            {section?.assetCaption && 
+              <Text className={cx(classes.assetCaption,{[classes.darkText]: isBgColorLight, [classes.lightText]: !isBgColorLight})}>
+                <span className={classes.infoIcon}>
+                  <InfoCircleIcon size={18} />
+                </span>
+                {section.assetCaption}
+              </Text>
+            }
           </div>
       }
       </div>

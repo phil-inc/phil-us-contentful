@@ -1,0 +1,37 @@
+.column {
+  &[data-reference-type="Stepper Cards"],
+  &[data-reference-type="Testimonial"] {
+    max-width: fit-content;
+  }
+
+  &[data-reference-type="Single line Metric card"] {
+    margin: auto;
+  }
+}
+
+.grid {
+  &[data-add-margin="true"] {
+    margin-top: 40px;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-top: 80px;
+
+      &[data-is-stepper-card="true"] {
+        margin-top: 40px;
+      }
+    }
+  }
+  &[data-context="Phil Direct"][data-order="2"],
+  &[data-context="Phil Direct"][data-order="3"],
+  &[data-context="Phil Direct"][data-order="4"] {
+    margin-top: 40px;
+  }
+
+  &[data-context="Solution"][data-reference-type="Code Snippet"]{
+    margin-top: 80px;
+  }
+
+  &[data-context="Our Solution"][data-reference-type="Code Snippet"]{
+    margin-top: 40px;
+  }
+}

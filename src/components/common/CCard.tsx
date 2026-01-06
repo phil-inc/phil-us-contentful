@@ -15,6 +15,7 @@ import { Link } from "gatsby";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import type { FC } from "react";
 import React, { useContext } from "react";
+import cx from 'clsx'
 import type { TResource } from "types/resource";
 import { getLink } from "utils/getLink";
 import Asset from "./Asset/Asset";
@@ -47,7 +48,7 @@ export const CCard: FC<ArticleProps> = ({
   metadata,
   arrayLength,
 }) => {
-  const { body, asset } = resource;
+  const { body, asset, subheading, description, canShowMediaWidthFull } = resource;
   const context = useContext(PageContext);
   const color = getColorFromStylingOptions(
     resource?.stylingOptions?.extraColor,
@@ -189,6 +190,28 @@ export const CCard: FC<ArticleProps> = ({
     },
   };
 
+  const isSubHeadingAndDescriptionPresent = Boolean(subheading) && Boolean(description?.description);
+  
+  const getMaxWidthForMedia = () => {
+    if(canShowMediaWidthFull) return "100%";
+    return (context.title === COMPANY_PAGE && arrayLength === 9) ? 300 : 900;
+  }
+  const getAspectRatio = () => {
+    if (canShowMediaWidthFull) return 16 / 6;
+    return 16 / 9;
+  }
+  
+  const SmallCardComponent = () => (
+    <div className={classes.smallCard}>
+      <Text className={classes.subheading}>
+        {subheading}
+      </Text>
+      <Text className={classes.description}>
+        {description.description}
+      </Text>
+    </div>
+  );
+
   // TODO: handle any
   let media: any = asset;
   if (resource?.media) {
@@ -210,8 +233,8 @@ export const CCard: FC<ArticleProps> = ({
           }
           fluid
           contain
-          maw={context.title === COMPANY_PAGE && arrayLength === 9 ? 300 : 900}
-          ratio={16 / 9}
+          maw={getMaxWidthForMedia()}
+          ratio={getAspectRatio()}
           data-media-item={true}
         >
           <Asset objectFit="contain" asset={media} />
@@ -234,7 +257,7 @@ export const CCard: FC<ArticleProps> = ({
         data-has-asset={Boolean(media)}
       ></Box>
       <Paper
-        className={classes.paper}
+        className={cx(classes.paper,{[classes.smallPaper]: isSubHeadingAndDescriptionPresent})}
         style={{
           background: getColorFromStylingOptions(
             resource?.stylingOptions?.background,
@@ -316,6 +339,10 @@ export const CCard: FC<ArticleProps> = ({
                       {item.heading}
                     </Badge>
                   ))
+                }
+
+                {isSubHeadingAndDescriptionPresent && 
+                  <SmallCardComponent />
                 }
 
               {body && renderRichText(body, options)}

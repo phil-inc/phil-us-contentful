@@ -22,6 +22,7 @@ type ExpandedProps = {
   fullWidth?: boolean;
   backgroundAssetImage?: TAsset;
   leftBackgroundAssetImage?: TAsset;
+  className?: string;
 };
 
 /**
@@ -43,13 +44,14 @@ const Expanded: React.FC<ExpandedProps> = ({
   fullWidth = false,
   backgroundAssetImage = null,
   leftBackgroundAssetImage = null,
+  className = "",
   ...rest
 }) => (
   <Container
     style={{ background, minHeight }}
     id={id}
     fluid
-    className={classes.container}
+    className={`${classes.container} ${className}`}
     py={py}
     pt={pt}
     pb={pb}

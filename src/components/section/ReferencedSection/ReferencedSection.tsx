@@ -1,11 +1,13 @@
 import React from "react";
 import cx from "clsx";
-import { Button, Group, Anchor, Accordion, Text, Container, Divider, Grid, GridCol } from "@mantine/core";
+import { Button, Group, Anchor, Accordion, Text, Container, Divider, Box } from "@mantine/core";
+import { IconArrowRight } from "@tabler/icons";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {
   type IReferencedSection,
   ReferenceTypeEnum,
+  RenderOptions,
   ResourceBlocksEnum,
 } from "types/section";
 import { getLink } from "utils/getLink";
@@ -13,6 +15,7 @@ import slugify from "slugify";
 import { getWindowProperty } from "utils/getWindowProperty";
 import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
+import { getIdSlugifyForDiv } from "utils/utils";
 import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
 import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE,OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
@@ -22,6 +25,13 @@ import { getSectionColors } from "./RenderResource";
 
 import * as classes from "./referencedSection.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
+import Asset from "components/common/Asset/Asset";
+import InfoCircleIcon from "assets/images/icons/component/info-circle";
+import CommonReferencedSectionBody from "components/section/ReferencedSection/CommonReferencedSectionBody/CommonReferencedSectionBody";
+
+import { useIsSmallDevice } from "hooks/useIsSmallDevice";
+
+import { REFERENCE_SECTION } from "constants/global.constant";
 
 type ReferencedSectionProps = {
   section: IReferencedSection;
@@ -29,6 +39,7 @@ type ReferencedSectionProps = {
   isPreviousBackgroundPure: boolean;
   addBorder: boolean
   index?: number;
+  sectionIndex?: number;
 };
 
 /**
@@ -42,12 +53,14 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   isEmbedFormTemplate,
   isPreviousBackgroundPure,
   index,
+  sectionIndex=0
 }) => { 
   const params = new URLSearchParams(getWindowProperty("location.search", {}));
   const GRID_COLUMNS = 12;
   const SPAN_LG = GRID_COLUMNS / section.references.length;
   const { link, isExternal } = getLink(section);
   const context = React.useContext(PageContext);
+  const isSmallDevice = useIsSmallDevice();
 
   React.useEffect(() => {
     try {
@@ -148,6 +161,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 
   const isProviderPage = context.title === HCP_PAGE;
   const isHomePageFirstCardSection =context.title === HOME && section.referenceType === ReferenceTypeEnum["Card Section"];
+  const topImage = section?.topAsset;
+  const asset = section?.asset;
+  const assetMobile = section?.assetForMobile;
 
   let sectionContent;
   if (context.title === FIELD_PAGE) {
@@ -205,9 +221,76 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               textColor={textColor}
               index={index}
             />
-          )}
+          )
+        }
 
-        <ReferencedSectionBody getSpan={getSpan} section={section}/>
+
+        {/* TODO: if possible use the contentful here */}
+        {section?.eyebrowHeading === "DIGITAL HUB" && (
+          <div className={classes.extraLinkContainer}>
+            <Anchor
+              className={classes.greenAnchor}
+              href={"https://phil.us/patients/"}
+            >
+              <div className={`anchor-text ${classes.leftColumnLink}`}>
+                {"Explore Patient Experience"}
+                <IconArrowRight size={16} />
+              </div>
+            </Anchor>
+            <Anchor
+              className={classes.greenAnchor}
+              href={"https://phil.us/providers/#sending-a-script-to-philrx-is-easy"}
+            >
+              <div className={`anchor-text ${classes.leftColumnLink}`}>
+                {"Explore HCP Experience"}
+                <IconArrowRight size={16} />
+              </div>
+            </Anchor>
+          </div>
+        )}
+
+        <Box 
+          className={cx({[classes.innerBgSection]: Boolean(section?.innerBackgroundStyling)})}
+          style={{background: section?.innerBackgroundStyling?.background ? getColorFromStylingOptions(section.innerBackgroundStyling.background) : undefined}} 
+        >
+          <ReferencedSectionBody getSpan={getSpan} section={section}/>
+
+          {/* New references section */}
+          { Boolean(section?.referenceSecond) && Boolean(section?.secondReferenceType) && Boolean(section?.referenceSecondRenderOptions) &&
+            <CommonReferencedSectionBody 
+              header={section.header  }
+              references={section.referenceSecond ?? []}
+              referenceType={section.secondReferenceType as ReferenceTypeEnum | ResourceBlocksEnum}
+              renderOptions={section.referenceSecondRenderOptions as RenderOptions}
+              v2flag={section.v2flag}
+              getSpan={getSpan}
+              order={REFERENCE_SECTION.TWO}
+            />
+          }
+          { Boolean(section?.referenceThird) && Boolean(section?.thirdReferenceType) && Boolean(section?.referenceThirdRenderOptions) &&
+            <CommonReferencedSectionBody 
+              header={section.header  }
+              references={section.referenceThird ?? []}
+              referenceType={section.thirdReferenceType as ReferenceTypeEnum | ResourceBlocksEnum}
+              renderOptions={section.referenceThirdRenderOptions as RenderOptions}
+              v2flag={section.v2flag}
+              getSpan={getSpan}
+              order={REFERENCE_SECTION.TWO}
+            />
+          }
+          { Boolean(section?.referenceFourth) && Boolean(section?.fourthReferenceType) && Boolean(section?.referenceFourthRenderOptions) &&
+            <CommonReferencedSectionBody 
+              header={section.header  }
+              references={section.referenceFourth ?? []}
+              referenceType={section.fourthReferenceType as ReferenceTypeEnum | ResourceBlocksEnum}
+              renderOptions={section.referenceFourthRenderOptions as RenderOptions}
+              v2flag={section.v2flag}
+              getSpan={getSpan}
+              order={REFERENCE_SECTION.TWO}
+            />
+          }
+        </Box>
+
       </>
     );
   }
@@ -216,7 +299,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     <>
       {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     <Expanded
-      id={slugify(section.header ?? section.id, { lower: true, strict: true })}
+      id={getIdSlugifyForDiv(section?.eyebrowHeading || "")}
       background={
         section.v2flag
           ? getColorFromStylingOptions(section?.stylingOptions?.background)
@@ -232,11 +315,30 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       data-is-home-page-brand-outcome={
         isBrandOutcomeCardSection && context.title === HOME
       }
+      data-referenceType={section.referenceType}
       pt={section.header?.length > 0 ? undefined : 0}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
+      className = {classes.scrollSection}
     >
-      <Container className={cx(classes.container, classes.innerContainer)} size={"xl"}>
-      {context.title === HOME &&
+      <Container 
+        id={slugify(section.header ?? section.id, { lower: true, strict: true })}
+        className={cx(classes.container, classes.innerContainer, {[classes.topPaddingWithoutHeader]: (!section.header?.length) && section.referenceType === ReferenceTypeEnum["Card Or Image"] && context.title === PAGES_TITLE.SOLUTION_MAIN})} 
+        size={"xl"}
+      >
+        {section?.eyebrowHeading && (
+          <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>
+            {section.eyebrowHeading}
+          </Text>
+        )}
+        {topImage &&
+        <div className={classes.topImage}>
+          <Asset
+            asset={topImage}
+            objectFit="contain"
+          />
+         </div>
+        }
+        {context.title === HOME &&
         section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
           style={{ display: "flex", flexDirection: "column", gap: "20px" }}
@@ -255,7 +357,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           </div>
         )}
 
-        {(context.title === OUR_SOLUTIONS || context.title === PAGES_TITLE.PHIL_DIRECT) && section.referenceType === ReferenceTypeEnum["Card Section"] && (
+        {(context.title === OUR_SOLUTIONS || context.title === PAGES_TITLE.PHIL_DIRECT || context.title === PAGES_TITLE.SOLUTION_MAIN) && section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
             style={{ display: "flex", justifyContent:"center"}}
           >
@@ -263,7 +365,34 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               {section?.header || ''}
             </Text>
           </div>
-            )}
+        )}
+        {
+          isSmallDevice 
+          ? (assetMobile &&
+            <div className={classes.topImage}>
+              <Asset
+                asset={assetMobile}
+                objectFit="contain"
+                />
+            </div>
+            )
+            :(asset &&
+              <div className={classes.topImage}>
+              <Asset
+                asset={asset}
+                objectFit="contain"
+                />
+            </div>
+          )
+        }
+        {section?.assetCaption && 
+          <Text className={classes.assetCaption}>
+            <span className={classes.infoIcon}>
+              <InfoCircleIcon size={18} />
+            </span>
+            {section.assetCaption}
+          </Text>
+        }
 
           {sectionContent}
 
@@ -278,31 +407,44 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               >
                 <Text>{section.subHeading.subHeading}</Text>
               </Group>
-            )}
+            )
+          }
+            
+          {/* parent div for button */}
+          <div
+            style={{background: section?.divColorOfBtnParent?.background ? getColorFromStylingOptions(section.divColorOfBtnParent.background) : undefined}} 
+            className={cx({[classes.parentBtnDiv]: Boolean(section?.divColorOfBtnParent)})}
+          >
 
-          {/* bottom buttons */}
-          {Boolean(section.buttonText?.length) &&
-            (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
-              <Group justify="center" mt={isFaqSection ? 80 : 44}>
-                {isExternal ? (
-                  <Anchor 
+            {/* bottom buttons */}
+            {Boolean(section.buttonText?.length) &&
+              (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
+                <Group justify="center" mt={isFaqSection ? 80 : 44}>
+                  {isExternal ? (
+                    <Anchor 
                     className={classes.externalLink}
                     href={link}
                     target="_blank"
-                  >
-                    <Button variant="philDefault">{section.buttonText}</Button>
-                  </Anchor>
-                ) : (
-                  <Link className={classes.internalLink} to={link}>
-                    <Button variant="philDefault">{section.buttonText}</Button>
-                  </Link>
-                )}
-              </Group>
-            )}
+                    >
+                      <Button variant="philDefault">{section.buttonText}</Button>
+                    </Anchor>
+                  ) : (
+                    <Link className={classes.internalLink} to={link}>
+                      <Button variant="philDefault">{section.buttonText}</Button>
+                    </Link>
+                  )}
+                </Group>
+              )}
+              {section?.belowSubHeading?.belowSubHeading && (
+                <Text className={classes.belowSubHeading}>
+                  {section.belowSubHeading.belowSubHeading}
+                </Text>
+              )}
+            </div>
 
           {/* philrx testimonial */}
-          {section.header === "What PhilRx Patients & Providers Say"  && (
-          <div className={classes.customTestiominalFooter}>
+          {(section.header === "What PhilRx Patients & Providers Say"  || section.header === "What PHIL Patients & Providers Say") && (
+            <div className={classes.customTestiominalFooter}>
             <div className="trustpilot-widget" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%">
               <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>
             </div>

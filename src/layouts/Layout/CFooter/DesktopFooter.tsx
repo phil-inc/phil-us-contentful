@@ -218,6 +218,7 @@ const DesktopFooter: React.FC<TDesktopFooter> = ({ pages, footer }) => {
                           section.header ?? section.title,
                           page.slug,
                           section.slug,
+                          section?.__typename,
                         );
 
                         return (

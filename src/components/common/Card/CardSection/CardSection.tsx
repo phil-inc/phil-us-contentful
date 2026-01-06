@@ -66,6 +66,18 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
           </Title>
         );
       },
+      [BLOCKS.HEADING_4](node, children) {
+        return (
+          <Title
+            order={4}
+            data-context={context.title}
+            className={classes.heading4}
+            lh={"normal"}
+          >
+            {children}
+          </Title>
+        );
+      },
     },
   };
  
@@ -124,27 +136,29 @@ export const CardSection: FC<ArticleProps> = ({ resource, sectionHeader }) => {
               {
                   hyperlink?.linkLabel === "Read Press Release"
               }
-              <div>
-                {isHeaderNameMedicationAccessSection ? (
-                  <div className={classes.anchorWrapper}>
-                    <span className={cx(classes.anchortext)}>
-                      {hyperlink?.linkLabel}
-                    </span>
-                    <span className={classes.iconWrapper}>
-                      <IconArrowRight size={16} />
-                    </span>
-                  </div>
-                ) : (
-                  <Anchor
-                    href={getLink()}
-                  >
-                    <div className="anchor-text">
-                      {hyperlink?.linkLabel}
-                      <IconArrowRight size={16} />
+              {hyperlink?.linkLabel &&
+                <div>
+                  {isHeaderNameMedicationAccessSection ? (
+                    <div className={classes.anchorWrapper}>
+                      <span className={cx(classes.anchortext)}>
+                        {hyperlink?.linkLabel}
+                      </span>
+                      <span className={classes.iconWrapper}>
+                        <IconArrowRight size={16} />
+                      </span>
                     </div>
-                  </Anchor>
-                )}
-              </div>
+                  ) : (
+                    <Anchor
+                      href={getLink()}
+                    >
+                      <div className="anchor-text">
+                        {hyperlink?.linkLabel}
+                        <IconArrowRight size={16} />
+                      </div>
+                    </Anchor>
+                  )}
+                </div>
+              }
             </Stack>
           </Grid.Col>
         </Grid>

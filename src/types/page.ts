@@ -3,6 +3,7 @@ import { TAsset } from 'types/asset';
 
 export type ContentfulPage = {
   id: string;
+  __typename?: string;
   description?: string;
   sections: Array<ISection | IReferencedSection | ITextandTextColumns | ITextandTextColumnsWithFooterSection>;
   title: string;
@@ -10,6 +11,7 @@ export type ContentfulPage = {
   noindex: boolean;
   slug: string;
   navbarTitle?: string;
+  canShowNew?: boolean;
 };
 
 export type ContenfulHeaderLogo = {

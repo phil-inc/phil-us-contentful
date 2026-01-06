@@ -8,6 +8,7 @@ import {
   Burger,
   Accordion,
   List,
+  Badge,
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons";
 import Asset from "components/common/Asset/Asset";
@@ -143,7 +144,8 @@ const CDrawer: React.FC = () => {
                         page.title,
                         section.header ?? section.title,
                         page.slug,
-                        section.slug
+                        section.slug,
+                        section?.__typename,
                       );
 
                       return (
@@ -169,6 +171,17 @@ const CDrawer: React.FC = () => {
                             ) : (
                               <Link to={path} className={classes.link}>
                                 {section?.navbarTitle ?? section.header ?? section.title}
+                                {section?.canShowNew  && 
+                                  <Badge
+                                    key={section.id}
+                                    className={classes.badge}
+                                    color="#EDBE3D"
+                                    size="lg"
+                                    radius="md"
+                                  >
+                                    NEW
+                                  </Badge>
+                                }
                               </Link>
                             )}
                           </List.Item>

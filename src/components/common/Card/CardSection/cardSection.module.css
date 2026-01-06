@@ -99,6 +99,10 @@
 	}
 }
 
+.heading4{
+	font-size: 24px;
+}
+
 .gridInner,
 .gridRoot {
 	height: 100%;

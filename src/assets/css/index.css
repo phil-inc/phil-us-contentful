@@ -16,6 +16,13 @@
   --transition-button-bg: outline 0.3s ease-out, background-color 0.3s ease, color 0.3s ease;
 }
 
+.darkText {
+	color: #000000;
+}
+.lightText {
+	color: var(--primay-white-color);
+}
+
   .home{
     .phil-Carousel-slide{
       --carousel-slide-size: calc(100% - var(--carousel-slide-gap));
@@ -217,5 +224,21 @@
     .hs-button {
       width: 100%;
     }
+  }
+}
+
+.phil-singleSlider{
+
+  .sliderLabel{
+    margin-top: 4px;
+  }
+
+  .phil-Slider-markWrapper:first-of-type .sliderLabel {
+    transform: translateX(0px) translateY(12px);
+  }
+
+
+  .phil-Slider-markWrapper:last-of-type .sliderLabel {
+    transform: translateX(-77%) translateY(12px);
   }
 }

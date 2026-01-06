@@ -7,6 +7,10 @@ import parse, {
 import { sanitize } from "isomorphic-dompurify";
 import { PHIL_TRUSTPILOT_IDENTIFIER } from "constants/identifiers";
 
+import TrustpilotWidget from "components/common/TrustpilotWidget/TrustPilotWidget";
+
+import { extractTrustpilotHtmlFromString } from "utils/extractTrustpilotHtml";
+
 type ParseContentProps = {
   content?: string;
 };
@@ -51,6 +55,7 @@ export const ParseContent: FC<ParseContentProps> = ({ content }) => {
 
   const sanitizedContent = sanitize(content ?? "");
   const parsedContent = parse(sanitizedContent, parsingOptions);
+  const trustpilotHtml = extractTrustpilotHtmlFromString(sanitizedContent);
 
   useEffect(() => {
     const elementId = extractIdFromElement(parsedContent);
@@ -68,5 +73,16 @@ export const ParseContent: FC<ParseContentProps> = ({ content }) => {
     }
   }, [parsedContent]);
 
-  return <div>{parsedContent}</div>;
+  return <div>
+         {trustpilotHtml 
+         ?<>
+            <TrustpilotWidget />
+              <div
+                dangerouslySetInnerHTML={{ __html: trustpilotHtml }}
+                data-trustpilot-rendered
+              />
+          </>
+        :parsedContent
+        }
+    </div>;
 };

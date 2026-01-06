@@ -5,6 +5,7 @@ import type {
 } from "gatsby-source-contentful/rich-text";
 import type { TResource } from "./resource";
 import { Hyperlink } from "types/modal";
+import { ContentfulButton } from "layouts/Layout/CHeader/CHeader";
 
 type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns | Text and Text Columns with Footer";
 
@@ -18,6 +19,7 @@ export type MediaItem = {
   media?: TAsset;
   youtubeLink?: string;
   emdedForm?: BodyType;
+  canShowMediaWidthFull?: boolean;
 };
 
 export type StylingOptions = {
@@ -42,8 +44,10 @@ export type RenderOptions = {
 
 export type ISection = {
   id: string;
+  __typename?: string;
   sectionType: SectionType;
   header: string;
+  canShowHeader?: boolean;
   youtubeVideoUrl?: string;
   title?:string;
   slug?: string;
@@ -83,7 +87,7 @@ export type ISection = {
     youtubeLink: string;
     emdedForm: BodyType;
   };
-
+  
   stylingOptions?: StylingOptions;
 
   renderOptions?: RenderOptions;
@@ -92,10 +96,16 @@ export type ISection = {
   addBorder: boolean;
   isReverse: boolean;
   backgroundAssetImage?: TAsset;
+  topBackgroundAsset?: TAsset;
   canShowAssetImageAlignToWall?: boolean;
-  sectionTitle?: string;
   showBottomBorder?: boolean;
   canShowTextColumnToRight?: boolean;
+  assetForMobile?: TAsset;
+  assetCaption?: string;
+  eyebrowHeading?: string;
+  headerDescription?: { 
+    headerDescription: string 
+  }
 };
 
 export enum ResourceBlocksEnum {
@@ -134,8 +144,13 @@ export enum ReferenceTypeEnum {
   "Card Section" = "Card Section",
   "Commitment Card" = "Commitment Card",
   "Featured Insights" = "Featured Insights",
+
   "Case Study" = "Case Study",
   "People Behind Phil" = "People Behind Phil",
+  "Card Or Image" = "Card Or Image",
+  "Bullet list" = "Bullet list",
+  "Metric card" = "Metric card",
+  "Single line Metric card" = "Single line Metric card",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
@@ -147,8 +162,10 @@ export type Metadata = {
 export type IReferencedSection = {
   [x: string]: any;
   id: string;
+  __typename?: string;
   title: string;
   metaDescription: string;
+  topAsset?: TAsset;
   hideHeader: boolean;
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
   header: string;
@@ -157,6 +174,9 @@ export type IReferencedSection = {
     id: string;
     subHeading: string;
   };
+  asset?: TAsset;
+  assetForMobile?: TAsset;
+  assetCaption?: string;
   references: TResource[];
   metadata?: Metadata;
   buttonText?: string;
@@ -185,8 +205,8 @@ export type IReferencedSection = {
       "generateStaticPage" | "id" | "heading" | "externalLink" | "internalLink"
     >
   >;
-
   stylingOptions?: StylingOptions;
+  addBorder: boolean;
   renderOptions?: RenderOptions;
   backgroundAssetImage?: TAsset;
   canAlsoBeUseAsAutoCarousel?: boolean;
@@ -196,7 +216,36 @@ export type IReferencedSection = {
     belowSubHeading: string;
   };
   leftBackgroundAssetImage?: TAsset;
+  divColorOfBtnParent?: StylingOptions;
+  innerBackgroundStyling?: StylingOptions;
+  referenceSecond?: TResource[];  
+  secondReferenceType?: ReferenceType;
+  referenceSecondRenderOptions?: RenderOptions;
+  referenceThird?: TResource[];  
+  thirdReferenceType?: ReferenceType;
+  referenceThirdRenderOptions?: RenderOptions;
+  referenceFourth?: TResource[];  
+  fourthReferenceType?: ReferenceType;
+  referenceFourthRenderOptions?: RenderOptions;
+  eyebrowHeading?: string;
+  announcementItems: AnnouncementItems
 };
+
+  export type AnnouncementItems = Array<
+    Pick<
+      TResource,
+      | "generateStaticPage"
+      | "id"
+      | "heading"
+      | "externalLink"
+      | "internalLink"
+      | "body"
+      | "asset"
+      | "buttonText"
+    >
+  >;
+  
+
 
 export type Reference = {
   id: string;
@@ -210,6 +259,7 @@ export type ReferenceBodyType = {
 
 export type ITextandTextColumns = {
   id: string;
+  __typename?: string;
   heading: string;
   subHeadingText: string;
   body?: BodyType;
@@ -225,6 +275,7 @@ export type ITextandTextColumns = {
 
 export type ITextandTextColumnsWithFooterSection = {
   id: string;
+  __typename?: string;
   title?: string;
   stylingOptions?: StylingOptions;
   leftColumn: ReferenceBodyType;
@@ -253,4 +304,24 @@ export type IContentfulList = {
   subheading: string | null;
   choose: boolean;
   anchorLink: string;
+}
+
+export type ISys = {
+    contentType: {
+      sys: {
+        type: string;
+        id: string;
+      };
+    };
+  };
+
+
+export type IContentfulButtonGroup = {
+  __typename: string;
+  id: string;
+  contentful_id: string;
+  title: string;
+  button1: ContentfulButton;
+  button2: ContentfulButton;
+  sys: ISys;
 }

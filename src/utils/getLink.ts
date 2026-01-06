@@ -45,15 +45,13 @@ export const getLink = (
         );
       }
     } else if (section.internalLink?.sys?.contentType?.sys?.id === "page") {
+        const str = (section as IReferencedSection)?.internalLink?.slug ?? section.internalLink.title!;
+        const hasSlash = str.includes("/");
+        const slug = hasSlash
+          ? slugify(str, { lower: true, remove: /[^a-zA-Z0-9/ ]/g  })
+          : slugify(str, { lower: true, strict: true });
       link.push(
-        slugify(
-          (section as IReferencedSection)?.internalLink?.slug ??
-            section.internalLink.title!,
-          {
-            lower: true,
-            strict: true,
-          },
-        ),
+        slug,
       );
     } else if (
       section.internalLink?.sys?.contentType?.sys?.id === "resource" ||

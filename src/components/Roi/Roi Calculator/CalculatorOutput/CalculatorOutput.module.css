@@ -1,0 +1,43 @@
+.calculatorOutput{
+    padding: 32px;
+    background: linear-gradient(90deg, #00827E 0%, #005E5B);
+    border: 2px solid #D9D9D9;
+    border-radius: 12px;
+    color: white;
+    height: 100%;
+   
+
+    .heading{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 27px;
+        
+        .roiValue{
+            font-size: 52px;
+            font-weight: 700;
+        }
+    }
+    .subHeading{
+        padding: 27px 0;
+        border-bottom: 1px solid #9E9E9E;
+
+        .subHeadingTitle{
+            margin-bottom: 24px;
+        }
+        .grossValue{
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+    }
+
+    .cardSection{
+        position: sticky;
+        top: calc(var(--announcment-bar-height) + 10px);
+    }
+
+     .title{
+        font-size: 18px;
+        font-style: Lato;
+    }
+}

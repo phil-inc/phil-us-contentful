@@ -41,6 +41,10 @@
 		color: #FFFFFF;
 
 	}
+
+	&[data-context='Solution'], &[data-context='Our Solution'] {
+		color: var(--primary-green-color, #00827E);
+	}
 }
 
 .homeTitle {
@@ -70,6 +74,9 @@
 		font-size: 18px;
 		text-align: center;
 		color: #FFFFFF;
+	}
+	&[data-context='Solution'] {
+		text-align: center;
 	}
 }
 

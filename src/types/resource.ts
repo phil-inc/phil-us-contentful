@@ -21,6 +21,7 @@ export type TResource = {
   subheading: string;
   noindex?: boolean;
   metadata?: Metadata;
+  icon?: TAsset;
   description: {
     id: string;
     description: string;
@@ -95,6 +96,9 @@ export type TResource = {
   renderOptions?: RenderOptions;
   isImageObjectContain?: boolean;
   publishDate?: string;
+  canShowImageOnly?: boolean;
+  isFirstItem?: boolean;
+  canShowMediaWidthFull?: boolean; // this is in the media item not in resource directly
 };
 
 export type DownloadableAsset = {
