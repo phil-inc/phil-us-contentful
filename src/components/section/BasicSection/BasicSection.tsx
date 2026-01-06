@@ -192,6 +192,19 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                   </Anchor>
                 </div>
               }
+              {index === 0 && context.title === PAGES_TITLE.PHIL_DIRECT && 
+                <div className={classes.greenAnchorContainer}>
+                  <Anchor
+                    className={classes.greenAnchor}
+                    href={"https://phil.us/solution/core"}
+                  >
+                    <div className={`anchor-text ${classes.leftColumnLink}`}>
+                      {"Explore PHIL Core"}
+                      <IconArrowRight size={16} />
+                    </div>
+                  </Anchor>
+                </div>
+              }
             </div>
             );
           }
@@ -307,7 +320,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           </Title>
         );
       },
-      
+
       [INLINES.HYPERLINK](node, children) {
         const canShowArrowIcon = context?.title === "Company" && node?.content[0]?.value === "Explore Open Roles";
         return (
