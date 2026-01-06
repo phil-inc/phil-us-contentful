@@ -72,6 +72,13 @@
   }
 }
 
+.secondTitle{
+    &[data-context='Solution'][data-index='2']{
+      text-align: center;
+      margin: 80px auto 40px
+    }
+}
+
 .chevron {
   margin-left: 0;
   margin-right: 16px;

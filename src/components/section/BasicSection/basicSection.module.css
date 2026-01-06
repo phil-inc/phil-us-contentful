@@ -130,6 +130,14 @@
 		}
 }
 
+.heading5{
+	font-family: Raleway;
+	font-weight: 800;
+	color: #09AAA5;
+	font-size: 18px;
+	margin-bottom: 24px;
+}
+
 .basicSectionContainer {
 	position: relative;
 	z-index: 2;
