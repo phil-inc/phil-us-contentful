@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "clsx";
-import { Button, Group, Anchor, Accordion, Text, Container, Divider, Box } from "@mantine/core";
+import { Button, Group, Anchor, Accordion, Text, Container, Divider, Box, Title } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
@@ -257,15 +257,27 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 
           {/* New references section */}
           { Boolean(section?.referenceSecond) && Boolean(section?.secondReferenceType) && Boolean(section?.referenceSecondRenderOptions) &&
-            <CommonReferencedSectionBody 
-              header={section.header  }
-              references={section.referenceSecond ?? []}
-              referenceType={section.secondReferenceType as ReferenceTypeEnum | ResourceBlocksEnum}
-              renderOptions={section.referenceSecondRenderOptions as RenderOptions}
-              v2flag={section.v2flag}
-              getSpan={getSpan}
-              order={REFERENCE_SECTION.TWO}
-            />
+            <>
+              {Boolean(section?.secondReferenceTitle) && 
+                <Title
+                  data-context={context.title}
+                  className={classes.secondTitle}
+                  data-index={REFERENCE_SECTION.TWO}
+                  order={2}
+                >
+                  {section.secondReferenceTitle}
+                </Title>
+                }
+              <CommonReferencedSectionBody 
+                header={section.header  }
+                references={section.referenceSecond ?? []}
+                referenceType={section.secondReferenceType as ReferenceTypeEnum | ResourceBlocksEnum}
+                renderOptions={section.referenceSecondRenderOptions as RenderOptions}
+                v2flag={section.v2flag}
+                getSpan={getSpan}
+                order={REFERENCE_SECTION.TWO}
+                />
+            </>
           }
           { Boolean(section?.referenceThird) && Boolean(section?.thirdReferenceType) && Boolean(section?.referenceThirdRenderOptions) &&
             <CommonReferencedSectionBody 

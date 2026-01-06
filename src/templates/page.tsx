@@ -1504,7 +1504,204 @@ export const query = graphql`
               id
               canShowMediaWidthFull
             }
+            ... on ContentfulResource {
+              id
+              isFaq
+              isImageObjectContain
+              externalLink
+              internalLink {
+                ... on ContentfulPage {
+                  slug
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+              buttonText
+              hyperlink {
+                contentful_id
+                id
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  ... on ContentfulPage {
+                    __typename
+                    slug
+                    id
+                    title
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              heading
+              subheading
+              hubspotEmbed {
+                raw
+              }
+              isHubspotEmbed
+              isInsertSnippet
+              codeSnippet {
+                codeSnippet
+              }
+              description {
+                id
+                description
+              }
+
+              body {
+                raw
+                references {
+                  __typename
+                  ... on ContentfulAsset {
+                    id
+                    contentful_id
+                    description
+                    gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+                    file {
+                      contentType
+                      details {
+                        size
+                      }
+                      url
+                    }
+                    sys {
+                      type
+                    }
+                  }
+                  ... on ContentfulButton {
+                    id
+                    contentful_id
+                    buttonText
+                    buttonStyle
+                    link {
+                      linkLabel
+                      name
+                      externalUrl
+                      internalContent {
+                        ... on ContentfulPage {
+                          id
+                          title
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulReferencedSection {
+                          id
+                          page {
+                            title
+                          }
+                          header
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulSection {
+                          id
+                          page {
+                            title
+                          }
+                          header
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulResource {
+                          id
+                          heading
+                          contentful_id
+                          slug
+                          isFaq
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulEventRegistration {
+                          id
+                          contentful_id
+                          slug
+                          heading
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    v2flag
+                  }
+                }
+              }
+              author {
+                id
+                name
+                authorTitle
+                bio {
+                  raw
+                }
+                avatar {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+              }
+              stylingOptions {
+                background
+                extraColor
+                id
+                name
+              }
+            }
           }
+          secondReferenceTitle
           referenceSecondRenderOptions {
             name
             id

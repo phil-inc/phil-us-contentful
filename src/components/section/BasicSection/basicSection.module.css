@@ -67,7 +67,6 @@
 
 	&[data-context="Our Solution"][section-index="4"] {
 		font-size: 40px;
-		margin-bottom: 100px;
 		text-align: center;
 	}
 
@@ -128,6 +127,14 @@
 		&[data-context='Company'],&[data-context='Solution'],&[data-context='Phil Direct'],&[data-context='Our Solution'] {
 			font-size: 40px;
 		}
+}
+
+.heading5{
+	font-family: Raleway;
+	font-weight: 800;
+	color: #09AAA5;
+	font-size: 18px;
+	margin-bottom: 24px;
 }
 
 .basicSectionContainer {
