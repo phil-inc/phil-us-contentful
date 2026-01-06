@@ -218,7 +218,8 @@ export type IReferencedSection = {
   leftBackgroundAssetImage?: TAsset;
   divColorOfBtnParent?: StylingOptions;
   innerBackgroundStyling?: StylingOptions;
-  referenceSecond?: TResource[];  
+  referenceSecond?: TResource[];
+  secondReferenceTitle?: string;
   secondReferenceType?: ReferenceType;
   referenceSecondRenderOptions?: RenderOptions;
   referenceThird?: TResource[];  

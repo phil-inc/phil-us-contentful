@@ -300,6 +300,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         );
       },
 
+      [BLOCKS.HEADING_5](node, children) {
+        return (
+          <Title order={5} className={classes.heading5}>
+            {children}
+          </Title>
+        );
+      },
+      
       [INLINES.HYPERLINK](node, children) {
         const canShowArrowIcon = context?.title === "Company" && node?.content[0]?.value === "Explore Open Roles";
         return (
@@ -342,7 +350,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   );
   const isSolutionEmpowerFieldTeamsSection = section?.header === "Empower Field Teams with Real-Time Insights";
   const isSolutionGainEndToEndVisibilitySection = section?.header === "Gain End-to-End Visibility Across the Patient Journey";
-  const isSolutionDrivingBrandSection = section?.header === "Driving Brand Success Through Outcomes-Based Partnership PHIL’s Client Insights Team";
+  const isSolutionDrivingBrandSection = section?.header === "Driving Brand Success Through Outcomes-Based Partnership";
 
   let formId = "";
   let portalId = "";
