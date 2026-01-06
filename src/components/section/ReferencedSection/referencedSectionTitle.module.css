@@ -62,7 +62,7 @@
 			align-items: start;
 		}
 
-		&[data-index='4']&[data-context='Phil Direct'] {
+		&[section-index='5']&[data-context='Phil Direct'] {
 			align-items: flex-start;
 		}
 	}

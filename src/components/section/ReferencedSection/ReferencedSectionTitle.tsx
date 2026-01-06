@@ -14,13 +14,15 @@ type ReferencedSectionTitleProps = {
   isEmbedFormTemplate: boolean;
   textColor: string;
   index?: number;
+  sectionIndex: number;
 };
 
 const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
   section,
   isEmbedFormTemplate,
   textColor,
-  index
+  index,
+  sectionIndex,
 }) => {
   const theme = useMantineTheme();
   const { title } = useContext(PageContext);
@@ -97,6 +99,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
           data-reference-type={section.referenceType}
           data-context={title}
           data-index={index}
+          section-index={sectionIndex}
         >
           {showHeader && renderTitle(section.header, 2, classes.heading)}
 

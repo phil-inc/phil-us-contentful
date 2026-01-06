@@ -188,6 +188,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               isEmbedFormTemplate={isEmbedFormTemplate}
               section={section}
               textColor={textColor}
+              sectionIndex={sectionIndex}
             />
           </Accordion.Control>
           <Accordion.Panel>
@@ -220,6 +221,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               isEmbedFormTemplate={isEmbedFormTemplate}
               textColor={textColor}
               index={index}
+              sectionIndex={sectionIndex}
             />
           )
         }
