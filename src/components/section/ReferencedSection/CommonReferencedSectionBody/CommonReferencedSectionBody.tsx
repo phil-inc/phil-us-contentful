@@ -5,7 +5,6 @@ import useDeviceType from "hooks/useView";
 import React, { useContext } from "react";
 import { TResource } from "types/resource";
 import {
-  ReferenceType,
   ReferenceTypeEnum,
   RenderOptions,
   ResourceBlocksEnum,
@@ -58,6 +57,72 @@ const CommonReferencedSectionBody: React.FC<props> = ({
     if (referenceType === ReferenceTypeEnum["Stepper Cards"]) return 0;
     return 36;
   };
+
+  if (renderOptions?.layoutOptions.shouldRenderCarousel) {
+    const columns = renderOptions.layoutOptions.numberOfColumns ?? 1;
+    const getSlideSize = () => {
+      
+      return {
+        base: "95%",
+        sm: `calc(50% - 16px)`,
+        md:
+          referenceType === "Testimonial"
+            ? `${95 / columns}%`
+            : "calc50% - 32px)",
+        xl: `${95 / columns}%`,
+      };
+    };
+
+    return (
+      <Container className="carousel__container" fluid>
+        <Carousel
+          classNames={{
+            root: classes.root,
+            container: classes.carouselContainer,
+            controls: classes.controls,
+            control: classes.control,
+          }}
+          mt={80}
+          slideGap={{ base: 16, md: 32 }}
+          includeGapInSize={false}
+          draggable={false}
+          previousControlIcon={<IconChevronLeft size={24} />}
+          nextControlIcon={<IconChevronRight size={24} />}
+          slideSize={getSlideSize()}
+          align={"start"}
+          loop={false}
+          slidesToScroll={
+            referenceType === "Testimonial"
+              ? xs || sm || md
+                ? "auto"
+                : columns
+              : 1
+          }
+          data-has-media-item={references.some(
+            (reference) =>
+              reference?.sys?.contentType?.sys?.id === "mediaItem" ?? false,
+          )}
+          data-context = {title}
+        >
+          {references.map((resource, index, array) => (
+            <Carousel.Slide key={resource.id + "carouselItem"}>
+              <RenderResource
+                arrayLength={array.length}
+                index={index}
+                referenceType={referenceType}
+                resource={resource}
+                sectionHeader={header}
+                isEmployeeTag={false}
+              />
+            </Carousel.Slide>
+            )
+          )}
+        
+        </Carousel>
+      
+      </Container>
+    );
+  }
 
   return (
     <Grid
