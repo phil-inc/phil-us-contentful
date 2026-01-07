@@ -41,6 +41,7 @@ const SingleSlider: React.FC<SingleSliderProps> = ({ sliderProps }) => {
                   textAlign: 'left',
                 },
               }}
+              events={{ hover: true, focus: true, touch: true }}   
               withArrow
             >
               <span className={classes.icon}>
