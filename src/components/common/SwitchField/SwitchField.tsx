@@ -31,6 +31,7 @@ const SwitchField: React.FC<SwitchFieldProps> = ({ switchData }) => {
                   textAlign: 'left',
                 },
               }}
+              events={{ hover: true, focus: true, touch: true }}   
               withArrow
             >
               <span className={classes.icon}>
