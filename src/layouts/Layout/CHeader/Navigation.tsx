@@ -7,6 +7,7 @@ import { Badge } from "@mantine/core";
 import * as classes from "./navigation.module.css";
 import { getPathForSectionAndPage } from "utils/links";
 import { PATH, SOLUTION_HEADER_SLUG } from "constants/routes";
+import { PAGES_TITLE } from "constants/page";
 
 export function Navigation({ pages }: { pages: ContentfulPage[] }) {
   const [visibleIndex, setVisibleIndex] = useState<number | null>(null);
@@ -41,9 +42,10 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
                       {page.sections
                         .filter(
                           (section) =>
-                            (section.header?.length ?? section.title?.length) &&
+                            ((section.header?.length ?? section.title?.length) &&
                             !section.hideNavigationAnchor &&
-                            !section.isHidden,
+                            !section.isHidden) &&
+                            section?.title !== PAGES_TITLE.SOLUTION_MAIN
                         )
                         .map((section, subIndex) => {
                           const path = getPathForSectionAndPage(
