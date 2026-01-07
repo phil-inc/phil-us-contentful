@@ -236,17 +236,6 @@
 			}
 		}
 	}
-
-	@media (min-width: $phil-breakpoint-lg) {
-		&[data-index='0'] {
-			&[data-context='Company'] {
-				padding-top: 0px;
-				padding-bottom: 0px;
-				margin-top: 0px;
-				margin-bottom: -25px;
-			}
-		}
-	}
 }
 
 .basicSectionContainer.empowerSection{
