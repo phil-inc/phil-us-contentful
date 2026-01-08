@@ -24,7 +24,7 @@ export const ROI_INPUT_CONFIG = {
   paSubmissionRate: {
     min: 0,
     max: 100,
-    preset: 80,
+    preset: 50,
     increment: 1,
   },
   averageRefillsPerNRx: {
@@ -36,12 +36,12 @@ export const ROI_INPUT_CONFIG = {
   commerciallyInsuredPercentage: {
     min: 0,
     max: 100,
-    preset: 90,
+    preset: 70,
     increment: 1,
   },
-  haveHubService: true,
-  haveCoverCouponOffer: true,
-  haveUncoverCouponOffer: true,
+  haveHubService: false,
+  haveCoverCouponOffer: false,
+  haveUncoverCouponOffer: false,
   
 };
 
