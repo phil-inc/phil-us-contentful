@@ -136,7 +136,7 @@ export const bannerFactory = (resource: TResource) => (
     fullWidth
     background="#F4F4F4"
     py={120}
-    px={106}
+    px={{ base: 0, sm: 40, md: 106 }}
   >
     <Container size="xl">
     <Banner resource={resource} />
