@@ -43,8 +43,8 @@ const Footer: React.FC<FooterProps> = ({ allContentfulFooter, minimal }) => {
     {
       label:
         !isMobile && !minimal
-          ? `Copyright ${currentYear}, Phil Inc.`
-          : "© Phil, Inc.",
+          ? `Copyright ${currentYear}, PHIL Inc.`
+          : "© PHIL, Inc.",
     },
     {
       label: "Terms of Use",
