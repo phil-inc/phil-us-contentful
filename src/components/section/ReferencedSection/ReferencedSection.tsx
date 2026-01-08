@@ -31,7 +31,7 @@ import CommonReferencedSectionBody from "components/section/ReferencedSection/Co
 
 import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
-import { REFERENCE_SECTION } from "constants/global.constant";
+import { COLORS, LIGHT_COLOR_LIST, REFERENCE_SECTION } from "constants/global.constant";
 
 type ReferencedSectionProps = {
   section: IReferencedSection;
@@ -164,6 +164,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const topImage = section?.topAsset;
   const asset = section?.asset;
   const assetMobile = section?.assetForMobile;
+  const bottomParentBgColor = section?.divColorOfBtnParent?.background 
+    ? getColorFromStylingOptions(section.divColorOfBtnParent.background)
+    : undefined;
+  const isParentBgColorOfButtonLight = LIGHT_COLOR_LIST.includes( bottomParentBgColor ?? COLORS.LIGHT); 
+  
 
   let sectionContent;
   if (context.title === FIELD_PAGE) {
@@ -426,7 +431,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             
           {/* parent div for button */}
           <div
-            style={{background: section?.divColorOfBtnParent?.background ? getColorFromStylingOptions(section.divColorOfBtnParent.background) : undefined}} 
+            style={{background: bottomParentBgColor}} 
             className={cx({[classes.parentBtnDiv]: Boolean(section?.divColorOfBtnParent)})}
           >
 
@@ -440,11 +445,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
                     href={link}
                     target="_blank"
                     >
-                      <Button variant="philDefault">{section.buttonText}</Button>
+                      <Button variant={isParentBgColorOfButtonLight ? "philDefault" : "white"}>{section.buttonText}</Button>
                     </Anchor>
                   ) : (
                     <Link className={classes.internalLink} to={link}>
-                      <Button variant="philDefault">{section.buttonText}</Button>
+                      <Button variant={isParentBgColorOfButtonLight ? "philDefault" : "white"}>{section.buttonText}</Button>
                     </Link>
                   )}
                 </Group>

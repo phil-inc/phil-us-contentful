@@ -17,25 +17,25 @@ const CalculatorOutput: React.FC<CalculatorOutputProps> = ({ roiVM }) => {
       {
         key: "C1",
         title: "Patient Start Improvement",
-        description: "with Phil",
+        description: "with PHIL",
         value: roiVM.roiImprovementInString.patientStarts,
       },
       {
         key: "C2",
         title: "Covered Dispense Improvement",
-        description: "with Phil",
+        description: "with PHIL",
         value: roiVM.roiImprovementInString.coveredDispenses,
       },
       {
         key: "C3",
         title: "Gross Revenue Improvement",
-        description: "with Phil",
+        description: "with PHIL",
         value: roiVM.roiImprovementInString.grossRevenue,
       },
       {
         key: "C4",
         title: "Net Revenue Improvement",
-        description: "with Phil",
+        description: "with PHIL",
         value: roiVM.roiImprovementInString.netRevenue,
       },
     ];
