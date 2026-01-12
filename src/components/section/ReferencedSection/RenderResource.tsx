@@ -36,6 +36,7 @@ import CardOrImage from "components/common/CardOrImage/CardOrImage";
 import BulletList from "components/BulletList/BulletList";
 import MetricCard from "components/common/MetricCardComponent/MetricCardComponent";
 import SingleLineMetricCard from "components/common/SingleLineMetricCard/SingleLineMetricCard";
+import { FaqAccordionSingle } from "components/common/AccordionSingle/FaqAccordionSingle";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -197,6 +198,10 @@ const FAQComponent: ComponentFunction = ({ resource }) => (
   <FAQ resource={resource} />
 );
 
+const FaqAccordianSingleComponent: ComponentFunction = ({ resource }) => (
+  <FaqAccordionSingle resource={resource} />
+);
+
 const ImageCarouselComponent: ComponentFunction = () => <></>;
 
 const BannerComponent: ComponentFunction = ({ resource }) => (
@@ -286,6 +291,7 @@ const getComponent = (
     [ReferenceTypeEnum["Brand Outcome Card"]]: BrandOutcomeCardComponent,
     [ReferenceTypeEnum.Cell]: CellComponent,
     [ReferenceTypeEnum["FAQ Accordion"]]: FaqAccordianComponent,
+    [ReferenceTypeEnum["FAQ Accordion Single"]]: FaqAccordianSingleComponent,
     [ReferenceTypeEnum["Card Section"]]: CardSectionComponent,
     [ReferenceTypeEnum["Commitment Card"]]: CommitmentCardComponent,
     [ReferenceTypeEnum["Featured Insights"]]: FeaturedInsightsComponent,

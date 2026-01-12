@@ -5,7 +5,6 @@ import PageContext from "contexts/PageContext";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { Options } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import { PATIENTS_PAGE } from "constants/page";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 
 import cx from "clsx";
@@ -101,45 +100,6 @@ export const FaqAccordion = ({ resource }: any) => {
       </Accordion>
     );
   };
-
-  if (title === PATIENTS_PAGE) {
-    const referenceBody = resource.body.references[0].body;
-    return (
-      <Accordion
-        transitionDuration={0}
-        chevronSize={28}
-        classNames={{
-          chevron: classes.chevron
-        }}
-        styles={{
-          content: {
-            background: "#f4f4f4",
-            marginBottom: "20px",
-            padding: "28px",
-            color: "#525252",
-          },
-          control: {
-            padding: "0px 30px 0px 0px",
-            fontSize: "24px",
-            backgroundColor: "transparent",
-          },
-          label: {
-            fontWeight: 700,
-          },
-          chevron:{
-            color: "#525252",
-          }
-        }}
-      >
-        <Accordion.Item value={resource.heading}>
-          <Accordion.Control>{resource.heading}</Accordion.Control>
-          <Accordion.Panel>
-            {referenceBody && renderRichText(referenceBody, options)}
-          </Accordion.Panel>
-        </Accordion.Item>
-      </Accordion>
-    );
-  }
 
   return (
     <Accordion
