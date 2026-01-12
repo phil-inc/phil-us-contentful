@@ -141,6 +141,7 @@ export enum ReferenceTypeEnum {
   "Brand Outcome Card" = "Brand Outcome Card",
   "Cell" = "Cell",
   "FAQ Accordion" = "FAQ Accordion",
+  "FAQ Accordion Single" = "FAQ Accordion Single",
   "Card Section" = "Card Section",
   "Commitment Card" = "Commitment Card",
   "Featured Insights" = "Featured Insights",
