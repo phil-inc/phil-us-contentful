@@ -1,17 +1,16 @@
-import { Tabs } from "@mantine/core";
+import { Badge, Box, Tabs } from "@mantine/core";
 import classNames from "classnames";
 import React, { useState } from "react";
 import * as classes from "./FaqTitleBar.module.css";
+import cx from "clsx";
 
-import {
-  IReferencedSection,
-  ReferenceTypeEnum,
-} from "types/section";
+import { IReferencedSection, ReferenceTypeEnum } from "types/section";
 import slugify from "slugify";
+import { NAVBAR_HEIGHT } from "constants/global.constant";
 
 type FaqTitleBarProps = {
-  sections: Array<IReferencedSection
-  >;
+  displayTitle: string;
+  sections: Array<IReferencedSection>;
 };
 
 type Itabs = {
@@ -20,8 +19,11 @@ type Itabs = {
   title: string;
   header: string;
 };
-const FaqTitleBar: React.FC<FaqTitleBarProps> = ({ sections }) => {
-
+const FaqTitleBar: React.FC<FaqTitleBarProps> = ({
+  displayTitle,
+  sections,
+}) => {
+  const [activeTabNum, setActiveTabNum] = useState<Number>(0);
   const faqSections = sections.filter(
     (section) =>
       section?.referenceType === ReferenceTypeEnum["FAQ Accordion"] ||
@@ -37,34 +39,44 @@ const FaqTitleBar: React.FC<FaqTitleBarProps> = ({ sections }) => {
     };
   });
 
-  const onTabClick = (tab: Itabs) => {
+  const onTabClick = (tab: Itabs, tabIndex: Number) => {
     if (!tab.title) return;
 
     const slug = slugify(tab.title, { lower: true, strict: true });
-    document.getElementById(slug)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-    window.history.pushState(null, "", `#${slug}`);
+    const offset = NAVBAR_HEIGHT; // px from top
+    const element = document.getElementById(slug);
+
+    if (element) {
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({ top: y, behavior: "smooth" });
+      window.history.pushState(null, "", `#${slug}`);
+      setActiveTabNum(tabIndex);
+    }
   };
 
   return (
     <div className={classes.faqTitlebar}>
-      <Tabs defaultValue={"0"}>
-        <Tabs.List>
-          {tabs.map((tab, index) => {
-            return (
-              <Tabs.Tab
-                key={tab.id}
-                value={`${index}`}
-                onClick={() => onTabClick(tab)}
-              >
-                {tab.title}
-              </Tabs.Tab>
-            );
-          })}
-        </Tabs.List>
-      </Tabs>
+      <Box className={classes.title}>{displayTitle}</Box>
+      <div className={classes.tabs}>
+        {tabs.map((tab, index) => {
+          return (
+            <Badge
+              key={tab.id}
+              className={cx(
+                classes.tabItem,
+                index === activeTabNum && classes.active,
+              )}
+              onClick={() => onTabClick(tab, index)}
+              size="xl"
+              radius="md"
+            >
+              {tab.title}
+            </Badge>
+          );
+        })}
+      </div>
     </div>
   );
 };

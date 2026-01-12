@@ -7,6 +7,12 @@
 		font-size: 25px;
 	}
 
+	&[data-context='FAQs'] {
+		font-size: 25px;
+		color: var(--primary-green-color, #00827E);
+		text-align: left;
+	}
+
 	&[data-context='Company'] {
 		text-align: center;
 		width: 100%;
@@ -59,6 +65,9 @@
 		}
 
 		&[data-context='Field'] {
+			align-items: start;
+		}
+		&[data-context='FAQs'] {
 			align-items: start;
 		}
 

@@ -19,6 +19,7 @@ import PageContext from "contexts/PageContext";
 import PageModal from "components/Modal/PageModal/PageModal";
 
 import * as classes from "./page.module.css";
+import FaqTitleBar from "components/common/FaqTitleBar/FaqTitleBar";
 
 type PageTemplateProps = {
   data: {
@@ -27,11 +28,11 @@ type PageTemplateProps = {
   };
 };
 
-// Page head
+// Page head  
 export { Head };
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
-  const { id, sections, title } = data?.contentfulPage;
+  const { id, sections, title, displayTitle } = data?.contentfulPage;
 
   let basicSectionCount = 0;
 
@@ -101,6 +102,8 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
           </Container>
         )}
         <PageModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
+        
+        {title === PAGES_TITLE.FAQs && <FaqTitleBar displayTitle={displayTitle} sections={sections as IReferencedSection[]}/>}
         {canShowLoader
         ? (<Center>
             <Loader  mt={"xl"} mb={"xl"} size="lg" />
