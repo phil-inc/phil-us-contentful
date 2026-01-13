@@ -10,6 +10,7 @@ import { HOME, INSIGHTS } from "../constants/page";
 import type { Actions } from "gatsby";
 import { type ContentfulPage } from "../types/page";
 import { type IReferencedSection, type ISection } from "../types/section";
+import { FEATURES } from "../config/feature.config";
 
 type PageSectionActions = {
   page: ContentfulPage;
@@ -54,11 +55,13 @@ export default async function GenerateMainPages(
     }
   });
 
-  //  // Create a new static page at /ask-phil-ai
-  // actions.createPage(createPageObject('ask-phil-ai', templateFactory('DTPChat'), {
-  //   id: 'dtp-chat-id',
-  //   title: 'Welcome to the Ask Phil Chat Page!',
-  // }));
+   // Create a new static page at /ask-phil-ai
+  if (FEATURES.PAGE.ASK_PHIL_AI.isEnable){
+    actions.createPage(createPageObject('ask-phil-ai', templateFactory('DTPChat'), {
+      id: 'dtp-chat-id',
+      title: 'Welcome to the Ask Phil Chat Page!',
+    }));
+  }
 
   callback(resourceSubPages);
 }
