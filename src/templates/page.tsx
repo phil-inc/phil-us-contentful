@@ -20,6 +20,7 @@ import PageModal from "components/Modal/PageModal/PageModal";
 
 import * as classes from "./page.module.css";
 import FaqTitleBar from "components/common/FaqTitleBar/FaqTitleBar";
+import InfoBar from "components/common/InfoBar/InfoBar";
 
 type PageTemplateProps = {
   data: {
@@ -32,7 +33,7 @@ type PageTemplateProps = {
 export { Head };
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
-  const { id, sections, title, displayTitle } = data?.contentfulPage;
+  const { id, sections, title, displayTitle, infoBarReference } = data?.contentfulPage;
 
   let basicSectionCount = 0;
 
@@ -102,7 +103,8 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
           </Container>
         )}
         <PageModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
-        
+
+        {infoBarReference && <InfoBar infoBarReference={infoBarReference}/>}
         {title === PAGES_TITLE.FAQs && <FaqTitleBar displayTitle={displayTitle} sections={sections as IReferencedSection[]}/>}
         {canShowLoader
         ? (<Center>
@@ -142,6 +144,77 @@ export const query = graphql`
       title
       displayTitle
       description
+      infoBarReference {
+        __typename
+        id
+        ... on ContentfulAnnouncement {
+          id
+          header
+          body {
+            raw
+          }
+          canDisplay
+          hyperlink {
+            ... on ContentfulLink {
+              id
+              linkLabel
+              internalContent {
+                ... on ContentfulPage {
+                  slug
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          stylingOptions {
+            id
+            background
+            name
+            background
+          }
+          buttonReference {
+            __typename
+            id
+            ... on ContentfulButton {
+              id
+              contentful_id
+              buttonText
+              buttonStyle
+              link {
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  __typename
+                  ... on ContentfulPage {
+                    id
+                    title
+                    slug
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              v2flag
+            }
+          }
+        }
+      }
       sections {
         ... on ContentfulTextAndTextColumns {
           sectionName
