@@ -94,3 +94,21 @@
 		margin: 0 auto;
 	}
 }
+
+.faqTitleContainer{
+	width: 100%;
+	display: flex;
+	justify-content:space-between;
+	justify-items: center;
+
+	.faqLink{
+		display: flex;
+		gap: 5px;
+		align-items: center;
+
+		span{
+			display: flex;
+			align-items: center;
+		}
+	}
+}

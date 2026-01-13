@@ -17,3 +17,5 @@ export const PATH={
 }
 
 export const SOLUTION_HEADER_SLUG = "solution-header"
+
+export const PHIL_DESK_FAQ= "https://philhelp.zendesk.com/hc/en-us/p/faq"

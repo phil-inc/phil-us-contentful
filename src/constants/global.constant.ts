@@ -12,6 +12,7 @@ export const LAYOUT_12COL = 12;
 export const BUTTON_STYLE = {
   Primary: "Primary",
   Secondary: "Secondary",
+  OutlineSecondary: "Outline Secondary"
 };
 
 export const BUTTON_CONFIG = {
@@ -30,10 +31,12 @@ export const INITIAL_PROMPT_QUESTION = {
 
 //sessionStorage keys
 export const TRUE_STRING = "true";
+export const FALSE_STRING = "false";
 export const SHOW_DTP_MODAL = "showDtpModal";
 export const IS_CASE_STUDY_EMAIL_SUBMITTED = "caseStudyEmailSubmitted";
 export const DTP_RESOURCES_EMAIL_SUBMITTED = "dtpResourcesEmailSubmitted";
 export const ROI_EMAIL_SUBMITTED = "roiEmailSubmitted";
+export const SHOW_INFOBAR = "showInfoBar"
 
 export const CONTENTFUL_TYPES = {
   CASE_STUDY: "ContentfulCaseStudy",

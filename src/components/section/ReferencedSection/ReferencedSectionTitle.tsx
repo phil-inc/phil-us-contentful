@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, Title, Divider, Stack, type TitleOrder } from "@mantine/core";
+import { Box, Title, Divider, Stack, type TitleOrder, Anchor } from "@mantine/core";
 import { useMantineTheme } from "@mantine/core";
 import { RESOURCE_BLOCKS } from "constants/section";
 import { handleSpacing } from "utils/handleSpacing";
@@ -8,6 +8,9 @@ import { ReferenceTypeEnum, type IReferencedSection } from "types/section";
 import * as classes from "./referencedSectionTitle.module.css";
 import PageContext from "contexts/PageContext";
 import { COMPANY_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE } from "constants/page";
+import { PHIL_DESK_FAQ } from "constants/routes";
+
+import ExportIcon from "components/icons/Export.icon";
 
 type ReferencedSectionTitleProps = {
   section: IReferencedSection;
@@ -35,23 +38,47 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
 
   const isHomePage = title === HOME;
 
+  const patientFAQLinkElement = <>
+    <Anchor
+        href={PHIL_DESK_FAQ}
+        target = "_blank"
+    >
+    <div className={classes.faqLink}>
+      <div className="anchor-text">
+        Visit Help Center
+      </div>
+      <span>
+        <ExportIcon width={20} height={20} color="#00827E"/>
+      </span>
+    </div>
+    </Anchor>
+  </>
+
+
   const renderTitle = (
     text: string,
     order?: TitleOrder,
     className?: string,
   ) => {
+    const isFaqSectionPatients = title === "FAQs" && sectionIndex === 1;
+
     return (
-      <Title
-        data-context={title}
-        data-is-home-brand-outcome={isBrandOutcomeCardSection && isHomePage}
-        className={className}
-        order={order}
-        c={title === COMPANY_PAGE ? textColor : undefined}
-      >
-        {(title === PATIENTS_PAGE || title === HCP_PAGE) && text === "FAQs"
-          ? "Frequently Asked Questions"
-          : text}
-      </Title>
+      <div className={isFaqSectionPatients ? classes.faqTitleContainer : ""}>
+        <Title
+          data-context={title}
+          data-is-home-brand-outcome={isBrandOutcomeCardSection && isHomePage}
+          className={className}
+          order={order}
+          c={title === COMPANY_PAGE ? textColor : undefined}
+          >
+          {(title === PATIENTS_PAGE || title === HCP_PAGE) && text === "FAQs"
+            ? "Frequently Asked Questions"
+            : text}
+        </Title>
+        {isFaqSectionPatients &&
+          patientFAQLinkElement
+        }
+      </div>
     );
   };
 

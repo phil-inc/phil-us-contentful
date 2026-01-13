@@ -43,7 +43,7 @@ const FaqTitleBar: React.FC<FaqTitleBarProps> = ({
     if (!tab.title) return;
 
     const slug = slugify(tab.title, { lower: true, strict: true });
-    const offset = NAVBAR_HEIGHT; // px from top
+    const offset = NAVBAR_HEIGHT + 40; // px from top
     const element = document.getElementById(slug);
 
     if (element) {
