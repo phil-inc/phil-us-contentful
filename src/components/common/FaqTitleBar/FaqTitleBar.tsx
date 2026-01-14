@@ -1,16 +1,16 @@
-import { Badge, Box, Tabs } from "@mantine/core";
-import classNames from "classnames";
+import { Badge, Box } from "@mantine/core";
 import React, { useState } from "react";
 import * as classes from "./FaqTitleBar.module.css";
 import cx from "clsx";
+import slugify from "slugify";
 
 import { IReferencedSection, ReferenceTypeEnum } from "types/section";
-import slugify from "slugify";
-import { NAVBAR_HEIGHT } from "constants/global.constant";
+import { ANNOUNCEMENR_BAR_HEIGHT, INFOBAR_HEIGHT, NAVBAR_HEIGHT } from "constants/global.constant";
 
 type FaqTitleBarProps = {
   displayTitle: string;
   sections: Array<IReferencedSection>;
+  canShowInfoBar: boolean;
 };
 
 type Itabs = {
@@ -22,6 +22,7 @@ type Itabs = {
 const FaqTitleBar: React.FC<FaqTitleBarProps> = ({
   displayTitle,
   sections,
+  canShowInfoBar,
 }) => {
   const [activeTabNum, setActiveTabNum] = useState<Number>(0);
   const faqSections = sections.filter(
@@ -43,13 +44,14 @@ const FaqTitleBar: React.FC<FaqTitleBarProps> = ({
     if (!tab.title) return;
 
     const slug = slugify(tab.title, { lower: true, strict: true });
-    const offset = NAVBAR_HEIGHT + 40; // px from top
+    const offset = canShowInfoBar 
+      ? (ANNOUNCEMENR_BAR_HEIGHT + NAVBAR_HEIGHT + INFOBAR_HEIGHT) 
+      : (ANNOUNCEMENR_BAR_HEIGHT + NAVBAR_HEIGHT) + 10; // px from top
     const element = document.getElementById(slug);
 
     if (element) {
       const y =
         element.getBoundingClientRect().top + window.pageYOffset - offset;
-
       window.scrollTo({ top: y, behavior: "smooth" });
       window.history.pushState(null, "", `#${slug}`);
       setActiveTabNum(tabIndex);

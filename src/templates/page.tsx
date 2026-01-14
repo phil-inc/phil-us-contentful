@@ -17,10 +17,9 @@ import Expanded from "components/common/Expanded/Expanded";
 import Head from "components/common/Head/Head";
 import PageContext from "contexts/PageContext";
 import PageModal from "components/Modal/PageModal/PageModal";
+import TopSection from "components/TopSection/TopSection";
 
 import * as classes from "./page.module.css";
-import FaqTitleBar from "components/common/FaqTitleBar/FaqTitleBar";
-import InfoBar from "components/common/InfoBar/InfoBar";
 
 type PageTemplateProps = {
   data: {
@@ -103,9 +102,12 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
           </Container>
         )}
         <PageModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
-
-        {infoBarReference && <InfoBar infoBarReference={infoBarReference}/>}
-        {title === PAGES_TITLE.FAQs && <FaqTitleBar displayTitle={displayTitle} sections={sections as IReferencedSection[]}/>}
+        <TopSection 
+          title={title}
+          displayTitle={displayTitle}
+          infoBarReference={infoBarReference}
+          sections={sections  as IReferencedSection[]}
+        />
         {canShowLoader
         ? (<Center>
             <Loader  mt={"xl"} mb={"xl"} size="lg" />

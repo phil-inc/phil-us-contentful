@@ -85,6 +85,14 @@
 		&[data-context='Field'] {
 			padding: 0 100px;
 		}
+
+		&[data-context='FAQs'] {
+			padding: 50px 0px;
+
+			&[section-index='2']{
+				padding: 50px 0px 100px;
+			}
+		}
 	}
 
 

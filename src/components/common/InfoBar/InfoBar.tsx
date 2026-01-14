@@ -20,12 +20,16 @@ import ExportIcon from "components/icons/Export.icon";
 import CrossIcon from "components/icons/Cross.icon";
 
 type props = {
+  canShowInfoBar: boolean;
+  setCanShowInforBar: React.Dispatch<React.SetStateAction<boolean>>;
   infoBarReference: AnnoucementReference;
 };
 
-const InfoBar: React.FC<props> = ({ infoBarReference }) => {
-  const [isVisible, setIsVisible] = useState(true);
-
+const InfoBar: React.FC<props> = ({
+  canShowInfoBar,
+  setCanShowInforBar,
+  infoBarReference,
+}) => {
   const buttonVariant =
     infoBarReference?.buttonReference?.buttonStyle ===
     BUTTON_STYLE.OutlineSecondary
@@ -55,18 +59,18 @@ const InfoBar: React.FC<props> = ({ infoBarReference }) => {
   };
 
   const handleClose = () => {
-    setIsVisible(false);
+    setCanShowInforBar(false);
     sessionStorage.setItem(SHOW_INFOBAR, FALSE_STRING);
   };
 
   useEffect(() => {
     const canDisplayBar = sessionStorage.getItem(SHOW_INFOBAR);
     if (canDisplayBar === FALSE_STRING) {
-      setIsVisible(false);
+      setCanShowInforBar(false);
     }
   }, []);
 
-  if (!isVisible) {
+  if (!canShowInfoBar) {
     return <></>;
   }
 

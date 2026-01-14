@@ -70,3 +70,5 @@ export const NOT_AVAILABLE = "N/A";
 export const BASIC_SECTION = "Basic Section";
 
 export const NAVBAR_HEIGHT = 90;
+export const INFOBAR_HEIGHT = 60;
+export const ANNOUNCEMENR_BAR_HEIGHT = 58;

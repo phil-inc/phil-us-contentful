@@ -314,11 +314,10 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     );
   }
 
-  return (
-    <>
-      {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
+  return (<>
+    {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     
-    <div className={classes.section} id ={slugify(section.title ?? "", { lower: true, strict: true })}>
+    <section className={cx(classes.referenceSection, classes.scrollSection)} id ={slugify(section.title ?? "", { lower: true, strict: true })}>
     <Expanded
       id={getIdSlugifyForDiv(section?.eyebrowHeading || "")}
       background={
@@ -340,6 +339,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       pt={section.header?.length > 0 ? undefined : 0}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
       className = {classes.scrollSection}
+      sectionIndex={sectionIndex}
     >
       <Container 
         id={slugify(section.header ?? section.id, { lower: true, strict: true })}
@@ -473,7 +473,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         )}
         </Container>
     </Expanded>
-    </div>
+    </section>
     {Boolean(section?.showBottomBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     </>
   );

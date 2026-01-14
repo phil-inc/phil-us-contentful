@@ -45,7 +45,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
     >
     <div className={classes.faqLink}>
       <div className="anchor-text">
-        Visit Help Center
+        Get Support
       </div>
       <span>
         <ExportIcon width={20} height={20} color="#00827E"/>

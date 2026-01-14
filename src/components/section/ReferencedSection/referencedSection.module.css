@@ -213,6 +213,11 @@
   &[data-context="Field"] {
     margin-top: 0;
   }
+  &[data-context="FAQs"] {
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-top: 40px;
+    }
+  }
 }
 
 .carouselContainer {

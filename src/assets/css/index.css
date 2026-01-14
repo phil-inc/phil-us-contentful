@@ -11,6 +11,9 @@
   --primary-green-color: #00827E;
   --primay-white-color: #FFFFFF;
 
+  --navbar-z-index: 110;
+  --infobar-z-index: 109;
+
   --transition-base: 0.3s ease;
   --transition-color-bg: color 0.3s ease, background-color 0.3s ease;
   --transition-button-bg: outline 0.3s ease-out, background-color 0.3s ease, color 0.3s ease;
@@ -195,7 +198,7 @@
 .sticky-wrapper {
   position: sticky;
   top: 0;
-  z-index: 110;
+  z-index: var(--navbar-z-index, 110);
 }
 
 
