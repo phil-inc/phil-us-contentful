@@ -37,6 +37,8 @@ import useDeviceType from "hooks/useView";
 import BookBannerFromResource from "components/Resource/BookBannerFromResource/BookBannerFromResource";
 import AnnouncementItem from "components/AnnouncementItem/AnnouncementItem";
 
+import { CONTENTFUL_TYPES } from "constants/global.constant";
+
 type HelmetProps = {
   data: {
     contentfulPage: ContentfulPage;
@@ -291,7 +293,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
                           return (
                             <React.Fragment key={path}>
                               <Link
-                                to={path}
+                                to={section?.__typename === CONTENTFUL_TYPES.PAGE 
+                                  ? `/${section?.slug ?? ""}`
+                                  : path
+                                }
+
                                 data-index={index}
                                 data-active={currentSection.id === section.id}
                                 className={classes.navLink}
@@ -1042,6 +1048,7 @@ export const resourcesQuery = graphql`
       sections {
         ... on ContentfulReferencedSection {
           id
+          __typename
           isHidden
           hideNavigationAnchor
           hideHeader
@@ -1331,9 +1338,16 @@ export const resourcesQuery = graphql`
         }
         ... on ContentfulSection {
           id
+          __typename
           header
           isHidden
           sectionType
+        }
+        ... on ContentfulPage {
+          id
+          __typename
+          slug
+          header: displayTitle
         }
       }
     }
