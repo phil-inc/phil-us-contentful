@@ -37,7 +37,7 @@ const AutoScrollCarousel: React.FC<Props> = ({ section }) => {
 
   const autoplay = React.useRef(
     Autoplay({
-      delay: 2500, // "pause for a while" between moves
+      delay: 5000, // "pause for a while" between moves
       stopOnInteraction: false, // keep autoplay after drags/clicks
       stopOnMouseEnter: false,
     }),
