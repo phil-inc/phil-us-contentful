@@ -40,6 +40,7 @@ import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetr
 import { DownloadPdfBox } from "components/common/DownloadPdfBox/DownloadPdfBox";
 
 import { PATH } from "constants/routes";
+import KeyTakeaways from "components/templates/case-study/key-takeaways";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -435,16 +436,20 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
           </Grid.Col>
           <Grid.Col span={"auto"}>
             <Box className={classes.box}>
-              {data?.keyMetricOfStudy?.length 
-                && <KeyMetricOfCaseStudy metrics={data.keyMetricOfStudy} />
-              }
-              <Title order={2} className={classes.boxTitle}>
-                {data.subtitle?.subtitle}
-              </Title>
-              <Box className={classes.boxDescription}>
-                {data.description?.raw &&
-                  documentToPlainTextString(JSON.parse(data.description.raw))}
-              </Box>
+              <KeyTakeaways
+                situation={{
+                  title: "Situation",
+                  description: data.situation || "A women's health brand sought to launch a direct-to-patient (DTP) channel for discreet, convenient care after FDA approval."
+                }}
+                challenge={{
+                  title: "Challenge", 
+                  description: data.challenge || "Deliver an integrated digital experience while addressing gross-to-net and coverage hurdles."
+                }}
+                solution={{
+                  title: "Solution",
+                  description: data.solution || "Partnered with PHIL to implement a flexible, API-integrated DTP program with telemedicine, tailored dispense options, and national pharmacy coverage."
+                }}
+              />
             </Box>
           </Grid.Col>
         </Grid>
