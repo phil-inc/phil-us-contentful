@@ -198,10 +198,6 @@ const FAQComponent: ComponentFunction = ({ resource }) => (
   <FAQ resource={resource} />
 );
 
-const FaqAccordianSingleComponent: ComponentFunction = ({ resource }) => (
-  <FaqAccordionSingle resource={resource} />
-);
-
 const ImageCarouselComponent: ComponentFunction = () => <></>;
 
 const BannerComponent: ComponentFunction = ({ resource }) => (
@@ -210,6 +206,10 @@ const BannerComponent: ComponentFunction = ({ resource }) => (
 
 const FaqAccordianComponent: ComponentFunction = ({ resource }) => (
   <FaqAccordion resource={resource} />
+);
+
+const FaqAccordianSingleComponent: ComponentFunction = ({ resource }) => (
+  <FaqAccordionSingle resource={resource} />
 );
 
 const CardSectionComponent: ComponentFunction = ({

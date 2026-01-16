@@ -99,6 +99,36 @@
 			background-color: var(--phil-black);
 		}
 	}
+
+	&[data-variant='philOutlineSecondary'] {
+		color: var(--Phil-Rebrand-Green-Foliage, #00827e);
+		font-weight: 600;
+		position: relative;
+		font-family: Lato;
+		-webkit-tap-highlight-color: transparent;
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		padding: 12px 24px;
+		transition: var(--transition-button-bg);
+		overflow: visible;
+		outline: 1.5px solid var(--Phil-Rebrand-Green-Foliage, #00827e);
+		outline-offset: -1px;
+		background-color: transparent;
+		font-size: 16px;
+		font-style: normal;
+		line-height: 16px; /* 100% */
+
+		&:hover {
+			outline-color: #000;
+			background-color: #000;
+			color: #fff;
+		}
+
+		@media (min-width: $phil-breakpoint-sm) {
+			width: auto;
+		}
+	}
 }
 
 .label {

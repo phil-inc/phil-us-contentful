@@ -23,6 +23,7 @@ type ExpandedProps = {
   backgroundAssetImage?: TAsset;
   leftBackgroundAssetImage?: TAsset;
   className?: string;
+  sectionIndex?: number;
 };
 
 /**
@@ -45,6 +46,7 @@ const Expanded: React.FC<ExpandedProps> = ({
   backgroundAssetImage = null,
   leftBackgroundAssetImage = null,
   className = "",
+  sectionIndex = 0,
   ...rest
 }) => (
   <Container
@@ -52,6 +54,7 @@ const Expanded: React.FC<ExpandedProps> = ({
     id={id}
     fluid
     className={`${classes.container} ${className}`}
+    section-index={sectionIndex}
     py={py}
     pt={pt}
     pb={pb}
