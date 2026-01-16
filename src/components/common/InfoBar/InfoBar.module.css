@@ -94,5 +94,9 @@
     position: sticky;
     top: calc(var(--announcment-bar-height) + var(--navbar-height));
     z-index: var(--infobar-z-index, 109);
+
+    	&[data-context='Patients'] {
+            top: calc(var(--navbar-height));
+      }
   }
 }

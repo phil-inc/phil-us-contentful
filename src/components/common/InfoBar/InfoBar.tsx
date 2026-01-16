@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Anchor, Button, Container } from "@mantine/core";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types";
@@ -19,6 +19,8 @@ import {
 import ExportIcon from "components/icons/Export.icon";
 import CrossIcon from "components/icons/Cross.icon";
 
+import PageContext from "contexts/PageContext";
+
 type props = {
   canShowInfoBar: boolean;
   setCanShowInforBar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,6 +32,7 @@ const InfoBar: React.FC<props> = ({
   setCanShowInforBar,
   infoBarReference,
 }) => {
+  const context = useContext(PageContext);
   const buttonVariant =
     infoBarReference?.buttonReference?.buttonStyle ===
     BUTTON_STYLE.OutlineSecondary
@@ -82,6 +85,7 @@ const InfoBar: React.FC<props> = ({
         ),
       }}
       className={classes.infoBar}
+      data-context={context.title}
     >
       <Container className={classes.msg} size="xl">
         <div className={classes.content}>
