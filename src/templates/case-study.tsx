@@ -40,7 +40,7 @@ import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetr
 import { DownloadPdfBox } from "components/common/DownloadPdfBox/DownloadPdfBox";
 
 import { PATH } from "constants/routes";
-import KeyTakeaways from "components/templates/case-study/key-takeaways";
+import KeyTakeaways from "components/case-study/key-takeaways";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -182,6 +182,13 @@ export type CaseStudy = {
     metricValue: string;
     metricDescription?: string;
   }[];
+  takeaway?: {
+    contentful_id: string;
+    id: string;
+    metricLabel: string;
+    metricValue: string;
+    metricDescription?: string;
+  }[];
   body?: {
     raw: string;
     __typename: string;
@@ -267,6 +274,7 @@ type CaseStudyProps = {
   };
 };
 
+// Here the component receives the data
 const CaseStudy: React.FC<CaseStudyProps> = ({
   data: {
     contentfulCaseStudy: data,
@@ -437,18 +445,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
           <Grid.Col span={"auto"}>
             <Box className={classes.box}>
               <KeyTakeaways
-                situation={{
-                  title: "Situation",
-                  description: data.situation || "A women's health brand sought to launch a direct-to-patient (DTP) channel for discreet, convenient care after FDA approval."
-                }}
-                challenge={{
-                  title: "Challenge", 
-                  description: data.challenge || "Deliver an integrated digital experience while addressing gross-to-net and coverage hurdles."
-                }}
-                solution={{
-                  title: "Solution",
-                  description: data.solution || "Partnered with PHIL to implement a flexible, API-integrated DTP program with telemedicine, tailored dispense options, and national pharmacy coverage."
-                }}
+                takeawayList={data.takeaway || []}
               />
             </Box>
           </Grid.Col>
@@ -576,6 +573,8 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
 export default CaseStudy;
 
+//Gatsby automatically detects and runs it during build time for each page created from template &
+//passes the data to the component(lines 270-277) as props 
 export const caseStudyQuery = graphql`
   query getDownloadableResource($id: String) {
     contentfulCaseStudy(id: { eq: $id }) {
@@ -583,6 +582,13 @@ export const caseStudyQuery = graphql`
       id
       title
       keyMetricOfStudy{
+        contentful_id
+        id
+        metricLabel
+        metricValue
+        metricDescription
+      }
+      takeaway{
         contentful_id
         id
         metricLabel
