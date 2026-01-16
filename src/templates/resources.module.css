@@ -5,9 +5,15 @@
 	> *:not(:last-child) {
 		margin-bottom: 44px;
 	}
+	.announcementItemContainer{
+		@media (min-width: $phil-breakpoint-md) {
+			margin-top: -24px;
+			margin-bottom: 24px;
+		}
+	}
 
 	@media (min-width: $phil-breakpoint-sm) {
-		padding: 70px;
+		padding: 50px;
 	}
 }
 
