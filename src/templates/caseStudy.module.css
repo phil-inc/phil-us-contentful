@@ -169,11 +169,11 @@
 }
 
 .box {
-  padding: 40px 20px;
+  padding: 24px 20px;
   background: #f7f7f7;
 
   @media (min-width: $phil-breakpoint-sm) {
-    padding: 52px;
+    padding: 40px;
     font-size: 20px !important;
   }
 }
