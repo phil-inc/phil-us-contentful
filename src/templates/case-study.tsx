@@ -40,6 +40,7 @@ import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetr
 import { DownloadPdfBox } from "components/common/DownloadPdfBox/DownloadPdfBox";
 
 import { PATH } from "constants/routes";
+import KeyTakeaways from "components/case-study/key-takeaways";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -181,6 +182,13 @@ export type CaseStudy = {
     metricValue: string;
     metricDescription?: string;
   }[];
+  takeaway?: {
+    contentful_id: string;
+    id: string;
+    metricLabel: string;
+    metricValue: string;
+    metricDescription?: string;
+  }[];
   body?: {
     raw: string;
     __typename: string;
@@ -266,6 +274,7 @@ type CaseStudyProps = {
   };
 };
 
+// Here the component receives the data
 const CaseStudy: React.FC<CaseStudyProps> = ({
   data: {
     contentfulCaseStudy: data,
@@ -429,22 +438,21 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
       <Container className={cx("container", classes.heroContainer)}size={"xl"}>
         <Grid align="center">
           <Grid.Col span={{ base: 12, md: 6 }}>
+          <Grid.Col span={{ base:12, md: "auto" }}> 
+              {data?.keyMetricOfStudy?.length 
+                && <KeyMetricOfCaseStudy metrics={data.keyMetricOfStudy} />
+              }
+
+          </Grid.Col>
             <Title order={1} className={classes.heroTitle}>
               {data.title}
             </Title>
           </Grid.Col>
           <Grid.Col span={"auto"}>
             <Box className={classes.box}>
-              {data?.keyMetricOfStudy?.length 
-                && <KeyMetricOfCaseStudy metrics={data.keyMetricOfStudy} />
-              }
-              <Title order={2} className={classes.boxTitle}>
-                {data.subtitle?.subtitle}
-              </Title>
-              <Box className={classes.boxDescription}>
-                {data.description?.raw &&
-                  documentToPlainTextString(JSON.parse(data.description.raw))}
-              </Box>
+              <KeyTakeaways
+                takeawayList={data.takeaway || []}
+              />
             </Box>
           </Grid.Col>
         </Grid>
@@ -571,6 +579,8 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
 export default CaseStudy;
 
+//Gatsby automatically detects and runs it during build time for each page created from template &
+//passes the data to the component(lines 270-277) as props 
 export const caseStudyQuery = graphql`
   query getDownloadableResource($id: String) {
     contentfulCaseStudy(id: { eq: $id }) {
@@ -578,6 +588,13 @@ export const caseStudyQuery = graphql`
       id
       title
       keyMetricOfStudy{
+        contentful_id
+        id
+        metricLabel
+        metricValue
+        metricDescription
+      }
+      takeaway{
         contentful_id
         id
         metricLabel
