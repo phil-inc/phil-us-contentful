@@ -438,6 +438,12 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
       <Container className={cx("container", classes.heroContainer)}size={"xl"}>
         <Grid align="center">
           <Grid.Col span={{ base: 12, md: 6 }}>
+          <Grid.Col span={{ base:12, md: "auto" }}> 
+              {data?.keyMetricOfStudy?.length 
+                && <KeyMetricOfCaseStudy metrics={data.keyMetricOfStudy} />
+              }
+
+          </Grid.Col>
             <Title order={1} className={classes.heroTitle}>
               {data.title}
             </Title>
