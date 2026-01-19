@@ -322,6 +322,43 @@
   }
 }
 
+.bookDemoForm {
+  background-color: #E8F7F7;
+  padding: 1px 20px 20px 20px;
+  
+}
+
+
+/* Target form fields container */
+.bookDemoForm :global(.hs-input) {
+  height: 44px;
+}
+
+.bookDemoForm :global(.hs-form-field > label:first-child:not(.hs-error-msg)) {
+  display: none;
+}
+
+/* Target input fields */
+.bookDemoForm :global(.hs-input) {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Target the submit button */
+.bookDemoForm :global(.hs-submit .actions input[type="submit"]) {
+  padding: 12px 24px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Target error messages */
+.bookDemoForm :global(.hs-error-msgs) {
+  color: red;
+  font-size: 12px;
+}
+
 .metricBoxGrid {
   position: relative;
 

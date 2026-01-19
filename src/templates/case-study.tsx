@@ -2,6 +2,7 @@ import React from "react";
 import * as classes from "./caseStudy.module.css";
 
 import cx from "clsx";
+import { navigate } from "gatsby";
 
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import { type Options } from "@contentful/rich-text-react-renderer";
@@ -37,10 +38,11 @@ import { useMediaQuery } from "@mantine/hooks";
 import Asset from "components/common/Asset/Asset";
 import BasicSection from "components/section/BasicSection/BasicSection";
 import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetricOfCaseStudy";
-import { DownloadPdfBox } from "components/common/DownloadPdfBox/DownloadPdfBox";
+import { getHubspotFormDetails } from "utils/utils";
 
 import { PATH } from "constants/routes";
 import KeyTakeaways from "components/case-study/key-takeaways";
+import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
 
 const FeaturedCaseStudy: React.FC<{
   resource: CaseStudy | TDownloadableResource;
@@ -267,7 +269,8 @@ export type CaseStudy = {
 type CaseStudyProps = {
   data: {
     contentfulCaseStudy: CaseStudy;
-    contentfulSection: ISection
+    contentfulSection: ISection;
+    demoFormSection: { nodes: { id: string; header: string; body?: BodyType; embedForm?: BodyType }[] };
     allContentfulReferencedSection: { nodes: ISection[] };
     allContentfulDownloadableResource: { nodes: TDownloadableResource[] };
     allContentfulCaseStudy: { nodes: CaseStudy[] };
@@ -279,6 +282,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
   data: {
     contentfulCaseStudy: data,
     contentfulSection: demoBannerSection,
+    demoFormSection,
     allContentfulReferencedSection,
     allContentfulDownloadableResource,
     allContentfulCaseStudy,
@@ -288,9 +292,12 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
   const tocRef = React.useRef(null);
 
   const newsletterSection = allContentfulReferencedSection?.nodes?.[0];
+  const demoForm = demoFormSection?.nodes?.[0];
 
   const [TOC, setTOC] = React.useState<React.ReactNode[]>([]);
   const [activeId, setActiveId] = React.useState<string | null>(null);
+  const { formId, portalId } = getHubspotFormDetails(data?.embedForm);
+  const { formId: demoFormId, portalId: demoPortalId } = getHubspotFormDetails(demoForm?.embedForm);
 
   const isMobile = useMediaQuery("(max-width: 64em)", false, {
     getInitialValueInEffect: false,
@@ -510,8 +517,18 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
             </Box>
           </Grid.Col>
           <Grid.Col span={{ base: "auto", md: 3 }} className={cx(classes.sticky, classes.downloadPdfColumn)}>
-            {data?.files && data.files.length > 0 && (
-              <DownloadPdfBox fileUrl={data?.files?.[0].url && data.files[0].url} embeddedForm={data?.embedForm} />
+            {demoFormId && demoPortalId && (
+              <Box className={classes.bookDemoForm}>
+                <Text>{demoForm?.body && renderRichText(demoForm.body)}</Text>
+                <hr/>
+                <p style={{ fontSize: '14px' }}>Fill out the form below to request a discovery call with the PHIL team.</p>
+                <HubspotFormV2
+                  formId={demoFormId}
+                  portalId={demoPortalId}
+                  callbackFn={() => navigate("/sharpen-your-access-and-commercialization-efforts")}
+                  formMinHeight="200px"
+                />
+              </Box>
             )}
           </Grid.Col>
         </Grid>
@@ -846,6 +863,22 @@ export const caseStudyQuery = graphql`
           name
           numberOfColumns
           shouldRenderCarousel
+        }
+      }
+    }
+    # Fetch the "Demo form section" for Request a Demo form
+    demoFormSection: allContentfulSection(
+      filter: { header: { eq: "Demo form section" } }
+      limit: 1
+    ) {
+      nodes {
+        id
+        header
+        body {
+          raw
+        }
+        embedForm {
+          raw
         }
       }
     }
