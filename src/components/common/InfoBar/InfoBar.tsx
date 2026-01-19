@@ -12,6 +12,7 @@ import * as classes from "./InfoBar.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 import {
   BUTTON_STYLE,
+  DOM_IDS,
   FALSE_STRING,
   SHOW_INFOBAR,
 } from "constants/global.constant";
@@ -86,6 +87,7 @@ const InfoBar: React.FC<props> = ({
       }}
       className={classes.infoBar}
       data-context={context.title}
+      id={DOM_IDS.TOP_INFO_BAR}
     >
       <Container className={classes.msg} size="xl">
         <div className={classes.content}>
@@ -126,7 +128,7 @@ const InfoBar: React.FC<props> = ({
           <CrossIcon />
         </div>
       </Container>
-    </section>
+  </section>
   );
 };
 

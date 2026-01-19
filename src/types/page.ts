@@ -13,7 +13,6 @@ export type ContentfulPage = {
   slug: string;
   navbarTitle?: string;
   canShowNew?: boolean;
-  infoBarReference?: AnnoucementReference;
 };
 
 export type ContenfulHeaderLogo = {

@@ -1,4 +1,3 @@
-import { Reference } from './../types/section';
 export const SCREEN_SIZES = {
   MOBILE: 480,
   TABLET: 768,
@@ -12,7 +11,7 @@ export const LAYOUT_12COL = 12;
 export const BUTTON_STYLE = {
   Primary: "Primary",
   Secondary: "Secondary",
-  OutlineSecondary: "Outline Secondary"
+  OutlineSecondary: "Outline Secondary",
 };
 
 export const BUTTON_CONFIG = {
@@ -36,24 +35,23 @@ export const SHOW_DTP_MODAL = "showDtpModal";
 export const IS_CASE_STUDY_EMAIL_SUBMITTED = "caseStudyEmailSubmitted";
 export const DTP_RESOURCES_EMAIL_SUBMITTED = "dtpResourcesEmailSubmitted";
 export const ROI_EMAIL_SUBMITTED = "roiEmailSubmitted";
-export const SHOW_INFOBAR = "showInfoBar"
+export const SHOW_INFOBAR = "showInfoBar";
 
 export const CONTENTFUL_TYPES = {
   CASE_STUDY: "ContentfulCaseStudy",
   DOWNLABLE_RESOURCE: "ContentfulDownloadableResource",
-  LIST : "ContentfulList",
+  LIST: "ContentfulList",
   LINK: "ContentfulLink",
   PAGE: "ContentfulPage",
-  BUTTON_GROUP: "ContentfulButtonGroup"
+  BUTTON_GROUP: "ContentfulButtonGroup",
 };
 
 export const TIME_ZONE_USA = "America/Los_Angeles";
 
-
 export const COLORS = {
   DARK: "#0A0A0A",
   LIGHT: "#FFFFFF",
-}
+};
 
 export const LIGHT_COLOR_LIST = [COLORS.LIGHT];
 
@@ -72,3 +70,8 @@ export const BASIC_SECTION = "Basic Section";
 export const NAVBAR_HEIGHT = 90;
 export const INFOBAR_HEIGHT = 60;
 export const ANNOUNCEMENR_BAR_HEIGHT = 58;
+
+export const DOM_IDS = {
+  TOP_BAR: "topBar",
+  TOP_INFO_BAR: "topInfoBar",
+};

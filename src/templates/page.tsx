@@ -32,7 +32,7 @@ type PageTemplateProps = {
 export { Head };
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
-  const { id, sections, title, displayTitle, infoBarReference } = data?.contentfulPage;
+  const { id, sections, title, displayTitle } = data?.contentfulPage;
 
   let basicSectionCount = 0;
 
@@ -105,7 +105,6 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
         <TopSection 
           title={title}
           displayTitle={displayTitle}
-          infoBarReference={infoBarReference}
           sections={sections  as IReferencedSection[]}
         />
         {canShowLoader
@@ -146,77 +145,6 @@ export const query = graphql`
       title
       displayTitle
       description
-      infoBarReference {
-        __typename
-        id
-        ... on ContentfulAnnouncement {
-          id
-          header
-          body {
-            raw
-          }
-          canDisplay
-          hyperlink {
-            ... on ContentfulLink {
-              id
-              linkLabel
-              internalContent {
-                ... on ContentfulPage {
-                  slug
-                  id
-                  title
-                  sys {
-                    contentType {
-                      sys {
-                        type
-                        id
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          stylingOptions {
-            id
-            background
-            name
-            background
-          }
-          buttonReference {
-            __typename
-            id
-            ... on ContentfulButton {
-              id
-              contentful_id
-              buttonText
-              buttonStyle
-              link {
-                linkLabel
-                name
-                externalUrl
-                internalContent {
-                  __typename
-                  ... on ContentfulPage {
-                    id
-                    title
-                    slug
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-              v2flag
-            }
-          }
-        }
-      }
       sections {
         ... on ContentfulTextAndTextColumns {
           sectionName

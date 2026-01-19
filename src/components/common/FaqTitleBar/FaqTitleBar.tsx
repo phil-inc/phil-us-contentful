@@ -5,12 +5,11 @@ import cx from "clsx";
 import slugify from "slugify";
 
 import { IReferencedSection, ReferenceTypeEnum } from "types/section";
-import { ANNOUNCEMENR_BAR_HEIGHT, INFOBAR_HEIGHT, NAVBAR_HEIGHT } from "constants/global.constant";
+import { ANNOUNCEMENR_BAR_HEIGHT, DOM_IDS, INFOBAR_HEIGHT, NAVBAR_HEIGHT } from "constants/global.constant";
 
 type FaqTitleBarProps = {
   displayTitle: string;
   sections: Array<IReferencedSection>;
-  canShowInfoBar: boolean;
 };
 
 type Itabs = {
@@ -22,7 +21,6 @@ type Itabs = {
 const FaqTitleBar: React.FC<FaqTitleBarProps> = ({
   displayTitle,
   sections,
-  canShowInfoBar,
 }) => {
   const [activeTabNum, setActiveTabNum] = useState<Number>(0);
   const faqSections = sections.filter(
@@ -43,10 +41,12 @@ const FaqTitleBar: React.FC<FaqTitleBarProps> = ({
   const onTabClick = (tab: Itabs, tabIndex: Number) => {
     if (!tab.title) return;
 
+    const topBarElement = document.getElementById(DOM_IDS.TOP_BAR);
+    const offset = topBarElement 
+    ? topBarElement.offsetHeight 
+    : (ANNOUNCEMENR_BAR_HEIGHT + NAVBAR_HEIGHT) + 10;
+    
     const slug = slugify(tab.title, { lower: true, strict: true });
-    const offset = canShowInfoBar 
-      ? (ANNOUNCEMENR_BAR_HEIGHT + NAVBAR_HEIGHT + INFOBAR_HEIGHT) 
-      : (ANNOUNCEMENR_BAR_HEIGHT + NAVBAR_HEIGHT) + 10; // px from top
     const element = document.getElementById(slug);
 
     if (element) {

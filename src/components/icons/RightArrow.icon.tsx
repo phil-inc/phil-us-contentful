@@ -14,7 +14,7 @@ const RightArrowCircle = ({height="28", width="28", ...props}: React.SVGProps<SV
       <path
         d="M6.60938 14.0047H19.2918M19.2918 14.0047L14.383 9.10645M19.2918 14.0047L14.4607 19.1618"
         stroke="white"
-        stroke-width="1.64697"
+        strokeWidth="1.64697"
       />
     </svg>
   );

@@ -4,19 +4,18 @@ import { graphql, StaticQuery } from "gatsby";
 import { TopAnnouncementBarNode } from "types/annoucementBar";
 
 import Annoucement from "layouts/Layout/AnnoumentBar/Annoument/Annoument";
-import { useLocation } from "@reach/router";
 
 type AllContentfulTopAnnouncementBarQuery = {
+  currentLocationSlug: string,
   allContentfulTopAnnouncementBar: {
     nodes: TopAnnouncementBarNode[];
   };
 };
 
 const TopAnnoucement: React.FC<AllContentfulTopAnnouncementBarQuery> = ({
+  currentLocationSlug,
   allContentfulTopAnnouncementBar,
 }) => {
-  const location = useLocation();
-  const currentLocationSlug = location.pathname.replace(/^\/|\/$/g, "");
 
   const [topAnnoucement] = allContentfulTopAnnouncementBar?.nodes;
   const isCurrentLocationSameToAnnoucementLink = currentLocationSlug === topAnnoucement?.reference?.hyperlink?.internalContent?.slug;
@@ -78,8 +77,8 @@ export const query = graphql`
   }
 `;
 
-const AnnoucementBar: React.FC<{}> = () => (
-  <StaticQuery query={query} render={(props) => <TopAnnoucement {...props} />} />
+const AnnoucementBar: React.FC<{currentLocationSlug:string}> = ({currentLocationSlug}) => (
+  <StaticQuery query={query} render={(props) => <TopAnnoucement currentLocationSlug={currentLocationSlug} {...props} />} />
 );
 
 export default AnnoucementBar;
