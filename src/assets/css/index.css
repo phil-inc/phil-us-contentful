@@ -6,14 +6,18 @@
 
 :root {
   --navbar-height: 90px;
-  --announcment-bar-height: 70px; /* Assume the height of the announcement bar */
+  --announcment-bar-height: 58px; /* Assume the height of the announcement bar */
   --side-margin: 32px;
   --primary-green-color: #00827E;
   --primay-white-color: #FFFFFF;
 
+  --navbar-z-index: 110;
+  --infobar-z-index: 109;
+
   --transition-base: 0.3s ease;
   --transition-color-bg: color 0.3s ease, background-color 0.3s ease;
   --transition-button-bg: outline 0.3s ease-out, background-color 0.3s ease, color 0.3s ease;
+  --transition-svg-stroke: stroke 0.15s ease-out;
 }
 
 .darkText {
@@ -194,7 +198,7 @@
 .sticky-wrapper {
   position: sticky;
   top: 0;
-  z-index: 110;
+  z-index: var(--navbar-z-index, 110);
 }
 
 

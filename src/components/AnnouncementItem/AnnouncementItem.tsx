@@ -45,9 +45,9 @@ const AnnouncementItem: React.FC<AnnouncementItemProps> = ({ items }) => {
               to={`/${item.internalLink?.slug || ""}`}
             >
               <Button
-                color="white"
+                color="black"
                 className={classes.btn}
-                variant={"philDefault"}
+                variant={"white"}
               >
                 {item?.buttonText || ""}
               </Button>

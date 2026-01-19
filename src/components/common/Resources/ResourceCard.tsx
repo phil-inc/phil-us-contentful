@@ -21,6 +21,8 @@ import { CaseStudy } from "templates/case-study";
 
 import { convertDateToCustomFormat } from "utils/date";
 
+import PageContext from "contexts/PageContext";
+
 type ResourceCardProps = {
   resource: TResource | CaseStudy;
   isFaq?: boolean;
@@ -33,6 +35,7 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
   isCaseStudy = false,
 }) => {
   const { link, isExternal, linkLabel } = getLink(resource);
+  const context = React.useContext(PageContext);
 
   const heading: React.ReactNode =
     (resource.subHeading as React.ReactNode) ??
@@ -44,7 +47,7 @@ export const ResourceCard: FC<ResourceCardProps & MantineStyleProps> = ({
     : null;
 
   return (
-    <Paper radius={0} className={classes.card}>
+    <Paper radius={0} className={classes.card} data-context={context.title}>
       <Grid justify="start" align="start">
         <Grid.Col>
           <Box className={classes.box}>

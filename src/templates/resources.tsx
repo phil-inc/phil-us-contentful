@@ -37,6 +37,10 @@ import useDeviceType from "hooks/useView";
 import BookBannerFromResource from "components/Resource/BookBannerFromResource/BookBannerFromResource";
 import AnnouncementItem from "components/AnnouncementItem/AnnouncementItem";
 
+import { CONTENTFUL_TYPES } from "constants/global.constant";
+
+import PageContext from "contexts/PageContext";
+
 type HelmetProps = {
   data: {
     contentfulPage: ContentfulPage;
@@ -220,7 +224,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
     </Card>
   );
 
-  return (
+  return (<PageContext.Provider value={{ title: data?.contentfulPage?.title }}>
+
     <Layout>
       
       <Expanded id={currentSection.id} py={0} mb={40}>
@@ -291,7 +296,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
                           return (
                             <React.Fragment key={path}>
                               <Link
-                                to={path}
+                                to={section?.__typename === CONTENTFUL_TYPES.PAGE 
+                                  ? `/${section?.slug ?? ""}`
+                                  : path
+                                }
+
                                 data-index={index}
                                 data-active={currentSection.id === section.id}
                                 className={classes.navLink}
@@ -347,7 +356,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
                 </Title>
               </Box>
 
-              {currentSection?.announcementItems?.length > 0 && <AnnouncementItem items={currentSection.announcementItems}/>}
+              {currentSection?.announcementItems?.length > 0 &&
+                <div className={classes.announcementItemContainer}>
+                  <AnnouncementItem items={currentSection.announcementItems}/>
+                </div>
+              }
 
               {resources?.length &&
                 resources
@@ -439,6 +452,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
           </div>
       }
     </Layout>
+  </PageContext.Provider>
   );
 };
 
@@ -1042,6 +1056,7 @@ export const resourcesQuery = graphql`
       sections {
         ... on ContentfulReferencedSection {
           id
+          __typename
           isHidden
           hideNavigationAnchor
           hideHeader
@@ -1331,9 +1346,16 @@ export const resourcesQuery = graphql`
         }
         ... on ContentfulSection {
           id
+          __typename
           header
           isHidden
           sectionType
+        }
+        ... on ContentfulPage {
+          id
+          __typename
+          slug
+          header: displayTitle
         }
       }
     }

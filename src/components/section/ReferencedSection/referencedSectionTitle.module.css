@@ -7,6 +7,12 @@
 		font-size: 25px;
 	}
 
+	&[data-context='FAQs'] {
+		font-size: 25px;
+		color: var(--primary-green-color, #00827E);
+		text-align: left;
+	}
+
 	&[data-context='Company'] {
 		text-align: center;
 		width: 100%;
@@ -61,6 +67,9 @@
 		&[data-context='Field'] {
 			align-items: start;
 		}
+		&[data-context='FAQs'] {
+			align-items: start;
+		}
 
 		&[section-index='5']&[data-context='Phil Direct'] {
 			align-items: flex-start;
@@ -83,5 +92,23 @@
 	&[data-is-home-brand-outcome='true'] {
 		max-width: 945px;
 		margin: 0 auto;
+	}
+}
+
+.faqTitleContainer{
+	width: 100%;
+	display: flex;
+	justify-content:space-between;
+	justify-items: center;
+
+	.faqLink{
+		display: flex;
+		gap: 5px;
+		align-items: center;
+
+		span{
+			display: flex;
+			align-items: center;
+		}
 	}
 }

@@ -17,6 +17,12 @@
 		background: #00827e 0% 0% no-repeat padding-box;
 	}
 
+	&[data-context='News & Insights'] {
+		@media (min-width: $phil-breakpoint-sm) {
+		padding: 30px 50px;
+		}
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		padding: 40px 60px;
 	}

@@ -1,0 +1,93 @@
+.infoBar {
+  padding: 12px 0;
+  z-index: var(--info-z-index, 99);
+
+  .msg {
+    display: flex;
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      row-gap: 16px;
+
+      .left {
+        font-family: Lato;
+        font-weight: 500;
+        font-size: 16px;
+        color: #0a5552;
+
+        @media (min-width: $phil-breakpoint-sm) {
+          padding-left: 15px;
+        }
+      }
+
+      .right {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .btn {
+          padding: 8px 20px 8px 24px;
+          width: 100%;
+
+          .btnText {
+            font-family: Lato;
+            font-weight: 500;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            gap: 5px;
+          }
+
+          .exportIcon {
+            svg {
+              path {
+                transition: var(
+                  ----transition-svg-stroke,
+                  stroke 0.15s ease-out
+                );
+              }
+            }
+          }
+
+          &:hover {
+            .exportIcon {
+              svg {
+                path {
+                  stroke: var(--primary-white-color, #ffffff);
+                }
+              }
+            }
+          }
+        }
+
+        @media (min-width: $phil-breakpoint-sm) {
+          display: block;
+          width: auto;
+        }
+      }
+
+      @media (min-width: $phil-breakpoint-md) {
+        flex-direction: row;
+      }
+    }
+
+    .crossIcon {
+      margin-left: 12px;
+      display: inline-flex;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      @media (min-width: $phil-breakpoint-sm) {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+  }
+}

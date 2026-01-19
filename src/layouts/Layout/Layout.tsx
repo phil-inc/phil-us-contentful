@@ -4,6 +4,7 @@ import CHeader, { HEADER_HEIGHT } from "./CHeader/CHeader";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 import CFooter from "./CFooter/CFooter";
 import LinkedinInsights from "analytics/LinkedinInsights";
+import { useLocation } from "@reach/router";
 
 // Import css overrides here
 import "assets/css/index.css";
@@ -11,6 +12,8 @@ import "assets/css/index.css";
 import ZoominfoAnalytics from "analytics/ZoominfoAnalytics";
 
 import AnnoucementBar from "layouts/Layout/AnnoumentBar/AnnoucementBar";
+import CInfoBar from "layouts/Layout/CInfoBar/CInfoBar";
+import { DOM_IDS } from "constants/global.constant";
 
 import PageContext from "contexts/PageContext";
 
@@ -37,6 +40,10 @@ export function Layout({
     const skipAnnoucementPageTitle = [PAGES_TITLE.DEMO, HCP_PAGE, PATIENTS_PAGE];
     const canShowAnnoucementBar = !(skipAnnoucementPageTitle.includes(context.title));
 
+    const location = useLocation();
+    const currentLocationSlug = location.pathname.replace(/^\/|\/$/g, "");
+
+
   return (
     <>
       <HubspotProvider>
@@ -46,11 +53,12 @@ export function Layout({
           }}
           >
           {isProduction && <ZoominfoAnalytics />}
-          <div className="sticky-wrapper">
-            {canShowAnnoucementBar && <AnnoucementBar/>}
+          <div className="sticky-wrapper" id={DOM_IDS.TOP_BAR}>
+            {canShowAnnoucementBar && <AnnoucementBar currentLocationSlug={currentLocationSlug}/>}
             {!canHideHeader && <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />}
+            <CInfoBar currentLocationSlug={currentLocationSlug}/>
           </div>
-          <Box>{children}</Box>
+          <>{children}</>
           <CFooter minimal={minimal} />
         </AppShell>
       </HubspotProvider>

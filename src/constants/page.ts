@@ -15,6 +15,7 @@ export const PAGES_TITLE = {
     DTP_RESOURCES :"DtpResources",
     GTN: "GTN",
     SOLUTION_MAIN:"Solution",
+    FAQs: "FAQs"
 }
 
 export const PAGE_WITHOUT_HEADER_FOOTER:string[] = [

@@ -314,15 +314,16 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     );
   }
 
-  return (
-    <>
-      {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
+  return (<>
+    {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
+    
+    <section className={cx(classes.referenceSection, classes.scrollSection)} id ={slugify(section.title ?? "", { lower: true, strict: true })}>
     <Expanded
       id={getIdSlugifyForDiv(section?.eyebrowHeading || "")}
       background={
         section.v2flag
-          ? getColorFromStylingOptions(section?.stylingOptions?.background)
-          : background
+        ? getColorFromStylingOptions(section?.stylingOptions?.background)
+        : background
       }
       fullWidth={section.referenceType === ReferenceTypeEnum["Image Carousel"]}
       backgroundAssetImage={section?.backgroundAssetImage ?? undefined}
@@ -338,6 +339,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
       pt={section.header?.length > 0 ? undefined : 0}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
       className = {classes.scrollSection}
+      sectionIndex={sectionIndex}
     >
       <Container 
         id={slugify(section.header ?? section.id, { lower: true, strict: true })}
@@ -367,8 +369,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             </h1>
             <p
             style={{marginBottom: "0px"}}
-              className={cx(classes.subHeading,{[classes.isDarkBanner]: isHomePageFirstCardSection})}
-              data-reference-type="Card Section"
+            className={cx(classes.subHeading,{[classes.isDarkBanner]: isHomePageFirstCardSection})}
+            data-reference-type="Card Section"
             >
               Solving access barriers in retail and specialty-lite to improve
               patient outcomes and drive commercial success.
@@ -378,7 +380,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
 
         {(context.title === OUR_SOLUTIONS || context.title === PAGES_TITLE.PHIL_DIRECT || context.title === PAGES_TITLE.SOLUTION_MAIN) && section.referenceType === ReferenceTypeEnum["Card Section"] && (
           <div
-            style={{ display: "flex", justifyContent:"center"}}
+          style={{ display: "flex", justifyContent:"center"}}
           >
             <Text className={classes.recentClientNewsHeader} data-reference-type="Our Solution">
               {section?.header || ''}
@@ -420,9 +422,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             section.referenceType === ReferenceTypeEnum["Stepper Cards"] &&
             context.title === PATIENTS_PAGE && (
               <Group
-                className={classes.subHeading}
-                data-reference-type={section.referenceType}
-                justify="center"
+              className={classes.subHeading}
+              data-reference-type={section.referenceType}
+              justify="center"
               >
                 <Text>{section.subHeading.subHeading}</Text>
               </Group>
@@ -471,6 +473,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         )}
         </Container>
     </Expanded>
+    </section>
     {Boolean(section?.showBottomBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     </>
   );

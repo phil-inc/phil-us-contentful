@@ -6,17 +6,18 @@ import { Box, Center, Container, Grid, Loader, Title } from "@mantine/core";
 import { Layout } from "layouts/Layout/Layout";
 
 import type { ContentfulPage } from "types/page";
-import type { ISection } from "types/section";
+import type { IReferencedSection, ISection } from "types/section";
 import { AllContentfulModalQuery } from "types/modal";
 
 import { DTP_RESOURCES_EMAIL_SUBMITTED } from "constants/global.constant";
-import { PAGES_ROUTES } from "constants/page";
+import { PAGES_ROUTES, PAGES_TITLE } from "constants/page";
 
 import Section from "components/section/Section";
 import Expanded from "components/common/Expanded/Expanded";
 import Head from "components/common/Head/Head";
 import PageContext from "contexts/PageContext";
 import PageModal from "components/Modal/PageModal/PageModal";
+import TopSection from "components/TopSection/TopSection";
 
 import * as classes from "./page.module.css";
 
@@ -27,11 +28,11 @@ type PageTemplateProps = {
   };
 };
 
-// Page head
+// Page head  
 export { Head };
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
-  const { id, sections, title } = data?.contentfulPage;
+  const { id, sections, title, displayTitle } = data?.contentfulPage;
 
   let basicSectionCount = 0;
 
@@ -101,6 +102,11 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
           </Container>
         )}
         <PageModal contentfulModalNodes={data?.allContentfulModal?.nodes || []}/>
+        <TopSection 
+          title={title}
+          displayTitle={displayTitle}
+          sections={sections  as IReferencedSection[]}
+        />
         {canShowLoader
         ? (<Center>
             <Loader  mt={"xl"} mb={"xl"} size="lg" />
@@ -638,6 +644,7 @@ export const query = graphql`
         }
         ... on ContentfulReferencedSection {
           id
+          title
           isHidden
           hideNavigationAnchor
           addBorder

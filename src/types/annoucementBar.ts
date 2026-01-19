@@ -1,3 +1,4 @@
+import { ContentfulButton } from "layouts/Layout/CHeader/CHeader";
 import { BodyType, StylingOptions } from "types/section";
 
 export type IContentfulLink = {
@@ -34,6 +35,7 @@ export type AnnoucementReference  = {
   hyperlink?: IContentfulLink | null;
   stylingOptions?: StylingOptions
   body: BodyType
+  buttonReference?: ContentfulButton;
 }
 
 export type TopAnnouncementBarNode = {
