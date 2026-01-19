@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { graphql, StaticQuery } from "gatsby";
 
 import { TopInfoBarNode } from "types/infoBar";
+import { FALSE_STRING, SHOW_INFOBAR } from "constants/global.constant";
 
 import InfoBar from "components/common/InfoBar/InfoBar";
-
 
 type AllContentfulTopInfoBarQuery = {
   currentLocationSlug: string;
@@ -21,13 +21,22 @@ const TopInfoBar: React.FC<AllContentfulTopInfoBarQuery> = ({
   const [canShowInfoBar, setCanShowInforBar] = useState(
     Boolean(topAnnoucement?.reference),
   );
-  const displayableSlug = topAnnoucement?.pagesToShowInfoBar?.map(page => page?.slug) ?? [];
-  const isCurrentLocationHaveDiplayablSlug = displayableSlug.includes(currentLocationSlug);
-  
+  const displayableSlug =
+    topAnnoucement?.pagesToShowInfoBar?.map((page) => page?.slug) ?? [];
+  const isCurrentLocationHaveDiplayableSlug =
+    displayableSlug.includes(currentLocationSlug);
+  React.useEffect(() => {
+    const canDisplayBar = sessionStorage.getItem(SHOW_INFOBAR);
+    if (canDisplayBar === FALSE_STRING) {
+      setCanShowInforBar(false);
+    }
+  }, []);
+
   if (
-    (allContentfulTopInfoBar?.nodes?.length < 1 ||
-    !topAnnoucement?.reference?.canDisplay) ||
-    !isCurrentLocationHaveDiplayablSlug
+    allContentfulTopInfoBar?.nodes?.length < 1 ||
+    !topAnnoucement?.reference?.canDisplay ||
+    !isCurrentLocationHaveDiplayableSlug ||
+    !canShowInfoBar
   ) {
     return <></>;
   }
@@ -119,7 +128,7 @@ export const query = graphql`
             }
           }
         }
-        pagesToShowInfoBar{
+        pagesToShowInfoBar {
           __typename
           id
           ... on ContentfulPage {
