@@ -18,19 +18,19 @@ const TopInfoBar: React.FC<AllContentfulTopInfoBarQuery> = ({
   allContentfulTopInfoBar,
 }) => {
   const [topAnnoucement] = allContentfulTopInfoBar?.nodes || [];
-  const [canShowInfoBar, setCanShowInforBar] = useState(
-    Boolean(topAnnoucement?.reference),
-  );
+  const [canShowInfoBar, setCanShowInforBar] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+
+    return (
+      Boolean(topAnnoucement?.reference) &&
+      sessionStorage.getItem(SHOW_INFOBAR) !== FALSE_STRING
+    );
+  });
+  
   const displayableSlug =
     topAnnoucement?.pagesToShowInfoBar?.map((page) => page?.slug) ?? [];
   const isCurrentLocationHaveDiplayableSlug =
     displayableSlug.includes(currentLocationSlug);
-  React.useEffect(() => {
-    const canDisplayBar = sessionStorage.getItem(SHOW_INFOBAR);
-    if (canDisplayBar === FALSE_STRING) {
-      setCanShowInforBar(false);
-    }
-  }, []);
 
   if (
     allContentfulTopInfoBar?.nodes?.length < 1 ||
