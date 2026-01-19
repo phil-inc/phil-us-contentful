@@ -54,7 +54,7 @@ const FeaturedCaseStudy: React.FC<{
               ? typeof resource.heading === "string"
                 ? resource.heading
                 : (resource as unknown as CaseStudy).title ||
-                  "No title available"
+                "No title available"
               : (resource as CaseStudy).title || "No heading available"}
           </Title>
           <Text mt={32} className={classes.featuredCaseStudyDescription}>
@@ -63,8 +63,8 @@ const FeaturedCaseStudy: React.FC<{
                 ? resource.description
                 : resource.description.raw
                   ? documentToPlainTextString(
-                      JSON.parse(resource.description.raw),
-                    )
+                    JSON.parse(resource.description.raw),
+                  )
                   : "No description available"
               : "No description available"}
           </Text>
@@ -194,37 +194,37 @@ export type CaseStudy = {
     __typename: string;
     references?: Array<
       | {
+        __typename: string;
+        contentful_id: string;
+        id: string;
+      }
+      | {
+        __typename: "ContentfulMetric";
+        contentful_id: string;
+        id: string;
+        metricLabel: string;
+        metricValue: string;
+        metricDescription?: string;
+        metricDescriptionRichText?: {
+          raw: string;
           __typename: string;
-          contentful_id: string;
-          id: string;
         }
+      }
       | {
-          __typename: "ContentfulMetric";
+        __typename: "ContentfulTestimonials";
+        contentful_id: string;
+        id: string;
+        quoteTitle: string;
+        quoteText: {
+          id: string;
+          quoteText: string;
+          __typename: string;
+        };
+        testimonialImage?: {
           contentful_id: string;
           id: string;
-          metricLabel: string;
-          metricValue: string;
-          metricDescription?: string;
-          metricDescriptionRichText?: {
-            raw: string;
-            __typename: string;
-          }
-        }
-      | {
-          __typename: "ContentfulTestimonials";
-          contentful_id: string;
-          id: string;
-          quoteTitle: string;
-          quoteText: {
-            id: string;
-            quoteText: string;
-            __typename: string;
-          };
-          testimonialImage?: {
-            contentful_id: string;
-            id: string;
-          };
-        }
+        };
+      }
     >;
   };
   files?: {
@@ -367,7 +367,7 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
   const options: Options = {
     renderNode: {
 
-      [BLOCKS.EMBEDDED_ASSET](node,children) {
+      [BLOCKS.EMBEDDED_ASSET](node, children) {
         return (
           <Box className={classes.embededAsset}>
             <Asset asset={node.data.target} />
@@ -405,12 +405,12 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         const val = (node.content[0] as any).value;
 
         return (
-        <>
-          <hr className={classes.sectionDivider}/>
-          <Title id={val} order={2} unstyled className={cx(classes.header2, classes.scrollSection)}>
-            {children}
-          </Title>
-        </>
+          <>
+            <hr className={classes.sectionDivider} />
+            <Title id={val} order={2} unstyled className={cx(classes.header2, classes.scrollSection)}>
+              {children}
+            </Title>
+          </>
         );
       },
       [BLOCKS.HEADING_3](node, children) {
@@ -420,9 +420,9 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
         return <Title order={4}>{children}</Title>;
       },
       [BLOCKS.HEADING_5](node, children) {
-        return <div className= {classes.header5}>
+        return <div className={classes.header5}>
           <Title order={5}>{children}</Title>
-        </div> 
+        </div>
       },
       [BLOCKS.HEADING_6](node, children) {
         return <Title order={6}>{children}</Title>;
@@ -435,18 +435,26 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
 
   return (
     <Layout>
-      <Container className={cx("container", classes.heroContainer)}size={"xl"}>
-        <Grid align="center">
+      <Container className={cx("container", classes.heroContainer)} size={"xl"}>
+        <Grid align="">
           <Grid.Col span={{ base: 12, md: 6 }}>
-          <Grid.Col span={{ base:12, md: "auto" }}> 
-              {data?.keyMetricOfStudy?.length 
+            <Grid.Col span={{ base: 12, md: "auto" }}>
+              {data?.keyMetricOfStudy?.length
                 && <KeyMetricOfCaseStudy metrics={data.keyMetricOfStudy} />
               }
-
-          </Grid.Col>
+            </Grid.Col>
             <Title order={1} className={classes.heroTitle}>
               {data.title}
             </Title>
+            {data?.files && data.files.length > 0 && (
+              <Box mt={52}>
+                <Anchor href={data.files[0].url} target="_blank" referrerPolicy="no-referrer">
+                  <Button variant="philDefault" w={"231"}>
+                   Download PDF
+                  </Button>
+                </Anchor>
+              </Box>
+            )}
           </Grid.Col>
           <Grid.Col span={"auto"}>
             <Box className={classes.box}>
@@ -513,56 +521,56 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
       <BasicSection section={demoBannerSection} index={0} isEmbedFormTemplate={false} />
 
       <Expanded id="featured-case-study" background="#f4f4f4">
-      <Container className={cx("container")} size={"xl"}>
-        <Group justify="center" className={classes.group}>
-          <Box mb={isMobile ? 60 : 80 - 22}>
-            <Title
-              unstyled
-              m={0}
-              order={3}
-              className={classes.featuredCaseStudyTitle}
-            >
-              Featured Case Studies
-            </Title>
-          </Box>
+        <Container className={cx("container")} size={"xl"}>
+          <Group justify="center" className={classes.group}>
+            <Box mb={isMobile ? 60 : 80 - 22}>
+              <Title
+                unstyled
+                m={0}
+                order={3}
+                className={classes.featuredCaseStudyTitle}
+              >
+                Featured Case Studies
+              </Title>
+            </Box>
 
-          {isMobile ? (
-            <Carousel
-              withIndicators
-              withControls={false}
-              classNames={{
-                indicators: classes.indicators,
-                indicator: classes.indicator,
-                viewport: classes.carouselViewport,
-              }}
-              slideSize={{ base: "40%", xs: "90%", sm: "90%" }}
-              slideGap={{ base: "5%", xs: "15%" }}
-            >
-              {featured.map((resource) => (
-                <Carousel.Slide>
-                  <FeaturedCaseStudy key={resource.id} resource={resource} />
-                </Carousel.Slide>
-              ))}
-            </Carousel>
-          ) : (
-            <Grid gutter={44} mb={80 - 22} align="stretch">
-              {featured.map((resource) => (
-                <Grid.Col span={4}>
-                  <FeaturedCaseStudy key={resource.id} resource={resource} />
-                </Grid.Col>
-              ))}
-            </Grid>
-          )}
+            {isMobile ? (
+              <Carousel
+                withIndicators
+                withControls={false}
+                classNames={{
+                  indicators: classes.indicators,
+                  indicator: classes.indicator,
+                  viewport: classes.carouselViewport,
+                }}
+                slideSize={{ base: "40%", xs: "90%", sm: "90%" }}
+                slideGap={{ base: "5%", xs: "15%" }}
+              >
+                {featured.map((resource) => (
+                  <Carousel.Slide>
+                    <FeaturedCaseStudy key={resource.id} resource={resource} />
+                  </Carousel.Slide>
+                ))}
+              </Carousel>
+            ) : (
+              <Grid gutter={44} mb={80 - 22} align="stretch">
+                {featured.map((resource) => (
+                  <Grid.Col span={4}>
+                    <FeaturedCaseStudy key={resource.id} resource={resource} />
+                  </Grid.Col>
+                ))}
+              </Grid>
+            )}
 
-          <Link to="/insights/case-studies">
-            <Button
-              className={classes.featuredCaseStudyButton}
-              variant="philDefault"
-            >
-              View all case studies
-            </Button>
-          </Link>
-        </Group>
+            <Link to="/insights/case-studies">
+              <Button
+                className={classes.featuredCaseStudyButton}
+                variant="philDefault"
+              >
+                View all case studies
+              </Button>
+            </Link>
+          </Group>
         </Container>
       </Expanded>
 
