@@ -43,7 +43,6 @@ export function Layout({
     const location = useLocation();
     const currentLocationSlug = location.pathname.replace(/^\/|\/$/g, "");
 
-
   return (
     <>
       <HubspotProvider>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Anchor, Button, Container } from "@mantine/core";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types";
@@ -66,13 +66,6 @@ const InfoBar: React.FC<props> = ({
     setCanShowInforBar(false);
     sessionStorage.setItem(SHOW_INFOBAR, FALSE_STRING);
   };
-
-  useEffect(() => {
-    const canDisplayBar = sessionStorage.getItem(SHOW_INFOBAR);
-    if (canDisplayBar === FALSE_STRING) {
-      setCanShowInforBar(false);
-    }
-  }, []);
 
   if (!canShowInfoBar) {
     return <></>;
