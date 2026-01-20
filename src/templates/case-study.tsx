@@ -56,7 +56,7 @@ const FeaturedCaseStudy: React.FC<{
               ? typeof resource.heading === "string"
                 ? resource.heading
                 : (resource as unknown as CaseStudy).title ||
-                "No title available"
+                ""
               : (resource as CaseStudy).title || "No heading available"}
           </Title>
           <Text mt={32} className={classes.featuredCaseStudyDescription}>
@@ -516,9 +516,9 @@ const CaseStudy: React.FC<CaseStudyProps> = ({
               {data.body && renderRichText(data.body, options)}
             </Box>
           </Grid.Col>
-          <Grid.Col span={{ base: "auto", md: 3 }} className={cx(classes.sticky, classes.downloadPdfColumn)}>
+          <Grid.Col span={{ base: "auto", md: 3 }} className={cx(classes.sticky)}>
             {demoFormId && demoPortalId && (
-              <Box className={classes.bookDemoForm}>
+              <Box className={cx(classes.bookDemoForm, "case-study-hubspot-form")}>
                 <Text>{demoForm?.body && renderRichText(demoForm.body)}</Text>
                 <hr/>
                 <p style={{ fontSize: '14px' }}>Fill out the form below to request a discovery call with the PHIL team.</p>

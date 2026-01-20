@@ -16,6 +16,7 @@
   }
 }
 
+/* This is for the download pdf column not used anymore */
 .downloadPdfColumn{
   margin-top: 16px;
   text-align: center;
@@ -23,8 +24,6 @@
   @media (min-width: $phil-breakpoint-md) {
     margin-top: 0px;
     text-align: left;
-
-
   }
 }
 
