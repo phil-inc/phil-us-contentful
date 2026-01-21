@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { SCREEN_SIZES } from "constants/global.constant";
+import { SCREEN_SIZES_DEVICE } from "constants/global.constant";
 
 export const useIsSmallDevice = () => {
   const [isSmall, setIsSmall] = useState(false);
 
   useEffect(() => {
     const checkSize = () => {
-      setIsSmall(window.innerWidth <= SCREEN_SIZES.TABLET);
+      setIsSmall(window.innerWidth <= SCREEN_SIZES_DEVICE.SM);
     };
 
     checkSize(); // initial check

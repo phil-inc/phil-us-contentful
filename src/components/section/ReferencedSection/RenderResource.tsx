@@ -37,6 +37,8 @@ import BulletList from "components/BulletList/BulletList";
 import MetricCard from "components/common/MetricCardComponent/MetricCardComponent";
 import SingleLineMetricCard from "components/common/SingleLineMetricCard/SingleLineMetricCard";
 import { FaqAccordionSingle } from "components/common/AccordionSingle/FaqAccordionSingle";
+import ImageConnnectToTwoCard from "components/common/ImageConnnectToTwoCard/ImageConnnectToTwoCard";
+import PromoCard from "components/common/PromoCard/PromoCard";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -86,6 +88,7 @@ type ComponentFunctionProps = {
   isEmployeeTag?: boolean;
   metadata?: Metadata;
   sectionHeader?: string;
+  sectionIndex?: number;
 };
 
 type ComponentFunction = (
@@ -249,6 +252,13 @@ const SingleLineMetricCardComponent: ComponentFunction = ({ resource,index }) =>
   <SingleLineMetricCard resource={resource} index={index ?? 0}/>
 );
 
+const ImageConnnectToTwoCardComponent: ComponentFunction = ({ resource,index, sectionIndex }) => (
+  <ImageConnnectToTwoCard resource={resource} index={index ?? 0} sectionIndex={sectionIndex}/>
+);
+const PromoCardComponent: ComponentFunction = ({ resource,index }) => (
+  <PromoCard resource={resource} index={index ?? 0}/>
+);
+
 const getComponent = (
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum,
   resource: TResource,
@@ -260,6 +270,7 @@ const getComponent = (
   metadata?: Metadata,
   isEmployeeTag?: boolean,
   sectionHeader?: string,
+  sectionIndex?: number,
 ) => {
   const componentMappings: Record<
     ReferenceTypeEnum | ResourceBlocksEnum,
@@ -300,6 +311,8 @@ const getComponent = (
     [ReferenceTypeEnum["Bullet list"]]: BulletListComponent,
     [ReferenceTypeEnum["Metric card"]]: MetricCardComponent,
     [ReferenceTypeEnum["Single line Metric card"]]: SingleLineMetricCardComponent,
+    [ReferenceTypeEnum["Image Connnect To Two Card"]]: ImageConnnectToTwoCardComponent,
+    [ReferenceTypeEnum["Promo Card"]]: PromoCardComponent,
   };
 
   const componentFunction = componentMappings[referenceType];
@@ -317,6 +330,7 @@ const getComponent = (
     metadata,
     isEmployeeTag,
     sectionHeader,
+    sectionIndex,
   });
 };
 
@@ -328,6 +342,7 @@ type RenderResourceProps = {
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum;
   isEmployeeTag: boolean;
   metadata?: Metadata;
+  sectionIndex?: number
 };
 
 const RenderResource: React.FC<RenderResourceProps> = ({
@@ -338,6 +353,7 @@ const RenderResource: React.FC<RenderResourceProps> = ({
   referenceType,
   isEmployeeTag,
   metadata,
+  sectionIndex
 }) => {
   const theme = useMantineTheme();
   const [resourceBackground] = getSectionColors(referenceType);
@@ -352,6 +368,7 @@ const RenderResource: React.FC<RenderResourceProps> = ({
     metadata,
     isEmployeeTag,
     sectionHeader,
+    sectionIndex,
   );
 };
 

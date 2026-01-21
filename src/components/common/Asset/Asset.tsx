@@ -1,5 +1,4 @@
 import React, { forwardRef, Suspense, type FC } from "react";
-import { AspectRatio } from "@mantine/core";
 import {
   GatsbyImage,
   type GatsbyImageProps,
@@ -9,6 +8,7 @@ import type { TAsset } from "types/asset";
 import { isVideoContent } from "utils/isVideoContent";
 import { getYouTubeId } from "utils/links";
 import loadable from "@loadable/component";
+import cx from 'clsx';
 
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import { type MediaItem } from "types/section";
@@ -25,10 +25,12 @@ type AssetProps = {
   youtubeVideoURL?: string;
   width?: number;
   objectFit?: GatsbyImageProps["objectFit"];
+  isFullWidth?: boolean;
+  isHeightInherit?: boolean;
 };
 
 const Asset = forwardRef<HTMLDivElement, AssetProps>(
-  ({ asset, youtubeVideoURL, width, objectFit }, ref) => {
+  ({ asset, youtubeVideoURL, width, objectFit, isFullWidth, isHeightInherit }, ref) => {
     const { media, url, title, contentType, videoURL } = extractAssetData(
       asset,
       youtubeVideoURL,
@@ -57,7 +59,12 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
 
       if (contentType.startsWith("image/")) {
         const image = getImage(media);
-        return <GatsbyImage objectFit={objectFit || "cover"} image={image!} alt={title} className={classes.gatsbyImageContainer}  />;
+        return <GatsbyImage 
+          objectFit={objectFit || "cover"}
+          image={image!}
+          alt={title}
+          className={cx(classes.gatsbyImageContainer, { [classes.fullWidth]: Boolean(isFullWidth), [classes.heightInherit]: Boolean(isHeightInherit) })} 
+        />;
       }
 
       return null;

@@ -1,0 +1,37 @@
+.sectionGroup {
+  position: relative;
+
+  .bgImageOne {
+    position: absolute;
+    width: 100%;
+    display: none;
+
+    @media (min-width: $phil-breakpoint-md) {
+      display: block;
+
+      &[data-context="Solution"][data-image-index="1"] {
+        left: 0;
+        top: 40%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  .bgImageTwo {
+    position: absolute;
+    width: 100%;
+    display: none;
+
+    @media (min-width: $phil-breakpoint-md) {
+      display: block;
+
+      &[data-context="Solution"][data-image-index="2"] {
+        /* background-color: rgb(230, 246, 233); */
+        width: 85%;
+        right: 0;
+        top: 75%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
