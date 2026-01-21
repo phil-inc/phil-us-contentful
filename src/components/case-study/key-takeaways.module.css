@@ -1,0 +1,104 @@
+.keyTakeaways {
+  margin: 0px 0px 40px 0px;
+}
+
+.mainTitle {
+  font-family: Raleway, sans-serif;
+  font-weight: bold;
+  color: #00827E;
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.itemTitle {
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 6px;
+  width: fit-content;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 104%;
+    height: 2px;
+    background-color: #35ada7;
+  }
+}
+
+.descriptionText {
+  color:#555555;
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  line-height: 25.6px;
+  margin: 0;
+}
+
+.takeawayItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.itemDescription {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: $phil-breakpoint-md) {
+  .keyTakeaways {
+    margin: 0px 0px 40px 0px;
+  }
+  
+  .takeawayItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .takeawayItem:last-child {
+    margin-bottom: 0;
+  }
+  
+  .itemTitle {
+    font-size: 24px;
+    margin: 0;
+    padding-bottom: 0;
+    flex-shrink: 0;
+    min-width: 150px;
+
+    &::after {
+      display: none;
+    }
+  }
+  
+  .itemDescription {
+    position: relative;
+    padding-left: 24px;
+    flex: 1;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      height: 100%;
+      background-color: #35ada7;
+    }
+  }
+}
+
+  
