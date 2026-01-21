@@ -21,7 +21,8 @@ type Props = {
 };
 
 const PromoCard: React.FC<Props> = ({ resource, index }) => {
-  const { heading, icon, body, subItemReferences } = resource;
+  const { heading, icon, body, subItemReferences, asset, canShowImageOnly } =
+    resource;
 
   const options: Options = {
     renderNode: {
@@ -30,46 +31,62 @@ const PromoCard: React.FC<Props> = ({ resource, index }) => {
       },
     },
   };
+  const ImageComponent: () => JSX.Element = () => {
+    return (
+      <>
+        {asset && (
+          <Box className={classes.imageOnly} data-index={index}>
+            <Asset objectFit="contain" asset={asset as TAsset} />
+          </Box>
+        )}
+      </>
+    );
+  };
 
   return (
     <>
-      <Group
-        h={"100%"}
-        gap={0}
-        className={classes.cardContainer}
-        data-index={index}
-      >
-        <Paper
-          className={cx(classes.promoCard)}
-          style={{
-            background: getColorFromStylingOptions(
-              resource?.stylingOptions?.background,
-            ),
-          }}
-          radius={0}
+      {" "}
+      {canShowImageOnly ? (
+        <ImageComponent />
+      ) : (
+        <Group
+          h={"100%"}
+          gap={0}
+          className={classes.cardContainer}
+          data-index={index}
         >
-          {icon && (
-            <Box className={classes.icon}>
-              <Asset objectFit="contain" asset={icon as TAsset} />
-            </Box>
-          )}
-          <Box className={classes.content}>
-            <Text className={classes.title}>{heading}</Text>
-            {body && renderRichText(body, options)}
-            {subItemReferences && subItemReferences?.length > 0 && (
-              <Box className={classes.pills}>
-                {subItemReferences.map((subItem, index) => (
-                  <PhilPill
-                    pill={subItem}
-                    index={index}
-                    key={`pill-${index}`}
-                  />
-                ))}
+          <Paper
+            className={cx(classes.promoCard)}
+            style={{
+              background: getColorFromStylingOptions(
+                resource?.stylingOptions?.background,
+              ),
+            }}
+            radius={0}
+          >
+            {icon && (
+              <Box className={classes.icon}>
+                <Asset objectFit="contain" asset={icon as TAsset} />
               </Box>
             )}
-          </Box>
-        </Paper>
-      </Group>
+            <Box className={classes.content}>
+              <Text className={classes.title}>{heading}</Text>
+              {body && renderRichText(body, options)}
+              {subItemReferences && subItemReferences?.length > 0 && (
+                <Box className={classes.pills}>
+                  {subItemReferences.map((subItem, index) => (
+                    <PhilPill
+                      pill={subItem}
+                      index={index}
+                      key={`pill-${index}`}
+                    />
+                  ))}
+                </Box>
+              )}
+            </Box>
+          </Paper>
+        </Group>
+      )}
     </>
   );
 };

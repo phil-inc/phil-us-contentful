@@ -153,7 +153,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
   const getGridGutter = () => {
-    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"] || section.referenceType === ReferenceTypeEnum["Image Connnect To Two Card"])
+    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"] ||
+          section.referenceType === ReferenceTypeEnum["Image Connnect To Two Card"] ||
+          section.referenceType === ReferenceTypeEnum["Promo Card"]
+    )
       return 0;
     return 36;
   };

@@ -130,7 +130,8 @@
 }
 
 .heading3{
-	&[data-context='Solution'][data-section-index='4'] {
+	/* &[data-context='Solution'][data-section-index='4'] { */
+	&[data-context='Solution'][data-section-index='3'] {
 		color: var(--primary-black-color, #000000);
 	}
 }
@@ -334,7 +335,8 @@
 	&[data-context='Phil Direct'][data-is-bgcolor-light='false'] {
 		color: var(--primary-white-color);
 	}	
-	&[data-context='Solution'][data-section-index='4'] {
+	/* &[data-context='Solution'][data-section-index='4'] { */
+	&[data-context='Solution'][data-section-index='3'] {
 		color: var(--primary-black-color);
 	}	
 }
