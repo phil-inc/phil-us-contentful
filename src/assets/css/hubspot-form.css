@@ -42,6 +42,13 @@ textarea {
 	width: 100%;
 }
 
+.case-study-form {
+	.hs-submit {
+	  margin-top: 12px;
+	}
+  }
+
+
 input[type='submit'] {
 	background-color: #00201f;
 	color: #fff;
@@ -191,5 +198,11 @@ input[type='submit']:hover {
 		&:hover {
 			background-color: #000;
 		}
+	}
+}
+
+.case-study-hubspot-form {
+	.hs-submit {
+		margin-top: 8px;
 	}
 }
