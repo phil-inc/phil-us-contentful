@@ -153,7 +153,9 @@ export enum ReferenceTypeEnum {
   "Bullet list" = "Bullet list",
   "Metric card" = "Metric card",
   "Single line Metric card" = "Single line Metric card",
-  "Promo Card" = "Promo Card"
+  "Promo Card" = "Promo Card",
+  "MetricWith5Card" = "MetricWith5Card",
+  "MetricWith3Card" = "MetricWith3Card",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;

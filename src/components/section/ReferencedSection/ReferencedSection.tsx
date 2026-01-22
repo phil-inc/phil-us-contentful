@@ -28,6 +28,7 @@ import { getColorFromStylingOptions } from "utils/stylingOptions";
 import Asset from "components/common/Asset/Asset";
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
 import CommonReferencedSectionBody from "components/section/ReferencedSection/CommonReferencedSectionBody/CommonReferencedSectionBody";
+import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 
 import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
@@ -61,6 +62,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const { link, isExternal } = getLink(section);
   const context = React.useContext(PageContext);
   const isSmallDevice = useIsSmallDevice();
+  console.log("section.referenceType", section);
 
   React.useEffect(() => {
     try {
@@ -215,6 +217,19 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         </div>
       </div>
     );
+  } else if (section.referenceType === ReferenceTypeEnum["MetricWith5Card"]){
+    sectionContent = <>
+      {Boolean(section.header) && (
+        <ReferencedSectionTitle
+          section={section}
+          isEmbedFormTemplate={isEmbedFormTemplate}
+          textColor={textColor}
+          index={index}
+          sectionIndex={sectionIndex}
+        />
+      )}
+      <MetricWithUmbrellaBorder section={section} sectionIndex={sectionIndex}/>
+    </>
   } else {
     sectionContent = (
       <>

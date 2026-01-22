@@ -39,6 +39,7 @@ import SingleLineMetricCard from "components/common/SingleLineMetricCard/SingleL
 import { FaqAccordionSingle } from "components/common/AccordionSingle/FaqAccordionSingle";
 import ImageConnnectToTwoCard from "components/common/ImageConnnectToTwoCard/ImageConnnectToTwoCard";
 import PromoCard from "components/common/PromoCard/PromoCard";
+import { MetricWithTitleCard } from "components/common/MetricWithUmbrellaBorder/MetricWithTitleCard/MetricWithTitleCard";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -258,6 +259,12 @@ const ImageConnnectToTwoCardComponent: ComponentFunction = ({ resource,index, se
 const PromoCardComponent: ComponentFunction = ({ resource,index }) => (
   <PromoCard resource={resource} index={index ?? 0}/>
 );
+const MetricWith5CardComponent: ComponentFunction = ({ resource,index }) => (
+  <MetricWithTitleCard resource={resource}/>
+);
+const MetricWith3CardComponent: ComponentFunction = ({ resource,index }) => (
+  <></>
+);
 
 const getComponent = (
   referenceType: ReferenceTypeEnum | ResourceBlocksEnum,
@@ -313,6 +320,8 @@ const getComponent = (
     [ReferenceTypeEnum["Single line Metric card"]]: SingleLineMetricCardComponent,
     [ReferenceTypeEnum["Image Connnect To Two Card"]]: ImageConnnectToTwoCardComponent,
     [ReferenceTypeEnum["Promo Card"]]: PromoCardComponent,
+    [ReferenceTypeEnum["MetricWith5Card"]]: MetricWith5CardComponent,
+    [ReferenceTypeEnum["MetricWith3Card"]]: MetricWith3CardComponent,
   };
 
   const componentFunction = componentMappings[referenceType];

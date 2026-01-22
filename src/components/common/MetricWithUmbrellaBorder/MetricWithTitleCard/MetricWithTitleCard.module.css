@@ -1,0 +1,31 @@
+.metricWithTitle {
+  color: var(--primary-green-color);
+
+  .description {
+    font-family: Lato;
+    font-weight: 600;
+    font-size: 9px;
+    text-transform: uppercase;
+    word-break: break-word;
+    word-break: break-word;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      font-size: 14px;
+    }
+  }
+
+  .value {
+    font-family: Raleway;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 120%;
+    text-align: center;
+    font-style: normal;
+    font-variant-numeric: lining-nums proportional-nums;
+    word-break: break-word;
+
+    @media (min-width: $phil-breakpoint-sm) {
+      font-size: 60px;
+    }
+  }
+}
