@@ -62,7 +62,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const { link, isExternal } = getLink(section);
   const context = React.useContext(PageContext);
   const isSmallDevice = useIsSmallDevice();
-  console.log("section.referenceType", section);
 
   React.useEffect(() => {
     try {

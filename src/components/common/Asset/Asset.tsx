@@ -27,10 +27,11 @@ type AssetProps = {
   objectFit?: GatsbyImageProps["objectFit"];
   isFullWidth?: boolean;
   isHeightInherit?: boolean;
+  isFullWidthHeight?: boolean;
 };
 
 const Asset = forwardRef<HTMLDivElement, AssetProps>(
-  ({ asset, youtubeVideoURL, width, objectFit, isFullWidth, isHeightInherit }, ref) => {
+  ({ asset, youtubeVideoURL, width, objectFit, isFullWidth, isHeightInherit,isFullWidthHeight }, ref) => {
     const { media, url, title, contentType, videoURL } = extractAssetData(
       asset,
       youtubeVideoURL,
@@ -63,7 +64,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
           objectFit={objectFit || "cover"}
           image={image!}
           alt={title}
-          className={cx(classes.gatsbyImageContainer, { [classes.fullWidth]: Boolean(isFullWidth), [classes.heightInherit]: Boolean(isHeightInherit) })} 
+          className={cx(classes.gatsbyImageContainer, { [classes.fullWidth]: Boolean(isFullWidth), [classes.fullWidthHeight]: Boolean(isFullWidthHeight), [classes.heightInherit]: Boolean(isHeightInherit) })} 
         />;
       }
 

@@ -106,6 +106,7 @@ export type ISection = {
   headerDescription?: { 
     headerDescription: string 
   }
+  componentType?: string;
 };
 
 export enum ResourceBlocksEnum {

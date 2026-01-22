@@ -620,6 +620,7 @@ export const query = graphql`
           showBottomBorder
           youtubeVideoUrl
           eyebrowHeading
+          componentType
           body {
             raw
             references {
