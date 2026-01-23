@@ -13,6 +13,7 @@ import { type IReferencedSection, ReferenceTypeEnum } from "types/section";
 import cx from 'clsx';
 
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
+import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -160,6 +161,12 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
       return 0;
     return 36;
   };
+
+  // Render MetricWithUmbrellaBorder skip the grid layout
+  if(section.referenceType === ReferenceTypeEnum["MetricWith5Card"]){
+    return <MetricWithUmbrellaBorder section={section} sectionIndex={sectionIndex} />;
+  }
+  
 
   return (
     <Grid

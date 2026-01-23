@@ -45,7 +45,6 @@ const PromoCard: React.FC<Props> = ({ resource, index }) => {
 
   return (
     <>
-      {" "}
       {canShowImageOnly ? (
         <ImageComponent />
       ) : (
@@ -66,7 +65,7 @@ const PromoCard: React.FC<Props> = ({ resource, index }) => {
           >
             {icon && (
               <Box className={classes.icon}>
-                <Asset objectFit="contain" asset={icon as TAsset} />
+                <Asset objectFit="contain" asset={icon as TAsset} isFullWidthHeight />
               </Box>
             )}
             <Box className={classes.content}>

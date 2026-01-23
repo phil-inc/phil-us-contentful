@@ -282,6 +282,73 @@ export const query = graphql`
                     }
                     v2flag
                   }
+                  ... on ContentfulButtonGroup {
+                    id
+                    contentful_id
+                    title
+                    button1 {
+                      __typename
+                      ... on ContentfulButton {
+                        id
+                        contentful_id
+                        buttonText
+                        buttonStyle
+                        link {
+                          linkLabel
+                          name
+                          externalUrl
+                          internalContent {
+                            __typename
+                            ... on ContentfulPage {
+                              id
+                              title
+                              slug
+                              sys {
+                                contentType {
+                                  sys {
+                                    type
+                                    id
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        v2flag
+                      }
+                    }
+                    button2 {
+                      __typename
+                      ... on ContentfulButton {
+                        id
+                        contentful_id
+                        buttonText
+                        buttonStyle
+                        link {
+                          linkLabel
+                          name
+                          externalUrl
+                          internalContent {
+                            __typename
+                            ... on ContentfulPage {
+                              id
+                              title
+                              slug
+                              sys {
+                                contentType {
+                                  sys {
+                                    type
+                                    id
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        v2flag
+                      }
+                    }
+                  }
                 }
               }
               isHubspotEmbed
@@ -710,6 +777,73 @@ export const query = graphql`
                   }
                 }
                 v2flag
+              }
+              ... on ContentfulButtonGroup {
+                id
+                contentful_id
+                title
+                button1 {
+                  __typename
+                  ... on ContentfulButton {
+                    id
+                    contentful_id
+                    buttonText
+                    buttonStyle
+                    link {
+                      linkLabel
+                      name
+                      externalUrl
+                      internalContent {
+                        __typename
+                        ... on ContentfulPage {
+                          id
+                          title
+                          slug
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    v2flag
+                  }
+                }
+                button2 {
+                  __typename
+                  ... on ContentfulButton {
+                    id
+                    contentful_id
+                    buttonText
+                    buttonStyle
+                    link {
+                      linkLabel
+                      name
+                      externalUrl
+                      internalContent {
+                        __typename
+                        ... on ContentfulPage {
+                          id
+                          title
+                          slug
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    v2flag
+                  }
+                }
               }
             }
           }
@@ -1755,6 +1889,56 @@ export const query = graphql`
           referenceSecond {
             __typename
             id
+            ... on ContentfulMediaItem {
+              id
+              metadata {
+                tags {
+                  name
+                  id
+                }
+              }
+              sys {
+                contentType {
+                  sys {
+                    id
+                    type
+                  }
+                }
+              }
+              contentful_id
+              name
+              name
+              media {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              youtubeLink
+              embedCode {
+                raw
+              }
+              canShowMediaWidthFull
+            }
+          }
+          referenceSecondRenderOptions {
+            name
+            id
+            layoutOptions {
+              id
+              name
+              numberOfColumns
+              shouldRenderCarousel
+            }
           }
           secondReferenceType
           referenceThird {
