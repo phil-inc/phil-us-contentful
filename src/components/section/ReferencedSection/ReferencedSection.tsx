@@ -197,7 +197,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             />
           </Accordion.Control>
           <Accordion.Panel>
-            <ReferencedSectionBody getSpan={getSpan} section={section} />
+            <ReferencedSectionBody getSpan={getSpan} section={section} sectionIndex={sectionIndex}/>
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion>
@@ -211,7 +211,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         </div>
         
         <div className={classes.commitmentCardRightSection}>
-        <ReferencedSectionBody getSpan={getSpan} section={section} />
+        <ReferencedSectionBody getSpan={getSpan} section={section} sectionIndex={sectionIndex}/>
         </div>
       </div>
     );
@@ -260,7 +260,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           className={cx({[classes.innerBgSection]: Boolean(section?.innerBackgroundStyling)})}
           style={{background: section?.innerBackgroundStyling?.background ? getColorFromStylingOptions(section.innerBackgroundStyling.background) : undefined}} 
         >
-          <ReferencedSectionBody getSpan={getSpan} section={section}/>
+          <ReferencedSectionBody getSpan={getSpan} section={section} sectionIndex={sectionIndex}/>
 
           {/* New references section */}
           { Boolean(section?.referenceSecond) && Boolean(section?.secondReferenceType) && Boolean(section?.referenceSecondRenderOptions) &&

@@ -129,6 +129,12 @@
 		}
 }
 
+.heading3{
+	&[data-context='Solution'][data-section-index='4'] {
+		color: var(--primary-black-color, #000000);
+	}
+}
+
 .heading5{
 	font-family: Raleway;
 	font-weight: 800;
@@ -241,6 +247,7 @@
 .basicSectionContainer.empowerSection{
 	@media (min-width: $phil-breakpoint-md) {
 		padding-bottom: 60px;
+		padding-top: 0px;
 	}
 }
 .basicSectionContainer.gainSection{
@@ -327,6 +334,9 @@
 	
 	&[data-context='Phil Direct'][data-is-bgcolor-light='false'] {
 		color: var(--primary-white-color);
+	}	
+	&[data-context='Solution'][data-section-index='4'] {
+		color: var(--primary-black-color);
 	}	
 }
 

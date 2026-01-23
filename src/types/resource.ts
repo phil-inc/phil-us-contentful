@@ -99,6 +99,8 @@ export type TResource = {
   canShowImageOnly?: boolean;
   isFirstItem?: boolean;
   canShowMediaWidthFull?: boolean; // this is in the media item not in resource directly
+  assetForMobile?: TAsset;
+  subItemReferences?: IPills[];
 };
 
 export type DownloadableAsset = {
@@ -128,3 +130,12 @@ export type TDownloadableResource = Pick<
   description: string;
   banner: TResource;
 };
+
+export type IPills = {
+  id: string;
+  __typename: string;
+  header: string;
+  iconAsset?: TAsset;
+  title?: string;
+  stylingOptions?: StylingOptions;
+}

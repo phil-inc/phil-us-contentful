@@ -50,12 +50,14 @@ import { getIdSlugifyForDiv } from "utils/utils";
 import { BASIC_SECTION, BUTTON_STYLE, COLORS, CONTENTFUL_TYPES, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
 
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
+import RightImageBottomComp from "components/section/BasicSection/BasicComponentType/RightImageBottomComp";
 
 type BasicSectionProps = {
   section: ISection;
   index: number;
   isEmbedFormTemplate: boolean;
-  sectionIndex?: number
+  sectionIndex?: number;
+  subSectionIndex?: number;
 };
 
 /**
@@ -68,7 +70,8 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   section,
   index,
   isEmbedFormTemplate,
-  sectionIndex=0
+  sectionIndex=0,
+  subSectionIndex,
 }) => {
   const HERO_SECTION_INDEX = 0; // Hero section index is always 0
   const NUMBER_OF_COLUMNS = 2; // Basic section will always have 2 columns
@@ -235,6 +238,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             className={classes.body}
             data-oneColumn={isOneColumn}
             data-is-bgcolor-light={isBgColorLight}
+            data-section-index={sectionIndex}
             >
             {children}
           </Text>
@@ -299,7 +303,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
       [BLOCKS.HEADING_3](node, children) {
         return (
-          <Title order={3}>
+          <Title order={3} className={classes.heading3} data-context={context.title} data-section-index={sectionIndex}>
             {children}
           </Title>
         );
@@ -450,9 +454,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   };
   
   const { media } = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
+  
+  if(section?.componentType === "Right Bottom Image"){
+    return <RightImageBottomComp section={section} index={index} isEmbedFormTemplate={isEmbedFormTemplate}/>
+  }
+
   return (
     <>
-   {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
+    {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
 
     <Box 
       id={getIdSlugifyForDiv(section?.eyebrowHeading || "")}
@@ -660,6 +669,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     </Container>
     </>
     </Box>
+    
     {Boolean(section?.showBottomBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
     </>
   );

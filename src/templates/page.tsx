@@ -146,6 +146,383 @@ export const query = graphql`
       displayTitle
       description
       sections {
+        ... on ContentfulSectionGroup {
+          id
+          __typename
+          header
+          sectionType
+          canShowTopBorder
+          canShowBottomBorder
+          backgroundAssetImage1 {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          backgroundAssetImage2 {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          sectionGroupReference {
+            ... on ContentfulSection {
+              id
+              isHidden
+              isReverse
+              addBorder
+              showBottomBorder
+              youtubeVideoUrl
+              eyebrowHeading
+              body {
+                raw
+                references {
+                  __typename
+                  ... on ContentfulAsset {
+                    id
+                    contentful_id
+                    description
+                    gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
+                    file {
+                      contentType
+                      details {
+                        size
+                      }
+                      url
+                    }
+                    sys {
+                      type
+                    }
+                  }
+                  ... on ContentfulButton {
+                    id
+                    contentful_id
+                    buttonText
+                    buttonStyle
+                    link {
+                      linkLabel
+                      name
+                      externalUrl
+                      internalContent {
+                        __typename
+                        ... on ContentfulPage {
+                          id
+                          title
+                          slug
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulReferencedSection {
+                          id
+                          page {
+                            title
+                          }
+                          header
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulSection {
+                          id
+                          page {
+                            title
+                          }
+                          header
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                        ... on ContentfulResource {
+                          id
+                          heading
+                          sys {
+                            contentType {
+                              sys {
+                                type
+                                id
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    v2flag
+                  }
+                  ... on ContentfulButtonGroup {
+                    id
+                    contentful_id
+                    title
+                    button1 {
+                      __typename
+                      ... on ContentfulButton {
+                        id
+                        contentful_id
+                        buttonText
+                        buttonStyle
+                        link {
+                          linkLabel
+                          name
+                          externalUrl
+                          internalContent {
+                            __typename
+                            ... on ContentfulPage {
+                              id
+                              title
+                              slug
+                              sys {
+                                contentType {
+                                  sys {
+                                    type
+                                    id
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        v2flag
+                      }
+                    }
+                    button2 {
+                      __typename
+                      ... on ContentfulButton {
+                        id
+                        contentful_id
+                        buttonText
+                        buttonStyle
+                        link {
+                          linkLabel
+                          name
+                          externalUrl
+                          internalContent {
+                            __typename
+                            ... on ContentfulPage {
+                              id
+                              title
+                              slug
+                              sys {
+                                contentType {
+                                  sys {
+                                    type
+                                    id
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                        v2flag
+                      }
+                    }
+                  }
+                }
+              }
+              isHubspotEmbed
+              isInsertSnippet
+              codeSnippet {
+                codeSnippet
+              }
+              asset {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              backgroundAssetImage {
+                id
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              canShowAssetImageAlignToWall
+              buttonText
+              header
+              canShowHeader
+              sectionType
+              externalLink
+              automaticOrder
+              background
+              sys {
+                contentType {
+                  sys {
+                    id
+                  }
+                }
+              }
+              headerDescription {
+                headerDescription
+              }
+              subHeader {
+                subHeader
+              }
+              internalLink {
+                ... on ContentfulPage {
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulReferencedSection {
+                  id
+                  page {
+                    title
+                  }
+                  header
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulSection {
+                  id
+                  page {
+                    title
+                  }
+                  header
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+                ... on ContentfulResource {
+                  id
+                  heading
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+              mediaItem {
+                name
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                youtubeLink
+                embedCode {
+                  raw
+                }
+                id
+              }
+              assetForMobile {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              assetCaption
+              stylingOptions {
+                background
+                id
+                name
+              }
+              v2Flag
+              renderOptions {
+                name
+                id
+                layoutOptions {
+                  id
+                  name
+                  numberOfColumns
+                  shouldRenderCarousel
+                }
+              }
+              canShowTextColumnToRight
+            }
+          }
+        }
         ... on ContentfulTextAndTextColumns {
           sectionName
           id
@@ -310,6 +687,7 @@ export const query = graphql`
           showBottomBorder
           youtubeVideoUrl
           eyebrowHeading
+          componentType
           body {
             raw
             references {
@@ -1212,6 +1590,18 @@ export const query = graphql`
                   }
                 }
               }
+              assetForMobile {
+                gatsbyImageData(
+                  placeholder: BLURRED
+                  layout: FULL_WIDTH
+                  resizingBehavior: FILL
+                )
+                id
+                file {
+                  contentType
+                  url
+                }
+              }
               asset {
                 gatsbyImageData(
                   placeholder: BLURRED
@@ -1254,6 +1644,33 @@ export const query = graphql`
                 id
               }
               canShowImageOnly
+              subItemReferences{
+                id
+                __typename
+                ... on ContentfulPills{
+                  id
+                  __typename
+                  title
+                  iconAsset {
+                    gatsbyImageData(
+                      placeholder: BLURRED
+                      layout: FULL_WIDTH
+                      resizingBehavior: FILL
+                    )
+                    id
+                    file {
+                      contentType
+                      url
+                    }
+                  }
+                  stylingOptions {
+                    background
+                    extraColor
+                    id
+                    name
+                  }
+                }
+              }
             }
             ... on ContentfulDownloadableResource {
               id
@@ -1471,7 +1888,9 @@ export const query = graphql`
           }
           referenceSecond {
             __typename
+            id
             ... on ContentfulMediaItem {
+              id
               metadata {
                 tags {
                   name
@@ -1508,207 +1927,9 @@ export const query = graphql`
               embedCode {
                 raw
               }
-              id
               canShowMediaWidthFull
             }
-            ... on ContentfulResource {
-              id
-              isFaq
-              isImageObjectContain
-              externalLink
-              internalLink {
-                ... on ContentfulPage {
-                  slug
-                  id
-                  title
-                  sys {
-                    contentType {
-                      sys {
-                        type
-                        id
-                      }
-                    }
-                  }
-                }
-              }
-              buttonText
-              hyperlink {
-                contentful_id
-                id
-                linkLabel
-                name
-                externalUrl
-                internalContent {
-                  ... on ContentfulPage {
-                    __typename
-                    slug
-                    id
-                    title
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-              heading
-              subheading
-              hubspotEmbed {
-                raw
-              }
-              isHubspotEmbed
-              isInsertSnippet
-              codeSnippet {
-                codeSnippet
-              }
-              description {
-                id
-                description
-              }
-
-              body {
-                raw
-                references {
-                  __typename
-                  ... on ContentfulAsset {
-                    id
-                    contentful_id
-                    description
-                    gatsbyImageData(layout: CONSTRAINED, placeholder: BLURRED)
-                    file {
-                      contentType
-                      details {
-                        size
-                      }
-                      url
-                    }
-                    sys {
-                      type
-                    }
-                  }
-                  ... on ContentfulButton {
-                    id
-                    contentful_id
-                    buttonText
-                    buttonStyle
-                    link {
-                      linkLabel
-                      name
-                      externalUrl
-                      internalContent {
-                        ... on ContentfulPage {
-                          id
-                          title
-                          sys {
-                            contentType {
-                              sys {
-                                type
-                                id
-                              }
-                            }
-                          }
-                        }
-                        ... on ContentfulReferencedSection {
-                          id
-                          page {
-                            title
-                          }
-                          header
-                          sys {
-                            contentType {
-                              sys {
-                                type
-                                id
-                              }
-                            }
-                          }
-                        }
-                        ... on ContentfulSection {
-                          id
-                          page {
-                            title
-                          }
-                          header
-                          sys {
-                            contentType {
-                              sys {
-                                type
-                                id
-                              }
-                            }
-                          }
-                        }
-                        ... on ContentfulResource {
-                          id
-                          heading
-                          contentful_id
-                          slug
-                          isFaq
-                          sys {
-                            contentType {
-                              sys {
-                                type
-                                id
-                              }
-                            }
-                          }
-                        }
-                        ... on ContentfulEventRegistration {
-                          id
-                          contentful_id
-                          slug
-                          heading
-                          sys {
-                            contentType {
-                              sys {
-                                type
-                                id
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                    v2flag
-                  }
-                }
-              }
-              author {
-                id
-                name
-                authorTitle
-                bio {
-                  raw
-                }
-                avatar {
-                  gatsbyImageData(
-                    resizingBehavior: SCALE
-                    placeholder: BLURRED
-                    layout: CONSTRAINED
-                  )
-                  title
-                  file {
-                    contentType
-                    details {
-                      size
-                    }
-                    url
-                  }
-                }
-              }
-              stylingOptions {
-                background
-                extraColor
-                id
-                name
-              }
-            }
           }
-          secondReferenceTitle
           referenceSecondRenderOptions {
             name
             id
@@ -1720,7 +1941,6 @@ export const query = graphql`
             }
           }
           secondReferenceType
-
           referenceThird {
             __typename
             ... on ContentfulResource {

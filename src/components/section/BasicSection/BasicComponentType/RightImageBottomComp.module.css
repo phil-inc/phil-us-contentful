@@ -1,0 +1,94 @@
+.rightImageBottomComp {
+  padding: 0px 0px 50px;
+
+  .heading2 {
+    font-family: Lato;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    color: var(--primay-white-color);
+  }
+
+  .body {
+    font-family: Lato;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--primay-white-color);
+  }
+
+  .sectionWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      45deg,
+      #00827e 3.87%,
+      #006e6b 55.82%,
+      #006b68 67.31%,
+      #6b8b65 91.96%,
+      #ae9f63 105.47%
+    );
+
+    overflow: hidden;
+    border-radius: 8px;
+    align-items: stretch; /* default, but good to be explicit */
+
+    .star {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .leftArea {
+      padding: 40px 40px 0px 40px;
+      width: 100%;
+
+      .button {
+        &.secondaryBtn {
+          width: 100%;
+
+          @media (min-width: $phil-breakpoint-md) {
+            width: auto;
+          }
+        }
+      }
+    }
+
+    .rightArea {
+      width: 100%;
+      position: relative;
+
+      .bottomImageArea {
+        position: relative;
+        width: 90%;
+        margin: auto;
+      }
+
+    }
+
+    @media (min-width: $phil-breakpoint-md) {
+      flex-direction: row;
+
+      .star {
+        display: none;
+      }
+
+      .leftArea {
+        padding: 40px 0 0px 40px;
+      }
+
+      .rightArea {
+        .bottomImageArea {
+          width: 453px;
+          position: absolute;
+          inset: 20px 0 0 0; /* top:0 right:0 bottom:0 left:0 */
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+        }
+      }
+    }
+  }
+}
