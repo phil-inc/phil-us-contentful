@@ -28,22 +28,35 @@
 }
 
 .featuredItemsList {
-	background: #f4f4f4;
-	padding: 36px 34px;
+	background: #E8F7F7;
+	padding: 34px 32px;
 
 	@media (min-width: $phil-breakpoint-sm) {
 		display: block;
 	}
 }
 
+.featuredItemSectionLabel {
+	background-color: #00827E;
+	color:white;
+	font-size: 14px;
+	font-weight: semibold;
+	display: inline-block;
+	font-family: Lato, sans-serif;
+	padding:4px 8px;
+	border-radius: 8px;
+}
+
 .navLink {
 	display: block;
+	font-family: Lato, sans-serif;
 	padding: 12px 16px 12px 0px;
 	background-color: transparent;
 	color: #0a0a0a;
-	font-size: 16px;
-	font-weight: 700;
+	font-size: 20px;
+	font-weight: semibold;
 	text-decoration: none;
+	line-height: 1.8;
 
 	&[data-featured='true'] {
 		padding-right: 0;
@@ -164,3 +177,4 @@
 		font-size: 16px !important;
 	}
 }
+

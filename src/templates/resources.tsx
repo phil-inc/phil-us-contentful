@@ -135,7 +135,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
   pageContext: { currentPage: currentPageNumber, limit, numPages },
 }) => {
   const isMobileView = useDeviceType();
-
+ 
   const currentSection = data.contentfulReferencedSection;
   const resources = currentSection?.references || [];
 
@@ -151,10 +151,8 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
         return true;
       }
     }
-
     return false;
   }) as IReferencedSection[];
-
   /* section data extracted from ReferenceTypeCard to build book banner */
   const bookBannerSectionData = (data?.contentfulPage?.sections?.find(
     (section:IReferencedSection | ISection) => (section as IReferencedSection).referenceType === ReferenceTypeEnum.Card,
@@ -167,11 +165,10 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
       toggle("ResourcesType");
     }
   }, [isMobileView]);
-
   const featuredBox = currentSection?.featuredItems?.length && (
     <Card className={classes.featuredItemsList}>
       <Title size={24} order={4} mb={24}>
-        Featured Items
+        Featured Press
       </Title>
       <Box className={classes.featuredItemsNavLinksContainer}>
         {data.contentfulReferencedSection.featuredItems
@@ -179,16 +176,15 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
           .map((resource, index, array) => {
             const path =
               "/" + slugify(resource.heading, { lower: true, strict: true });
-
             const sectionLabelText = (
               <Text className={classes.featuredItemSectionLabel}>
-                {currentSection.header}
+                 {resource.label ?? currentSection.header}
               </Text>
             );
 
             return (
               <React.Fragment key={path + index.toString() + index.toString()}>
-                <Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
+                <Box pt={index === 0 ? 0 : 20} pb={index === 0 ? 20 : 0}>
                   {resource?.internalLink && (
                     <>
                       {sectionLabelText}
@@ -912,6 +908,7 @@ export const resourcesQuery = graphql`
         heading
         generateStaticPage
         externalLink
+        label
         internalLink {
           ... on ContentfulPage {
             id
