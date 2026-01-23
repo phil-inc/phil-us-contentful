@@ -13,6 +13,7 @@ import { type IReferencedSection, ReferenceTypeEnum } from "types/section";
 import cx from 'clsx';
 
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
+import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -23,11 +24,13 @@ type ReferencedSectionBodyProps = {
     sm: number;
     xs?: number;
   };
+  sectionIndex?: number;
 };
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   section,
   getSpan,
+  sectionIndex,
 }) => {
   const { title } = useContext(PageContext);
 
@@ -151,10 +154,19 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
   const getGridGutter = () => {
-    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"])
+    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"] ||
+          section.referenceType === ReferenceTypeEnum["Image Connnect To Two Card"] ||
+          section.referenceType === ReferenceTypeEnum["Promo Card"]
+    )
       return 0;
     return 36;
   };
+
+  // Render MetricWithUmbrellaBorder skip the grid layout
+  if(section.referenceType === ReferenceTypeEnum["MetricWith5Card"]){
+    return <MetricWithUmbrellaBorder section={section} sectionIndex={sectionIndex} />;
+  }
+  
 
   return (
     <Grid
@@ -201,6 +213,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
             sectionHeader={section.header}
             isEmployeeTag={Boolean(isEmployeeTag)}
             metadata={section.metadata}
+            sectionIndex={sectionIndex}
           />
         </Grid.Col>
       ))}

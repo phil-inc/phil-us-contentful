@@ -6,6 +6,14 @@ export const SCREEN_SIZES = {
   LARGE_DESKTOP: 1536,
 };
 
+export const SCREEN_SIZES_DEVICE = {
+  XS: 640,
+  SM: 767,
+  MD: 1023,
+  LG: 1279,
+  XL: 1536,
+};
+
 export const LAYOUT_12COL = 12;
 
 export const BUTTON_STYLE = {
@@ -74,4 +82,11 @@ export const ANNOUNCEMENR_BAR_HEIGHT = 58;
 export const DOM_IDS = {
   TOP_BAR: "topBar",
   TOP_INFO_BAR: "topInfoBar",
+};
+
+export const BG_IMAGE_INDEX = {
+  ONE: 1,
+  TWO: 2,
+  THREE: 3,
+  FOUR: 4,
 };

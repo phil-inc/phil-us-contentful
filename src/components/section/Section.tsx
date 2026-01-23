@@ -1,10 +1,11 @@
 import React from "react";
-import type { IReferencedSection, ISection, ITextandTextColumns } from "types/section";
+import type { IReferencedSection, ISection, ISectionGroup, ITextandTextColumns } from "types/section";
 import BasicSection from "./BasicSection/BasicSection";
 import ReferencedSection from "./ReferencedSection/ReferencedSection";
 import TextAndTextColumns from "components/text-text-columns";
 import TextAndTextColunnsV2 from "components/text-text-columnsv2";
 import { OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
+import SectionGroup from "components/section/SectionGroup/SectionGroup";
 
 type SectionProps = {
   section: ISection | IReferencedSection | ITextandTextColumns;
@@ -63,6 +64,15 @@ const Section: React.FC<SectionProps> = ({
           ) 
         }
       
+      case "Section Group":
+        return (
+          <SectionGroup 
+          sections={section as ISectionGroup} 
+          index={index}
+          sectionIndex={sectionIndex}
+          />
+        )
+        
     default:
       return <></>;
   }

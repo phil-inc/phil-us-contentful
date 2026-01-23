@@ -7,7 +7,7 @@ import type { TResource } from "./resource";
 import { Hyperlink } from "types/modal";
 import { ContentfulButton } from "layouts/Layout/CHeader/CHeader";
 
-type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns | Text and Text Columns with Footer";
+type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns | Text and Text Columns with Footer" | "Section Group";
 
 export type BodyType = RenderRichTextData<ContentfulRichTextGatsbyReference>;
 
@@ -106,6 +106,7 @@ export type ISection = {
   headerDescription?: { 
     headerDescription: string 
   }
+  componentType?: string;
 };
 
 export enum ResourceBlocksEnum {
@@ -149,9 +150,13 @@ export enum ReferenceTypeEnum {
   "Case Study" = "Case Study",
   "People Behind Phil" = "People Behind Phil",
   "Card Or Image" = "Card Or Image",
+  "Image Connnect To Two Card" = "Image Connnect To Two Card",
   "Bullet list" = "Bullet list",
   "Metric card" = "Metric card",
   "Single line Metric card" = "Single line Metric card",
+  "Promo Card" = "Promo Card",
+  "MetricWith5Card" = "MetricWith5Card",
+  "MetricWith3Card" = "MetricWith3Card",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
@@ -326,4 +331,16 @@ export type IContentfulButtonGroup = {
   button1: ContentfulButton;
   button2: ContentfulButton;
   sys: ISys;
+}
+
+export type ISectionGroup = {
+  id: string;
+  __typename: string;
+  title: string;
+  sectionType: SectionType;
+  canShowTopBorder: boolean;
+  canShowBottomBorder:boolean;
+  backgroundAssetImage1?: TAsset;
+  backgroundAssetImage2?:  TAsset;
+  sectionGroupReference?: Array<ISection>;
 }

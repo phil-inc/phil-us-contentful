@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { SCREEN_SIZES_DEVICE } from "constants/global.constant";
 
-export const useIsSmallDevice = () => {
-  const [isSmall, setIsSmall] = useState(false);
+export const useIsMediumDevice = () => {
+  const [isMedium, setIsMedium] = useState(false);
 
   useEffect(() => {
     const checkSize = () => {
-      setIsSmall(window.innerWidth <= SCREEN_SIZES_DEVICE.SM);
+      setIsMedium(window.innerWidth <= SCREEN_SIZES_DEVICE.MD);
     };
 
     checkSize(); // initial check
@@ -15,5 +15,5 @@ export const useIsSmallDevice = () => {
     return () => window.removeEventListener("resize", checkSize);
   }, []);
 
-  return isSmall;
+  return { isMediumScreen: isMedium};
 };

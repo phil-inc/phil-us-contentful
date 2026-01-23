@@ -10,9 +10,10 @@
   --side-margin: 32px;
   --primary-green-color: #00827E;
   --primay-white-color: #FFFFFF;
+  --primary-black-color: #000000;
 
   --navbar-z-index: 110;
-  --infobar-z-index: 109;
+  --infobar-z-index: 99;
 
   --transition-base: 0.3s ease;
   --transition-color-bg: color 0.3s ease, background-color 0.3s ease;

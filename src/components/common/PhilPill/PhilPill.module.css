@@ -1,0 +1,39 @@
+.philPill {
+  display: flex;
+
+  .wrapper {
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0px 1.12px 2.24px -1.12px #0000001a;
+
+    .pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: Lato;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--primary-green-color);
+
+      .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  &:not(:last-child) {
+    .wrapper {
+      margin-right: 16px;
+    }
+
+    .line {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5% 0;
+    }
+  }
+}
