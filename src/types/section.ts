@@ -208,7 +208,7 @@ export type IReferencedSection = {
   featuredItems: Array<
     Pick<
       TResource,
-      "generateStaticPage" | "id" | "heading" | "externalLink" | "internalLink"
+      "generateStaticPage" | "id" | "heading" | "externalLink" | "internalLink" | "label"
     >
   >;
   stylingOptions?: StylingOptions;
