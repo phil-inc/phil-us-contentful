@@ -20,6 +20,7 @@ import PageModal from "components/Modal/PageModal/PageModal";
 import TopSection from "components/TopSection/TopSection";
 
 import * as classes from "./page.module.css";
+import RobotHandAnimation from "components/A/animation";
 
 type PageTemplateProps = {
   data: {
@@ -107,6 +108,7 @@ const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
           displayTitle={displayTitle}
           sections={sections  as IReferencedSection[]}
         />
+        <RobotHandAnimation/>
         {canShowLoader
         ? (<Center>
             <Loader  mt={"xl"} mb={"xl"} size="lg" />
