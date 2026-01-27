@@ -31,6 +31,7 @@ export type TResource = {
   asset?: TAsset;
   buttonText?: string;
   externalLink?: string;
+  label?: string;
   internalLink: {
     slug?: string;
     id: string;
