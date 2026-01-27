@@ -40,6 +40,9 @@ import { FaqAccordionSingle } from "components/common/AccordionSingle/FaqAccordi
 import ImageConnnectToTwoCard from "components/common/ImageConnnectToTwoCard/ImageConnnectToTwoCard";
 import PromoCard from "components/common/PromoCard/PromoCard";
 import { MetricWithTitleCard } from "components/common/MetricWithUmbrellaBorder/MetricWithTitleCard/MetricWithTitleCard";
+// import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
+import { LinearProcessCard } from "components/common/LinearProcessCard/LinearProcessCard";
+import MetricOutcomeCard from "components/common/MetricOutcomeCard/MetricOutcomeCard";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -240,8 +243,8 @@ const PeopleBehindPhilComponent: ComponentFunction = ({ resource }) => (
   <PhilPeople resource={resource} />
 );
 
-const CardOrImageComponent: ComponentFunction = ({ resource,index }) => (
-  <CardOrImage resource={resource} index={index ?? 0}/>
+const CardOrImageComponent: ComponentFunction = ({ resource,index,sectionIndex }) => (
+  <CardOrImage resource={resource} index={index ?? 0} sectionIndex={sectionIndex}/>
 );
 const BulletListComponent: ComponentFunction = ({ resource,index }) => (
   <BulletList resource={resource} index={index ?? 0}/>
@@ -262,8 +265,15 @@ const PromoCardComponent: ComponentFunction = ({ resource,index }) => (
 const MetricWith5CardComponent: ComponentFunction = ({ resource,index }) => (
   <MetricWithTitleCard resource={resource}/>
 );
-const MetricWith3CardComponent: ComponentFunction = ({ resource,index }) => (
+const TabsSwitchComponent: ComponentFunction = ({ resource,index }) => (
+  // <TabsSwitch resource={resource}/>
   <></>
+);
+const LinearProcessCardComponent: ComponentFunction = ({ resource,index, arrayLength }) => (
+  <LinearProcessCard resource={resource} index={index ?? 0} arrayLength = {arrayLength ?? 0}/>
+);
+const MetricOutcomeCardComponent: ComponentFunction = ({ resource,index, arrayLength }) => (
+  <MetricOutcomeCard resource={resource} index={index ?? 0} arrayLength = {arrayLength ?? 0}/>
 );
 
 const getComponent = (
@@ -321,7 +331,9 @@ const getComponent = (
     [ReferenceTypeEnum["Image Connnect To Two Card"]]: ImageConnnectToTwoCardComponent,
     [ReferenceTypeEnum["Promo Card"]]: PromoCardComponent,
     [ReferenceTypeEnum["MetricWith5Card"]]: MetricWith5CardComponent,
-    [ReferenceTypeEnum["MetricWith3Card"]]: MetricWith3CardComponent,
+    [ReferenceTypeEnum["Tabs Switch"]]: TabsSwitchComponent,
+    [ReferenceTypeEnum["Linear Process Card"]]: LinearProcessCardComponent,
+    [ReferenceTypeEnum["Metric Outcome Card"]]: MetricOutcomeCardComponent,
   };
 
   const componentFunction = componentMappings[referenceType];

@@ -1,0 +1,179 @@
+.pointedEdgeCard {
+  --parent-background-color: #f4f4f4;
+  --paddingEdgeCard-sm: 20px;
+  --paddingEdgeCard-md: 32px;
+  --correction-offset: 1px;
+
+  padding: var(--paddingEdgeCard-sm) var(--paddingEdgeCard-sm) 0px var(--paddingEdgeCard-sm);
+  position: relative;
+
+  &.firstCard {
+    ::after {
+      content: "";
+      position: absolute;
+      bottom: calc(-30px + var(--correction-offset));
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+      width: 0;
+      height: 0;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 20px solid var(--triangle-arrow-color);
+      z-index: 1;
+    }
+  }
+
+  &.middleCard {
+    ::after {
+      content: "";
+      position: absolute;
+      bottom: calc(-30px + var(--correction-offset));
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+      width: 0;
+      height: 0;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 20px solid var(--triangle-arrow-color);
+      z-index: 2;
+    }
+
+    ::before {
+      content: "";
+      position: absolute;
+      top: calc(-10px - var(--correction-offset));
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+      width: 0;
+      height: 0;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 20px solid var(--parent-background-color);
+      z-index: 0;
+    }
+  }
+
+  &.lastCard {
+    padding-bottom: var(--paddingEdgeCard-sm);
+
+    ::before {
+      content: "";
+      position: absolute;
+      top: calc(-10px - var(--correction-offset));
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+      width: 0;
+      height: 0;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 20px solid var(--parent-background-color);
+      z-index: 1;
+    }
+  }
+
+  @media (min-width: $phil-breakpoint-sm) {
+    padding: var(--paddingEdgeCard-md) 0px var(--paddingEdgeCard-md) var(--paddingEdgeCard-md);
+
+    &.firstCard {
+      ::after {
+        top: 50%;
+        right: calc(-20px + var(--correction-offset));
+        left: auto;
+        bottom: auto;
+        transform: translateY(-50%) rotate(0deg);
+        border-left: 20px solid var(--triangle-arrow-color);
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+      }
+    }
+
+    &.middleCard {
+      ::after {
+        top: 50%;
+        right: calc(-20px + var(--correction-offset));
+        left: auto;
+        bottom: auto;
+        transform: translateY(-50%) rotate(0deg);
+        border-left: 20px solid var(--triangle-arrow-color);
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+      }
+
+      ::before {
+        top: 50%;
+        left: -1px;
+        right: auto;
+        transform: translateY(-50%) rotate(0deg);
+        border-left: 20px solid var(--parent-background-color);
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+      }
+    }
+
+    &.lastCard {
+      padding-right: var(--paddingEdgeCard-md);
+
+      ::before {
+        top: 50%;
+        left: -1px;
+        right: auto;
+        transform: translateY(-50%) rotate(0deg);
+        border-left: 20px solid var(--parent-background-color);
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+      }
+    }
+  }
+}
+
+.paper {
+  border-radius: 16px 20px 16px 16px;
+  height: 100%;
+  line-height: 27px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+
+  .icon {
+    display: inline-flex;
+ 
+  }
+
+  @media (min-width: $phil-breakpoint-sm) {
+    flex-direction: row;
+    gap: 2px;
+  }
+}
+
+.paragraph {
+  font-size: 16px;
+  color: #525252;
+  word-break: break-word;
+}
+
+.stack {
+  justify-content: flex-start;
+
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 20px;
+    }
+
+    &:nth-child(2):is(h4) {
+      margin-top: 8px;
+    }
+  }
+
+  & > p:last-child:empty {
+    display: none;
+  }
+}
+
+
+
+
+
+

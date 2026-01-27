@@ -159,6 +159,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           section.referenceType === ReferenceTypeEnum["Promo Card"]
     )
       return 0;
+    if (section.referenceType === ReferenceTypeEnum["Linear Process Card"]) {
+      return 18;
+    }
     return 36;
   };
 

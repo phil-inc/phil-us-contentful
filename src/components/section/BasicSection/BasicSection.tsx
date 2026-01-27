@@ -490,6 +490,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
       data-is-bgcolor-dark={!isBgColorLight}
+      data-section-index={sectionIndex}
     >
 
       {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>{section.eyebrowHeading}</Text>}

@@ -1,5 +1,5 @@
 import type { TAsset } from "./asset";
-import type { BodyType, MediaItem, Metadata, RenderOptions, StylingOptions } from "./section";
+import type { BodyType, IContentfulList, MediaItem, Metadata, RenderOptions, StylingOptions } from "./section";
 
 export type TLink = {
   link: string;
@@ -101,7 +101,7 @@ export type TResource = {
   isFirstItem?: boolean;
   canShowMediaWidthFull?: boolean; // this is in the media item not in resource directly
   assetForMobile?: TAsset;
-  subItemReferences?: IPills[];
+  subItemReferences?: IPills[] | IContentfulList[];
 };
 
 export type DownloadableAsset = {
