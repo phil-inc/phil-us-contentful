@@ -40,7 +40,6 @@ import { FaqAccordionSingle } from "components/common/AccordionSingle/FaqAccordi
 import ImageConnnectToTwoCard from "components/common/ImageConnnectToTwoCard/ImageConnnectToTwoCard";
 import PromoCard from "components/common/PromoCard/PromoCard";
 import { MetricWithTitleCard } from "components/common/MetricWithUmbrellaBorder/MetricWithTitleCard/MetricWithTitleCard";
-// import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
 import { LinearProcessCard } from "components/common/LinearProcessCard/LinearProcessCard";
 import MetricOutcomeCard from "components/common/MetricOutcomeCard/MetricOutcomeCard";
 
@@ -266,7 +265,6 @@ const MetricWith5CardComponent: ComponentFunction = ({ resource,index }) => (
   <MetricWithTitleCard resource={resource}/>
 );
 const TabsSwitchComponent: ComponentFunction = ({ resource,index }) => (
-  // <TabsSwitch resource={resource}/>
   <></>
 );
 const LinearProcessCardComponent: ComponentFunction = ({ resource,index, arrayLength }) => (
