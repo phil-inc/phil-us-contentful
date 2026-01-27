@@ -168,10 +168,11 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
     }
   }, [isMobileView]);
 
+
   const featuredBox = currentSection?.featuredItems?.length && (
     <Card className={classes.featuredItemsList}>
-      <Title size={24} order={4} mb={24}>
-        Featured Items
+      <Title size={24} order={4} mb={20}>
+        Featured Press
       </Title>
       <Box className={classes.featuredItemsNavLinksContainer}>
         {data.contentfulReferencedSection.featuredItems
@@ -182,13 +183,13 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
 
             const sectionLabelText = (
               <Text className={classes.featuredItemSectionLabel}>
-                {currentSection.header}
+                {resource.label}
               </Text>
             );
 
             return (
               <React.Fragment key={path + index.toString() + index.toString()}>
-                <Box pt={index === 0 ? 0 : 16} pb={index === 0 ? 16 : 0}>
+                <Box pt={index === 0 ? 0 : 20}>
                   {resource?.internalLink && (
                     <>
                       {sectionLabelText}
@@ -207,6 +208,7 @@ const ResourcesPage: React.FC<ResourcesPageProps> = ({
                       {sectionLabelText}
                       <Anchor
                         className={classes.navLink}
+                        style={index === array.length - 1 ? { paddingBottom: 0 } : undefined}
                         href={resource.externalLink}
                         target="_blank"
                         data-featured={true}
@@ -912,6 +914,7 @@ export const resourcesQuery = graphql`
         heading
         generateStaticPage
         externalLink
+        label
         internalLink {
           ... on ContentfulPage {
             id
