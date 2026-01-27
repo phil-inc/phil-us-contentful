@@ -1,0 +1,58 @@
+.metricOutcomeCard {
+  padding: 12px 12px 12px 25px;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  color: #009689;
+  position: relative;
+
+
+  .content {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    &[data-context="Phil Direct"][data-index="0"] {
+      .title {
+        font-family: Lato;
+        font-weight: 700;
+        font-size: 18px;
+      }
+    }
+
+    .paragraph {
+      font-family: Lato;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .heading1 {
+      font-family: Raleway;
+      font-weight: 700;
+      font-size: 60px;
+      font-variant-numeric: lining-nums proportional-nums;
+    }
+  }
+
+  @media (min-width: $phil-breakpoint-md) {
+    &::after {
+      content: "";
+      position: absolute;
+      height: 60%;
+      width: 1px;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #00C2BC;
+    }
+
+    &[data-last-index="true"]::after {
+      display: none;
+    }
+  }
+}
