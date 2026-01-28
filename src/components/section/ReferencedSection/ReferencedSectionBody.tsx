@@ -1,5 +1,6 @@
 import RenderResource from "./RenderResource";
 import * as classes from "./referencedSection.module.css";
+import AutoScroll from 'embla-carousel-auto-scroll';
 import { Carousel } from "@mantine/carousel";
 import { Center, Container, Grid } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
@@ -26,6 +27,7 @@ type ReferencedSectionBodyProps = {
   };
   sectionIndex?: number;
 };
+//sfa
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   section,
@@ -33,7 +35,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   sectionIndex,
 }) => {
   const { title } = useContext(PageContext);
-
+  
   const isFiveLayout =  section?.renderOptions?.layoutOptions?.numberOfColumns === 5;
   const span = isFiveLayout
     ? 2
@@ -44,6 +46,28 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
     (tag) => tag.name === EMPLOYEE_SPOTLIGHT_TAG,
   );
   const canRemoveTopMargin = section?.header === "The Script Journey";
+
+  const autoScrollRef = React.useRef(
+    AutoScroll({
+      speed: 1, 
+      startDelay: 0, 
+      playOnInit: true, 
+      stopOnInteraction: false, 
+      stopOnMouseEnter: false,
+      stopOnFocusIn: false, 
+    }),
+  );
+
+  // Force embla to recalculate after mount to ensure proper layout
+  const handleEmblaInit = (embla: any) => {
+    // Trigger reInit after a short delay to ensure DOM is fully ready
+    // This helps with the gap visibility on initial load
+    setTimeout(() => {
+      embla.reInit();
+    }, 50);
+  };
+  
+  
 
   const xs = useDeviceType("xs");
   const sm = useDeviceType("sm");
@@ -73,14 +97,18 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
         md:
           section.referenceType === "Testimonial"
             ? `${95 / columns}%`
-            : "calc50% - 32px)",
+            : "calc(50% - 32px)",
         xl: `${95 / columns}%`,
       };
     };
 
+    // Duplicate the references to create a loop effect, otherwise the carousel won't loop.
+    const carouselReferences = [...section.references, ...section.references];
+
     return (
       <Container className="carousel__container" fluid>
         <Carousel
+          style={{ maxWidth: "85%", margin: "0 auto" }}
           classNames={{
             root: classes.root,
             container: classes.carouselContainer,
@@ -92,12 +120,16 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           includeGapInSize={false}
           draggable={false}
           previousControlIcon={<IconChevronLeft size={24} />}
+          withControls={false}
           nextControlIcon={<IconChevronRight size={24} />}
           slideSize={getSlideSize()}
+          getEmblaApi={handleEmblaInit}
           align={"start"}
-          // slideSize={{base: '320px', sm: "calc(50% - 16px)", md: "calc50% - 32px)"}}
+          // slideSize={{base: '320px', sm: "calc(50% - 16px)", md: "calc(50% - 32px)"}}
           // slidesToScroll={1}
-          loop={false}
+          withIndicators={false}
+          loop={true}
+          plugins={[autoScrollRef.current]}
           slidesToScroll={
             section.referenceType === "Testimonial"
               ? xs || sm || md
@@ -113,34 +145,46 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           data-is-employee-tag={Boolean(isEmployeeTag)}
         >
           {section.header === "Recent Client News" ? (
-            section.references.map((resource, index, array) => {
-                return (
-                  <Carousel.Slide key={resource.id + "carouselItem"}>
-                    <RenderResource
-                      arrayLength={array.length}
-                      index={index}
-                      referenceType={section.referenceType}
-                      resource={resource}
-                      sectionHeader={section.header}
-                      isEmployeeTag={Boolean(isEmployeeTag)}
-                    />
-                  </Carousel.Slide>
-              )
-            }
-          )): (
-          section.references.map((resource, index, array) => (
-                <Carousel.Slide key={resource.id + "carouselItem"}>
+            carouselReferences.map((resource, index) => {
+              const isLastItem = index === carouselReferences.length - 1;
+              return (
+                <Carousel.Slide
+                  key={`${resource.id}-carousel-${index}`}
+                  data-index={index % section.references.length}
+                  className={isLastItem ? classes.carouselRepeatGap : undefined}
+                >
                   <RenderResource
-                    arrayLength={array.length}
-                    index={index}
+                    arrayLength={section.references.length}
+                    index={index % section.references.length}
                     referenceType={section.referenceType}
                     resource={resource}
                     sectionHeader={section.header}
                     isEmployeeTag={Boolean(isEmployeeTag)}
                   />
                 </Carousel.Slide>
-          ))
-        )}
+              );
+            })
+          ) : (
+            carouselReferences.map((resource, index) => {
+              const isLastItem = index === carouselReferences.length - 1;
+              return (
+                <Carousel.Slide
+                  key={`${resource.id}-carousel-${index}`}
+                  data-index={index % section.references.length}
+                  className={isLastItem ? classes.carouselRepeatGap : undefined}
+                >
+                  <RenderResource
+                    arrayLength={section.references.length}
+                    index={index % section.references.length}
+                    referenceType={section.referenceType}
+                    resource={resource}
+                    sectionHeader={section.header}
+                    isEmployeeTag={Boolean(isEmployeeTag)}
+                  />
+                </Carousel.Slide>
+              );
+            })
+          )}
         </Carousel>
       
       </Container>
