@@ -50,7 +50,8 @@ import { getIdSlugifyForDiv } from "utils/utils";
 import { BASIC_SECTION, BUTTON_STYLE, COLORS, CONTENTFUL_TYPES, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
 
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
-import RightImageBottomComp from "components/section/BasicSection/BasicComponentType/RightImageBottomComp";
+
+import withBasicSectionSwitch from "hoc/withBasicSectionSwitch";
 
 type BasicSectionProps = {
   section: ISection;
@@ -455,10 +456,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   
   const { media } = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
   
-  if(section?.componentType === "Right Bottom Image"){
-    return <RightImageBottomComp section={section} index={index} isEmbedFormTemplate={isEmbedFormTemplate}/>
-  }
-
   return (
     <>
     {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
@@ -493,6 +490,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
       data-is-bgcolor-dark={!isBgColorLight}
+      data-section-index={sectionIndex}
     >
 
       {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>{section.eyebrowHeading}</Text>}
@@ -675,4 +673,4 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   );
 };
 
-export default BasicSection;
+export default withBasicSectionSwitch(BasicSection);

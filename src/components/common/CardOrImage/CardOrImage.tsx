@@ -17,12 +17,15 @@ import { getLink } from "utils/getLink";
 
 import * as classes from "./CardOrImage.module.css";
 
+import PageContext from "contexts/PageContext";
+
 type Props = {
   resource: TResource;
   index: number;
+  sectionIndex?: number;
 };
 
-const CardOrImage: React.FC<Props> = ({ resource, index }) => {
+const CardOrImage: React.FC<Props> = ({ resource, index, sectionIndex }) => {
   const {
     heading,
     icon,
@@ -36,6 +39,8 @@ const CardOrImage: React.FC<Props> = ({ resource, index }) => {
 
   const { link, isExternal } = getLink(resource);
 
+  const context = React.useContext(PageContext);
+
   const options: Options = {
     renderNode: {
       [BLOCKS.PARAGRAPH](node, children) {
@@ -48,7 +53,12 @@ const CardOrImage: React.FC<Props> = ({ resource, index }) => {
     return (
       <>
         {asset && (
-          <Box className={classes.imageOnly} data-index={index}>
+          <Box
+            className={classes.imageOnly}
+            data-index={index}
+            data-context={context.title}
+            data-section-index={sectionIndex}
+          >
             <Asset objectFit="contain" asset={asset as TAsset} />
           </Box>
         )}

@@ -31,7 +31,8 @@ import CommonReferencedSectionBody from "components/section/ReferencedSection/Co
 
 import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
-import { COLORS, LIGHT_COLOR_LIST, REFERENCE_SECTION } from "constants/global.constant";
+import { COLORS, LIGHT_COLOR_LIST } from "constants/global.constant";
+import { REFERENCE_SECTION_ORDER } from "enum/global.enum";
 
 type ReferencedSectionProps = {
   section: IReferencedSection;
@@ -265,16 +266,6 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           {/* New references section */}
           { Boolean(section?.referenceSecond) && Boolean(section?.secondReferenceType) && Boolean(section?.referenceSecondRenderOptions) &&
             <>
-              {Boolean(section?.secondReferenceTitle) && 
-                <Title
-                  data-context={context.title}
-                  className={classes.secondTitle}
-                  data-index={REFERENCE_SECTION.TWO}
-                  order={2}
-                >
-                  {section.secondReferenceTitle}
-                </Title>
-                }
               <CommonReferencedSectionBody 
                 header={section.header  }
                 references={section.referenceSecond ?? []}
@@ -282,7 +273,9 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
                 renderOptions={section.referenceSecondRenderOptions as RenderOptions}
                 v2flag={section.v2flag}
                 getSpan={getSpan}
-                order={REFERENCE_SECTION.TWO}
+                order={REFERENCE_SECTION_ORDER.TWO}
+                sectionIndex={sectionIndex}
+                sectionTitle={section?.secondReferenceTitle}
                 />
             </>
           }
@@ -294,7 +287,10 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               renderOptions={section.referenceThirdRenderOptions as RenderOptions}
               v2flag={section.v2flag}
               getSpan={getSpan}
-              order={REFERENCE_SECTION.TWO}
+              order={REFERENCE_SECTION_ORDER.THREE}
+              sectionIndex={sectionIndex}
+              sectionTitle={section?.thirdReferenceTitle}
+              canShowBottomBorder={section?.canShowBottomBorderInThirdReference}
             />
           }
           { Boolean(section?.referenceFourth) && Boolean(section?.fourthReferenceType) && Boolean(section?.referenceFourthRenderOptions) &&
@@ -305,7 +301,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               renderOptions={section.referenceFourthRenderOptions as RenderOptions}
               v2flag={section.v2flag}
               getSpan={getSpan}
-              order={REFERENCE_SECTION.TWO}
+              order={REFERENCE_SECTION_ORDER.FOUR}
+              sectionIndex={sectionIndex}
             />
           }
         </Box>

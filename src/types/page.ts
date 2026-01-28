@@ -1,6 +1,5 @@
 import type { IReferencedSection, ISection, ITextandTextColumns, ITextandTextColumnsWithFooterSection } from './section';
 import { TAsset } from 'types/asset';
-import { AnnoucementReference } from 'types/annoucementBar';
 
 export type ContentfulPage = {
   id: string;

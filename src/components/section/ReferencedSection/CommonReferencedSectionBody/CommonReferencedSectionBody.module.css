@@ -1,3 +1,29 @@
+.container {
+  &[data-context="Phil Direct"][data-section-index="4"][data-order="3"] {
+    padding: 36px 48px 36px;
+    background-color: #eef6f6;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+
+  &[data-context="Phil Direct"][data-section-index="4"][data-order="4"] {
+    padding: 36px 48px 36px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    background-color: #eef6f6;
+  }
+
+  .heading {
+    &[data-context="Phil Direct"][data-section-index="4"][data-order="3"] {
+      text-align: center;
+      font-family: Raleway;
+      font-weight: 700;
+      font-style: Bold;
+      font-size: 32px;
+    }
+  }
+}
+
 .column {
   &[data-reference-type="Stepper Cards"],
   &[data-reference-type="Testimonial"] {
@@ -21,17 +47,20 @@
       }
     }
   }
-  &[data-context="Phil Direct"][data-order="2"],
-  &[data-context="Phil Direct"][data-order="3"],
-  &[data-context="Phil Direct"][data-order="4"] {
+  &[data-context="Phil Direct"][data-section-index="4"][data-order="2"] {
+    width: 80%;
+    margin: auto;
+  }
+
+  &[data-context="Phil Direct"][data-order="3"] {
     margin-top: 40px;
   }
 
-  &[data-context="Solution"][data-reference-type="Code Snippet"]{
+  &[data-context="Solution"][data-reference-type="Code Snippet"] {
     margin-top: 100px;
   }
 
-  &[data-context="Our Solution"][data-reference-type="Code Snippet"]{
+  &[data-context="Our Solution"][data-reference-type="Code Snippet"] {
     margin-top: 40px;
   }
 }
@@ -64,37 +93,36 @@
   &[data-context="Company"] {
     width: 100%;
     .controls {
-      >button {
-          background-color: #09AAA5;
-          padding: 4px;
+      > button {
+        background-color: #09aaa5;
+        padding: 4px;
 
-          svg{
-            stroke: var(--primay-white-color);
-            }
+        svg {
+          stroke: var(--primay-white-color);
+        }
       }
-      
-      >button:first-child {
-          margin-left: -9%;
-          @media screen and (min-width: $phil-breakpoint-xs) {
-            margin-left: -46px;
-          }
-        }
 
-        > button:nth-child(2) {
-          margin-right: -9%;
-          @media screen and (min-width: $phil-breakpoint-xs) {
-            margin-right: -46px;
-          }
+      > button:first-child {
+        margin-left: -9%;
+        @media screen and (min-width: $phil-breakpoint-xs) {
+          margin-left: -46px;
         }
+      }
+
+      > button:nth-child(2) {
+        margin-right: -9%;
+        @media screen and (min-width: $phil-breakpoint-xs) {
+          margin-right: -46px;
+        }
+      }
     }
   }
-
 }
 
 .controls {
   width: initial;
 
-  >button {
+  > button {
     @media screen and (max-width: $phil-breakpoint-sm) {
       background-color: white;
       border-radius: 50%;
@@ -107,7 +135,7 @@
     }
   }
 
-  >button:first-child {
+  > button:first-child {
     @media screen and (min-width: $phil-breakpoint-sm) {
       margin-left: -46px;
     }
@@ -130,5 +158,13 @@
   &[data-inactive="true"] {
     opacity: 0.2;
     cursor: not-allowed;
+  }
+}
+
+.bottomDivider {
+  &[data-context="Phil Direct"][data-section-index="4"][data-order="3"] {
+    border-top: 1px solid #00C2BC;
+    width: 90%;
+    margin: auto;
   }
 }

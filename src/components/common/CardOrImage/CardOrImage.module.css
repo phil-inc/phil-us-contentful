@@ -42,6 +42,10 @@
 .imageOnly {
   padding: 40px;
 
+  &[data-context="Phil Direct"][data-section-index="4"]{
+    padding: 0;
+  }
+
   @media (min-width: $phil-breakpoint-sm) {
     padding: 0;
   }

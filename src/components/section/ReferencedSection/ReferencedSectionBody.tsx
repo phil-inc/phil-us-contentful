@@ -14,6 +14,7 @@ import cx from 'clsx';
 
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
 import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
+import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -151,6 +152,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
     return <ResourceCarousel imageCaraouselSection={section} />;
   }
 
+  if (section.referenceType === ReferenceTypeEnum["Tabs Switch"]) {
+    return <TabsSwitch section={section}/>;
+  }
+
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
   const getGridGutter = () => {
@@ -159,6 +164,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           section.referenceType === ReferenceTypeEnum["Promo Card"]
     )
       return 0;
+    if (section.referenceType === ReferenceTypeEnum["Linear Process Card"]) {
+      return 18;
+    }
     return 36;
   };
 
