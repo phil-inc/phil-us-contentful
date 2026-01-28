@@ -222,13 +222,24 @@
 
 .carouselContainer {
   width: calc(99vw - 40px);
-
+  overflow: visible;
   @media (min-width: $phil-breakpoint-sm) {
     width: 100%;
   }
 
   > div:last-child {
     margin: 0;
+  }
+}
+
+/* Same gap as between other slides, between first set and second set */
+.carouselRepeatGap {
+  margin-right: 16px !important;
+}
+
+@media (min-width: $phil-breakpoint-md) {
+  .carouselRepeatGap {
+    margin-right: 32px !important;
   }
 }
 
