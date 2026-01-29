@@ -83,7 +83,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
     const getSlideSize = () => {
       if (section.referenceType === "People Behind Phil") {
         return {
-          base: "95%",
+          base: "calc(84% - 16px)",
           sm: `${100 / 2}%`,
           md: `${95 / columns}%`,
           lg: `${95 / columns}%`,
@@ -92,7 +92,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
       }
       
       return {
-        base: "95%",
+        base: "calc(84% - 16px)",
         sm: `calc(50% - 16px)`,
         md:
           section.referenceType === "Testimonial"
