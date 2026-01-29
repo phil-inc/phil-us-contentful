@@ -1647,7 +1647,6 @@ export const query = graphql`
               subItemReferences{
                 __typename
                 ... on ContentfulPills{
-                  id
                   __typename
                   title
                   iconAsset {
@@ -1668,16 +1667,6 @@ export const query = graphql`
                     id
                     name
                   }
-                }
-                ... on ContentfulList {
-                  __typename
-                  id
-                  heading
-                  subheading
-                  choose
-                  anchorLink
-                  linkText
-                  listType
                 }
               }
             }
