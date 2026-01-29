@@ -14,6 +14,7 @@ import cx from 'clsx';
 
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
 import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
+import AutoScrollingCarousel from "components/AutoScrollingCarousel/AutoScrollingCarousel";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -51,7 +52,8 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const lg = useDeviceType("lg");
 
   if( title === COMPANY_PAGE && section?.canAlsoBeUseAsAutoCarousel){
-    return <AutoScrollCarousel section={section} />;
+    // return <ActoScrollCarousel section={section} />;
+    return <AutoScrollingCarousel />;
   }
 
   if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
