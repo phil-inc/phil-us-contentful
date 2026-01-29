@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mantine/core";
+import { Box, Container, Divider, Grid, Title } from "@mantine/core";
 import { COMPANY_PAGE } from "constants/page";
 import PageContext from "contexts/PageContext";
 import useDeviceType from "hooks/useView";
@@ -10,11 +10,13 @@ import {
   ResourceBlocksEnum,
 } from "types/section";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
+import cx from "clsx";
+import { Carousel } from "@mantine/carousel";
 
 import * as classes from "./CommonReferencedSectionBody.module.css";
-import { Carousel } from "@mantine/carousel";
 import RenderResource from "components/section/ReferencedSection/RenderResource";
-import cx from "clsx";
+
+import { REFERENCE_SECTION_ORDER } from "enum/global.enum";
 
 type props = {
   references: TResource[];
@@ -22,7 +24,7 @@ type props = {
   renderOptions: RenderOptions;
   header: string;
   v2flag?: boolean;
-  order?: number;
+  order?: REFERENCE_SECTION_ORDER;
   getSpan: (referenceType: string) => {
     xl: number;
     lg: number;
@@ -30,6 +32,9 @@ type props = {
     sm: number;
     xs?: number;
   };
+  sectionIndex?: number;
+  sectionTitle?: string;
+  canShowBottomBorder?: boolean;
 };
 
 const CommonReferencedSectionBody: React.FC<props> = ({
@@ -40,8 +45,11 @@ const CommonReferencedSectionBody: React.FC<props> = ({
   v2flag,
   getSpan,
   order,
+  sectionIndex,
+  sectionTitle,
+  canShowBottomBorder,
 }) => {
-  const { title } = useContext(PageContext);
+  const context = useContext(PageContext);
 
   const isFiveLayout = renderOptions?.layoutOptions?.numberOfColumns === 5;
   const span = isFiveLayout
@@ -61,7 +69,6 @@ const CommonReferencedSectionBody: React.FC<props> = ({
   if (renderOptions?.layoutOptions.shouldRenderCarousel) {
     const columns = renderOptions.layoutOptions.numberOfColumns ?? 1;
     const getSlideSize = () => {
-      
       return {
         base: "95%",
         sm: `calc(50% - 16px)`,
@@ -102,7 +109,7 @@ const CommonReferencedSectionBody: React.FC<props> = ({
             (reference) =>
               reference?.sys?.contentType?.sys?.id === "mediaItem" ?? false,
           )}
-          data-context = {title}
+          data-context={context.title}
         >
           {references.map((resource, index, array) => (
             <Carousel.Slide key={resource.id + "carouselItem"}>
@@ -113,55 +120,87 @@ const CommonReferencedSectionBody: React.FC<props> = ({
                 resource={resource}
                 sectionHeader={header}
                 isEmployeeTag={false}
+                sectionIndex={sectionIndex}
               />
             </Carousel.Slide>
-            )
-          )}
-        
+          ))}
         </Carousel>
-      
       </Container>
     );
   }
 
   return (
-    <Grid
-      grow
-      className={classes.grid}
-      gutter={getGridGutter()}
-      justify="center"
-      align={title === COMPANY_PAGE ? "center" : "stretch"}
-      data-add-margin={""}
-      data-remove-top-margin={""}
-      data-context={title}
-      data-is-stepper-card={
-        referenceType === ReferenceTypeEnum["Stepper Cards"]
-      }
-      data-reference-type={referenceType}
-      data-order={order}
-    >
-      {references?.map((resource, index, array) => (
-        <Grid.Col
-          className={cx(classes.column)}
-          p={referenceType === ReferenceTypeEnum.Investors ? 0 : undefined}
-          key={resource.id + "mapReferencedSectionResource"}
-          span={
-            v2flag ? { base: 12, sm: span, md: span } : getSpan(referenceType)
+    <>
+      <Box
+        className={classes.container}
+        data-context={context.title}
+        data-section-index={sectionIndex}
+        data-order={order}
+      >
+        {Boolean(sectionTitle) && (
+          <Title
+            className={classes.heading}
+            order={2}
+            data-context={context.title}
+            data-section-index={sectionIndex}
+            data-order={order}
+          >
+            {sectionTitle}
+          </Title>
+        )}
+
+        <Grid
+          grow
+          className={classes.grid}
+          gutter={getGridGutter()}
+          justify="center"
+          align={context.title === COMPANY_PAGE ? "center" : "stretch"}
+          data-add-margin={""}
+          data-remove-top-margin={""}
+          data-context={context.title}
+          data-is-stepper-card={
+            referenceType === ReferenceTypeEnum["Stepper Cards"]
           }
           data-reference-type={referenceType}
-          data-is-first-item={Boolean(resource?.isFirstItem)}
+          data-section-index={sectionIndex}
+          data-order={order}
         >
-          <RenderResource
-            arrayLength={array.length}
-            index={index}
-            referenceType={referenceType}
-            resource={resource}
-            sectionHeader={header}
-            isEmployeeTag={false}
-          />
-        </Grid.Col>
-      ))}
-    </Grid>
+          {references?.map((resource, index, array) => (
+            <Grid.Col
+              className={cx(classes.column)}
+              p={referenceType === ReferenceTypeEnum.Investors ? 0 : undefined}
+              key={resource.id + "mapReferencedSectionResource"}
+              span={
+                v2flag
+                  ? { base: 12, sm: span, md: span }
+                  : getSpan(referenceType)
+              }
+              data-reference-type={referenceType}
+              data-is-first-item={Boolean(resource?.isFirstItem)}
+            >
+              <RenderResource
+                arrayLength={array.length}
+                index={index}
+                referenceType={referenceType}
+                resource={resource}
+                sectionHeader={header}
+                isEmployeeTag={false}
+                sectionIndex={sectionIndex}
+              />
+            </Grid.Col>
+          ))}
+        </Grid>
+      </Box>
+
+      {canShowBottomBorder && (
+        <Divider
+          className={classes.bottomDivider}
+          data-context={context.title}
+          data-section-index={sectionIndex}
+          data-order={order}
+        />
+      )}
+    </>
   );
 };
 
