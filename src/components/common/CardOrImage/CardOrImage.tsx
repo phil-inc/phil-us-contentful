@@ -70,11 +70,11 @@ const CardOrImage: React.FC<Props> = ({ resource, index }) => {
           <Paper
             className={cx(classes.cardOrImage)}
             style={{
-              background: getColorFromStylingOptions(
+              "--card-bg": getColorFromStylingOptions(
                 resource?.stylingOptions?.background,
               ),
-            }}
-            radius={0}
+            } as React.CSSProperties}
+            radius={0}  
           >
             <Box className={classes.content}>
               {icon && (
