@@ -29,11 +29,23 @@
       font-size: 16px;
       text-decoration: none;
       color: var(--primary-green-color);
-
+      transition: color 0.3s ease;
       .textwrapper {
         display: flex;
         align-items: center;
         gap: 4px;
+      }
+    }
+
+    transition: background-color 0.4s ease, color 0.3s ease-out;
+
+    &:hover {
+      background-color: #00827E;
+      border: none;
+      color: #fff;
+
+      .anchor {
+        color: #fff;
       }
     }
   }
