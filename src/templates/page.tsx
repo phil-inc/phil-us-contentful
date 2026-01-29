@@ -1645,10 +1645,8 @@ export const query = graphql`
               }
               canShowImageOnly
               subItemReferences{
-                id
                 __typename
                 ... on ContentfulPills{
-                  id
                   __typename
                   title
                   iconAsset {
@@ -1888,7 +1886,6 @@ export const query = graphql`
           }
           referenceSecond {
             __typename
-            id
             ... on ContentfulMediaItem {
               id
               metadata {
@@ -1929,6 +1926,125 @@ export const query = graphql`
               }
               canShowMediaWidthFull
             }
+            ... on ContentfulResource {
+              id
+              isImageObjectContain
+              externalLink
+              internalLink {
+                ... on ContentfulPage {
+                  slug
+                  id
+                  title
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
+              }
+              buttonText
+              hyperlink {
+                contentful_id
+                id
+                linkLabel
+                name
+                externalUrl
+                internalContent {
+                  ... on ContentfulPage {
+                    __typename
+                    slug
+                    id
+                    title
+                    sys {
+                      contentType {
+                        sys {
+                          type
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              heading
+              subheading
+              hubspotEmbed {
+                raw
+              }
+              isHubspotEmbed
+              isInsertSnippet
+              codeSnippet {
+                codeSnippet
+              }
+              description {
+                id
+                description
+              }
+              icon {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              body {
+                raw
+              }
+              asset {
+                gatsbyImageData(
+                  placeholder: BLURRED
+                  layout: FULL_WIDTH
+                  resizingBehavior: FILL
+                )
+                id
+                file {
+                  contentType
+                  url
+                }
+              }
+              stylingOptions {
+                background
+                extraColor
+                id
+                name
+              }
+              media {
+                name
+                media {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+                youtubeLink
+                embedCode {
+                  raw
+                }
+                id
+              }
+              canShowImageOnly
+              isFirstItem
+            }
           }
           referenceSecondRenderOptions {
             name
@@ -1941,6 +2057,7 @@ export const query = graphql`
             }
           }
           secondReferenceType
+          thirdReferenceTitle
           referenceThird {
             __typename
             ... on ContentfulResource {
@@ -2115,7 +2232,7 @@ export const query = graphql`
             }
           }
           thirdReferenceType
-
+          canShowBottomBorderInThirdReference
           referenceFourth {
             __typename
             ... on ContentfulResource {

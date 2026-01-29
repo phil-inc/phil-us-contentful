@@ -63,12 +63,6 @@ export const COLORS = {
 
 export const LIGHT_COLOR_LIST = [COLORS.LIGHT];
 
-export const REFERENCE_SECTION = {
-  ONE: 1,
-  TWO: 2,
-  THREE: 3,
-  FOUR: 4,
-};
 export const ONE = 1;
 
 export const NOT_AVAILABLE = "N/A";
