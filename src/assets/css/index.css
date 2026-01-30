@@ -9,7 +9,7 @@
   --announcment-bar-height: 58px; /* Assume the height of the announcement bar */
   --side-margin: 32px;
   --primary-green-color: #00827E;
-  --primay-white-color: #FFFFFF;
+  --primary-white-color: #FFFFFF;
   --primary-black-color: #000000;
 
   --navbar-z-index: 110;
@@ -25,7 +25,7 @@
 	color: #000000;
 }
 .lightText {
-	color: var(--primay-white-color);
+	color: var(--primary-white-color);
 }
 
   .home{
