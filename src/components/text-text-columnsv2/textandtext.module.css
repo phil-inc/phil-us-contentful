@@ -33,6 +33,29 @@
   .listCheckIcon:not(:last-child) {
     border-bottom: 1px solid #e6e6e6;
   }
+
+  .listCheckIconCard{
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    background-color: #EEF8F5;
+    padding: 16px;
+    margin-bottom: 20px;
+    transition: var(--transition-color-bg);
+
+
+     .heading{
+      margin-bottom: 4px;
+     }
+
+     .subHeading{
+      color:#525252
+     }
+
+     &:hover{
+      background-color: #13C1A3;
+      color: var(--primary-white-color);
+     }
+  }
   
   .border {
     border-left: 4px solid #35ada7;
@@ -129,6 +152,14 @@
   .leftColumnHeader {
     font-size: 40px;
     margin-bottom: 40px;
+
+    &[data-context="Our Solution"][data-section-index="1"] {
+      font-family: Raleway;
+      font-weight: 700;
+      font-style: Bold;
+      font-size: 20px;
+
+    }
   }
 
   .leftColumnTitle {
@@ -225,8 +256,24 @@
   .rightColumnHeader {
     padding-left: 0px;
 
+     &[data-context="Our Solution"][data-section-index="1"] {
+      h3{
+        font-family: Raleway;
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 20px;
+
+      }
+    }
+
+
     @media (min-width: $phil-breakpoint-sm) {
        padding-left: 20px;
+
+       &[data-context="Our Solution"] {
+          padding-left: 0px;
+          font-size: 20px;
+      }
     }
   }
 

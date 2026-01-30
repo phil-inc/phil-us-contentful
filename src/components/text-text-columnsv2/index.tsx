@@ -140,9 +140,8 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
                   </>
                 ) : (
                   <>
-                  {/* <Title order={3} className={classes.leftColumnTitle} id={entry.title === "DATA & INSIGHTS" ? slugify("DATA AND INSIGHTS") : slugify(entry.title)}>{entry.title}</Title> */}
                   <Title order={3} className={classes.leftColumnTitle}>{entry.title}</Title>
-                  <Title order={3} className={classes.leftColumnHeader}>{entry.header}</Title>
+                  <Title order={3} className={classes.leftColumnHeader} data-context={contentTitle} data-section-index={sectionIndex}>{entry.header}</Title>
                   {entry.subHeading?.subHeading && (
                     <Text fz="md" mt={4} className={classes.leftColumnSubHeading}>
                       {entry.subHeading.subHeading}
@@ -251,12 +250,12 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
   );
 };
 
-const renderRightColumn = (column: any, context: any) => {
+const renderRightColumn = (column: any, context: any, sectionIndex: number) => {
   if (!column) return null;
   
   return (
     <div>
-      <Box className={classes.rightColumnHeader}>{renderRichText(column)}</Box>
+      <Box className={classes.rightColumnHeader} data-context={context.title} data-section-index={sectionIndex}>{renderRichText(column)}</Box>
 
       <div>
         {column.references?.map((item: any, index :any) => {
@@ -277,6 +276,33 @@ const renderRightColumn = (column: any, context: any) => {
                         </a>
                     </div>
                   </Flex>
+                );
+
+              case 'Card list':
+                return (
+                  <>
+                    <Box 
+                      key={item.id} 
+                      className={classes.listCheckIconCard}
+                        onClick={() => {
+                        if (item?.anchorLink) window.location.href = item.anchorLink;
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <Flex gap={8}>
+                        {!item.choose && <CheckIcon size={28} color="#00827E" />}
+                        <div className={cx(classes.item)}>
+                          <Text data-context={context.title} 
+                            className={item.subheading ? classes.heading : classes.noSubHeading}>
+                            {item.heading}
+                          </Text>
+                          <Text className={classes.subheading}>
+                            {item.subheading}
+                          </Text>
+                        </div>
+                      </Flex>
+                    </Box>
+                  </>
                 );
             
               case 'Feature list':
@@ -392,7 +418,7 @@ const TextAndTextColumns = ({ data, index, sectionIndex }: TextAndTextColumnsPro
           data-context={context.title} 
           data-index={sectionIndex}
           className={cx(classes.rightColumn, classes.rightColumnContainer,heading === "PhilRx Access Solution"  && classes.philRxAccessSolutionNoBorder,heading === WHY_BRANDS_WIN_WITH_PHILRX && classes.philRxAccessSolutionNoBorder)}>
-            {renderRightColumn(rightColumn, context)}
+            {renderRightColumn(rightColumn, context, sectionIndex)}
           </Grid.Col>
         </Grid>
       </Container>
