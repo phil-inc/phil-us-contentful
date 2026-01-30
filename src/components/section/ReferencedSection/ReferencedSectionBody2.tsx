@@ -1,7 +1,7 @@
 import RenderResource from "./RenderResource";
 import * as classes from "./referencedSection.module.css";
 import { Carousel } from "@mantine/carousel";
-import { Container, Grid } from "@mantine/core";
+import { Center, Container, Grid } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { ResourceCarousel } from "components/common/Carousel/ResourceCarousel";
 import { EMPLOYEE_SPOTLIGHT_TAG, MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
@@ -13,8 +13,6 @@ import { type IReferencedSection, ReferenceTypeEnum } from "types/section";
 import cx from 'clsx';
 
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
-import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
-import TestimonialCarousel from "./TestimonialCarousel";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -25,16 +23,14 @@ type ReferencedSectionBodyProps = {
     sm: number;
     xs?: number;
   };
-  sectionIndex?: number;
 };
 
 const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   section,
   getSpan,
-  sectionIndex,
 }) => {
   const { title } = useContext(PageContext);
-  
+
   const isFiveLayout =  section?.renderOptions?.layoutOptions?.numberOfColumns === 5;
   const span = isFiveLayout
     ? 2
@@ -51,23 +47,12 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const md = useDeviceType("md");
   const lg = useDeviceType("lg");
 
-  // Early return for AutoScrollCarousel on Company page
-  if (title === COMPANY_PAGE && section?.canAlsoBeUseAsAutoCarousel) {
+  if( title === COMPANY_PAGE && section?.canAlsoBeUseAsAutoCarousel){
     return <AutoScrollCarousel section={section} />;
   }
 
-  // Early return for Testimonial carousel with auto-scroll infinite loop
-  if (
-    section.referenceType === ReferenceTypeEnum.Testimonial &&
-    section.renderOptions?.layoutOptions?.shouldRenderCarousel
-  ) {
-    return <TestimonialCarousel section={section} />;
-  }
-
-  // Standard carousel (People Behind Phil, Recent Client News, etc.)
-  if (section.renderOptions?.layoutOptions?.shouldRenderCarousel) {
+  if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
     const columns = section.renderOptions.layoutOptions.numberOfColumns ?? 1;
-
     const getSlideSize = () => {
       if (section.referenceType === "People Behind Phil") {
         return {
@@ -78,11 +63,14 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           xl: `${95 / columns}%`,
         };
       }
-
+      
       return {
         base: "95%",
-        sm: "calc(50% - 16px)",
-        md: "calc(50% - 32px)",
+        sm: `calc(50% - 16px)`,
+        md:
+          section.referenceType === "Testimonial"
+            ? `${95 / columns}%`
+            : "calc50% - 32px)",
         xl: `${95 / columns}%`,
       };
     };
@@ -103,32 +91,59 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           previousControlIcon={<IconChevronLeft size={24} />}
           nextControlIcon={<IconChevronRight size={24} />}
           slideSize={getSlideSize()}
-          align="start"
+          align={"start"}
+          // slideSize={{base: '320px', sm: "calc(50% - 16px)", md: "calc50% - 32px)"}}
+          // slidesToScroll={1}
           loop={false}
-          slidesToScroll={1}
+          slidesToScroll={
+            section.referenceType === "Testimonial"
+              ? xs || sm || md
+                ? "auto"
+                : columns
+              : 1
+          }
           data-has-media-item={section.references.some(
             (reference) =>
               reference?.sys?.contentType?.sys?.id === "mediaItem" ?? false,
           )}
-          data-context={title}
+          data-context = {title}
           data-is-employee-tag={Boolean(isEmployeeTag)}
         >
-          {section.references.map((resource, index, array) => (
-            <Carousel.Slide key={`${resource.id}-carousel-${index}`}>
-              <RenderResource
-                arrayLength={array.length}
-                index={index}
-                referenceType={section.referenceType}
-                resource={resource}
-                sectionHeader={section.header}
-                isEmployeeTag={Boolean(isEmployeeTag)}
-              />
-            </Carousel.Slide>
-          ))}
+          {section.header === "Recent Client News" ? (
+            section.references.map((resource, index, array) => {
+                return (
+                  <Carousel.Slide key={resource.id + "carouselItem"}>
+                    <RenderResource
+                      arrayLength={array.length}
+                      index={index}
+                      referenceType={section.referenceType}
+                      resource={resource}
+                      sectionHeader={section.header}
+                      isEmployeeTag={Boolean(isEmployeeTag)}
+                    />
+                  </Carousel.Slide>
+              )
+            }
+          )): (
+          section.references.map((resource, index, array) => (
+                <Carousel.Slide key={resource.id + "carouselItem"}>
+                  <RenderResource
+                    arrayLength={array.length}
+                    index={index}
+                    referenceType={section.referenceType}
+                    resource={resource}
+                    sectionHeader={section.header}
+                    isEmployeeTag={Boolean(isEmployeeTag)}
+                  />
+                </Carousel.Slide>
+          ))
+        )}
         </Carousel>
+      
       </Container>
     );
   }
+
   if (section.referenceType === ReferenceTypeEnum["Image Carousel"]) {
     return <ResourceCarousel imageCaraouselSection={section} />;
   }
@@ -136,19 +151,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
   const getGridGutter = () => {
-    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"] ||
-          section.referenceType === ReferenceTypeEnum["Image Connnect To Two Card"] ||
-          section.referenceType === ReferenceTypeEnum["Promo Card"]
-    )
+    if (section.referenceType === ReferenceTypeEnum["Stepper Cards"])
       return 0;
     return 36;
   };
-
-  // Render MetricWithUmbrellaBorder skip the grid layout
-  if(section.referenceType === ReferenceTypeEnum["MetricWith5Card"]){
-    return <MetricWithUmbrellaBorder section={section} sectionIndex={sectionIndex} />;
-  }
-  
 
   return (
     <Grid
@@ -195,7 +201,6 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
             sectionHeader={section.header}
             isEmployeeTag={Boolean(isEmployeeTag)}
             metadata={section.metadata}
-            sectionIndex={sectionIndex}
           />
         </Grid.Col>
       ))}
