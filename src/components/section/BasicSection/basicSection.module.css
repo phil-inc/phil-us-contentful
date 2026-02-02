@@ -198,8 +198,17 @@
 			transform: translateY(-50%);
 			right: calc(var(--img-outside-margin) * -1);
 			
-			&[data-context='Phil Direct'] {
-				height: 110%;
+			&[data-context='Phil Direct']{
+				&[data-section-index='0']{
+					height: 105%;
+				}	
+
+				&[data-section-index='8']{
+					height: auto;
+				}
+			}
+			&[data-context='Our Solution'][data-section-index='0'] {
+				height: 105%;
 			}
 			&[data-context='Solution'] {
 				height: auto;

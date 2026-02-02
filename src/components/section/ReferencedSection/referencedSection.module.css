@@ -181,7 +181,7 @@
 .belowSubHeading{
   margin-top: 28px;
   text-align: center;
-  color: var(--primay-white-color, #FFF);
+  color: var(--primary-white-color, #FFF);
   font-size: 18px;
 }
 
@@ -257,7 +257,7 @@
           padding: 4px;
 
           svg{
-            stroke: var(--primay-white-color);
+            stroke: var(--primary-white-color);
             }
       }
       

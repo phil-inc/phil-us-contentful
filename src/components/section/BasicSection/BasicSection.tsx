@@ -7,7 +7,6 @@ import {
   Button,
   Container,
   Divider,
-  Flex,
   Grid,
   Group,
   List,
@@ -647,6 +646,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             data-index={index}
             data-context={context.title}
             data-oneColumn={isOneColumn}
+            data-section-index={sectionIndex}
           >
             <Asset
               className={classes.assetWallImage}

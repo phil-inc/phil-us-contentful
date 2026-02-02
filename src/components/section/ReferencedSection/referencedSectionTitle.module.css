@@ -40,7 +40,7 @@
 
 	&[data-index='0']&[data-context='DtpResources'] {
 		.heading,.subHeading{
-			color: var(--primay-white-color);
+			color: var(--primary-white-color);
 			text-align: center;
 		}
 
