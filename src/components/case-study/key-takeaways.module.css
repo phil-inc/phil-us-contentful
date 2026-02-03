@@ -1,5 +1,5 @@
 .keyTakeaways {
-  margin: 0px 0px 40px 0px;
+  margin: 0px 0px 0px 0px;
 }
 
 .mainTitle {
@@ -53,7 +53,7 @@
 
 @media (min-width: $phil-breakpoint-md) {
   .keyTakeaways {
-    margin: 0px 0px 40px 0px;
+    margin: 0px 0px 0px 0px;
   }
   
   .takeawayItem {

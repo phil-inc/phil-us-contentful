@@ -39,22 +39,29 @@
     border-radius: 12px;
     background-color: #EEF8F5;
     padding: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     transition: var(--transition-color-bg);
 
 
      .heading{
-      margin-bottom: 4px;
+      margin-bottom: 6px;
      }
 
      .subHeading{
-      color:#525252
+      color:#525252;
      }
 
      &:hover{
       background-color: #13C1A3;
       color: var(--primary-white-color);
+      transition: var(--transition-color-bg);
+
+      .subHeading {
+        color: var(--primary-white-color);
+        transition: var(--transition-color-bg);
+      }
      }
+     font-size: 20px;
   }
   
   .border {
@@ -65,11 +72,18 @@
   .heading {
     font-size: 16px;
     font-weight: 700;
+    &[data-context="Our Solution"] {
+      font-size: 17px;
+     }
   }
   
   .subHeading {
     font-size: 16px;
     font-weight: 400;
+    &[data-context="Our Solution"] {
+      font-size: 15px;
+    line-height: 17px;
+     }
   }
 
   .noSubHeading {
@@ -123,17 +137,19 @@
         border-right: 1px solid #e6e6e6;
       }
     }
+    &[data-context="Our Solution"]{
+      padding: 0px 48px;
+    }
   }
 
   .rightColumn {
     border-top: 1px solid #e6e6e6;
-    padding-top: 20px;
+    padding-top: 3px;
 
     @media (min-width: $phil-breakpoint-sm) {
       border-top: 0px;
-
       border-left: 1px solid #e6e6e6;
-      padding-left: 70px;
+      padding-left: 42px;
       &[data-context="Pharma"] {
         border-left: 0px;
       }
@@ -141,6 +157,23 @@
       &[data-context="Phil Direct"][data-index="4"] {
         border-left: none;
       }
+
+      /* For the vertical line between left and right column */
+      /* &[data-context="Our Solution"] {
+        border-left: none;
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          height: 400px;
+          width: 1px;
+          background-color: #e6e6e6;
+        }
+      } */
     }
   }
 
@@ -158,7 +191,6 @@
       font-weight: 700;
       font-style: Bold;
       font-size: 20px;
-
     }
   }
 
@@ -171,7 +203,7 @@
 
   .leftColumnSubHeading{
     margin-bottom: 18px;
-    
+    font-size: 16px;
     /* @media (min-width: $phil-breakpoint-lg) {
       margin-bottom: 80px;
     } */
@@ -181,7 +213,10 @@
     }
     
     @media (min-width: $phil-breakpoint-sm) {
-      margin-bottom: 36px;
+      margin-bottom: 52px;
+    }
+    &&[data-context="Our Solution"]{
+      font-size: 18px !important;
     }
   }
 
@@ -195,27 +230,31 @@
     }
   }
 
-  .leftColumnCardBox{
+  .leftColumnCardBox {
     flex: 1 1 0;
+    /* max-width: 134px;  */
     margin-top: 60px;
-
+  
     @media (min-width: $phil-breakpoint-sm) {
       margin-top: 0px;
     }
   }
 
   .leftColumnCardTitle{
-    font-size: 40px;
+    font-size: 45px;
     color : #00827E;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .leftColumnCardBody {
-    font-size: 14px;
+    font-size: 10.5px;
     width: auto;
-
+    color : #00827E;   
+    margin-bottom: 18px;
+    text-transform: uppercase;
     @media (min-width: $phil-breakpoint-sm) {
-      width: 140px;
+      /* width: 140px; */
+      width: 136px;
     }
   }
   
@@ -322,7 +361,7 @@
     margin-bottom: 60px;
 
     @media (min-width: $phil-breakpoint-sm) {
-      margin-bottom: 100px;
+      margin-bottom: 64px;
     }
 
     &[data-context='Phil Direct'] {
