@@ -255,9 +255,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               </div>
             </Anchor>
           </div>
-        )}
-
-        <Box 
+        )}       <Box
           className={cx({[classes.innerBgSection]: Boolean(section?.innerBackgroundStyling)})}
           style={{background: section?.innerBackgroundStyling?.background ? getColorFromStylingOptions(section.innerBackgroundStyling.background) : undefined}} 
         >
