@@ -40,14 +40,17 @@
     background-color: #EEF8F5;
     padding: 16px;
     margin-bottom: 24px;
+    margin-bottom: 24px;
     transition: var(--transition-color-bg);
 
 
      .heading{
       margin-bottom: 6px;
+      margin-bottom: 6px;
      }
 
      .subHeading{
+      color:#525252;
       color:#525252;
      }
 
@@ -60,7 +63,14 @@
         color: var(--primary-white-color);
         transition: var(--transition-color-bg);
       }
+      transition: var(--transition-color-bg);
+
+      .subHeading {
+        color: var(--primary-white-color);
+        transition: var(--transition-color-bg);
+      }
      }
+     font-size: 20px;
      font-size: 20px;
   }
   
@@ -140,16 +150,19 @@
     &[data-context="Our Solution"]{
       padding: 0px 48px;
     }
+    &[data-context="Our Solution"]{
+      padding: 0px 48px;
+    }
   }
 
   .rightColumn {
     border-top: 1px solid #e6e6e6;
-    padding-top: 3px;
+    padding-top: 0px;
 
     @media (min-width: $phil-breakpoint-sm) {
       border-top: 0px;
       border-left: 1px solid #e6e6e6;
-      padding-left: 42px;
+      padding-left: 40px;
       &[data-context="Pharma"] {
         border-left: 0px;
       }
@@ -247,7 +260,7 @@
   }
 
   .leftColumnCardBody {
-    font-size: 10.5px;
+    font-size: 12px;
     width: auto;
     color : #00827E;   
     margin-bottom: 18px;
@@ -301,7 +314,6 @@
         font-weight: 700;
         font-style: Bold;
         font-size: 20px;
-
       }
     }
 
@@ -361,7 +373,7 @@
     margin-bottom: 60px;
 
     @media (min-width: $phil-breakpoint-sm) {
-      margin-bottom: 64px;
+      margin-bottom: 70px;
     }
 
     &[data-context='Phil Direct'] {
