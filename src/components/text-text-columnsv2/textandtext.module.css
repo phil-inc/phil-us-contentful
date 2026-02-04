@@ -1,205 +1,302 @@
-  .listCheckIcon {
+.listCheckIcon {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+
+  .featureListLinkContainer{
+      padding-left: 24px;
+      font-weight: 600;
+      font-size: 18px;
+      margin-top: 25px;
+      margin-bottom: 20px;
+
+    .featureListAnchor {
+      font-weight: 600;
+      font-size: 18px;
+      text-decoration: none;
+      color: var(--primary-green-color);
+
+      .textwrapper {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+  }
+
+  @media (min-width: $phil-breakpoint-sm) {
+    padding-left: 20px;
     padding-bottom: 20px;
     margin-bottom: 20px;
-
-    .featureListLinkContainer{
-        padding-left: 24px;
-        font-weight: 600;
-        font-size: 18px;
-        margin-top: 25px;
-        margin-bottom: 20px;
-
-      .featureListAnchor {
-        font-weight: 600;
-        font-size: 18px;
-        text-decoration: none;
-        color: var(--primary-green-color);
-
-        .textwrapper {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-      }
-    }
-
-    @media (min-width: $phil-breakpoint-sm) {
-      padding-left: 20px;
-      padding-bottom: 20px;
-      margin-bottom: 20px;
-    }
   }
+}
 
-  .listCheckIcon:not(:last-child) {
-    border-bottom: 1px solid #e6e6e6;
-  }
+.listCheckIcon:not(:last-child) {
+  border-bottom: 1px solid #e6e6e6;
+}
 
-  .listCheckIconCard{
-    border: 1px solid #E2E8F0;
-    border-radius: 12px;
-    background-color: #EEF8F5;
-    padding: 16px;
-    margin-bottom: 24px;
-    margin-bottom: 24px;
+.listCheckIconCard{
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  background-color: #EEF8F5;
+  padding: 16px;
+  margin-bottom: 20px;
+  transition: var(--transition-color-bg);
+
+
+   .heading{
+    margin-bottom: 4px;
+   }
+
+   .subHeading{
+    color:#525252
+   }
+
+   &:hover{
+    background-color: #13C1A3;
+    color: var(--primary-white-color);
     transition: var(--transition-color-bg);
 
-
-     .heading{
-      margin-bottom: 6px;
-      margin-bottom: 6px;
-     }
-
-     .subHeading{
-      color:#525252;
-      color:#525252;
-     }
-
-     &:hover{
-      background-color: #13C1A3;
+    .subHeading {
       color: var(--primary-white-color);
       transition: var(--transition-color-bg);
+    }
+   }
+   font-size: 20px;
+}
 
-      .subHeading {
-        color: var(--primary-white-color);
-        transition: var(--transition-color-bg);
-      }
-      transition: var(--transition-color-bg);
+.border {
+  border-left: 4px solid #35ada7;
+  padding-left: 20px;
+}
 
-      .subHeading {
-        color: var(--primary-white-color);
-        transition: var(--transition-color-bg);
-      }
-     }
-     font-size: 20px;
-     font-size: 20px;
-  }
-  
-  .border {
-    border-left: 4px solid #35ada7;
-    padding-left: 20px;
-  }
-  
-  .heading {
-    font-size: 16px;
-    font-weight: 700;
-    &[data-context="Our Solution"] {
-      font-size: 17px;
-     }
-  }
-  
-  .subHeading {
-    font-size: 16px;
-    font-weight: 400;
-    &[data-context="Our Solution"] {
-      font-size: 15px;
-    line-height: 17px;
-     }
+.heading {
+  font-size: 16px;
+  font-weight: 700;
+  &[data-context="Our Solution"] {
+    font-size: 17px;
+   }
+}
+
+.subHeading {
+  font-size: 16px;
+  font-weight: 400;
+  &[data-context="Our Solution"] {
+    font-size: 15px;
+  line-height: 17px;
+   }
+}
+
+.noSubHeading {
+  font-size: 28px;
+  font-weight: 700;
+  color : #00827E;
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+
+  &[data-context="Our Solution"], &[data-context="Phil Direct"] {
+    &::after{
+      position: absolute;
+      content: "";
+      left: 20px;
+      display: block;
+      width: 95%;
+      height: 3px;
+      background: #00827E;
+      transition: 0.4s var(--ease-out-expo);
+      transform-origin: left;
+      transform: scaleX(0); /* Start hidden */
+      transition: transform 0.4s var(--ease-out-expo) 0s;
+    }
   }
 
-  .noSubHeading {
-    font-size: 28px;
-    font-weight: 700;
-    color : #00827E;
-    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-
-    &[data-context="Our Solution"], &[data-context="Phil Direct"] {
+  &:hover{
+    &[data-context="Our Solution"], &[data-context="Phil Direct"]  {
       &::after{
-        position: absolute;
-        content: "";
-        left: 20px;
-        display: block;
-        width: 95%;
-        height: 3px;
-        background: #00827E;
-        transition: 0.4s var(--ease-out-expo);
-        transform-origin: left;
-        transform: scaleX(0); /* Start hidden */
-        transition: transform 0.4s var(--ease-out-expo) 0s;
+        transform: scaleX(1); /* Animate to full underline on hover */
       }
-    }
-
-    &:hover{
-      &[data-context="Our Solution"], &[data-context="Phil Direct"]  {
-        &::after{
-          transform: scaleX(1); /* Animate to full underline on hover */
-        }
-      }
-    }
- 
-
-  }
-
-  .noSubHeadingChooseBox {
-    margin-bottom:16px;
-    margin-top:16px;
-    position: relative;
-  }
-
-  .containerBody{
-    .headerBody{
-      font-size: 18px;
     }
   }
 
-  .leftColumn{
-    @media (min-width: $phil-breakpoint-sm) {
-      &[data-context="Phil Direct"][data-index="4"] {
-        border-right: 1px solid #e6e6e6;
-      }
-    }
-    &[data-context="Our Solution"]{
-      padding: 0px 48px;
-    }
-    &[data-context="Our Solution"]{
-      padding: 0px 48px;
+
+}
+
+.noSubHeadingChooseBox {
+  margin-bottom:16px;
+  margin-top:16px;
+  position: relative;
+}
+
+.containerBody{
+  .headerBody{
+    font-size: 18px;
+  }
+}
+
+.leftColumn{
+  @media (min-width: $phil-breakpoint-sm) {
+    &[data-context="Phil Direct"][data-index="4"] {
+      border-right: 1px solid #e6e6e6;
     }
   }
-
-  .rightColumn {
-    border-top: 1px solid #e6e6e6;
-    padding-top: 0px;
-
-    @media (min-width: $phil-breakpoint-sm) {
-      border-top: 0px;
-      border-left: 1px solid #e6e6e6;
-      padding-left: 40px;
-      &[data-context="Pharma"] {
-        border-left: 0px;
-      }
-
-      &[data-context="Phil Direct"][data-index="4"] {
-        border-left: none;
-      }
-
-      /* For the vertical line between left and right column */
-      /* &[data-context="Our Solution"] {
-        border-left: none;
-        position: relative;
-
-        &::before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 50%;
-          transform: translateY(-50%);
-          height: 400px;
-          width: 1px;
-          background-color: #e6e6e6;
-        }
-      } */
-    }
+  &[data-context="Our Solution"]{
+    padding: 0px 48px;
   }
+}
 
-  .philRxAccessSolutionNoBorder {
-    border-left: 0px;
+.rightColumn {
+  border-top: 1px solid #e6e6e6;
+  padding-top: 0px;
+
+  @media (min-width: $phil-breakpoint-sm) {
     border-top: 0px;
+    border-left: 1px solid #e6e6e6;
+    padding-left: 40px;
+    &[data-context="Pharma"] {
+      border-left: 0px;
+    }
+
+    &[data-context="Phil Direct"][data-index="4"] {
+      border-left: none;
+    }
+
+    /* For the vertical line between left and right column */
+    /* &[data-context="Our Solution"] {
+      border-left: none;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 400px;
+        width: 1px;
+        background-color: #e6e6e6;
+      }
+    } */
+  }
+}
+
+.philRxAccessSolutionNoBorder {
+  border-left: 0px;
+  border-top: 0px;
+}
+
+.leftColumnHeader {
+  font-size: 40px;
+  margin-bottom: 40px;
+
+  &[data-context="Our Solution"][data-section-index="1"] {
+    font-family: Raleway;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 20px;
+  }
+}
+
+.leftColumnTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color : #00827E;
+  margin-bottom: 40px;
+}
+
+.leftColumnSubHeading{
+  margin-bottom: 18px;
+  font-size: 16px;
+  /* @media (min-width: $phil-breakpoint-lg) {
+    margin-bottom: 80px;
+  } */
+  
+  &.belowSubHeading {
+    margin: 40px auto auto;
+  }
+  
+  @media (min-width: $phil-breakpoint-sm) {
+    margin-bottom: 52px;
+  }
+  &&[data-context="Our Solution"]{
+    font-size: 18px !important;
+  }
+}
+
+.leftColumnCard{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+
+  @media (min-width: $phil-breakpoint-md) {
+    gap: 2px;
+  }
+}
+
+.leftColumnCardBox {
+  flex: 1 1 0;
+  /* max-width: 134px;  */
+  margin-top: 60px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    margin-top: 0px;
+  }
+}
+
+.leftColumnCardTitle{
+  font-size: 45px;
+  color : #00827E;
+  font-weight: 700;
+}
+
+.leftColumnCardBody {
+  font-size: 12px;
+  width: auto;
+  color : #00827E;   
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  @media (min-width: $phil-breakpoint-sm) {
+    /* width: 140px; */
+    width: 136px;
+  }
+}
+
+.leftColumnSubTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 36px;
+
+}
+
+.leftColumnLinkContainer {
+  display: flex;
+  flex-direction: column;
+  gap:36px;
+  margin-top: 40px;
+
+  .greenAnchor {
+    display: inline-flex;
+    align-items: center;
   }
 
-  .leftColumnHeader {
-    font-size: 40px;
-    margin-bottom: 40px;
+  @media (min-width: $phil-breakpoint-sm) {
+    flex-direction: row;
 
-    &[data-context="Our Solution"][data-section-index="1"] {
+    .greenAnchor{
+      display: inline-block;
+    }
+  }
+}
+
+
+.leftColumnLink {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.rightColumnHeader {
+  padding-left: 0px;
+
+   &[data-context="Our Solution"][data-section-index="1"] {
+    h3{
       font-family: Raleway;
       font-weight: 700;
       font-style: Bold;
@@ -207,206 +304,96 @@
     }
   }
 
-  .leftColumnTitle {
-    font-size: 18px;
-    font-weight: 800;
-    color : #00827E;
-    margin-bottom: 40px;
-  }
 
-  .leftColumnSubHeading{
-    margin-bottom: 18px;
-    font-size: 16px;
-    /* @media (min-width: $phil-breakpoint-lg) {
-      margin-bottom: 80px;
-    } */
-    
-    &.belowSubHeading {
-      margin: 40px auto auto;
-    }
-    
-    @media (min-width: $phil-breakpoint-sm) {
-      margin-bottom: 52px;
-    }
-    &&[data-context="Our Solution"]{
-      font-size: 18px !important;
-    }
-  }
+  @media (min-width: $phil-breakpoint-sm) {
+     padding-left: 20px;
 
-  .leftColumnCard{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-
-    @media (min-width: $phil-breakpoint-md) {
-      gap: 2px;
-    }
-  }
-
-  .leftColumnCardBox {
-    flex: 1 1 0;
-    /* max-width: 134px;  */
-    margin-top: 60px;
-  
-    @media (min-width: $phil-breakpoint-sm) {
-      margin-top: 0px;
-    }
-  }
-
-  .leftColumnCardTitle{
-    font-size: 45px;
-    color : #00827E;
-    font-weight: 700;
-  }
-
-  .leftColumnCardBody {
-    font-size: 12px;
-    width: auto;
-    color : #00827E;   
-    margin-bottom: 18px;
-    text-transform: uppercase;
-    @media (min-width: $phil-breakpoint-sm) {
-      /* width: 140px; */
-      width: 136px;
-    }
-  }
-  
-  .leftColumnSubTitle {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 36px;
-
-  }
-
-  .leftColumnLinkContainer {
-    display: flex;
-    flex-direction: column;
-    gap:36px;
-    margin-top: 40px;
-
-    .greenAnchor {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    @media (min-width: $phil-breakpoint-sm) {
-      flex-direction: row;
-
-      .greenAnchor{
-        display: inline-block;
-      }
-    }
-  }
-
-
-  .leftColumnLink {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 16px;
-  }
-
-  .rightColumnHeader {
-    padding-left: 0px;
-
-     &[data-context="Our Solution"][data-section-index="1"] {
-      h3{
-        font-family: Raleway;
-        font-weight: 700;
-        font-style: Bold;
+     &[data-context="Our Solution"] {
+        padding-left: 0px;
         font-size: 20px;
-      }
-    }
-
-
-    @media (min-width: $phil-breakpoint-sm) {
-       padding-left: 20px;
-
-       &[data-context="Our Solution"] {
-          padding-left: 0px;
-          font-size: 20px;
-      }
     }
   }
+}
 
-  .dataAndInsightsImage {
-    padding-top : 60px;
+.dataAndInsightsImage {
+  padding-top : 60px;
 
-    @media (min-width: $phil-breakpoint-sm) {
-      padding-top : 88px;
-    }
+  @media (min-width: $phil-breakpoint-sm) {
+    padding-top : 88px;
   }
+}
 
-  .philRxAccessSolutionPageImage {
-    width: 64%;
-    margin: auto;
-  }
+.philRxAccessSolutionPageImage {
+  width: 64%;
+  margin: auto;
+}
 
-  .embededAsset{
-    display: flex;
-		justify-content: center;
+.embededAsset{
+  display: flex;
+  justify-content: center;
 
-    &[data-context="Phil Direct"]{
-      margin: 20px 20px;
+  &[data-context="Phil Direct"]{
+    margin: 20px 20px;
 
-      &[data-index='5']{
-        justify-content: left;
-        margin: 20px auto 30px;
-        display: flex;
-        width: 50%;
-        
-        @media (min-width: $phil-breakpoint-sm) {
-          display: inline-flex;
-          margin: 20px auto;
-        }
-      }
-    }
+    &[data-index='5']{
+      justify-content: left;
+      margin: 20px auto 30px;
+      display: flex;
+      width: 50%;
       
-  }
-
-  .rightColumnContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .containerHeaderBox {
-    margin-bottom: 60px;
-
-    @media (min-width: $phil-breakpoint-sm) {
-      margin-bottom: 70px;
-    }
-
-    &[data-context='Phil Direct'] {
-      text-align: center;
-
       @media (min-width: $phil-breakpoint-sm) {
-        margin-left: 50px;
-        margin-right: 50px;
+        display: inline-flex;
+        margin: 20px auto;
       }
     }
   }
+    
+}
 
-  .containerHeader {
-    text-align: left;
+.rightColumnContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.containerHeaderBox {
+  margin-bottom: 60px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    margin-bottom: 70px;
+  }
+
+  &[data-context='Phil Direct'] {
+    text-align: center;
 
     @media (min-width: $phil-breakpoint-sm) {
-      text-align: center;
+      margin-left: 50px;
+      margin-right: 50px;
     }
   }
+}
 
-  .containerSubHeader {
-    text-align: left;
+.containerHeader {
+  text-align: left;
 
-    @media (min-width: $phil-breakpoint-sm) {
-      text-align: center;
-    }
+  @media (min-width: $phil-breakpoint-sm) {
+    text-align: center;
   }
+}
 
-  .hrContainer{
-    margin-top: 30px;
+.containerSubHeader {
+  text-align: left;
 
-    .hr{
-      border: none;
-      border-top: 1px solid #E6E6E6;
-    }
+  @media (min-width: $phil-breakpoint-sm) {
+    text-align: center;
   }
+}
+
+.hrContainer{
+  margin-top: 30px;
+
+  .hr{
+    border: none;
+    border-top: 1px solid #E6E6E6;
+  }
+}
