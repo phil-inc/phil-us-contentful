@@ -123,7 +123,7 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
                   <>
                   <Title order={3} className={classes.leftColumnSubTitle}>{entry.header}</Title>
                   {entry.subHeading?.subHeading && (
-                    <Text fz="md" mt={4} className={classes.leftColumnSubHeading}>
+                    <Text mt={4} className={classes.leftColumnSubHeading}>
                       {entry.subHeading.subHeading}
                     </Text>
                   )}
@@ -143,7 +143,7 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
                   <Title order={3} className={classes.leftColumnTitle}>{entry.title}</Title>
                   <Title order={3} className={classes.leftColumnHeader} data-context={contentTitle} data-section-index={sectionIndex}>{entry.header}</Title>
                   {entry.subHeading?.subHeading && (
-                    <Text fz="md" mt={4} className={classes.leftColumnSubHeading}>
+                    <Text fz="md" mt={4} className={classes.leftColumnSubHeading} data-context={contentTitle}>
                       {entry.subHeading.subHeading}
                     </Text>
                   )}
@@ -151,15 +151,15 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
                     {entry.references?.map((item:any) => {
                       return (
                           <div className={classes.leftColumnCardBox}>
-                            <Text data-context={entry.title} 
-                              className={classes.leftColumnCardTitle}>
-                              {item.heading}
-                            </Text>
                             {item.body && (
                               <Text className={classes.leftColumnCardBody} lineClamp={2}>
                                 {getDescriptionFromRichtext(item?.body?.raw ?? "")}
                               </Text>
                             )}
+                            <Text data-context={entry.title} 
+                              className={classes.leftColumnCardTitle}>
+                              {item.heading}
+                            </Text>
                           </div>
                       );
                     }
@@ -284,6 +284,7 @@ const renderRightColumn = (column: any, context: any, sectionIndex: number) => {
                     <Box 
                       key={item.id} 
                       className={classes.listCheckIconCard}
+                      data-context={context.title}
                         onClick={() => {
                         if (item?.anchorLink) window.location.href = item.anchorLink;
                       }}
@@ -296,7 +297,7 @@ const renderRightColumn = (column: any, context: any, sectionIndex: number) => {
                             className={item.subheading ? classes.heading : classes.noSubHeading}>
                             {item.heading}
                           </Text>
-                          <Text className={classes.subheading}>
+                          <Text data-context={context.title} className={classes.subHeading}>
                             {item.subheading}
                           </Text>
                         </div>
@@ -395,7 +396,7 @@ const TextAndTextColumns = ({ data, index, sectionIndex }: TextAndTextColumnsPro
       )}
 
       <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
-      { heading !== "PhilRx Access Solution" && (
+        {heading !== "PhilRx Access Solution" && (
           <Box className={classes.containerHeaderBox} data-context={context.title}>
             <Title className={classes.containerHeader} order={2} mb={20}>
               {heading}

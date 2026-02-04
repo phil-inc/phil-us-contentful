@@ -66,6 +66,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
       <div className={isFaqSectionPatients ? classes.faqTitleContainer : ""}>
         <Title
           data-context={title}
+          section-index={sectionIndex}
           data-is-home-brand-outcome={isBrandOutcomeCardSection && isHomePage}
           className={className}
           order={order}
