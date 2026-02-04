@@ -232,7 +232,6 @@
 
 .leftColumnCardBox {
   flex: 1 1 0;
-  /* max-width: 134px;  */
   margin-top: 60px;
 
   @media (min-width: $phil-breakpoint-sm) {
@@ -253,7 +252,6 @@
   margin-bottom: 18px;
   text-transform: uppercase;
   @media (min-width: $phil-breakpoint-sm) {
-    /* width: 140px; */
     width: 136px;
   }
 }
