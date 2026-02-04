@@ -30,61 +30,47 @@
   }
 }
 
-.listCheckIcon:not(:last-child) {
-  border-bottom: 1px solid #e6e6e6;
-}
+  .listCheckIcon:not(:last-child) {
+    border-bottom: 1px solid #e6e6e6;
+  }
 
-.listCheckIconCard{
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  background-color: #EEF8F5;
-  padding: 16px;
-  margin-bottom: 20px;
-  transition: var(--transition-color-bg);
-
-
-   .heading{
-    margin-bottom: 4px;
-   }
-
-   .subHeading{
-    color:#525252
-   }
-
-   &:hover{
-    background-color: #13C1A3;
-    color: var(--primary-white-color);
+  .listCheckIconCard{
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    background-color: #EEF8F5;
+    padding: 16px;
+    margin-bottom: 20px;
     transition: var(--transition-color-bg);
 
-    .subHeading {
+
+     .heading{
+      margin-bottom: 4px;
+     }
+
+     .subHeading{
+      color:#525252
+     }
+
+     &:hover{
+      background-color: #13C1A3;
       color: var(--primary-white-color);
-      transition: var(--transition-color-bg);
-    }
-   }
-   font-size: 20px;
-}
-
-.border {
-  border-left: 4px solid #35ada7;
-  padding-left: 20px;
-}
-
-.heading {
-  font-size: 16px;
-  font-weight: 700;
-  &[data-context="Our Solution"] {
-    font-size: 17px;
-   }
-}
-
-.subHeading {
-  font-size: 16px;
-  font-weight: 400;
-  &[data-context="Our Solution"] {
-    font-size: 15px;
-  line-height: 17px;
-   }
-}
+     }
+  }
+  
+  .border {
+    border-left: 4px solid #35ada7;
+    padding-left: 20px;
+  }
+  
+  .heading {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .subHeading {
+    font-size: 16px;
+    font-weight: 400;
+  }
 
 .noSubHeading {
   font-size: 28px;
@@ -101,7 +87,6 @@
       width: 95%;
       height: 3px;
       background: #00827E;
-      transition: 0.4s var(--ease-out-expo);
       transform-origin: left;
       transform: scaleX(0); /* Start hidden */
       transition: transform 0.4s var(--ease-out-expo) 0s;
@@ -182,17 +167,18 @@
   border-top: 0px;
 }
 
-.leftColumnHeader {
-  font-size: 40px;
-  margin-bottom: 40px;
+  .leftColumnHeader {
+    font-size: 40px;
+    margin-bottom: 40px;
 
-  &[data-context="Our Solution"][data-section-index="1"] {
-    font-family: Raleway;
-    font-weight: 700;
-    font-style: Bold;
-    font-size: 20px;
+    &[data-context="Our Solution"][data-section-index="1"] {
+      font-family: Raleway;
+      font-weight: 700;
+      font-style: Bold;
+      font-size: 20px;
+
+    }
   }
-}
 
 .leftColumnTitle {
   font-size: 18px;
@@ -292,28 +278,13 @@
   line-height: 16px;
 }
 
-.rightColumnHeader {
-  padding-left: 0px;
+  .rightColumnHeader {
+    padding-left: 0px;
 
-   &[data-context="Our Solution"][data-section-index="1"] {
-    h3{
-      font-family: Raleway;
-      font-weight: 700;
-      font-style: Bold;
-      font-size: 20px;
+    @media (min-width: $phil-breakpoint-sm) {
+       padding-left: 20px;
     }
   }
-
-
-  @media (min-width: $phil-breakpoint-sm) {
-     padding-left: 20px;
-
-     &[data-context="Our Solution"] {
-        padding-left: 0px;
-        font-size: 20px;
-    }
-  }
-}
 
 .dataAndInsightsImage {
   padding-top : 60px;
