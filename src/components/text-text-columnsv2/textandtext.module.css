@@ -103,7 +103,7 @@
       background: #00827E;
       transition: 0.4s var(--ease-out-expo);
       transform-origin: left;
-      transform: scaleX(0); /* Start hidden */
+      transform: scaleX(0); 
       transition: transform 0.4s var(--ease-out-expo) 0s;
     }
   }
@@ -111,7 +111,7 @@
   &:hover{
     &[data-context="Our Solution"], &[data-context="Phil Direct"]  {
       &::after{
-        transform: scaleX(1); /* Animate to full underline on hover */
+        transform: scaleX(1);  
       }
     }
   }
@@ -157,23 +157,6 @@
     &[data-context="Phil Direct"][data-index="4"] {
       border-left: none;
     }
-
-    /* For the vertical line between left and right column */
-    /* &[data-context="Our Solution"] {
-      border-left: none;
-      position: relative;
-
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        height: 400px;
-        width: 1px;
-        background-color: #e6e6e6;
-      }
-    } */
   }
 }
 
@@ -204,9 +187,6 @@
 .leftColumnSubHeading{
   margin-bottom: 18px;
   font-size: 16px;
-  /* @media (min-width: $phil-breakpoint-lg) {
-    margin-bottom: 80px;
-  } */
   
   &.belowSubHeading {
     margin: 40px auto auto;
