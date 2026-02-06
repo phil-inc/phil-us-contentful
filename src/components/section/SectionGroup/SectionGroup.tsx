@@ -1,28 +1,45 @@
 import { Box, Container } from "@mantine/core";
 import React from "react";
-import { ISection, ISectionGroup } from "types/section";
+import { IMetric, ISection, ISectionGroup } from "types/section";
 import * as classes from "./SectionGroup.module.css";
 import { Divider } from "@mantine/core";
 import BasicSection from "components/section/BasicSection/BasicSection";
 import PageContext from "contexts/PageContext";
 import Asset from "components/common/Asset/Asset";
 import { BG_IMAGE_INDEX } from "constants/global.constant";
+import TabbedSectionGroup from "./TabbedSectionGroup";
 
 type props = {
   sections: ISectionGroup;
   index?: number;
   sectionIndex?: number;
 };
+
 const SectionGroup: React.FC<props> = ({ sections, index, sectionIndex }) => {
   const context = React.useContext(PageContext);
+
+  // Extract metric from sectionGroupReference (if exists)
+  const metric = sections?.sectionGroupReference?.find(
+    (item) => item.__typename === "ContentfulMetric"
+  ) as IMetric | undefined;
+
+  // Filter out metric to get only sections
+  const sectionReferences = sections?.sectionGroupReference?.filter(
+    (item) => item.__typename !== "ContentfulMetric"
+  ) as ISection[] | undefined;
+
+  // Render tabbed interface when metric exists and multiple sections
+  const shouldRenderTabbedInterface =
+    sectionReferences && sectionReferences.length > 1;
+
   return (
     <Box className={classes.sectionGroup}>
       {Boolean(sections?.canShowTopBorder) && (
-        <Container className={classes.dividerContainer} size={"xl"}>
+        <Container className={classes.dividerContainer} size="xl">
           <Divider className={classes.divider} />
         </Container>
       )}
-
+{/* 
       {sections?.backgroundAssetImage1 && (
         <div
           className={classes.bgImageOne}
@@ -60,29 +77,35 @@ const SectionGroup: React.FC<props> = ({ sections, index, sectionIndex }) => {
             isFullWidth={true}
           />
         </div>
-      )}
-      <Container size={"xl"} data-context={context.title}>
-        {sections?.sectionGroupReference &&
-          sections?.sectionGroupReference.map((section, subIndex) => {
+      )} */}
+
+      {shouldRenderTabbedInterface ? (
+        <TabbedSectionGroup metric={metric} sections={sectionReferences} />
+      ) : (
+        <Container size="xl" data-context={context.title}>
+          {sectionReferences?.map((section, subIndex) => {
             switch (section.sectionType) {
               case "Basic Section":
                 return (
                   <BasicSection
+                    key={section.id}
                     section={section as ISection}
                     index={index!}
                     isEmbedFormTemplate={false}
                     sectionIndex={sectionIndex}
                     subSectionIndex={subIndex}
+                    metric={metric}
                   />
                 );
-
               default:
-                return <></>;
+                return null;
             }
           })}
-      </Container>
+        </Container>
+      )}
+
       {Boolean(sections?.canShowBottomBorder) && (
-        <Container className={classes.dividerContainer} size={"xl"}>
+        <Container className={classes.dividerContainer} size="xl">
           <Divider className={classes.divider} />
         </Container>
       )}

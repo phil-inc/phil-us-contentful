@@ -199,6 +199,16 @@ export const query = graphql`
             }
           }
           sectionGroupReference {
+            __typename
+            ... on ContentfulMetric {
+              id
+              __typename
+              metricLabel
+              metricDescription
+              metricDescriptionRichText {
+                raw
+              }
+            }
             ... on ContentfulSection {
               id
               isHidden
@@ -414,12 +424,9 @@ export const query = graphql`
                 contentType {
                   sys {
                     id
-                  }
                 }
               }
-              headerDescription {
-                headerDescription
-              }
+            }
               subHeader {
                 subHeader
               }
@@ -915,9 +922,6 @@ export const query = graphql`
                 id
               }
             }
-          }
-          headerDescription {
-            headerDescription
           }
           subHeader {
             subHeader
