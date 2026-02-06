@@ -36,6 +36,7 @@
 .clickableArea {
     cursor: pointer;
     user-select: none;
+    margin-top: 60px;
   }
   
   .tabbedGrid {
@@ -156,29 +157,21 @@
     cursor: pointer;
     width: 100%;
     position: relative;
-    transform-origin: bottom center;
     transition:
-      transform 1s ease-in-out,
-      background-color 1s ease-in-out,
-      border-left 1s ease-in-out;
+      background-color 0.6s ease,
+      border-left 0.6s ease;
   }
   
-  /* First tab active - expands height, pushes others down */
-  .tabButtonActiveFirst {
+  /* Active tab */
+  .tabButtonActive {
     background-color: #d5f1f0;
     border-left: 4px solid #09aaa5;
-  }
-  /* Other tabs active - scrolls bottom to top */
-.tabButtonActiveRest {
-    background-color: #d5f1f0;
-    border-left: 4px solid #09aaa5;
-    z-index: 10;
-    animation: scrollUp 1s ease-out;
   }
   
   /* Inactive tabs */
   .tabButtonInactive {
-    transform: translateY(0);
+    background-color: #fff;
+    border-left: 1px solid #d9d9d9;
   }
   
   .tabButtonContent {
@@ -204,58 +197,37 @@
     font-weight: 700;
   }
   
-  .tabButtonDescription {
+  /* Panel expand/collapse */
+  .panel {
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition:
-      max-height 1s ease-in-out,
-      opacity 1s ease-in-out,
-      margin-top 1s ease-in-out;
     margin-top: 0;
+    /* Closing: collapse fast, fade out quickly */
+    transition:
+      max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.25s ease,
+      margin-top 0.3s ease;
+
     p {
-        font-family: "Lato", sans-serif;
-        font-size: 19px;
-        font-weight: 400;
-        color: #0a0a0a;
-        line-height: 1.8;
-        margin: 0;
-      }
+      font-family: "Lato", sans-serif;
+      font-size: 19px;
+      font-weight: 400;
+      color: #0a0a0a;
+      line-height: 1.8;
+      margin: 0;
     }
+  }
 
-
-.tabButtonDescriptionActive {
-    max-height: 500px;
+  .panelOpen {
+    max-height: 500px; /* must be larger than content */
     opacity: 1;
     margin-top: 10px;
-  }
-  
-  /* First tab description - slower expand */
-  .tabButtonDescriptionFirst {
+    /* Opening: expand slower, fade in with slight delay */
     transition:
-      max-height 1s cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 1.2s ease-in,
-      margin-top 1s ease-in-out;
-  }
-  
-  /* Inner content slides down as it reveals */
-  .descriptionContentReveal {
-    animation: revealSlideDown 1s ease-out forwards;
-  }
-  
-  @keyframes revealSlideDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-15px);
-    }
-    40% {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      max-height 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 0.4s 0.15s ease,
+      margin-top 0.4s ease;
   }
   
   /* Fade transition animations */
@@ -306,20 +278,6 @@
   }
 
 
-/* Other tabs: scroll from bottom to top */
-@keyframes scrollUp {
-    0% {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    50% {
-      opacity: 0.6;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
   
   /* Legacy styles kept for backwards compatibility */
   .tabContent {

@@ -108,17 +108,14 @@ const TabbedSectionGroup: React.FC<TabbedSectionGroupProps> = ({
 
           {/* Right Column - Tab Buttons (visual only, click on grid cycles) */}
           <Grid.Col span={{ base: 12, md: 5 }} className={classes.tabsColumn}>
-            <Box className={classes.tabsList} key={`tabs-${animationKey}`}>
+            <Box className={classes.tabsList}>
               {sections.map((section, tabIndex) => {
                 const isActive = tabIndex === activeTabIndex;
                 return (
                   <Box
                     key={section.id}
                     className={cx(classes.tabButton, {
-                      [classes.tabButtonActiveFirst]:
-                        isActive && activeTabIndex === 0,
-                      [classes.tabButtonActiveRest]:
-                        isActive && activeTabIndex !== 0,
+                      [classes.tabButtonActive]: isActive,
                       [classes.tabButtonInactive]: !isActive,
                     })}
                   >
@@ -130,12 +127,10 @@ const TabbedSectionGroup: React.FC<TabbedSectionGroupProps> = ({
                       >
                         {section.header}
                       </Text>
-                      {/* Description - only visible when active */}
+                      {/* Description panel - expands when active */}
                       <Box
-                        className={cx(classes.tabButtonDescription, {
-                          [classes.tabButtonDescriptionActive]: isActive,
-                          [classes.tabButtonDescriptionFirst]:
-                            isActive && activeTabIndex === 0,
+                        className={cx(classes.panel, {
+                          [classes.panelOpen]: isActive,
                         })}
                       >
                         {section.body &&
