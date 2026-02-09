@@ -151,6 +151,7 @@ export const query = graphql`
           __typename
           header
           sectionType
+          groupSectionType
           canShowTopBorder
           canShowBottomBorder
           backgroundAssetImage1 {

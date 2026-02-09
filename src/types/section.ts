@@ -348,11 +348,14 @@ export type IMetric = {
   metricDescriptionRichText?: BodyType;
 };
 
+export type GroupSectionType = "Tabbed" | "Default";
+
 export type ISectionGroup = {
   id: string;
   __typename: string;
   title: string;
   sectionType: SectionType;
+  groupSectionType?: GroupSectionType;
   canShowTopBorder: boolean;
   canShowBottomBorder:boolean;
   backgroundAssetImage1?: TAsset;

@@ -7,7 +7,7 @@ import BasicSection from "components/section/BasicSection/BasicSection";
 import PageContext from "contexts/PageContext";
 import Asset from "components/common/Asset/Asset";
 import { BG_IMAGE_INDEX } from "constants/global.constant";
-import TabbedSectionGroup from "./TabbedSectionGroup";
+import TabbedSectionGroup from "components/section/TabbedSectionGroup/TabbedSectionGroup";
 
 type props = {
   sections: ISectionGroup;
@@ -28,9 +28,44 @@ const SectionGroup: React.FC<props> = ({ sections, index, sectionIndex }) => {
     (item) => item.__typename !== "ContentfulMetric"
   ) as ISection[] | undefined;
 
-  // Render tabbed interface when metric exists and multiple sections
-  const shouldRenderTabbedInterface =
-    metric && sectionReferences && sectionReferences.length > 1;
+  // Only render Tabbed when groupSectionType is explicitly "Tabbed" in Contentful.
+  // When the field is missing or "Default", render the default section list.
+  const groupType = sections?.groupSectionType ?? "Default";
+  const renderGroupContent = () => {
+    switch (groupType) {
+      case "Tabbed":
+        return (
+          <TabbedSectionGroup
+            metric={metric!}
+            sections={sectionReferences!}
+          />
+        );
+      case "Default":
+      default:
+        return (
+          <Container size="xl" data-context={context.title}>
+            {sectionReferences?.map((section, subIndex) => {
+              switch (section.sectionType) {
+                case "Basic Section":
+                  return (
+                    <BasicSection
+                      key={section.id}
+                      section={section as ISection}
+                      index={index!}
+                      isEmbedFormTemplate={false}
+                      sectionIndex={sectionIndex}
+                      subSectionIndex={subIndex}
+                      metric={metric}
+                    />
+                  );
+                default:
+                  return null;
+              }
+            })}
+          </Container>
+        );
+    }
+  };
 
   return (
     <Box className={classes.sectionGroup}>
@@ -39,7 +74,6 @@ const SectionGroup: React.FC<props> = ({ sections, index, sectionIndex }) => {
           <Divider className={classes.divider} />
         </Container>
       )}
-{/* 
       {sections?.backgroundAssetImage1 && (
         <div
           className={classes.bgImageOne}
@@ -77,32 +111,9 @@ const SectionGroup: React.FC<props> = ({ sections, index, sectionIndex }) => {
             isFullWidth={true}
           />
         </div>
-      )} */}
-
-      {shouldRenderTabbedInterface ? (
-        <TabbedSectionGroup metric={metric} sections={sectionReferences} />
-      ) : (
-        <Container size="xl" data-context={context.title}>
-          {sectionReferences?.map((section, subIndex) => {
-            switch (section.sectionType) {
-              case "Basic Section":
-                return (
-                  <BasicSection
-                    key={section.id}
-                    section={section as ISection}
-                    index={index!}
-                    isEmbedFormTemplate={false}
-                    sectionIndex={sectionIndex}
-                    subSectionIndex={subIndex}
-                    metric={metric}
-                  />
-                );
-              default:
-                return null;
-            }
-          })}
-        </Container>
       )}
+
+      {renderGroupContent()}
 
       {Boolean(sections?.canShowBottomBorder) && (
         <Container className={classes.dividerContainer} size="xl">
