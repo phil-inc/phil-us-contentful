@@ -360,7 +360,6 @@ export type ISectionGroup = {
   canShowBottomBorder:boolean;
   backgroundAssetImage1?: TAsset;
   backgroundAssetImage2?:  TAsset;
-  backgroundAssetImage3?: TAsset;
   sectionGroupReference?: Array<ISection | IMetric>;
   metric?: IMetric;
 }

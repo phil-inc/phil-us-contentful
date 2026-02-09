@@ -184,21 +184,7 @@ export const query = graphql`
               url
             }
           }
-          backgroundAssetImage3 {
-            gatsbyImageData(
-              resizingBehavior: SCALE
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
-            title
-            file {
-              contentType
-              details {
-                size
-              }
-              url
-            }
-          }
+
           sectionGroupReference {
             __typename
             ... on ContentfulMetric {

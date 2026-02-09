@@ -98,20 +98,6 @@ const SectionGroup: React.FC<props> = ({ sections, index, sectionIndex }) => {
           />
         </div>
       )}
-      {sections?.backgroundAssetImage3 && (
-        <div
-          className={classes.bgImageThree}
-          data-context={context.title}
-          data-section-index={sectionIndex}
-          data-image-index={BG_IMAGE_INDEX.TWO}
-        >
-          <Asset
-            asset={sections.backgroundAssetImage3}
-            objectFit="cover"
-            isFullWidth={true}
-          />
-        </div>
-      )}
 
       {renderGroupContent()}
 
