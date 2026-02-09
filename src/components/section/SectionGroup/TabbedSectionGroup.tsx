@@ -14,36 +14,43 @@ type TabbedSectionGroupProps = {
   sections: ISection[];
 };
 
+const richTextOptions = {
+  renderNode: {
+    [BLOCKS.HEADING_1]: () => null,
+    [BLOCKS.HEADING_2]: () => null,
+    [BLOCKS.HEADING_3]: () => null,
+    [BLOCKS.HEADING_4]: () => null,
+    [BLOCKS.HEADING_5]: () => null,
+    [BLOCKS.HEADING_6]: () => null,
+  },
+};
+
+const getMedia = (section?: ISection) =>
+  section?.mediaItem || section?.asset;
+
+//To make the images size smaller so that we can see the transition effect better
+// Scale decreases per tab: 1 → 0.9 → 0.82 → 0.75 → …  (floors at 0.6)
+const getScale = (index: number) => Math.max(0.6, 1 - index * 0.08);
+
 const TabbedSectionGroup: React.FC<TabbedSectionGroupProps> = ({
   metric,
   sections,
 }) => {
   const context = React.useContext(PageContext);
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [animationKey, setAnimationKey] = useState(0);
-  const activeSection = sections[activeTabIndex];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [fadingIndex, setFadingIndex] = useState<number | null>(null);
 
-  // Handle click on the entire grid to cycle through tabs
-  const handleGridClick = () => {
-    setActiveTabIndex((prev) => (prev + 1) % sections.length);
-    setAnimationKey((prev) => prev + 1); // Trigger animation
+  const activeSection = sections[activeIndex];
+  const fadingSection = fadingIndex !== null ? sections[fadingIndex] : null;
+
+  const handleClick = () => {
+    if (fadingIndex !== null) return;
+    setFadingIndex(activeIndex);
+    setActiveIndex((i) => (i + 1) % sections.length);
   };
 
-  // Get media from mediaItem (v2) or fallback to asset
-  const activeMediaItemOrAsset =
-    activeSection?.mediaItem || activeSection?.asset;
-
-  // Render rich text but skip headings (show only paragraphs / normal text)
-  const options = {
-    renderNode: {
-      [BLOCKS.HEADING_1]: () => null,
-      [BLOCKS.HEADING_2]: () => null,
-      [BLOCKS.HEADING_3]: () => null,
-      [BLOCKS.HEADING_4]: () => null,
-      [BLOCKS.HEADING_5]: () => null,
-      [BLOCKS.HEADING_6]: () => null,
-    },
-  };
+  const activeMedia = getMedia(activeSection);
+  const fadingMedia = getMedia(fadingSection ?? undefined);
 
   return (
     <Container
@@ -52,65 +59,84 @@ const TabbedSectionGroup: React.FC<TabbedSectionGroupProps> = ({
       className={classes.tabbedContainer}
     >
       {/* Metric Heading */}
-      <Text className={classes.title}>{metric.metricLabel}</Text>
-      {metric.metricDescription && (
+      {metric?.metricLabel && (
+        <Text className={classes.title}>{metric.metricLabel}</Text>
+      )}
+      {metric?.metricDescription && (
         <Text className={classes.subTitle}>{metric.metricDescription}</Text>
       )}
-      {metric.metricDescriptionRichText && (
+      {metric?.metricDescriptionRichText && (
         <Box className={classes.description}>
           {renderRichText(metric.metricDescriptionRichText, {})}
         </Box>
       )}
 
-      {/* Clickable Grid - cycles through tabs on click */}
-      <Box className={classes.clickableArea} onClick={handleGridClick}>
+      {/* Clickable Grid — cycles through tabs on click */}
+      <Box className={classes.clickableArea} onClick={handleClick}>
         <Grid className={classes.tabbedGrid} gutter={{ base: 20, md: 40 }}>
-          {/* Left Column - Image/Content Area */}
+          {/* Left Column — Image / Content */}
           <Grid.Col
             span={{ base: 12, md: 7 }}
             className={classes.contentColumn}
           >
             <Box className={classes.imageContainer}>
-              {/* Section Title - key triggers fade animation on change */}
-              <Text
-                key={`title-${animationKey}`}
-                className={classes.imageSectionTitle}
-              >
-                {activeSection?.header}
-              </Text>
-
-              {/* Image/Asset - key triggers fade animation, last 2 images are smaller */}
-              {activeMediaItemOrAsset && (
-                <Box
-                  key={`image-${animationKey}`}
-                  className={cx(classes.imageWrapper, {
-                    [classes.imageWrapperSmall]: activeTabIndex >= 2,
-                  })}
+              <Box className={classes.overlapArea}>
+                <Text
+                  key={activeIndex}
+                  className={cx(classes.imageSectionTitle, classes.fadeIn)}
                 >
-                  <Asset asset={activeMediaItemOrAsset as TAsset & MediaItem} />
-                </Box>
-              )}
+                  {activeSection?.header}
+                </Text>
+                {fadingSection && (
+                  <Text
+                    className={cx(classes.imageSectionTitle, classes.fadeOut)}
+                    onAnimationEnd={() => setFadingIndex(null)}
+                  >
+                    {fadingSection.header}
+                  </Text>
+                )}
+              </Box>
+
+              <Box className={classes.overlapAreaFlex}>
+                {activeMedia && (
+                  <Box
+                    key={activeIndex}
+                    className={cx(classes.imageWrapper, classes.fadeIn)}
+                    style={{ transform: `scale(${getScale(activeIndex)})` }}
+                  >
+                    <Asset asset={activeMedia as TAsset & MediaItem} />
+                  </Box>
+                )}
+                {fadingMedia && (
+                  <Box
+                    className={cx(classes.imageWrapper, classes.fadeOut)}
+                    style={{ transform: `scale(${getScale(fadingIndex!)})` }}
+                  >
+                    <Asset asset={fadingMedia as TAsset & MediaItem} />
+                  </Box>
+                )}
+              </Box>
 
               {/* Pagination Dots */}
               <Box className={classes.paginationDots}>
-                {sections.map((_, index) => (
+                {sections.map((_, i) => (
                   <span
-                    key={index}
+                    key={i}
                     className={cx(classes.dot, {
-                      [classes.dotActive]: index === activeTabIndex,
+                      [classes.dotActive]: i === activeIndex,
                     })}
-                    aria-label={`Slide ${index + 1}`}
+                    aria-label={`Slide ${i + 1}`}
                   />
                 ))}
               </Box>
             </Box>
           </Grid.Col>
 
-          {/* Right Column - Tab Buttons (visual only, click on grid cycles) */}
+          {/* Right Column — Tab Buttons */}
           <Grid.Col span={{ base: 12, md: 5 }} className={classes.tabsColumn}>
             <Box className={classes.tabsList}>
-              {sections.map((section, tabIndex) => {
-                const isActive = tabIndex === activeTabIndex;
+              {sections.map((section, i) => {
+                const isActive = i === activeIndex;
                 return (
                   <Box
                     key={section.id}
@@ -127,14 +153,13 @@ const TabbedSectionGroup: React.FC<TabbedSectionGroupProps> = ({
                       >
                         {section.header}
                       </Text>
-                      {/* Description panel - expands when active */}
                       <Box
                         className={cx(classes.panel, {
                           [classes.panelOpen]: isActive,
                         })}
                       >
                         {section.body &&
-                          renderRichText(section.body, options)}
+                          renderRichText(section.body, richTextOptions)}
                       </Box>
                     </Box>
                   </Box>

@@ -30,7 +30,7 @@ const SectionGroup: React.FC<props> = ({ sections, index, sectionIndex }) => {
 
   // Render tabbed interface when metric exists and multiple sections
   const shouldRenderTabbedInterface =
-    sectionReferences && sectionReferences.length > 1;
+    metric && sectionReferences && sectionReferences.length > 1;
 
   return (
     <Box className={classes.sectionGroup}>
