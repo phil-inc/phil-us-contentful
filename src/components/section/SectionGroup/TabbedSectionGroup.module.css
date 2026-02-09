@@ -29,8 +29,8 @@
     width: 100%;
     
     @media (min-width: $phil-breakpoint-md) {
-      width: 72%;
-
+      width: 74%;
+      padding-right: 0;
     }
   }
   /* Clickable area wrapper */
@@ -65,7 +65,6 @@
   .imageContainer {
     background-color: #d5f1f0;
     border-radius: 8px;
-    /* padding: 2rem; */
     min-height: 500px;
     display: flex;
     flex-direction: column;
@@ -77,9 +76,13 @@
       min-height: 608px;
     }
   
-    @media (min-width: $phil-breakpoint-md) {
+    @media (min-width: $phil-breakpoint-lg) {
       min-height: 670px;
-      padding: 2.5rem;
+      padding: 40px;
+    }
+    @media (min-width: $phil-breakpoint-xl) {
+      min-height: 700px;
+      padding: 50px;
     }
   }
   .imageSectionTitle {
@@ -96,13 +99,12 @@
   }
 
   .imageWrapper {
+    position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    transition: transform 0.4s ease;
   }
-
 
   /* Overlap wrappers — let active & fading elements stack in the same spot */
   .overlapArea {
@@ -113,15 +115,13 @@
   .overlapAreaFlex {
     position: relative;
     flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
+    overflow: hidden;
   }
 
   /* New content fades in after a short delay */
   .fadeIn {
-    animation: fadeIn 0.4s ease 0.15s both;
+    animation: fadeIn 0.5s ease-out 0.15s both;
   }
 
   /* Old content sits on top and fades out */

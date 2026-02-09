@@ -30,7 +30,7 @@ const getMedia = (section?: ISection) =>
 
 //To make the images size smaller so that we can see the transition effect better
 // Scale decreases per tab: 1 → 0.9 → 0.82 → 0.75 → …  (floors at 0.6)
-const getScale = (index: number) => Math.max(0.6, 1 - index * 0.08);
+const getScale = (index: number) => Math.max(0.6, 1 - index * 0.09);
 
 const TabbedSectionGroup: React.FC<TabbedSectionGroupProps> = ({
   metric,
