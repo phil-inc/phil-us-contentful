@@ -11,6 +11,7 @@ export enum INPUT_TYPE {
 
 export enum BASIC_SECTION_COMPONENTS {
   RIGHT_BOTTOM_IMAGE = "Right Bottom Image",
+  LOTTIE_ANIMATION = "Lottie Animation",
 }
 
 export enum REFERENCE_SECTION_ORDER {
