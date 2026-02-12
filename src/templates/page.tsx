@@ -183,21 +183,6 @@ export const query = graphql`
               url
             }
           }
-          backgroundAssetImage3 {
-            gatsbyImageData(
-              resizingBehavior: SCALE
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
-            title
-            file {
-              contentType
-              details {
-                size
-              }
-              url
-            }
-          }
           sectionGroupReference {
             ... on ContentfulSection {
               id
@@ -416,9 +401,6 @@ export const query = graphql`
                     id
                   }
                 }
-              }
-              headerDescription {
-                headerDescription
               }
               subHeader {
                 subHeader
@@ -915,9 +897,6 @@ export const query = graphql`
                 id
               }
             }
-          }
-          headerDescription {
-            headerDescription
           }
           subHeader {
             subHeader
@@ -2214,6 +2193,21 @@ export const query = graphql`
               name
               name
               media {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
+              mobileViewMedia {
                 gatsbyImageData(
                   resizingBehavior: SCALE
                   placeholder: BLURRED

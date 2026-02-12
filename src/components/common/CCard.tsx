@@ -35,6 +35,7 @@ import { CENTER_LIFE_SCIENCES_CARD_TAG } from "constants/identifiers";
 import { CONTENTFUL_TYPES } from "constants/global.constant";
 import { IconArrowRight } from "@tabler/icons";
 import { IContentfulLink } from "types/annoucementBar";
+import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
 type ArticleProps = {
   resource: TResource;
@@ -50,6 +51,7 @@ export const CCard: FC<ArticleProps> = ({
 }) => {
   const { body, asset, subheading, description, canShowMediaWidthFull } = resource;
   const context = useContext(PageContext);
+  const isSmallDevice = useIsSmallDevice();
   const color = getColorFromStylingOptions(
     resource?.stylingOptions?.extraColor,
   );
@@ -224,6 +226,11 @@ export const CCard: FC<ArticleProps> = ({
 
   // TODO: improve this
   if (resource?.sys?.contentType?.sys?.id === "mediaItem") {
+    const resourceWithMobile = resource as TResource & { mobileViewMedia?: typeof media };
+    const assetToShow: typeof media =
+      isSmallDevice && resourceWithMobile?.mobileViewMedia
+        ? resourceWithMobile.mobileViewMedia
+        : media;
     return (
       <Center>
         <ImageContainer
@@ -237,7 +244,7 @@ export const CCard: FC<ArticleProps> = ({
           ratio={getAspectRatio()}
           data-media-item={true}
         >
-          <Asset objectFit="contain" asset={media} />
+          <Asset objectFit="contain" asset={assetToShow} />
         </ImageContainer>
       </Center>
     );

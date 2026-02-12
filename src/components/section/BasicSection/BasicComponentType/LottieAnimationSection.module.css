@@ -1,0 +1,92 @@
+.lottieAnimationSection {
+  position: relative;
+  overflow: hidden;
+}
+
+.sectionContainer {
+  padding: 40px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+}
+
+.eyebrowHeading {
+  font-family: Raleway;
+  font-weight: 800;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #09AAA5;
+}
+
+.header {
+  color: #0A0A0A;
+  font-size: 40px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.headerDescription {
+  font-weight: 400;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 100px;
+}
+
+.bodyArea {
+  gap: 0px;
+
+  & > p:last-child:empty {
+    display: none;
+  }
+
+  p {
+    font-size: 18px;
+    margin-top: 24px;
+    color: #000000;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+
+  ul {
+    padding-left: 8px;
+
+    li {
+      color: #000;
+      line-height: 27px;
+      font-size: 18px;
+      margin-top: 6px;
+    }
+  }
+
+  ol {
+    li {
+      color: #000;
+      line-height: 27px;
+      font-size: 18px;
+      margin-top: 6px;
+    }
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.animationGroup {
+  justify-content: center;
+}
+
+.dividerContainer {
+  padding: 0;
+
+  .divider {
+    border-top: 1px solid #E6E6E6;
+  }
+}

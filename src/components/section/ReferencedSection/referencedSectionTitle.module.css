@@ -22,6 +22,11 @@
 			font-size: 40px;
 		}
 	}
+	&[data-context='Our Solution']&[section-index='2'] {
+		text-align: left;
+		font-size: 40px;
+		font-weight: bold;
+	}
 
 	&[data-context='Our Solution']&[section-index='3'] {
 		text-align: center;
