@@ -4,8 +4,6 @@ import { ISection } from "types/section";
 import { BASIC_SECTION_COMPONENTS } from "enum/global.enum";
 
 import RightImageBottomComp from "components/section/BasicSection/BasicComponentType/RightImageBottomComp";
-import LottieAnimationSection from "components/section/BasicSection/BasicComponentType/LottieAnimationSection";
-import PrescriptionJourney from "components/Animation/PrescriptionJourney";
 
 type SectionProps = {
   section: ISection;
@@ -28,17 +26,6 @@ const withBasicSectionSwitch = <T extends SectionProps>(
             index={index ?? 0}
             isEmbedFormTemplate={isEmbedFormTemplate}
             sectionIndex={sectionIndex}
-          />
-        );
-
-      case BASIC_SECTION_COMPONENTS.LOTTIE_ANIMATION:
-        return (
-          <LottieAnimationSection
-            section={section}
-            index={index ?? 0}
-            isEmbedFormTemplate={isEmbedFormTemplate}
-            sectionIndex={sectionIndex}
-            animationComponent={<PrescriptionJourney />}
           />
         );
 
