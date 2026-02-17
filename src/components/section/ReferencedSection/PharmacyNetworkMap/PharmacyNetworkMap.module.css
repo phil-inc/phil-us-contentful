@@ -1,0 +1,188 @@
+.wrapper {
+  margin-top: 180px;
+}
+
+/* =========================================
+   Desktop: aspect-ratio container + absolute cards
+   ========================================= */
+.desktopLayout {
+  display: none;
+
+  @media (min-width: $phil-breakpoint-md) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Map container — positioning context for cards */
+.mapContainer {
+  position: relative;
+  width: 44%;
+  margin: 0 auto;
+}
+
+/* The actual SVG */
+.svgInner {
+  width: 100%;
+
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+/* Overlay stretches to match mapContainer, cards overflow outside of it */
+.cardsOverlay {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  width: 100%;
+}
+
+/* Annotation Card/ Description Box*/
+.annotationCard {
+  position: absolute;
+  pointer-events: auto;
+  width: 28vw;
+  max-width: 391px;
+  min-width: 200px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: clamp(8px, 1vw, 16px);
+  box-shadow:
+    0px 9px 13px -3px rgba(0, 0, 0, 0.1),
+    0px 4px 5px -4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  cursor: default;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.4s ease;
+}
+
+/* Hover: green box, white text */
+.annotationCard[data-hovered="true"] {
+  background-color: #00827E;
+  border-color: #00827E;
+  transform: translateY(-3px);
+  box-shadow:
+    0px 16px 24px -4px rgba(9, 170, 165, 0.25),
+    0px 8px 12px -6px rgba(9, 170, 165, 0.15);
+
+  .cardTitle,
+  .cardDescription {
+    color: #FFFFFF;
+  }
+}
+
+/* Smart Script Routing — upper-left, outside map */
+.smartScriptRouting {
+  right: 84%;
+  bottom: 87%;
+  @media (min-width: $phil-breakpoint-xl) {
+    bottom: 88%;
+  }
+}
+
+/* Full Script Control — upper-center, above map */
+.fullScriptControl {
+  left: 26%;
+  bottom: 99%;
+  @media (min-width: $phil-breakpoint-xl) {
+    bottom: 100%;
+  }
+}
+
+/* 50-state Coverage — right side, outside map */
+.stateCoverage {
+  left: 99%;
+  top: 24%;
+  @media (min-width: $phil-breakpoint-xl) {
+    top: 28%;
+  }
+}
+
+/* Customizable Business Rules — lower-left, outside map */
+.customizableRules {
+  right: 93%;
+  bottom: 16%;
+  @media (min-width: $phil-breakpoint-xl) {
+    bottom: 20%;
+  }
+}
+
+/* In-house Distributors — lower-right, outside map */
+.inHouseDistributors {
+  left: 86%;
+  bottom: 7%;
+  @media (min-width: $phil-breakpoint-xl) {
+    bottom: 7%;
+  }
+}
+
+/* =========================================
+   Card Typography
+   ========================================= */
+.cardTitle {
+  font-family: Lato, sans-serif;
+  font-weight: 600;
+  font-size: clamp(11px, 1.05vw, 16px);
+  color: #0A0A0A;
+  margin: 0 0 clamp(2px, 0.4vw, 8px) 0;
+  line-height: 1.25;
+  transition: color 0.4s ease;
+}
+
+.cardDescription {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-size: clamp(10px, 0.9vw, 14px);
+  color: #525252;
+  margin: 0;
+  line-height: 1.4;
+  transition: color 0.4s ease;
+}
+
+/* =========================================
+   Mobile Layout (untouched — to be revisited)
+   ========================================= */
+.mobileLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  @media (min-width: $phil-breakpoint-md) {
+    display: none;
+  }
+}
+
+.mobileMap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobileCards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mobileCard {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow:
+    0px 9px 13px -3px rgba(0, 0, 0, 0.1),
+    0px 4px 5px -4px rgba(0, 0, 0, 0.1);
+}

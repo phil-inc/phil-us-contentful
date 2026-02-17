@@ -33,6 +33,7 @@ import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
 import { COLORS, LIGHT_COLOR_LIST } from "constants/global.constant";
 import { REFERENCE_SECTION_ORDER } from "enum/global.enum";
+import PharmacyNetworkMap from "./PharmacyNetworkMap/PharmacyNetworkMap";
 
 type ReferencedSectionProps = {
   section: IReferencedSection;
@@ -215,6 +216,25 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         <ReferencedSectionBody getSpan={getSpan} section={section} sectionIndex={sectionIndex}/>
         </div>
       </div>
+    );
+  } else if (section?.eyebrowHeading === "PHARMACY NETWORK") {
+    const mapRef = section.references?.[0];
+    sectionContent = (
+      <>
+        {!isNewsLetterComponent &&
+          Boolean(section.header?.length) &&
+          Boolean(!section.hideHeader) && (
+            <ReferencedSectionTitle
+              section={section}
+              isEmbedFormTemplate={isEmbedFormTemplate}
+              textColor={textColor}
+              index={index}
+              sectionIndex={sectionIndex}
+            />
+          )
+        }
+        {mapRef && <PharmacyNetworkMap mapAsset={mapRef} />}
+      </>
     );
   } else {
     sectionContent = (
