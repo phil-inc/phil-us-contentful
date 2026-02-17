@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import cx from "clsx";
 import Asset from "components/common/Asset/Asset";
-import { extractAssetData } from "utils/asset";
 
 import * as classes from "./pharmacyNetworkMap.module.css";
 
@@ -44,30 +43,14 @@ type PharmacyNetworkMapProps = {
 const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
   mapAsset,
 }) => {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-  const [svgContent, setSvgContent] = useState<string>("");
-
-  const { url } = extractAssetData(mapAsset);
-  const svgUrl = url?.startsWith("//") ? `https:${url}` : url;
-
-  useEffect(() => {
-    if (svgUrl) {
-      fetch(svgUrl)
-        .then((res) => res.text())
-        .then((text) => setSvgContent(text))
-        .catch((err) => console.error("Failed to load map SVG:", err));
-    }
-  }, [svgUrl]);
-
   return (
     <div className={classes.wrapper} data-pharmacy-network-map>
       {/* Desktop Layout — cards are absolute inside mapContainer */}
       <div className={classes.desktopLayout}>
         <div className={classes.mapContainer}>
-          <div
-            className={classes.svgInner}
-            dangerouslySetInnerHTML={{ __html: svgContent }}
-          />
+          <div className={classes.svgInner}>
+            <Asset objectFit="contain" asset={mapAsset} />
+          </div>
 
           <div className={classes.cardsOverlay}>
             {ANNOTATIONS.map((card) => (
@@ -77,9 +60,6 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
                   classes.annotationCard,
                   classes[card.id as keyof typeof classes],
                 )}
-                data-hovered={hoveredCard === card.id}
-                onMouseEnter={() => setHoveredCard(card.id)}
-                onMouseLeave={() => setHoveredCard(null)}
               >
                 <p className={classes.cardTitle}>{card.title}</p>
                 <p className={classes.cardDescription}>{card.description}</p>

@@ -2,9 +2,6 @@
   margin-top: 180px;
 }
 
-/* =========================================
-   Desktop: aspect-ratio container + absolute cards
-   ========================================= */
 .desktopLayout {
   display: none;
 
@@ -22,10 +19,11 @@
   margin: 0 auto;
 }
 
-/* The actual SVG */
+/* The actual SVG (Asset renders as img for SVGs from Contentful) */
 .svgInner {
   width: 100%;
 
+  img,
   svg {
     width: 100%;
     height: auto;
@@ -42,7 +40,7 @@
   width: 100%;
 }
 
-/* Annotation Card/ Description Box*/
+/* Annotation Card / Description Box*/
 .annotationCard {
   position: absolute;
   pointer-events: auto;
@@ -65,11 +63,10 @@
     transform 0.4s ease;
 }
 
-/* Hover: green box, white text */
-.annotationCard[data-hovered="true"] {
+/* Hover: green box, white text — pure CSS, no JS */
+.annotationCard:hover {
   background-color: #00827E;
   border-color: #00827E;
-  transform: translateY(-3px);
   box-shadow:
     0px 16px 24px -4px rgba(9, 170, 165, 0.25),
     0px 8px 12px -6px rgba(9, 170, 165, 0.15);

@@ -157,6 +157,7 @@ export enum ReferenceTypeEnum {
   "Promo Card" = "Promo Card",
   "MetricWith5Card" = "MetricWith5Card",
   "Tabs Switch" = "Tabs Switch",
+  "Pharmacy Network" = "Pharmacy Network",
   "Linear Process Card" = "Linear Process Card",
   "Metric Outcome Card" = "Metric Outcome Card",
 }

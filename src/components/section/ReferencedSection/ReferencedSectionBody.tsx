@@ -15,6 +15,7 @@ import cx from 'clsx';
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
 import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
+import PharmacyNetworkMap from "./PharmacyNetworkMap/PharmacyNetworkMap";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -53,6 +54,11 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
 
   if( title === COMPANY_PAGE && section?.canAlsoBeUseAsAutoCarousel){
     return <AutoScrollCarousel section={section} />;
+  }
+
+  if (section.referenceType === ReferenceTypeEnum["Pharmacy Network"]) {
+    const mapRef = section.references?.[0];
+    return mapRef ? <PharmacyNetworkMap mapAsset={mapRef} /> : null;
   }
 
   if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {
