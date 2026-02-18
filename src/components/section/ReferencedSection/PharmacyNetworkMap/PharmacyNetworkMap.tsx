@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import cx from "clsx";
 import Asset from "components/common/Asset/Asset";
 
-import * as classes from "./pharmacyNetworkMap.module.css";
+import * as classes from "./PharmacyNetworkMap.module.css";
 
 const ANNOTATIONS = [
   {
@@ -36,13 +36,59 @@ const ANNOTATIONS = [
   },
 ];
 
+const INTERVAL_MS = 4000;
+const FADE_MS = 280;
+
+type Phase = "idle" | "out" | "in";
+
 type PharmacyNetworkMapProps = {
   mapAsset: any;
+  mobileMapAsset?: any;
 };
 
 const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
   mapAsset,
+  mobileMapAsset,
 }) => {
+  const [displayedIndex, setDisplayedIndex] = useState(0);
+  const [phase, setPhase] = useState<Phase>("idle");
+  const nextIndexRef = useRef(0);
+
+  useEffect(() => {
+    if (phase === "out") {
+      const timer = setTimeout(() => {
+        setDisplayedIndex(nextIndexRef.current);
+        setPhase("in");
+      }, FADE_MS);
+      return () => clearTimeout(timer);
+    }
+
+    if (phase === "in") {
+      const timer = setTimeout(() => {
+        setPhase("idle");
+      }, FADE_MS);
+      return () => clearTimeout(timer);
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (phase !== "idle") return;
+      nextIndexRef.current = (displayedIndex + 1) % ANNOTATIONS.length;
+      setPhase("out");
+    }, INTERVAL_MS);
+    return () => clearInterval(interval);
+  }, [displayedIndex, phase]);
+
+  const goTo = (index: number) => {
+    if (phase !== "idle" || index === displayedIndex) return;
+    nextIndexRef.current = index;
+    setPhase("out");
+  };
+
+  const mobileAsset = mobileMapAsset ?? mapAsset;
+  const current = ANNOTATIONS[displayedIndex];
+
   return (
     <div className={classes.wrapper} data-pharmacy-network-map>
       {/* Desktop Layout — cards are absolute inside mapContainer */}
@@ -69,18 +115,46 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
         </div>
       </div>
 
-      {/* Mobile Layout — kept as-is for now */}
-      <div className={classes.mobileLayout}>
-        <div className={classes.mobileMap}>
-          <Asset objectFit="contain" asset={mapAsset} />
-        </div>
-        <div className={classes.mobileCards}>
-          {ANNOTATIONS.map((card) => (
-            <div key={card.id} className={classes.mobileCard}>
-              <p className={classes.cardTitle}>{card.title}</p>
-              <p className={classes.cardDescription}>{card.description}</p>
+      {/* Mobile Layout — card on top (fade transition), static map, pill/circle dots */}
+      <div className={classes.mobileContainer}>
+        <div className={classes.mobileLayout}>
+          <div className={classes.mobileDescriptionSlot}>
+            <div className={classes.mobileDescriptionBox}>
+              <div
+                className={cx(classes.mobileDescriptionWrapper, {
+                  [classes.mobileDescriptionOut]: phase === "out",
+                })}
+              >
+                <p className={classes.mobileDescriptionTitle}>
+                  {current.title}
+                </p>
+                <p className={classes.mobileDescription}>
+                  {current.description}
+                </p>
+              </div>
             </div>
-          ))}
+            <div className={classes.mobileMap}>
+              <Asset objectFit="contain" asset={mobileAsset} />
+            </div>
+          </div>
+          <div
+            className={classes.mobileDots}
+            role="tablist"
+            aria-label="Carousel pagination"
+          >
+            {ANNOTATIONS.map((_, index) => (
+              <button
+                key={ANNOTATIONS[index].id}
+                type="button"
+                className={cx(classes.mobileDot, {
+                  [classes.mobileDotActive]: displayedIndex === index,
+                })}
+                aria-label={`Go to slide ${index + 1}`}
+                aria-selected={displayedIndex === index}
+                onClick={() => goTo(index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

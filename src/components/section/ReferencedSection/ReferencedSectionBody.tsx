@@ -58,7 +58,12 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
 
   if (section.referenceType === ReferenceTypeEnum["Pharmacy Network"]) {
     const mapRef = section.references?.[0];
-    return mapRef ? <PharmacyNetworkMap mapAsset={mapRef} /> : null;
+    return mapRef ? (
+      <PharmacyNetworkMap
+        mapAsset={mapRef}
+        mobileMapAsset={mapRef?.mobileViewMedia ?? mapRef}
+      />
+    ) : null;
   }
 
   if (section.renderOptions?.layoutOptions.shouldRenderCarousel) {

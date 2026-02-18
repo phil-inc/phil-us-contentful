@@ -17,6 +17,7 @@ export type MediaItem = {
   id: string;
   name?: string;
   media?: TAsset;
+  mobileViewMedia?: TAsset;
   youtubeLink?: string;
   emdedForm?: BodyType;
   canShowMediaWidthFull?: boolean;

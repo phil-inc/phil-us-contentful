@@ -1,5 +1,9 @@
+/* Mobile-first: 24px on small screens, 180px on desktop */
 .wrapper {
-  margin-top: 180px;
+  margin-top: 30px;
+  @media (min-width: $phil-breakpoint-md) {
+    margin-top: 180px;
+  }
 }
 
 .desktopLayout {
@@ -83,6 +87,7 @@
   bottom: 87%;
   @media (min-width: $phil-breakpoint-xl) {
     bottom: 88%;
+
   }
 }
 
@@ -146,40 +151,135 @@
 }
 
 /* =========================================
-   Mobile Layout (untouched — to be revisited)
+   Mobile Layout — card on top (fade transition), static map, pill/circle pagination
    ========================================= */
-.mobileLayout {
+.mobileContainer {
   display: flex;
-  flex-direction: column;
-  gap: 32px;
-
+  justify-content: center;
+  align-items: center;
   @media (min-width: $phil-breakpoint-md) {
     display: none;
   }
 }
 
-.mobileMap {
+.mobileLayout {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-}
-
-.mobileCards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
   @media (min-width: $phil-breakpoint-sm) {
-    grid-template-columns: 1fr 1fr;
+    width: 90%;
+    height:auto;
   }
 }
 
-.mobileCard {
-  background: #FFFFFF;
+/* Fixed-height slot so map position never changes; description box is absolute inside */
+.mobileDescriptionSlot {
+  flex-shrink: 0;
+  width: 100%;
+  background-color: red;
+  position: relative;
+}
+
+.mobileDescriptionBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-height: 140px;
+  overflow-y: auto;
   border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 8px;
+  padding: 12px 12px;
   box-shadow:
-    0px 9px 13px -3px rgba(0, 0, 0, 0.1),
-    0px 4px 5px -4px rgba(0, 0, 0, 0.1);
+    0px 5px 8px -1.5px rgba(0, 0, 0, 0.1),
+    0px 2px 3px -2px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  background: #FFFFFF;
+}
+
+.mobileDescriptionWrapper {
+  width: 100%;
+  min-width: 0;
+  opacity: 1;
+  transition: opacity 0.28s ease;
+}
+
+.mobileDescriptionOut {
+  opacity: 0;
+}
+
+.mobileDescriptionTitle {
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #0A0A0A;
+  margin: 0 0 5px 0;
+}
+
+.mobileDescription {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #525252;
+  margin: 0;
+}
+
+.mobileMap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  img,
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.mobileDots {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 11px;
+  padding-top: 23px;
+}
+
+/* Inactive: 12px grey circle */
+.mobileDot {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: none;
+  border-radius: 29px;
+  background-color: #D9D9D9;
+  cursor: pointer;
+  transition:
+    background-color 0.45s ease-in-out,
+    width 0.45s ease-in-out,
+    border-radius 0.45s ease-in-out;
+}
+
+.mobileDot:hover {
+  background-color: #CBD5E1;
+}
+
+/* Active: elongated teal capsule/pill */
+.mobileDotActive {
+  width: 41px;
+  height: 14px;
+  border-radius: 29px;
+  background-color: #00827E;
 }

@@ -1762,6 +1762,21 @@ export const query = graphql`
                   url
                 }
               }
+              mobileViewMedia {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
               youtubeLink
               embedCode {
                 raw
