@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AppShell, Box } from "@mantine/core";
 import CHeader, { HEADER_HEIGHT } from "./CHeader/CHeader";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
@@ -10,6 +10,9 @@ import { useLocation } from "@reach/router";
 import "assets/css/index.css";
 
 import ZoominfoAnalytics from "analytics/ZoominfoAnalytics";
+import ConsentBanner from "components/ConsentBanner/ConsentBanner";
+import ConditionalAnalytics from "components/ConditionalAnalytics/ConditionalAnalytics";
+import ConsentMode from "components/ConsentMode/ConsentMode";
 
 import AnnoucementBar from "layouts/Layout/AnnoumentBar/AnnoucementBar";
 import CInfoBar from "layouts/Layout/CInfoBar/CInfoBar";
@@ -21,7 +24,16 @@ import { HCP_PAGE, PAGES_TITLE, PATIENTS_PAGE } from "constants/page";
 
 const isProduction = process.env.NODE_ENV === "production";
 
-export const Head: React.FC = () => <>{isProduction && <LinkedinInsights />}</>;
+export const Head: React.FC = () => (
+  <>
+    {isProduction && (
+      <>
+        <ConsentMode />
+        <LinkedinInsights />
+      </>
+    )}
+  </>
+);
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -43,6 +55,13 @@ export function Layout({
     const location = useLocation();
     const currentLocationSlug = location.pathname.replace(/^\/|\/$/g, "");
 
+    const [consentKey, setConsentKey] = useState(0);
+
+    const handleConsentChange = () => {
+      // Force re-render of analytics components when consent changes
+      setConsentKey(prev => prev + 1);
+    };
+
   return (
     <>
       <HubspotProvider>
@@ -51,7 +70,12 @@ export function Layout({
             height: HEADER_HEIGHT,
           }}
           >
-          {isProduction && <ZoominfoAnalytics />}
+          {isProduction && (
+            <>
+              <ConditionalAnalytics key={`analytics-${consentKey}`} />
+              <ZoominfoAnalytics key={`zoominfo-${consentKey}`} />
+            </>
+          )}
           <div className="sticky-wrapper" id={DOM_IDS.TOP_BAR}>
             {canShowAnnoucementBar && <AnnoucementBar currentLocationSlug={currentLocationSlug}/>}
             {!canHideHeader && <CHeader minimal={minimal} headerTargetBlank={headerTargetBlank} />}
@@ -59,6 +83,7 @@ export function Layout({
           </div>
           <>{children}</>
           <CFooter minimal={minimal} />
+          <ConsentBanner onConsentChange={handleConsentChange} />
         </AppShell>
       </HubspotProvider>
     </>
