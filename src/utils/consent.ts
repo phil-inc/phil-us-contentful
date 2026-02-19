@@ -1,4 +1,4 @@
-export export interface ConsentPreferences {
+export interface ConsentPreferences {
   necessary: boolean;
   analytics: boolean;
   marketing: boolean;
