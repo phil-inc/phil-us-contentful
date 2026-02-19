@@ -51,13 +51,16 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
   mobileMapAsset,
 }) => {
   const [displayedIndex, setDisplayedIndex] = useState(0);
+  const [selectedDotIndex, setSelectedDotIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("idle");
   const nextIndexRef = useRef(0);
 
   useEffect(() => {
     if (phase === "out") {
       const timer = setTimeout(() => {
-        setDisplayedIndex(nextIndexRef.current);
+        const next = nextIndexRef.current;
+        setDisplayedIndex(next);
+        setSelectedDotIndex(next);
         setPhase("in");
       }, FADE_MS);
       return () => clearTimeout(timer);
@@ -83,6 +86,7 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
   const goTo = (index: number) => {
     if (phase !== "idle" || index === displayedIndex) return;
     nextIndexRef.current = index;
+    setSelectedDotIndex(index);
     setPhase("out");
   };
 
@@ -147,10 +151,10 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
                 key={ANNOTATIONS[index].id}
                 type="button"
                 className={cx(classes.mobileDot, {
-                  [classes.mobileDotActive]: displayedIndex === index,
+                  [classes.mobileDotActive]: selectedDotIndex === index,
                 })}
                 aria-label={`Go to slide ${index + 1}`}
-                aria-selected={displayedIndex === index}
+                aria-selected={selectedDotIndex === index}
                 onClick={() => goTo(index)}
               />
             ))}

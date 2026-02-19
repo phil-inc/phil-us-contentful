@@ -150,10 +150,9 @@
   transition: color 0.4s ease;
 }
 
-/* =========================================
-   Mobile Layout — card on top (fade transition), static map, pill/circle pagination
-   ========================================= */
+/*Mobile Layout */
 .mobileContainer {
+  margin-top: 38px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,7 +180,6 @@
 .mobileDescriptionSlot {
   flex-shrink: 0;
   width: 100%;
-  background-color: red;
   position: relative;
 }
 
@@ -232,6 +230,7 @@
 }
 
 .mobileMap {
+  padding-top: 70px;
   flex: 1;
   min-height: 0;
   display: flex;
@@ -276,10 +275,10 @@
   background-color: #CBD5E1;
 }
 
-/* Active: elongated teal capsule/pill */
-.mobileDotActive {
+/* Active: elongated teal capsule/pill (stays teal on hover) */
+.mobileDotActive,
+.mobileDotActive:hover {
   width: 41px;
-  height: 14px;
   border-radius: 29px;
   background-color: #00827E;
 }
