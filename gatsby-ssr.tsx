@@ -11,7 +11,7 @@ export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 			key="cookieyes"
 			id="cookieyes"
 			type="text/javascript"
-			src="https://cdn-cookieyes.com/client_data/23e55f35b7c77040a59ea329f3a2fd8f/script.js"
+			src="https://cdn-cookieyes.com/client_data/2dc47b0a0466a26a3289cf91512a2365/script.js"
 		/>
 	);
 	
