@@ -44,7 +44,7 @@
   width: 100%;
 }
 
-/* Annotation Card / Description Box*/
+/* Description Box*/
 .annotationCard {
   position: absolute;
   pointer-events: auto;
@@ -84,10 +84,9 @@
 /* Smart Script Routing — upper-left, outside map */
 .smartScriptRouting {
   right: 84%;
-  bottom: 87%;
+  bottom: 89%;
   @media (min-width: $phil-breakpoint-xl) {
     bottom: 88%;
-
   }
 }
 
@@ -150,6 +149,16 @@
   transition: color 0.4s ease;
 }
 
+/* Override rich-text output so our padding controls spacing */
+.cardDescription p,
+.cardDescription div {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.cardDescription p + p {
+  margin-top: 6px !important;
+}
+
 /*Mobile Layout */
 .mobileContainer {
   margin-top: 38px;
@@ -186,29 +195,43 @@
 .mobileDescriptionBox {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   right: 0;
   max-height: 140px;
+  width: 94%;
   overflow-y: auto;
   border: 1px solid #E2E8F0;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 12px 12px;
   box-shadow:
     0px 5px 8px -1.5px rgba(0, 0, 0, 0.1),
     0px 2px 3px -2px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   background: #FFFFFF;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    max-height: 200px;
+    padding: 18px 20px;
+  }
 }
 
 .mobileDescriptionWrapper {
   width: 100%;
   min-width: 0;
-  opacity: 1;
-  transition: opacity 0.28s ease;
 }
 
-.mobileDescriptionOut {
-  opacity: 0;
+.mobileDescriptionFadeIn {
+  animation: mobileDescriptionFadeIn 0.3s ease-out;
+}
+
+@keyframes mobileDescriptionFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .mobileDescriptionTitle {
@@ -218,6 +241,11 @@
   line-height: 1.6;
   color: #0A0A0A;
   margin: 0 0 5px 0;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-size: 16px;
+    margin: 0 0 8px 0;
+  }
 }
 
 .mobileDescription {
@@ -227,6 +255,20 @@
   line-height: 1.6;
   color: #525252;
   margin: 0;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-size: 14px;
+  }
+}
+
+/* Override rich-text output so box padding controls spacing */
+.mobileDescription p,
+.mobileDescription div {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.mobileDescription p + p {
+  margin-top: 6px !important;
 }
 
 .mobileMap {

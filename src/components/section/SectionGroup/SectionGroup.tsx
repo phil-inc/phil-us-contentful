@@ -7,7 +7,7 @@ import BasicSection from "components/section/BasicSection/BasicSection";
 import PageContext from "contexts/PageContext";
 import Asset from "components/common/Asset/Asset";
 import { BG_IMAGE_INDEX } from "constants/global.constant";
-import TabbedSectionGroup from "components/section/TabbedSectionGroup/TabbedSectionGroup";
+import TabbedSectionGroup from "components/TabbedSectionGroup/TabbedSectionGroup";
 
 type props = {
   sections: ISectionGroup;

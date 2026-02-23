@@ -389,25 +389,25 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             </Text>
           </div>
         )}
-        {
-          isSmallDevice 
-          ? (assetMobile &&
-            <div className={classes.topImage}>
-              <Asset
-                asset={assetMobile}
-                objectFit="contain"
-                />
-            </div>
-            )
-            :(asset &&
-              <div className={classes.topImage}>
-              <Asset
-                asset={asset}
-                objectFit="contain"
-                />
-            </div>
-          )
-        }
+        {section.referenceType !== ReferenceTypeEnum["Pharmacy Network"] && (
+          isSmallDevice
+            ? (assetMobile && (
+                <div className={classes.topImage}>
+                  <Asset
+                    asset={assetMobile}
+                    objectFit="contain"
+                  />
+                </div>
+              ))
+            : (asset && (
+                <div className={classes.topImage}>
+                  <Asset
+                    asset={asset}
+                    objectFit="contain"
+                  />
+                </div>
+              ))
+        )}
         {section?.assetCaption && 
           <Text className={classes.assetCaption}>
             <span className={classes.infoIcon}>

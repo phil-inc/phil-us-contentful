@@ -1676,6 +1676,14 @@ export const query = graphql`
                 }
               }
             }
+            ... on ContentfulMetric {
+              id
+              metricLabel
+              metricValue
+              metricDescriptionRichText {
+                raw
+              }
+            }
             ... on ContentfulDownloadableResource {
               id
               heading
@@ -1809,6 +1817,14 @@ export const query = graphql`
                     }
                   }
                 }
+                ... on ContentfulMetric {
+                  id
+                  metricLabel
+                  metricValue
+                  metricDescriptionRichText {
+                    raw
+                  }
+                }  
               }
             }
           }
