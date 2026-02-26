@@ -1,11 +1,13 @@
 import React from "react";
 import { Script } from "gatsby";
+import { hasMarketingConsent } from "utils/consent";
 
 const ZoominfoAnalytics: React.FC = () => {
   const [shouldExecute, setShouldExecute] = React.useState(false);
 
   React.useEffect(() => {
-    if (!window?.zi) {
+    const hasConsent = hasMarketingConsent();
+    if (hasConsent && !window?.zi) {
       setShouldExecute(true);
     }
   }, []);

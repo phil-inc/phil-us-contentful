@@ -103,7 +103,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-hubspot',
       options: {
         trackingCode: '20880193',
-        respectDNT: false,
+        respectDNT: true,
         productionOnly: true,
       },
     },
@@ -116,6 +116,10 @@ const config: GatsbyConfig = {
         pluginConfig: {
           // Puts tracking script in the head instead of the body
           head: true,
+        },
+        // Set default consent to denied, will be updated when user accepts
+        gtagConfig: {
+          anonymize_ip: true,
         },
       },
     },
