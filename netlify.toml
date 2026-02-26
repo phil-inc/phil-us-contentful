@@ -126,6 +126,21 @@ from = "https://philrx.com/dev/checkout/*"
 to = "https://my.dev.phil.us/gpa/:splat"
 status = 302
 
+[[redirects]]
+from = "https://philrx.com/payment-info/*"
+to = "https://my.phil.us/payment-info/:splat"
+status = 302
+
+[[redirects]]
+from = "https://philrx.com/stage/payment-info/*"
+to = "https://my.stage.phil.us/payment-info/:splat"
+status = 302
+
+[[redirects]]
+from = "https://philrx.com/dev/payment-info/*"
+to = "https://my.dev.phil.us/payment-info/:splat"
+status = 302
+
 #
 # START - Domain level redirections
 # DO NOT MODIFY
