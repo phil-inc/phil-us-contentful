@@ -99,8 +99,7 @@ const config: GatsbyConfig = {
         icon: 'src/assets/images/icon.png',
       },
     },
-    // GTM is loaded in gatsby-ssr.tsx after GCM + CookieYes so tags do not fire before consent.
-    // Do not re-enable gatsby-plugin-google-tagmanager here or GTM may load before CookieYes.
+    // Do not re-enable the below gatsby-plugin-google-tagmanager here or GTM may load before CookieYes.
     // {
     //   resolve: "gatsby-plugin-google-tagmanager",
     //   options: { id: "GTM-P8P2538M", defaultDataLayer: { platform: "gatsby", cms: "cookieyes" } },

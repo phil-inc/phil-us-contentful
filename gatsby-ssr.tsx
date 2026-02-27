@@ -10,8 +10,15 @@ const gcmDefaultScript = (
 		dangerouslySetInnerHTML={{
 			__html: `
 				window.dataLayer = window.dataLayer || [];
-				window.dataLayer.push({ platform: 'gatsby', cms: 'cookieyes' });
 				function gtag(){dataLayer.push(arguments);}
+
+				// Set platform metadata for 2026 compliance logging
+                window.dataLayer.push({ 
+                    'platform': 'gatsby', 
+                    'cms': 'cookieyes',
+                    'consent_version': 'Feb-2026-v1' 
+                });
+
 				gtag('consent', 'default', {
 					'ad_storage': 'denied',
 					'ad_user_data': 'denied',
@@ -26,17 +33,7 @@ const gcmDefaultScript = (
 	/>
 );
 
-// 2. CookieYes SDK (loads after GCM so it can update consent; do not fire Analytics/Advertising tags until it has run)
-const cookieYesScript = (
-	<script
-		key="cookieyes-sdk"
-		id="cookieyes-script"
-		type="text/javascript"
-		src="https://cdn-cookieyes.com/client_data/2dc47b0a0466a26a3289cf91512a2365/script.js"
-	/>
-);
-
-// 3. Google Tag Manager (loads after consent default + CookieYes)
+// 2. Google Tag Manager (loads after consent default)
 const gtmScript = (
 	<script
 		key="gtm-script"
@@ -56,7 +53,6 @@ export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
 	replaceHeadComponents([
 		gcmDefaultScript,
-		cookieYesScript,
 		gtmScript,
 		...headComponents,
 		<ColorSchemeScript key="color-scheme-script" />,
