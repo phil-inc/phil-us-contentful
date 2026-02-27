@@ -58,9 +58,9 @@ const config: GatsbyConfig = {
       options: {},
     },
     {
-      resolve: `gatsby-plugin-advanced-sitemap-patch`,
+      resolve: `gatsby-plugin-sitemap`,
       options: {
-        exclude: [`/dev-404-page`, `/dev-404-page/`, `/404`, `/404/`, `/404.html`, `/field`],
+        excludes: [`/dev-404-page`, `/dev-404-page/`, `/404`, `/404/`, `/404.html`, `/field`],
         createLinkInHead: true,
       },
     },
