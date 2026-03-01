@@ -49,6 +49,19 @@ const gtmScript = (
 	/>
 );
 
+// 3. GTM noscript fallback (immediately after <body> for users with JS disabled)
+const gtmNoscript = (
+	<noscript key="gtm-noscript">
+		<iframe
+			title="GTM"
+			src="https://www.googletagmanager.com/ns.html?id=GTM-MF95PNSX"
+			height="0"
+			width="0"
+			style={{ display: 'none', visibility: 'hidden' }}
+		/>
+	</noscript>
+);
+
 export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
 	replaceHeadComponents([
@@ -63,6 +76,7 @@ export const wrapPageElement = ({element}) => {
 	return <MantineProvider theme={theme} defaultColorScheme='light' classNamesPrefix='phil'>{element}</MantineProvider>;
 };
 
-export const onRenderBody = ({setHtmlAttributes}) => {
-	setHtmlAttributes({lang: 'en'});
+export const onRenderBody = ({ setHtmlAttributes, setPreBodyComponents }) => {
+	setHtmlAttributes({ lang: 'en' });
+	setPreBodyComponents([gtmNoscript]);
 };
