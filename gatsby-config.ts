@@ -99,16 +99,6 @@ const config: GatsbyConfig = {
         icon: 'src/assets/images/icon.png',
       },
     },
-    // Do not re-enable the below gatsby-plugin-google-tagmanager here or GTM may load before CookieYes.
-    // {
-    //   resolve: "gatsby-plugin-google-tagmanager",
-    //   options: { id: "GTM-P8P2538M", defaultDataLayer: { platform: "gatsby", cms: "cookieyes" } },
-    // },
-
-    //NOTE:
-    // The gatsby-plugin-google-tagmanager plugin here is not used because, It only worked well when we don’t need strict script order. When you do need a specific order (e.g. GCM → CookieYes → GTM for consent), 
-    // the plugin doesn’t give you control over where GTM loads. In that case, injecting GTM manually in gatsby-ssr.tsx is the right approach (Which I've done), 
-    // and the plugin becomes unnecessary.
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
