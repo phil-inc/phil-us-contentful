@@ -4,34 +4,34 @@ import {theme} from './src/layouts/Layout/theme';
 
 // 1. Google Consent Mode default state (must be VERY first — before any tags)
 // Default denied for ad/analytics; wait_for_update gives CookieYes time to apply geo rules and push consent.
-const gcmDefaultScript = (
-	<script
-		key="gcm-default"
-		dangerouslySetInnerHTML={{
-			__html: `
-				window.dataLayer = window.dataLayer || [];
-				function gtag(){dataLayer.push(arguments);}
+// const gcmDefaultScript = (
+// 	<script
+// 		key="gcm-default"
+// 		dangerouslySetInnerHTML={{
+// 			__html: `
+// 				window.dataLayer = window.dataLayer || [];
+// 				function gtag(){dataLayer.push(arguments);}
 
-				// Set platform metadata for 2026 compliance logging
-                window.dataLayer.push({ 
-                    'platform': 'gatsby', 
-                    'cms': 'cookieyes',
-                    'consent_version': 'Feb-2026-v1' 
-                });
+// 				// Set platform metadata for 2026 compliance logging
+//                 window.dataLayer.push({ 
+//                     'platform': 'gatsby', 
+//                     'cms': 'cookieyes',
+//                     'consent_version': 'Feb-2026-v1' 
+//                 });
 
-				gtag('consent', 'default', {
-					'ad_storage': 'denied',
-					'ad_user_data': 'denied',
-					'ad_personalization': 'denied',
-					'analytics_storage': 'denied',
-					'functionality_storage': 'denied',
-					'security_storage': 'granted',
-					'wait_for_update': 500
-				});
-			`,
-		}}
-	/>
-);
+// 				gtag('consent', 'default', {
+// 					'ad_storage': 'denied',
+// 					'ad_user_data': 'denied',
+// 					'ad_personalization': 'denied',
+// 					'analytics_storage': 'denied',
+// 					'functionality_storage': 'denied',
+// 					'security_storage': 'granted',
+// 					'wait_for_update': 500
+// 				});
+// 			`,
+// 		}}
+// 	/>
+// );
 
 // 2. Google Tag Manager (loads after consent default)
 const gtmScript = (
@@ -65,7 +65,6 @@ const gtmNoscript = (
 export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
 	replaceHeadComponents([
-		gcmDefaultScript,
 		gtmScript,
 		...headComponents,
 		<ColorSchemeScript key="color-scheme-script" />,
