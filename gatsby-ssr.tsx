@@ -31,16 +31,9 @@ const gtmNoscript = (
 	</noscript>
 );
 
-// HubSpot / CookieYes integration
-// https://www.cookieyes.com/documentation/integrating-hubspot-consent-api-with-cookieyes/
-const hubSpotCookieYes = (
-	<script>window.disableHubSpotCookieBanner = true;</script>
-);
-
 export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
 	replaceHeadComponents([
-		hubSpotCookieYes,
 		gtmScript,
 		...headComponents,
 		<ColorSchemeScript key="color-scheme-script" />,
