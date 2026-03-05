@@ -34,10 +34,7 @@ const gtmNoscript = (
 // HubSpot / CookieYes integration
 // https://www.cookieyes.com/documentation/integrating-hubspot-consent-api-with-cookieyes/
 const hubSpotCookieYes = (
-	<script>
-		// Disable HubSpot's default cookie banner
-		window.disableHubSpotCookieBanner = true;
-	</script>
+	<script>window.disableHubSpotCookieBanner = true;</script>
 );
 
 export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
