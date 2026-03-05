@@ -77,7 +77,7 @@ const hubSpotCookieYes = (
 			setHubSpotConsent(consentDetails);
 		});
 	</script>
-)
+);
 
 export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
