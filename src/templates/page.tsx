@@ -183,21 +183,6 @@ export const query = graphql`
               url
             }
           }
-          backgroundAssetImage3 {
-            gatsbyImageData(
-              resizingBehavior: SCALE
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
-            title
-            file {
-              contentType
-              details {
-                size
-              }
-              url
-            }
-          }
           sectionGroupReference {
             ... on ContentfulSection {
               id
@@ -417,9 +402,6 @@ export const query = graphql`
                   }
                 }
               }
-              headerDescription {
-                headerDescription
-              }
               subHeader {
                 subHeader
               }
@@ -501,6 +483,21 @@ export const query = graphql`
                   raw
                 }
                 id
+              }
+              mediaItemAnimation {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
               }
               assetForMobile {
                 gatsbyImageData(
@@ -916,9 +913,6 @@ export const query = graphql`
               }
             }
           }
-          headerDescription {
-            headerDescription
-          }
           subHeader {
             subHeader
           }
@@ -1000,6 +994,21 @@ export const query = graphql`
               raw
             }
             id
+          }
+          mediaItemAnimation {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
           }
           assetForMobile {
             gatsbyImageData(

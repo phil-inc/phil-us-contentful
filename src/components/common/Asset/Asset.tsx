@@ -15,6 +15,7 @@ import { type MediaItem } from "types/section";
 import { extractAssetData } from "utils/asset";
 
 import YouTubeVideo from "components/common/Asset/YoutubeVideo";
+import LottieAsset from "components/common/Asset/LottieAsset";
 
 import * as classes from "./asset.module.css";
 
@@ -52,6 +53,10 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
 
       if (contentType === "image/svg+xml") {
         return <img style={{ objectFit }} src={url} alt={title} />;
+      }
+
+      if (contentType === "application/json") {
+        return <LottieAsset url={url} />;
       }
 
       if (contentType === "application/pdf" && typeof window !== "undefined") {
