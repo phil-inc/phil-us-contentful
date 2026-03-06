@@ -94,6 +94,7 @@ export type TResource = {
 
   stylingOptions: StylingOptions;
   media: MediaItem;
+  mobileViewMedia?: TAsset;
   renderOptions?: RenderOptions;
   isImageObjectContain?: boolean;
   publishDate?: string;

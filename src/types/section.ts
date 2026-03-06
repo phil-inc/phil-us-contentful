@@ -17,6 +17,7 @@ export type MediaItem = {
   id: string;
   name?: string;
   media?: TAsset;
+  mobileViewMedia?: TAsset;
   youtubeLink?: string;
   emdedForm?: BodyType;
   canShowMediaWidthFull?: boolean;
@@ -157,6 +158,7 @@ export enum ReferenceTypeEnum {
   "Promo Card" = "Promo Card",
   "MetricWith5Card" = "MetricWith5Card",
   "Tabs Switch" = "Tabs Switch",
+  "Pharmacy Network" = "Pharmacy Network",
   "Linear Process Card" = "Linear Process Card",
   "Metric Outcome Card" = "Metric Outcome Card",
 }
@@ -340,14 +342,26 @@ export type IContentfulButtonGroup = {
   sys: ISys;
 }
 
+export type IMetric = {
+  id: string;
+  __typename?: string;
+  metricLabel: string;
+  metricDescription?: string;
+  metricDescriptionRichText?: BodyType;
+};
+
+export type GroupSectionType = "Tabbed" | "Default";
+
 export type ISectionGroup = {
   id: string;
   __typename: string;
   title: string;
   sectionType: SectionType;
+  groupSectionType?: GroupSectionType;
   canShowTopBorder: boolean;
   canShowBottomBorder:boolean;
   backgroundAssetImage1?: TAsset;
   backgroundAssetImage2?:  TAsset;
-  sectionGroupReference?: Array<ISection>;
+  sectionGroupReference?: Array<ISection | IMetric>;
+  metric?: IMetric;
 }

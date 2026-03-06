@@ -1,0 +1,326 @@
+/* Mobile-first: 24px on small screens, 180px on desktop */
+.wrapper {
+  margin-top: 30px;
+  @media (min-width: $phil-breakpoint-md) {
+    margin-top: 180px;
+  }
+}
+
+.desktopLayout {
+  display: none;
+
+  @media (min-width: $phil-breakpoint-md) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Map container — positioning context for cards */
+.mapContainer {
+  position: relative;
+  width: 44%;
+  margin: 0 auto;
+}
+
+/* The actual SVG (Asset renders as img for SVGs from Contentful) */
+.svgInner {
+  width: 100%;
+
+  img,
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+/* Overlay stretches to match mapContainer, cards overflow outside of it */
+.cardsOverlay {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  width: 100%;
+}
+
+/* Description Box*/
+.annotationCard {
+  position: absolute;
+  pointer-events: auto;
+  width: 28vw;
+  max-width: 391px;
+  min-width: 200px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: clamp(8px, 1vw, 16px);
+  box-shadow:
+    0px 9px 13px -3px rgba(0, 0, 0, 0.1),
+    0px 4px 5px -4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  cursor: default;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    transform 0.4s ease;
+}
+
+/* Hover: green box, white text — pure CSS, no JS */
+.annotationCard:hover {
+  background-color: #00827E;
+  border-color: #00827E;
+  box-shadow:
+    0px 16px 24px -4px rgba(9, 170, 165, 0.25),
+    0px 8px 12px -6px rgba(9, 170, 165, 0.15);
+
+  .cardTitle,
+  .cardDescription {
+    color: #FFFFFF;
+  }
+}
+
+/* Smart Script Routing — upper-left, outside map */
+.smartScriptRouting {
+  right: 84%;
+  bottom: 89%;
+  @media (min-width: $phil-breakpoint-xl) {
+    bottom: 88%;
+  }
+}
+
+/* Full Script Control — upper-center, above map */
+.fullScriptControl {
+  left: 26%;
+  bottom: 99%;
+  @media (min-width: $phil-breakpoint-xl) {
+    bottom: 100%;
+  }
+}
+
+/* 50-state Coverage — right side, outside map */
+.stateCoverage {
+  left: 99%;
+  top: 24%;
+  @media (min-width: $phil-breakpoint-xl) {
+    top: 28%;
+  }
+}
+
+/* Customizable Business Rules — lower-left, outside map */
+.customizableRules {
+  right: 93%;
+  bottom: 16%;
+  @media (min-width: $phil-breakpoint-xl) {
+    bottom: 20%;
+  }
+}
+
+/* In-house Distributors — lower-right, outside map */
+.inHouseDistributors {
+  left: 86%;
+  bottom: 7%;
+  @media (min-width: $phil-breakpoint-xl) {
+    bottom: 7%;
+  }
+}
+
+/* =========================================
+   Card Typography
+   ========================================= */
+.cardTitle {
+  font-family: Lato, sans-serif;
+  font-weight: 600;
+  font-size: clamp(11px, 1.05vw, 16px);
+  color: #0A0A0A;
+  margin: 0 0 clamp(2px, 0.4vw, 8px) 0;
+  line-height: 1.25;
+  transition: color 0.4s ease;
+}
+
+.cardDescription {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-size: clamp(10px, 0.9vw, 14px);
+  color: #525252;
+  margin: 0;
+  line-height: 1.4;
+  transition: color 0.4s ease;
+}
+
+/* Override rich-text output so our padding controls spacing */
+.cardDescription p,
+.cardDescription div {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.cardDescription p + p {
+  margin-top: 6px !important;
+}
+
+/*Mobile Layout */
+.mobileContainer {
+  margin-top: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: $phil-breakpoint-md) {
+    display: none;
+  }
+}
+
+.mobileLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+  @media (min-width: $phil-breakpoint-sm) {
+    width: 90%;
+    height:auto;
+  }
+}
+
+/* Fixed-height slot so map position never changes; description box is absolute inside */
+.mobileDescriptionSlot {
+  flex-shrink: 0;
+  width: 100%;
+  position: relative;
+}
+
+.mobileDescriptionBox {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  right: 0;
+  max-height: 140px;
+  width: 94%;
+  overflow-y: auto;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 12px 12px;
+  box-shadow:
+    0px 5px 8px -1.5px rgba(0, 0, 0, 0.1),
+    0px 2px 3px -2px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  background: #FFFFFF;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    max-height: 200px;
+    padding: 18px 20px;
+  }
+}
+
+.mobileDescriptionWrapper {
+  width: 100%;
+  min-width: 0;
+}
+
+.mobileDescriptionFadeIn {
+  animation: mobileDescriptionFadeIn 0.3s ease-out;
+}
+
+@keyframes mobileDescriptionFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mobileDescriptionTitle {
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #0A0A0A;
+  margin: 0 0 5px 0;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-size: 16px;
+    margin: 0 0 8px 0;
+  }
+}
+
+.mobileDescription {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #525252;
+  margin: 0;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-size: 14px;
+  }
+}
+
+/* Override rich-text output so box padding controls spacing */
+.mobileDescription p,
+.mobileDescription div {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.mobileDescription p + p {
+  margin-top: 6px !important;
+}
+
+.mobileMap {
+  padding-top: 70px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  img,
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.mobileDots {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 11px;
+  padding-top: 23px;
+}
+
+/* Inactive: 12px grey circle */
+.mobileDot {
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: none;
+  border-radius: 29px;
+  background-color: #D9D9D9;
+  cursor: pointer;
+  transition:
+    background-color 0.45s ease-in-out,
+    width 0.45s ease-in-out,
+    border-radius 0.45s ease-in-out;
+}
+
+.mobileDot:hover {
+  background-color: #CBD5E1;
+}
+
+/* Active: elongated teal capsule/pill (stays teal on hover) */
+.mobileDotActive,
+.mobileDotActive:hover {
+  width: 41px;
+  border-radius: 29px;
+  background-color: #00827E;
+}

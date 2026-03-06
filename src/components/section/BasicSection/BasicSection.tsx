@@ -22,7 +22,7 @@ import { Link, Script } from "gatsby";
 import { GatsbyImage, getImage, type ImageDataLike } from "gatsby-plugin-image";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import slugify from "slugify";
-import type { BackgroundType, ISection } from "types/section";
+import type { BackgroundType, IMetric, ISection } from "types/section";
 import { getLink } from "utils/getLink";
 import { marked } from "marked";
 import { isVideoContent } from "utils/isVideoContent";
@@ -58,6 +58,7 @@ type BasicSectionProps = {
   isEmbedFormTemplate: boolean;
   sectionIndex?: number;
   subSectionIndex?: number;
+  metric?: IMetric;
 };
 
 /**
@@ -107,6 +108,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       alt: reference.title,
     };
   });
+
 
   const options = {
     renderNode: {
@@ -491,7 +493,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-bgcolor-dark={!isBgColorLight}
       data-section-index={sectionIndex}
     >
-
       {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>{section.eyebrowHeading}</Text>}
       {section?.canShowHeader && <Title className={classes.header} data-context={context.title} section-index={sectionIndex}>{section.header}</Title>}
       {section?.headerDescription?.headerDescription && <Text className={classes.headerDescription} data-context={context.title}>{section.headerDescription.headerDescription}</Text>}

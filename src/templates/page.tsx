@@ -151,6 +151,7 @@ export const query = graphql`
           __typename
           header
           sectionType
+          groupSectionType
           canShowTopBorder
           canShowBottomBorder
           backgroundAssetImage1 {
@@ -183,22 +184,18 @@ export const query = graphql`
               url
             }
           }
-          backgroundAssetImage3 {
-            gatsbyImageData(
-              resizingBehavior: SCALE
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
-            title
-            file {
-              contentType
-              details {
-                size
-              }
-              url
-            }
-          }
+
           sectionGroupReference {
+            __typename
+            ... on ContentfulMetric {
+              id
+              __typename
+              metricLabel
+              metricDescription
+              metricDescriptionRichText {
+                raw
+              }
+            }
             ... on ContentfulSection {
               id
               isHidden
@@ -414,12 +411,9 @@ export const query = graphql`
                 contentType {
                   sys {
                     id
-                  }
                 }
               }
-              headerDescription {
-                headerDescription
-              }
+            }
               subHeader {
                 subHeader
               }
@@ -915,9 +909,6 @@ export const query = graphql`
                 id
               }
             }
-          }
-          headerDescription {
-            headerDescription
           }
           subHeader {
             subHeader
@@ -1685,6 +1676,14 @@ export const query = graphql`
                 }
               }
             }
+            ... on ContentfulMetric {
+              id
+              metricLabel
+              metricValue
+              metricDescriptionRichText {
+                raw
+              }
+            }
             ... on ContentfulDownloadableResource {
               id
               heading
@@ -1771,6 +1770,21 @@ export const query = graphql`
                   url
                 }
               }
+              mobileViewMedia {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
               youtubeLink
               embedCode {
                 raw
@@ -1803,6 +1817,14 @@ export const query = graphql`
                     }
                   }
                 }
+                ... on ContentfulMetric {
+                  id
+                  metricLabel
+                  metricValue
+                  metricDescriptionRichText {
+                    raw
+                  }
+                }  
               }
             }
           }
