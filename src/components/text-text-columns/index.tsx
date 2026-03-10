@@ -10,6 +10,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { ITextandTextColumns, ReferenceBodyType } from "types/section";
 import {
   documentToReactComponents,
@@ -24,6 +25,8 @@ import cx from "clsx";
 import PageContext from "contexts/PageContext";
 import Asset from "components/common/Asset/Asset";
 import ImageContainer from "components/common/Container/ImageContainer";
+import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
+import { getHubspotFormDetails } from "utils/utils";
 import { BUTTON_CONFIG } from "constants/global.constant";
 
 interface CheckIconProps {
@@ -63,7 +66,7 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
   const referenceMap = new Map<string, any>();
 
   column.references?.forEach((entry) => {
-    referenceMap.set(entry?.slug, entry);
+    referenceMap.set(entry?.sys?.id ?? entry?.id, entry);
   });
 
   const options: Options = {
@@ -80,10 +83,42 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
       },
 
       [BLOCKS.EMBEDDED_ENTRY]: (node) => {
-        const entry = referenceMap.get(node.data.target?.sys.id);
-        if (!entry) return null;
+        const target = node.data.target;
+        if (!target) return null;
 
-        if (entry?.sys?.contentType?.sys.id === "referencedSection") {
+        const entry = referenceMap.get(target?.sys?.id) ?? target;
+
+        if (entry?.__typename === "ContentfulList") {
+          const icon = entry.icon;
+          const iconImage = icon?.gatsbyImageData ? getImage(icon) : null;
+          return (
+            <Box className={classes.listCard} key={entry.id}>
+              <Flex gap={16} align="flex-start">
+                <Box className={classes.listCardIconWrap}>
+                  {iconImage ? (
+                    <GatsbyImage image={iconImage} alt={icon?.title ?? ""} className={classes.listCardIconImg} />
+                  ) : icon?.file?.url ? (
+                    <img src={icon.file.url} alt={icon?.title ?? ""} className={classes.listCardIconImg} />
+                  ) : (
+                    <CheckIcon size={28} color="#00827E" />
+                  )}
+                </Box>
+                <Box style={{ flex: 1, minWidth: 0 }}>
+                  <Title order={4} className={classes.listCardHeading}>
+                    {entry.heading}
+                  </Title>
+                  {entry.subheading && (
+                    <Text className={classes.listCardSubheading}>
+                      {entry.subheading}
+                    </Text>
+                  )}
+                </Box>
+              </Flex>
+            </Box>
+          );
+        }
+
+        if (entry?.sys?.contentType?.sys?.id === "referencedSection") {
           return (
             <Box className={classes.referencedSectionBox}>
               <Title order={3}>{entry.title}</Title>
@@ -95,23 +130,21 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
             </Box>
           );
         }
-        else if(entry?.__typename === "ContentfulMediaItem") {
-            const youtubeVideoUrl = entry?.youtubeLink
-            if(youtubeVideoUrl){
-              const mediaItemOrAsset = entry
 
-            return (<>
-              <div className={cx({[classes.rightColumnVideoWrapper]:isFromRightColumn})}>
+        if (entry?.__typename === "ContentfulMediaItem") {
+          const youtubeVideoUrl = entry?.youtubeLink;
+          if (youtubeVideoUrl) {
+            return (
+              <div className={cx({[classes.rightColumnVideoWrapper]: isFromRightColumn})}>
                 <Asset
-                  asset={mediaItemOrAsset}
+                  asset={entry}
                   objectFit="contain"
                   youtubeVideoURL={youtubeVideoUrl}
-                  />
-                </div>
-              </>)
-            }
-
-            return null;
+                />
+              </div>
+            );
+          }
+          return null;
         }
 
         return null;
@@ -127,11 +160,24 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
 };
 
 const renderRightColumn = (column: any, context: any) => {
-  if(column?.references?.length > 0 && column?.references[0]?.__typename === "ContentfulMediaItem") {
-    return renderColumn(column, true);
+  if (!column) return null;
+
+  const { formId, portalId } = getHubspotFormDetails(
+    column?.raw ? { raw: column.raw } : undefined
+  );
+  const hasHubspotForm = Boolean(formId && portalId);
+
+  if (hasHubspotForm) {
+    return (
+      <Box className={classes.rightColumnForm}>
+        <HubspotFormV2 formId={formId} portalId={portalId} />
+      </Box>
+    );
   }
 
-  if (!column) return null;
+  if (column?.references?.length > 0 && column?.references[0]?.__typename === "ContentfulMediaItem") {
+    return renderColumn(column, true);
+  }
 
   return (
     <div>

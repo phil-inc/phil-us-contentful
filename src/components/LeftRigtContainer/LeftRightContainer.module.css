@@ -59,4 +59,22 @@
     max-height: 90px;
     cursor: pointer;
   }
+
+  /* Research Report page */
+  &:has([data-context="Research Report · March 2026"]) {
+    padding-top: 40px;
+
+    @media (min-width: $phil-breakpoint-md) {
+      padding-top: 60px;
+      padding-bottom: 80px;
+    }
+
+    .sectionFooter {
+      padding-top: 48px;
+
+      @media (min-width: $phil-breakpoint-md) {
+        padding-top: 56px;
+      }
+    }
+  }
 }

@@ -315,9 +315,12 @@ export type IContentfulList = {
   subheading: string | null;
   choose: boolean;
   anchorLink: string;
+  linkText?: string | null;
+  listType?: string | null;
   description?: {
     description: string;
   };
+  icon?: Pick<TAsset, "gatsbyImageData" | "title">;
 }
 
 export type ISys = {

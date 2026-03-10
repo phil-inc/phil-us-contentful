@@ -71,7 +71,7 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
 
     return (
       <div>
-        <Box className={classes.heading}>{renderRichText(column, options)}</Box>
+        <Box className={classes.heading}>{renderRichText(column as Parameters<typeof renderRichText>[0], options)}</Box>
 
         <div>
           {column.references?.map((item) => {

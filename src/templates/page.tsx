@@ -589,6 +589,36 @@ export const query = graphql`
                 }
                 id
               }
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                contentful_id
+                heading
+                subheading
+                choose
+                anchorLink
+                linkText
+                listType
+                icon {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    url
+                    contentType
+                  }
+                }
+              }
             }
           }
           rightColumn {
@@ -730,6 +760,17 @@ export const query = graphql`
                 heading
                 subheading
                 choose
+                anchorLink
+                linkText
+                listType
+                icon {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                }
               }
             }
           }
