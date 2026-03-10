@@ -684,6 +684,14 @@ export const query = graphql`
             id
             name
           }
+          files {
+            url
+            file {
+              url
+              contentType
+            }
+            title
+          }
           link {
             ... on ContentfulLink {
               id

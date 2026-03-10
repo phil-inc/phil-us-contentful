@@ -29,6 +29,8 @@ import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
 import { getHubspotFormDetails } from "utils/utils";
 import { BUTTON_CONFIG } from "constants/global.constant";
 
+const REPORT_FORM_SUBMITTED_KEY = "researchReportFormSubmitted";
+
 interface CheckIconProps {
   size: number;
   color: string;
@@ -159,25 +161,62 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
   );
 };
 
-const renderRightColumn = (column: any, context: any) => {
-  if (!column) return null;
+const GatedFormColumn: React.FC<{ column: any; fileUrl?: string }> = ({ column, fileUrl }) => {
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const { formId, portalId } = getHubspotFormDetails(
     column?.raw ? { raw: column.raw } : undefined
   );
-  const hasHubspotForm = Boolean(formId && portalId);
 
-  if (hasHubspotForm) {
-    return (
-      <Box className={classes.rightColumnForm}>
-        <HubspotFormV2 formId={formId} portalId={portalId} />
-      </Box>
-    );
-  }
+  React.useEffect(() => {
+    if (sessionStorage.getItem(REPORT_FORM_SUBMITTED_KEY) === "true") {
+      setIsSubmitted(true);
+    }
+  }, []);
 
+  const handleFormSubmit = () => {
+    sessionStorage.setItem(REPORT_FORM_SUBMITTED_KEY, "true");
+    setIsSubmitted(true);
+  };
+
+  return (
+    <Box className={classes.rightColumnForm}>
+      {isSubmitted ? (
+        <Box ta="center" py={20}>
+          <Text fw={700} mb={12}>Thank you!</Text>
+          {fileUrl && (
+            <Anchor href={fileUrl} target="_blank" referrerPolicy="no-referrer">
+              <Button variant="philDefault" w="100%">
+                Download Report
+              </Button>
+            </Anchor>
+          )}
+        </Box>
+      ) : (
+        <>
+          <Text fw={700} fz="sm" mb={4}>Get the full report</Text>
+          <Text fz="xs" c="dimmed" mb="xs">
+            Fill out the form below to download the PDF.
+          </Text>
+          <hr />
+          <HubspotFormV2
+            formId={formId}
+            portalId={portalId}
+            formMinHeight="200px"
+            callbackFn={handleFormSubmit}
+          />
+        </>
+      )}
+    </Box>
+  );
+};
+
+const renderRightColumn = (column: any, context: any) => {
   if (column?.references?.length > 0 && column?.references[0]?.__typename === "ContentfulMediaItem") {
     return renderColumn(column, true);
   }
+
+  if (!column) return null;
 
   return (
     <div>
@@ -207,7 +246,13 @@ const renderRightColumn = (column: any, context: any) => {
 const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
-  const { heading, subHeadingText, leftColumn, rightColumn, addBorder } = data;
+  const { heading, subHeadingText, leftColumn, rightColumn, addBorder, files } = data;
+  const fileUrl = files?.[0]?.file?.url ?? files?.[0]?.url;
+
+  const { formId, portalId } = getHubspotFormDetails(
+    rightColumn?.raw ? { raw: rightColumn.raw } : undefined
+  );
+  const hasGatedForm = Boolean(formId && portalId);
 
   return (
     <>
@@ -230,7 +275,11 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
               {renderColumn(leftColumn)}
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6 }} data-context={context.title} className={classes.rightColumn}>
-            {renderRightColumn(rightColumn, context)}
+            {hasGatedForm ? (
+              <GatedFormColumn column={rightColumn} fileUrl={fileUrl} />
+            ) : (
+              renderRightColumn(rightColumn, context)
+            )}
           </Grid.Col>
         </Grid>
 

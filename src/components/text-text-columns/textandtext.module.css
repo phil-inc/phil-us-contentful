@@ -87,6 +87,38 @@
   color: #4a4a4a;
 }
 
+/* Match case study embedded form design */
 .rightColumnForm {
-  min-height: 400px;
+  background-color: #e8f7f7;
+  padding: 20px;
+  min-height: 200px;
+}
+
+.rightColumnForm hr {
+  border: none;
+  border-top: 1px solid #d9d9d9;
+  margin: 16px 0;
+}
+
+.rightColumnForm :global(.hs-input) {
+  height: 44px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.rightColumnForm :global(.hs-form-field > label:first-child:not(.hs-error-msg)) {
+  display: none;
+}
+
+.rightColumnForm :global(.hs-submit .actions input[type="submit"]) {
+  padding: 12px 24px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.rightColumnForm :global(.hs-error-msgs) {
+  color: red;
+  font-size: 12px;
 }

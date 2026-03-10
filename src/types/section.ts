@@ -282,6 +282,7 @@ export type ITextandTextColumns = {
   showBottomBorder?: boolean;
   sectionName?: string;
   link?: Hyperlink;
+  files?: { url: string; file?: { url: string; contentType: string }; title?: string }[];
 };
 
 export type ITextandTextColumnsWithFooterSection = {
