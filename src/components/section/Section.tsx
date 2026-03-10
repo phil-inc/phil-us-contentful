@@ -1,14 +1,21 @@
 import React from "react";
-import type { IReferencedSection, ISection, ISectionGroup, ITextandTextColumns } from "types/section";
+import type {
+  IReferencedSection,
+  ISection,
+  ISectionGroup,
+  ITextandTextColumns,
+  ITextandTextColumnsWithFooterSection,
+} from "types/section";
 import BasicSection from "./BasicSection/BasicSection";
 import ReferencedSection from "./ReferencedSection/ReferencedSection";
 import TextAndTextColumns from "components/text-text-columns";
 import TextAndTextColunnsV2 from "components/text-text-columnsv2";
+import LeftRightContainer from "components/LeftRigtContainer/LeftRigthContainer";
 import { OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 import SectionGroup from "components/section/SectionGroup/SectionGroup";
 
 type SectionProps = {
-  section: ISection | IReferencedSection | ITextandTextColumns;
+  section: ISection | IReferencedSection | ITextandTextColumns | ITextandTextColumnsWithFooterSection;
   index?: number;
   isEmbedFormTemplate: boolean;
   isPreviousBackgroundPure: boolean;
@@ -27,7 +34,7 @@ const Section: React.FC<SectionProps> = ({
   isEmbedFormTemplate,
   isPreviousBackgroundPure,
   pageTitle,
-  sectionIndex = 0
+  sectionIndex = 0,
 }) => {
   switch (section.sectionType) {
     case "Basic Section":
@@ -71,8 +78,15 @@ const Section: React.FC<SectionProps> = ({
           index={index}
           sectionIndex={sectionIndex}
           />
-        )
-        
+        );
+        //ONly used for one page(first page) in resources page
+      case "Text and Text Columns with Footer":
+        return (
+          <LeftRightContainer
+            sectionData={section as ITextandTextColumnsWithFooterSection}
+          />
+        );
+
     default:
       return <></>;
   }

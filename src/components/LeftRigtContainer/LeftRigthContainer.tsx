@@ -14,8 +14,8 @@ import * as classes from "./LeftRightContainer.module.css";
 
 type Props = {
   sectionData: ITextandTextColumnsWithFooterSection;
-  philLogo: TAsset;
-  whiltePhilLogo: TAsset;
+  philLogo?: TAsset;
+  whiltePhilLogo?: TAsset;
 };
 
 export default function LeftRightContainer({
@@ -32,6 +32,8 @@ export default function LeftRightContainer({
       </Box>
     );
   };
+
+  const showLogo = philLogo && whiltePhilLogo;
 
   return (
     <>
@@ -51,11 +53,13 @@ export default function LeftRightContainer({
             </div>
         }
 
-        <Box className={classes.philLogo}>
-          <Container className="container" size={"xl"}>
-            {renderPhilLogo(isLaptopScreen ? whiltePhilLogo : philLogo)}
-          </Container>
-        </Box>
+        {showLogo && (
+          <Box className={classes.philLogo}>
+            <Container className="container" size={"xl"}>
+              {renderPhilLogo(isLaptopScreen ? whiltePhilLogo : philLogo)}
+            </Container>
+          </Box>
+        )}
 
         {isLaptopScreen ? (
           <Container className="container" size="xl">

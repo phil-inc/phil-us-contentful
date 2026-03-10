@@ -183,21 +183,6 @@ export const query = graphql`
               url
             }
           }
-          backgroundAssetImage3 {
-            gatsbyImageData(
-              resizingBehavior: SCALE
-              placeholder: BLURRED
-              layout: CONSTRAINED
-            )
-            title
-            file {
-              contentType
-              details {
-                size
-              }
-              url
-            }
-          }
           sectionGroupReference {
             ... on ContentfulSection {
               id
@@ -416,9 +401,6 @@ export const query = graphql`
                     id
                   }
                 }
-              }
-              headerDescription {
-                headerDescription
               }
               subHeader {
                 subHeader
@@ -694,6 +676,93 @@ export const query = graphql`
             }
           }
         }
+        ... on ContentfulTextAndTextColumnsWithFooterSection {
+          id
+          title
+          sectionType
+          leftWallBackgroundImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          rightWallBackgroundImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          leftColumn {
+            __typename
+            raw
+            references {
+              __typename
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                heading
+                subheading
+                choose
+              }
+            }
+          }
+          rightColumn {
+            __typename
+            raw
+            references {
+              __typename
+              ... on ContentfulSection {
+                id
+                header
+                body {
+                  raw
+                }
+                sectionType
+              }
+            }
+          }
+          footerColumn {
+            __typename
+            raw
+          }
+          resourceReferences {
+            __typename
+            ... on ContentfulResource {
+              id
+              heading
+              body {
+                raw
+              }
+            }
+          }
+        }
         ... on ContentfulSection {
           id
           isHidden
@@ -915,9 +984,6 @@ export const query = graphql`
                 id
               }
             }
-          }
-          headerDescription {
-            headerDescription
           }
           subHeader {
             subHeader
@@ -1692,8 +1758,21 @@ export const query = graphql`
               metaDescription
               buttonText
               internalLink {
-                id
+                ... on ContentfulPage {
+                  id
+                  title
+                  slug
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
                 ... on ContentfulDownloadableResource {
+                  id
                   slug
                   heading
                   sys {
