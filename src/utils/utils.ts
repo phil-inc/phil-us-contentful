@@ -13,8 +13,8 @@ export type ISectionsArray = Array<ISection | IReferencedSection>;
 
     const [formProps] = parseScript(embedForm);
     return {
-      formId: formProps?.formId ?? '',
-      portalId: formProps?.portalId ?? '',
+      formId: formProps.formId,
+      portalId: formProps.portalId,
     };
   };
 
