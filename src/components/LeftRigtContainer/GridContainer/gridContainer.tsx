@@ -35,81 +35,19 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
   dataContext: dataContextProp,
   children,
 }) => {
-  const { title: pageTitle } = React.useContext(PageContext);
-  const dataContext = dataContextProp ?? pageTitle;
+  const { title } = React.useContext(PageContext);
 
   const leftSection = sectionData?.leftColumn;
   const rightSection = sectionData?.rightColumn;
   const lengthOfRightSection = rightSection?.references?.length;
   const context = React.useContext(PageContext);
 
-  const hasListItems = rightSection?.references?.some(
-    (ref: any) => ref?.__typename === "ContentfulList"
-  );
-
-  const firstParagraphRef = React.useRef(true);
-  firstParagraphRef.current = true;
-
   const options: Options = {
     renderNode: {
-      [BLOCKS.PARAGRAPH](node, children) {
-        let useEyebrow = false;
-        if (hasListItems && firstParagraphRef.current) {
-          firstParagraphRef.current = false;
-          const textNode = node.content?.find((n: any) => n.nodeType === "text") as { value?: string } | undefined;
-          const text = typeof textNode?.value === "string" ? textNode.value : "";
-          useEyebrow = Boolean(text && text.length < 60);
-        }
-        if (useEyebrow) {
-          return (
-            <div className={classes.eyebrowPill}>
-              <span className={classes.eyebrowPillDot} aria-hidden />
-              <span>{children}</span>
-            </div>
-          );
-        }
-        return <p className={hasListItems ? classes.bodyText : undefined}>{children}</p>;
-      },
       [BLOCKS.HEADING_1](node, children) {
         return <Title className={classes.titleH1}>{children}</Title>;
       },
-      [BLOCKS.UL_LIST](node, children) {
-        return <>{children}</>;
-      },
-      [BLOCKS.OL_LIST](node, children) {
-        return <>{children}</>;
-      },
-      [BLOCKS.LIST_ITEM](node, children) {
-        return <>{children}</>;
-      },
     },
-  };
-
-  const renderStatCards = (column: ReferenceBodyType) => {
-    if (!column?.references) return null;
-    const listItems = column.references.filter(
-      (ref: any) => ref?.__typename === "ContentfulList"
-    );
-    if (!listItems.length) return null;
-
-    return (
-      <div className={classes.statCardWrapper}>
-        <div className={classes.statCardsContainer}>
-          {listItems.map((item: any) => (
-            <div key={item.id} className={classes.statCard}>
-              <div className={classes.statCardRow}>
-                <div className={classes.statValueCell}>
-                  <Text className={classes.statValue}>{item.heading}</Text>
-                </div>
-                <div className={classes.statLabelCell}>
-                  <Text className={classes.statLabel}>{item.subheading}</Text>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
   };
 
   const renderRightColumn = (column: ReferenceBodyType) => {
@@ -139,7 +77,7 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
 
     return (
       <div>
-        <Box className={classes.heading}>{renderRichText(column as Parameters<typeof renderRichText>[0], options)}</Box>
+        <Box className={classes.heading}>{renderRichText(column, options)}</Box>
 
         <div>
           {column.references?.map((item) => {
@@ -175,7 +113,7 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
   return (
     <>
       <div className={classes.gridContainer}>
-        <Grid gutter={0} style={{ height: "100%" }} align="stretch">
+        <Grid gutter={0} style={{ height: "100%" }} align="center">
           <Grid.Col
             className={cx(classes.gridBox, classes.left, {
               [classes.mobilePadding]: isMobileView,
