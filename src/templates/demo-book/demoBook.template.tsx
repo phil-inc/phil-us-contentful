@@ -821,21 +821,8 @@ export const query = graphql`
               metaDescription
               buttonText
               internalLink {
-                ... on ContentfulPage {
-                  id
-                  title
-                  slug
-                  sys {
-                    contentType {
-                      sys {
-                        type
-                        id
-                      }
-                    }
-                  }
-                }
+                id
                 ... on ContentfulDownloadableResource {
-                  id
                   slug
                   heading
                   sys {
