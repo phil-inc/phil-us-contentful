@@ -66,9 +66,11 @@ const Section: React.FC<SectionProps> = ({
           ) 
         } else {
           return (
-            <TextAndTextColumns data={section as ISection} 
+            <TextAndTextColumns
+              data={section as ISection}
+              sectionIndex={sectionIndex}
             />
-          ) 
+          );
         }
       
       case "Section Group":

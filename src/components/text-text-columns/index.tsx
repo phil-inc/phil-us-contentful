@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import {
-  Anchor,
   Box,
   Button,
   Container,
@@ -23,10 +22,8 @@ import { renderRichText } from "gatsby-source-contentful/rich-text";
 import cx from "clsx";
 import PageContext from "contexts/PageContext";
 import Asset from "components/common/Asset/Asset";
-import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
+import { GatedReportForm } from "components/common/GatedReportForm/GatedReportForm";
 import { getHubspotFormDetails } from "utils/utils";
-
-const REPORT_FORM_SUBMITTED_KEY = "researchReportFormSubmitted";
 
 interface CheckIconProps {
   size: number;
@@ -57,6 +54,7 @@ const CheckIcon = ({ size, color }: CheckIconProps) => {
 
 type TextAndTextColumnsProps = {
   data: ITextandTextColumns;
+  sectionIndex?: number;
 };
 
 const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
@@ -99,7 +97,7 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
                   ) : icon?.file?.url ? (
                     <img src={icon.file.url} alt={icon?.title ?? ""} className={classes.listCardIconImg} />
                   ) : (
-                    <CheckIcon size={28} color="#00827E" />
+                    <CheckIcon size={22} color="#00827E" />
                   )}
                 </Box>
                 <Box style={{ flex: 1, minWidth: 0 }}>
@@ -158,56 +156,6 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
   );
 };
 
-const GatedFormColumn: React.FC<{ column: any; fileUrl?: string }> = ({ column, fileUrl }) => {
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
-
-  const { formId, portalId } = getHubspotFormDetails(
-    column?.raw ? { raw: column.raw } : undefined
-  );
-
-  React.useEffect(() => {
-    if (sessionStorage.getItem(REPORT_FORM_SUBMITTED_KEY) === "true") {
-      setIsSubmitted(true);
-    }
-  }, []);
-
-  const handleFormSubmit = () => {
-    sessionStorage.setItem(REPORT_FORM_SUBMITTED_KEY, "true");
-    setIsSubmitted(true);
-  };
-
-  return (
-    <Box className={classes.rightColumnForm}>
-      {isSubmitted ? (
-        <Box ta="center" py={20}>
-          <Text fw={700} mb={12}>Thank you!</Text>
-          {fileUrl && (
-            <Anchor href={fileUrl} target="_blank" referrerPolicy="no-referrer">
-              <Button variant="philDefault" w="100%">
-                Download Report
-              </Button>
-            </Anchor>
-          )}
-        </Box>
-      ) : (
-        <>
-          <Text fw={700} fz="sm" mb={4}>Get the full report</Text>
-          <Text fz="xs" c="dimmed" mb="xs">
-            Fill out the form below to download the PDF.
-          </Text>
-          <hr />
-          <HubspotFormV2
-            formId={formId}
-            portalId={portalId}
-            formMinHeight="200px"
-            callbackFn={handleFormSubmit}
-          />
-        </>
-      )}
-    </Box>
-  );
-};
-
 const renderRightColumn = (column: any, context: any) => {
   if (column?.references?.length > 0 && column?.references[0]?.__typename === "ContentfulMediaItem") {
     return renderColumn(column, true);
@@ -240,16 +188,19 @@ const renderRightColumn = (column: any, context: any) => {
   );
 };
 
-const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
+const TextAndTextColumns = ({ data, sectionIndex = 0 }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
-  const { heading, subHeadingText, leftColumn, rightColumn, addBorder, files } = data;
+  const { heading, subHeadingText, leftColumn, rightColumn, addBorder, files, sectionName } = data;
   const fileUrl = files?.[0]?.file?.url ?? files?.[0]?.url;
 
   const { formId, portalId } = getHubspotFormDetails(
     rightColumn?.raw ? { raw: rightColumn.raw } : undefined
   );
   const hasGatedForm = Boolean(formId && portalId);
+
+  /* Uniquely target this section: data-context (section or page), data-section-index, data-gated-report */
+  const dataContext = sectionName ?? context.title;
 
   return (
     <>
@@ -259,21 +210,48 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
         </Container>
       )}
 
-      <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
-        <Box mb={100}>
-          <Title order={2} ta={"center"} mb={20} id={slugify(heading)}>
-            {heading}
-          </Title>
-          <Text ta={"center"}>{subHeadingText}</Text>
-        </Box>
+      <Container
+        className="container"
+        size={"xl"}
+        py={{ base: 16, sm: 100 }}
+        data-context={dataContext}
+        data-section-index={sectionIndex}
+        data-gated-report={hasGatedForm ? "true" : undefined}
+      >
+        {!hasGatedForm && (
+          <Box mb={100}>
+            <Title order={2} ta={"center"} mb={20} id={slugify(heading)}>
+              {heading}
+            </Title>
+            <Text ta={"center"}>{subHeadingText}</Text>
+          </Box>
+        )}
 
         <Grid gutter={48}>
-          <Grid.Col span={{ base: 12, md: 6 }}>
-              {renderColumn(leftColumn)}
+          <Grid.Col
+            span={{ base: 12, md: 6 }}
+            data-context={dataContext}
+            data-section-index={sectionIndex}
+            data-gated-report={hasGatedForm ? "true" : undefined}
+            className={cx({ [classes.leftColumnGated]: hasGatedForm })}
+          >
+            {renderColumn(leftColumn)}
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6 }} data-context={context.title} className={classes.rightColumn}>
+          <Grid.Col
+            span={{ base: 12, md: 6 }}
+            data-context={dataContext}
+            data-section-index={sectionIndex}
+            data-gated-report={hasGatedForm ? "true" : undefined}
+            className={classes.rightColumn}
+          >
             {hasGatedForm ? (
-              <GatedFormColumn column={rightColumn} fileUrl={fileUrl} />
+              <GatedReportForm
+                column={rightColumn}
+                fileUrl={fileUrl}
+                heading={heading}
+                subHeadingText={subHeadingText}
+                sectionEyebrow={sectionName ?? "What's Inside"}
+              />
             ) : (
               renderRightColumn(rightColumn, context)
             )}
