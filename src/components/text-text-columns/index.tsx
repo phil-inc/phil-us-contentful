@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import {
-  Anchor,
   Box,
   Button,
   Container,
@@ -10,6 +9,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { ITextandTextColumns, ReferenceBodyType } from "types/section";
 import {
   documentToReactComponents,
@@ -18,13 +18,12 @@ import {
 import * as classes from "./textandtext.module.css";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import {  navigate } from "gatsby";
-import { IconArrowRight } from "@tabler/icons";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import cx from "clsx";
 import PageContext from "contexts/PageContext";
 import Asset from "components/common/Asset/Asset";
-import ImageContainer from "components/common/Container/ImageContainer";
-import { BUTTON_CONFIG } from "constants/global.constant";
+import { GatedReportForm } from "components/common/GatedReportForm/GatedReportForm";
+import { getHubspotFormDetails } from "utils/utils";
 
 interface CheckIconProps {
   size: number;
@@ -55,6 +54,7 @@ const CheckIcon = ({ size, color }: CheckIconProps) => {
 
 type TextAndTextColumnsProps = {
   data: ITextandTextColumns;
+  sectionIndex?: number;
 };
 
 const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
@@ -63,7 +63,7 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
   const referenceMap = new Map<string, any>();
 
   column.references?.forEach((entry) => {
-    referenceMap.set(entry?.slug, entry);
+    referenceMap.set(entry?.sys?.id ?? entry?.id, entry);
   });
 
   const options: Options = {
@@ -80,10 +80,42 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
       },
 
       [BLOCKS.EMBEDDED_ENTRY]: (node) => {
-        const entry = referenceMap.get(node.data.target?.sys.id);
-        if (!entry) return null;
+        const target = node.data.target;
+        if (!target) return null;
 
-        if (entry?.sys?.contentType?.sys.id === "referencedSection") {
+        const entry = referenceMap.get(target?.sys?.id) ?? target;
+
+        if (entry?.__typename === "ContentfulList") {
+          const icon = entry.icon;
+          const iconImage = icon?.gatsbyImageData ? getImage(icon) : null;
+          return (
+            <Box className={classes.listCard} key={entry.id}>
+              <Flex gap={16} align="flex-start">
+                <Box className={classes.listCardIconWrap}>
+                  {iconImage ? (
+                    <GatsbyImage image={iconImage} alt={icon?.title ?? ""} className={classes.listCardIconImg} />
+                  ) : icon?.file?.url ? (
+                    <img src={icon.file.url} alt={icon?.title ?? ""} className={classes.listCardIconImg} />
+                  ) : (
+                    <CheckIcon size={22} color="#00827E" />
+                  )}
+                </Box>
+                <Box style={{ flex: 1, minWidth: 0 }}>
+                  <Title order={4} className={classes.listCardHeading}>
+                    {entry.heading}
+                  </Title>
+                  {entry.subheading && (
+                    <Text className={classes.listCardSubheading}>
+                      {entry.subheading}
+                    </Text>
+                  )}
+                </Box>
+              </Flex>
+            </Box>
+          );
+        }
+
+        if (entry?.sys?.contentType?.sys?.id === "referencedSection") {
           return (
             <Box className={classes.referencedSectionBox}>
               <Title order={3}>{entry.title}</Title>
@@ -95,23 +127,21 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
             </Box>
           );
         }
-        else if(entry?.__typename === "ContentfulMediaItem") {
-            const youtubeVideoUrl = entry?.youtubeLink
-            if(youtubeVideoUrl){
-              const mediaItemOrAsset = entry
 
-            return (<>
-              <div className={cx({[classes.rightColumnVideoWrapper]:isFromRightColumn})}>
+        if (entry?.__typename === "ContentfulMediaItem") {
+          const youtubeVideoUrl = entry?.youtubeLink;
+          if (youtubeVideoUrl) {
+            return (
+              <div className={cx({[classes.rightColumnVideoWrapper]: isFromRightColumn})}>
                 <Asset
-                  asset={mediaItemOrAsset}
+                  asset={entry}
                   objectFit="contain"
                   youtubeVideoURL={youtubeVideoUrl}
-                  />
-                </div>
-              </>)
-            }
-
-            return null;
+                />
+              </div>
+            );
+          }
+          return null;
         }
 
         return null;
@@ -127,7 +157,7 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
 };
 
 const renderRightColumn = (column: any, context: any) => {
-  if(column?.references?.length > 0 && column?.references[0]?.__typename === "ContentfulMediaItem") {
+  if (column?.references?.length > 0 && column?.references[0]?.__typename === "ContentfulMediaItem") {
     return renderColumn(column, true);
   }
 
@@ -158,10 +188,19 @@ const renderRightColumn = (column: any, context: any) => {
   );
 };
 
-const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
+const TextAndTextColumns = ({ data, sectionIndex = 0 }: TextAndTextColumnsProps) => {
   const context = useContext(PageContext);
 
-  const { heading, subHeadingText, leftColumn, rightColumn, addBorder } = data;
+  const { heading, subHeadingText, leftColumn, rightColumn, addBorder, files, sectionName } = data;
+  const fileUrl = files?.[0]?.file?.url ?? files?.[0]?.url;
+
+  const { formId, portalId } = getHubspotFormDetails(
+    rightColumn?.raw ? { raw: rightColumn.raw } : undefined
+  );
+  const hasGatedForm = Boolean(formId && portalId);
+
+  /* Uniquely target this section: data-context (section or page), data-section-index, data-gated-report */
+  const dataContext = sectionName ?? context.title;
 
   return (
     <>
@@ -171,20 +210,51 @@ const TextAndTextColumns = ({ data }: TextAndTextColumnsProps) => {
         </Container>
       )}
 
-      <Container className="container" size={"xl"} py={{ base: 16, sm: 100 }}>
-        <Box mb={100}>
-          <Title order={2} ta={"center"} mb={20} id={slugify(heading)}>
-            {heading}
-          </Title>
-          <Text ta={"center"}>{subHeadingText}</Text>
-        </Box>
+      <Container
+        className="container"
+        size={"xl"}
+        py={{ base: 16, sm: 100 }}
+        data-context={dataContext}
+        data-section-index={sectionIndex}
+        data-gated-report={hasGatedForm ? "true" : undefined}
+      >
+        {!hasGatedForm && (
+          <Box mb={100}>
+            <Title order={2} ta={"center"} mb={20} id={slugify(heading)}>
+              {heading}
+            </Title>
+            <Text ta={"center"}>{subHeadingText}</Text>
+          </Box>
+        )}
 
         <Grid gutter={48}>
-          <Grid.Col span={{ base: 12, md: 6 }}>
-              {renderColumn(leftColumn)}
+          <Grid.Col
+            span={{ base: 12, md: 6 }}
+            data-context={dataContext}
+            data-section-index={sectionIndex}
+            data-gated-report={hasGatedForm ? "true" : undefined}
+            className={cx({ [classes.leftColumnGated]: hasGatedForm })}
+          >
+            {renderColumn(leftColumn)}
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6 }} data-context={context.title} className={classes.rightColumn}>
-            {renderRightColumn(rightColumn, context)}
+          <Grid.Col
+            span={{ base: 12, md: 6 }}
+            data-context={dataContext}
+            data-section-index={sectionIndex}
+            data-gated-report={hasGatedForm ? "true" : undefined}
+            className={classes.rightColumn}
+          >
+            {hasGatedForm ? (
+              <GatedReportForm
+                column={rightColumn}
+                fileUrl={fileUrl}
+                heading={heading}
+                subHeadingText={subHeadingText}
+                sectionEyebrow={sectionName ?? "What's Inside"}
+              />
+            ) : (
+              renderRightColumn(rightColumn, context)
+            )}
           </Grid.Col>
         </Grid>
 
