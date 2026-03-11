@@ -25,6 +25,7 @@ interface IGridContainerProps {
   isMobileView: boolean;
   sectionIndex?: number;
   dataContext?: string;
+  children?: React.ReactNode;
 }
 
 const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
@@ -32,6 +33,7 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
   isMobileView,
   sectionIndex = 0,
   dataContext: dataContextProp,
+  children,
 }) => {
   const { title: pageTitle } = React.useContext(PageContext);
   const dataContext = dataContextProp ?? pageTitle;
@@ -159,6 +161,17 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
     );
   };
 
+  const rightContent =
+    lengthOfRightSection &&
+    (hasListItems ? renderStatCards(rightSection) : renderRightColumn(rightSection));
+  const rightSectionEl = rightContent ? (
+    <section className={cx(classes.rightSection, classes.rightSectionBelowFooter)} data-context={dataContext} data-section-index={sectionIndex}>
+      {rightContent}
+    </section>
+  ) : null;
+
+  const showRightInGrid = lengthOfRightSection && !(isMobileView && children);
+
   return (
     <>
       <div className={classes.gridContainer}>
@@ -169,7 +182,7 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
             })}
             data-context={dataContext}
             data-section-index={sectionIndex}
-            order={{ base: 2, sm: 2, md: 1, lg: 1 }}
+            order={{ base: 1, sm: 1, md: 1, lg: 1 }}
             span={{
               base: 12,
               sm: 12,
@@ -179,25 +192,25 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
           >
             <section>{renderLeftColumn(leftSection, context)}</section>
           </Grid.Col>
-          {lengthOfRightSection && (
+          {showRightInGrid && (
             <Grid.Col
               className={cx(classes.gridBox, classes.right, {
                 [classes.mobilePadding]: isMobileView,
               })}
               data-context={dataContext}
               data-section-index={sectionIndex}
-              order={{ base: 1, md: 2 }}
+              order={{ base: 2, sm: 2, md: 2 }}
               span={{ base: 12, md: 6 }}
             >
               <section className={classes.rightSection}>
-                {hasListItems
-                  ? renderStatCards(rightSection)
-                  : renderRightColumn(rightSection)}
+                {rightContent}
               </section>
             </Grid.Col>
           )}
         </Grid>
       </div>
+      {children}
+      {isMobileView && children && rightSectionEl}
     </>
   );
 };
