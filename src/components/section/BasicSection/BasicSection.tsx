@@ -97,7 +97,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     section?.renderOptions?.layoutOptions?.numberOfColumns === 1;
 
   const bgColor = getColorFromStylingOptions(section.stylingOptions?.background)
-  const isBgColorLight = LIGHT_COLOR_LIST.includes(bgColor ?? COLORS.LIGHT); 
+  const isBgColorLight = LIGHT_COLOR_LIST.includes(bgColor ?? COLORS.LIGHT);
+  const isDtpCtaSection =
+    section?.eyebrowHeading?.toUpperCase() === "SEE WHAT'S POSSIBLE";
 
   // eslint-disable-next-line array-callback-return
   section?.body?.references?.map((reference: any) => {
@@ -141,6 +143,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           const { target } = node.data;
           const isSecondaryAltButton =
             node.data.target.buttonStyle === BUTTON_STYLE.Secondary;
+          const buttonLabel =
+            (node.data.target.buttonText as string) +
+            (isDtpCtaSection ? " →" : "");
           const button = (
             <Button
               className={cx(classes.button, {
@@ -148,7 +153,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               })}
               variant={isSecondaryAltButton ? "white" : "philDefault"}
             >
-              {node.data.target.buttonText}
+              {buttonLabel}
             </Button>
           );
 
@@ -467,6 +472,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           : sectionBackground(section?.background as BackgroundType),
         }} 
       className={cx(classes.basicSectionMainContainer, section.slug, classes.scrollSection)}
+      data-dtp-cta-section={isDtpCtaSection ? "true" : undefined}
     >
       <>
       {section?.backgroundAssetImage && 
