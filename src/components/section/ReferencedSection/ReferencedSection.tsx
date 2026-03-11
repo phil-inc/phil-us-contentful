@@ -33,7 +33,6 @@ import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
 import { COLORS, LIGHT_COLOR_LIST } from "constants/global.constant";
 import { REFERENCE_SECTION_ORDER } from "enum/global.enum";
-
 type ReferencedSectionProps = {
   section: IReferencedSection;
   isEmbedFormTemplate: boolean;
@@ -137,7 +136,15 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           md: GRID_COLUMNS,
           sm: GRID_COLUMNS,
         };
-        
+
+      case ReferenceTypeEnum["Pharmacy Network"]:
+        return {
+          xl: GRID_COLUMNS,
+          lg: GRID_COLUMNS,
+          md: GRID_COLUMNS,
+          sm: GRID_COLUMNS,
+        };
+
       default:
         return { xl: SPAN_LG, lg: SPAN_LG, md: GRID_COLUMNS, sm: GRID_COLUMNS };
     }
@@ -382,25 +389,25 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
             </Text>
           </div>
         )}
-        {
-          isSmallDevice 
-          ? (assetMobile &&
-            <div className={classes.topImage}>
-              <Asset
-                asset={assetMobile}
-                objectFit="contain"
-                />
-            </div>
-            )
-            :(asset &&
-              <div className={classes.topImage}>
-              <Asset
-                asset={asset}
-                objectFit="contain"
-                />
-            </div>
-          )
-        }
+        {section.referenceType !== ReferenceTypeEnum["Pharmacy Network"] && (
+          isSmallDevice
+            ? (assetMobile && (
+                <div className={classes.topImage}>
+                  <Asset
+                    asset={assetMobile}
+                    objectFit="contain"
+                  />
+                </div>
+              ))
+            : (asset && (
+                <div className={classes.topImage}>
+                  <Asset
+                    asset={asset}
+                    objectFit="contain"
+                  />
+                </div>
+              ))
+        )}
         {section?.assetCaption && 
           <Text className={classes.assetCaption}>
             <span className={classes.infoIcon}>
