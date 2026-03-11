@@ -84,6 +84,7 @@ const Section: React.FC<SectionProps> = ({
         return (
           <LeftRightContainer
             sectionData={section as ITextandTextColumnsWithFooterSection}
+            sectionIndex={sectionIndex}
           />
         );
 

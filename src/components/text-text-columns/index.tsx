@@ -19,15 +19,12 @@ import {
 import * as classes from "./textandtext.module.css";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import {  navigate } from "gatsby";
-import { IconArrowRight } from "@tabler/icons";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import cx from "clsx";
 import PageContext from "contexts/PageContext";
 import Asset from "components/common/Asset/Asset";
-import ImageContainer from "components/common/Container/ImageContainer";
 import HubspotFormV2 from "components/common/HubspotForm/HubspotFormV2";
 import { getHubspotFormDetails } from "utils/utils";
-import { BUTTON_CONFIG } from "constants/global.constant";
 
 const REPORT_FORM_SUBMITTED_KEY = "researchReportFormSubmitted";
 

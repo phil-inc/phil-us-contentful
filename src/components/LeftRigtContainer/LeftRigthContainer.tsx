@@ -5,6 +5,7 @@ import { TAsset } from "types/asset";
 import { navigate } from "gatsby";
 
 import { useIsLaptop } from "hooks/useIsLaptop";
+import PageContext from "contexts/PageContext";
 
 import Asset from "components/common/Asset/Asset";
 import FloorContainer from "components/LeftRigtContainer/FloorContainer/FloorContainer";
@@ -14,16 +15,21 @@ import * as classes from "./LeftRightContainer.module.css";
 
 type Props = {
   sectionData: ITextandTextColumnsWithFooterSection;
+  sectionIndex?: number;
   philLogo?: TAsset;
   whiltePhilLogo?: TAsset;
 };
 
 export default function LeftRightContainer({
   sectionData,
+  sectionIndex = 0,
   philLogo,
   whiltePhilLogo,
 }: Props) {
   const isLaptopScreen = useIsLaptop();
+  const { title: pageTitle } = React.useContext(PageContext);
+  /* Use section entry title for data-context so styling matches (e.g. "Research Report") */
+  const dataContext = sectionData?.title ?? pageTitle;
 
   const renderPhilLogo = (logo: TAsset) => {
     return (
@@ -37,7 +43,11 @@ export default function LeftRightContainer({
 
   return (
     <>
-      <div className={classes.leftRightContainer}>
+      <div
+        className={classes.leftRightContainer}
+        data-context={dataContext}
+        data-section-index={sectionIndex}
+      >
         {sectionData?.leftWallBackgroundImage && 
           <div className={classes.leftWallBgIcon}>
             <Asset
@@ -63,10 +73,20 @@ export default function LeftRightContainer({
 
         {isLaptopScreen ? (
           <Container className="container" size="xl">
-            <GridContainer sectionData={sectionData} isMobileView={false} />
+            <GridContainer
+              sectionData={sectionData}
+              isMobileView={false}
+              sectionIndex={sectionIndex}
+              dataContext={dataContext}
+            />
           </Container>
         ) : (
-          <GridContainer sectionData={sectionData} isMobileView={true} />
+          <GridContainer
+            sectionData={sectionData}
+            isMobileView={true}
+            sectionIndex={sectionIndex}
+            dataContext={dataContext}
+          />
         )}
 
         {(sectionData?.footerColumn || sectionData?.resourceReferences) && (

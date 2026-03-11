@@ -795,11 +795,70 @@ export const query = graphql`
                 }
                 sectionType
               }
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                heading
+                subheading
+                choose
+                anchorLink
+                linkText
+                listType
+                icon {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+              }
             }
           }
           footerColumn {
             __typename
             raw
+            references {
+              __typename
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                heading
+                subheading
+                choose
+                anchorLink
+                linkText
+                listType
+                icon {
+                  title
+                  file {
+                    contentType
+                    url
+                  }
+                }
+              }
+            }
           }
           resourceReferences {
             __typename
