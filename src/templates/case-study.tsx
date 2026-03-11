@@ -1325,29 +1325,14 @@ export const caseStudyQuery = graphql`
             metaDescription
             buttonText
             internalLink {
-              ... on ContentfulPage {
-                id
-                title
-                slug
-                sys {
-                  contentType {
-                    sys {
-                      type
-                      id
-                    }
-                  }
-                }
-              }
-              ... on ContentfulDownloadableResource {
-                id
-                slug
-                heading
-                sys {
-                  contentType {
-                    sys {
-                      type
-                      id
-                    }
+              id
+              slug
+              heading
+              sys {
+                contentType {
+                  sys {
+                    type
+                    id
                   }
                 }
               }

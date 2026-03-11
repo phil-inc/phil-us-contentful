@@ -282,7 +282,6 @@ export type ITextandTextColumns = {
   showBottomBorder?: boolean;
   sectionName?: string;
   link?: Hyperlink;
-  files?: { url: string; file?: { url: string; contentType: string }; title?: string }[];
 };
 
 export type ITextandTextColumnsWithFooterSection = {
@@ -316,12 +315,9 @@ export type IContentfulList = {
   subheading: string | null;
   choose: boolean;
   anchorLink: string;
-  linkText?: string | null;
-  listType?: string | null;
   description?: {
     description: string;
   };
-  icon?: Pick<TAsset, "gatsbyImageData" | "title">;
 }
 
 export type ISys = {

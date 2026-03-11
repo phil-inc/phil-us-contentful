@@ -204,12 +204,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           }
           key={resource.id + "mapReferencedSectionResource"}
           span={
-            section.referenceType === ReferenceTypeEnum["Card Section"] &&
-            section.header === "What the Research Shows"
-              ? { base: 12, sm: 12, md: 4, lg: 4, xl: 4 }
-              : section.v2flag
+            section.v2flag
                 ? { base: 12, sm: span, md: span  }
-                : getSpan(section.referenceType)
+              : getSpan(section.referenceType)
           }
           data-reference-type={section.referenceType}
           data-is-home-page-brand-outcome={
