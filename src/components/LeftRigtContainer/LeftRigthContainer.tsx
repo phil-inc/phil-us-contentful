@@ -81,15 +81,26 @@ export default function LeftRightContainer({
             />
           </Container>
         ) : (
-          <GridContainer
-            sectionData={sectionData}
-            isMobileView={true}
-            sectionIndex={sectionIndex}
-            dataContext={dataContext}
-          />
+          <Container className="container" size="xl">
+            <GridContainer
+              sectionData={sectionData}
+              isMobileView={true}
+              sectionIndex={sectionIndex}
+              dataContext={dataContext}
+            >
+              {(sectionData?.footerColumn || sectionData?.resourceReferences) && (
+                <div className={classes.sectionFooter}>
+                  <FloorContainer
+                    floorData={sectionData?.footerColumn}
+                    brandMetric={sectionData?.resourceReferences}
+                  />
+                </div>
+              )}
+            </GridContainer>
+          </Container>
         )}
 
-        {(sectionData?.footerColumn || sectionData?.resourceReferences) && (
+        {isLaptopScreen && (sectionData?.footerColumn || sectionData?.resourceReferences) && (
           <Container className="container" size={"xl"}>
             <div className={classes.sectionFooter}>
               <FloorContainer

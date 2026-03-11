@@ -323,3 +323,33 @@
   }
 }
 
+/* Right section when rendered below footer on mobile (outside grid) */
+.rightSectionBelowFooter {
+  margin-top: 24px;
+  width: 100%;
+}
+
+.rightSectionBelowFooter[data-context="Research Report"] .statCardWrapper {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  padding: 24px 28px;
+}
+
+.rightSectionBelowFooter[data-context="Research Report"] .statCard {
+  background-color: #e0f2f1;
+  padding: 16px 20px;
+}
+
+.rightSectionBelowFooter[data-context="Research Report"] .statValue {
+  color: #016d6d;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.rightSectionBelowFooter[data-context="Research Report"] .statLabel {
+  color: #2a9d8f;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
