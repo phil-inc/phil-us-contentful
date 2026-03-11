@@ -71,7 +71,7 @@ export function GatedReportForm({
           <Text className={classes.submittedPrivacy} component="p">
             By submitting this form, you agree to PHIL&apos;s{" "}
             <Anchor
-              href="/privacy-policy"
+              href="/privacy"
               target="_blank"
               rel="noopener noreferrer"
               className={classes.privacyLink}
