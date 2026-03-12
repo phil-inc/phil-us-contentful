@@ -106,7 +106,8 @@
   }
 
   .right {
-    &[data-context="Demo Page"] {
+    &[data-context="Demo Page"],
+    &[data-context="Demo form section"] {
       padding-bottom: 20px;
       background-color: #ffffff;
 
@@ -116,7 +117,7 @@
 
         .border {
           border-radius: 15px;
-          padding: 36px 36px 22px;
+          padding: 36px;
           background-color: #ffffff;
         }
       }
@@ -134,8 +135,34 @@
     height: 100%;
   }
 
+  /* Demo Page: white form panel (target section + .border so it works regardless of Grid.Col) */
+  .rightSection[data-context="Demo Page"] .border,
+  .rightSection[data-context="Demo form section"] .border {
+    background-color: #ffffff !important;
+    border-radius: 15px;
+    padding: 36px;
+    min-height: 0; /* don't stretch so top/bottom padding stay equal */
+  }
+
+  .rightSection[data-context="Demo Page"],
+  .rightSection[data-context="Demo form section"] {
+    padding-bottom: 20px;
+  }
+
+  @media (min-width: $phil-breakpoint-md) {
+    .rightSection[data-context="Demo Page"],
+    .rightSection[data-context="Demo form section"] {
+      padding-bottom: 0;
+    }
+  }
+
   .right .rightSection .border {
     min-height: 100%;
+  }
+
+  /* Demo form card: don't stretch so padding stays uniform */
+  .right .rightSection .border.demoFormCard {
+    min-height: 0;
   }
 
   /* Research Report: vertically center the stat card instead of stretching */
@@ -329,6 +356,34 @@
   width: 100%;
 }
 
+/* Demo Page mobile: form at top – full-width white block, gap below form not above */
+.demoFormMobileTop {
+  margin-top: 0;
+  padding: 0;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+/* Full-width white block: no rounded card, fill the area */
+.demoFormMobileTop .border {
+  border-radius: 0;
+  width: 100%;
+  max-width: none;
+}
+
+/* Gap below form (between form and teal section) – margin and padding on section in mobile view */
+.demoFormGridBelow {
+  margin-top: 24px;
+}
+
+.demoFormGridBelow .mobilePadding[data-context="Demo Page"],
+.demoFormGridBelow .mobilePadding[data-context="Demo form section"] {
+  padding-top: 40px;
+}
+
 .rightSectionBelowFooter[data-context="Research Report"] .statCardWrapper {
   background-color: #ffffff;
   border-radius: 20px;
@@ -351,5 +406,42 @@
   color: #2a9d8f;
   font-size: 14px;
   line-height: 1.45;
+}
+
+/* Demo Page: white form panel when right section is rendered below footer on mobile */
+.rightSectionBelowFooter[data-context="Demo Page"] .border,
+.rightSectionBelowFooter[data-context="Demo form section"] .border {
+  background-color: #ffffff !important;
+  border-radius: 15px;
+  padding: 36px;
+  min-height: 0;
+}
+
+/* Demo form: white card (applied by class when right column is "Request a Demo" form – no reliance on data-context) */
+.demoFormCard {
+  background-color: #ffffff !important;
+  border-radius: 15px;
+  padding: 36px;
+  min-height: 0;
+}
+
+/* Uniform top/bottom: reset inner margins so card padding is the only spacing (use element selectors – inner classes are from another module) */
+.demoFormCard > section,
+.rightSection[data-context="Demo Page"] .border > section,
+.rightSection[data-context="Demo form section"] .border > section {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.demoFormCard > section > *:first-child,
+.rightSection[data-context="Demo Page"] .border > section > *:first-child,
+.rightSection[data-context="Demo form section"] .border > section > *:first-child {
+  margin-top: 0;
+}
+.demoFormCard > section > *:last-child,
+.rightSection[data-context="Demo Page"] .border > section > *:last-child,
+.rightSection[data-context="Demo form section"] .border > section > *:last-child {
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
