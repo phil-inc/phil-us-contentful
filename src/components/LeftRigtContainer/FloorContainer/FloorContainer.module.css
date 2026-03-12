@@ -76,4 +76,50 @@
     font-weight: 600;
     font-size: 18px;
   }
+
+  .footerListRow {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 24px;
+
+    > p:empty {
+      display: none;
+    }
+
+    /* Research Report: no border between grid and footer */
+    [data-context="Research Report"] & {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+
+  .footerListItem {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .footerListIcon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+
+    img,
+    [data-gatsby-image-wrapper] {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  .footerListText {
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.85);
+    white-space: nowrap;
+  }
 }
