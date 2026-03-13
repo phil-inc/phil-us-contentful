@@ -110,7 +110,9 @@ const RightImageBottomComp: React.FC<BasicSectionProps> = ({
     },
   };
 
-  const mediaItemOrAsset = section.v2Flag ? section.mediaItem : section.asset;
+  const mediaItemOrAsset = section.v2Flag
+    ? (section.mediaItemAnimation ?? section.mediaItem)
+    : section.asset;
 
   return (
     <>

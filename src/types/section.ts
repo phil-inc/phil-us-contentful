@@ -87,6 +87,8 @@ export type ISection = {
     youtubeLink: string;
     emdedForm: BodyType;
   };
+
+  mediaItemAnimation?: TAsset;
   
   stylingOptions?: StylingOptions;
 

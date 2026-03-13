@@ -58,6 +58,8 @@ type BasicSectionProps = {
   isEmbedFormTemplate: boolean;
   sectionIndex?: number;
   subSectionIndex?: number;
+  /** When true, section is a direct child of the page (not inside a Section Group). mediaItemAnimation is only used in this case. */
+  isDirectPageSection?: boolean;
 };
 
 /**
@@ -72,6 +74,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   isEmbedFormTemplate,
   sectionIndex=0,
   subSectionIndex,
+  isDirectPageSection = false,
 }) => {
   const HERO_SECTION_INDEX = 0; // Hero section index is always 0
   const NUMBER_OF_COLUMNS = 2; // Basic section will always have 2 columns
@@ -427,7 +430,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   const hasYoutubeLink = isSectionV2
     ? Boolean(section?.mediaItem?.youtubeLink)
     : Boolean(section.youtubeVideoUrl);
-  const mediaItemOrAsset = isSectionV2 ? section.mediaItem : section.asset;
+  const mediaItemOrAsset = isSectionV2
+    ? (isDirectPageSection ? (section.mediaItemAnimation ?? section.mediaItem) : section.mediaItem)
+    : section.asset;
   const youtubeVideoUrl = isSectionV2
     ? section?.mediaItem?.youtubeLink
     : section.youtubeVideoUrl;

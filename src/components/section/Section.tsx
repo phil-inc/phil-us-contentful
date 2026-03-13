@@ -44,6 +44,7 @@ const Section: React.FC<SectionProps> = ({
           index={index!}
           isEmbedFormTemplate={isEmbedFormTemplate}
           sectionIndex={sectionIndex}
+          isDirectPageSection
         />
       );
     case "Referenced Section":

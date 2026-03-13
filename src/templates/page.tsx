@@ -484,6 +484,21 @@ export const query = graphql`
                 }
                 id
               }
+              mediaItemAnimation {
+                gatsbyImageData(
+                  resizingBehavior: SCALE
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
+                title
+                file {
+                  contentType
+                  details {
+                    size
+                  }
+                  url
+                }
+              }
               assetForMobile {
                 gatsbyImageData(
                   resizingBehavior: SCALE
@@ -1174,6 +1189,21 @@ export const query = graphql`
               raw
             }
             id
+          }
+          mediaItemAnimation {
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
           }
           assetForMobile {
             gatsbyImageData(
