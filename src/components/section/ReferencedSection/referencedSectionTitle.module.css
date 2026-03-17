@@ -99,6 +99,33 @@
 	}
 }
 
+:global([data-expert-perspectives="true"]) .stack {
+	align-items: center;
+	gap: 16px;
+}
+
+:global([data-expert-perspectives="true"]) .stack .heading {
+	text-align: center;
+	width: 100%;
+	font-size: 32px;
+	font-family: Raleway, sans-serif;
+	font-weight: 700;
+	color: #1a1a1a;
+	line-height: 1.2;
+}
+
+@media (min-width: $phil-breakpoint-sm) {
+	:global([data-expert-perspectives="true"]) .stack .heading {
+		font-size: 40px;
+	}
+}
+
+@media (min-width: $phil-breakpoint-md) {
+	:global([data-expert-perspectives="true"]) .stack .heading {
+		font-size: 48px;
+	}
+}
+
 .faqTitleContainer{
 	width: 100%;
 	display: flex;

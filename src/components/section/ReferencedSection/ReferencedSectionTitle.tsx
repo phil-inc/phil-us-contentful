@@ -84,7 +84,11 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
   };
 
   // === Conditionally render header and subheading ===
-  const showHeader = Boolean(section.header?.length) && !isCardSection;
+  const isExpertPerspectivesCardSection =
+    isCardSection && section.header === "What the Research Shows";
+  const showHeader =
+    Boolean(section.header?.length) &&
+    (!isCardSection || isExpertPerspectivesCardSection);
 
   const showSubheading =
     Boolean(section.subHeading?.subHeading?.length) &&
