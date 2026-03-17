@@ -601,6 +601,36 @@ export const query = graphql`
                 }
                 id
               }
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                contentful_id
+                heading
+                subheading
+                choose
+                anchorLink
+                linkText
+                listType
+                icon {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    url
+                    contentType
+                  }
+                }
+              }
             }
           }
           rightColumn {
@@ -666,6 +696,14 @@ export const query = graphql`
             id
             name
           }
+          files {
+            url
+            file {
+              url
+              contentType
+            }
+            title
+          }
           link {
             ... on ContentfulLink {
               id
@@ -684,6 +722,163 @@ export const query = graphql`
                     }
                   }
                 }
+              }
+            }
+          }
+        }
+        ... on ContentfulTextAndTextColumnsWithFooterSection {
+          id
+          title
+          sectionType
+          leftWallBackgroundImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          rightWallBackgroundImage {
+            id
+            gatsbyImageData(
+              resizingBehavior: SCALE
+              placeholder: BLURRED
+              layout: CONSTRAINED
+            )
+            title
+            file {
+              contentType
+              details {
+                size
+              }
+              url
+            }
+          }
+          leftColumn {
+            __typename
+            raw
+            references {
+              __typename
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                heading
+                subheading
+                choose
+                anchorLink
+                linkText
+                listType
+                icon {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                }
+              }
+            }
+          }
+          rightColumn {
+            __typename
+            raw
+            references {
+              __typename
+              ... on ContentfulSection {
+                id
+                header
+                body {
+                  raw
+                }
+                sectionType
+              }
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                heading
+                subheading
+                choose
+                anchorLink
+                linkText
+                listType
+                icon {
+                  gatsbyImageData(
+                    resizingBehavior: SCALE
+                    placeholder: BLURRED
+                    layout: CONSTRAINED
+                  )
+                  title
+                  file {
+                    contentType
+                    details {
+                      size
+                    }
+                    url
+                  }
+                }
+              }
+            }
+          }
+          footerColumn {
+            __typename
+            raw
+            references {
+              __typename
+              ... on ContentfulList {
+                sys {
+                  contentType {
+                    sys {
+                      type
+                      id
+                    }
+                  }
+                }
+                id
+                heading
+                subheading
+                choose
+                anchorLink
+                linkText
+                listType
+                icon {
+                  title
+                  file {
+                    contentType
+                    url
+                  }
+                }
+              }
+            }
+          }
+          resourceReferences {
+            __typename
+            ... on ContentfulResource {
+              id
+              heading
+              body {
+                raw
               }
             }
           }
@@ -1691,8 +1886,21 @@ export const query = graphql`
               metaDescription
               buttonText
               internalLink {
-                id
+                ... on ContentfulPage {
+                  id
+                  title
+                  slug
+                  sys {
+                    contentType {
+                      sys {
+                        type
+                        id
+                      }
+                    }
+                  }
+                }
                 ... on ContentfulDownloadableResource {
+                  id
                   slug
                   heading
                   sys {

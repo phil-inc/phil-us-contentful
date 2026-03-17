@@ -26,3 +26,7 @@ The project requires the following environment variables to be set:
 - When there is changes in the contentful, please run `yarn clean` to get the lastest clean data from contentful.
 
 
+## Documentation Link:
+- [Marketing-Phil Documentation](https://docs.google.com/document/d/1bud4I2aCPJBOtauzsQEWD6uc_Q0J6XW_g6_X68FvTVQ/edit?usp=sharing)
+
+

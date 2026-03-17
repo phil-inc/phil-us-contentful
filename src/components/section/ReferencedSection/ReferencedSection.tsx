@@ -338,6 +338,12 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         isBrandOutcomeCardSection && context.title === HOME
       }
       data-referenceType={section.referenceType}
+      data-expert-perspectives={
+        section.referenceType === ReferenceTypeEnum["Card Section"] &&
+        section.header === "What the Research Shows"
+          ? "true"
+          : undefined
+      }
       pt={section.header?.length > 0 ? undefined : 0}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
       className = {classes.scrollSection}
