@@ -15,6 +15,7 @@ import cx from 'clsx';
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
 import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 import TestimonialCarousel from "./TestimonialCarousel";
+import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -133,6 +134,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
     return <ResourceCarousel imageCaraouselSection={section} />;
   }
 
+  if (section.referenceType === ReferenceTypeEnum["Tabs Switch"]) {
+    return <TabsSwitch section={section}/>;
+  }
+
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
   const getGridGutter = () => {
@@ -141,6 +146,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           section.referenceType === ReferenceTypeEnum["Promo Card"]
     )
       return 0;
+    if (section.referenceType === ReferenceTypeEnum["Linear Process Card"]) {
+      return 18;
+    }
     return 36;
   };
 
@@ -178,9 +186,12 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           }
           key={resource.id + "mapReferencedSectionResource"}
           span={
-            section.v2flag
+            section.referenceType === ReferenceTypeEnum["Card Section"] &&
+            section.header === "What the Research Shows"
+              ? { base: 12, sm: 12, md: 4, lg: 4, xl: 4 }
+              : section.v2flag
                 ? { base: 12, sm: span, md: span  }
-              : getSpan(section.referenceType)
+                : getSpan(section.referenceType)
           }
           data-reference-type={section.referenceType}
           data-is-home-page-brand-outcome={

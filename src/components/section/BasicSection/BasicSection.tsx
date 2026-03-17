@@ -7,7 +7,6 @@ import {
   Button,
   Container,
   Divider,
-  Flex,
   Grid,
   Group,
   List,
@@ -50,7 +49,8 @@ import { getIdSlugifyForDiv } from "utils/utils";
 import { BASIC_SECTION, BUTTON_STYLE, COLORS, CONTENTFUL_TYPES, LAYOUT_12COL, LIGHT_COLOR_LIST } from "constants/global.constant";
 
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
-import RightImageBottomComp from "components/section/BasicSection/BasicComponentType/RightImageBottomComp";
+
+import withBasicSectionSwitch from "hoc/withBasicSectionSwitch";
 
 type BasicSectionProps = {
   section: ISection;
@@ -97,7 +97,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     section?.renderOptions?.layoutOptions?.numberOfColumns === 1;
 
   const bgColor = getColorFromStylingOptions(section.stylingOptions?.background)
-  const isBgColorLight = LIGHT_COLOR_LIST.includes(bgColor ?? COLORS.LIGHT); 
+  const isBgColorLight = LIGHT_COLOR_LIST.includes(bgColor ?? COLORS.LIGHT);
+  const isDtpCtaSection =
+    section?.eyebrowHeading?.toUpperCase() === "SEE WHAT'S POSSIBLE";
 
   // eslint-disable-next-line array-callback-return
   section?.body?.references?.map((reference: any) => {
@@ -141,6 +143,9 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           const { target } = node.data;
           const isSecondaryAltButton =
             node.data.target.buttonStyle === BUTTON_STYLE.Secondary;
+          const buttonLabel =
+            (node.data.target.buttonText as string) +
+            (isDtpCtaSection ? " →" : "");
           const button = (
             <Button
               className={cx(classes.button, {
@@ -148,7 +153,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               })}
               variant={isSecondaryAltButton ? "white" : "philDefault"}
             >
-              {node.data.target.buttonText}
+              {buttonLabel}
             </Button>
           );
 
@@ -455,10 +460,6 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   
   const { media } = extractAssetData(mediaItemOrAsset, youtubeVideoUrl);
   
-  if(section?.componentType === "Right Bottom Image"){
-    return <RightImageBottomComp section={section} index={index} isEmbedFormTemplate={isEmbedFormTemplate}/>
-  }
-
   return (
     <>
     {Boolean(section.addBorder) && <Container className={classes.dividerContainer} size={"xl"}><Divider className={classes.divider}/></Container>}
@@ -471,6 +472,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
           : sectionBackground(section?.background as BackgroundType),
         }} 
       className={cx(classes.basicSectionMainContainer, section.slug, classes.scrollSection)}
+      data-dtp-cta-section={isDtpCtaSection ? "true" : undefined}
     >
       <>
       {section?.backgroundAssetImage && 
@@ -493,6 +495,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
       data-is-embed-form-template={isEmbedFormTemplate}
       data-oneColumn={isOneColumn}
       data-is-bgcolor-dark={!isBgColorLight}
+      data-section-index={sectionIndex}
     >
 
       {section?.eyebrowHeading && <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>{section.eyebrowHeading}</Text>}
@@ -649,6 +652,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             data-index={index}
             data-context={context.title}
             data-oneColumn={isOneColumn}
+            data-section-index={sectionIndex}
           >
             <Asset
               className={classes.assetWallImage}
@@ -675,4 +679,4 @@ const BasicSection: React.FC<BasicSectionProps> = ({
   );
 };
 
-export default BasicSection;
+export default withBasicSectionSwitch(BasicSection);

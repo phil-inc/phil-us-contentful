@@ -58,9 +58,9 @@ const config: GatsbyConfig = {
       options: {},
     },
     {
-      resolve: `gatsby-plugin-advanced-sitemap-patch`,
+      resolve: `gatsby-plugin-sitemap`,
       options: {
-        exclude: [`/dev-404-page`, `/dev-404-page/`, `/404`, `/404/`, `/404.html`, `/field`],
+        excludes: [`/dev-404-page`, `/dev-404-page/`, `/404`, `/404/`, `/404.html`, `/field`],
         createLinkInHead: true,
       },
     },
@@ -97,26 +97,6 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-manifest',
       options: {
         icon: 'src/assets/images/icon.png',
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-hubspot',
-      options: {
-        trackingCode: '20880193',
-        respectDNT: false,
-        productionOnly: true,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        // You can add multiple tracking ids and a pageview event will be fired for all of them.
-        trackingIds: ['UA-71509531-1', 'AW-10844415925', 'G-0D2JJPD1QY'],
-        // This object is used for configuration specific to this plugin
-        pluginConfig: {
-          // Puts tracking script in the head instead of the body
-          head: true,
-        },
       },
     },
     {

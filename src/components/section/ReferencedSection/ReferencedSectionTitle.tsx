@@ -66,6 +66,7 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
       <div className={isFaqSectionPatients ? classes.faqTitleContainer : ""}>
         <Title
           data-context={title}
+          section-index={sectionIndex}
           data-is-home-brand-outcome={isBrandOutcomeCardSection && isHomePage}
           className={className}
           order={order}
@@ -83,7 +84,11 @@ const ReferencedSectionTitle: React.FC<ReferencedSectionTitleProps> = ({
   };
 
   // === Conditionally render header and subheading ===
-  const showHeader = Boolean(section.header?.length) && !isCardSection;
+  const isExpertPerspectivesCardSection =
+    isCardSection && section.header === "What the Research Shows";
+  const showHeader =
+    Boolean(section.header?.length) &&
+    (!isCardSection || isExpertPerspectivesCardSection);
 
   const showSubheading =
     Boolean(section.subHeading?.subHeading?.length) &&

@@ -1,0 +1,110 @@
+.philTabsContainer {
+  background-color: transparent;
+
+  .tabsContainer {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+
+    .tabsList {
+      display: flex;
+      &[data-context="Phil Direct"] {
+        .tab {
+          font-size: 18px;
+          font-family: Lato;
+          font-weight: 600;
+        }
+      }
+
+      .tab {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px 12px;
+        color: #444;
+        position: relative;
+
+        &.active {
+          font-weight: 600;
+          background-color: #d5f1f0;
+        }
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+      }
+    }
+
+    .tabsPanel {
+      padding: 16px;
+      border: 1.5px solid #6ddfc1;
+      border-radius: 8px;
+      display: flex;
+      gap: 8px;
+
+      &[data-context="Phil Direct"] {
+        font-family: Lato;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      .bullet {
+        margin-top: 2px;
+      }
+    }
+
+    /* ===== TAB LAYOUT HORIZONTAL ===== */
+
+    &.tabsHorizontal {
+      flex-direction: column;
+
+      .tabsList {
+        flex-direction: row;
+        border-bottom: 1px solid #ddd;
+        gap: 8px;
+
+        .tab {
+          border-bottom: 3px solid transparent;
+
+          &.active {
+            border-bottom-color: #1c7ed6;
+          }
+        }
+      }
+    }
+
+    /* ===== TABS LAYOUT VERTICAL ===== */
+
+    &.tabsVertical {
+      flex-direction: column;
+      gap: 24px;
+
+      .tabsList {
+        flex: 1;
+
+        flex-direction: column;
+        border-left: 1px solid #ddd;
+        min-width: 160px;
+
+        .tab {
+          text-align: left;
+          border-left: 3px solid transparent;
+        }
+
+        .tab.active {
+          border-left-color: #09aaa5;
+          padding-left: 9px;
+        }
+      }
+
+      .tabsPanel {
+        flex: 1;
+      }
+
+      @media (min-width: $phil-breakpoint-md) {
+        flex-direction: row;
+        gap: 60px;
+      }
+    }
+  }
+}

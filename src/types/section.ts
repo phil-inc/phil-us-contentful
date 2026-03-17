@@ -156,7 +156,9 @@ export enum ReferenceTypeEnum {
   "Single line Metric card" = "Single line Metric card",
   "Promo Card" = "Promo Card",
   "MetricWith5Card" = "MetricWith5Card",
-  "MetricWith3Card" = "MetricWith3Card",
+  "Tabs Switch" = "Tabs Switch",
+  "Linear Process Card" = "Linear Process Card",
+  "Metric Outcome Card" = "Metric Outcome Card",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
@@ -228,9 +230,11 @@ export type IReferencedSection = {
   secondReferenceTitle?: string;
   secondReferenceType?: ReferenceType;
   referenceSecondRenderOptions?: RenderOptions;
+  thirdReferenceTitle?: string;
   referenceThird?: TResource[];  
   thirdReferenceType?: ReferenceType;
   referenceThirdRenderOptions?: RenderOptions;
+  canShowBottomBorderInThirdReference?: boolean;
   referenceFourth?: TResource[];  
   fourthReferenceType?: ReferenceType;
   referenceFourthRenderOptions?: RenderOptions;
@@ -278,6 +282,7 @@ export type ITextandTextColumns = {
   showBottomBorder?: boolean;
   sectionName?: string;
   link?: Hyperlink;
+  files?: { url: string; file?: { url: string; contentType: string }; title?: string }[];
 };
 
 export type ITextandTextColumnsWithFooterSection = {
@@ -311,6 +316,12 @@ export type IContentfulList = {
   subheading: string | null;
   choose: boolean;
   anchorLink: string;
+  linkText?: string | null;
+  listType?: string | null;
+  description?: {
+    description: string;
+  };
+  icon?: Pick<TAsset, "gatsbyImageData" | "title">;
 }
 
 export type ISys = {
