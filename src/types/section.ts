@@ -344,14 +344,26 @@ export type IContentfulButtonGroup = {
   sys: ISys;
 }
 
+export type IMetric = {
+  id: string;
+  __typename?: string;
+  metricLabel: string;
+  metricDescription?: string;
+  metricDescriptionRichText?: BodyType;
+};
+
+export type GroupSectionType = "Tabbed" | "Default";
+
 export type ISectionGroup = {
   id: string;
   __typename: string;
   title: string;
   sectionType: SectionType;
+  groupSectionType?: GroupSectionType;
   canShowTopBorder: boolean;
   canShowBottomBorder:boolean;
   backgroundAssetImage1?: TAsset;
   backgroundAssetImage2?:  TAsset;
-  sectionGroupReference?: Array<ISection>;
+  sectionGroupReference?: Array<ISection | IMetric>;
+  metric?: IMetric;
 }
