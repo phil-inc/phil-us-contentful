@@ -28,7 +28,7 @@ type PageTemplateProps = {
   };
 };
 
-// Page head  
+// Page Head  
 export { Head };
 
 const PageTemplate: React.FC<PageTemplateProps> = ({ data }) => {
