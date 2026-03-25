@@ -358,6 +358,7 @@ const ResourcesSearch: React.FC<ResourcesSearchProps> = ({
   const resources = React.useMemo(
     () =>
       sections
+        .filter((section) => (section as IReferencedSection).references)
         .map((section) => (section as IReferencedSection).references)
         .flat(),
     [],
