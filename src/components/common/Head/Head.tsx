@@ -75,6 +75,7 @@ const Head: React.FC<HelmetProps> = ({
         />
       )}
       <meta property="og:url" content={`https://phil.us${config.slug}`} />
+      <link rel="canonical" href={`https://phil.us${config.slug}`} />
       <Script
         defer
         async
