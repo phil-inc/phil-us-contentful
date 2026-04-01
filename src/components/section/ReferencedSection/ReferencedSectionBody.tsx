@@ -15,7 +15,7 @@ import cx from 'clsx';
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
 import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
-import ScrollCircleAnimation from "components/ScrollCircleAnimation";
+import ScrollCircleAnimation from "components/ScrollCircleAnimation/ScrollCircleAnimation";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
