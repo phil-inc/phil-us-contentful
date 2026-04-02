@@ -48,7 +48,7 @@ function unlockScroll(_savedY: number) {
 }
 
 // Total accumulated wheel deltaY (px) to drive animation from 0 → 1
-const WHEEL_TOTAL = 6000;
+const WHEEL_TOTAL = 4000; // The less the number, the faster the animation
 
 //  Main component
 type Props = {
