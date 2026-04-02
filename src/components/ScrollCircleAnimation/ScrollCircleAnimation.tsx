@@ -12,7 +12,6 @@ import homeDeliveryLogo from '../../assets/scroll-circle-animation/home-delivery
 import simpleRefillsLogo from '../../assets/scroll-circle-animation/simple-refills.svg';
 import arrowConnector from '../../assets/scroll-circle-animation/arrow-connector.svg';
 
-// ─── Circle data ──────────────────────────────────────────────────────────────
 
 interface CircleData {
   label: string;
@@ -23,7 +22,6 @@ interface CircleData {
 
 const CIRCUMFERENCE = 2 * Math.PI * 42; // ≈ 263.8
 
-// ─── Circle definitions ───────────────────────────────────────────────────────
 
 const CIRCLES: CircleData[] = [
   { label: 'e-Prescribing', desc: 'Familiar workflow with existing EMRs', bgVariant: 'light', logo: ePrescribingLogo },
@@ -35,30 +33,24 @@ const CIRCLES: CircleData[] = [
   { label: 'Simple Refills', desc: 'Easy enrollment in patient refills', bgVariant: 'light', logo: simpleRefillsLogo },
 ];
 
-// ─── Scroll lock / unlock ─────────────────────────────────────────────────────
+//  Scroll lock / unlock
 
 function lockScroll(): number {
-  const y = window.scrollY;
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${y}px`;
-  document.body.style.width = '100%';
-  document.body.style.overflowY = 'scroll';
-  return y;
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+  document.documentElement.style.overflow = 'hidden';
+  if (scrollbarWidth) document.body.style.paddingRight = `${scrollbarWidth}px`;
+  return window.scrollY;
 }
 
-function unlockScroll(savedY: number) {
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  document.body.style.overflowY = '';
-  window.scrollTo({ top: savedY, behavior: 'instant' as ScrollBehavior });
+function unlockScroll(_savedY: number) {
+  document.documentElement.style.overflow = '';
+  document.body.style.paddingRight = '';
 }
 
 // Total accumulated wheel deltaY (px) to drive animation from 0 → 1
 const WHEEL_TOTAL = 6000;
 
-// ─── Main component ───────────────────────────────────────────────────────────
-
+//  Main component
 type Props = {
   mobileImage?: TAsset;
 };
@@ -67,19 +59,16 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
   const isMobile = useDeviceType('maxSm');
   const isUsingMobileFallback = isMobile && Boolean(mobileImage);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null); // kept for cleanup only
   const lastScrollYRef = useRef<number>(0);
 
-  // Authoritative progress (0–1). Kept as a ref so wheel handler always
-  // reads the latest value without stale-closure issues.
   const progressRef = useRef(0);
-  const lockedRef = useRef(false);      // is scroll currently locked?
+  const lockedRef = useRef(false);   
   const savedScrollY = useRef(0);
-  const centerTriggered = useRef(false); // has lock fired for this approach?
-  const cooldownRef = useRef(false);    // suppress re-lock after unlock (Safari fix)
-  const hasCompletedRef = useRef(false); // animation played once — never re-trigger
+  const centerTriggered = useRef(false); 
+  const cooldownRef = useRef(false);   
+  const hasCompletedRef = useRef(false); 
 
-  // React state drives the render; synced from progressRef inside events.
   const [scrollProgress, setScrollProgress] = useState(0);
   const [animationDone, setAnimationDone] = useState(false);
 
@@ -89,33 +78,39 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
     if (!el) return;
     lastScrollYRef.current = window.scrollY;
 
-    // ── Phase A: detect section centre reaching viewport centre ────────────
+    // ── Phase A: detect section centre reaching viewport centre 
     const handleScroll = () => {
       if (lockedRef.current || cooldownRef.current || hasCompletedRef.current) return;
+
       const currentScrollY = window.scrollY;
       const isScrollingDown = currentScrollY > lastScrollYRef.current;
       lastScrollYRef.current = currentScrollY;
 
-      if (rafRef.current !== null) return;
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        const rect = el.getBoundingClientRect();
-        const viewportH = window.innerHeight;
-        const sectionCenter = rect.top + rect.height / 2;
-        const viewportCenter = viewportH / 2;
-        const dist = Math.abs(sectionCenter - viewportCenter);
+      const rect = el.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const sectionCenter = rect.top + rect.height / 2;
+      const viewportCenter = viewportH / 2;
+      const dist = Math.abs(sectionCenter - viewportCenter);
 
-        // Fire lock only when scrolling DOWN into the section
-        const threshold = Math.max(40, rect.height * 0.1);
-        if (!centerTriggered.current && isScrollingDown && dist < threshold) {
-          centerTriggered.current = true;
-          lockedRef.current = true;
-          savedScrollY.current = lockScroll();
+      // Reset trigger when section is far from centre (user scrolled away)
+      if (dist > rect.height * 0.4) {
+        centerTriggered.current = false;
+        if (progressRef.current > 0) {
+          progressRef.current = 0;
+          setScrollProgress(0);
         }
-      });
+      }
+
+      // Lock when section centre crosses viewport centre while scrolling down
+      const threshold = Math.max(20, rect.height * 0.05);
+      if (!centerTriggered.current && isScrollingDown && dist < threshold) {
+        centerTriggered.current = true;
+        lockedRef.current = true;
+        savedScrollY.current = lockScroll();
+      }
     };
 
-    // ── Phase B: wheel drives animation while locked ───────────────────────
+    //Phase B: wheel drives animation while locked
     const handleWheel = (e: WheelEvent) => {
       if (!lockedRef.current) return;
       e.preventDefault(); // suppress any browser scroll while locked
@@ -130,7 +125,7 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
       });
 
       if (next >= 1 && !hasCompletedRef.current) {
-        // Animation complete — fade out rings, hold for 2s, then unlock
+        // Animation complete — fade out rings, hold for 0.1s, then unlock
         hasCompletedRef.current = true;
         setAnimationDone(true);
 
@@ -138,14 +133,15 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
           cooldownRef.current = true;
           lockedRef.current = false;
           unlockScroll(savedScrollY.current);
-          setTimeout(() => { cooldownRef.current = false; }, 500);
-        }, 500);
+          setTimeout(() => { cooldownRef.current = false; }, 100);
+        }, 100);
       } else if (next <= 0 && delta < 0) {
-        // User scrolled back to start — unlock and allow scrolling up
+        // Animation incomplete, user scrolling up past 0 — unlock and re-arm
         cooldownRef.current = true;
         lockedRef.current = false;
+        centerTriggered.current = false;
         unlockScroll(savedScrollY.current);
-        setTimeout(() => { cooldownRef.current = false; }, 500);
+        setTimeout(() => { cooldownRef.current = false; }, 100);
       }
     };
 
@@ -157,7 +153,7 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleWheel);
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      if (document.body.style.position === 'fixed') {
+      if (document.documentElement.style.overflow === 'hidden') {
         unlockScroll(savedScrollY.current);
       }
     };
@@ -194,16 +190,13 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
 
               return (
                 <React.Fragment key={i}>
-                  {/* Circle item */}
                   <div className={styles.circleItem}>
-                    {/* Ring + icon */}
                     <div
                       className={[
                         styles.circleRingWrap,
                         isActive ? styles.active : '',
                       ].join(' ')}
                     >
-                      {/* Progress ring SVG */}
                       <svg
                         className={[
                           styles.progressRingSvg,
@@ -221,7 +214,6 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
                         />
                       </svg>
 
-                      {/* Icon circle */}
                       {circle.bgVariant === 'svg' ? (
                         <div
                           className={[
@@ -247,12 +239,10 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
                       )}
                     </div>
 
-                    {/* Text */}
                     <div className={styles.circleLabel}>{circle.label}</div>
                     <div className={styles.circleDesc}>{circle.desc}</div>
                   </div>
 
-                  {/* Arrow connector between circles */}
                   {i < CIRCLES.length - 1 && (
                     <div className={[styles.arrowWrap, isDone ? styles.lit : ''].join(' ')}>
                       <img src={arrowConnector} alt="" aria-hidden className={styles.arrowIcon} />
@@ -263,7 +253,6 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
             })}
           </div>
 
-          {/* ── Footer badge ── */}
           <div className={styles.footerBadge}>
             <p>End-to-end data &amp; insights at the script, provider, payer, and program level</p>
           </div>
