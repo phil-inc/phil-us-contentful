@@ -1,37 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import Asset from 'components/common/Asset/Asset';
+import { CIRCUMFERENCE } from 'constants/global.constant';
+import { CIRCLES, FOOTER_BADGE_TEXT, HEADER_PILLS } from 'constants/scroll-circle-animation.constant';
 import useDeviceType from 'hooks/useView';
 import { TAsset } from 'types/asset';
 import * as styles from './ScrollCircleAnimation.module.css';
-import ePrescribingLogo from '../../assets/scroll-circle-animation/e-prescribing.svg';
-import fastEnrollmentLogo from '../../assets/scroll-circle-animation/fast-enrollment.svg';
-import paSubmissionLogo from '../../assets/scroll-circle-animation/pa-submission.svg';
-import coveredDispensesLogo from '../../assets/scroll-circle-animation/covered-dispenses.svg';
-import transparentCostsLogo from '../../assets/scroll-circle-animation/transparent-costs.svg';
-import homeDeliveryLogo from '../../assets/scroll-circle-animation/home-delivery.svg';
-import simpleRefillsLogo from '../../assets/scroll-circle-animation/simple-refills.svg';
 import arrowConnector from '../../assets/scroll-circle-animation/arrow-connector.svg';
-
-
-interface CircleData {
-  label: string;
-  desc: string;
-  bgVariant: 'light' | 'teal' | 'svg';
-  logo: string;
-}
-
-const CIRCUMFERENCE = 2 * Math.PI * 42; // ≈ 263.8
-
-
-const CIRCLES: CircleData[] = [
-  { label: 'e-Prescribing', desc: 'Familiar workflow with existing EMRs', bgVariant: 'light', logo: ePrescribingLogo },
-  { label: 'Fast Enrollment', desc: '< 1-minute patient signup', bgVariant: 'teal', logo: fastEnrollmentLogo },
-  { label: 'PA Submission', desc: 'Pre-filled forms for fewer clicks', bgVariant: 'svg', logo: paSubmissionLogo },
-  { label: 'Covered Dispenses', desc: 'Broad network maximizes coverage', bgVariant: 'svg', logo: coveredDispensesLogo },
-  { label: 'Transparent Costs', desc: 'Clear coverage and cost details', bgVariant: 'light', logo: transparentCostsLogo },
-  { label: 'Home Delivery', desc: 'Scheduled delivery options', bgVariant: 'teal', logo: homeDeliveryLogo },
-  { label: 'Simple Refills', desc: 'Easy enrollment in patient refills', bgVariant: 'light', logo: simpleRefillsLogo },
-];
 
 //  Scroll lock / unlock
 
@@ -174,8 +149,9 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
 
           {/* ── Header pills ── */}
           <div className={styles.headerPills}>
-            <div className={styles.pill}>Digital Hub Services</div>
-            <div className={styles.pill}>Integrated Dispense Network</div>
+            {HEADER_PILLS.map((pill) => (
+              <div key={pill} className={styles.pill}>{pill}</div>
+            ))}
           </div>
 
           {/* ── Circles row ── */}
@@ -192,16 +168,10 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
                 <React.Fragment key={i}>
                   <div className={styles.circleItem}>
                     <div
-                      className={[
-                        styles.circleRingWrap,
-                        isActive ? styles.active : '',
-                      ].join(' ')}
+                      className={clsx(styles.circleRingWrap, isActive && styles.active)}
                     >
                       <svg
-                        className={[
-                          styles.progressRingSvg,
-                          animationDone ? styles.hidden : '',
-                        ].join(' ')}
+                        className={clsx(styles.progressRingSvg, animationDone && styles.hidden)}
                         viewBox="0 0 88 88"
                       >
                         <circle className={styles.ringTrack} cx="44" cy="44" r="42" />
@@ -216,23 +186,19 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
 
                       {circle.bgVariant === 'svg' ? (
                         <div
-                          className={[
-                            styles.iconCircle,
-                            isActive ? styles.active : '',
-                            isDone ? styles.done : '',
-                          ].join(' ')}
+                          className={clsx(styles.iconCircle, isActive && styles.active, isDone && styles.done)}
                           style={{ background: 'transparent' }}
                         >
                           <img src={circle.logo} alt="" aria-hidden className={styles.fullSizeLogo} />
                         </div>
                       ) : (
                         <div
-                          className={[
+                          className={clsx(
                             styles.iconCircle,
                             circle.bgVariant === 'teal' ? styles.tealBg : styles.lightBg,
-                            isActive ? styles.active : '',
-                            isDone ? styles.done : '',
-                          ].join(' ')}
+                            isActive && styles.active,
+                            isDone && styles.done,
+                          )}
                         >
                           <img src={circle.logo} alt="" aria-hidden className={styles.innerLogo} />
                         </div>
@@ -244,7 +210,7 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
                   </div>
 
                   {i < CIRCLES.length - 1 && (
-                    <div className={[styles.arrowWrap, isDone ? styles.lit : ''].join(' ')}>
+                    <div className={clsx(styles.arrowWrap, isDone && styles.lit)}>
                       <img src={arrowConnector} alt="" aria-hidden className={styles.arrowIcon} />
                     </div>
                   )}
@@ -254,7 +220,7 @@ export default function ScrollCircleAnimation({ mobileImage }: Props) {
           </div>
 
           <div className={styles.footerBadge}>
-            <p>End-to-end data &amp; insights at the script, provider, payer, and program level</p>
+            <p>{FOOTER_BADGE_TEXT}</p>
           </div>
         </div>
       </div>
