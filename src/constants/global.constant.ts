@@ -84,3 +84,5 @@ export const BG_IMAGE_INDEX = {
   THREE: 3,
   FOUR: 4,
 };
+
+export const CIRCUMFERENCE = 2 * Math.PI * 42; // ~= 263.8

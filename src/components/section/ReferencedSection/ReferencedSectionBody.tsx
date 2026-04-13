@@ -15,6 +15,7 @@ import cx from 'clsx';
 import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrollCarousel";
 import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
+import ScrollCircleAnimation from "components/ScrollCircleAnimation/ScrollCircleAnimation";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -154,6 +155,10 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
 
   if (section.referenceType === ReferenceTypeEnum["Tabs Switch"]) {
     return <TabsSwitch section={section}/>;
+  }
+
+  if (section.referenceType === ReferenceTypeEnum["Scroll Circle Animation"]) {
+    return <ScrollCircleAnimation mobileImage={section.assetForMobile} />;
   }
 
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";

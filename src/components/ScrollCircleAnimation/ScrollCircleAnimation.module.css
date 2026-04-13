@@ -1,0 +1,273 @@
+/* ── Wrapper ── */
+.section {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 0 clamp(12px, 2vw, 24px) clamp(26px, 6vw, 77px); */
+  margin-top: -80px;
+  box-sizing: border-box;
+  /* background-color: red; */
+}
+
+/* ── Outer card with dashed border ── */
+.card {
+  position: relative;
+  border: 2px dashed #00827e;
+  border-radius: 17px;
+  padding: clamp(56px, 6vw, 82px) clamp(20px, 4vw, 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* ── Header pills above the card ── */
+.headerPills {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 100%;
+  gap: clamp(8px, 1.3vw, 17px);
+  align-items: center;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+.pill {
+  flex: 0 0 47%;
+  max-width: 47%;
+  background: #e3f0ee;
+  border: 1px solid #e6f5f4;
+  border-radius: 28px;
+  padding: clamp(8px, 1vw, 15px) clamp(12px, 2vw, 30px);
+  color: #00827e;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: clamp(11px, 1.5vw, 20px);
+  line-height: normal;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ── Circles row ── */
+.circlesRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* ── Single circle item (icon + label + desc) ── */
+.circleItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1.2vw, 16px);
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ── SVG ring wrapper ── */
+.circleRingWrap {
+  position: relative;
+  width: clamp(48px, 6vw, 80px);
+  height: clamp(48px, 6vw, 80px);
+  flex-shrink: 0;
+}
+
+.progressRingSvg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+  transition: opacity 0.5s ease-out;
+}
+
+.progressRingSvg.hidden {
+  opacity: 0;
+}
+
+.ringTrack {
+  fill: none;
+  stroke: #e5e5e5;
+  stroke-width: 3;
+}
+
+.ringFill {
+  fill: none;
+  stroke: #00827e;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 263.8; /* 2π × 42 */
+  stroke-dashoffset: 263.8;
+  will-change: stroke-dashoffset;
+}
+
+/* ── Inner icon circle ── */
+.iconCircle {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.iconCircle.tealBg {
+  background: #00827e;
+}
+
+.iconCircle.lightBg {
+  background: #d5f1f0;
+}
+
+.iconCircle.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.iconCircle.done {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* SVG logos inside circles */
+.iconCircle svg,
+.iconCircle img {
+  display: block;
+}
+
+.innerLogo {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+}
+
+.fullSizeLogo {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Circle label ── */
+.circleLabel {
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-size: clamp(11px, 1.15vw, 15px);
+  color: #000a1f;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.circleDesc {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: clamp(10px, 1vw, 13px);
+  color: #4a4a4a;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── Arrow connector ── */
+.arrowWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(14px, 2vw, 24px);
+  height: clamp(14px, 2vw, 24px);
+  margin-top: clamp(16px, 2.2vw, 28px);
+  flex-shrink: 0;
+  opacity: 0.4;
+  transition: opacity 0.4s ease;
+}
+
+.arrowIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.arrowWrap.lit {
+  opacity: 1;
+}
+
+/* ── Footer badge below card ── */
+.footerBadge {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background: #00827e;
+  border: 1px solid #007a55;
+  border-radius: 28px;
+  padding: clamp(8px, 1vw, 15px) clamp(14px, 2vw, 30px);
+  white-space: nowrap;
+}
+
+.footerBadge p {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
+  font-size: clamp(10px, 1.1vw, 14px);
+  color: #fff;
+  line-height: normal;
+  margin: 0;
+}
+
+/* ── Scroll lock notice ── */
+.scrollNotice {
+  position: absolute;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.scrollNotice.visible {
+  opacity: 1;
+}
+
+.scrollNoticeText {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  color: #00827e;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Mobile fallback ── */
+.mobileFallback {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.mobileFallback img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Scale wrapper (fluid layout handles sizing; slight zoom for visual weight) ── */
+.scaleWrap {
+  width: 100%;
+  zoom: 1.05;
+}
+
+@media (min-width: $phil-breakpoint-xl) {
+  .scaleWrap {
+    zoom: 1.2;
+  }
+}

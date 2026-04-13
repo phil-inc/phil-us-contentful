@@ -159,6 +159,7 @@ export enum ReferenceTypeEnum {
   "Tabs Switch" = "Tabs Switch",
   "Linear Process Card" = "Linear Process Card",
   "Metric Outcome Card" = "Metric Outcome Card",
+  "Scroll Circle Animation" = "Scroll Circle Animation",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;
