@@ -170,7 +170,7 @@ const RichTextRenderer = ({
       [BLOCKS.HEADING_1](node, children: React.ReactNode) {
         return (
           <Title
-            order={1}
+            order={2}
             data-context={context.title}
           >
             {children}
