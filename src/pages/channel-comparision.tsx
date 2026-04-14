@@ -37,6 +37,8 @@ const ChannelComparisionPage = () => {
     "//images.ctfassets.net/2h91ja0efsni/yZzZQ61D5fUVPiX4ioZnd/cfa25cb6c64b81496395dbaaa9bd7bba/hipaa-compliance.svg",
   ];
 
+  const badgeAltTexts = ["AICPA SOC 2 Certified", "HIPAA Compliant"];
+
   const getImageConfig = (src: string) => ({
     image: {
       layout: "constrained",
@@ -156,7 +158,7 @@ const ChannelComparisionPage = () => {
                   objectFit="contain"
                   image={image}
                   key={index}
-                  alt=""
+                  alt={badgeAltTexts[index] ?? ""}
                 />
               ))}
             </Group>
