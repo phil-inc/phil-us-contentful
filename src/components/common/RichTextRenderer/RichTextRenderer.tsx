@@ -54,7 +54,7 @@ const RichTextRenderer = ({
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const imageData = richTextImages[node.data.target.sys.id];
         const image = getImage(imageData?.image as ImageDataLike);
-        return <GatsbyImage image={image!} alt={""} />;
+        return <GatsbyImage image={image!} alt={""} loading="lazy" />;
       },
 
       // TODO: Refactor this

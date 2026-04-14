@@ -99,6 +99,7 @@ const MobileFooter: React.FC<TMobileFooter> = ({ pages, footer }) => {
                           <StaticImage
                             src="../../../assets/images/linkedin.svg"
                             alt="LinkedIn Icon"
+                            loading="lazy"
                           />
                           <Text
                             unstyled

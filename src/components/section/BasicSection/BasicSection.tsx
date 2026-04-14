@@ -120,13 +120,14 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
         return (
           <div className={classes.embeddedAsset}>
-            {image 
+            {image
             ? <GatsbyImage
                 style={{
                   marginBottom: `${handleSpacing(theme, theme.spacing.md)}px`,
                 }}
                 image={image!}
                 alt={""}
+                loading="lazy"
                 />
             : (targetImage &&
               <div>
@@ -596,6 +597,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                         <Asset
                           className={classes.assetWallImage}
                           asset={section.assetForMobile}
+                          loading={sectionIndex === 0 ? "eager" : "lazy"}
                           />
                     </div>
                     :<ImageContainer
@@ -614,6 +616,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                           asset={mediaItemOrAsset}
                           objectFit="contain"
                           youtubeVideoURL={youtubeVideoUrl}
+                          loading={sectionIndex === 0 ? "eager" : "lazy"}
                           />
                     </ImageContainer>
                   )
@@ -657,6 +660,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
             <Asset
               className={classes.assetWallImage}
               asset={mediaItemOrAsset}
+              loading={sectionIndex === 0 ? "eager" : "lazy"}
             />
             {section?.assetCaption && 
               <Text className={cx(classes.assetCaption,{[classes.darkText]: isBgColorLight, [classes.lightText]: !isBgColorLight})}>
