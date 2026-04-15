@@ -289,7 +289,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
         return (
           <Title
-            order={1}
+            order={2}
             data-context={context.title}
             className={classes.title}
           >

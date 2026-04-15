@@ -207,7 +207,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     sectionContent = (
       <div className={classes.commitmentCard}>
         <div className={classes.commitmentCardLeftSection}>
-          <h1 style={{fontSize: "40px", fontWeight: 700}}>{section.header}</h1>
+          <h2 style={{fontSize: "40px", fontWeight: 700}}>{section.header}</h2>
           <p style={{fontSize: "18px", fontWeight: 400}}>{section.subHeading?.subHeading}</p>
         </div>
         
