@@ -233,16 +233,6 @@
   }
 }
 
-/* Same gap as between other slides, between first set and second set */
-.carouselRepeatGap {
-  margin-right: 16px !important;
-}
-
-@media (min-width: $phil-breakpoint-md) {
-  .carouselRepeatGap {
-    margin-right: 32px !important;
-  }
-}
 
 .root {
   width: fit-content;

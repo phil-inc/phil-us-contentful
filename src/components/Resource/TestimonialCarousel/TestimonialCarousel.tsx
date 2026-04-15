@@ -2,11 +2,12 @@ import React from "react";
 import { Carousel } from "@mantine/carousel";
 import { Container } from "@mantine/core";
 import AutoScroll from "embla-carousel-auto-scroll";
+import { type EmblaCarouselType } from "embla-carousel";
 import { EMPLOYEE_SPOTLIGHT_TAG } from "constants/identifiers";
 import useDeviceType from "hooks/useView";
 import { type IReferencedSection } from "types/section";
-import RenderResource from "./RenderResource";
-import * as classes from "./referencedSection.module.css";
+import RenderResource from "components/section/ReferencedSection/RenderResource";
+import * as classes from "./TestimonialCarousel.module.css";
 
 type TestimonialCarouselProps = {
   section: IReferencedSection;
@@ -31,7 +32,7 @@ const TestimonialCarousel: React.FC<TestimonialCarouselProps> = ({ section }) =>
   );
 
   // Force embla to recalculate after mount to ensure proper layout
-  const handleEmblaInit = (embla: any) => {
+  const handleEmblaInit = (embla: EmblaCarouselType) => {
     setTimeout(() => {
       embla.reInit();
     }, 50);
@@ -48,8 +49,10 @@ const TestimonialCarousel: React.FC<TestimonialCarouselProps> = ({ section }) =>
     xl: `${95 / columns}%`,
   });
 
+  const references = section.references ?? [];
+
   // Duplicate references for infinite loop effect
-  const carouselReferences = [...section.references, ...section.references];
+  const carouselReferences = [...references, ...references];
 
   return (
     <Container className="carousel__container" fluid>
@@ -73,9 +76,9 @@ const TestimonialCarousel: React.FC<TestimonialCarouselProps> = ({ section }) =>
         loop={true}
         plugins={[autoScrollRef.current]}
         slidesToScroll={xs || sm || md ? "auto" : columns}
-        data-has-media-item={section.references.some(
+        data-has-media-item={references.some(
           (reference) =>
-            reference?.sys?.contentType?.sys?.id === "mediaItem" ?? false,
+            reference?.sys?.contentType?.sys?.id === "mediaItem",
         )}
         data-is-employee-tag={Boolean(isEmployeeTag)}
       >
@@ -84,12 +87,12 @@ const TestimonialCarousel: React.FC<TestimonialCarouselProps> = ({ section }) =>
           return (
             <Carousel.Slide
               key={`${resource.id}-testimonial-carousel-${index}`}
-              data-index={index % section.references.length}
+              data-index={index % references.length}
               className={isLastItem ? classes.carouselRepeatGap : undefined}
             >
               <RenderResource
-                arrayLength={section.references.length}
-                index={index % section.references.length}
+                arrayLength={references.length}
+                index={index % references.length}
                 referenceType={section.referenceType}
                 resource={resource}
                 sectionHeader={section.header}
