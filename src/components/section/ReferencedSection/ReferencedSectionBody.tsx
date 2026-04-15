@@ -16,7 +16,6 @@ import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrol
 import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 import TestimonialCarousel from "./TestimonialCarousel";
 import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
-import TestimonialCarousel from "./TestimonialCarousel";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
