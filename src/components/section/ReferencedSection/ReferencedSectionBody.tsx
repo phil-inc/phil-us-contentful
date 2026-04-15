@@ -16,6 +16,9 @@ import AutoScrollCarousel from "components/Resource/AutoScrollCarousel/AutoScrol
 import MetricWithUmbrellaBorder from "components/common/MetricWithUmbrellaBorder/MetricWithUmbrellaBorder";
 import TabsSwitch from "components/common/TabsSwitch/TabsSwitch";
 import TestimonialCarousel from "components/Resource/TestimonialCarousel/TestimonialCarousel";
+import PharmacyNetworkMap, {
+  type AnnotationMetric,
+} from "../../PharmacyNetworkMap/PharmacyNetworkMap";
 
 type ReferencedSectionBodyProps = {
   section: IReferencedSection;
@@ -55,6 +58,19 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   // Early return for AutoScrollCarousel on Company page
   if (title === COMPANY_PAGE && section?.canAlsoBeUseAsAutoCarousel) {
     return <AutoScrollCarousel section={section} />;
+  }
+
+  if (section.referenceType === ReferenceTypeEnum["Pharmacy Network"]) {
+    const annotations = ((section.references ?? []) as { id?: string; metricLabel?: string }[]).filter(
+      (ref) => ref?.metricLabel != null
+    ) as AnnotationMetric[];
+    return (
+      <PharmacyNetworkMap
+        mapAsset={section.asset}
+        mobileMapAsset={section.assetForMobile ?? section.asset}
+        annotations={annotations}
+      />
+    );
   }
 
   // Early return for Testimonial carousel with auto-scroll

@@ -157,6 +157,7 @@ export enum ReferenceTypeEnum {
   "Promo Card" = "Promo Card",
   "MetricWith5Card" = "MetricWith5Card",
   "Tabs Switch" = "Tabs Switch",
+  "Pharmacy Network" = "Pharmacy Network",
   "Linear Process Card" = "Linear Process Card",
   "Metric Outcome Card" = "Metric Outcome Card",
 }
@@ -343,6 +344,16 @@ export type IContentfulButtonGroup = {
   button2: ContentfulButton;
   sys: ISys;
 }
+
+export type IMetric = {
+  id: string;
+  __typename?: string;
+  metricLabel: string;
+  metricDescription?: string;
+  metricDescriptionRichText?: BodyType;
+};
+
+export type GroupSectionType = "Tabbed" | "Default";
 
 export type ISectionGroup = {
   id: string;
