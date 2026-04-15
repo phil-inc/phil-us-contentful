@@ -227,7 +227,7 @@ const BasicSectionColumn = ({ section, index = 0 }: Props) => {
       [BLOCKS.HEADING_1](node, children) {
         return (
           <Title
-            order={1}
+            order={2}
             data-context={context.title}
             className={classes.title}
           >
