@@ -58,7 +58,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
     return <AutoScrollCarousel section={section} />;
   }
 
-  // Early return for Testimonial carousel with auto-scroll infinite loop
+  // Early return for Testimonial carousel with auto-scroll
   if (
     section.referenceType === ReferenceTypeEnum.Testimonial &&
     section.renderOptions?.layoutOptions?.shouldRenderCarousel

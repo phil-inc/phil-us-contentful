@@ -80,9 +80,8 @@ const CardOrImage: React.FC<Props> = ({ resource, index, sectionIndex }) => {
           <Paper
             className={cx(classes.cardOrImage)}
             style={{
-              "--card-bg": getColorFromStylingOptions(
-                resource?.stylingOptions?.background,
-              ),
+              "--card-bg": getColorFromStylingOptions(resource?.stylingOptions?.background),
+              "--card-hover-bg": getColorFromStylingOptions(resource?.stylingOptions?.extraColor),
             } as React.CSSProperties}
             radius={0}  
           >
