@@ -1,4 +1,4 @@
-/* Mobile-first: 24px on small screens, 180px on desktop */
+/* Mobile-first: 30px on small screens, 180px on desktop */
 .wrapper {
   margin-top: 30px;
   @media (min-width: $phil-breakpoint-md) {
@@ -197,10 +197,7 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  right: 0;
-  max-height: 140px;
   width: 94%;
-  overflow-y: auto;
   border: 1px solid #E2E8F0;
   border-radius: 10px;
   padding: 12px 12px;
@@ -211,9 +208,14 @@
   background: #FFFFFF;
 
   @media (min-width: $phil-breakpoint-sm) {
-    max-height: 200px;
     padding: 18px 20px;
   }
+}
+
+/* Inner wrapper — position: relative so fadeOut stays inside the box's padded area */
+.mobileDescriptionInner {
+  position: relative;
+  width: 100%;
 }
 
 .mobileDescriptionWrapper {
@@ -221,16 +223,39 @@
   min-width: 0;
 }
 
-.mobileDescriptionFadeIn {
-  animation: mobileDescriptionFadeIn 0.3s ease-out;
+/* New content fades in — opacity: 0 base prevents any single-frame flash */
+.fadeIn {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out 0.1s both;
+  will-change: opacity;
 }
 
-@keyframes mobileDescriptionFadeIn {
+/* Old content overlays, fades out without affecting the box height */
+.fadeOut {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  animation: fadeOut 0.4s ease-out forwards;
+  will-change: opacity;
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 

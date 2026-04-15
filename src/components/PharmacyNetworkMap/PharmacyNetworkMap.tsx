@@ -1,19 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import cx from "clsx";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import Asset from "components/common/Asset/Asset";
+import { type TAsset } from "types/asset";
 
 import * as classes from "./PharmacyNetworkMap.module.css";
-
-const CARD_POSITION_CLASSES = [
-  "smartScriptRouting",
-  "fullScriptControl",
-  "stateCoverage",
-  "customizableRules",
-  "inHouseDistributors",
-] as const;
-
-const INTERVAL_MS = 5000;
+import { CARD_POSITION_CLASSES, INTERVAL_MS } from "constants/pharmacyNetwork";
 
 /** Matches ContentfulMetric fragment from page query (id, metricLabel, metricValue, metricDescriptionRichText) */
 export type AnnotationMetric = {
@@ -26,12 +18,12 @@ export type AnnotationMetric = {
 type NormalizedAnnotation = {
   id: string;
   title: string;
-  description: string | React.ReactNode;
+  description: React.ReactNode;
 };
 
 type PharmacyNetworkMapProps = {
-  mapAsset: any;
-  mobileMapAsset?: any;
+  mapAsset: TAsset;
+  mobileMapAsset?: TAsset;
   annotations?: AnnotationMetric[];
 };
 
@@ -57,24 +49,62 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
     [annotationsProp]
   );
 
-  const [displayedIndex, setDisplayedIndex] = useState(0);
-  const [selectedDotIndex, setSelectedDotIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  const activeIndexRef = useRef(0);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const storedHeightRef = useRef<number | null>(null);
 
-  const current = annotations[displayedIndex];
+  const current = annotations[activeIndex];
 
   useEffect(() => {
     if (annotations.length <= 1) return;
     const interval = setInterval(() => {
-      setDisplayedIndex((prev) => (prev + 1) % annotations.length);
-      setSelectedDotIndex((prev) => (prev + 1) % annotations.length);
+      setActiveIndex((prev) => (prev + 1) % annotations.length);
     }, INTERVAL_MS);
     return () => clearInterval(interval);
-  }, [annotations.length]);
+  }, [annotations.length, activeIndex]);
+
+  // Animate container height in sync with the crossfade (runs before paint)
+  useLayoutEffect(() => {
+    const el = innerRef.current;
+    if (!el) return;
+
+    const newHeight = el.scrollHeight;
+    const oldHeight = storedHeightRef.current;
+    storedHeightRef.current = newHeight;
+
+    if (oldHeight === null || oldHeight === newHeight) return;
+
+    // Lock at previous height, then transition to new height
+    el.style.transition = "none";
+    el.style.height = `${oldHeight}px`;
+    void el.offsetHeight; // force layout to commit old height before transition
+
+    el.style.transition = "height 0.6s ease-out";
+    el.style.height = `${newHeight}px`;
+
+    const onEnd = () => {
+      el.style.height = "";
+      el.style.transition = "";
+      storedHeightRef.current = el.scrollHeight;
+    };
+    el.addEventListener("transitionend", onEnd, { once: true });
+    return () => el.removeEventListener("transitionend", onEnd);
+  }, [activeIndex]);
+
+  // When activeIndex changes, briefly keep previous for fadeOut animation
+  useEffect(() => {
+    if (activeIndexRef.current === activeIndex) return;
+    setPrevIndex(activeIndexRef.current);
+    activeIndexRef.current = activeIndex;
+    const t = setTimeout(() => setPrevIndex(null), 500);
+    return () => clearTimeout(t);
+  }, [activeIndex]);
 
   const goTo = (index: number) => {
-    if (index === displayedIndex) return;
-    setDisplayedIndex(index);
-    setSelectedDotIndex(index);
+    if (index === activeIndex) return;
+    setActiveIndex(index);
   };
 
   const mobileAsset = mobileMapAsset ?? mapAsset;
@@ -101,11 +131,7 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
                 )}
               >
                 <p className={classes.cardTitle}>{card.title}</p>
-                <div className={classes.cardDescription}>
-                  {typeof card.description === "string"
-                    ? card.description
-                    : card.description}
-                </div>
+                <div className={classes.cardDescription}>{card.description}</div>
               </div>
             ))}
           </div>
@@ -117,21 +143,26 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
         <div className={classes.mobileLayout}>
           <div className={classes.mobileDescriptionSlot}>
             <div className={classes.mobileDescriptionBox}>
-              {current && (
-                <div
-                  key={displayedIndex}
-                  className={cx(classes.mobileDescriptionWrapper, classes.mobileDescriptionFadeIn)}
-                >
-                  <p className={classes.mobileDescriptionTitle}>
-                    {current.title}
-                  </p>
-                  <div className={classes.mobileDescription}>
-                    {typeof current.description === "string"
-                      ? current.description
-                      : current.description}
+              <div ref={innerRef} className={classes.mobileDescriptionInner}>
+                {prevIndex !== null && annotations[prevIndex] && (
+                  <div
+                    key={`prev-${prevIndex}`}
+                    className={cx(classes.mobileDescriptionWrapper, classes.fadeOut)}
+                  >
+                    <p className={classes.mobileDescriptionTitle}>{annotations[prevIndex].title}</p>
+                    <div className={classes.mobileDescription}>{annotations[prevIndex].description}</div>
                   </div>
-                </div>
-              )}
+                )}
+                {current && (
+                  <div
+                    key={`curr-${activeIndex}`}
+                    className={cx(classes.mobileDescriptionWrapper, classes.fadeIn)}
+                  >
+                    <p className={classes.mobileDescriptionTitle}>{current.title}</p>
+                    <div className={classes.mobileDescription}>{current.description}</div>
+                  </div>
+                )}
+              </div>
             </div>
             <div className={classes.mobileMap}>
               <Asset objectFit="contain" asset={mobileAsset} />
@@ -142,15 +173,15 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
             role="tablist"
             aria-label="Carousel pagination"
           >
-            {annotations.map((_, index) => (
+            {annotations.map((annotation, index) => (
               <button
-                key={annotations[index].id}
+                key={annotation.id}
                 type="button"
                 className={cx(classes.mobileDot, {
-                  [classes.mobileDotActive]: selectedDotIndex === index,
+                  [classes.mobileDotActive]: activeIndex === index,
                 })}
                 aria-label={`Go to slide ${index + 1}`}
-                aria-selected={selectedDotIndex === index}
+                aria-selected={activeIndex === index}
                 onClick={() => goTo(index)}
               />
             ))}
