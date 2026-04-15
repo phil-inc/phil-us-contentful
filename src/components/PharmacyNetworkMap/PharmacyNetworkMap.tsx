@@ -5,7 +5,13 @@ import Asset from "components/common/Asset/Asset";
 import { type TAsset } from "types/asset";
 
 import * as classes from "./PharmacyNetworkMap.module.css";
-import { CARD_POSITION_CLASSES, INTERVAL_MS } from "constants/pharmacyNetwork";
+import {
+  CARD_POSITION_CLASSES,
+  DOT_GAP,
+  DOT_SIZE,
+  PILL_WIDTH,
+  INTERVAL_MS,
+} from "constants/pharmacyNetwork";
 
 /** Matches ContentfulMetric fragment from page query (id, metricLabel, metricValue, metricDescriptionRichText) */
 export type AnnotationMetric = {
@@ -38,34 +44,84 @@ function normalizeAnnotations(annotations: AnnotationMetric[]): NormalizedAnnota
   }));
 }
 
+/**
+ * Computes the new slot-order array when the pill moves from its current slot
+ * to `targetSlot`.
+ *
+ * Item IDs: 0 = pill, 1..N-1 = dots (fungible — dots are identical grey circles).
+ *
+ * Rules (mirroring the reference PaginationLoader):
+ *   • Single-step forward  (target === currentPillSlot + 1): swap pill with right neighbour
+ *   • Wrap                 (target === 0, pill at last slot): pop pill from end, unshift to front
+ *   • Multi-step / click   (anything else): splice pill out, insert at target slot
+ */
+function computeNextOrder(order: number[], targetSlot: number): number[] {
+  const next = [...order];
+  const pillSlot = next.indexOf(0);
+
+  if (pillSlot === targetSlot) return order;
+
+  const isWrap = targetSlot === 0 && pillSlot === next.length - 1;
+  const isSingleForward = targetSlot === pillSlot + 1;
+
+  if (isWrap) {
+    next.splice(pillSlot, 1);
+    next.unshift(0);
+    return next;
+  }
+
+  if (isSingleForward) {
+    [next[pillSlot], next[targetSlot]] = [next[targetSlot], next[pillSlot]];
+    return next;
+  }
+
+  // Arbitrary jump: remove pill and insert at target slot
+  next.splice(pillSlot, 1);
+  next.splice(targetSlot, 0, 0);
+  return next;
+}
+
 const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
   mapAsset,
   mobileMapAsset,
   annotations: annotationsProp = [],
 }) => {
-
   const annotations = useMemo(
     () => normalizeAnnotations(annotationsProp),
     [annotationsProp]
   );
 
+  const N = annotations.length;
+
+  // ── Description box state ────────────────────────────────────────────────
   const [activeIndex, setActiveIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState<number | null>(null);
   const activeIndexRef = useRef(0);
+
+  // ── Description box height-sync refs ────────────────────────────────────
   const innerRef = useRef<HTMLDivElement>(null);
   const storedHeightRef = useRef<number | null>(null);
 
+  // ── Pagination dots order ────────────────────────────────────────────────
+  // order[slot] = itemId   (itemId 0 = pill, 1..N-1 = dots)
+  // Pill always occupies slot === activeIndex.
+  const [order, setOrder] = useState<number[]>(() =>
+    Array.from({ length: N }, (_, i) => i)
+  );
+
   const current = annotations[activeIndex];
 
+  // Auto-rotate interval — resets whenever activeIndex changes (so a dot click
+  // also resets the countdown).
   useEffect(() => {
-    if (annotations.length <= 1) return;
+    if (N <= 1) return;
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % annotations.length);
+      setActiveIndex((prev) => (prev + 1) % N);
     }, INTERVAL_MS);
     return () => clearInterval(interval);
-  }, [annotations.length, activeIndex]);
+  }, [N, activeIndex]);
 
-  // Animate container height in sync with the crossfade (runs before paint)
+  // Animate description-box height in sync with the crossfade (before paint).
   useLayoutEffect(() => {
     const el = innerRef.current;
     if (!el) return;
@@ -76,10 +132,9 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
 
     if (oldHeight === null || oldHeight === newHeight) return;
 
-    // Lock at previous height, then transition to new height
     el.style.transition = "none";
     el.style.height = `${oldHeight}px`;
-    void el.offsetHeight; // force layout to commit old height before transition
+    void el.offsetHeight;
 
     el.style.transition = "height 0.6s ease-out";
     el.style.height = `${newHeight}px`;
@@ -93,11 +148,18 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
     return () => el.removeEventListener("transitionend", onEnd);
   }, [activeIndex]);
 
-  // When activeIndex changes, briefly keep previous for fadeOut animation
+  // When activeIndex changes, keep the previous visible briefly for the
+  // description crossfade, and update the slot order for the pagination dots.
   useEffect(() => {
     if (activeIndexRef.current === activeIndex) return;
-    setPrevIndex(activeIndexRef.current);
+
+    const prev = activeIndexRef.current;
+    setPrevIndex(prev);
     activeIndexRef.current = activeIndex;
+
+    // Update slot order so the pill moves to the new activeIndex slot.
+    setOrder((prevOrder) => computeNextOrder(prevOrder, activeIndex));
+
     const t = setTimeout(() => setPrevIndex(null), 500);
     return () => clearTimeout(t);
   }, [activeIndex]);
@@ -109,7 +171,11 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
 
   const mobileAsset = mobileMapAsset ?? mapAsset;
 
-  if (!mapAsset || annotations.length === 0) return null;
+  if (!mapAsset || N === 0) return null;
+
+  const dotStep = DOT_SIZE + DOT_GAP;
+  const pillSlot = order.indexOf(0);
+  const trackWidth = (N - 1) * dotStep + PILL_WIDTH;
 
   return (
     <div className={classes.wrapper} data-pharmacy-network-map>
@@ -138,7 +204,7 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
         </div>
       </div>
 
-      {/* Mobile Layout*/}
+      {/* Mobile Layout */}
       <div className={classes.mobileContainer}>
         <div className={classes.mobileLayout}>
           <div className={classes.mobileDescriptionSlot}>
@@ -168,23 +234,42 @@ const PharmacyNetworkMap: React.FC<PharmacyNetworkMapProps> = ({
               <Asset objectFit="contain" asset={mobileAsset} />
             </div>
           </div>
-          <div
-            className={classes.mobileDots}
-            role="tablist"
-            aria-label="Carousel pagination"
-          >
-            {annotations.map((annotation, index) => (
-              <button
-                key={annotation.id}
-                type="button"
-                className={cx(classes.mobileDot, {
-                  [classes.mobileDotActive]: activeIndex === index,
-                })}
-                aria-label={`Go to slide ${index + 1}`}
-                aria-selected={activeIndex === index}
-                onClick={() => goTo(index)}
-              />
-            ))}
+
+          {/* Pagination dots — slot-based layout; pill always behind dots */}
+          <div className={classes.mobileDots} role="tablist" aria-label="Carousel pagination">
+            <div className={classes.mobileDotsTrack} style={{ width: trackWidth }}>
+              {Array.from({ length: N }, (_, itemId) => {
+                const slot = order.indexOf(itemId);
+                const isPill = itemId === 0;
+
+                const pillExtra = PILL_WIDTH - DOT_SIZE;
+
+                if (isPill) {
+                  return (
+                    <div
+                      key={0}
+                      className={classes.mobilePill}
+                      style={{ transform: `translateX(${slot * dotStep}px)` }}
+                      aria-hidden="true"
+                    />
+                  );
+                }
+
+                const x = slot * dotStep + (pillSlot < slot ? pillExtra : 0);
+                const targetAnnotation = slot;
+                return (
+                  <button
+                    key={itemId}
+                    type="button"
+                    className={classes.mobileDot}
+                    style={{ transform: `translateX(${x}px)` }}
+                    aria-label={`Go to slide ${targetAnnotation + 1}`}
+                    aria-selected={false}
+                    onClick={() => goTo(targetAnnotation)}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

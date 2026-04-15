@@ -316,36 +316,56 @@
 .mobileDots {
   flex-shrink: 0;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 11px;
   padding-top: 23px;
 }
 
-/* Inactive: 12px grey circle */
+/* Track: sizing context for all absolutely-positioned items */
+.mobileDotsTrack {
+  position: relative;
+  height: 12px;
+  /* width is set inline: annotations.length * DOT_STEP_SIZE */
+}
+
+/* Every item in the track is absolute; position driven by JS transform */
+.mobileDot,
+.mobilePill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 12px;
+  @media (min-width: $phil-breakpoint-sm) {
+    height: 14px;
+    background-color: red;
+
+  }
+  border-radius: 25px;
+  transition: transform 0.8s cubic-bezier(0.6, -0.05, 0.1, 0.99);
+}
+
+/* Dots: grey circles, always in front of the pill */
 .mobileDot {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  @media (min-width: $phil-breakpoint-sm) {
+    background-color: red;
+    height: 14px;
+  }
   padding: 0;
   border: none;
-  border-radius: 29px;
   background-color: #D9D9D9;
   cursor: pointer;
-  transition:
-    background-color 0.45s ease-in-out,
-    width 0.45s ease-in-out,
-    border-radius 0.45s ease-in-out;
+  z-index: 10;
 }
 
 .mobileDot:hover {
   background-color: #CBD5E1;
 }
 
-/* Active: elongated teal capsule/pill (stays teal on hover) */
-.mobileDotActive,
-.mobileDotActive:hover {
+/* Pill: teal capsule, always behind the dots */
+.mobilePill {
   width: 41px;
-  border-radius: 29px;
   background-color: #00827E;
+  pointer-events: none;
+  z-index: 1;
 }
