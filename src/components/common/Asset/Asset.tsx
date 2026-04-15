@@ -28,10 +28,11 @@ type AssetProps = {
   isFullWidth?: boolean;
   isHeightInherit?: boolean;
   isFullWidthHeight?: boolean;
+  loading?: "lazy" | "eager";
 };
 
 const Asset = forwardRef<HTMLDivElement, AssetProps>(
-  ({ asset, youtubeVideoURL, width, objectFit, isFullWidth, isHeightInherit,isFullWidthHeight }, ref) => {
+  ({ asset, youtubeVideoURL, width, objectFit, isFullWidth, isHeightInherit, isFullWidthHeight, loading = "lazy" }, ref) => {
     const { media, url, title, contentType, videoURL } = extractAssetData(
       asset,
       youtubeVideoURL,
@@ -51,7 +52,7 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
       }
 
       if (contentType === "image/svg+xml") {
-        return <img style={{ objectFit }} src={url} alt={title} />;
+        return <img style={{ objectFit }} src={url} alt={title} loading={loading} />;
       }
 
       if (contentType === "application/pdf" && typeof window !== "undefined") {
@@ -60,11 +61,12 @@ const Asset = forwardRef<HTMLDivElement, AssetProps>(
 
       if (contentType.startsWith("image/")) {
         const image = getImage(media);
-        return <GatsbyImage 
+        return <GatsbyImage
           objectFit={objectFit || "cover"}
           image={image!}
           alt={title}
-          className={cx(classes.gatsbyImageContainer, { [classes.fullWidth]: Boolean(isFullWidth), [classes.fullWidthHeight]: Boolean(isFullWidthHeight), [classes.heightInherit]: Boolean(isHeightInherit) })} 
+          loading={loading}
+          className={cx(classes.gatsbyImageContainer, { [classes.fullWidth]: Boolean(isFullWidth), [classes.fullWidthHeight]: Boolean(isFullWidthHeight), [classes.heightInherit]: Boolean(isHeightInherit) })}
         />;
       }
 
