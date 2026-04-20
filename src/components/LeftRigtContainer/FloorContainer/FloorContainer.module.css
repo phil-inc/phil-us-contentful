@@ -86,8 +86,8 @@
     }
 
     /* Research Report section on /dtp-research and /hcp-research (section index 0): no border between grid and footer */
-    [data-context="Dtp Research"][data-section-index="0"] &,
-    [data-context="Hcp Research"][data-section-index="0"] & {
+    &[data-context="Dtp Research"][data-section-index="0"],
+    &[data-context="Hcp Research"][data-section-index="0"] {
       border-top: none;
       padding-top: 0;
     }

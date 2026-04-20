@@ -19,6 +19,10 @@
 	&[data-context='Our Solution'],&[data-context="Phil Direct"] {
 		color: #09AAA5;
 	}
+
+  &[data-context="Hcp Research"],&[data-context="Dtp Research"]{
+    color: #09AAA5;
+  }
   
   &[data-context="Phil Direct"][section-index="5"]{
     text-align: left;
