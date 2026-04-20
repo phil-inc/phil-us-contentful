@@ -7,8 +7,9 @@
     padding-top: 36px;
   }
 
-  /* Research Report: tighten gap between grid and footer; min-height on bigger screens */
-  [data-context="Research Report"] & {
+  /* Research Report section on /dtp-research and /hcp-research (section index 0): tighten gap between grid and footer; min-height on bigger screens */
+  [data-context="Dtp Research"][data-section-index="0"] &,
+  [data-context="Hcp Research"][data-section-index="0"] & {
     margin-bottom: 0;
 
     @media (min-width: $phil-breakpoint-lg) {
@@ -56,8 +57,9 @@
     }
   }
 
-  /* Left column on Research Report page: eyebrow pill, title, body */
-  .left[data-context="Research Report"] {
+  /* Left column on Research Report section (/dtp-research, /hcp-research): eyebrow pill, title, body */
+  .left[data-context="Dtp Research"][data-section-index="0"],
+  .left[data-context="Hcp Research"][data-section-index="0"] {
     .eyebrowPill {
       display: inline-flex;
       align-items: center;
@@ -106,8 +108,7 @@
   }
 
   .right {
-    &[data-context="Demo Page"],
-    &[data-context="Demo form section"] {
+    &[data-context="Demo Page"] {
       padding-bottom: 20px;
       background-color: #ffffff;
 
@@ -136,22 +137,19 @@
   }
 
   /* Demo Page: white form panel (target section + .border so it works regardless of Grid.Col) */
-  .rightSection[data-context="Demo Page"] .border,
-  .rightSection[data-context="Demo form section"] .border {
+  .rightSection[data-context="Demo Page"] .border {
     background-color: #ffffff !important;
     border-radius: 15px;
     padding: 36px;
     min-height: 0; /* don't stretch so top/bottom padding stay equal */
   }
 
-  .rightSection[data-context="Demo Page"],
-  .rightSection[data-context="Demo form section"] {
+  .rightSection[data-context="Demo Page"] {
     padding-bottom: 20px;
   }
 
   @media (min-width: $phil-breakpoint-md) {
-    .rightSection[data-context="Demo Page"],
-    .rightSection[data-context="Demo form section"] {
+    .rightSection[data-context="Demo Page"] {
       padding-bottom: 0;
     }
   }
@@ -165,8 +163,9 @@
     min-height: 0;
   }
 
-  /* Research Report: vertically center the stat card instead of stretching */
-  .right[data-context="Research Report"] {
+  /* Research Report section (/dtp-research, /hcp-research): vertically center the stat card instead of stretching */
+  .right[data-context="Dtp Research"][data-section-index="0"],
+  .right[data-context="Hcp Research"][data-section-index="0"] {
     display: flex;
     align-items: center;
 
@@ -243,8 +242,9 @@
     color: rgba(255, 255, 255, 0.9);
   }
 
-  /* Research Report page: white card + teal stat boxes – responsive for 13" vs larger */
-  .right[data-context="Research Report"] {
+  /* Research Report section (/dtp-research, /hcp-research): white card + teal stat boxes – responsive for 13" vs larger */
+  .right[data-context="Dtp Research"][data-section-index="0"],
+  .right[data-context="Hcp Research"][data-section-index="0"] {
     .statCardWrapper {
       background-color: #ffffff;
       border-radius: 20px;
@@ -379,38 +379,40 @@
   margin-top: 24px;
 }
 
-.demoFormGridBelow .mobilePadding[data-context="Demo Page"],
-.demoFormGridBelow .mobilePadding[data-context="Demo form section"] {
+.demoFormGridBelow .mobilePadding[data-context="Demo Page"] {
   padding-top: 40px;
 }
 
-.rightSectionBelowFooter[data-context="Research Report"] .statCardWrapper {
+.rightSectionBelowFooter[data-context="Dtp Research"][data-section-index="0"] .statCardWrapper,
+.rightSectionBelowFooter[data-context="Hcp Research"][data-section-index="0"] .statCardWrapper {
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   padding: 24px 28px;
 }
 
-.rightSectionBelowFooter[data-context="Research Report"] .statCard {
+.rightSectionBelowFooter[data-context="Dtp Research"][data-section-index="0"] .statCard,
+.rightSectionBelowFooter[data-context="Hcp Research"][data-section-index="0"] .statCard {
   background-color: #e0f2f1;
   padding: 16px 20px;
 }
 
-.rightSectionBelowFooter[data-context="Research Report"] .statValue {
+.rightSectionBelowFooter[data-context="Dtp Research"][data-section-index="0"] .statValue,
+.rightSectionBelowFooter[data-context="Hcp Research"][data-section-index="0"] .statValue {
   color: #016d6d;
   font-size: 24px;
   line-height: 1.1;
 }
 
-.rightSectionBelowFooter[data-context="Research Report"] .statLabel {
+.rightSectionBelowFooter[data-context="Dtp Research"][data-section-index="0"] .statLabel,
+.rightSectionBelowFooter[data-context="Hcp Research"][data-section-index="0"] .statLabel {
   color: #2a9d8f;
   font-size: 14px;
   line-height: 1.45;
 }
 
 /* Demo Page: white form panel when right section is rendered below footer on mobile */
-.rightSectionBelowFooter[data-context="Demo Page"] .border,
-.rightSectionBelowFooter[data-context="Demo form section"] .border {
+.rightSectionBelowFooter[data-context="Demo Page"] .border {
   background-color: #ffffff !important;
   border-radius: 15px;
   padding: 36px;
@@ -427,19 +429,16 @@
 
 /* Uniform top/bottom: reset inner margins so card padding is the only spacing (use element selectors – inner classes are from another module) */
 .demoFormCard > section,
-.rightSection[data-context="Demo Page"] .border > section,
-.rightSection[data-context="Demo form section"] .border > section {
+.rightSection[data-context="Demo Page"] .border > section {
   margin-top: 0;
   margin-bottom: 0;
 }
 .demoFormCard > section > *:first-child,
-.rightSection[data-context="Demo Page"] .border > section > *:first-child,
-.rightSection[data-context="Demo form section"] .border > section > *:first-child {
+.rightSection[data-context="Demo Page"] .border > section > *:first-child {
   margin-top: 0;
 }
 .demoFormCard > section > *:last-child,
-.rightSection[data-context="Demo Page"] .border > section > *:last-child,
-.rightSection[data-context="Demo form section"] .border > section > *:last-child {
+.rightSection[data-context="Demo Page"] .border > section > *:last-child {
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
