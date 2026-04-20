@@ -92,6 +92,8 @@ export default function LeftRightContainer({
                   <FloorContainer
                     floorData={sectionData?.footerColumn}
                     brandMetric={sectionData?.resourceReferences}
+                    dataContext={dataContext}
+                    sectionIndex={sectionIndex}
                   />
                 </div>
               )}
@@ -105,6 +107,8 @@ export default function LeftRightContainer({
               <FloorContainer
                 floorData={sectionData?.footerColumn}
                 brandMetric={sectionData?.resourceReferences}
+                dataContext={dataContext}
+                sectionIndex={sectionIndex}
               />
             </div>
           </Container>

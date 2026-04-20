@@ -4,6 +4,8 @@ import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { Options } from "@contentful/rich-text-react-renderer";
 
+import PageContext from "contexts/PageContext";
+
 import { TResource } from "types/resource";
 import { ReferenceBodyType } from "types/section";
 
@@ -15,12 +17,18 @@ import * as classes from "./FloorContainer.module.css";
 interface IFloorContainerProps {
   floorData?: ReferenceBodyType;
   brandMetric?: TResource[];
+  dataContext?: string;
+  sectionIndex?: number;
 }
 
 const FloorContainer: React.FunctionComponent<IFloorContainerProps> = ({
   floorData,
   brandMetric,
+  dataContext: dataContextProp,
+  sectionIndex = 0,
 }) => {
+  const { title: pageTitle } = React.useContext(PageContext);
+  const dataContext = dataContextProp ?? pageTitle;
   const listRefs = React.useMemo(
     () =>
       (floorData?.references as any[])?.filter(
@@ -53,6 +61,8 @@ const FloorContainer: React.FunctionComponent<IFloorContainerProps> = ({
           wrap="wrap"
           align="center"
           className={classes.footerListRow}
+          data-context={dataContext}
+          data-section-index={sectionIndex}
         >
           {listRefs.map((entry: any) => (
             <Flex key={entry.id} gap={12} align="center" className={classes.footerListItem}>

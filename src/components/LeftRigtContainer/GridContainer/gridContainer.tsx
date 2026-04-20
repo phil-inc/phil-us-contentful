@@ -69,16 +69,36 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
         }
         if (useEyebrow) {
           return (
-            <div className={classes.eyebrowPill}>
+            <div
+              className={classes.eyebrowPill}
+              data-context={dataContext}
+              data-section-index={sectionIndex}
+            >
               <span className={classes.eyebrowPillDot} aria-hidden />
               <span>{children}</span>
             </div>
           );
         }
-        return <p className={hasListItems ? classes.bodyText : undefined}>{children}</p>;
+        return (
+          <p
+            className={hasListItems ? classes.bodyText : undefined}
+            data-context={dataContext}
+            data-section-index={sectionIndex}
+          >
+            {children}
+          </p>
+        );
       },
       [BLOCKS.HEADING_1](node, children) {
-        return <Title className={classes.titleH1}>{children}</Title>;
+        return (
+          <Title
+            className={classes.titleH1}
+            data-context={dataContext}
+            data-section-index={sectionIndex}
+          >
+            {children}
+          </Title>
+        );
       },
       [BLOCKS.UL_LIST](node, children) {
         return <>{children}</>;
@@ -100,16 +120,53 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
     if (!listItems.length) return null;
 
     return (
-      <div className={classes.statCardWrapper}>
-        <div className={classes.statCardsContainer}>
+      <div
+        className={classes.statCardWrapper}
+        data-context={dataContext}
+        data-section-index={sectionIndex}
+      >
+        <div
+          className={classes.statCardsContainer}
+          data-context={dataContext}
+          data-section-index={sectionIndex}
+        >
           {listItems.map((item: any) => (
-            <div key={item.id} className={classes.statCard}>
-              <div className={classes.statCardRow}>
-                <div className={classes.statValueCell}>
-                  <Text className={classes.statValue}>{item.heading}</Text>
+            <div
+              key={item.id}
+              className={classes.statCard}
+              data-context={dataContext}
+              data-section-index={sectionIndex}
+            >
+              <div
+                className={classes.statCardRow}
+                data-context={dataContext}
+                data-section-index={sectionIndex}
+              >
+                <div
+                  className={classes.statValueCell}
+                  data-context={dataContext}
+                  data-section-index={sectionIndex}
+                >
+                  <Text
+                    className={classes.statValue}
+                    data-context={dataContext}
+                    data-section-index={sectionIndex}
+                  >
+                    {item.heading}
+                  </Text>
                 </div>
-                <div className={classes.statLabelCell}>
-                  <Text className={classes.statLabel}>{item.subheading}</Text>
+                <div
+                  className={classes.statLabelCell}
+                  data-context={dataContext}
+                  data-section-index={sectionIndex}
+                >
+                  <Text
+                    className={classes.statLabel}
+                    data-context={dataContext}
+                    data-section-index={sectionIndex}
+                  >
+                    {item.subheading}
+                  </Text>
                 </div>
               </div>
             </div>
@@ -132,6 +189,8 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
     return (
       <div
         className={cx(classes.border, columnIsDemoForm && classes.demoFormCard)}
+        data-context={dataContext}
+        data-section-index={sectionIndex}
       >
         {column?.references &&
           column.references.map((entry: any, idx: number) => {
@@ -155,7 +214,13 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
 
     return (
       <div>
-        <Box className={classes.heading}>{renderRichText(column as Parameters<typeof renderRichText>[0], options)}</Box>
+        <Box
+          className={classes.heading}
+          data-context={dataContext}
+          data-section-index={sectionIndex}
+        >
+          {renderRichText(column as Parameters<typeof renderRichText>[0], options)}
+        </Box>
 
         <div>
           {column.references?.map((item) => {
@@ -207,6 +272,8 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
         classes.gridContainer,
         isFormOnTopMobile && classes.demoFormGridBelow
       )}
+      data-context={dataContext}
+      data-section-index={sectionIndex}
     >
       <Grid gutter={0} style={{ height: "100%" }} align="stretch">
         <Grid.Col
