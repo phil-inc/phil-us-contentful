@@ -10,6 +10,13 @@
   min-height: 340px;
   margin-left: auto;
   margin-right: auto;
+
+  /* Sticky form wrapper on desktop: stays pinned below the nav */
+  @media (min-width: $phil-breakpoint-md) {
+    position: sticky;
+    top: calc(var(--announcment-bar-height) + var(--navbar-height) + 16px);
+    align-self: flex-start;
+  }
 }
 
 .form hr {
