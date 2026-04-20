@@ -104,9 +104,9 @@ const renderColumn = (column: ReferenceBodyType, isFromRightColumn = false) => {
                   <Title order={4} className={classes.listCardHeading}>
                     {entry.heading}
                   </Title>
-                  {entry.subheading && (
-                    <Text className={classes.listCardSubheading}>
-                      {entry.subheading}
+                  {entry.description?.description && (
+                    <Text className={classes.listCardSubheading} mt={8}>
+                      {entry.description.description}
                     </Text>
                   )}
                 </Box>
@@ -176,9 +176,11 @@ const renderRightColumn = (column: any, context: any) => {
                 <Text data-context={context.title} className={classes.heading}>
                   {item.heading}
                 </Text>
-                <Text className={classes.subheading}>
-                  {item.subheading}
-                </Text>
+                {item.description?.description && (
+                  <Text className={classes.subheading} mt={4}>
+                    {item.description.description}
+                  </Text>
+                )}
               </div>
             </Flex>
           );
@@ -199,8 +201,7 @@ const TextAndTextColumns = ({ data, sectionIndex = 0 }: TextAndTextColumnsProps)
   );
   const hasGatedForm = Boolean(formId && portalId);
 
-  /* Uniquely target this section: data-context (section or page), data-section-index, data-gated-report */
-  const dataContext = sectionName ?? context.title;
+  const dataContext = context.title;
 
   return (
     <>

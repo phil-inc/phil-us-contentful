@@ -619,7 +619,10 @@ export const query = graphql`
                 id
                 contentful_id
                 heading
-                subheading
+                description {
+                  id
+                  description
+                }
                 choose
                 anchorLink
                 linkText
