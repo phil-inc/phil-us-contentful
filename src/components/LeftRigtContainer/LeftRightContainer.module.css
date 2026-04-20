@@ -9,8 +9,7 @@
 }
 
 /* Demo page mobile: prevent horizontal scroll when form block is full viewport width */
-.leftRightContainer[data-context="Demo Page"],
-.leftRightContainer[data-context="Demo form section"] {
+.leftRightContainer[data-context="Demo Page"] {
   @media (max-width: 1199px) {
     overflow-x: hidden;
   }
@@ -69,8 +68,9 @@
   cursor: pointer;
 }
 
-/* Research Report page – exact data-context like other sections */
-.leftRightContainer[data-context="Research Report"] {
+/* Research Report section on /dtp-research and /hcp-research (section index 0) */
+.leftRightContainer[data-context="Dtp Research"][data-section-index="0"],
+.leftRightContainer[data-context="Hcp Research"][data-section-index="0"] {
   padding-top: 40px;
 
   @media (min-width: $phil-breakpoint-md) {

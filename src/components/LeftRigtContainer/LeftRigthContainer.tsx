@@ -28,8 +28,7 @@ export default function LeftRightContainer({
 }: Props) {
   const isLaptopScreen = useIsLaptop();
   const { title: pageTitle } = React.useContext(PageContext);
-  /* Use section entry title for data-context so styling matches (e.g. "Research Report") */
-  const dataContext = sectionData?.title ?? pageTitle;
+  const dataContext = pageTitle;
 
   const renderPhilLogo = (logo: TAsset) => {
     return (
