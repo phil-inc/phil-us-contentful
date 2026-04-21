@@ -212,9 +212,8 @@ const TextAndTextColumns = ({ data, sectionIndex = 0 }: TextAndTextColumnsProps)
       )}
 
       <Container
-        className="container"
+        className={classes.container}
         size={"xl"}
-        py={{ base: 16, sm: 100 }}
         data-context={dataContext}
         data-section-index={sectionIndex}
         data-gated-report={hasGatedForm ? "true" : undefined}
@@ -231,6 +230,7 @@ const TextAndTextColumns = ({ data, sectionIndex = 0 }: TextAndTextColumnsProps)
         <Grid gutter={48}>
           <Grid.Col
             span={{ base: 12, md: 6 }}
+            order={hasGatedForm ? { base: 2, md: 1 } : undefined}
             data-context={dataContext}
             data-section-index={sectionIndex}
             data-gated-report={hasGatedForm ? "true" : undefined}
@@ -240,6 +240,7 @@ const TextAndTextColumns = ({ data, sectionIndex = 0 }: TextAndTextColumnsProps)
           </Grid.Col>
           <Grid.Col
             span={{ base: 12, md: 6 }}
+            order={hasGatedForm ? { base: 1, md: 2 } : undefined}
             data-context={dataContext}
             data-section-index={sectionIndex}
             data-gated-report={hasGatedForm ? "true" : undefined}

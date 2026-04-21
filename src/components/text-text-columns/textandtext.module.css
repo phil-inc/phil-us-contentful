@@ -1,3 +1,10 @@
+.container {
+  margin-bottom: 50px;
+  @media (min-width: $phil-breakpoint-md) {
+    margin-bottom: 100px;
+  }
+}
+
 .listCheckIcon {
   padding-bottom: 20px;
   margin-bottom: 20px;
