@@ -7,6 +7,14 @@
 	}
 }
 
+.paperWide {
+	@media (min-width: $phil-breakpoint-md) {
+		max-width: none;
+		width: 70%;
+		align-items: center;
+	}
+}
+
 .body {
 	color: var(--Phil-Rebrand-Neutral-Gunmetal, #525252);
 	font-family: Lato, sans-serif;

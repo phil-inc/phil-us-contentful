@@ -140,6 +140,12 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
 
   const isBrandOutcomeCardSection = section.referenceType === "Brand Outcome Card";
 
+  // Make testimonial wide on desktop (recently only used on the /hcp-research)
+  const isWideTestimonial = Boolean(
+    section.wideTestimonial &&
+      section.referenceType === ReferenceTypeEnum.Testimonial,
+  );
+
   const getGridGutter = () => {
     if (section.referenceType === ReferenceTypeEnum["Stepper Cards"] ||
           section.referenceType === ReferenceTypeEnum["Image Connnect To Two Card"] ||
@@ -194,6 +200,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
           data-is-home-page-brand-outcome={
             isBrandOutcomeCardSection && title === HOME
           }
+          data-wide-testimonial={isWideTestimonial ? "true" : undefined}
         >
           <RenderResource
             arrayLength={array.length}
@@ -204,6 +211,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
             isEmployeeTag={Boolean(isEmployeeTag)}
             metadata={section.metadata}
             sectionIndex={sectionIndex}
+            wide={isWideTestimonial}
           />
         </Grid.Col>
       ))}

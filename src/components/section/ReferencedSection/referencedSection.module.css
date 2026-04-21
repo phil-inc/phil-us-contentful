@@ -121,6 +121,14 @@
   &[data-reference-type="Testimonial"] {
     max-width: fit-content;
   }
+
+  &[data-reference-type="Testimonial"][data-wide-testimonial="true"] {
+    max-width: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   &[data-reference-type="Card Or Image"] {
     display: grid;

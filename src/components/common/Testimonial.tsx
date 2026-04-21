@@ -5,6 +5,7 @@ import React from "react";
 import type { TResource } from "types/resource";
 import Asset from "./Asset/Asset";
 import { BLOCKS } from "@contentful/rich-text-types";
+import cx from "clsx";
 
 import * as classes from "./testimonial.module.css";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
@@ -12,11 +13,13 @@ import { getColorFromStylingOptions } from "utils/stylingOptions";
 type TestimonialProps = {
   type?: "person" | "company";
   resource: TResource;
+  wide?: boolean;
 };
 
 export const Testimonial: FC<TestimonialProps> = ({
   resource,
   type = "company",
+  wide = false,
 }) => {
   const options = {
     renderNode: {
@@ -32,7 +35,7 @@ export const Testimonial: FC<TestimonialProps> = ({
 
   return (
     <Paper
-      className={classes.paper}
+      className={cx(classes.paper, { [classes.paperWide]: wide })}
       style={{
         background: getColorFromStylingOptions(
           resource.stylingOptions?.background,

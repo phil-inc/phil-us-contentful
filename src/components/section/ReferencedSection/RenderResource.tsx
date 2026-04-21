@@ -92,6 +92,7 @@ type ComponentFunctionProps = {
   metadata?: Metadata;
   sectionHeader?: string;
   sectionIndex?: number;
+  wide?: boolean;
 };
 
 type ComponentFunction = (
@@ -132,12 +133,12 @@ const StepperCardComponent: ComponentFunction = ({
   <StepperCard resource={resource} index={index!} arrayLength={arrayLength!} />
 );
 
-const TestimonialCompanyComponent: ComponentFunction = ({ resource }) => (
-  <Testimonial type="company" resource={resource} />
+const TestimonialCompanyComponent: ComponentFunction = ({ resource, wide }) => (
+  <Testimonial type="company" resource={resource} wide={wide} />
 );
 
-const TestimonialPersonComponent: ComponentFunction = ({ resource }) => (
-  <Testimonial type="person" resource={resource} />
+const TestimonialPersonComponent: ComponentFunction = ({ resource, wide }) => (
+  <Testimonial type="person" resource={resource} wide={wide} />
 );
 
 const ResourceCardComponent: ComponentFunction = ({ resource }) => (
@@ -286,6 +287,7 @@ const getComponent = (
   isEmployeeTag?: boolean,
   sectionHeader?: string,
   sectionIndex?: number,
+  wide?: boolean,
 ) => {
   const componentMappings: Record<
     ReferenceTypeEnum | ResourceBlocksEnum,
@@ -350,6 +352,7 @@ const getComponent = (
     isEmployeeTag,
     sectionHeader,
     sectionIndex,
+    wide,
   });
 };
 
@@ -362,6 +365,7 @@ type RenderResourceProps = {
   isEmployeeTag: boolean;
   metadata?: Metadata;
   sectionIndex?: number
+  wide?: boolean;
 };
 
 const RenderResource: React.FC<RenderResourceProps> = ({
@@ -372,7 +376,8 @@ const RenderResource: React.FC<RenderResourceProps> = ({
   referenceType,
   isEmployeeTag,
   metadata,
-  sectionIndex
+  sectionIndex,
+  wide,
 }) => {
   const theme = useMantineTheme();
   const [resourceBackground] = getSectionColors(referenceType);
@@ -388,6 +393,7 @@ const RenderResource: React.FC<RenderResourceProps> = ({
     isEmployeeTag,
     sectionHeader,
     sectionIndex,
+    wide,
   );
 };
 
