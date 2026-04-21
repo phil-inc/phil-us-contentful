@@ -240,6 +240,7 @@ export type IReferencedSection = {
   referenceFourthRenderOptions?: RenderOptions;
   eyebrowHeading?: string;
   announcementItems: AnnouncementItems
+  wideTestimonial?: boolean;
 };
 
   export type AnnouncementItems = Array<

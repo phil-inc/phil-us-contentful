@@ -252,6 +252,7 @@ export const query = graphql`
                           }
                         }
                         ... on ContentfulReferencedSection {
+                          wideTestimonial
                           id
                           page {
                             title
@@ -437,6 +438,7 @@ export const query = graphql`
                   }
                 }
                 ... on ContentfulReferencedSection {
+                  wideTestimonial
                   id
                   page {
                     title
@@ -554,6 +556,7 @@ export const query = graphql`
               __typename
 
               ... on ContentfulReferencedSection {
+                wideTestimonial
                 sys {
                   contentType {
                     sys {
@@ -946,6 +949,7 @@ export const query = graphql`
                       }
                     }
                     ... on ContentfulReferencedSection {
+                      wideTestimonial
                       id
                       page {
                         title
@@ -1134,6 +1138,7 @@ export const query = graphql`
               }
             }
             ... on ContentfulReferencedSection {
+              wideTestimonial
               id
               page {
                 title
@@ -1234,6 +1239,7 @@ export const query = graphql`
           canShowTextColumnToRight
         }
         ... on ContentfulReferencedSection {
+          wideTestimonial
           id
           title
           isHidden
@@ -1355,6 +1361,7 @@ export const query = graphql`
                   }
                 }
                 ... on ContentfulReferencedSection {
+                  wideTestimonial
                   id
                   page {
                     title
@@ -1432,6 +1439,7 @@ export const query = graphql`
                     }
                   }
                   ... on ContentfulReferencedSection {
+                    wideTestimonial
                     __typename
                     id
                     page {
@@ -1592,6 +1600,7 @@ export const query = graphql`
                           }
                         }
                         ... on ContentfulReferencedSection {
+                          wideTestimonial
                           id
                           page {
                             title
@@ -1990,6 +1999,7 @@ export const query = graphql`
               canShowMediaWidthFull
             }
             ... on ContentfulReferencedSection {
+              wideTestimonial
               id
               header
               references {
@@ -2035,6 +2045,7 @@ export const query = graphql`
               }
             }
             ... on ContentfulReferencedSection {
+              wideTestimonial
               id
               page {
                 title
