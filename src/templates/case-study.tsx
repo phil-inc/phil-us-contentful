@@ -139,7 +139,7 @@ export const Head: React.FC<HelmetProps> = ({
       )}
       <meta name="description" content={computeMetaDescription()} />
       <meta property="og:title" content={computeTitle()} />
-      <meta property="og:type" content={"Page"} />
+      <meta property="og:type" content="article" />
       <meta property="og:description" content={computeMetaDescription()} />
       {config.heroImage && (
         <meta
