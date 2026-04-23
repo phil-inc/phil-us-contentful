@@ -126,8 +126,25 @@ export const Head: React.FC<HelmetProps> = ({
     return pageMetaDescription.trim();
   };
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: computeTitle(),
+    description: computeMetaDescription(),
+    url: config.slug,
+    ...(config.heroImage && {
+      image: `https:${config.heroImage}?w=1200&h=630&q=100&fm=webp`,
+    }),
+    publisher: {
+      "@type": "Organization",
+      name: "PHIL",
+      url: "https://phil.us",
+    },
+  };
+
   return (
     <SEO title={computeTitle()}>
+      <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={computeTitle()} />
       <meta name="twitter:description" content={computeMetaDescription()} />
