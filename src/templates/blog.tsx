@@ -45,8 +45,29 @@ export const Head: React.FC<HelmetProps> = ({
     slug: "https://phil.us" + location.pathname,
   };
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: contentfulResource.heading,
+    description,
+    url: config.slug,
+    ...(heroImage && { image: `https:${heroImage}?w=1200&h=630&q=100&fm=webp` }),
+    publisher: {
+      "@type": "Organization",
+      name: "PHIL",
+      url: "https://phil.us",
+    },
+    ...(contentfulResource.author && {
+      author: {
+        "@type": "Person",
+        name: contentfulResource.author.name,
+      },
+    }),
+  };
+
   return (
     <SEO title={contentfulResource.heading}>
+      <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={contentfulResource.heading} />
       <meta name="twitter:description" content={description} />

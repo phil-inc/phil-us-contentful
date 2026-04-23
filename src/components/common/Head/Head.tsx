@@ -53,8 +53,35 @@ const Head: React.FC<HelmetProps> = ({
         : `/${slugify(contentfulPage.title, { lower: true })}`;
   }
 
+  const isHomePage = config.slug === "/";
+
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `https://phil.us${config.slug}`,
+    url: `https://phil.us${config.slug}`,
+    name: title,
+    description: contentfulPage.description,
+    ...(image && { image: `https:${image}?w=1200&h=630&q=100&fm=webp` }),
+  };
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "PHIL",
+    url: "https://phil.us",
+    logo: "https://phil.us/icons/icon-512x512.png",
+    description:
+      "PHIL simplifies the prescription journey for patients and providers — solving medication access and GTN challenges for pharma brands.",
+    sameAs: ["https://www.linkedin.com/company/phil-inc-"],
+  };
+
   return (
     <SEO title={title}>
+      <script type="application/ld+json">{JSON.stringify(webPageSchema)}</script>
+      {isHomePage && (
+        <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
+      )}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={contentfulPage.description} />
