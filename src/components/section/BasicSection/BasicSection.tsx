@@ -598,6 +598,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                           className={classes.assetWallImage}
                           asset={section.assetForMobile}
                           loading={sectionIndex === 0 ? "eager" : "lazy"}
+                          fetchPriority={sectionIndex === 0 ? "high" : undefined}
                           />
                     </div>
                     :<ImageContainer
@@ -617,6 +618,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                           objectFit="contain"
                           youtubeVideoURL={youtubeVideoUrl}
                           loading={sectionIndex === 0 ? "eager" : "lazy"}
+                          fetchPriority={sectionIndex === 0 ? "high" : undefined}
                           />
                     </ImageContainer>
                   )
@@ -661,6 +663,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
               className={classes.assetWallImage}
               asset={mediaItemOrAsset}
               loading={sectionIndex === 0 ? "eager" : "lazy"}
+              fetchPriority={sectionIndex === 0 ? "high" : undefined}
             />
             {section?.assetCaption && 
               <Text className={cx(classes.assetCaption,{[classes.darkText]: isBgColorLight, [classes.lightText]: !isBgColorLight})}>

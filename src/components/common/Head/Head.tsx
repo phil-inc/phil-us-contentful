@@ -55,6 +55,14 @@ const Head: React.FC<HelmetProps> = ({
 
   return (
     <SEO title={title}>
+      {image && (
+        <link
+          rel="preload"
+          as="image"
+          href={`https:${image}?w=1200&fm=webp&q=80`}
+          type="image/webp"
+        />
+      )}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={contentfulPage.description} />
