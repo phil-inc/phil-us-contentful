@@ -101,6 +101,7 @@ const CDrawer: React.FC = () => {
               toggleDrawer();
             }}
             className={classes.burger}
+            aria-label="Close navigation menu"
           />
         </Box>
       </div>
