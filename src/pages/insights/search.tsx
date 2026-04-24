@@ -206,8 +206,9 @@ const SearchBody: React.FC<SearchBodyType> = ({
       size={9}
       radius="xl"
       variant="transparent"
+      aria-label={`Remove ${badge} filter`}
     >
-      <img src={crossIcon as string} width={9} />
+      <img src={crossIcon as string} width={9} alt="" />
     </ActionIcon>
   );
 

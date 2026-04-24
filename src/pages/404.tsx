@@ -46,7 +46,7 @@ const Error = () => (
           </Box>
         </Grid.Col>
         <Grid.Col span="auto" order={{ base: 1, sm: 2 }}>
-          <img src={notFoundIcon} />
+          <img src={notFoundIcon} alt="Page not found" />
         </Grid.Col>
       </Grid>
     </Container>
