@@ -28,7 +28,7 @@ export const Head: React.FC = () => (
       content="Addyi - Empowering women's health and wellness through PhilRx Pharmacy"
     />
     <meta property="og:title" content="Addyi" />
-    <meta property="og:type" content="Page" />
+    <meta property="og:type" content="website" />
     <meta
       property="og:description"
       content="Addyi - Empowering women's health and wellness through PhilRx Pharmacy"
