@@ -709,6 +709,7 @@ export const query = graphql`
             name
           }
           files {
+            contentful_id
             url
             file {
               url
