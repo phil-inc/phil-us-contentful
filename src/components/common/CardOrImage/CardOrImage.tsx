@@ -101,6 +101,7 @@ const CardOrImage: React.FC<Props> = ({ resource, index, sectionIndex }) => {
                   <Anchor
                     href={link}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className={classes.anchor}
                     underline="never"
                   >

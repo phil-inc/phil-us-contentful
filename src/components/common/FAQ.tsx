@@ -43,6 +43,7 @@ export const FAQ: FC<FAQProps> = ({ resource }) => {
             <Anchor
               href={link}
               target="_blank"
+              rel="noopener noreferrer"
               className={classes.title}
               underline="never"
             >

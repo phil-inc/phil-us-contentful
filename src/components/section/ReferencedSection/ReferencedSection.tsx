@@ -437,10 +437,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
               (Boolean(section.externalLink) || Boolean(section.internalLink)) && (
                 <Group justify="center" mt={isFaqSection ? 80 : 44}>
                   {isExternal ? (
-                    <Anchor 
+                    <Anchor
                     className={classes.externalLink}
                     href={link}
                     target="_blank"
+                    rel="noopener noreferrer"
                     >
                       <Button variant={isParentBgColorOfButtonLight ? "philDefault" : "white"}>{section.buttonText}</Button>
                     </Anchor>
@@ -462,7 +463,7 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
           {(section.header === "What PhilRx Patients & Providers Say"  || section.header === "What PHIL Patients & Providers Say") && (
             <div className={classes.customTestiominalFooter}>
             <div className="trustpilot-widget" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%">
-              <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>
+              <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener noreferrer">Trustpilot</a>
             </div>
           </div>
         )}
