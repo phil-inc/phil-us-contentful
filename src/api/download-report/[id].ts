@@ -6,11 +6,8 @@ import { verifyDownloadToken } from "../../utils/downloadToken";
 
 type ContentfulAsset = {
   fields?: {
-    title?: string;
     file?: {
       url?: string;
-      fileName?: string;
-      contentType?: string;
     };
   };
 };
@@ -64,34 +61,10 @@ const handler = async (
   }
 
   const absolute = fileUrl.startsWith("//") ? `https:${fileUrl}` : fileUrl;
-  const upstream = await fetch(absolute);
-  if (!upstream.ok || !upstream.body) {
-    res.status(502).json({ error: "upstream_failed" });
-    return;
-  }
 
-  const contentType =
-    upstream.headers.get("content-type") ||
-    asset?.fields?.file?.contentType ||
-    "application/pdf";
-  const fileName =
-    asset?.fields?.file?.fileName ||
-    asset?.fields?.title ||
-    `${assetId}.pdf`;
-
-  res.setHeader("Content-Type", contentType);
-  res.setHeader(
-    "Content-Disposition",
-    `inline; filename="${fileName.replace(/"/g, "")}"`,
-  );
   res.setHeader("X-Robots-Tag", "noindex, nofollow");
   res.setHeader("Cache-Control", "private, no-store");
-
-  const contentLength = upstream.headers.get("content-length");
-  if (contentLength) res.setHeader("Content-Length", contentLength);
-
-  const buf = Buffer.from(await upstream.arrayBuffer());
-  res.status(200).send(buf);
+  res.redirect(absolute);
 };
 
 export default handler;
