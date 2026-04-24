@@ -6,12 +6,15 @@ import { signDownloadToken } from "../utils/downloadToken";
 
 const TOKEN_TTL_SECONDS = 10 * 60;
 
-const ALLOWED_ORIGINS = new Set([
-  "https://www.phil.us",
-  "https://phil.us",
-  "http://localhost:3000",
-  "http://localhost:9000",
-]);
+const ALLOWED_ORIGIN_PATTERNS = [
+  /^https:\/\/(www\.)?phil\.us$/,
+  /^https:\/\/[a-z0-9-]+--phil-us\.netlify\.app$/,
+  /^http:\/\/localhost:\d+$/,
+];
+
+function isAllowedOrigin(origin: string): boolean {
+  return ALLOWED_ORIGIN_PATTERNS.some((pattern) => pattern.test(origin));
+}
 
 type Body = {
   assetId?: string;
@@ -27,7 +30,7 @@ const handler = async (
   }
 
   const origin = req.headers.origin;
-  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+  if (origin && !isAllowedOrigin(origin)) {
     res.status(403).json({ error: "forbidden_origin" });
     return;
   }
