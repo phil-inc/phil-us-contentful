@@ -31,9 +31,22 @@ const gtmNoscript = (
 	</noscript>
 );
 
+const resourceHints = [
+	// Full handshake (DNS + TCP + TLS) for domains that serve critical early resources
+	<link key="preconnect-ctfassets" rel="preconnect" href="https://images.ctfassets.net" />,
+	<link key="preconnect-gtm" rel="preconnect" href="https://www.googletagmanager.com" />,
+	// DNS-only for deferred/analytics scripts
+	<link key="dns-hsforms" rel="dns-prefetch" href="//js.hsforms.net" />,
+	<link key="dns-trustpilot" rel="dns-prefetch" href="//widget.trustpilot.com" />,
+	<link key="dns-linkedin" rel="dns-prefetch" href="//snap.licdn.com" />,
+	<link key="dns-zoominfo" rel="dns-prefetch" href="//js.zi-scripts.com" />,
+	<link key="dns-ytimg" rel="dns-prefetch" href="//i.ytimg.com" />,
+];
+
 export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
 	replaceHeadComponents([
+		...resourceHints,
 		gtmScript,
 		...headComponents,
 		<ColorSchemeScript key="color-scheme-script" />,

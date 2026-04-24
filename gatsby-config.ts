@@ -50,6 +50,7 @@ const config: GatsbyConfig = {
       },
     },
     `gatsby-plugin-image`,
+    `gatsby-plugin-preload-fonts`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-inline-svg`,
     `gatsby-plugin-postcss`,
