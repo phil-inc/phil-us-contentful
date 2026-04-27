@@ -34,12 +34,18 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulResource },
   location,
 }) => {
-  const heroImage = contentfulResource.asset?.file.url;
+  const rawImage = contentfulResource.asset?.file.url;
+  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
   const description = contentfulResource.metaDescription?.length
     ? contentfulResource.metaDescription
     : contentfulResource.body?.raw
       ? getDescriptionFromRichtext(contentfulResource.body.raw)
       : "";
+
+  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
+  const ogImage = heroImage
+    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
+    : `${siteUrl}/og-social-image.png`;
 
   const config = {
     slug: "https://phil.us" + location.pathname,
@@ -50,22 +56,14 @@ export const Head: React.FC<HelmetProps> = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={contentfulResource.heading} />
       <meta name="twitter:description" content={description} />
-      {heroImage && (
-        <meta
-          name="twitter:image"
-          content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta name="twitter:image" content={ogImage} />
       <meta name="description" content={description} />
       <meta property="og:title" content={contentfulResource.heading} />
       <meta property="og:type" content="article" />
       <meta property="og:description" content={description} />
-      {heroImage && (
-        <meta
-          property="og:image"
-          content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={config.slug} />
       <Script
         defer

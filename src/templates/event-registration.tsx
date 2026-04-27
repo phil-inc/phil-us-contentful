@@ -70,7 +70,8 @@ export const Head: React.FC<HelmetProps> = ({
   pageContext,
   data: { contentfulEventRegistration: cer },
 }) => {
-  const heroImage = cer.heroImage?.file.url;
+  const rawImage = cer.heroImage?.file.url;
+  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
   const description = cer.metaDescription?.length
     ? cer.metaDescription
     : cer.bodyContent?.raw
@@ -81,27 +82,24 @@ export const Head: React.FC<HelmetProps> = ({
     cer.slug ??
     `/${slugify(pageContext.heading, { strict: true, lower: true })}`;
 
+  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
+  const ogImage = heroImage
+    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
+    : `${siteUrl}/og-social-image.png`;
+
   return (
     <SEO title={cer.heading}>
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageContext.heading} />
       <meta name="twitter:description" content={description} />
-      {heroImage && (
-        <meta
-          name="twitter:image"
-          content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta name="twitter:image" content={ogImage} />
       <meta name="description" content={description} />
       <meta property="og:title" content={pageContext.heading} />
       <meta property="og:type" content="website" />
       <meta property="og:description" content={description} />
-      {heroImage && (
-        <meta
-          property="og:image"
-          content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={`https://phil.us${slug}/`} />
       <Script
         defer

@@ -109,9 +109,16 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulCaseStudy },
   location,
 }) => {
+  const rawImage = contentfulCaseStudy?.image?.file?.url;
+  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
+
+  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
+  const ogImage = heroImage
+    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
+    : `${siteUrl}/og-social-image.png`;
+
   const config = {
     slug: "https://phil.us" + location.pathname,
-    heroImage: contentfulCaseStudy?.image?.file?.url,
   };
 
   const computeTitle = () => {
@@ -131,22 +138,14 @@ export const Head: React.FC<HelmetProps> = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={computeTitle()} />
       <meta name="twitter:description" content={computeMetaDescription()} />
-      {config.heroImage && (
-        <meta
-          name="twitter:image"
-          content={`https:${config.heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta name="twitter:image" content={ogImage} />
       <meta name="description" content={computeMetaDescription()} />
       <meta property="og:title" content={computeTitle()} />
       <meta property="og:type" content="article" />
       <meta property="og:description" content={computeMetaDescription()} />
-      {config.heroImage && (
-        <meta
-          property="og:image"
-          content={`https:${config.heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={config.slug} />
       <Script
         defer

@@ -24,9 +24,11 @@
 # environment variables. Be mindful when using this
 # option and avoid committing sensitive values to public
 # source repositories.
+[context.deploy-preview]
+  command = "GATSBY_DEPLOY_URL=$DEPLOY_URL npm run build"
+
 [context.deploy-preview.environment]
   NODE_ENV = "development"
-  GATSBY_DEPLOY_URL = "$DEPLOY_URL"
   
 # Branch Deploy context: all deploys that are not from
 # a pull/merge request or from the Production branch
