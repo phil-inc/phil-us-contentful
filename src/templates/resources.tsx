@@ -56,7 +56,13 @@ export const Head: React.FC<HelmetProps> = ({
   const heroSection = contentfulPage.sections.find(
     (section) => section.sectionType === "Basic Section",
   ) as ISection;
-  const heroImage = heroSection?.asset.file.url;
+  const rawImage = heroSection?.asset.file.url;
+  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
+
+  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
+  const ogImage = heroImage
+    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
+    : `${siteUrl}/og-social-image.png`;
 
   const computeTitle = () => {
     const referencedSectionTitle = contentfulReferencedSection.title;
@@ -84,25 +90,17 @@ export const Head: React.FC<HelmetProps> = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={computeTitle()} />
       <meta name="twitter:description" content={computeMetaDescription()} />
-      {heroImage && (
-        <meta
-          name="twitter:image"
-          content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta name="twitter:image" content={ogImage} />
       <meta name="description" content={computeMetaDescription()} />
       <meta property="og:title" content={computeTitle()} />
       <meta property="og:type" content="article" />
       <meta property="og:description" content={computeMetaDescription()} />
-      {heroImage && (
-        <meta
-          property="og:image"
-          content={`https:${heroImage}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta
         property="og:url"
-        content={`https://phil.us${location.pathname}}`}
+        content={`https://phil.us${location.pathname}`}
       />
       <Script
         defer
