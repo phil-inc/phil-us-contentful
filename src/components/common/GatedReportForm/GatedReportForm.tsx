@@ -78,7 +78,7 @@ export function GatedReportForm({
 
   const downloadHref =
     assetId && downloadToken
-      ? `/api/download-report/${assetId}?token=${encodeURIComponent(downloadToken)}`
+      ? `/api/download-report/${assetId}/${encodeURIComponent(downloadToken)}`
       : null;
 
   return (
