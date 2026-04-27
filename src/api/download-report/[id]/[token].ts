@@ -2,7 +2,7 @@ import {
   type GatsbyFunctionRequest,
   type GatsbyFunctionResponse,
 } from "gatsby";
-import { verifyDownloadToken } from "../../utils/downloadToken";
+import { verifyDownloadToken } from "../../../utils/downloadToken";
 
 type ContentfulAsset = {
   fields?: {
@@ -39,9 +39,7 @@ const handler = async (
     return;
   }
 
-  const assetId = req.params.id;
-  const token =
-    typeof req.query.token === "string" ? req.query.token : undefined;
+  const { id: assetId, token } = req.params;
   if (!assetId || !token) {
     res.status(401).json({ error: "missing_token" });
     return;
