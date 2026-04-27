@@ -64,7 +64,8 @@ const handler = async (
 
   res.setHeader("X-Robots-Tag", "noindex, nofollow");
   res.setHeader("Cache-Control", "private, no-store");
-  res.redirect(absolute);
+  res.setHeader("Location", absolute);
+  res.status(302).end();
 };
 
 export default handler;
