@@ -42,6 +42,11 @@ const Head: React.FC<HelmetProps> = ({
     image = heroImageV2 || heroImage;
   }
 
+  const FALLBACK_OG_IMAGE = "https://phil.us/img/marketing/email/june-25/og-social-image.png";
+  const ogImage = image
+    ? `https:${image}?w=1200&h=630&q=90&fm=webp&fit=fill`
+    : FALLBACK_OG_IMAGE;
+
   const config = {
     slug: contentfulPage.slug,
   };
@@ -66,22 +71,14 @@ const Head: React.FC<HelmetProps> = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={contentfulPage.description} />
-      {image && (
-        <meta
-          name="twitter:image"
-          content={`https:${image}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta name="twitter:image" content={ogImage} />
       <meta name="description" content={contentfulPage.description} />
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
       <meta property="og:description" content={contentfulPage.description} />
-      {image && (
-        <meta
-          property="og:image"
-          content={`https:${image}?w=400&h=400&q=100&fm=webp&fit=scale`}
-        />
-      )}
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={`https://phil.us${config.slug}`} />
       <link rel="canonical" href={`https://phil.us${config.slug}`} />
       <Script
