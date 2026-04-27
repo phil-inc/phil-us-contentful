@@ -13,7 +13,7 @@ export function Navigation({ pages }: { pages: ContentfulPage[] }) {
   const [visibleIndex, setVisibleIndex] = useState<number | null>(null);
 
   return (
-    <nav className={classes.navbar} >
+    <nav className={classes.navbar} aria-label="Main navigation">
       <div className={classes.navContainer}>
         <ul className={classes.navMenu}>
           {pages
