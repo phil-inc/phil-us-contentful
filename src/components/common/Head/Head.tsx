@@ -25,6 +25,8 @@ const Head: React.FC<HelmetProps> = ({
   // Safely extract heroImage and heroImageV2
   const heroImage = heroSection?.asset?.file?.url || null;
   const heroImageV2 = heroSection?.mediaItem?.media?.file?.url || null;
+  const backgroundImage =
+    heroSection?.backgroundAssetImage?.file?.url || null;
 
   // Safely extract title with a fallback
   const title = contentfulPage?.displayTitle?.length
@@ -40,6 +42,11 @@ const Head: React.FC<HelmetProps> = ({
     !isVideoContent(heroSection.mediaItem.media.file.contentType)
   ) {
     image = heroImageV2 || heroImage;
+  }
+
+  // Fall back to backgroundAssetImage if neither asset nor mediaItem yielded an image
+  if (!image) {
+    image = backgroundImage;
   }
 
   // SVGs can't be reliably used as og:image; fall back to static
