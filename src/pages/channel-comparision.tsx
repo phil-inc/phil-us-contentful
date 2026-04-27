@@ -22,7 +22,7 @@ export const Head: React.FC = () => (
       content="Learn how you can optimize your patient access strategy to improve adherence and gross-to-net"
     />
     <meta property="og:title" content="Channel Comparision" />
-    <meta property="og:type" content="Page" />
+    <meta property="og:type" content="website" />
     <meta
       property="og:description"
       content="Learn how you can optimize your patient access strategy to improve adherence and gross-to-net"

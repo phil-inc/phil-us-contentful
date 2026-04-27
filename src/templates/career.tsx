@@ -53,7 +53,7 @@ export const Head: React.FC<HelmetProps> = ({
         property="og:title"
         content={getTitle(contentfulPage.title, contentfulPage.displayTitle)}
       />
-      <meta property="og:type" content={"Page"} />
+      <meta property="og:type" content="website" />
       <meta property="og:description" content={contentfulPage.description} />
       {heroImage && (
         <meta

@@ -258,6 +258,7 @@ const Navbar: React.FC<CHeaderProps> = ({
                 toggleDrawer();
               }}
               className={classes.burger}
+              aria-label={isDrawer ? "Close navigation menu" : "Open navigation menu"}
             />
             <List ref={setNavRef} className={classes.navLinksWrapper}>
 

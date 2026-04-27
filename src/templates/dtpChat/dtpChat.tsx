@@ -151,7 +151,7 @@ const DTPChat: React.FC<Props> = ({ pageContext }) => {
               </h3>
             </div>
             <div className={classes.logoContainer}>
-              <a href="https://www.phil.us/demo" target="_blank">
+              <a href="https://www.phil.us/demo" target="_blank" rel="noopener noreferrer">
                 <Image
                   className={classes.logo}
                   src="https://images.ctfassets.net/2h91ja0efsni/2fqDgv1rXvEaIvGmf57rFc/d37f4c6b6a1165743aea1cd10ca56e62/PhilLogoGreen.svg"

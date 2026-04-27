@@ -213,7 +213,7 @@ const RichTextRenderer = ({
 
       [INLINES.HYPERLINK](node, children: React.ReactNode) {
         return (
-          <Anchor href={node.data.uri as string} target="_blank">
+          <Anchor href={node.data.uri as string} target="_blank" rel="noopener noreferrer">
             {children}
           </Anchor>
         );

@@ -82,6 +82,14 @@ const Head: React.FC<HelmetProps> = ({
       {isHomePage && (
         <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
       )}
+      {image && (
+        <link
+          rel="preload"
+          as="image"
+          href={`https:${image}?w=1200&fm=webp&q=80`}
+          type="image/webp"
+        />
+      )}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={contentfulPage.description} />
@@ -93,7 +101,7 @@ const Head: React.FC<HelmetProps> = ({
       )}
       <meta name="description" content={contentfulPage.description} />
       <meta property="og:title" content={title} />
-      <meta property="og:type" content={"Page"} />
+      <meta property="og:type" content="website" />
       <meta property="og:description" content={contentfulPage.description} />
       {image && (
         <meta

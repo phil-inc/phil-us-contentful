@@ -99,6 +99,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(
                 pr={5}
                 onClick={previousPage}
                 disabled={pageNumber <= 1}
+                aria-label="Previous page"
               >
                 <IconChevronLeft size={50} />
               </ActionIcon>
@@ -131,6 +132,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(
                 pl={5}
                 onClick={nextPage}
                 disabled={pageNumber >= numPages}
+                aria-label="Next page"
               >
                 <IconChevronRight size={50} />
               </ActionIcon>
@@ -152,6 +154,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(
               radius={"50%"}
               onClick={previousPage}
               disabled={pageNumber <= 1}
+              aria-label="Previous page"
             >
               <IconChevronLeft size={25} />
             </ActionIcon>
@@ -166,6 +169,7 @@ const PDFViewer = forwardRef<HTMLDivElement, PDFViewerProps>(
               radius={"50%"}
               onClick={nextPage}
               disabled={pageNumber >= numPages}
+              aria-label="Next page"
             >
               <IconChevronRight size={25} />
             </ActionIcon>

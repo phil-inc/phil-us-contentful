@@ -80,7 +80,7 @@ export const Head: React.FC<HelmetProps> = ({
       )}
       <meta name="description" content={contentfulPage.description} />
       <meta property="og:title" content={title} />
-      <meta property="og:type" content={"Page"} />
+      <meta property="og:type" content="website" />
       <meta property="og:description" content={contentfulPage.description} />
       {heroImage && (
         <meta
@@ -206,8 +206,9 @@ const SearchBody: React.FC<SearchBodyType> = ({
       size={9}
       radius="xl"
       variant="transparent"
+      aria-label={`Remove ${badge} filter`}
     >
-      <img src={crossIcon as string} width={9} />
+      <img src={crossIcon as string} width={9} alt="" />
     </ActionIcon>
   );
 

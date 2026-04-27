@@ -194,7 +194,7 @@ const TextAndTextColumns = ({ data, sectionIndex = 0 }: TextAndTextColumnsProps)
   const context = useContext(PageContext);
 
   const { heading, subHeadingText, leftColumn, rightColumn, addBorder, files, sectionName } = data;
-  const fileUrl = files?.[0]?.file?.url ?? files?.[0]?.url;
+  const assetId = files?.[0]?.contentful_id;
 
   const { formId, portalId } = getHubspotFormDetails(
     rightColumn?.raw ? { raw: rightColumn.raw } : undefined
@@ -249,7 +249,7 @@ const TextAndTextColumns = ({ data, sectionIndex = 0 }: TextAndTextColumnsProps)
             {hasGatedForm ? (
               <GatedReportForm
                 column={rightColumn}
-                fileUrl={fileUrl}
+                assetId={assetId}
                 heading={heading}
                 subHeadingText={subHeadingText}
                 sectionEyebrow={sectionName ?? "What's Inside"}
