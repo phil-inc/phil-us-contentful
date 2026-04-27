@@ -42,7 +42,8 @@ const Head: React.FC<HelmetProps> = ({
     image = heroImageV2 || heroImage;
   }
 
-  const FALLBACK_OG_IMAGE = "https://phil.us/img/marketing/email/june-25/og-social-image.png";
+  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://www.phil.us";
+  const FALLBACK_OG_IMAGE = `${siteUrl}/og-social-image.png`;
   const ogImage = image
     ? `https:${image}?w=1200&h=630&q=90&fm=webp&fit=fill`
     : FALLBACK_OG_IMAGE;
