@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { graphql, StaticQuery } from "gatsby";
 
 import { TopInfoBarNode } from "types/infoBar";
@@ -18,14 +18,14 @@ const TopInfoBar: React.FC<AllContentfulTopInfoBarQuery> = ({
   allContentfulTopInfoBar,
 }) => {
   const [topAnnoucement] = allContentfulTopInfoBar?.nodes || [];
-  const [canShowInfoBar, setCanShowInforBar] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
+  const [canShowInfoBar, setCanShowInforBar] = useState<boolean>(false);
 
-    return (
+  useEffect(() => {
+    setCanShowInforBar(
       Boolean(topAnnoucement?.reference) &&
-      sessionStorage.getItem(SHOW_INFOBAR) !== FALSE_STRING
+        sessionStorage.getItem(SHOW_INFOBAR) !== FALSE_STRING,
     );
-  });
+  }, [topAnnoucement?.reference]);
   
   const displayableSlug =
     topAnnoucement?.pagesToShowInfoBar?.map((page) => page?.slug) ?? [];
