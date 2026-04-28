@@ -49,11 +49,6 @@ const Head: React.FC<HelmetProps> = ({
     image = backgroundImage;
   }
 
-  // SVGs can't be reliably used as og:image; fall back to static
-  if (image?.toLowerCase().endsWith(".svg")) {
-    image = null;
-  }
-
   const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
   const ogImage = image
     ? `https:${image}?w=1200&h=630&q=90&fm=webp&fit=fill`
