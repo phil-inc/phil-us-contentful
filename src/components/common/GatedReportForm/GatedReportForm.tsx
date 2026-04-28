@@ -6,8 +6,6 @@ import { getHubspotFormDetails } from "utils/utils";
 
 import * as classes from "./GatedReportForm.module.css";
 
-const SUBMITTED_KEY = "researchReportFormSubmitted";
-
 type GatedReportFormProps = {
   column: any;
   assetId?: string;
@@ -32,12 +30,14 @@ export function GatedReportForm({
     column?.raw ? { raw: column.raw } : undefined
   );
 
+  const submittedKey = `researchReportFormSubmitted_${assetId ?? formId}`;
+
   // On mount: restore submitted state only — don't auto-request token
   React.useEffect(() => {
-    if (sessionStorage.getItem(SUBMITTED_KEY) === "true") {
+    if (sessionStorage.getItem(submittedKey) === "true") {
       setIsSubmitted(true);
     }
-  }, []);
+  }, [submittedKey]);
 
   const requestDownloadToken = React.useCallback(async () => {
     if (!assetId) {
@@ -63,7 +63,7 @@ export function GatedReportForm({
   const handleFormSubmit = () => {
     if (inFlightRef.current) return;
     inFlightRef.current = true;
-    sessionStorage.setItem(SUBMITTED_KEY, "true");
+    sessionStorage.setItem(submittedKey, "true");
     setIsSubmitted(true);
     void requestDownloadToken().finally(() => {
       inFlightRef.current = false;
