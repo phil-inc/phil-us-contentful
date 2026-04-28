@@ -24,8 +24,7 @@ export const Head: React.FC<HelmetProps> = ({
   const heroSection = contentfulPage.sections.find(
     (section) => section.sectionType === "Basic Section",
   ) as ISection;
-  const rawImage = heroSection?.asset.file.url;
-  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
+  const heroImage = heroSection?.asset?.file?.url ?? null;
   const domain = getWindowProperty("location.hostname", "phil.us");
 
   const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";

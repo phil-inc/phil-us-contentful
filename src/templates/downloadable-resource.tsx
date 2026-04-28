@@ -35,8 +35,7 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulDownloadableResource },
   location,
 }) => {
-  const rawImage = contentfulDownloadableResource?.image?.file?.url;
-  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
+  const heroImage = contentfulDownloadableResource?.image?.file?.url ?? null;
 
   const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
   const ogImage = heroImage
