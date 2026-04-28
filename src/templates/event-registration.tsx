@@ -70,8 +70,7 @@ export const Head: React.FC<HelmetProps> = ({
   pageContext,
   data: { contentfulEventRegistration: cer },
 }) => {
-  const rawImage = cer.heroImage?.file.url;
-  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
+  const heroImage = cer.heroImage?.file?.url ?? null;
   const description = cer.metaDescription?.length
     ? cer.metaDescription
     : cer.bodyContent?.raw

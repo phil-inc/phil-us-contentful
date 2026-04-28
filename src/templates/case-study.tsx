@@ -109,8 +109,7 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulCaseStudy },
   location,
 }) => {
-  const rawImage = contentfulCaseStudy?.image?.file?.url;
-  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
+  const heroImage = contentfulCaseStudy?.image?.file?.url ?? null;
 
   const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
   const ogImage = heroImage

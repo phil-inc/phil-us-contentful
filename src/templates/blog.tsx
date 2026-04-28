@@ -34,8 +34,7 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulResource },
   location,
 }) => {
-  const rawImage = contentfulResource.asset?.file.url;
-  const heroImage = rawImage?.toLowerCase().endsWith(".svg") ? null : rawImage;
+  const heroImage = contentfulResource.asset?.file?.url ?? null;
   const description = contentfulResource.metaDescription?.length
     ? contentfulResource.metaDescription
     : contentfulResource.body?.raw
