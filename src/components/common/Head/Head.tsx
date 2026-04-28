@@ -44,11 +44,6 @@ const Head: React.FC<HelmetProps> = ({
     image = heroImageV2 || heroImage;
   }
 
-  // Fall back to backgroundAssetImage if neither asset nor mediaItem yielded an image
-  if (!image) {
-    image = backgroundImage;
-  }
-
   const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
   const ogImage = image
     ? `https:${image}?w=1200&h=630&q=90&fm=webp&fit=fill`
