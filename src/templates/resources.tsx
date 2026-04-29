@@ -40,6 +40,7 @@ import AnnouncementItem from "components/AnnouncementItem/AnnouncementItem";
 import { CONTENTFUL_TYPES } from "constants/global.constant";
 
 import PageContext from "contexts/PageContext";
+import { getOgImage } from "utils/getOgImage";
 
 type HelmetProps = {
   data: {
@@ -56,12 +57,7 @@ export const Head: React.FC<HelmetProps> = ({
   const heroSection = contentfulPage.sections.find(
     (section) => section.sectionType === "Basic Section",
   ) as ISection;
-  const heroImage = heroSection?.asset?.file?.url ?? null;
-
-  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
-  const ogImage = heroImage
-    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
-    : `${siteUrl}/og-social-image.png`;
+  const ogImage = getOgImage(heroSection?.asset?.file?.url);
 
   const computeTitle = () => {
     const referencedSectionTitle = contentfulReferencedSection.title;

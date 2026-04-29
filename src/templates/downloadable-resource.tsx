@@ -19,6 +19,7 @@ import SocialShare from "components/Blog/SocialShare/SocialShare";
 import Asset from "components/common/Asset/Asset";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { isPDFContent } from "utils/isVideoContent";
+import { getOgImage } from "utils/getOgImage";
 import cx from "clsx";
 import * as classes from "./downloadableResource.module.css";
 import ImageContainer from "components/common/Container/ImageContainer";
@@ -35,12 +36,7 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulDownloadableResource },
   location,
 }) => {
-  const heroImage = contentfulDownloadableResource?.image?.file?.url ?? null;
-
-  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
-  const ogImage = heroImage
-    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
-    : `${siteUrl}/og-social-image.png`;
+  const ogImage = getOgImage(contentfulDownloadableResource?.image?.file?.url);
 
   const config = {
     slug: "https://phil.us" + location.pathname,

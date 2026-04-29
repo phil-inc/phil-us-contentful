@@ -10,6 +10,7 @@ import { getWindowProperty } from "utils/getWindowProperty";
 import { groupBy } from "utils/groupBy";
 import { isProduction } from "utils/isProduction";
 import { Script, graphql } from "gatsby";
+import { getOgImage } from "utils/getOgImage";
 
 type HelmetProps = {
   pageContext: ContentfulPage;
@@ -21,16 +22,11 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulPage },
   location,
 }) => {
+  const domain = getWindowProperty("location.hostname", "phil.us");
   const heroSection = contentfulPage.sections.find(
     (section) => section.sectionType === "Basic Section",
   ) as ISection;
-  const heroImage = heroSection?.asset?.file?.url ?? null;
-  const domain = getWindowProperty("location.hostname", "phil.us");
-
-  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
-  const ogImage = heroImage
-    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
-    : `${siteUrl}/og-social-image.png`;
+  const ogImage = getOgImage(heroSection?.asset?.file?.url);
 
   const config = {
     slug: "https://phil.us" + location.pathname,
