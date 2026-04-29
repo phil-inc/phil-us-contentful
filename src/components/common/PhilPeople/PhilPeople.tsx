@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { TResource } from "types/resource";
 import PageContext from "contexts/PageContext";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
-import { Options } from "react-pdf/dist/cjs/shared/types";
+import type { Options } from "react-pdf/dist/cjs/shared/types";
 import { Link } from "gatsby";
 import {
   Anchor,
