@@ -39,6 +39,7 @@ import Asset from "components/common/Asset/Asset";
 import BasicSection from "components/section/BasicSection/BasicSection";
 import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetricOfCaseStudy";
 import { getHubspotFormDetails } from "utils/utils";
+import { getOgImage } from "utils/getOgImage";
 
 import { PATH } from "constants/routes";
 import KeyTakeaways from "components/case-study/key-takeaways";
@@ -109,12 +110,7 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulCaseStudy },
   location,
 }) => {
-  const heroImage = contentfulCaseStudy?.image?.file?.url ?? null;
-
-  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
-  const ogImage = heroImage
-    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
-    : `${siteUrl}/og-social-image.png`;
+  const ogImage = getOgImage(contentfulCaseStudy?.image?.file?.url);
 
   const config = {
     slug: "https://phil.us" + location.pathname,

@@ -5,10 +5,10 @@ import Section from "components/section/Section";
 import { SEO } from "layouts/SEO/SEO";
 import { Box, Grid, Title, useMantineTheme } from "@mantine/core";
 import Expanded from "components/common/Expanded/Expanded";
-import type { ISection } from "types/section";
 import { handleSpacing } from "utils/handleSpacing";
 import PageContext from "contexts/PageContext";
 import { Script, graphql } from "gatsby";
+import { getOgImage } from "utils/getOgImage";
 
 type HelmetProps = {
   data: {
@@ -21,18 +21,13 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulPage },
   location,
 }) => {
-  const heroSection = contentfulPage.sections.find(
-    (section) => section.sectionType === "Basic Section",
-  ) as ISection;
-  const heroImage = heroSection?.asset?.file?.url ?? null;
   const title = contentfulPage.displayTitle.length
     ? contentfulPage.displayTitle
     : contentfulPage.title;
-
-  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
-  const ogImage = heroImage
-    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
-    : `${siteUrl}/og-social-image.png`;
+  const heroSection = contentfulPage.sections.find(
+    (section) => section.sectionType === "Basic Section",
+  ) as ISection;
+  const ogImage = getOgImage(heroSection?.asset?.file?.url);
 
   const config = {
     slug: "https://phil.us" + location.pathname,
