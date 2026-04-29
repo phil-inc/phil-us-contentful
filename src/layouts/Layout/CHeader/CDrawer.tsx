@@ -10,10 +10,11 @@ import {
   List,
   Badge,
 } from "@mantine/core";
-import { IconChevronDown } from "@tabler/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 import Asset from "components/common/Asset/Asset";
 import { Link } from "gatsby";
 import React from "react";
+import { useLocation } from "@reach/router";
 import { getPathForSectionAndPage } from "utils/links";
 import { Link as ScrollToElement } from "react-scroll";
 import HeaderContext from "contexts/HeaderProvider";
@@ -31,6 +32,7 @@ import * as classes from "./drawer.module.css";
 const CDrawer: React.FC = () => {
   const { header, isDrawer, pages, toggleDrawer, buttons } =
     React.useContext(HeaderContext);
+  const location = useLocation();
 
   const buttonConfig = {
     primary: { variant: "header-primary", size: "md", uppercase: true },
@@ -156,7 +158,7 @@ const CDrawer: React.FC = () => {
                           <List.Item py="xs">
                             {/* All sections except for the first */}
 
-                            {page.title === document.title &&
+                            {location.pathname.includes(`/${page.slug}`) &&
                             page.title !== INSIGHTS ? (
                               <ScrollToElement
                                 to={path}
