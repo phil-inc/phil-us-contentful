@@ -6,6 +6,7 @@ import slugify from "slugify";
 import { ContentfulPage } from "types/page";
 import { ISection } from "types/section";
 import { isVideoContent } from "utils/isVideoContent";
+import { getOgImage } from "utils/getOgImage";
 
 
 type HelmetProps = {
@@ -44,10 +45,7 @@ const Head: React.FC<HelmetProps> = ({
     image = heroImageV2 || heroImage;
   }
 
-  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
-  const ogImage = image
-    ? `https:${image}?w=1200&h=630&q=90&fm=webp&fit=fill`
-    : `${siteUrl}/og-social-image.png`;
+  const ogImage = getOgImage(image);
 
   const config = {
     slug: contentfulPage.slug,

@@ -12,6 +12,7 @@ import { renderBanners } from "components/common/Banner/Banner";
 import AuthorBlock from "components/Blog/AuthorBlock/AuthorBlock";
 import SocialShare from "components/Blog/SocialShare/SocialShare";
 import { getDescriptionFromRichtext } from "utils/getDescription";
+import { getOgImage } from "utils/getOgImage";
 import { isPDFContent, isVideoContent } from "utils/isVideoContent";
 import { type Block } from "@contentful/rich-text-types";
 import ImageContainer from "components/common/Container/ImageContainer";
@@ -34,17 +35,13 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulResource },
   location,
 }) => {
-  const heroImage = contentfulResource.asset?.file?.url ?? null;
   const description = contentfulResource.metaDescription?.length
     ? contentfulResource.metaDescription
     : contentfulResource.body?.raw
       ? getDescriptionFromRichtext(contentfulResource.body.raw)
       : "";
 
-  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
-  const ogImage = heroImage
-    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
-    : `${siteUrl}/og-social-image.png`;
+  const ogImage = getOgImage(contentfulResource.asset?.file?.url);
 
   const config = {
     slug: "https://phil.us" + location.pathname,

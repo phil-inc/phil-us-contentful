@@ -25,6 +25,7 @@ import Speaker from "components/common/Person/Speaker/Speaker";
 import { convertTimeToCustomFormat } from "utils/date";
 import { type TResource } from "types/resource";
 import { getDescriptionFromRichtext } from "utils/getDescription";
+import { getOgImage } from "utils/getOgImage";
 import { SEO } from "layouts/SEO/SEO";
 import { type BodyType } from "types/section";
 import { type Person } from "types/person";
@@ -70,7 +71,6 @@ export const Head: React.FC<HelmetProps> = ({
   pageContext,
   data: { contentfulEventRegistration: cer },
 }) => {
-  const heroImage = cer.heroImage?.file?.url ?? null;
   const description = cer.metaDescription?.length
     ? cer.metaDescription
     : cer.bodyContent?.raw
@@ -81,10 +81,7 @@ export const Head: React.FC<HelmetProps> = ({
     cer.slug ??
     `/${slugify(pageContext.heading, { strict: true, lower: true })}`;
 
-  const siteUrl = process.env.GATSBY_DEPLOY_URL ?? "https://phil.us";
-  const ogImage = heroImage
-    ? `https:${heroImage}?w=1200&h=630&q=90&fm=webp&fit=fill`
-    : `${siteUrl}/og-social-image.png`;
+  const ogImage = getOgImage(cer.heroImage?.file?.url);
 
   return (
     <SEO title={cer.heading}>
