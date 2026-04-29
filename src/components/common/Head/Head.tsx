@@ -26,9 +26,6 @@ const Head: React.FC<HelmetProps> = ({
   // Safely extract heroImage and heroImageV2
   const heroImage = heroSection?.asset?.file?.url || null;
   const heroImageV2 = heroSection?.mediaItem?.media?.file?.url || null;
-  const backgroundImage =
-    heroSection?.backgroundAssetImage?.file?.url || null;
-
   // Safely extract title with a fallback
   const title = contentfulPage?.displayTitle?.length
     ? contentfulPage.displayTitle

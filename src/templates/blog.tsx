@@ -41,7 +41,8 @@ export const Head: React.FC<HelmetProps> = ({
       ? getDescriptionFromRichtext(contentfulResource.body.raw)
       : "";
 
-  const ogImage = getOgImage(contentfulResource.asset?.file?.url);
+  const heroImage = contentfulResource.asset?.file?.url ?? null;
+  const ogImage = getOgImage(heroImage);
 
   const config = {
     slug: "https://phil.us" + location.pathname,
