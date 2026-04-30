@@ -114,13 +114,6 @@ const Head: React.FC<HelmetProps> = ({
         src="//js.hsforms.net/forms/embed/v2.js"
       ></Script>
       {contentfulPage.noindex && <meta name="robots" content="noindex" />}
-      <Script
-        defer
-        async
-        strategy="idle"
-        type="text/javascript"
-        src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
-      ></Script>
     </SEO>
   );
 };

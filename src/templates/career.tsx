@@ -56,8 +56,7 @@ export const Head: React.FC<HelmetProps> = ({
       <meta property="og:image:height" content="630" />
       <meta property="og:url" content={config.slug} />
       <Script
-        defer
-        async
+        strategy="idle"
         charSet="utf-8"
         type="text/javascript"
         src="//js.hsforms.net/forms/embed/v2.js"
