@@ -1,6 +1,6 @@
 import { Anchor, Box, Button, Group, Image, Text, Title } from "@mantine/core";
 import React, { ForwardedRef, useContext, useState } from "react";
-import { Options } from "react-pdf/dist/cjs/shared/types";
+import type { Options } from "react-pdf/dist/cjs/shared/types";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import ImageContainer from "components/common/Container/ImageContainer";
 import Asset from "components/common/Asset/Asset";

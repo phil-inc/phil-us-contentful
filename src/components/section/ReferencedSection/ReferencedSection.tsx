@@ -13,10 +13,8 @@ import {
 import { getLink } from "utils/getLink";
 import slugify from "slugify";
 import { getWindowProperty } from "utils/getWindowProperty";
-import * as FullStory from "@fullstory/browser";
 import { isProduction } from "utils/isProduction";
 import { getIdSlugifyForDiv } from "utils/utils";
-import mixpanel from "mixpanel-browser";
 import PageContext from "contexts/PageContext";
 import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE,OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
@@ -64,20 +62,27 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
   const isSmallDevice = useIsSmallDevice();
 
   React.useEffect(() => {
-    try {
-      const isFromSMSIntro = params.get("isFromSMSIntro");
-      if (
-        section.referenceType === ReferenceTypeEnum["Stats Card with Arrows"] &&
-        isFromSMSIntro === "true" &&
-        isProduction
-      ) {
-        mixpanel.init(process.env.GATSBY_MIXPANEL_TOKEN ?? "");
-        FullStory.init({ orgId: process.env.GATSBY_FULLSTORY_ORG_ID ?? "" });
-        mixpanel.track("PhilIntro_SMS_Clicked");
+    const run = async () => {
+      try {
+        const isFromSMSIntro = params.get("isFromSMSIntro");
+        if (
+          section.referenceType === ReferenceTypeEnum["Stats Card with Arrows"] &&
+          isFromSMSIntro === "true" &&
+          isProduction
+        ) {
+          const [{ default: mixpanel }, FullStory] = await Promise.all([
+            import("mixpanel-browser"),
+            import("@fullstory/browser"),
+          ]);
+          mixpanel.init(process.env.GATSBY_MIXPANEL_TOKEN ?? "");
+          FullStory.init({ orgId: process.env.GATSBY_FULLSTORY_ORG_ID ?? "" });
+          mixpanel.track("PhilIntro_SMS_Clicked");
+        }
+      } catch (error: unknown) {
+        console.log(error);
       }
-    } catch (error: unknown) {
-      console.log(error);
-    }
+    };
+    void run();
   }, []);
 
   // TODO: Refactor Get grid span based on resource type

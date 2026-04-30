@@ -2,7 +2,6 @@
 @import "anchor.css";
 @import "hubspot-form.css";
 @import "mantine-accordion-override.css";
-@import url("https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css");
 
 :root {
   --navbar-height: 90px;
@@ -98,8 +97,7 @@
       }
 
       &:after {
-        content: "\ea1f";
-        font-family: "tabler-icons";
+        content: "→";
         display: inline-block;
         vertical-align: middle;
         margin-left: 4px;
