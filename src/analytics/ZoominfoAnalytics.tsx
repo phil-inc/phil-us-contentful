@@ -11,7 +11,7 @@ const ZoominfoAnalytics: React.FC = () => {
   }, []);
 
   return (
-    <Script>
+    <Script strategy="idle">
       {shouldExecute
         ? `
     window.ZIProjectKey = "${process.env.GATSBY_ZI_PROJECT_KEY ?? ""}"; 

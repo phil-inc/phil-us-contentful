@@ -643,7 +643,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
         section.codeSnippet &&
         Boolean(section.codeSnippet.codeSnippet.length) &&
         isProduction ? (
-          <Script defer async>
+          <Script strategy="idle">
             {section.codeSnippet.codeSnippet
               .trim()
               .replace("<script>", "")
