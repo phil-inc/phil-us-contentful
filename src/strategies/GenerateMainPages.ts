@@ -124,8 +124,11 @@ function handleResourcePage(
 }
 
 function handleRegularPage(page: ContentfulPage, actions: Actions): void {
+  // TODO: Remove this override once the Contentful GTN page slug is changed to "gtn/calculator"
+  const slug = page.title === "GTN" ? "gtn/calculator" : page.slug;
+
   const config = {
-    slug: page.slug,
+    slug,
     component: templateFactory(page.title as TemplateKey),
   };
 
