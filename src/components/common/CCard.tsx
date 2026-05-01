@@ -33,7 +33,7 @@ import { COMPANY_PAGE, LIFE_SCIENCES_PAGE } from "constants/page";
 import { IContentfulList, Metadata } from "types/section";
 import { CENTER_LIFE_SCIENCES_CARD_TAG } from "constants/identifiers";
 import { CONTENTFUL_TYPES } from "constants/global.constant";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import { IContentfulLink } from "types/annoucementBar";
 
 type ArticleProps = {

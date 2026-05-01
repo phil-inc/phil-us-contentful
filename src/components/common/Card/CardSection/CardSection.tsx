@@ -14,7 +14,7 @@ import { getColorFromStylingOptions } from "utils/stylingOptions";
 import { type Options } from "@contentful/rich-text-react-renderer";
 import PageContext from "contexts/PageContext";
 import { Metadata } from "types/section";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 
 import { DIVE_INTO_THE_LATEST_DTP, RECENT_CLIENT_WINS } from "constants/section";
 import { PATH } from "constants/routes";

@@ -7,7 +7,7 @@ import type { TResource } from "types/resource";
 import { getColorFromStylingOptions } from "utils/stylingOptions";
 
 import PageContext from "contexts/PageContext";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 
 import * as classes from "./commitmentCard.module.css";
 import { renderRichText } from "gatsby-source-contentful/rich-text";

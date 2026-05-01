@@ -2,7 +2,7 @@ import RenderResource from "./RenderResource";
 import * as classes from "./referencedSection.module.css";
 import { Carousel } from "@mantine/carousel";
 import { Container, Grid } from "@mantine/core";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { ResourceCarousel } from "components/common/Carousel/ResourceCarousel";
 import { EMPLOYEE_SPOTLIGHT_TAG, MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
 import { COMPANY_PAGE, HOME } from "constants/page";

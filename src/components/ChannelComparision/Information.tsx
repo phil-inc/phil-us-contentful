@@ -15,7 +15,7 @@ import {
 } from "@mantine/core";
 import type { FormValues } from "contexts/ChannelComparisionContext";
 import { ChannelComparisionContext } from "contexts/ChannelComparisionContext";
-import { IconArrowLeft, IconCheck } from "@tabler/icons";
+import { IconArrowLeft, IconCheck } from "@tabler/icons-react";
 import {
   CHANNEL_COMPARISION_API,
   HUBSPOT_CHANNEL_COMPARISION_URL,

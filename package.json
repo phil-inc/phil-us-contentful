@@ -33,7 +33,6 @@
     "@mantine/core": "7.6.0",
     "@mantine/form": "7.6.0",
     "@mantine/hooks": "7.6.0",
-    "@tabler/icons": "^1.95.1",
     "@tabler/icons-react": "^3.34.1",
     "@types/marked": "^5.0.2",
     "classnames": "^2.5.1",

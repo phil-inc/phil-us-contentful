@@ -1,7 +1,7 @@
 import React from "react";
 import { ActionIcon, Anchor, MantineRadius, Tooltip } from "@mantine/core";
 import { useClipboard, useHover } from "@mantine/hooks";
-import type { TablerIcon } from "@tabler/icons";
+import type { Icon } from "@tabler/icons-react";
 import { ESocialShare } from "types/social";
 import { getShareLink } from "utils/socialShare";
 import { getWindowProperty } from "utils/getWindowProperty";
@@ -10,7 +10,7 @@ import * as classes from "./socialButton.module.css";
 
 type TSocialButton = {
   type: ESocialShare;
-  icon: TablerIcon;
+  icon: Icon;
   tooltipLabel?: string;
   radius?: MantineRadius;
 };
