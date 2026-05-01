@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { IconMinus, IconPlus } from "@tabler/icons";
+import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { Accordion, Anchor, Text, Title } from "@mantine/core";
 import PageContext from "contexts/PageContext";
 import { renderRichText } from "gatsby-source-contentful/rich-text";

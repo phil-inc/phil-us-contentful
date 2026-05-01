@@ -34,7 +34,7 @@ import PageContext from "contexts/PageContext";
 import { CONTACT_PAGE, OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
 import { parseScript } from "utils/parseScript";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 
 import BtnGroup from "components/BtnGroup/BtnGroup";
 

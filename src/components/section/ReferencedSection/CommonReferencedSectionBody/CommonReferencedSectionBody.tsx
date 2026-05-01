@@ -9,7 +9,7 @@ import {
   RenderOptions,
   ResourceBlocksEnum,
 } from "types/section";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import cx from "clsx";
 import { Carousel } from "@mantine/carousel";
 

@@ -51,7 +51,7 @@ const FaqTitleBar: React.FC<FaqTitleBarProps> = ({
 
     if (element) {
       const y =
-        element.getBoundingClientRect().top + window.pageYOffset - offset;
+        element.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top: y, behavior: "smooth" });
       window.history.pushState(null, "", `#${slug}`);
       setActiveTabNum(tabIndex);

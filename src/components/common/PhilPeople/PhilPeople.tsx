@@ -17,7 +17,7 @@ import { getLink } from "utils/getLink";
 import ImageContainer from "components/common/Container/ImageContainer";
 import { COMPANY_PAGE, LIFE_SCIENCES_PAGE } from "constants/page";
 import Asset from "components/common/Asset/Asset";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import { isVideoContent } from "utils/isVideoContent";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
