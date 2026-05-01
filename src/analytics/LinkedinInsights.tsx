@@ -2,7 +2,7 @@ import React from "react";
 import { Script } from "gatsby";
 
 const LinkedinInsights = () => (
-  <Script>
+  <Script strategy="idle">
     {`
 			_linkedin_partner_id = "${process.env.GATSBY_LINKEDIN_PARTNER_ID ?? ""}";
 			window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];

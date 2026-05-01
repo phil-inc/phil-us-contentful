@@ -81,7 +81,7 @@ export const Banner: FC<BannerProps> = ({ resource }) => {
                   resource.codeSnippet &&
                   Boolean(resource.codeSnippet.codeSnippet.length) &&
                   isProduction ? (
-                    <Script>
+                    <Script strategy="idle">
                       {resource.codeSnippet.codeSnippet
                         .trim()
                         .replace("<script>", "")
