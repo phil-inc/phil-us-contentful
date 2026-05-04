@@ -29,7 +29,7 @@ import PageContext from "contexts/PageContext";
 import { COMPANY_PAGE, LIFE_SCIENCES_PAGE } from "constants/page";
 import { Metadata } from "types/section";
 import { CENTER_LIFE_SCIENCES_CARD_TAG } from "constants/identifiers";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import ImageContainer from "components/common/Container/ImageContainer";
 import Asset from "components/common/Asset/Asset";
 

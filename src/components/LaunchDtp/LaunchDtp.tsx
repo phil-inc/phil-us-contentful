@@ -6,7 +6,7 @@ import { IconX } from "@tabler/icons-react";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types";
 import { ContentfulModal } from "types/modal";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 
 import Asset from "components/common/Asset/Asset";
 

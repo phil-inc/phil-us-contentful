@@ -1,7 +1,7 @@
 import React, { JSX } from "react";
 import { Link } from "gatsby";
 import { Anchor, Box, Group, Paper, Stack, Text } from "@mantine/core";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { Options } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";

@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "clsx";
 import { Button, Group, Anchor, Accordion, Text, Container, Divider, Box, Title } from "@mantine/core";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import Expanded from "components/common/Expanded/Expanded";
 import { Link } from "gatsby";
 import {

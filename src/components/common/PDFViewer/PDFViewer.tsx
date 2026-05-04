@@ -16,7 +16,7 @@ import {
   Text,
 } from "@mantine/core";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 import * as classes from "./pdfViewer.module.css";
 import useDeviceType from "hooks/useView";

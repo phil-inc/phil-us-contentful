@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import { Button, Container } from "@mantine/core";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import { BLOCKS, MARKS, Node } from "@contentful/rich-text-types";

@@ -3,7 +3,7 @@ import { Paper, Grid } from "@mantine/core";
 import React from "react";
 import type { FC } from "react";
 import type { IReferencedSection } from "types/section";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import * as classes from "./resourceCarousel.module.css";
 import Asset from "../Asset/Asset";
 import ImageContainer from "../Container/ImageContainer";

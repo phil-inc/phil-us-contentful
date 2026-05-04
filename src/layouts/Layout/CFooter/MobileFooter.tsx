@@ -8,7 +8,7 @@ import {
   Grid,
   Title,
 } from "@mantine/core";
-import { IconChevronDown } from "@tabler/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 import Asset from "components/common/Asset/Asset";
 import ImageContainer from "components/common/Container/ImageContainer";
 import { CONTACT_PAGE } from "constants/page";

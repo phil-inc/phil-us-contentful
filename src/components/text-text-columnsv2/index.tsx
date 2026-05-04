@@ -16,7 +16,7 @@ import {
 } from "@contentful/rich-text-react-renderer";
 import * as classes from "./textandtext.module.css";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import cx from "clsx";
 import PageContext from "contexts/PageContext";
