@@ -1,3 +1,28 @@
+/* Eyebrow label shown above first card only */
+.eyebrow {
+  font-family: Lato, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow::before {
+  content: "";
+  flex-shrink: 0;
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* No-op — keeps TSX reference valid, no visual effect */
+.cardContentCentered {}
+
 /* Each card is a vertical column inside the 3-col metric panel */
 .card {
   display: flex;
@@ -75,7 +100,7 @@
     font-weight: 700;
     font-size: 26px;
     line-height: 1;
-    color: rgba(38, 38, 38, 0.92);
+    color: rgba(255, 255, 255, 0.65);
     margin-bottom: 7px;
   }
 }
