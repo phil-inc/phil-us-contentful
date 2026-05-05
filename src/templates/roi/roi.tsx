@@ -55,7 +55,7 @@ const RoiTemplate: React.FC<RoiTemplateProps> = ({
     <PageContext.Provider value={{ title }}>
       <Layout>
         <Container className="container" size={"xl"}>
-          <PageModal contentfulModalNodes={allContentfulModal?.nodes || []}/>
+          {/* <PageModal contentfulModalNodes={allContentfulModal?.nodes || []}/> */}
            {canShowLoader
               ? <Center>
                   <Loader mt={"xl"} mb={"xl"} size="lg" />

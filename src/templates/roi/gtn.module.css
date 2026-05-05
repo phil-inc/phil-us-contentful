@@ -1,0 +1,96 @@
+/* Row uses flex ~65% / ~35% on md+ (7:4 grow) — form a bit wider than 2:1 */
+.gtnRow {
+	width: 100%;
+
+	.mainCol {
+		min-width: 0;
+		padding-top: 30px;
+
+		@media (max-width: 767px) {
+			padding-top: 40px;
+		}
+	}
+
+	.sidebarCol {
+		padding-top: 30px;
+		@media (min-width: $phil-breakpoint-xl) {
+			padding-top: 50px;
+		}
+
+    @media (min-width: $phil-breakpoint-md) {
+			align-self: stretch;
+		}
+
+		/* Sticky sidebar / form card */
+		.stickyAside {
+			box-sizing: border-box;
+			width: 100%;
+			max-width: 100%;
+			background: #ffffff;
+			border-radius: 16px;
+			padding: 28px 24px 28px;
+      border: 1px solid #E6E6E6;
+			box-shadow: 10px 18px 56px rgba(100, 50, 100, 0.18);
+
+			@media (min-width: $phil-breakpoint-md) {
+				position: sticky;
+				top: 90px;
+				align-self: flex-start;
+				border-radius: 20px;
+				padding: 40px 40px 40px;
+				width: 100%;
+				max-width: 100%;
+				max-height: calc(
+					100vh - var(--announcment-bar-height) - var(--navbar-height) - 2px
+				);
+				overflow-y: hidden;
+				overscroll-behavior: contain;
+			}
+
+			/* Eyebrow — "Run Your Numbers" */
+			.sidebarEyebrow {
+				font-family: Lato, Arial, sans-serif;
+				font-weight: 700;
+				font-size: 11px;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: #00827E;
+				margin: 0 0 20px;
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+
+				&::before {
+					content: "";
+					display: inline-block;
+					width: 18px;
+					height: 2px;
+					background: #00827E;
+					flex-shrink: 0;
+				}
+			}
+
+			/* H3 — "Your brand's commercial potential…" */
+			.sidebarTitle {
+				font-family: Raleway, Arial, sans-serif;
+				font-weight: 700;
+        font-size: 24px;
+        @media (min-width: $phil-breakpoint-xl) {
+          font-size: 32px;
+        }
+				line-height: 1.3;
+				color: #0a0a0a;
+				margin: 0 0 12px;
+			}
+
+			/* P — "Gain a clear view…" */
+			.sidebarBody {
+				font-family: Lato, Arial, sans-serif;
+				font-size: 15px;
+				line-height: 1.65;
+				color: #525252;
+				margin: 0;
+			}
+		}
+	}
+}

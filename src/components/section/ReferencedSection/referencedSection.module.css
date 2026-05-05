@@ -61,10 +61,76 @@
 }
 
 .innerContainer{
-  position: relative;
-  z-index: 2;
+	position: relative;
+	z-index: 2;
 
-  &.topPaddingWithoutHeader{
+	&[data-context='GTN'][data-reference-type='Auto Increasing Metric Card'] {
+		background: #00827E;
+		border-radius: 24px;
+		padding: 22px 22px 26px;
+
+		@media (min-width: $phil-breakpoint-lg) {
+			padding: 18px 40px 26px;
+		}
+		margin-top: 40px;
+
+		/* Right-side dot texture (target comp) */
+		&::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: min(52%, 420px);
+			height: 100%;
+			border-radius: inherit;
+			pointer-events: none;
+			z-index: 0;
+			background-image: radial-gradient(
+				circle at 1px 1px,
+				rgba(255, 255, 255, 0.16) 1px,
+				transparent 1px
+			);
+			background-size: 10px 10px;
+			-webkit-mask-image: linear-gradient(
+				270deg,
+				rgba(0, 0, 0, 0.95) 0%,
+				rgba(0, 0, 0, 0.35) 55%,
+				transparent 100%
+			);
+			mask-image: linear-gradient(
+				270deg,
+				rgba(0, 0, 0, 0.95) 0%,
+				rgba(0, 0, 0, 0.35) 55%,
+				transparent 100%
+			);
+		}
+
+		/* Overline: set copy in Contentful field `eyebrowHeading` (not `header`) */
+		& h1, & h2, & h3, & h4 { display: none; }
+
+		& .eyebrowHeading {
+			position: relative;
+			z-index: 1;
+			color: rgba(255, 255, 255, 0.85);
+			margin: 0 0 24px;
+			width: 100%;
+			text-align: left;
+		}
+
+		& .eyebrowHeading::before {
+			background: rgba(255, 255, 255, 0.7);
+		}
+
+		/* Metric band — flex row matches ContentfulMetricCard 993px breakpoint */
+		& .grid {
+			position: relative;
+			z-index: 1;
+			margin-top: 0 !important;
+			align-items: center;
+		}
+	}
+
+	&.topPaddingWithoutHeader{
     padding-top: 60px;
     	@media (min-width: $phil-breakpoint-sm) {
         padding-top: 100px;
@@ -140,12 +206,21 @@
     justify-content: center;
   }
 
+  &[data-reference-type="Opportunity Card"] {
+    display: flex;
+
+    & > * {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+    }
+  }
+
 }
 
 .subHeading {
   display: none;
   margin-top: 44px;
-
   color: var(--Phil-Rebrand-Neutral-Pitch, #0a0a0a);
   font-family: Lato, sans-serif;
   font-size: 18px;
@@ -198,6 +273,39 @@
   font-size: 18px;
 }
 
+/* Auto Increasing Metric Card — plain flex row (see ReferencedSectionBody) */
+.autoIncreasingMetricRow {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-start;
+	width: 100%;
+	gap: 0;
+
+	@media (min-width: $phil-breakpoint-lg) {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: stretch;
+		justify-content: center;
+		gap: 36px;
+	}
+}
+
+.autoIncreasingMetricItem {
+	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: stretch;
+
+	@media (min-width: $phil-breakpoint-lg) {
+		flex: 1 1 0;
+		min-width: 0;
+		width: auto;
+		justify-content: center;
+		align-items: stretch;
+	}
+}
+
 .grid {
 
   &[data-add-margin="true"] {
@@ -227,6 +335,12 @@
     margin-top: 0;
   }
   &[data-context="FAQs"] {
+    @media (min-width: $phil-breakpoint-sm) {
+      margin-top: 40px;
+    }
+  }
+
+  &[data-context="GTN"][data-reference-type="Opportunity Card"][data-add-margin="true"] {
     @media (min-width: $phil-breakpoint-sm) {
       margin-top: 40px;
     }
@@ -445,4 +559,29 @@
       display: inline-block;
     }
   }
+}
+
+/* ── GTN page — referenced section overrides ────────────── */
+
+/* Teal eyebrow with decorative line (all GTN referenced sections) */
+.eyebrowHeading[data-context='GTN'] {
+  font-family: Lato, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #00827E;
+  text-align: left;
+  margin-bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrowHeading[data-context='GTN']::before {
+  content: "";
+  flex-shrink: 0;
+  width: 18px;
+  height: 2px;
+  background: #00827E;
 }

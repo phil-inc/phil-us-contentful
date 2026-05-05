@@ -1,6 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import { BLOCKS, INLINES } from "@contentful/rich-text-types";
+import { BLOCKS, INLINES, MARKS } from "@contentful/rich-text-types";
 import {
   Anchor,
   Box,
@@ -37,6 +37,7 @@ import { parseScript } from "utils/parseScript";
 import { IconArrowRight } from "@tabler/icons-react";
 
 import BtnGroup from "components/BtnGroup/BtnGroup";
+import ListGroup from "../../ListGroup/ListGroup";
 
 import cx from "clsx";
 import * as classes from "./basicSection.module.css";
@@ -110,7 +111,51 @@ const BasicSection: React.FC<BasicSectionProps> = ({
     };
   });
 
+  const listReferences = (section?.body?.references ?? []).filter((reference: any) => {
+    const contentTypeId = reference?.sys?.contentType?.sys?.id;
+    return (
+      reference?.__typename === CONTENTFUL_TYPES.LIST ||
+      contentTypeId === "list" ||
+      typeof reference?.listType === "string"
+    );
+  });
+
+  const embeddedEntryIds = React.useMemo(() => {
+    const ids = new Set<string>();
+    const raw = section?.body?.raw;
+    if (!raw) return ids;
+
+    try {
+      const doc = JSON.parse(raw) as { content?: any[] };
+      const walk = (nodes?: any[]) => {
+        if (!Array.isArray(nodes)) return;
+        nodes.forEach((n) => {
+          if (n?.nodeType === "embedded-entry-block") {
+            const id = n?.data?.target?.sys?.id;
+            if (typeof id === "string" && id) ids.add(id);
+          }
+          walk(n?.content);
+        });
+      };
+      walk(doc?.content);
+    } catch (_error) {
+      // noop: if body.raw isn't valid JSON, we fallback to references-only behavior
+    }
+
+    return ids;
+  }, [section?.body?.raw]);
+
+  const listReferencesToRender = listReferences.filter(
+    (item: any) => !embeddedEntryIds.has(item?.id),
+  );
+
   const options = {
+    renderMark: {
+      [MARKS.ITALIC](text: React.ReactNode) {
+        if (context.title !== "GTN") return <em>{text}</em>;
+        return <span className={classes.gtnItalicAccent}>{text}</span>;
+      },
+    },
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET](node) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -160,6 +205,13 @@ const BasicSection: React.FC<BasicSectionProps> = ({
 
           if(target?.__typename === CONTENTFUL_TYPES.BUTTON_GROUP){
             return <BtnGroup data={node.data.target}/>
+          }
+
+          if (
+            target?.__typename === CONTENTFUL_TYPES.LIST ||
+            target?.sys?.contentType?.sys?.id === "list"
+          ) {
+            return <ListGroup target={target} contextTitle={context.title} />;
           }
 
           if (target?.link?.internalContent) {
@@ -560,6 +612,11 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                           heroRef.current,
                         )
                       : renderRichText(section.body, options)}
+                    {listReferencesToRender.map((listItem: any) => (
+                      <React.Fragment key={listItem.id}>
+                        <ListGroup target={listItem} contextTitle={context.title} />
+                      </React.Fragment>
+                    ))}
                   </Stack>
 
                 )}

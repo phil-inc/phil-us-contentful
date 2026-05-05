@@ -7,7 +7,7 @@ import type { TResource } from "./resource";
 import { Hyperlink } from "types/modal";
 import { ContentfulButton } from "layouts/Layout/CHeader/CHeader";
 
-type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns | Text and Text Columns with Footer" | "Section Group";
+type SectionType = "Basic Section" | "Referenced Section" | "Text and Text Columns | Text and Text Columns with Footer" | "Section Group" | "Sticky Sidebar Form";
 
 export type BodyType = RenderRichTextData<ContentfulRichTextGatsbyReference>;
 
@@ -159,6 +159,8 @@ export enum ReferenceTypeEnum {
   "Tabs Switch" = "Tabs Switch",
   "Linear Process Card" = "Linear Process Card",
   "Metric Outcome Card" = "Metric Outcome Card",
+  "Auto Increasing Metric Card" = "Auto Increasing Metric Card",
+  "Opportunity Card" = "Opportunity Card",
 }
 
 export type ReferenceType = keyof typeof ReferenceTypeEnum;

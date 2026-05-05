@@ -20,6 +20,11 @@
 		padding-bottom: 0px;
 	}
 
+	&[data-context='GTN'][data-referencetype='Auto Increasing Metric Card'] {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
 	.rightBackgroundIcon {
 		display: none;
 
@@ -100,6 +105,11 @@
 
 		&[data-context='Solution'][section-index='2'] {
 			padding: 50px 0;
+		}
+
+		&[data-context='GTN'][data-referencetype='Auto Increasing Metric Card'] {
+			padding-top: 0;
+			padding-bottom: 0;
 		}
 	}
 
