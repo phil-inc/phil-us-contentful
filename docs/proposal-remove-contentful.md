@@ -254,6 +254,213 @@ flowchart LR
 
 ---
 
+## Engineering Implementation
+
+What eng needs to build to enable this workflow.
+
+### Overview
+
+```mermaid
+flowchart TB
+    subgraph ci["CI Pipeline (GitHub Actions)"]
+        direction LR
+        LINT["Lint + Type Check"] --> BUILD["Gatsby Build"]
+        BUILD --> TEST["Visual Regression Tests"]
+        TEST --> PREVIEW["Netlify Deploy Preview"]
+    end
+
+    subgraph access["Access Controls"]
+        direction LR
+        CODEOWNERS["CODEOWNERS file"]
+        BRANCH["Branch protection rules"]
+        AUTOMERGE["Auto-merge for content-only PRs"]
+    end
+
+    subgraph ai["AI Guardrails"]
+        direction LR
+        CLAUDE_MD["CLAUDE.md project context"]
+        SKILLS["Claude Code skills"]
+        HOOKS["Pre-commit hooks"]
+    end
+
+    subgraph testing["Testing"]
+        direction LR
+        VRT["Visual regression tests"]
+        LINK["Link / SEO validation"]
+        A11Y["Accessibility checks"]
+    end
+
+    subgraph migration["Migration Tooling"]
+        direction LR
+        SCRIPT["Contentful-to-static converter"]
+        CONTENT_DIR["Content directory convention"]
+    end
+
+    ci --> access --> ai --> testing --> migration
+```
+
+### 1. CI Pipeline (GitHub Actions)
+
+No CI exists today — Netlify handles builds but there are no PR checks. We need a GitHub Actions workflow that blocks broken PRs from merging.
+
+| Check | Tool | Purpose |
+|---|---|---|
+| TypeScript | `tsc --noEmit` | Catch type errors before build |
+| Lint | `eslint .` | Enforce code style |
+| Build | `gatsby build` | Verify the site actually builds |
+| Visual regression | Percy or Playwright screenshots | Catch unintended visual changes |
+| Link validation | `broken-link-checker` or custom | Catch dead internal links |
+| Accessibility | `axe-core` or `pa11y` | Catch a11y regressions |
+
+### 2. Testing Strategy
+
+Currently the repo only has utility unit tests (`src/__tests__/utils/`). We need tests that give marketing confidence their changes didn't break anything.
+
+**Visual regression tests** — the highest-value addition. Capture baseline screenshots of every page, then compare on each PR. Marketing can see exactly what changed visually.
+
+```mermaid
+flowchart LR
+    PR["PR opened"] --> BUILD["Build site"]
+    BUILD --> CAPTURE["Capture page screenshots"]
+    CAPTURE --> COMPARE{"Compare to baseline"}
+    COMPARE -->|No diff| PASS["Check passes"]
+    COMPARE -->|Diff detected| REVIEW["Visual diff posted to PR"]
+    REVIEW --> APPROVE["Marketing reviews diff"]
+
+    style PASS fill:#d4edda,stroke:#28a745
+    style REVIEW fill:#fff3cd,stroke:#856d0a
+```
+
+| Test Type | What It Catches | Tool Options |
+|---|---|---|
+| Visual regression | Layout breaks, missing images, font changes | Playwright screenshots, Percy, Chromatic |
+| Link validation | Broken internal links, dead anchors | Custom script or `broken-link-checker` |
+| SEO validation | Missing meta titles/descriptions, broken OG tags | Custom script checking `<Head>` output |
+| Accessibility | Color contrast, missing alt text, ARIA issues | `axe-core`, `pa11y-ci` |
+| Build smoke test | Import errors, missing assets, TypeScript errors | `gatsby build` (already exists as npm script) |
+
+### 3. Branch Protection + CODEOWNERS
+
+**Branch protection rules** on `main`:
+- Require PR reviews before merge
+- Require CI status checks to pass
+- No direct pushes
+
+**CODEOWNERS** file to route reviews by change type:
+
+```
+# Eng reviews anything outside content directories
+*                           @phil-inc/engineering
+
+# Marketing can self-approve content-only changes
+src/pages/**/content.ts     @phil-inc/marketing
+src/pages/**/assets/        @phil-inc/marketing
+static/                     @phil-inc/marketing
+```
+
+**Auto-merge** — GitHub Action that auto-approves PRs when:
+- Only content files changed (text, images, static assets)
+- All CI checks pass
+- Deploy preview is generated
+
+### 4. CLAUDE.md Project Context
+
+A `CLAUDE.md` at repo root gives Claude Code Desktop the context it needs to make correct edits. This is the single most important file for the workflow — it teaches the AI how the project works.
+
+Contents:
+- Project architecture and conventions (already documented in `CONTEXT.md` — merge in)
+- Component reuse guidelines (use existing components before creating new ones)
+- Styling rules (Mantine theme, CSS Modules, responsive breakpoints)
+- File naming conventions
+- What files marketing should and shouldn't touch
+- PR creation instructions
+
+### 5. Claude Code Skills
+
+Expand the existing `skills/` directory with marketing-facing skills:
+
+| Skill | Purpose |
+|---|---|
+| `create-landing-from-design` | Already exists — converts Claude Design exports to static pages |
+| `edit-page-content` | New — guides AI through safe content edits (text, images, SEO) |
+| `add-blog-post` | New — creates a new blog post from a brief |
+| `update-seo` | New — updates meta tags, OG images, descriptions |
+
+### 6. Content Directory Convention
+
+Establish a clear separation between content and code so CODEOWNERS and auto-merge rules work:
+
+```
+src/pages/spring-campaign/
+├── index.tsx           # Page component (imports content)
+├── content.ts          # All text, headlines, CTAs (marketing edits this)
+├── assets/             # Images, icons (marketing edits this)
+└── springCampaign.module.css  # Styles (eng reviews)
+```
+
+Marketing edits `content.ts` and `assets/`. Structural changes to `index.tsx` or styles require eng review.
+
+### 7. Migration Script
+
+A Claude Code skill or script that converts a Contentful-driven page to a static page:
+
+1. Query the Contentful API for the page's current data
+2. Generate a static `src/pages/{slug}/index.tsx` with the same content hardcoded
+3. Generate a `content.ts` file with extractable text
+4. Copy referenced assets (images) to the page's `assets/` directory
+5. Verify the output matches the original visually (screenshot comparison)
+
+### 8. Pre-commit Hooks
+
+Extend the existing Husky setup with hooks that catch problems before they reach CI:
+
+- TypeScript type check
+- Lint staged files
+- Validate image sizes (prevent marketing from committing 10MB PNGs)
+- Check for accidental secret/credential commits
+
+### Build Priority
+
+```mermaid
+flowchart LR
+    subgraph p0["P0 — Before pilot"]
+        direction TB
+        P0A["GitHub Actions CI pipeline"]
+        P0B["Branch protection rules"]
+        P0C["CLAUDE.md project context"]
+    end
+
+    subgraph p1["P1 — During pilot"]
+        direction TB
+        P1A["Visual regression tests"]
+        P1B["CODEOWNERS + auto-merge"]
+        P1C["Content directory convention"]
+    end
+
+    subgraph p2["P2 — Before Phase 3"]
+        direction TB
+        P2A["Migration script"]
+        P2B["Additional Claude Code skills"]
+        P2C["SEO + link + a11y checks"]
+    end
+
+    p0 --> p1 --> p2
+```
+
+| Priority | Item | Effort |
+|---|---|---|
+| **P0** | GitHub Actions CI (lint, typecheck, build) | ~1 day |
+| **P0** | Branch protection rules on `main` | ~1 hour |
+| **P0** | CLAUDE.md project context | ~1 day |
+| **P1** | Visual regression tests (Playwright screenshots) | ~2-3 days |
+| **P1** | CODEOWNERS + auto-merge action | ~half day |
+| **P1** | Content directory convention + docs | ~half day |
+| **P2** | Contentful-to-static migration script | ~2-3 days |
+| **P2** | Additional Claude Code skills | ~1-2 days |
+| **P2** | SEO, link, and accessibility CI checks | ~1-2 days |
+
+---
+
 ## What Marketing Needs to Learn
 
 Claude Code Desktop is a native app with a chat-like interface — no terminal required. Marketing doesn't need to learn to code — they need to learn a workflow:
