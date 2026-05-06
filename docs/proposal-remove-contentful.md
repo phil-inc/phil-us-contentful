@@ -251,13 +251,13 @@ gantt
 
 ## What Marketing Needs to Learn
 
-Claude Code is a terminal-based AI assistant. Marketing doesn't need to learn to code — they need to learn a workflow:
+Claude Code Desktop is a native app with a chat-like interface — no terminal required. Marketing doesn't need to learn to code — they need to learn a workflow:
 
 ### The Daily Workflow
 
 ```mermaid
 flowchart TB
-    START([Open Claude Code in terminal]) --> DESCRIBE["Describe the change in plain English"]
+    START([Open Claude Code Desktop]) --> DESCRIBE["Describe the change in plain English"]
     DESCRIBE --> AI["Claude Code makes the edit"]
     AI --> REVIEW{"Happy with the change?"}
     REVIEW -->|No| DESCRIBE
@@ -287,7 +287,7 @@ flowchart TB
 
 | Session | Duration | Content |
 |---|---|---|
-| Intro to Claude Code | 1 hour | Install, navigate, basic prompts |
+| Intro to Claude Code Desktop | 1 hour | Install app, open project, basic prompts |
 | Content editing workshop | 1 hour | Edit text, images, SEO metadata with live practice |
 | New page creation | 1 hour | Claude Design export to Claude Code build |
 | PR workflow | 30 min | Preview URLs, approving, merging |
@@ -300,7 +300,7 @@ flowchart TB
 |---|---|---|---|
 | Marketing breaks the build | Medium | Low | CI blocks broken PRs from merging. TypeScript + build checks catch errors before deploy. |
 | AI generates incorrect code | Low | Low | Deploy preview lets marketing visually verify before merge. Eng reviews structural changes. |
-| Marketing is uncomfortable with terminal workflow | Medium | Medium | Training sessions + reference prompts. Claude Code's natural language interface is approachable. Evaluate web-based Claude Code as alternative. |
+| Marketing finds the tool unfamiliar | Medium | Medium | Claude Code Desktop has a chat-like interface — no terminal needed. Training sessions + reference prompts lower the learning curve. |
 | Loss of Contentful's content scheduling | Low | Medium | Implement GitHub Actions for scheduled merges, or use Netlify's scheduled deploys. |
 | Rollback is harder without CMS | Low | Low | `git revert` is faster and more reliable than Contentful entry restore. |
 | AI hallucinations in content | Low | Medium | Marketing reviews all preview URLs before merge — same review they'd do in Contentful. |
@@ -336,5 +336,5 @@ A: No — Netlify deploy previews give you a full, live preview of every change 
 **Q: What happens to existing blog posts and resources?**
 A: They stay as-is during migration. We migrate them incrementally in Phase 3. No content is lost — Contentful data is converted to static pages.
 
-**Q: Does marketing need to learn Git?**
-A: No. Claude Code handles Git operations (branching, committing, pushing, PR creation). Marketing only needs to review preview URLs and click "merge" on GitHub.
+**Q: Does marketing need to learn Git or the terminal?**
+A: No. Claude Code Desktop is a native app with a familiar chat interface. It handles all Git operations (branching, committing, pushing, PR creation) behind the scenes. Marketing only needs to describe the change, review the preview URL, and click "merge" on GitHub.
