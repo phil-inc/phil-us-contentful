@@ -212,31 +212,36 @@ flowchart LR
 
 This is not a big-bang migration. We run both systems in parallel and migrate incrementally.
 
-### Phase 1: New Pages Go Static (Weeks 1-4)
-
 ```mermaid
-gantt
-    title Migration Timeline
-    dateFormat YYYY-MM-DD
-    axisFormat %b %d
+flowchart LR
+    subgraph p1["Phase 1: New Pages Go Static"]
+        P1A["Set up CI guardrails + branch rules"]
+        P1B["Train marketing on Claude Code Desktop"]
+        P1C["Pilot: 2-3 new landing pages via AI"]
+        P1D["Retrospective + adjust process"]
+        P1A --> P1C
+        P1B --> P1C
+        P1C --> P1D
+    end
 
-    section Phase 1 - New Pages
-    Set up CI guardrails + branch rules     :p1a, 2026-05-12, 5d
-    Train marketing on Claude Code          :p1b, 2026-05-12, 10d
-    Pilot: 2-3 new landing pages via AI     :p1c, after p1b, 14d
-    Retrospective + adjust process          :p1d, after p1c, 3d
+    subgraph p2["Phase 2: Content Edits"]
+        P2A["Marketing handles text/image PRs"]
+        P2B["Reduce eng content-change load"]
+    end
 
-    section Phase 2 - Content Edits
-    Marketing handles text/image PRs        :p2a, after p1d, 21d
-    Reduce eng content-change load          :p2b, after p1d, 21d
+    subgraph p3["Phase 3: Page Migration"]
+        P3A["Migrate high-churn pages from Contentful"]
+        P3B["Migrate remaining pages"]
+        P3A --> P3B
+    end
 
-    section Phase 3 - Page Migration
-    Migrate high-churn pages from Contentful:p3a, after p2a, 30d
-    Migrate remaining pages                 :p3b, after p3a, 30d
+    subgraph p4["Phase 4: Sunset"]
+        P4A["Remove Contentful source plugin"]
+        P4B["Cancel Contentful subscription"]
+        P4A --> P4B
+    end
 
-    section Phase 4 - Sunset
-    Remove Contentful source plugin         :p4a, after p3b, 5d
-    Cancel Contentful subscription          :p4b, after p4a, 1d
+    p1 --> p2 --> p3 --> p4
 ```
 
 **Phase 1** — All *new* pages are built as static pages in `src/pages/` using Claude Code. Existing Contentful pages are untouched.
