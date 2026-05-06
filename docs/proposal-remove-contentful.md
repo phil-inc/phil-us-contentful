@@ -11,21 +11,25 @@
 
 Our current content pipeline requires engineering involvement at every stage, even for routine content changes. Despite using Contentful as a "no-code" CMS, the reality is:
 
-1. **Engineering defines every content model** — field types, validations, references, and structure must be set up by a developer in Contentful before marketing can enter content.
-2. **Design-to-CMS mapping is manual** — translating a static design into Contentful's data model is time-consuming and error-prone.
-3. **Two parallel tracks must converge** — engineering builds components while marketing populates Contentful. Neither can ship without the other.
-4. **Content changes trigger eng work** — adding a new section type, changing a layout, or restructuring a page requires code changes to `Section.tsx`, GraphQL queries, templates, and the template factory.
+1. **Engineering owns the entire Contentful pipeline** — for new pages, eng defines the content model, enters the content, builds the components, and wires up GraphQL queries. Marketing requests the page but eng does all the work.
+2. **Design-to-CMS mapping is manual** — translating a static design into Contentful's data model is time-consuming and error-prone, and only eng can do it.
+3. **Content changes trigger eng work** — adding a new section type, changing a layout, or restructuring a page requires code changes to `Section.tsx`, GraphQL queries, templates, and the template factory, plus corresponding Contentful model updates.
+4. **The CMS adds complexity without removing eng dependency** — Contentful was meant to let marketing self-serve, but in practice eng handles both the code and the CMS setup.
 
 ```mermaid
 flowchart LR
-    subgraph today["Today: Every Content Change"]
-        M[Marketing requests change] --> E[Eng updates Contentful model]
-        E --> C[Marketing enters content in CMS]
-        C --> R[Eng reviews + deploys]
+    subgraph today["Today: New Page Request"]
+        M[Marketing requests page] --> E1[Eng defines Contentful model]
+        E1 --> E2[Eng enters content in CMS]
+        E1 --> E3[Eng builds components + GraphQL]
+        E2 --> E4[Eng reviews + deploys]
+        E3 --> E4
     end
 
-    style E fill:#fff3cd,stroke:#856d0a
-    style R fill:#fff3cd,stroke:#856d0a
+    style E1 fill:#fff3cd,stroke:#856d0a
+    style E2 fill:#fff3cd,stroke:#856d0a
+    style E3 fill:#fff3cd,stroke:#856d0a
+    style E4 fill:#fff3cd,stroke:#856d0a
 ```
 
 **Result:** Marketing is blocked by engineering for content updates. Engineering spends time on CMS plumbing instead of product work. A "simple" landing page takes 1-2 weeks instead of 1-2 days.
@@ -104,35 +108,30 @@ sequenceDiagram
 
 ### Before vs. After
 
-```mermaid
-flowchart LR
-    subgraph before["BEFORE"]
-        direction TB
-        B1["Marketing briefs design"]
-        B2["Eng: define Contentful model"]
-        B3["Eng: build components + GraphQL"]
-        B4["Marketing: enter content in CMS"]
-        B5["Both tracks converge"]
-        B6["Eng: PR + review + deploy"]
-        B1 --> B2 --> B3 --> B5
-        B1 --> B4 --> B5
-        B5 --> B6
-    end
+**BEFORE** — Eng handles both code and Contentful setup
 
-    subgraph after["AFTER"]
-        direction TB
-        A1["Marketing creates in Claude Design"]
-        A2["Marketing hands off to Claude Code"]
-        A3["AI builds page + opens PR"]
-        A4["Netlify deploy preview"]
-        A5["Marketing reviews + merges"]
-        A1 --> A2 --> A3 --> A4 --> A5
-    end
+```mermaid
+flowchart TB
+    B1["Marketing briefs design"] --> B2["Eng: build components + GraphQL"]
+    B1 --> B3["Eng: define Contentful model + enter content"]
+    B2 --> B4["Both tracks converge"]
+    B3 --> B4
+    B4 --> B5["Eng: PR + review + deploy"]
 
     style B2 fill:#fff3cd,stroke:#856d0a
     style B3 fill:#fff3cd,stroke:#856d0a
-    style B4 fill:#fff3cd,stroke:#856d0a
-    style B6 fill:#fff3cd,stroke:#856d0a
+    style B5 fill:#fff3cd,stroke:#856d0a
+```
+
+**AFTER** — Marketing self-serves, eng only reviews structural changes
+
+```mermaid
+flowchart TB
+    A1["Marketing creates in Claude Design"] --> A2["Marketing hands off to Claude Code"]
+    A2 --> A3["AI builds page + opens PR"]
+    A3 --> A4["Netlify deploy preview"]
+    A4 --> A5["Marketing reviews + merges"]
+
     style A3 fill:#d4edda,stroke:#28a745
 ```
 
