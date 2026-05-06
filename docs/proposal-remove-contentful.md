@@ -7,6 +7,51 @@
 
 ---
 
+## What Is Contentful and How Do We Use It Today?
+
+**Contentful** is a headless content management system (CMS). Unlike traditional CMS platforms like WordPress where content and presentation are bundled together, Contentful only manages content — it stores text, images, and structured data, then delivers it via API to our website at build time.
+
+### How phil.us works today
+
+Our marketing site ([phil.us](https://phil.us)) is built with Gatsby, a static site generator. When we deploy, Gatsby pulls all content from Contentful's API, combines it with our code (components, templates, styles), and generates static HTML pages that are hosted on Netlify.
+
+```mermaid
+flowchart LR
+    CF["Contentful (content)"] --> GATSBY["Gatsby (build)"]
+    CODE["Code (components + templates)"] --> GATSBY
+    GATSBY --> HTML["Static HTML pages"]
+    HTML --> NETLIFY["Netlify (hosting)"]
+
+    style CF fill:#cce5ff,stroke:#0d6efd
+    style CODE fill:#fff3cd,stroke:#856d0a
+```
+
+### What lives in Contentful
+
+| Content Type | What It Stores | Examples |
+|---|---|---|
+| **Pages** | Top-level page structure — title, slug, SEO metadata, and a list of sections | /about, /pricing, /enterprise |
+| **Sections** | Content blocks within a page — headlines, body text, images, forms | Hero sections, feature grids, FAQ accordions |
+| **Resources** | Blog posts, articles, testimonials | Insight articles, customer stories |
+| **Case Studies** | Structured case study content — metrics, quotes, takeaways | Customer success stories |
+| **Downloadable Resources** | Gated content with HubSpot forms | Whitepapers, guides, reports |
+| **Events** | Event registration pages with speaker info and dates | Webinars, conferences |
+
+There are **15+ content models** in Contentful with **30+ section layout types**, each requiring its own code to render.
+
+### Why we originally chose Contentful
+
+The intent was to let marketing update content without engineering. In practice, Contentful requires eng to:
+
+1. **Define the content model** — create the data structure (fields, types, validations) for every new page type or section
+2. **Enter the content** — for new pages, eng populates Contentful because the model and content are created together
+3. **Write the rendering code** — build the React components, GraphQL queries, and template wiring that turns Contentful data into HTML
+4. **Maintain the mapping** — keep the code in sync with the Contentful model as it evolves
+
+The CMS layer adds complexity without removing the engineering dependency it was meant to eliminate.
+
+---
+
 ## The Problem
 
 Our current content pipeline requires engineering involvement at every stage, even for routine content changes. Despite using Contentful as a "no-code" CMS, the reality is:
