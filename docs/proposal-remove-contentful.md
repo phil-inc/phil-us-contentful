@@ -28,16 +28,16 @@ flowchart LR
 
 ### What lives in Contentful
 
-| Content Type | What It Stores | Examples |
-|---|---|---|
-| **Pages** | Top-level page structure — title, slug, SEO metadata, and a list of sections | /about, /pricing, /enterprise |
-| **Sections** | Content blocks within a page — headlines, body text, images, forms | Hero sections, feature grids, FAQ accordions |
-| **Resources** | Blog posts, articles, testimonials | Insight articles, customer stories |
-| **Case Studies** | Structured case study content — metrics, quotes, takeaways | Customer success stories |
-| **Downloadable Resources** | Gated content with HubSpot forms | Whitepapers, guides, reports |
-| **Events** | Event registration pages with speaker info and dates | Webinars, conferences |
+| Content Type | What It Stores | Examples | Can this live in code instead? |
+|---|---|---|---|
+| **Pages** | Top-level page structure — title, slug, SEO metadata, and a list of sections | /about, /pricing, /enterprise | Yes — static page files in `src/pages/` |
+| **Sections** | Content blocks within a page — headlines, body text, images, forms | Hero sections, feature grids, FAQ accordions | Yes — props passed to reusable React components |
+| **Resources** | Blog posts, articles, testimonials | Insight articles, customer stories | Yes — markdown or TypeScript content files |
+| **Case Studies** | Structured case study content — metrics, quotes, takeaways | Customer success stories | Yes — structured data in content files |
+| **Downloadable Resources** | Gated content with HubSpot forms | Whitepapers, guides, reports | Yes — static pages with form embed IDs |
+| **Events** | Event registration pages with speaker info and dates | Webinars, conferences | Yes — static pages with event data as props |
 
-There are **15+ content models** in Contentful with **30+ section layout types**, each requiring its own code to render.
+There are **15+ content models** in Contentful with **30+ section layout types**, each requiring its own code to render. **All of this is just structured data (text, image references, metadata) — none of it requires a CMS. Everything Contentful stores can live directly in the codebase as static files.**
 
 ### Why we originally chose Contentful
 
