@@ -105,7 +105,7 @@ sequenceDiagram
 ### Before vs. After
 
 ```mermaid
-flowchart TB
+flowchart LR
     subgraph before["BEFORE"]
         direction TB
         B1["Marketing briefs design"]
