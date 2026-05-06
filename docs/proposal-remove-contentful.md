@@ -38,12 +38,13 @@ flowchart LR
 
 ## The Proposal
 
-Remove Contentful. Marketing uses **Claude Code** (AI coding assistant) to make content changes directly in the site repository and raises pull requests for review.
+Remove Contentful. Marketing uses **Claude Design** to create and iterate on page designs, and **Claude Code Desktop** to implement changes in the site repository and raise pull requests for review.
 
 ```mermaid
 flowchart LR
     subgraph proposed["Proposed: Content Changes"]
-        M[Marketing describes change to Claude Code] --> A[AI makes the edit]
+        M[Marketing designs in Claude Design] --> B[Marketing implements via Claude Code Desktop]
+        B --> A[AI makes the edit]
         A --> P[PR with preview URL]
         P --> R[Marketing reviews preview + merges]
     end
@@ -51,7 +52,7 @@ flowchart LR
     style A fill:#d4edda,stroke:#28a745
 ```
 
-**Claude Code replaces Contentful as the content editing interface.** Instead of clicking through a CMS dashboard, marketing describes what they want in natural language, Claude Code makes the changes, and a PR with a live preview is created for review.
+**Claude Design + Claude Code Desktop replace Contentful as the content workflow.** Instead of clicking through a CMS dashboard, marketing designs visually in Claude Design, then uses Claude Code Desktop to implement the changes — describing what they want in natural language. A PR with a live preview is created for review.
 
 ---
 
@@ -62,10 +63,13 @@ flowchart LR
 ```mermaid
 sequenceDiagram
     actor Marketing
-    participant CC as Claude Code
+    participant CD as Claude Design
+    participant CC as Claude Code Desktop
     participant GH as GitHub
     participant NF as Netlify
 
+    Marketing->>CD: Iterates on the change visually
+    CD-->>Marketing: Updated design
     Marketing->>CC: "Update the hero headline on the pricing page to 'Save up to 80%'"
     CC->>CC: Locates src/pages/pricing/index.tsx
     CC->>CC: Edits the headline text
@@ -84,7 +88,7 @@ sequenceDiagram
 sequenceDiagram
     actor Marketing
     participant CD as Claude Design
-    participant CC as Claude Code
+    participant CC as Claude Code Desktop
     participant GH as GitHub
     participant NF as Netlify
 
@@ -127,7 +131,7 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    A1["Marketing creates in Claude Design"] --> A2["Marketing hands off to Claude Code"]
+    A1["Marketing designs in Claude Design"] --> A2["Marketing implements via Claude Code Desktop"]
     A2 --> A3["AI builds page + opens PR"]
     A3 --> A4["Netlify deploy preview"]
     A4 --> A5["Marketing reviews + merges"]
@@ -135,9 +139,10 @@ flowchart TB
     style A3 fill:#d4edda,stroke:#28a745
 ```
 
-| | Before (Contentful) | After (Claude Code) |
+| | Before (Contentful) | After (Claude Design + Claude Code Desktop) |
 |---|---|---|
-| **Content editing interface** | Contentful dashboard | Natural language via Claude Code |
+| **Design workflow** | Static mockups handed to eng | Marketing iterates in Claude Design |
+| **Content editing interface** | Contentful dashboard | Natural language via Claude Code Desktop |
 | **Who defines data structure** | Engineering (manual) | AI (automatic from design) |
 | **Design-to-code mapping** | Manual by eng | Automated by AI |
 | **Content source of truth** | Contentful API (external) | Git repository (owned) |
@@ -147,7 +152,7 @@ flowchart TB
 | **Time to publish a text change** | Hours (eng involvement) | Minutes (self-serve) |
 | **Time to launch a new page** | 1-2 weeks | 1-2 days |
 | **Eng involvement for content** | Every change | Only structural/component changes |
-| **Monthly cost** | Contentful subscription + eng time | Claude Code subscription |
+| **Monthly cost** | Contentful subscription + eng time | Claude Design + Claude Code Desktop subscriptions |
 
 ---
 
@@ -159,7 +164,7 @@ Marketing editing code sounds risky. Here's how we prevent problems:
 
 ```mermaid
 flowchart TB
-    PR[PR Created by Claude Code] --> CI{CI Checks}
+    PR[PR Created via Claude Code Desktop] --> CI{CI Checks}
     CI -->|TypeScript| TS[Type check passes?]
     CI -->|Build| BLD[Gatsby build succeeds?]
     CI -->|Preview| PV[Deploy preview generated?]
@@ -216,7 +221,7 @@ This is not a big-bang migration. We run both systems in parallel and migrate in
 flowchart LR
     subgraph p1["Phase 1: New Pages Go Static"]
         P1A["Set up CI guardrails + branch rules"]
-        P1B["Train marketing on Claude Code Desktop"]
+        P1B["Train marketing on Claude Design + Claude Code Desktop"]
         P1C["Pilot: 2-3 new landing pages via AI"]
         P1D["Retrospective + adjust process"]
         P1A --> P1C
@@ -244,9 +249,9 @@ flowchart LR
     p1 --> p2 --> p3 --> p4
 ```
 
-**Phase 1** — All *new* pages are built as static pages in `src/pages/` using Claude Code. Existing Contentful pages are untouched.
+**Phase 1** — All *new* pages are designed in Claude Design and built as static pages in `src/pages/` via Claude Code Desktop. Existing Contentful pages are untouched.
 
-**Phase 2** — Marketing starts making text/image edits to existing pages via Claude Code PRs. Eng reviews only structural changes.
+**Phase 2** — Marketing starts making text/image edits to existing pages via Claude Code Desktop PRs. Eng reviews only structural changes.
 
 **Phase 3** — Migrate existing Contentful-driven pages to static pages. Start with high-churn pages (pages that get updated most frequently). AI handles the conversion — reads the current Contentful-rendered output and creates equivalent static pages.
 
@@ -365,7 +370,7 @@ static/                     @phil-inc/marketing
 
 ### 4. CLAUDE.md Project Context
 
-A `CLAUDE.md` at repo root gives Claude Code Desktop the context it needs to make correct edits. This is the single most important file for the workflow — it teaches the AI how the project works.
+A `CLAUDE.md` at repo root gives Claude Code Desktop the context it needs to make correct edits. This is the single most important file for the implementation workflow — it teaches the AI how the project works.
 
 Contents:
 - Project architecture and conventions (already documented in `CONTEXT.md` — merge in)
@@ -463,17 +468,18 @@ flowchart LR
 
 ## What Marketing Needs to Learn
 
-Claude Code Desktop is a native app with a chat-like interface — no terminal required. Marketing doesn't need to learn to code — they need to learn a workflow:
+Marketing uses two tools: **Claude Design** for visual creation and iteration, and **Claude Code Desktop** for implementing changes in the codebase. Neither requires coding knowledge — both use natural language interfaces. Marketing just needs to learn the workflow:
 
 ### The Daily Workflow
 
 ```mermaid
 flowchart TB
-    START([Open Claude Code Desktop]) --> DESCRIBE["Describe the change in plain English"]
-    DESCRIBE --> AI["Claude Code makes the edit"]
+    START([Design or iterate in Claude Design]) --> OPEN["Open Claude Code Desktop"]
+    OPEN --> DESCRIBE["Describe the change in plain English"]
+    DESCRIBE --> AI["Claude Code Desktop makes the edit"]
     AI --> REVIEW{"Happy with the change?"}
     REVIEW -->|No| DESCRIBE
-    REVIEW -->|Yes| PUSH["Claude Code creates PR"]
+    REVIEW -->|Yes| PUSH["Claude Code Desktop creates PR"]
     PUSH --> PREVIEW["Click deploy preview link"]
     PREVIEW --> CHECK{"Looks good on preview?"}
     CHECK -->|No| DESCRIBE
@@ -486,7 +492,7 @@ flowchart TB
 
 ### Example Prompts Marketing Would Use
 
-| Task | What You Tell Claude Code |
+| Task | What You Tell Claude Code Desktop |
 |---|---|
 | Update headline | "Change the hero headline on /pricing to 'Save up to 80% on prescriptions'" |
 | Swap an image | "Replace the hero image on /about with this new photo" (attach file) |
@@ -499,9 +505,10 @@ flowchart TB
 
 | Session | Duration | Content |
 |---|---|---|
+| Intro to Claude Design | 1 hour | Visual design creation, iteration, exporting |
 | Intro to Claude Code Desktop | 1 hour | Install app, open project, basic prompts |
 | Content editing workshop | 1 hour | Edit text, images, SEO metadata with live practice |
-| New page creation | 1 hour | Claude Design export to Claude Code build |
+| New page creation | 1 hour | End-to-end: Claude Design to Claude Code Desktop to deploy |
 | PR workflow | 30 min | Preview URLs, approving, merging |
 
 ---
@@ -512,7 +519,7 @@ flowchart TB
 |---|---|---|---|
 | Marketing breaks the build | Medium | Low | CI blocks broken PRs from merging. TypeScript + build checks catch errors before deploy. |
 | AI generates incorrect code | Low | Low | Deploy preview lets marketing visually verify before merge. Eng reviews structural changes. |
-| Marketing finds the tool unfamiliar | Medium | Medium | Claude Code Desktop has a chat-like interface — no terminal needed. Training sessions + reference prompts lower the learning curve. |
+| Marketing finds the tools unfamiliar | Medium | Medium | Both Claude Design and Claude Code Desktop have chat-like interfaces — no terminal or coding needed. Training sessions + reference prompts lower the learning curve. |
 | Loss of Contentful's content scheduling | Low | Medium | Implement GitHub Actions for scheduled merges, or use Netlify's scheduled deploys. |
 | Rollback is harder without CMS | Low | Low | `git revert` is faster and more reliable than Contentful entry restore. |
 | AI hallucinations in content | Low | Medium | Marketing reviews all preview URLs before merge — same review they'd do in Contentful. |
@@ -521,10 +528,10 @@ flowchart TB
 
 ## Cost Comparison
 
-| Item | Current (Contentful) | Proposed (Claude Code) |
+| Item | Current (Contentful) | Proposed (Claude Design + Claude Code Desktop) |
 |---|---|---|
 | CMS subscription | Contentful Team/Enterprise plan | $0 (removed) |
-| AI tooling | - | Claude Code Pro/Team seats for marketing |
+| AI tooling | - | Claude Design + Claude Code Desktop seats for marketing |
 | Eng time on CMS plumbing | ~15-20% of content-related eng work | ~5% (structural reviews only) |
 | Time to publish content change | Hours to days | Minutes |
 | Time to launch new page | 1-2 weeks | 1-2 days |
@@ -533,14 +540,14 @@ flowchart TB
 
 ## FAQ
 
-**Q: What if Claude Code is down?**
-A: Content lives in Git. Anyone can edit files directly and raise a PR. Claude Code speeds up the workflow but isn't a single point of failure.
+**Q: What if Claude Design or Claude Code Desktop is down?**
+A: Content lives in Git. Anyone can edit files directly and raise a PR. The AI tools speed up the workflow but aren't a single point of failure.
 
 **Q: Can we still schedule content?**
 A: Yes. Use GitHub's scheduled merge actions or Netlify's scheduled deploys to publish PRs at specific times.
 
 **Q: What about non-text content like forms?**
-A: HubSpot forms are already embedded via component props. Claude Code can add/update form IDs the same way engineering does today.
+A: HubSpot forms are already embedded via component props. Claude Code Desktop can add/update form IDs the same way engineering does today.
 
 **Q: Do we lose content preview?**
 A: No — Netlify deploy previews give you a full, live preview of every change before it goes to production. This is actually better than Contentful's preview mode, which requires a full rebuild.
@@ -549,4 +556,4 @@ A: No — Netlify deploy previews give you a full, live preview of every change 
 A: They stay as-is during migration. We migrate them incrementally in Phase 3. No content is lost — Contentful data is converted to static pages.
 
 **Q: Does marketing need to learn Git or the terminal?**
-A: No. Claude Code Desktop is a native app with a familiar chat interface. It handles all Git operations (branching, committing, pushing, PR creation) behind the scenes. Marketing only needs to describe the change, review the preview URL, and click "merge" on GitHub.
+A: No. Claude Design is a visual tool in the browser. Claude Code Desktop is a native app with a familiar chat interface. Both use natural language — no terminal or Git knowledge needed. Claude Code Desktop handles all Git operations (branching, committing, pushing, PR creation) behind the scenes. Marketing only needs to describe the change, review the preview URL, and click "merge" on GitHub.
