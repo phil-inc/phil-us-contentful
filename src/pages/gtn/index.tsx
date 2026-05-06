@@ -30,11 +30,11 @@ const stats = [
 const benchmarks = [
   {
     title: "Baselines from real pharma brands",
-    description: "Every calculation is based on real performance data from brands, giving you a realistic estimate of what's achievable.",
+    description: "Every calculation is based on real performance data from brands, giving you a realistic estimate of what's achievable for your portfolio.",
   },
   {
     title: "Customized to your access strategy",
-    description: "The calculator is designed to estimate a target based on your brand's actual channel strategy layered on top of PHIL program data, not a generic industry average.",
+    description: "The calculator is built to deliver a strong GTN estimate based on your brand's actual channel strategy inputs, layered on top of PHIL program data, not a generic industry average.",
   },
   {
     title: "Built by Commercial Insights experts",
@@ -114,7 +114,7 @@ const GtnLandingPage: React.FC = () => (
                 Your brand team is focused on improving starts, coverage, and adherence.
                 See what&rsquo;s possible when all three components kick into hyperdrive
                 to multiply gross&#8209;to&#8209;net impact, with an alternative channel
-                built to maximize channel control and patient outcomes. Uncover your
+                built to maximize commercial control and patient outcomes. Uncover your
                 brand&rsquo;s untapped potential.
               </p>
               <StatBanner label="Capture your commercial potential" stats={stats} />
