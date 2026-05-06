@@ -4,7 +4,12 @@ import parse, {
   type HTMLReactParserOptions,
   attributesToProps,
 } from "html-react-parser";
-import { sanitize } from "isomorphic-dompurify";
+import { sanitize as sanitizeFn } from "isomorphic-dompurify";
+// During SSR, gatsby-node.ts null-loads isomorphic-dompurify to avoid the
+// webidl-conversions crash on Node ≤18. Fall back to identity; content from
+// Contentful is trusted and client-side sanitization still runs in the browser.
+const sanitize: (html: string) => string =
+  typeof sanitizeFn === "function" ? sanitizeFn : (html) => html;
 import { PHIL_TRUSTPILOT_IDENTIFIER } from "constants/identifiers";
 
 import TrustpilotWidget from "components/common/TrustpilotWidget/TrustPilotWidget";
