@@ -24,7 +24,7 @@ const HUBSPOT_FORM_ID = "ca766c17-c6b5-4b29-a1b5-5e4f25655386";
 const stats = [
   { value: 1.9, suffix: "×", decimals: 1, label: "Patient starts", sublabel: "vs. baseline" },
   { value: 2.8, suffix: "×", decimals: 1, label: "Covered dispenses", sublabel: "vs. baseline" },
-  { value: 2.7, suffix: "×", decimals: 1, label: "Gross Revenue Potential", sublabel: "vs. retail baseline", highlight: true },
+  { value: 2.7, suffix: "×", decimals: 1, label: "Gross Revenue Potential", sublabel: "vs. baseline", highlight: true },
 ];
 
 const benchmarks = [
