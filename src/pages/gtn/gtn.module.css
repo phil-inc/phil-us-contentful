@@ -1,0 +1,108 @@
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 64px;
+  align-items: start;
+  padding: 64px 0 96px;
+}
+
+.editorial {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.rail {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+
+.mobileForm {
+  display: none;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.h1 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  margin: 0 0 28px;
+  color: #0a0a0a;
+  text-wrap: balance;
+}
+
+.accent {
+  font-style: normal;
+  color: #00827e;
+}
+
+.h2 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0 0 20px;
+  color: #0a0a0a;
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #525252;
+  max-width: 680px;
+  margin: 0 0 36px;
+}
+
+.oppGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+@media (max-width: 1080px) {
+  .shell {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-top: 48px;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  .mobileForm {
+    display: block;
+  }
+
+  .h1 {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 720px) {
+  .oppGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .h1 {
+    font-size: 40px;
+  }
+
+  .h2 {
+    font-size: 32px;
+  }
+
+  .lead {
+    font-size: 18px;
+  }
+}

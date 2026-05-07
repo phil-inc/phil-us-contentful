@@ -18,7 +18,8 @@ const TopAnnoucement: React.FC<AllContentfulTopAnnouncementBarQuery> = ({
 }) => {
 
   const [topAnnoucement] = allContentfulTopAnnouncementBar?.nodes;
-  const isCurrentLocationSameToAnnoucementLink = currentLocationSlug === topAnnoucement?.reference?.hyperlink?.internalContent?.slug;
+  const announcementSlug = topAnnoucement?.reference?.hyperlink?.internalContent?.slug;
+  const isCurrentLocationSameToAnnoucementLink = currentLocationSlug === announcementSlug || currentLocationSlug?.startsWith(announcementSlug + "/");
 
   if (allContentfulTopAnnouncementBar?.nodes?.length < 1 || !(topAnnoucement?.reference?.canDisplay) || isCurrentLocationSameToAnnoucementLink) {
     return <></>;

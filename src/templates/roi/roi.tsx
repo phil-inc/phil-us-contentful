@@ -60,7 +60,7 @@ const RoiTemplate: React.FC<RoiTemplateProps> = ({
               ? <Center>
                   <Loader mt={"xl"} mb={"xl"} size="lg" />
                 </Center>
-                
+
               :<main className="roi-page">
                   <RoiCalculator section={firstSection}/>
               </main>
