@@ -122,6 +122,10 @@
   margin-left: 2px;
 }
 
+.hubspotForm :global(.submitted-message) {
+  display: none;
+}
+
 .trustRow {
   display: flex;
   gap: 8px;

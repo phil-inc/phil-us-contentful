@@ -56,14 +56,15 @@ const RoiTemplate: React.FC<RoiTemplateProps> = ({
       <Layout>
         <Container className="container" size={"xl"}>
           <PageModal contentfulModalNodes={allContentfulModal?.nodes || []}/>
-           {canShowLoader && (
-              <Center>
-                <Loader mt={"xl"} mb={"xl"} size="lg" />
-              </Center>
-           )}
-           <main className="roi-page" style={{ display: canShowLoader ? 'none' : undefined }}>
-              <RoiCalculator section={firstSection}/>
-           </main>
+           {canShowLoader
+              ? <Center>
+                  <Loader mt={"xl"} mb={"xl"} size="lg" />
+                </Center>
+
+              :<main className="roi-page">
+                  <RoiCalculator section={firstSection}/>
+              </main>
+          }
         </Container>
       </Layout>
     </PageContext.Provider>
