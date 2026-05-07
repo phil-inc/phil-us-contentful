@@ -11,6 +11,7 @@ import * as classes from "./RoiHeading.module.css";
 type RoiHeadingProps = {
   section: ISection;
 };
+
 const RoiHeading: React.FC<RoiHeadingProps> = ({ section }) => {
   const context = React.useContext(PageContext);
 

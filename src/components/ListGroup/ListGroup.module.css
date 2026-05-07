@@ -1,0 +1,91 @@
+.checkListItem {
+  --check-icon: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 12 10 18 20 6'/></svg>");
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  column-gap: 18px;
+  align-items: start;
+  padding: 22px 0;
+  border-top: 1px solid #d5d8dc;
+  transition: background 220ms ease;
+  cursor: default;
+
+  &::before {
+    content: "";
+    width: 28px;
+    height: 28px;
+    margin-top: 2px;
+    border-radius: 999px;
+    grid-row: 1 / span 2;
+    background:
+      var(--check-icon) center/15px no-repeat,
+      #00827e;
+    transition: background-color 220ms ease, transform 220ms ease;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid #d5d8dc;
+  }
+
+  &:hover::before {
+    background:
+      var(--check-icon) center/15px no-repeat,
+      #00615e;
+    transform: scale(1.08);
+  }
+
+  &:hover .checkListHeading, &:hover .listNoSubheading {
+    color: #00827e;
+  }
+}
+
+.checkListContent {
+  grid-column: 2;
+}
+
+.itemLink {
+  text-decoration: none;
+}
+
+.checkListHeading {
+  font-family: Lato, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.2;
+  margin: 4px 0 8px;
+  color: #0a0a0a;
+ 
+}
+
+.checkListBody {
+  font-size: 15px;
+  line-height: 1.55;
+  color: #54595f;
+  margin: 0;
+}
+
+.listNoSubheading {
+  font-family: Lato, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.3;
+  margin: 4px 0 6px;
+  color: #0a0a0a;
+}
+
+.featureListLinkContainer {
+  grid-column: 2;
+  margin-top: 14px;
+}
+
+.featureListAnchor {
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #00827e;
+}
+
+.textWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

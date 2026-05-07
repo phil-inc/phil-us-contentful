@@ -13,7 +13,8 @@ const templates = {
   Blog: path.resolve("./src/templates/blog.tsx"),
   "Demo Page": path.resolve("./src/templates/demo-book/demoBook.template.tsx"),
   DTPChat: path.resolve("./src/templates/dtpChat/dtpChat.tsx"),
-  GTN: path.resolve("./src/templates/roi/roi.tsx"),
+  GTN: path.resolve("./src/templates/roi/gtn.tsx"),
+  "GTN Calculator": path.resolve("./src/templates/roi/roi.tsx"),
   Default: path.resolve("./src/templates/page.tsx"),
 } as const; // Mark the object as a constant so TypeScript can infer a narrower type
 

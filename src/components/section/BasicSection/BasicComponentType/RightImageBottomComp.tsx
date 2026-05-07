@@ -51,14 +51,18 @@ const RightImageBottomComp: React.FC<BasicSectionProps> = ({
           const { target } = node.data;
           const isSecondaryAltButton =
             node.data.target.buttonStyle === BUTTON_STYLE.Secondary;
+          const isOvalButton = /oval/i.test(node.data.target.buttonStyle ?? "");
+          const buttonLabel =
+            (node.data.target.buttonText as string) + (isOvalButton ? " →" : "");
           const button = (
             <Button
               className={cx(classes.button, {
                 [classes.secondaryBtn]: isSecondaryAltButton,
+                [classes.ovalBtn]: isOvalButton,
               })}
               variant={isSecondaryAltButton ? "white" : "philDefault"}
             >
-              {node.data.target.buttonText}
+              {buttonLabel}
             </Button>
           );
 

@@ -20,6 +20,7 @@ export const BUTTON_STYLE = {
   Primary: "Primary",
   Secondary: "Secondary",
   OutlineSecondary: "Outline Secondary",
+  Oval: "Oval",
 };
 
 export const BUTTON_CONFIG = {
