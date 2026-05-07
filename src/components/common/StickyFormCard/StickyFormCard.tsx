@@ -31,11 +31,7 @@ const StickyFormCard: React.FC<StickyFormCardProps> = ({
         classname={classes.hubspotForm}
       />
     </div>
-    <div className={classes.trustRow}>
-      <span className={classes.pill}>HIPAA Compliant</span>
-      <span className={classes.pill}>SOC 2 Certified</span>
-      <span className={classes.pill}>256-bit SSL</span>
-    </div>
+    <p className={classes.disclaimer}>By submitting, you agree to PHIL's privacy policy.</p>
   </aside>
 );
 
