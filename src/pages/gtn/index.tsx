@@ -120,6 +120,18 @@ const GtnLandingPage: React.FC = () => (
               <StatBanner label="Capture your commercial potential" stats={stats} />
             </section>
 
+            {/* Mobile Form — shown below stats on small screens */}
+            <div className={classes.mobileForm}>
+              <StickyFormCard
+                eyebrow="Run Your Numbers"
+                title="Your brand's commercial potential, modeled in a minute."
+                description="Gain a clear view of what's possible for your portfolio."
+                portalId={HUBSPOT_PORTAL_ID}
+                formId={HUBSPOT_FORM_ID}
+                onSubmit={handleFormSubmit}
+              />
+            </div>
+
             {/* Benchmarks */}
             <section>
               <Eyebrow text="Uncover Your Commercial Potential" />

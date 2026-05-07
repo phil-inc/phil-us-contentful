@@ -19,6 +19,10 @@
   align-self: start;
 }
 
+.mobileForm {
+  display: none;
+}
+
 .hero {
   display: flex;
   flex-direction: column;
@@ -73,7 +77,11 @@
   }
 
   .rail {
-    position: static;
+    display: none;
+  }
+
+  .mobileForm {
+    display: block;
   }
 
   .h1 {
