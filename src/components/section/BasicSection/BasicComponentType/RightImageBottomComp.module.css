@@ -53,6 +53,27 @@
             width: auto;
           }
         }
+
+        &.ovalBtn {
+          border-radius: 999px;
+          min-height: 82px;
+          padding: 0 38px;
+          background: #00827e;
+          color: #ffffff;
+          font-family: Lato, sans-serif;
+          font-size: clamp(20px, 2.2vw, 42px);
+          font-weight: 700;
+          line-height: 1.15;
+          letter-spacing: -0.01em;
+          text-transform: none;
+          border: 1px solid #00827e;
+
+          &:hover {
+            background: #ffffff;
+            color: #006f6b;
+            border-color: #ffffff;
+          }
+        }
       }
     }
 

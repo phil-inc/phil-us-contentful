@@ -33,6 +33,7 @@ import { CommitmentCard } from "components/CommitmentCard/CommitmentCard";
 import { FeaturedInsights } from "components/FeaturedInsights/FeaturedInsights";
 import { PhilPeople } from "components/common/PhilPeople/PhilPeople";
 import CardOrImage from "components/common/CardOrImage/CardOrImage";
+import OpportunityCard from "components/OpportunityCard/OpportunityCard";
 import BulletList from "components/BulletList/BulletList";
 import MetricCard from "components/common/MetricCardComponent/MetricCardComponent";
 import SingleLineMetricCard from "components/common/SingleLineMetricCard/SingleLineMetricCard";
@@ -42,6 +43,10 @@ import PromoCard from "components/common/PromoCard/PromoCard";
 import { MetricWithTitleCard } from "components/common/MetricWithUmbrellaBorder/MetricWithTitleCard/MetricWithTitleCard";
 import { LinearProcessCard } from "components/common/LinearProcessCard/LinearProcessCard";
 import MetricOutcomeCard from "components/common/MetricOutcomeCard/MetricOutcomeCard";
+import ContentfulMetricCard, {
+  type ContentfulMetricFields,
+} from "components/common/ContentfulMetricCard/ContentfulMetricCard";
+import GtnOpportunityPullQuote from "components/GtnOpportunityPullQuote/GtnOpportuintyPullQuote";
 
 // TODO: Deprecate after v2.0.0
 // Get colors for resources based on resource type
@@ -246,6 +251,17 @@ const PeopleBehindPhilComponent: ComponentFunction = ({ resource }) => (
 const CardOrImageComponent: ComponentFunction = ({ resource,index,sectionIndex }) => (
   <CardOrImage resource={resource} index={index ?? 0} sectionIndex={sectionIndex}/>
 );
+const OpportunityCardComponent: ComponentFunction = ({
+  resource,
+  index,
+  sectionIndex,
+}) => (
+  <OpportunityCard
+    resource={resource}
+    index={index ?? 0}
+    sectionIndex={sectionIndex}
+  />
+);
 const BulletListComponent: ComponentFunction = ({ resource,index }) => (
   <BulletList resource={resource} index={index ?? 0}/>
 );
@@ -273,6 +289,22 @@ const LinearProcessCardComponent: ComponentFunction = ({ resource,index, arrayLe
 );
 const MetricOutcomeCardComponent: ComponentFunction = ({ resource,index, arrayLength }) => (
   <MetricOutcomeCard resource={resource} index={index ?? 0} arrayLength = {arrayLength ?? 0}/>
+);
+
+const AutoIncreasingMetricCardComponent: ComponentFunction = ({
+  resource,
+  index,
+  sectionHeader,
+}) => (
+  <ContentfulMetricCard
+    metric={resource as unknown as ContentfulMetricFields}
+    index={index ?? 0}
+    sectionHeader={sectionHeader}
+  />
+);
+
+const GtnOpportunityPullQuoteComponent: ComponentFunction = ({ resource }) => (
+  <GtnOpportunityPullQuote resource={resource} />
 );
 
 const getComponent = (
@@ -334,6 +366,10 @@ const getComponent = (
     [ReferenceTypeEnum["Tabs Switch"]]: TabsSwitchComponent,
     [ReferenceTypeEnum["Linear Process Card"]]: LinearProcessCardComponent,
     [ReferenceTypeEnum["Metric Outcome Card"]]: MetricOutcomeCardComponent,
+    [ReferenceTypeEnum["Auto Increasing Metric Card"]]:
+      AutoIncreasingMetricCardComponent,
+    [ReferenceTypeEnum["Opportunity Card"]]: OpportunityCardComponent,
+    [ReferenceTypeEnum["Long Testimonial"]]: GtnOpportunityPullQuoteComponent,
   };
 
   const componentFunction = componentMappings[referenceType];
@@ -357,7 +393,7 @@ const getComponent = (
 };
 
 type RenderResourceProps = {
-  sectionHeader: string;
+  sectionHeader?: string;
   resource: TResource;
   index: number;
   arrayLength: number;
