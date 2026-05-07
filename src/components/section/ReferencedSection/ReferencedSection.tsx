@@ -16,7 +16,7 @@ import { getWindowProperty } from "utils/getWindowProperty";
 import { isProduction } from "utils/isProduction";
 import { getIdSlugifyForDiv } from "utils/utils";
 import PageContext from "contexts/PageContext";
-import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE,OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
+import { FIELD_PAGE, HCP_PAGE, HOME, PATIENTS_PAGE, OUR_SOLUTIONS, PAGES_TITLE } from "constants/page";
 import ReferencedSectionTitle from "./ReferencedSectionTitle";
 import ReferencedSectionBody from "./ReferencedSectionBody";
 import { getSectionColors } from "./RenderResource";
@@ -26,7 +26,6 @@ import { getColorFromStylingOptions } from "utils/stylingOptions";
 import Asset from "components/common/Asset/Asset";
 import InfoCircleIcon from "assets/images/icons/component/info-circle";
 import CommonReferencedSectionBody from "components/section/ReferencedSection/CommonReferencedSectionBody/CommonReferencedSectionBody";
-
 import { useIsSmallDevice } from "hooks/useIsSmallDevice";
 
 import { COLORS, LIGHT_COLOR_LIST } from "constants/global.constant";
@@ -174,7 +173,10 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
     ? getColorFromStylingOptions(section.divColorOfBtnParent.background)
     : undefined;
   const isParentBgColorOfButtonLight = LIGHT_COLOR_LIST.includes( bottomParentBgColor ?? COLORS.LIGHT); 
-  
+
+  const isGtnAutoIncreasingMetricCard =
+    context.title === PAGES_TITLE.GTN &&
+    section.referenceType === ReferenceTypeEnum["Auto Increasing Metric Card"];
 
   let sectionContent;
   if (context.title === FIELD_PAGE) {
@@ -336,7 +338,8 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         isBrandOutcomeCardSection && context.title === HOME
       }
       data-referenceType={section.referenceType}
-      pt={section.header?.length > 0 ? undefined : 0}
+      pt={isGtnAutoIncreasingMetricCard ? 0 : section.header?.length > 0 ? undefined : 0}
+      pb={isGtnAutoIncreasingMetricCard ? 0 : undefined}
       leftBackgroundAssetImage={section?.leftBackgroundAssetImage}
       className = {classes.scrollSection}
       sectionIndex={sectionIndex}
@@ -345,9 +348,11 @@ const ReferencedSection: React.FC<ReferencedSectionProps> = ({
         id={slugify(section.header ?? section.id, { lower: true, strict: true })}
         className={cx(classes.container, classes.innerContainer, {[classes.topPaddingWithoutHeader]: (!section.header?.length) && section.referenceType === ReferenceTypeEnum["Card Or Image"] && context.title === PAGES_TITLE.SOLUTION_MAIN})} 
         size={"xl"}
+        data-context={context.title}
+        data-reference-type={section.referenceType}
       >
         {section?.eyebrowHeading && (
-          <Text className={classes.eyebrowHeading} data-context={context.title} section-index={sectionIndex}>
+          <Text className={classes.eyebrowHeading} data-context={context.title} data-reference-type={section.referenceType} section-index={sectionIndex}>
             {section.eyebrowHeading}
           </Text>
         )}
