@@ -125,6 +125,11 @@ const MyComponent: React.FC<MyComponentProps> = ({ title, items }) => (
 export default MyComponent;
 ```
 
+### Content fidelity rule:
+
+- **Only implement content that exists in the design HTML.** If the design has CSS for an element but no corresponding HTML, do NOT invent the content. Leave it out entirely or flag it as missing during the grill phase.
+- Never fabricate copy, labels, badges, or data that aren't in the handoff. If something looks incomplete, ask — don't fill in the blanks.
+
 ### CSS Module pattern:
 
 - Match the design's CSS values exactly (fonts, sizes, colors, spacing, border-radius)
