@@ -1,8 +1,8 @@
 import RenderResource from "./RenderResource";
 import * as classes from "./referencedSection.module.css";
 import { Carousel } from "@mantine/carousel";
-import { Container, Grid } from "@mantine/core";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { Box, Container, Grid } from "@mantine/core";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { ResourceCarousel } from "components/common/Carousel/ResourceCarousel";
 import { EMPLOYEE_SPOTLIGHT_TAG, MEDICATION_ACCESS_SIMPLIFIED } from "constants/identifiers";
 import { COMPANY_PAGE, HOME } from "constants/page";
@@ -155,6 +155,9 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
     if (section.referenceType === ReferenceTypeEnum["Linear Process Card"]) {
       return 18;
     }
+    if (section.referenceType === ReferenceTypeEnum["Opportunity Card"]) {
+      return 24;
+    }
     return 36;
   };
 
@@ -162,7 +165,52 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
   if(section.referenceType === ReferenceTypeEnum["MetricWith5Card"]){
     return <MetricWithUmbrellaBorder section={section} sectionIndex={sectionIndex} />;
   }
-  
+
+  const isAutoIncreasingMetric =
+    section.referenceType === ReferenceTypeEnum["Auto Increasing Metric Card"];
+
+  const sharedGridDataAttributes = {
+    "data-add-margin": addMargin,
+    "data-remove-top-margin": canRemoveTopMargin,
+    "data-context": title,
+    "data-is-stepper-card":
+      section.referenceType === ReferenceTypeEnum["Stepper Cards"],
+    "data-reference-type": section.referenceType,
+    "data-is-home-page-brand-outcome":
+      isBrandOutcomeCardSection && title === HOME,
+  };
+
+  if (isAutoIncreasingMetric) {
+    return (
+      <Box
+        className={cx(classes.grid, classes.autoIncreasingMetricRow)}
+        {...sharedGridDataAttributes}
+      >
+        {section.references.map((resource, index, array) => (
+          <Box
+            key={resource.id + "mapReferencedSectionResource"}
+            className={classes.autoIncreasingMetricItem}
+            data-reference-type={section.referenceType}
+            data-is-home-page-brand-outcome={
+              isBrandOutcomeCardSection && title === HOME
+            }
+          >
+            <RenderResource
+              arrayLength={array.length}
+              index={index}
+              referenceType={section.referenceType}
+              resource={resource}
+              sectionHeader={undefined}
+              isEmployeeTag={Boolean(isEmployeeTag)}
+              metadata={section.metadata}
+              sectionIndex={sectionIndex}
+              wide={isWideTestimonial}
+            />
+          </Box>
+        ))}
+      </Box>
+    );
+  }
 
   return (
     <Grid
@@ -171,16 +219,7 @@ const ReferencedSectionBody: React.FC<ReferencedSectionBodyProps> = ({
       gutter={getGridGutter()}
       justify="center"
       align={title === COMPANY_PAGE ? "center" : "stretch"}
-      data-add-margin={addMargin}
-      data-remove-top-margin={canRemoveTopMargin}
-      data-context={title}
-      data-is-stepper-card={
-        section.referenceType === ReferenceTypeEnum["Stepper Cards"]
-      }
-      data-reference-type={section.referenceType}
-      data-is-home-page-brand-outcome={
-        isBrandOutcomeCardSection && title === HOME
-      }
+      {...sharedGridDataAttributes}
     >
       {section.references.map((resource, index, array) => (
         <Grid.Col
