@@ -1,6 +1,6 @@
 import React from "react";
 import { Anchor, Box } from "@mantine/core";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowRight } from "@tabler/icons-react";
 import cx from "clsx";
 
 import { CONTENTFUL_TYPES } from "constants/global.constant";
