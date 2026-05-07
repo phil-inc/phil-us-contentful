@@ -81,6 +81,23 @@ Create a `SPEC.md` co-located with the page (e.g., `src/pages/<slug>/SPEC.md`) d
 - Animations
 - Assets to copy
 - Any temporary workarounds (with TODO for removal)
+- **Deviation log** (see below)
+
+### Deviation log
+
+Any time the implementation differs from the design — whether in content, styling, structure, or behavior — it must be logged in the SPEC.md under a `## Deviations from Design` section. Each entry should include:
+
+| What changed | Design value | Implementation value | Why |
+|---|---|---|---|
+
+Examples of deviations that must be logged:
+- CSS values that differ (sizes, colors, spacing, opacity, transitions, z-index)
+- Content that was added, removed, or reworded
+- Structural changes (element order, wrapping elements, different HTML)
+- Mantine/framework defaults that override design values
+- Responsive behavior differences
+
+If there's no good reason for a deviation, it shouldn't exist — match the design. If there is a reason (e.g., accounting for the real site header height, using a framework component), log it so it's reviewable.
 
 ## Phase 4: Build
 
@@ -125,10 +142,11 @@ const MyComponent: React.FC<MyComponentProps> = ({ title, items }) => (
 export default MyComponent;
 ```
 
-### Content fidelity rule:
+### Fidelity rules:
 
-- **Only implement content that exists in the design HTML.** If the design has CSS for an element but no corresponding HTML, do NOT invent the content. Leave it out entirely or flag it as missing during the grill phase.
-- Never fabricate copy, labels, badges, or data that aren't in the handoff. If something looks incomplete, ask — don't fill in the blanks.
+- **Content:** Only implement content that exists in the design HTML. If the design has CSS for an element but no corresponding HTML, do NOT invent the content. Leave it out entirely or flag it as missing during the grill phase. Never fabricate copy, labels, badges, or data that aren't in the handoff. If something looks incomplete, ask — don't fill in the blanks.
+- **Styling:** Default to matching the design's CSS values. Deviations are fine when there's a real reason (framework constraints, site-level layout, accessibility), but every deviation must be logged in the spec.
+- **Structure:** Preserve element order from the design unless there's a technical reason to change it. Log any reordering.
 
 ### CSS Module pattern:
 
