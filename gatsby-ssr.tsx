@@ -2,7 +2,18 @@ import React from 'react';
 import {ColorSchemeScript, MantineProvider} from '@mantine/core';
 import {theme} from './src/layouts/Layout/theme';
 
-// 1. Google Tag Manager (loads after consent default)
+// 1. CookieYes CMP — must load BEFORE GTM so stored consent is restored before any tags fire.
+// Without this, returning visitors' analytics_storage stays unknown at GTM init → HubSpot blocked.
+const cookieYesScript = (
+	<script
+		key="cookieyes"
+		id="cookieyes"
+		type="text/javascript"
+		src="https://cdn-cookieyes.com/client_data/2dc47b0a0466a26a3289cf91512a2365/script.js"
+	/>
+);
+
+// 2. Google Tag Manager (loads after CookieYes so consent state is already applied)
 const gtmScript = (
 	<script
 		key="gtm-script"
@@ -18,7 +29,7 @@ const gtmScript = (
 	/>
 );
 
-// 2. GTM noscript fallback (immediately after <body> for users with JS disabled)
+// 3. GTM noscript fallback (immediately after <body> for users with JS disabled)
 const gtmNoscript = (
 	<noscript key="gtm-noscript">
 		<iframe
@@ -35,6 +46,7 @@ const resourceHints = [
 	// Full handshake (DNS + TCP + TLS) for domains that serve critical early resources
 	<link key="preconnect-ctfassets" rel="preconnect" href="https://images.ctfassets.net" />,
 	<link key="preconnect-gtm" rel="preconnect" href="https://www.googletagmanager.com" />,
+	<link key="preconnect-cookieyes" rel="preconnect" href="https://cdn-cookieyes.com" />,
 	// DNS-only for deferred/analytics scripts
 	<link key="dns-hsforms" rel="dns-prefetch" href="//js.hsforms.net" />,
 	<link key="dns-trustpilot" rel="dns-prefetch" href="//widget.trustpilot.com" />,
@@ -47,6 +59,7 @@ export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
 	replaceHeadComponents([
 		...resourceHints,
+		cookieYesScript,
 		gtmScript,
 		...headComponents,
 		<ColorSchemeScript key="color-scheme-script" />,
