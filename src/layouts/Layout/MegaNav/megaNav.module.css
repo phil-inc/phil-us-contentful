@@ -318,6 +318,7 @@
   min-height: 360px;
   transform: translateY(0);
   cursor: pointer;
+  text-decoration: none;
   box-shadow: 0 6px 18px -8px rgba(120, 124, 130, 0.28),
     0 2px 6px -2px rgba(120, 124, 130, 0.18);
   transition: transform 200ms cubic-bezier(0.2, 0, 0, 1),
@@ -327,6 +328,7 @@
 .megaFeature:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 36px -16px rgba(0, 0, 0, 0.28);
+  text-decoration: none;
 }
 
 .megaFeatureTidewater {
@@ -339,14 +341,6 @@
   color: #FFFFFF;
 }
 
-/* Whole-card clickable */
-.mfLinkOverlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-}
 
 .mfEyebrow {
   font-family: "Lato", Arial, sans-serif;
@@ -356,7 +350,6 @@
   text-transform: uppercase;
   margin: 0;
   color: rgba(255, 255, 255, 0.85);
-  pointer-events: none;
 }
 
 .mfTitle {
@@ -367,7 +360,6 @@
   letter-spacing: -0.005em;
   margin: 0;
   color: #FFFFFF;
-  pointer-events: none;
 }
 
 .mfBody {
@@ -376,7 +368,6 @@
   line-height: 1.5;
   margin: 0;
   color: rgba(255, 255, 255, 0.92);
-  pointer-events: none;
 }
 
 .mfLink {

@@ -298,22 +298,22 @@ const MegaNav: React.FC<MegaNavProps> = ({
                       </li>
                     </ul>
                   </div>
-                  <aside className={cx(classes.megaFeature, classes.megaFeatureTidewater)}>
+                  <Link to="/solution/" className={cx(classes.megaFeature, classes.megaFeatureTidewater)}>
                     <p className={classes.mfEyebrow}>For Pharma Manufacturers</p>
                     <h4 className={classes.mfTitle}>Streamline Your Prescription Access Experience.</h4>
                     <p className={classes.mfBody}>Explore our all-in-one platform that boosts access, affordability, and adherence at scale.</p>
-                    <Link to="/solution/" className={cx(classes.mfLink, classes.mfLinkOverlay)}>
+                    <span className={classes.mfLink}>
                       View Solution <ArrowIcon />
-                    </Link>
-                  </aside>
-                  <aside className={cx(classes.megaFeature, classes.megaFeatureMeadow)}>
+                    </span>
+                  </Link>
+                  <a href="https://philhelp.zendesk.com/hc/en-us/p/faq" target="_blank" rel="noopener noreferrer" className={cx(classes.megaFeature, classes.megaFeatureMeadow)}>
                     <p className={classes.mfEyebrow}>For Patients and Providers</p>
                     <h4 className={classes.mfTitle}>Questions About Your PHILRx Prescription?</h4>
                     <p className={classes.mfBody}>Visit our help center for information and support.</p>
-                    <a href="https://philhelp.zendesk.com/hc/en-us/p/faq" target="_blank" rel="noopener noreferrer" className={cx(classes.mfLink, classes.mfLinkOverlay)}>
+                    <span className={classes.mfLink}>
                       Visit Help Center <ArrowIcon />
-                    </a>
-                  </aside>
+                    </span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -369,14 +369,14 @@ const MegaNav: React.FC<MegaNavProps> = ({
                       </li>
                     </ul>
                   </div>
-                  <aside className={cx(classes.megaFeature, classes.megaFeatureTidewater)}>
+                  <Link to="/gtn/" className={cx(classes.megaFeature, classes.megaFeatureTidewater)}>
                     <p className={classes.mfEyebrow}>Quantify Your Commercial Potential</p>
                     <h4 className={classes.mfTitle}>Model Your Brand's Gross‑to‑Net Upside.</h4>
                     <p className={classes.mfBody}>Discover how partnering with PHIL can drive commercial success.</p>
-                    <Link to="/gtn/" className={cx(classes.mfLink, classes.mfLinkOverlay)}>
+                    <span className={classes.mfLink}>
                       Calculate GTN Potential <ArrowIcon />
-                    </Link>
-                  </aside>
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -421,20 +421,20 @@ const MegaNav: React.FC<MegaNavProps> = ({
                       </li>
                     </ul>
                   </div>
-                  <aside className={cx(classes.megaFeature, classes.megaFeatureTidewater)}>
+                  <Link to="/dtp-research/" className={cx(classes.megaFeature, classes.megaFeatureTidewater)}>
                     <p className={classes.mfEyebrow}>Featured Resource</p>
                     <h4 className={classes.mfTitle}>Patient Perspectives on Direct‑to‑Patient: The Key to Improving Access and Adherence</h4>
-                    <Link to="/dtp-research/" className={cx(classes.mfLink, classes.mfLinkOverlay)}>
+                    <span className={classes.mfLink}>
                       Read Report <ArrowIcon />
-                    </Link>
-                  </aside>
-                  <aside className={cx(classes.megaFeature, classes.megaFeatureMeadow)}>
+                    </span>
+                  </Link>
+                  <Link to="/hcp-research/" className={cx(classes.megaFeature, classes.megaFeatureMeadow)}>
                     <p className={classes.mfEyebrow}>Featured Resource</p>
                     <h4 className={classes.mfTitle}>HCP Perspectives on Direct‑to‑Patient: Engaging Providers in the Digital Era</h4>
-                    <Link to="/hcp-research/" className={cx(classes.mfLink, classes.mfLinkOverlay)}>
+                    <span className={classes.mfLink}>
                       Read Report <ArrowIcon />
-                    </Link>
-                  </aside>
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -485,20 +485,20 @@ const MegaNav: React.FC<MegaNavProps> = ({
                       </li>
                     </ul>
                   </div>
-                  <aside className={cx(classes.megaFeature, classes.megaFeatureTidewater)}>
+                  <a href="https://www.prnewswire.com/news-releases/phil-and-sprout-pharmaceuticals-expand-their-affordable-direct-to-patient-access-program-for-addyiflibanserin-302655793.html" target="_blank" rel="noopener noreferrer" className={cx(classes.megaFeature, classes.megaFeatureTidewater)}>
                     <p className={classes.mfEyebrow}>Featured Announcement</p>
                     <h4 className={classes.mfTitle}>PHIL and Sprout Pharmaceuticals Expand Affordable Direct‑to‑Patient Access Program for Innovative Women's Health Brand</h4>
-                    <a href="https://www.prnewswire.com/news-releases/phil-and-sprout-pharmaceuticals-expand-their-affordable-direct-to-patient-access-program-for-addyiflibanserin-302655793.html" target="_blank" rel="noopener noreferrer" className={cx(classes.mfLink, classes.mfLinkOverlay)}>
+                    <span className={classes.mfLink}>
                       Read Press Release <ArrowIcon />
-                    </a>
-                  </aside>
-                  <aside className={cx(classes.megaFeature, classes.megaFeatureMeadow)}>
+                    </span>
+                  </a>
+                  <a href="https://www.businesswire.com/news/home/20260402677480/en/Tenpoint-Therapeutics-Ltd-and-PHIL-Partner-to-Launch-YUVEZZI-Direct-to-Patient-Cash-Program-to-Make-Novel-Presbyopia-Therapy-More-Accessible-and-Affordable" target="_blank" rel="noopener noreferrer" className={cx(classes.megaFeature, classes.megaFeatureMeadow)}>
                     <p className={classes.mfEyebrow}>Featured Announcement</p>
                     <h4 className={classes.mfTitle}>PHIL and Tenpoint Therapeutics Partner to Launch Direct‑to‑Patient Cash Program for Novel Ophthalmologic Brand</h4>
-                    <a href="https://www.businesswire.com/news/home/20260402677480/en/Tenpoint-Therapeutics-Ltd-and-PHIL-Partner-to-Launch-YUVEZZI-Direct-to-Patient-Cash-Program-to-Make-Novel-Presbyopia-Therapy-More-Accessible-and-Affordable" target="_blank" rel="noopener noreferrer" className={cx(classes.mfLink, classes.mfLinkOverlay)}>
+                    <span className={classes.mfLink}>
                       Read Press Release <ArrowIcon />
-                    </a>
-                  </aside>
+                    </span>
+                  </a>
                 </div>
               </div>
             </div>
