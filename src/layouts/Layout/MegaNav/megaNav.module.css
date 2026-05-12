@@ -1,0 +1,419 @@
+/* =========================================================================
+   MegaNav · CSS Module
+   Source of truth: PHIL Navigation V2 - Standalone.html
+   ========================================================================= */
+
+/* ---------- Top promo banner ---------- */
+.promoBanner {
+  background: #D5F1F0;
+  color: #0A0A0A;
+  border-bottom: 1px solid #BFE5E0;
+}
+
+.promoInner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-family: "Lato", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.promoText {
+  color: #0A0A0A;
+}
+
+.promoLink {
+  color: #00615E;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.promoLink:hover {
+  color: #0A0A0A;
+  text-decoration: underline;
+}
+
+.promoLink svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promoLink:hover svg {
+  transform: translateX(2px);
+}
+
+/* ---------- Header shell ---------- */
+.navShell {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #FFFFFF;
+  border-bottom: 1px solid #D7DCDC;
+}
+
+.navBar {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navLogo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.navLogo img {
+  height: 28px;
+  display: block;
+}
+
+.navPrimary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  height: 100%;
+}
+
+.navItem {
+  position: static;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.navTrigger {
+  appearance: none;
+  background: none;
+  border: 0;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #0A0A0A;
+  padding: 12px 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+  transition: color 120ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navTrigger:hover {
+  color: #00827E;
+}
+
+.navItemOpen .navTrigger {
+  color: #00827E;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* ---------- Nav buttons ---------- */
+.btnNav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  padding: 14px 28px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.btnNavDemo {
+  background: #0A0A0A;
+  color: #FFFFFF;
+}
+
+.btnNavDemo:hover {
+  background: #FFFFFF;
+  color: #00827E;
+  border-color: #00827E;
+  text-decoration: none;
+}
+
+.btnNavLogin {
+  background: #00827E;
+  color: #FFFFFF;
+}
+
+.btnNavLogin:hover {
+  background: #5ABEA4;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+/* ---------- Mega menu panel ---------- */
+.mega {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: #FFFFFF;
+  border-top: 1px solid #D7DCDC;
+  box-shadow: 0 6px 18px rgba(10, 10, 10, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 200ms;
+}
+
+.navItemOpen .mega {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 0s;
+}
+
+.megaInner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px 48px 56px;
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 1.05fr) minmax(0, 1.05fr);
+  gap: 32px;
+  align-items: stretch;
+}
+
+.megaInnerSolution {
+  grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr) minmax(0, 1.4fr);
+}
+
+/* ---------- Link list (left column) ---------- */
+.megaListWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.megaGroupTitle {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9E9E9E;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #D7DCDC;
+}
+
+.megaList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.megaListLink {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  margin: 0 -12px;
+  border-radius: 10px;
+  color: #0A0A0A;
+  text-decoration: none;
+  transition: background 120ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.megaListLink:hover {
+  background: #D5F1F0;
+  text-decoration: none;
+}
+
+.megaListLink:hover .megaIcon {
+  background: #00827E;
+  color: #FFFFFF;
+}
+
+.megaListLink:hover .megaItemTitle {
+  color: #00615E;
+}
+
+.megaIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #D5F1F0;
+  color: #00827E;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 120ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 120ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.megaIcon svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+}
+
+.megaItemTitle {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3;
+  color: #0A0A0A;
+}
+
+/* ---------- Gradient feature cards ---------- */
+.megaFeature {
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-height: 360px;
+  transform: translateY(0);
+  box-shadow: 0 6px 18px -8px rgba(120, 124, 130, 0.28),
+    0 2px 6px -2px rgba(120, 124, 130, 0.18);
+  transition: transform 200ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.megaFeature:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px -16px rgba(0, 0, 0, 0.28);
+}
+
+.megaFeatureTidewater {
+  background: linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%);
+  color: #FFFFFF;
+}
+
+.megaFeatureMeadow {
+  background: linear-gradient(135deg, #2AA89E 0%, #7DE6CB 100%);
+  color: #FFFFFF;
+}
+
+/* Whole-card clickable */
+.mfLinkOverlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.mfEyebrow {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.mfTitle {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  margin: 0;
+  color: #FFFFFF;
+}
+
+.mfBody {
+  font-family: "Lato", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.mfLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  margin-top: auto;
+  color: #FFFFFF;
+  position: relative;
+  z-index: 2;
+}
+
+.mfLink svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mfLink:hover svg {
+  transform: translateX(3px);
+}
+
+.mfLink:hover {
+  color: #D5F1F0;
+  text-decoration: none;
+}
+
+/* ---------- Backdrop ---------- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  background: rgba(10, 10, 10, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 40;
+  pointer-events: none;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 200ms;
+}
+
+.backdropVisible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 0s;
+}
