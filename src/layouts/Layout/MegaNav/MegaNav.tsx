@@ -50,48 +50,63 @@ const MOBILE_NAV_SECTIONS = [
   {
     label: "Who We Serve",
     key: "serve",
-    links: [
-      { to: "/pharma/", label: "Pharma", icon: PillBottle },
-      { to: "/patients/", label: "Patients", icon: UserRound },
-      { to: "/providers/", label: "Providers", icon: Stethoscope },
+    groups: [
+      {
+        links: [
+          { to: "/pharma/", label: "Pharma", icon: PillBottle },
+          { to: "/patients/", label: "Patients", icon: UserRound },
+          { to: "/providers/", label: "Providers", icon: Stethoscope },
+        ],
+      },
     ],
   },
   {
     label: "Our Solution",
     key: "solution",
-    links: [
-      { to: "/solution/", label: "Overview", icon: LayoutGrid },
-      { to: "/solution/core/", label: "Digital Hub", icon: MonitorSmartphone },
-      { to: "/solution/direct/", label: "Direct\u2011to\u2011Patient", icon: SmartphoneCharging },
-    ],
-  },
-  {
-    label: "Why PHIL",
-    key: "why",
-    links: [
-      { to: "/insights/case-studies/", label: "Customer Success Stories", icon: Trophy },
-      { to: "/gtn/", label: "GTN Calculator", icon: Calculator },
+    groups: [
+      {
+        links: [
+          { to: "/solution/", label: "Overview", icon: LayoutGrid },
+          { to: "/solution/core/", label: "Digital Hub", icon: MonitorSmartphone },
+          { to: "/solution/direct/", label: "Direct\u2011to\u2011Patient", icon: SmartphoneCharging },
+        ],
+      },
+      {
+        title: "Why PHIL",
+        links: [
+          { to: "/insights/case-studies/", label: "Customer Success Stories", icon: Trophy },
+          { to: "/gtn/", label: "GTN Calculator", icon: Calculator },
+        ],
+      },
     ],
   },
   {
     label: "Resources",
     key: "resources",
-    links: [
-      { to: "/insights/press-releases/", label: "Press", icon: Newspaper },
-      { to: "/insights/resources/", label: "Reports", icon: FileText },
-      { to: "/insights/events/", label: "Webinars", icon: Video },
-      { to: "/insights/phil-blog/", label: "Blog", icon: PenLine },
+    groups: [
+      {
+        links: [
+          { to: "/insights/press-releases/", label: "Press", icon: Newspaper },
+          { to: "/insights/resources/", label: "Reports", icon: FileText },
+          { to: "/insights/events/", label: "Webinars", icon: Video },
+          { to: "/insights/phil-blog/", label: "Blog", icon: PenLine },
+        ],
+      },
     ],
   },
   {
     label: "About Us",
     key: "about",
-    links: [
-      { to: "/company/", label: "Company", icon: Building },
-      { to: "/leadership/", label: "Leadership", icon: UsersRound },
-      { to: "/careers/", label: "Careers", icon: Briefcase },
-      { to: "/contact/", label: "Contact", icon: Mail },
-      { to: "/faqs/", label: "FAQ", icon: HelpCircle },
+    groups: [
+      {
+        links: [
+          { to: "/company/", label: "Company", icon: Building },
+          { to: "/leadership/", label: "Leadership", icon: UsersRound },
+          { to: "/careers/", label: "Careers", icon: Briefcase },
+          { to: "/contact/", label: "Contact", icon: Mail },
+          { to: "/faqs/", label: "FAQ", icon: HelpCircle },
+        ],
+      },
     ],
   },
 ];
@@ -139,11 +154,18 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({ onClose, accordion, setAcco
           </button>
           {accordion === section.key && (
             <div className={classes.mobileAccordionContent}>
-              {section.links.map((link) => (
-                <Link key={link.to} to={link.to} className={classes.mobileLink} onClick={onClose}>
-                  <span className={classes.mobileLinkIcon}><link.icon size={18} /></span>
-                  {link.label}
-                </Link>
+              {section.groups.map((group, gi) => (
+                <React.Fragment key={gi}>
+                  {group.title && (
+                    <div className={classes.mobileGroupTitle}>{group.title}</div>
+                  )}
+                  {group.links.map((link) => (
+                    <Link key={link.to} to={link.to} className={classes.mobileLink} onClick={onClose}>
+                      <span className={classes.mobileLinkIcon}><link.icon size={18} /></span>
+                      {link.label}
+                    </Link>
+                  ))}
+                </React.Fragment>
               ))}
             </div>
           )}

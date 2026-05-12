@@ -593,6 +593,18 @@
   text-align: center;
 }
 
+.mobileGroupTitle {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9E9E9E;
+  margin: 12px 0 8px;
+  padding-top: 12px;
+  border-top: 1px solid #D7DCDC;
+}
+
 /* ---------- Mobile ---------- */
 .burger {
   display: none;
