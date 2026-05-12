@@ -498,6 +498,38 @@ to= "/insights"
 status = 301
 
 
+# Resource Hub redirects — old Insights listing pages → new /resource-hub
+# TODO: Remove force=true once old Contentful pages are unpublished
+[[redirects]]
+from = "/insights/press-releases"
+to = "/resource-hub"
+status = 301
+force = true
+
+[[redirects]]
+from = "/insights/resources"
+to = "/resource-hub"
+status = 301
+force = true
+
+[[redirects]]
+from = "/insights/case-studies"
+to = "/resource-hub"
+status = 301
+force = true
+
+[[redirects]]
+from = "/insights/events"
+to = "/resource-hub"
+status = 301
+force = true
+
+[[redirects]]
+from = "/insights/phil-blog"
+to = "/resource-hub"
+status = 301
+force = true
+
 [[headers]]
   for = "/*"
   [headers.values]

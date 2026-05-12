@@ -1,0 +1,55 @@
+.hero { position: relative; overflow: hidden; padding: 96px 60px 72px; background: #fff; }
+
+.inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 80px; align-items: center; position: relative; z-index: 2;
+}
+
+.eyebrow {
+  font-weight: 700; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #00827E; margin-bottom: 24px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.eyebrow::before { content: ''; width: 28px; height: 2px; background: #00827E; }
+
+.heading {
+  font-family: "Raleway", sans-serif; font-weight: 700;
+  font-size: clamp(44px, 5.4vw, 72px); line-height: 1.02; letter-spacing: -0.015em;
+  color: #00615E; margin: 0 0 24px;
+}
+.heading :global(.accent) { color: #00827E; }
+
+.sub { font-size: 18px; line-height: 1.55; color: #525252; max-width: 780px; margin: 0; }
+
+/* Decorative art */
+.art { position: relative; aspect-ratio: 1/1; max-width: 460px; justify-self: end; width: 100%; }
+
+.ring {
+  position: absolute; inset: 0;
+  border: 2px dashed rgba(0,130,126,0.18); border-radius: 50%;
+  animation: spin 80s linear infinite;
+}
+.ringInner { inset: 22%; border: 2px dashed rgba(0,130,126,0.22); animation-direction: reverse; animation-duration: 60s; }
+
+.blob { position: absolute; border-radius: 50%; }
+.blobA { top: 8%; left: 12%; width: 38%; height: 38%; background: linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%); }
+.blobB { bottom: 10%; right: 6%; width: 30%; height: 30%; background: linear-gradient(135deg, #2AA89E 0%, #7DE6CB 100%); }
+.blobC { bottom: 18%; left: 22%; width: 22%; height: 22%; background: linear-gradient(135deg, #D5F1F0 0%, #A8E2DA 50%, #F2E8C0 100%); }
+
+.pdot {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 26%; height: 26%; background: #00827E; border-radius: 50%;
+  color: #fff; font-family: "Raleway", sans-serif; font-weight: 700;
+  font-size: clamp(36px, 5vw, 54px);
+  display: flex; align-items: center; justify-content: center;
+  letter-spacing: -0.04em; box-shadow: 0 8px 24px rgba(0,97,94,0.35);
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1000px) {
+  .hero { padding: 64px 32px 56px; }
+  .inner { grid-template-columns: 1fr; gap: 48px; }
+  .art { justify-self: start; max-width: 320px; }
+}

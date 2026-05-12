@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resource Hub — Implementation Spec</title>
+<style>
+  :root {
+    --phil-foliage: #00827E;
+    --phil-forest: #00615E;
+    --phil-pitch: #0A0A0A;
+    --phil-gunmetal: #525252;
+    --phil-paper: #F4F4F4;
+    --phil-base: #D7DCDC;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 15px; line-height: 1.7; color: var(--phil-pitch); background: #fff; }
+  .container { max-width: 860px; margin: 0 auto; padding: 48px 32px 96px; }
+  h1 { font-size: 36px; font-weight: 800; color: var(--phil-forest); margin-bottom: 8px; letter-spacing: -0.02em; }
+  .subtitle { font-size: 16px; color: var(--phil-gunmetal); margin-bottom: 48px; }
+  h2 { font-size: 22px; font-weight: 700; color: var(--phil-forest); margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--phil-base); }
+  h3 { font-size: 17px; font-weight: 700; color: var(--phil-pitch); margin: 28px 0 10px; }
+  p, li { color: var(--phil-gunmetal); }
+  p { margin-bottom: 12px; }
+  ul, ol { margin: 8px 0 16px 24px; }
+  li { margin-bottom: 6px; }
+  code { background: var(--phil-paper); padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: "SF Mono", "Fira Code", monospace; }
+  pre { background: var(--phil-paper); border: 1px solid var(--phil-base); border-radius: 8px; padding: 16px 20px; overflow-x: auto; margin: 12px 0 20px; font-size: 13px; line-height: 1.5; }
+  pre code { background: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 24px; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 14px; border: 1px solid var(--phil-base); }
+  th { background: var(--phil-paper); font-weight: 700; color: var(--phil-forest); }
+  td code { font-size: 12px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+  .badge-new { background: #E0F5F4; color: var(--phil-foliage); }
+  .badge-redirect { background: #FFF3E0; color: #E65100; }
+  .badge-reuse { background: #E8F5E9; color: #2E7D32; }
+  .badge-todo { background: #FFF9C4; color: #F57F17; }
+  .callout { background: var(--phil-paper); border-left: 4px solid var(--phil-foliage); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0 24px; }
+  .callout strong { color: var(--phil-forest); }
+  .meta { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; font-size: 13px; color: var(--phil-gunmetal); }
+  .meta dt { font-weight: 700; color: var(--phil-pitch); }
+  .meta dd { margin: 0; }
+  .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px; }
+  .section-card { background: var(--phil-paper); border-radius: 10px; padding: 16px 20px; }
+  .section-card h4 { font-size: 14px; font-weight: 700; color: var(--phil-forest); margin-bottom: 6px; }
+  .section-card p { font-size: 13px; margin: 0; }
+  @media (max-width: 600px) { .section-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Resource Hub — Implementation Spec</h1>
+<p class="subtitle">A unified content hub replacing the existing Insights listing pages. Combines reports, webinars, blog posts, and press into a single filterable, paginated landing page.</p>
+
+<dl class="meta">
+  <div><dt>Status</dt><dd>Ready for implementation</dd></div>
+  <div><dt>Design source</dt><dd><code>/Projects/resource-hub.html</code></dd></div>
+  <div><dt>Data source</dt><dd><code>/Projects/resources-data.csv</code></dd></div>
+  <div><dt>Date</dt><dd>2026-05-11</dd></div>
+</dl>
+
+<h2>1. Routes</h2>
+
+<table>
+  <thead><tr><th>Route</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>/resource-hub</code></td><td><span class="badge badge-new">New</span></td><td>Main resource hub landing page</td></tr>
+    <tr><td><code>/press</code></td><td><span class="badge badge-new">New</span></td><td>Dedicated press landing page (same layout as resource hub, scoped to press)</td></tr>
+    <tr><td><code>/insights/press-releases</code></td><td><span class="badge badge-redirect">301 → /resource-hub</span></td><td>Old listing page</td></tr>
+    <tr><td><code>/insights/resources</code></td><td><span class="badge badge-redirect">301 → /resource-hub</span></td><td>Old listing page</td></tr>
+    <tr><td><code>/insights/case-studies</code></td><td><span class="badge badge-redirect">301 → /resource-hub</span></td><td>Old listing page</td></tr>
+    <tr><td><code>/insights/events</code></td><td><span class="badge badge-redirect">301 → /resource-hub</span></td><td>Old listing page</td></tr>
+    <tr><td><code>/insights/phil-blog</code></td><td><span class="badge badge-redirect">301 → /resource-hub</span></td><td>Old listing page</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>Note:</strong> Redirects use <code>force = true</code> in <code>netlify.toml</code> to override Gatsby-generated pages without touching Contentful.
+</div>
+
+<div class="callout">
+  <strong><span class="badge badge-todo">TODO</span> Cleanup:</strong> Once stable, unpublish the old Contentful listing pages ("Insights" and its sub-pages) and remove <code>force = true</code> from the redirects.
+</div>
+
+<h2>2. Architecture</h2>
+
+<h3>Page type</h3>
+<p>File-based Gatsby pages — no Contentful dependency for the hub itself.</p>
+<ul>
+  <li><code>src/pages/resource-hub/index.tsx</code></li>
+  <li><code>src/pages/press/index.tsx</code></li>
+</ul>
+
+<h3>Layout</h3>
+<p><span class="badge badge-reuse">Reuse</span> Existing site <code>Layout</code> component (shared header + footer).</p>
+
+<h3>Data</h3>
+<p>Single JSON file: <code>src/data/resource-hub.json</code></p>
+<p>Source of truth for the JSON content is <code>/Projects/resources-data.csv</code>.</p>
+
+<pre><code>{
+  "filters": {
+    "topics": [
+      { "value": "direct", "label": "Direct-to-Patient" },
+      { "value": "access", "label": "Access Strategy & Channel Design" },
+      { "value": "patient", "label": "Patient Experience, Support & Assistance" },
+      { "value": "utilization", "label": "Utilization Management" },
+      { "value": "field", "label": "Field Enablement & HCP Engagement" },
+      { "value": "data", "label": "Data, Technology & Optimization" },
+      { "value": "commercial", "label": "Commercial Performance" }
+    ],
+    "types": [
+      { "value": "report", "label": "Reports" },
+      { "value": "webinar", "label": "Webinars" },
+      { "value": "blog", "label": "Blog" },
+      { "value": "press", "label": "Press" }
+    ]
+  },
+  "resourceHub": {
+    "featured": [ ... ],
+    "cards": [ ... ],
+    "pressHighlights": [ ... ]
+  },
+  "pressPage": {
+    "featured": [ ... ],
+    "cards": [ ... ]
+  }
+}</code></pre>
+
+<h3>Card schema</h3>
+<table>
+  <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>title</code></td><td>string</td><td>Yes</td><td>Card heading</td></tr>
+    <tr><td><code>description</code></td><td>string</td><td>No</td><td>Not displayed — used for search matching</td></tr>
+    <tr><td><code>type</code></td><td><code>"report" | "webinar" | "blog" | "press"</code></td><td>Yes</td><td>Determines type badge label</td></tr>
+    <tr><td><code>topics</code></td><td>string[]</td><td>Yes</td><td>Short keys matching filter values</td></tr>
+    <tr><td><code>href</code></td><td>string</td><td>Yes</td><td>Starts with <code>/</code> → internal Link; otherwise → external <code>&lt;a&gt;</code></td></tr>
+    <tr><td><code>cta</code></td><td>string</td><td>Yes</td><td>Button label: "Download", "Read", "Watch"</td></tr>
+  </tbody>
+</table>
+
+<h3>Press highlight schema (additional fields)</h3>
+<table>
+  <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>publication</code></td><td>string</td><td>"Drug Channels", "Fierce Pharma", etc.</td></tr>
+  </tbody>
+</table>
+
+<h3>Featured card schema</h3>
+<p>Same as card schema plus:</p>
+<table>
+  <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td><code>color</code></td><td><code>"tidewater" | "meadow" | "forest"</code></td><td>Gradient background for the featured card</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Page Sections</h2>
+
+<div class="section-grid">
+  <div class="section-card">
+    <h4>Hero</h4>
+    <p>Eyebrow + H1 + subtitle + decorative art (animated rings + blobs)</p>
+  </div>
+  <div class="section-card">
+    <h4>Featured Strip</h4>
+    <p>3 large gradient cards (from <code>featured</code> array)</p>
+  </div>
+  <div class="section-card">
+    <h4>Filter Bar</h4>
+    <p>Topic dropdown + Type dropdown + Search input</p>
+  </div>
+  <div class="section-card">
+    <h4>Results Banner</h4>
+    <p>Shows when filters active: count + chip + clear button</p>
+  </div>
+  <div class="section-card">
+    <h4>Card Grid</h4>
+    <p>3-column grid, paginated (9 per page), from <code>cards</code> array</p>
+  </div>
+  <div class="section-card">
+    <h4>Pagination</h4>
+    <p>Page numbers + prev/next, updates with filters</p>
+  </div>
+  <div class="section-card">
+    <h4>Press Highlights</h4>
+    <p>4-column curated press strip with publication logos (resource hub only)</p>
+  </div>
+  <div class="section-card">
+    <h4>Demo CTA</h4>
+    <p>Full-width gradient CTA → /demo (reusable component)</p>
+  </div>
+</div>
+
+<h2>4. Components</h2>
+
+<table>
+  <thead><tr><th>Component</th><th>Location</th><th>Shared?</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>ResourceHubHero</td><td><code>components/common/ResourceHubHero/</code></td><td>No</td><td>Animated decorative art (CSS keyframes)</td></tr>
+    <tr><td>FeaturedCard</td><td><code>components/common/FeaturedCard/</code></td><td>Yes</td><td>Gradient card with SVG art, used on both pages</td></tr>
+    <tr><td>FilterBar</td><td><code>components/common/FilterBar/</code></td><td>Yes</td><td>Topic + Type dropdowns + search input</td></tr>
+    <tr><td>ResultsBanner</td><td><code>components/common/ResultsBanner/</code></td><td>Yes</td><td>Active filter chip + count + clear</td></tr>
+    <tr><td>ResourceCard</td><td><code>components/common/ResourceCard/</code></td><td>Yes</td><td>Standard bordered card with color strip</td></tr>
+    <tr><td>CardGrid</td><td><code>components/common/CardGrid/</code></td><td>Yes</td><td>3-col responsive grid wrapper</td></tr>
+    <tr><td>Pager</td><td><code>components/common/Pager/</code></td><td>Yes</td><td>Pagination with ellipsis + count text</td></tr>
+    <tr><td>PressHighlights</td><td><code>components/common/PressHighlights/</code></td><td>No</td><td>4-col press cards with publication name</td></tr>
+    <tr><td>DemoCta</td><td><code>components/common/DemoCta/</code></td><td>Yes</td><td>Full-width gradient CTA block</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Behavior</h2>
+
+<h3>Filtering</h3>
+<ul>
+  <li>Topic dropdown, Type dropdown, and Search input are AND'd together</li>
+  <li>Search matches case-insensitively against <code>title</code> + <code>description</code></li>
+  <li>When any filter is active, a results banner appears showing count + active filter chip(s)</li>
+  <li>Clearing filters resets all three inputs</li>
+</ul>
+
+<h3>Pagination</h3>
+<ul>
+  <li>9 cards per page</li>
+  <li>Pagination operates on the <strong>filtered</strong> subset</li>
+  <li>Resets to page 1 when any filter changes</li>
+  <li>Shows "Showing X–Y of Z resources" count</li>
+  <li>Page numbers with ellipsis for large sets</li>
+</ul>
+
+<h3>Card colors</h3>
+<ul>
+  <li>The thin color strip at the top of each card auto-cycles by index</li>
+  <li>Cycle order: <code>forest → meadow → heritage → tidewater → repeat</code></li>
+  <li>No color field in JSON — derived at render time</li>
+</ul>
+
+<h3>Links</h3>
+<ul>
+  <li><code>href</code> starting with <code>/</code> → Gatsby <code>&lt;Link&gt;</code> (internal navigation)</li>
+  <li>All other <code>href</code> → <code>&lt;a target="_blank" rel="noopener noreferrer"&gt;</code></li>
+</ul>
+
+<h2>6. Redirects (netlify.toml)</h2>
+
+<pre><code>[[redirects]]
+  from = "/insights/press-releases"
+  to = "/resource-hub"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/insights/resources"
+  to = "/resource-hub"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/insights/case-studies"
+  to = "/resource-hub"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/insights/events"
+  to = "/resource-hub"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/insights/phil-blog"
+  to = "/resource-hub"
+  status = 301
+  force = true</code></pre>
+
+<h2>7. File Inventory</h2>
+
+<pre><code>src/
+├── data/
+│   └── resource-hub.json              # All card data + filter options
+├── pages/
+│   ├── resource-hub/
+│   │   ├── index.tsx                  # Resource Hub page
+│   │   └── resource-hub.module.css
+│   └── press/
+│       ├── index.tsx                  # Press page
+│       └── press.module.css
+├── components/common/
+│   ├── ResourceHubHero/
+│   │   ├── ResourceHubHero.tsx
+│   │   └── resourceHubHero.module.css
+│   ├── FeaturedCard/
+│   │   ├── FeaturedCard.tsx
+│   │   └── featuredCard.module.css
+│   ├── FilterBar/
+│   │   ├── FilterBar.tsx
+│   │   └── filterBar.module.css
+│   ├── ResultsBanner/
+│   │   ├── ResultsBanner.tsx
+│   │   └── resultsBanner.module.css
+│   ├── ResourceHubCard/
+│   │   ├── ResourceHubCard.tsx
+│   │   └── resourceHubCard.module.css
+│   ├── CardGrid/
+│   │   ├── CardGrid.tsx
+│   │   └── cardGrid.module.css
+│   ├── Pager/
+│   │   ├── Pager.tsx
+│   │   └── pager.module.css
+│   ├── PressHighlights/
+│   │   ├── PressHighlights.tsx
+│   │   └── pressHighlights.module.css
+│   └── DemoCta/
+│       ├── DemoCta.tsx
+│       └── demoCta.module.css
+netlify.toml                           # Add redirects</code></pre>
+
+<h2>8. Open Items</h2>
+
+<table>
+  <thead><tr><th>Item</th><th>Status</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Press page design</td><td><span class="badge badge-todo">Pending</span></td><td>Reuses same layout as resource hub — needs confirmation on featured cards for press</td></tr>
+    <tr><td>Contentful cleanup</td><td><span class="badge badge-todo">TODO</span></td><td>Unpublish old Insights listing pages, then remove <code>force = true</code> from redirects</td></tr>
+    <tr><td>Nav update</td><td><span class="badge badge-todo">Pending</span></td><td>Header dropdown currently links to <code>/insights/*</code> — needs update to <code>/resource-hub</code></td></tr>
+  </tbody>
+</table>
+
+</div>
+</body>
+</html>

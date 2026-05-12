@@ -1,0 +1,43 @@
+.section {
+  padding: 80px 60px 96px;
+  background: linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%);
+  position: relative; overflow: hidden;
+}
+
+.inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: auto auto;
+  justify-content: start; gap: 96px; align-items: center;
+  position: relative; z-index: 1;
+}
+
+.eyebrow {
+  font-weight: 700; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #fff; opacity: 0.9; margin-bottom: 20px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.eyebrow::before { content: ''; width: 28px; height: 2px; background: #fff; }
+
+.heading {
+  font-family: "Raleway", sans-serif; font-weight: 700;
+  font-size: clamp(36px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -0.015em;
+  color: #fff; margin: 0 0 16px; max-width: 720px;
+}
+
+.sub { font-size: 19px; line-height: 1.55; color: rgba(255,255,255,0.88); margin: 0; max-width: 560px; }
+
+.actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-weight: 700; font-size: 17px; color: #00827E; background: #fff;
+  border-radius: 999px; padding: 18px 32px; text-decoration: none;
+  transition: transform 0.15s, gap 0.15s;
+}
+.btn svg { width: 18px; height: 18px; }
+.btn:hover { gap: 16px; transform: translateY(-1px); }
+
+@media (max-width: 1000px) {
+  .section { padding: 64px 32px 72px; }
+  .inner { grid-template-columns: 1fr; gap: 32px; }
+}

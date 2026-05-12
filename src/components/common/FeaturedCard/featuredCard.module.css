@@ -1,0 +1,36 @@
+.link { text-decoration: none; color: inherit; display: block; }
+
+.card {
+  position: relative; overflow: hidden;
+  border-radius: 18px; aspect-ratio: 5 / 4;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 36px; color: #fff;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s;
+  box-shadow: 0 10px 28px rgba(0,72,71,0.12);
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(0,72,71,0.20); }
+
+.tidewater { background: linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%); }
+.meadow { background: linear-gradient(135deg, #2AA89E 0%, #7DE6CB 100%); }
+.forest { background: linear-gradient(135deg, #00484A 0%, #0E6A66 100%); }
+
+.eyebrow {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: #fff;
+}
+
+.title {
+  font-family: "Raleway", sans-serif; font-weight: 700;
+  font-size: 26px; line-height: 1.1; letter-spacing: -0.005em;
+  color: #fff; margin: 16px 0 12px;
+}
+
+.cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 14px; color: #fff; margin-top: 24px;
+  transition: gap 0.15s;
+}
+.card:hover .cta { gap: 12px; }
+.cta svg { width: 14px; height: 14px; }
+
+@media (max-width: 1000px) { .card { aspect-ratio: auto; } }

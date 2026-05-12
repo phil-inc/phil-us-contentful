@@ -1,0 +1,36 @@
+.banner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 60px 24px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+
+.count {
+  font-family: "Raleway", sans-serif; font-weight: 700;
+  font-size: 22px; letter-spacing: -0.01em;
+  color: #00615E; margin-right: 4px;
+}
+
+.chip {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 8px 8px 16px;
+  background: #00827E; color: #fff;
+  border-radius: 999px; font-weight: 700; font-size: 13px;
+  box-shadow: 0 4px 14px rgba(0,130,126,0.25);
+}
+
+.x {
+  width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.22); border-radius: 50%;
+  cursor: pointer; transition: background 0.15s;
+}
+.x:hover { background: rgba(255,255,255,0.4); }
+.x svg { width: 12px; height: 12px; }
+
+.clearAll {
+  font-weight: 700; font-size: 13px;
+  color: #00827E; cursor: pointer;
+}
+.clearAll:hover { color: #00615E; }
+
+@media (max-width: 1000px) { .banner { padding: 0 32px 24px; } }

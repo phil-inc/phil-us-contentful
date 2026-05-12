@@ -1,0 +1,30 @@
+.row {
+  max-width: 1280px; margin: 0 auto;
+  padding: 16px 60px 96px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+}
+
+.countText { font-size: 14px; color: #525252; }
+.countText em { font-style: normal; font-weight: 700; color: #00615E; }
+
+.pager { display: inline-flex; align-items: center; gap: 4px; }
+.pager button {
+  width: 36px; height: 36px;
+  border: 1px solid #D7DCDC; background: #fff;
+  color: #00615E; font-weight: 700; font-size: 14px;
+  border-radius: 8px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.pager button svg { width: 14px; height: 14px; }
+.pager button:hover { background: #E8F4EE; border-color: #00827E; color: #00827E; }
+.pager button:disabled { opacity: 0.4; cursor: not-allowed; }
+.active { background: #00827E !important; border-color: #00827E !important; color: #fff !important; }
+
+.ellipsis { color: #525252; padding: 0 4px; font-weight: 700; }
+
+@media (max-width: 1000px) {
+  .row { padding: 16px 32px 96px; flex-direction: column; align-items: stretch; }
+  .pager { justify-content: center; }
+}
