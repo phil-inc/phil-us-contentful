@@ -109,15 +109,13 @@ const MegaNav: React.FC<MegaNavProps> = ({
         <div className={classes.promoBanner}>
           <div className={classes.promoInner}>
             <span className={classes.promoText}>{PROMO_BANNER.text}</span>
-            <a
+            <Link
               className={classes.promoLink}
-              href={PROMO_BANNER.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              to={PROMO_BANNER.href}
             >
               {PROMO_BANNER.linkText}
               <ArrowIcon />
-            </a>
+            </Link>
           </div>
         </div>
 
