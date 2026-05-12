@@ -141,7 +141,7 @@
   gap: 8px;
   font-family: "Lato", sans-serif;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1;
   letter-spacing: 0.01em;
   padding: 14px 28px;
@@ -153,25 +153,36 @@
 }
 
 .btnNavDemo {
-  background: #0A0A0A;
   color: #FFFFFF;
+  border-color: transparent;
+  background:
+    linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%) padding-box,
+    linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%) border-box;
 }
 
 .btnNavDemo:hover {
-  background: #FFFFFF;
-  color: #00827E;
-  border-color: #00827E;
+  color: #00615E;
+  border-color: transparent;
+  background:
+    linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+    linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%) border-box;
   text-decoration: none;
 }
 
 .btnNavLogin {
-  background: #00827E;
-  color: #FFFFFF;
+  color: #2AA89E;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#FFFFFF, #FFFFFF) padding-box,
+    linear-gradient(135deg, #2AA89E 0%, #7DE6CB 100%) border-box;
 }
 
 .btnNavLogin:hover {
-  background: #5ABEA4;
   color: #FFFFFF;
+  border-color: transparent;
+  background:
+    linear-gradient(135deg, #2AA89E 0%, #7DE6CB 100%) padding-box,
+    linear-gradient(135deg, #2AA89E 0%, #7DE6CB 100%) border-box;
   text-decoration: none;
 }
 
