@@ -18,6 +18,7 @@ import {
   Briefcase,
   Mail,
   HelpCircle,
+  ChevronDown,
 } from "lucide-react";
 import cx from "clsx";
 
@@ -45,11 +46,128 @@ const ArrowIcon = () => (
   </svg>
 );
 
+const MOBILE_NAV_SECTIONS = [
+  {
+    label: "Who We Serve",
+    key: "serve",
+    links: [
+      { to: "/pharma/", label: "Pharma", icon: PillBottle },
+      { to: "/patients/", label: "Patients", icon: UserRound },
+      { to: "/providers/", label: "Providers", icon: Stethoscope },
+    ],
+  },
+  {
+    label: "Our Solution",
+    key: "solution",
+    links: [
+      { to: "/solution/", label: "Overview", icon: LayoutGrid },
+      { to: "/solution/core/", label: "Digital Hub", icon: MonitorSmartphone },
+      { to: "/solution/direct/", label: "Direct\u2011to\u2011Patient", icon: SmartphoneCharging },
+    ],
+  },
+  {
+    label: "Why PHIL",
+    key: "why",
+    links: [
+      { to: "/insights/case-studies/", label: "Customer Success Stories", icon: Trophy },
+      { to: "/gtn/", label: "GTN Calculator", icon: Calculator },
+    ],
+  },
+  {
+    label: "Resources",
+    key: "resources",
+    links: [
+      { to: "/insights/press-releases/", label: "Press", icon: Newspaper },
+      { to: "/insights/resources/", label: "Reports", icon: FileText },
+      { to: "/insights/events/", label: "Webinars", icon: Video },
+      { to: "/insights/phil-blog/", label: "Blog", icon: PenLine },
+    ],
+  },
+  {
+    label: "About Us",
+    key: "about",
+    links: [
+      { to: "/company/", label: "Company", icon: Building },
+      { to: "/leadership/", label: "Leadership", icon: UsersRound },
+      { to: "/careers/", label: "Careers", icon: Briefcase },
+      { to: "/contact/", label: "Contact", icon: Mail },
+      { to: "/faqs/", label: "FAQ", icon: HelpCircle },
+    ],
+  },
+];
+
+type MobileDrawerProps = {
+  onClose: () => void;
+  accordion: string | null;
+  setAccordion: (key: string | null) => void;
+  headerTargetBlank: boolean;
+};
+
+const MobileDrawer: React.FC<MobileDrawerProps> = ({ onClose, accordion, setAccordion, headerTargetBlank }) => (
+  <div className={classes.mobileDrawer}>
+    <div className={classes.mobileHeader}>
+      {headerTargetBlank ? (
+        <a href="https://phil.us" target="_blank" rel="noopener noreferrer" className={classes.navLogo} aria-label="PHIL home">
+          <img src={philLogo} alt="PHIL" />
+        </a>
+      ) : (
+        <Link className={classes.navLogo} to="/" aria-label="PHIL home" onClick={onClose}>
+          <img src={philLogo} alt="PHIL" />
+        </Link>
+      )}
+      <button
+        className={cx(classes.burger, classes.burgerOpen)}
+        onClick={onClose}
+        aria-label="Close navigation menu"
+      >
+        <span className={classes.burgerBar} />
+        <span className={classes.burgerBar} />
+        <span className={classes.burgerBar} />
+      </button>
+    </div>
+    <div className={classes.mobileBody}>
+      {MOBILE_NAV_SECTIONS.map((section) => (
+        <div key={section.key} className={classes.mobileAccordionItem}>
+          <button
+            className={cx(classes.mobileAccordionTrigger, {
+              [classes.mobileAccordionTriggerOpen]: accordion === section.key,
+            })}
+            onClick={() => setAccordion(accordion === section.key ? null : section.key)}
+          >
+            {section.label}
+            <ChevronDown size={18} />
+          </button>
+          {accordion === section.key && (
+            <div className={classes.mobileAccordionContent}>
+              {section.links.map((link) => (
+                <Link key={link.to} to={link.to} className={classes.mobileLink} onClick={onClose}>
+                  <span className={classes.mobileLinkIcon}><link.icon size={18} /></span>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+      <div className={classes.mobileActions}>
+        <a href="https://my.phil.us/" target="_blank" rel="noopener noreferrer" className={cx(classes.btnNav, classes.btnNavLogin)}>
+          Patient Login
+        </a>
+        <Link to="/demo/" className={cx(classes.btnNav, classes.btnNavDemo)} onClick={onClose}>
+          Book Demo
+        </Link>
+      </div>
+    </div>
+  </div>
+);
+
 const MegaNav: React.FC<MegaNavProps> = ({
   minimal = false,
   headerTargetBlank = false,
 }) => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shellRef = useRef<HTMLElement>(null);
 
@@ -372,6 +490,16 @@ const MegaNav: React.FC<MegaNavProps> = ({
               Book Demo
             </Link>
           </div>
+
+          <button
+            className={cx(classes.burger, { [classes.burgerOpen]: mobileOpen })}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          >
+            <span className={classes.burgerBar} />
+            <span className={classes.burgerBar} />
+            <span className={classes.burgerBar} />
+          </button>
         </div>
       </header>
 
@@ -380,6 +508,16 @@ const MegaNav: React.FC<MegaNavProps> = ({
         className={cx(classes.backdrop, { [classes.backdropVisible]: openMenu !== null })}
         onClick={() => handleOpen(null)}
       />
+
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <MobileDrawer
+          onClose={() => setMobileOpen(false)}
+          accordion={mobileAccordion}
+          setAccordion={setMobileAccordion}
+          headerTargetBlank={headerTargetBlank}
+        />
+      )}
     </>
   );
 };

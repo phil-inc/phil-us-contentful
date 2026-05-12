@@ -417,3 +417,365 @@
   transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1),
     visibility 0s linear 0s;
 }
+
+/* ---------- Mobile burger ---------- */
+.burger {
+  display: none;
+  appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+}
+
+.burgerBar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #0A0A0A;
+  border-radius: 2px;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.burgerBar + .burgerBar {
+  margin-top: 5px;
+}
+
+.burgerOpen .burgerBar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burgerOpen .burgerBar:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerOpen .burgerBar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: $phil-breakpoint-lg) {
+  .navPrimary {
+    display: none;
+  }
+
+  .navActions {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .navBar {
+    height: 64px;
+    padding: 0 20px;
+  }
+
+  .promoInner {
+    padding: 8px 20px;
+    font-size: 12px;
+  }
+}
+
+/* ---------- Mobile drawer ---------- */
+.mobileDrawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  background: #FFFFFF;
+  overflow-y: auto;
+  animation: slideIn 200ms ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #D7DCDC;
+}
+
+.mobileBody {
+  padding: 16px 20px;
+}
+
+.mobileAccordionItem {
+  border-bottom: 1px solid #D7DCDC;
+}
+
+.mobileAccordionTrigger {
+  appearance: none;
+  background: none;
+  border: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #0A0A0A;
+  cursor: pointer;
+}
+
+.mobileAccordionTrigger svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 200ms ease;
+  color: #9E9E9E;
+}
+
+.mobileAccordionTriggerOpen svg {
+  transform: rotate(180deg);
+}
+
+.mobileAccordionContent {
+  padding: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  color: #0A0A0A;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.mobileLink:hover {
+  background: #D5F1F0;
+  text-decoration: none;
+}
+
+.mobileLinkIcon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #D5F1F0;
+  color: #00827E;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileLinkIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.mobileActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 0;
+}
+
+.mobileActions .btnNav {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ---------- Mobile ---------- */
+.burger {
+  display: none;
+  appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+}
+
+.burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #0A0A0A;
+  border-radius: 2px;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.burger span + span {
+  margin-top: 5px;
+}
+
+.burgerOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burgerOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: $phil-breakpoint-lg) {
+  .navPrimary {
+    display: none;
+  }
+
+  .navActions {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .navBar {
+    height: 64px;
+    padding: 0 20px;
+  }
+
+  .promoInner {
+    padding: 8px 20px;
+    font-size: 12px;
+  }
+}
+
+/* ---------- Mobile drawer ---------- */
+.mobileDrawer {
+  display: none;
+}
+
+@media (max-width: $phil-breakpoint-lg) {
+  .mobileDrawer {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    background: #FFFFFF;
+    overflow-y: auto;
+    animation: slideIn 200ms ease;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #D7DCDC;
+}
+
+.mobileBody {
+  padding: 16px 20px;
+}
+
+.mobileAccordionItem {
+  border-bottom: 1px solid #D7DCDC;
+}
+
+.mobileAccordionTrigger {
+  appearance: none;
+  background: none;
+  border: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #0A0A0A;
+  cursor: pointer;
+}
+
+.mobileAccordionTrigger svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 200ms ease;
+  color: #9E9E9E;
+}
+
+.mobileAccordionTriggerOpen svg {
+  transform: rotate(180deg);
+}
+
+.mobileAccordionContent {
+  padding: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  color: #0A0A0A;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.mobileLink:hover {
+  background: #D5F1F0;
+  text-decoration: none;
+}
+
+.mobileLinkIcon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #D5F1F0;
+  color: #00827E;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileLinkIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.mobileActions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 0;
+}
+
+.mobileActions .btnNav {
+  width: 100%;
+  justify-content: center;
+}
