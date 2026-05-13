@@ -2,7 +2,20 @@ import React from 'react';
 import {ColorSchemeScript, MantineProvider} from '@mantine/core';
 import {theme} from './src/layouts/Layout/theme';
 
-// 1. Google Tag Manager (loads after consent default)
+// 1. HubSpot visitor tracking — sets hubspotutk cookie for form pre-fill.
+// Loaded directly (not via GTM) so it fires unconditionally before any form renders.
+const hubspotTrackingScript = (
+	<script
+		key="hubspot-tracking"
+		id="hs-script-loader"
+		type="text/javascript"
+		async
+		defer
+		src="//js.hs-scripts.com/20880193.js"
+	/>
+);
+
+// 2. Google Tag Manager
 const gtmScript = (
 	<script
 		key="gtm-script"
@@ -18,7 +31,7 @@ const gtmScript = (
 	/>
 );
 
-// 2. GTM noscript fallback (immediately after <body> for users with JS disabled)
+// 3. GTM noscript fallback (immediately after <body> for users with JS disabled)
 const gtmNoscript = (
 	<noscript key="gtm-noscript">
 		<iframe
@@ -35,6 +48,7 @@ const resourceHints = [
 	// Full handshake (DNS + TCP + TLS) for domains that serve critical early resources
 	<link key="preconnect-ctfassets" rel="preconnect" href="https://images.ctfassets.net" />,
 	<link key="preconnect-gtm" rel="preconnect" href="https://www.googletagmanager.com" />,
+	<link key="dns-hsscripts" rel="dns-prefetch" href="//js.hs-scripts.com" />,
 	// DNS-only for deferred/analytics scripts
 	<link key="dns-hsforms" rel="dns-prefetch" href="//js.hsforms.net" />,
 	<link key="dns-trustpilot" rel="dns-prefetch" href="//widget.trustpilot.com" />,
@@ -47,6 +61,7 @@ export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
 	replaceHeadComponents([
 		...resourceHints,
+		hubspotTrackingScript,
 		gtmScript,
 		...headComponents,
 		<ColorSchemeScript key="color-scheme-script" />,
