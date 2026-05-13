@@ -11,8 +11,6 @@ import {
   Calculator,
   Newspaper,
   FileText,
-  Video,
-  PenLine,
   Building,
   UsersRound,
   Briefcase,
@@ -86,10 +84,8 @@ const MOBILE_NAV_SECTIONS = [
     groups: [
       {
         links: [
-          { to: "/insights/press-releases/", label: "Press", icon: Newspaper },
-          { to: "/insights/resources/", label: "Reports", icon: FileText },
-          { to: "/insights/events/", label: "Webinars", icon: Video },
-          { to: "/insights/phil-blog/", label: "Blog", icon: PenLine },
+          { to: "/resources/", label: "Resource Hub", icon: FileText },
+          { to: "/press/", label: "Press", icon: Newspaper },
         ],
       },
     ],
@@ -396,27 +392,15 @@ const MegaNav: React.FC<MegaNavProps> = ({
                     <p className={classes.megaGroupTitle}>Resources</p>
                     <ul className={classes.megaList}>
                       <li>
-                        <Link to="/insights/press-releases/" className={classes.megaListLink}>
+                        <Link to="/resources/" className={classes.megaListLink}>
+                          <span className={classes.megaIcon}><FileText size={20} /></span>
+                          <span className={classes.megaItemTitle}>Resource Hub</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/press/" className={classes.megaListLink}>
                           <span className={classes.megaIcon}><Newspaper size={20} /></span>
                           <span className={classes.megaItemTitle}>Press</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/insights/resources/" className={classes.megaListLink}>
-                          <span className={classes.megaIcon}><FileText size={20} /></span>
-                          <span className={classes.megaItemTitle}>Reports</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/insights/events/" className={classes.megaListLink}>
-                          <span className={classes.megaIcon}><Video size={20} /></span>
-                          <span className={classes.megaItemTitle}>Webinars</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/insights/phil-blog/" className={classes.megaListLink}>
-                          <span className={classes.megaIcon}><PenLine size={20} /></span>
-                          <span className={classes.megaItemTitle}>Blog</span>
                         </Link>
                       </li>
                     </ul>
