@@ -588,6 +588,7 @@ export const query = graphql`
                 }
               }
               ... on ContentfulMediaItem {
+                contentful_id
                 name
                 media {
                   gatsbyImageData(
@@ -679,6 +680,7 @@ export const query = graphql`
                 heading
               }
               ... on ContentfulMediaItem {
+                contentful_id
                 name
                 media {
                   gatsbyImageData(
