@@ -7,7 +7,7 @@ import PageContext from "contexts/PageContext";
 import DemoCta from "components/common/DemoCta/DemoCta";
 import Pagination from "components/common/Pagination/Pagination";
 
-import { RESOURCES_DATA, ResourceItem } from "./data";
+import { RESOURCES_DATA, ResourceItem } from "./_data";
 import * as classes from "./resources.module.css";
 
 const CARD_ART_CYCLE = [classes.cardArtForest, classes.cardArtMeadow, classes.cardArtHeritage, classes.cardArtTidewater];
