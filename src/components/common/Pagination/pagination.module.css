@@ -57,3 +57,14 @@
   border-color: #d7dcdc;
   color: #00615e;
 }
+
+.ellipsis {
+  min-width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  color: #9e9e9e;
+}
