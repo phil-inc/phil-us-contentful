@@ -10,6 +10,68 @@ import Pagination from "components/common/Pagination/Pagination";
 import { RESOURCES_DATA, ResourceItem } from "./_data";
 import * as classes from "./resources.module.css";
 
+/* ─── Custom Dropdown ─── */
+
+type DropdownProps = {
+  options: { key: string; label: string }[];
+  value: string;
+  placeholder: string;
+  onChange: (value: string) => void;
+};
+
+const Dropdown: React.FC<DropdownProps> = ({ options, value, placeholder, onChange }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selected = options.find((o) => o.key === value);
+
+  return (
+    <div className={classes.dropdown} ref={ref}>
+      <button
+        type="button"
+        className={`${classes.dropdownTrigger} ${open ? classes.dropdownTriggerOpen : ""}`}
+        onClick={() => setOpen(!open)}
+      >
+        {selected ? (
+          <span>{selected.label}</span>
+        ) : (
+          <span className={classes.dropdownPlaceholder}>{placeholder}</span>
+        )}
+      </button>
+      <svg className={classes.filterIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" /></svg>
+      {open && (
+        <div className={classes.dropdownPanel}>
+          <button
+            type="button"
+            className={`${classes.dropdownOption} ${!value ? classes.dropdownOptionActive : ""}`}
+            onClick={() => { onChange(""); setOpen(false); }}
+          >
+            {placeholder}
+          </button>
+          {options.map((o) => (
+            <button
+              key={o.key}
+              type="button"
+              className={`${classes.dropdownOption} ${value === o.key ? classes.dropdownOptionActive : ""}`}
+              onClick={() => { onChange(o.key); setOpen(false); }}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const CARD_ART_CYCLE = [classes.cardArtForest, classes.cardArtMeadow, classes.cardArtHeritage, classes.cardArtTidewater];
 const PER_PAGE = 9;
 
@@ -181,19 +243,11 @@ const ResourcesPage: React.FC = () => {
         <div className={classes.filterBar} ref={gridRef}>
           <div className={classes.filterGroup}>
             <label className={classes.filterLabel}>Topic</label>
-            <select className={classes.filterSelect} value={topic} onChange={(e) => setTopicFilter(e.target.value)}>
-              <option value="">I'm interested in…</option>
-              {TOPICS.map((t) => <option key={t.key} value={t.key}>{t.label}</option>)}
-            </select>
-            <svg className={classes.filterIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" /></svg>
+            <Dropdown options={TOPICS} value={topic} placeholder="I'm interested in…" onChange={setTopicFilter} />
           </div>
           <div className={classes.filterGroup}>
             <label className={classes.filterLabel}>Type</label>
-            <select className={classes.filterSelect} value={type} onChange={(e) => setTypeFilter(e.target.value)}>
-              <option value="">All formats</option>
-              {TYPES.map((t) => <option key={t.key} value={t.key}>{t.label}</option>)}
-            </select>
-            <svg className={classes.filterIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" /></svg>
+            <Dropdown options={TYPES} value={type} placeholder="All formats" onChange={setTypeFilter} />
           </div>
           <div className={classes.filterGroup}>
             <label className={classes.filterLabel}>Search</label>
