@@ -909,6 +909,12 @@
   }
 }
 
+@media (max-width: $phil-breakpoint-sm) {
+  .filterBar {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Custom Dropdown */
 .dropdown {
   position: relative;
