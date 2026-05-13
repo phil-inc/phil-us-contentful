@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useRef } from "react";
 import type { HeadFC } from "gatsby";
 import { Link } from "gatsby";
 
@@ -75,6 +75,7 @@ const ResourcesPage: React.FC = () => {
   const [type, setType] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const gridRef = useRef<HTMLElement>(null);
 
   const filtered = useMemo(() => {
     return RESOURCES_DATA.filter((item) => {
@@ -91,7 +92,7 @@ const ResourcesPage: React.FC = () => {
   const paged = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
 
   const handleFilterChange = useCallback(() => setPage(1), []);
-  const setTopicFilter = (v: string) => { setTopic(v); handleFilterChange(); };
+  const setTopicFilter = (v: string) => { setTopic(v); handleFilterChange(); setTimeout(() => gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0); };
   const setTypeFilter = (v: string) => { setType(v); handleFilterChange(); };
   const setSearchFilter = (v: string) => { setSearch(v); handleFilterChange(); };
   const clearFilters = () => { setTopic(""); setType(""); setSearch(""); setPage(1); };
@@ -216,7 +217,7 @@ const ResourcesPage: React.FC = () => {
         )}
 
         {/* All Resources */}
-        <section className={classes.section}>
+        <section className={classes.section} ref={gridRef}>
           <div className={classes.cardGrid}>
             {paged.map((item, i) => (
               <CardLink key={item.url} url={item.url} className={classes.card}>
