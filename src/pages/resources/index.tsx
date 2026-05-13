@@ -75,7 +75,7 @@ const ResourcesPage: React.FC = () => {
   const [type, setType] = useState("");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const gridRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
     return RESOURCES_DATA.filter((item) => {
@@ -178,7 +178,7 @@ const ResourcesPage: React.FC = () => {
         </section>
 
         {/* Filter bar */}
-        <div className={classes.filterBar}>
+        <div className={classes.filterBar} ref={gridRef}>
           <div className={classes.filterGroup}>
             <label className={classes.filterLabel}>Topic</label>
             <select className={classes.filterSelect} value={topic} onChange={(e) => setTopicFilter(e.target.value)}>
@@ -217,7 +217,7 @@ const ResourcesPage: React.FC = () => {
         )}
 
         {/* All Resources */}
-        <section className={classes.section} ref={gridRef}>
+        <section className={classes.section}>
           <div className={classes.cardGrid}>
             {paged.map((item, i) => (
               <CardLink key={item.url} url={item.url} className={classes.card}>
