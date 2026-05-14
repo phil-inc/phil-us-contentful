@@ -123,7 +123,7 @@ const PressPage: React.FC = () => {
             <div>
               <div className={classes.heroEyebrow}>Pressroom</div>
               <h1 className={classes.h1}>
-                PHIL <span className={classes.accent}>in the press</span>
+                PHIL <span className={classes.accent}>in the Press</span>
               </h1>
               <p className={classes.heroDesc}>
                 Read our latest news, announcements, and thought leadership.
