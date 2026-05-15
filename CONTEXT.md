@@ -4,6 +4,19 @@
 
 Marketing website for [phil.us](https://phil.us). Gatsby 5 SSG + Contentful CMS + Mantine v7 UI. Hosted on Netlify.
 
+> **Migration in progress:** New pages are code-driven (file-based in `src/pages/`), not Contentful-driven. Existing Contentful pages remain but new content should be managed in code.
+
+## Skills
+
+Reusable workflows for common tasks live in `skills/`:
+
+| Skill | Description |
+|---|---|
+| [`implement-from-design`](./skills/implement-from-design/SKILL.md) | Implement or update any page/component from a design export |
+| [`update-copy-from-design`](./skills/update-copy-from-design/SKILL.md) | Update existing page copy from a design |
+| [`grill-me`](./skills/grill-me/SKILL.md) | Grill relentlessly until 100% clarity on a plan |
+| [`local-setup`](./skills/local-setup/SKILL.md) | Dev environment setup |
+
 ## Tech Stack
 
 - **Framework**: Gatsby 5.13.6, React 18.3.1, TypeScript 5.5.3

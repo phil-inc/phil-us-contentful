@@ -1,0 +1,133 @@
+.section {
+  padding: 80px 60px 96px;
+  background: linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: -160px;
+  right: -100px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  bottom: -200px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(109, 223, 193, 0.25), transparent 70%);
+  pointer-events: none;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr auto;
+  gap: 48px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0.9;
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: #ffffff;
+}
+
+.heading {
+  font-family: Raleway, sans-serif;
+  font-weight: 700;
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  margin: 0 0 16px;
+  max-width: 720px;
+  text-wrap: balance;
+}
+
+.description {
+  font-size: 19px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+  max-width: 560px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-self: end;
+  margin-right: 64px;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #00827e;
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 16px 28px;
+  transition: transform 0.15s, gap 0.15s;
+  text-decoration: none;
+}
+
+.btnPrimary svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btnPrimary:hover {
+  gap: 14px;
+  transform: translateY(-1px);
+  color: #00827e;
+  text-decoration: none;
+}
+
+@media (max-width: $phil-breakpoint-lg) {
+  .section {
+    padding: 64px 32px 72px;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .actions {
+    justify-self: start;
+    margin-right: 0;
+  }
+}
