@@ -110,7 +110,7 @@ Use `.xl-container` (defined in `src/assets/css/index.css`) for any wrapper that
 // or combined: <div className={`xl-container ${classes.foo}`}>
 ```
 
-Applied to: MegaNav, StaticFooter, Leadership, CareerSection, GTN.
+Applied to: MegaNav.
 
 ### What to look at for patterns
 
