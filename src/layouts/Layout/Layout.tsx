@@ -2,7 +2,7 @@ import React from "react";
 import { AppShell } from "@mantine/core";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 import { useLocation } from "@reach/router";
-import CFooter from "./CFooter/CFooter";
+import StaticFooter from "./MegaFooter/megaFooter";
 import LinkedinInsights from "analytics/LinkedinInsights";
 import CInfoBar from "layouts/Layout/CInfoBar/CInfoBar";
 // Import css overrides here
@@ -40,7 +40,7 @@ export function Layout({
           {!canHideHeader && <MegaNav minimal={minimal} headerTargetBlank={headerTargetBlank} />}
           <CInfoBar currentLocationSlug={currentLocationSlug}/>
           <>{children}</>
-          <CFooter minimal={minimal} />
+          <StaticFooter minimal={minimal} />
         </AppShell>
       </HubspotProvider>
     </>
