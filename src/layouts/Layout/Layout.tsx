@@ -1,7 +1,7 @@
 import React from "react";
 import { AppShell } from "@mantine/core";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
-import CFooter from "./CFooter/CFooter";
+import StaticFooter from "./MegaFooter/megaFooter";
 import LinkedinInsights from "analytics/LinkedinInsights";
 
 // Import css overrides here
@@ -35,7 +35,7 @@ export function Layout({
           {isProduction && <ZoominfoAnalytics />}
           {!canHideHeader && <MegaNav minimal={minimal} headerTargetBlank={headerTargetBlank} />}
           <>{children}</>
-          <CFooter minimal={minimal} />
+          <StaticFooter minimal={minimal} />
         </AppShell>
       </HubspotProvider>
     </>

@@ -52,6 +52,17 @@
     }
 }
 
+.xl-container {
+  /* box-sizing: border-box; */
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 32px;
+  @media screen and (min-width: 1680px) {
+    max-width: 1600px;
+  }
+}
+
 .pharma {
   .brandOutcomeCard-module--title--4129d {
     color: #00827e;
