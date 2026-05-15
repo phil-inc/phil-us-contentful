@@ -101,6 +101,17 @@ git checkout <branch> && git pull origin <branch>
 7. **Log every deviation** — any difference from the design HTML goes in SPEC.md.
 8. **Design for AI maintainability** — clear structure, obvious data boundaries, no clever abstractions. Future updates will be made by AI agents or devs with AI.
 
+### Layout width
+
+Use `.xl-container` (defined in `src/assets/css/index.css`) for any wrapper that must align with page content width.
+
+```jsx
+<div className="xl-container">…</div>
+// or combined: <div className={`xl-container ${classes.foo}`}>
+```
+
+Applied to: MegaNav, StaticFooter, Leadership, CareerSection, GTN.
+
 ### What to look at for patterns
 
 Don't follow frozen templates. Look at existing implementations:
@@ -111,16 +122,15 @@ Don't follow frozen templates. Look at existing implementations:
 
 ## Phase 5: Verify and Ship
 
-1. **Systematic diff** — Extract all visible text/structure from the design HTML and compare against the implementation. Check every section, every label, every data item, every filter option. If anything in the design is not in the code, flag it before shipping.
-2. Run `npx tsc --noEmit` — fix any errors before proceeding.
-3. Commit with a descriptive message:
+1. Run `npx tsc --noEmit` — fix any errors before proceeding.
+2. Commit with a descriptive message:
    ```bash
    git add .
    git commit -m "feat: <description of change>"
    ```
-4. Push and create PR:
+3. Push and create PR:
    ```bash
    git push -u origin feature/<slug>-<epoch>
    gh pr create --base develop --title "feat: <description>" --body "Preview URL will be available once Netlify deploys."
    ```
-5. Hand the Netlify preview URL to the user for visual review.
+4. Hand the Netlify preview URL to the user for visual review.

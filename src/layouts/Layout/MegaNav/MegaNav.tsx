@@ -368,7 +368,7 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
   if (minimal) {
     return (
       <header className={classes.navShell}>
-        <div className={classes.navBar}>{logo}</div>
+        <div className={`xl-container ${classes.navBar}`}>{logo}</div>
       </header>
     );
   }
@@ -378,7 +378,7 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
       <header className={classes.navShell} ref={shellRef}>
         {/* Promo Banner */}
         <div className={classes.promoBanner}>
-          <div className={classes.promoInner}>
+          <div className={`xl-container ${classes.promoInner}`}>
             <span className={classes.promoText}>{PROMO_BANNER.text}{" "}</span>
             <Link className={classes.promoLink} to={PROMO_BANNER.href}>
               {PROMO_BANNER.linkText}
@@ -388,7 +388,7 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
         </div>
 
         {/* Nav Bar */}
-        <div className={classes.navBar}>
+        <div className={`xl-container ${classes.navBar}`}>
           {logo}
 
           <nav className={classes.navPrimary} aria-label="Primary">
