@@ -1,7 +1,7 @@
 export interface ResourceItem {
   title: string;
   topics: string[];
-  type: "report" | "press" | "webinar" | "blog";
+  type: "report" | "press" | "webinar" | "blog" | "casestudy";
   url: string;
   buttonLabel: string;
 }
@@ -685,5 +685,33 @@ export const RESOURCES_DATA: ResourceItem[] = [
     type: "report",
     url: "https://phil.us/defining-success-for-patient-support-services/",
     buttonLabel: "Download",
+  },
+  {
+    title: "Driving Adoption in a Crowded Market by Removing Access Barriers",
+    topics: ["patient", "access", "data", "commercial"],
+    type: "casestudy",
+    url: "https://phil.us/insights/case-studies/philrx-launches-robust-channel-strategy-for-specialty-lite-migraine-brand/",
+    buttonLabel: "Read",
+  },
+  {
+    title: "Overcoming Low Enrollment and High Abandonment Rates",
+    topics: ["patient", "access", "data", "commercial"],
+    type: "casestudy",
+    url: "https://phil.us/insights/case-studies/philrx-unlocks-90-dispense-coverage-for-womens-health-brand/",
+    buttonLabel: "Read",
+  },
+  {
+    title: "Addressing Two Critical Issues: Prescriber Adoption & Patient Adherence",
+    topics: ["patient", "access", "data", "commercial"],
+    type: "casestudy",
+    url: "https://phil.us/insights/case-studies/philrx-drives-high-adoption-for-ophthalmology-brand/",
+    buttonLabel: "Read",
+  },
+  {
+    title: "Designing a Transformative Direct-to-Patient Program to Drive Brand Growth",
+    topics: ["direct", "patient", "access", "data", "commercial"],
+    type: "casestudy",
+    url: "https://phil.us/insights/case-studies/philrx-designs-transformative-telemedicine-channel-for-womens-health-brand/",
+    buttonLabel: "Read",
   },
 ];

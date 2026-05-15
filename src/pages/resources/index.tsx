@@ -90,6 +90,7 @@ const TYPES = [
   { key: "webinar", label: "Webinars" },
   { key: "blog", label: "Blog" },
   { key: "press", label: "Press" },
+  { key: "casestudy", label: "Case Studies" },
 ];
 
 const PRESS_CARDS = [
