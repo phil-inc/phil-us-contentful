@@ -8,6 +8,13 @@ export interface ResourceItem {
 
 export const RESOURCES_DATA: ResourceItem[] = [
   {
+    title: "Protecting Gross-to-Net Performance Through Single-Channel Ecosystems",
+    topics: ["access", "commercial"],
+    type: "press",
+    url: "https://www.drugchannels.net/2026/05/protecting-gross-to-net-performance.html",
+    buttonLabel: "Read",
+  },
+  {
     title: "Building Direct-to-Patient Programs that Exceed Today's Patient Expectations",
     topics: ["direct", "patient"],
     type: "report",

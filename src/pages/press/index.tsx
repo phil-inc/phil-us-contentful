@@ -20,6 +20,12 @@ interface PressItem {
 
 const PRESS_DATA: PressItem[] = [
   {
+    title: "Protecting Gross-to-Net Performance Through Single-Channel Ecosystems",
+    outlet: "Drug Channels",
+    type: "Thought Leadership",
+    url: "https://www.drugchannels.net/2026/05/protecting-gross-to-net-performance.html",
+  },
+  {
     title: "PHIL Invests in State-of-the-Art Cash Dispense Capabilities, Expanding Direct-to-Patient Fulfillment for Pharma",
     outlet: "Press Release",
     type: "Release",
