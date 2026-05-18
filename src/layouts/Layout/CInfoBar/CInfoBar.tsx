@@ -1,156 +1,77 @@
 import React, { useEffect, useState } from "react";
-import { graphql, StaticQuery } from "gatsby";
+import { Anchor, Button, Container } from "@mantine/core";
 
-import { TopInfoBarNode } from "types/infoBar";
-import { FALSE_STRING, SHOW_INFOBAR } from "constants/global.constant";
+import { FALSE_STRING, SHOW_INFOBAR, DOM_IDS } from "constants/global.constant";
+import ExportIcon from "components/icons/Export.icon";
+import CrossIcon from "components/icons/Cross.icon";
 
-import InfoBar from "components/common/InfoBar/InfoBar";
+import * as classes from "components/common/InfoBar/InfoBar.module.css";
 
-type AllContentfulTopInfoBarQuery = {
-  currentLocationSlug: string;
-  allContentfulTopInfoBar: {
-    nodes: TopInfoBarNode[];
-  };
-};
-
-const TopInfoBar: React.FC<AllContentfulTopInfoBarQuery> = ({
-  currentLocationSlug,
-  allContentfulTopInfoBar,
-}) => {
-  const [topAnnoucement] = allContentfulTopInfoBar?.nodes || [];
-  const [canShowInfoBar, setCanShowInforBar] = useState<boolean>(false);
-
-  useEffect(() => {
-    setCanShowInforBar(
-      Boolean(topAnnoucement?.reference) &&
-        sessionStorage.getItem(SHOW_INFOBAR) !== FALSE_STRING,
-    );
-  }, [topAnnoucement?.reference]);
-  
-  const displayableSlug =
-    topAnnoucement?.pagesToShowInfoBar?.map((page) => page?.slug) ?? [];
-  const isCurrentLocationHaveDiplayableSlug =
-    displayableSlug.includes(currentLocationSlug);
-
-  if (
-    allContentfulTopInfoBar?.nodes?.length < 1 ||
-    !topAnnoucement?.reference?.canDisplay ||
-    !isCurrentLocationHaveDiplayableSlug ||
-    !canShowInfoBar
-  ) {
-    return <></>;
-  }
-
-  return (
-    <>
-      <InfoBar
-        canShowInfoBar={canShowInfoBar}
-        setCanShowInforBar={setCanShowInforBar}
-        infoBarReference={topAnnoucement?.reference}
-      />
-    </>
-  );
-};
-
-export const query = graphql`
-  {
-    allContentfulTopInfoBar(filter: { node_locale: { eq: "en-US" } }) {
-      nodes {
-        id
-        header
-        reference {
-          __typename
-          id
-          ... on ContentfulAnnouncement {
-            id
-            header
-            body {
-              raw
-            }
-            canDisplay
-            hyperlink {
-              ... on ContentfulLink {
-                id
-                linkLabel
-                internalContent {
-                  ... on ContentfulPage {
-                    slug
-                    id
-                    title
-                    sys {
-                      contentType {
-                        sys {
-                          type
-                          id
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            stylingOptions {
-              id
-              background
-              name
-              background
-            }
-            buttonReference {
-              __typename
-              id
-              ... on ContentfulButton {
-                id
-                contentful_id
-                buttonText
-                buttonStyle
-                link {
-                  linkLabel
-                  name
-                  externalUrl
-                  internalContent {
-                    ... on ContentfulPage {
-                      id
-                      title
-                      slug
-                      sys {
-                        contentType {
-                          sys {
-                            type
-                            id
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-                v2flag
-              }
-            }
-          }
-        }
-        pagesToShowInfoBar {
-          __typename
-          id
-          ... on ContentfulPage {
-            id
-            title
-            slug
-          }
-        }
-      }
-    }
-  }
-`;
+const HELP_CENTER_URL = "https://philhelp.zendesk.com/hc/en-us/p/faq";
+const BG_COLOR = "#EBF7F5";
+const ALLOWED_SLUGS = ["patients", "faqs"];
 
 const CInfoBar: React.FC<{ currentLocationSlug: string }> = ({
   currentLocationSlug,
-}) => (
-  <StaticQuery
-    query={query}
-    render={(props) => (
-      <TopInfoBar currentLocationSlug={currentLocationSlug} {...props} />
-    )}
-  />
-);
+}) => {
+  const [canShow, setCanShow] = useState(false);
+
+  useEffect(() => {
+    setCanShow(sessionStorage.getItem(SHOW_INFOBAR) !== FALSE_STRING);
+  }, []);
+
+  if (!ALLOWED_SLUGS.includes(currentLocationSlug)) {
+    return <></>;
+  }
+
+  if (!canShow) {
+    return <></>;
+  }
+
+  const handleClose = () => {
+    setCanShow(false);
+    sessionStorage.setItem(SHOW_INFOBAR, FALSE_STRING);
+  };
+
+  return (
+    <section
+      style={{ background: BG_COLOR }}
+      className={classes.infoBar}
+      id={DOM_IDS.TOP_INFO_BAR}
+    >
+      <Container className={classes.msg} size="xl">
+        <div className={classes.content}>
+          <div className={classes.left}>
+            Have a question about your PHILRx prescription? Visit our patient
+            FAQ page for more information
+          </div>
+          <div className={classes.right}>
+            <Anchor
+              className={classes.internalLink}
+              href={HELP_CENTER_URL}
+              target="_blank"
+            >
+              <Button
+                className={classes.btn}
+                variant="philOutlineSecondary"
+                radius="md"
+              >
+                <div className={classes.btnText}>
+                  <span className={classes.text}>Visit Help Center</span>
+                  <div className={classes.exportIcon}>
+                    <ExportIcon />
+                  </div>
+                </div>
+              </Button>
+            </Anchor>
+          </div>
+        </div>
+        <div className={classes.crossIcon} onClick={handleClose}>
+          <CrossIcon />
+        </div>
+      </Container>
+    </section>
+  );
+};
 
 export default CInfoBar;

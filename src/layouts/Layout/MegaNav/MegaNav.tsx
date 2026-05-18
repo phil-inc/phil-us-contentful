@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "gatsby";
+import { useLocation } from "@reach/router";
 import {
   PillBottle,
   UserRound,
@@ -317,7 +318,14 @@ type MegaNavProps = {
   headerTargetBlank?: boolean;
 };
 
+const HIDE_PROMO_SLUGS = ["patients", "faqs"];
+const HIDE_BOOK_DEMO_SLUGS = ["patients", "hcp-research"];
+
 const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = false }) => {
+  const location = useLocation();
+  const currentSlug = location.pathname.replace(/^\/|\/$/g, "");
+  const showPromoBanner = !HIDE_PROMO_SLUGS.includes(currentSlug);
+  const showBookDemo = !HIDE_BOOK_DEMO_SLUGS.includes(currentSlug);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
@@ -377,15 +385,17 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
     <>
       <header className={classes.navShell} ref={shellRef}>
         {/* Promo Banner */}
-        <div className={classes.promoBanner}>
-          <div className={`xl-container ${classes.promoInner}`}>
-            <span className={classes.promoText}>{PROMO_BANNER.text}{" "}</span>
-            <Link className={classes.promoLink} to={PROMO_BANNER.href}>
-              {PROMO_BANNER.linkText}
-              <ArrowIcon />
-            </Link>
+        {showPromoBanner && (
+          <div className={classes.promoBanner}>
+            <div className={`xl-container ${classes.promoInner}`}>
+              <span className={classes.promoText}>{PROMO_BANNER.text}{" "}</span>
+              <Link className={classes.promoLink} to={PROMO_BANNER.href}>
+                {PROMO_BANNER.linkText}
+                <ArrowIcon />
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Nav Bar */}
         <div className={`xl-container ${classes.navBar}`}>
@@ -421,9 +431,11 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
             <a href="https://my.phil.us/" target="_blank" rel="noopener noreferrer" className={cx(classes.btnNav, classes.btnNavLogin)}>
               Patient Login
             </a>
-            <Link to="/demo/" className={cx(classes.btnNav, classes.btnNavDemo)}>
-              Book Demo
-            </Link>
+            {showBookDemo && (
+              <Link to="/demo/" className={cx(classes.btnNav, classes.btnNavDemo)}>
+                Book Demo
+              </Link>
+            )}
           </div>
 
           <button
