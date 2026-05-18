@@ -1,4 +1,10 @@
 .infoBar {
+  position: sticky;
+  top: 84px;
+
+  @media (max-width: $phil-breakpoint-lg) {
+    top: 64px;
+  }
   padding: 12px 0;
   z-index: var(--info-z-index, 99);
 

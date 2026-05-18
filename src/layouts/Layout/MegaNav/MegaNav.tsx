@@ -250,9 +250,10 @@ type MobileDrawerProps = {
   accordion: string | null;
   setAccordion: (key: string | null) => void;
   headerTargetBlank: boolean;
+  showBookDemo: boolean;
 };
 
-const MobileDrawer: React.FC<MobileDrawerProps> = ({ onClose, accordion, setAccordion, headerTargetBlank }) => (
+const MobileDrawer: React.FC<MobileDrawerProps> = ({ onClose, accordion, setAccordion, headerTargetBlank, showBookDemo }) => (
   <div className={classes.mobileDrawer}>
     <div className={classes.mobileHeader}>
       {headerTargetBlank ? (
@@ -303,9 +304,11 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({ onClose, accordion, setAcco
         <a href="https://my.phil.us/" target="_blank" rel="noopener noreferrer" className={cx(classes.btnNav, classes.btnNavLogin)}>
           Patient Login
         </a>
-        <Link to="/demo/" className={cx(classes.btnNav, classes.btnNavDemo)} onClick={onClose}>
-          Book Demo
-        </Link>
+        {showBookDemo && (
+          <Link to="/demo/" className={cx(classes.btnNav, classes.btnNavDemo)} onClick={onClose}>
+            Book Demo
+          </Link>
+        )}
       </div>
     </div>
   </div>
@@ -319,7 +322,7 @@ type MegaNavProps = {
 };
 
 const HIDE_PROMO_SLUGS = ["patients", "faqs"];
-const HIDE_BOOK_DEMO_SLUGS = ["patients", "hcp-research"];
+const HIDE_BOOK_DEMO_SLUGS = ["patients", "providers"];
 
 const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = false }) => {
   const location = useLocation();
@@ -463,6 +466,7 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
           accordion={mobileAccordion}
           setAccordion={setMobileAccordion}
           headerTargetBlank={headerTargetBlank}
+          showBookDemo={showBookDemo}
         />
       )}
     </>
