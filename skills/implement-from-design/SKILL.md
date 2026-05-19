@@ -101,17 +101,6 @@ git checkout <branch> && git pull origin <branch>
 7. **Log every deviation** — any difference from the design HTML goes in SPEC.md.
 8. **Design for AI maintainability** — clear structure, obvious data boundaries, no clever abstractions. Future updates will be made by AI agents or devs with AI.
 
-### Layout width
-
-Use `.xl-container` (defined in `src/assets/css/index.css`) for any wrapper that must align with page content width.
-
-```jsx
-<div className="xl-container">…</div>
-// or combined: <div className={`xl-container ${classes.foo}`}>
-```
-
-Applied to: MegaNav.
-
 ### What to look at for patterns
 
 Don't follow frozen templates. Look at existing implementations:

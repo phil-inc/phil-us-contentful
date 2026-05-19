@@ -36,7 +36,6 @@ const NAV_COLUMNS: NavColumn[] = [
       { label: "Overview", href: "/solution/" },
       { label: "Digital Hub", href: "/solution/core/" },
       { label: "Direct-to-Patient", href: "/solution/direct/" },
-      { label: "Approach & Impact", href: "/solution/" },
     ],
   },
   {
@@ -44,8 +43,8 @@ const NAV_COLUMNS: NavColumn[] = [
     links: [
       { label: "Customer Stories", href: "/insights/case-studies/" },
       { label: "GTN Calculator", href: "/gtn/" },
-      { label: "Resource Hub", href: "/insights/resources/" },
-      { label: "Press Library", href: "/insights/press-releases/" },
+      { label: "Resource Hub", href: "/resources/" },
+      { label: "Press Library", href: "/press/" },
     ],
   },
   {
