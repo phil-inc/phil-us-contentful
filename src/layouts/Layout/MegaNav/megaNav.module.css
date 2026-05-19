@@ -11,7 +11,6 @@
 }
 
 .promoInner {
-  max-width: 1440px;
   margin: 0 auto;
   padding: 10px 32px;
   font-family: "Lato", Arial, sans-serif;
@@ -59,7 +58,6 @@
 }
 
 .navBar {
-  max-width: 1440px;
   margin: 0 auto;
   padding: 0 32px;
   height: 84px;
