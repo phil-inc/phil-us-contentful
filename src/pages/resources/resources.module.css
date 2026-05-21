@@ -5,7 +5,7 @@
 }
 
 .heroInner {
-  max-width: 1280px;
+  max-width: 1256px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.4fr 1fr;
@@ -138,7 +138,7 @@
 
 /* Featured */
 .featured {
-  max-width: 1280px;
+  max-width: 1256px;
   margin: 0 auto;
   padding: 8px 60px 48px;
 }
@@ -250,7 +250,7 @@
 
 /* Explore Topics */
 .topics {
-  max-width: 1280px;
+  max-width: 1256px;
   margin: 0 auto;
   padding: 16px 60px 56px;
 }
@@ -347,7 +347,7 @@
 
 /* Filter bar */
 .filterBar {
-  max-width: 1280px;
+  max-width: 1256px;
   margin: 0 auto;
   padding: 24px 60px 56px;
   display: grid;
@@ -407,7 +407,7 @@
 
 /* Results banner */
 .resultsBanner {
-  max-width: 1280px;
+  max-width: 1256px;
   margin: 0 auto;
   padding: 0 60px 24px;
   display: none;
@@ -482,7 +482,7 @@
 
 /* Card grid */
 .section {
-  max-width: 1280px;
+  max-width: 1256px;
   margin: 0 auto;
   padding: 8px 60px 24px;
 }
@@ -610,7 +610,7 @@
 
 /* Show more row */
 .showMoreRow {
-  max-width: 1280px;
+  max-width: 1256px;
   margin: 0 auto;
   padding: 16px 60px 96px;
   display: flex;
@@ -666,7 +666,7 @@
 }
 
 .pressInner {
-  max-width: 1280px;
+  max-width: 1256px;
   margin: 0 auto;
   padding: 0 60px;
   position: relative;
@@ -833,6 +833,20 @@
 .pressCta svg {
   width: 16px;
   height: 16px;
+}
+
+/* Wide screens */
+@media (min-width: 1680px) {
+  .heroInner,
+  .featured,
+  .topics,
+  .filterBar,
+  .resultsBanner,
+  .section,
+  .showMoreRow,
+  .pressInner {
+    max-width: 1536px;
+  }
 }
 
 /* Responsive */

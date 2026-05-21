@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import type { HeadFC } from "gatsby";
+import React, { useMemo } from "react";
+import type { HeadFC, PageProps } from "gatsby";
+import { navigate } from "gatsby";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -116,8 +117,16 @@ const ArrowIcon = () => (
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-const PressPage: React.FC = () => {
-  const [page, setPage] = useState(1);
+const PressPage: React.FC<PageProps> = ({ location }) => {
+  const page = useMemo(() => {
+    const p = new URLSearchParams(location.search).get("page");
+    return p ? Math.max(1, parseInt(p, 10)) : 1;
+  }, [location.search]);
+
+  const handlePageChange = (p: number) => {
+    navigate(`/press/?page=${p}`);
+  };
+
   const paged = PRESS_DATA.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
   return (
@@ -216,7 +225,7 @@ const PressPage: React.FC = () => {
                 </a>
               ))}
             </div>
-            <Pagination currentPage={page} totalPages={TOTAL_PAGES} onPageChange={setPage} />
+            <Pagination currentPage={page} totalPages={TOTAL_PAGES} onPageChange={handlePageChange} />
           </div>
         </section>
 

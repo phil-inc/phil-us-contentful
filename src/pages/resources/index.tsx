@@ -1,12 +1,11 @@
 import React, { useState, useMemo, useCallback, useRef } from "react";
-import type { HeadFC } from "gatsby";
-import { Link } from "gatsby";
+import type { HeadFC, PageProps } from "gatsby";
+import { Link, navigate } from "gatsby";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import DemoCta from "components/common/DemoCta/DemoCta";
 import Pagination from "components/common/Pagination/Pagination";
-
 import { RESOURCES_DATA, ResourceItem } from "./_data";
 import * as classes from "./resources.module.css";
 
@@ -133,12 +132,16 @@ function CardLink({ url, className, children }: { url: string; className: string
   return <a href={url} className={className} target="_blank" rel="noopener noreferrer">{children}</a>;
 }
 
-const ResourcesPage: React.FC = () => {
+const ResourcesPage: React.FC<PageProps> = ({ location }) => {
   const [topic, setTopic] = useState("");
   const [type, setType] = useState("");
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  const page = useMemo(() => {
+    const p = new URLSearchParams(location.search).get("page");
+    return p ? Math.max(1, parseInt(p, 10)) : 1;
+  }, [location.search]);
 
   const filtered = useMemo(() => {
     return RESOURCES_DATA.filter((item) => {
@@ -154,11 +157,18 @@ const ResourcesPage: React.FC = () => {
   const currentPage = Math.min(page, totalPages);
   const paged = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
 
-  const handleFilterChange = useCallback(() => setPage(1), []);
-  const setTopicFilter = (v: string) => { setTopic(v); handleFilterChange(); setTimeout(() => gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0); };
-  const setTypeFilter = (v: string) => { setType(v); handleFilterChange(); };
-  const setSearchFilter = (v: string) => { setSearch(v); handleFilterChange(); };
-  const clearFilters = () => { setTopic(""); setType(""); setSearch(""); setPage(1); };
+  const handlePageChange = useCallback((p: number) => {
+    navigate(`/resources/?page=${p}`);
+  }, []);
+
+  const resetPage = useCallback(() => {
+    navigate("/resources/", { replace: true });
+  }, []);
+
+  const setTopicFilter = (v: string) => { setTopic(v); resetPage(); setTimeout(() => gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0); };
+  const setTypeFilter = (v: string) => { setType(v); resetPage(); };
+  const setSearchFilter = (v: string) => { setSearch(v); resetPage(); };
+  const clearFilters = () => { setTopic(""); setType(""); setSearch(""); resetPage(); };
 
   const filterLabel = [
     topic && TOPICS.find((t) => t.key === topic)?.label,
@@ -303,7 +313,7 @@ const ResourcesPage: React.FC = () => {
           <div className={classes.countText}>
             Showing <em className={classes.countTextBold}>{Math.min((currentPage - 1) * PER_PAGE + 1, filtered.length)}–{Math.min(currentPage * PER_PAGE, filtered.length)}</em> of <em className={classes.countTextBold}>{filtered.length}</em> resources
           </div>
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
 
         {/* Press section */}
