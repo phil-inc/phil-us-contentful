@@ -102,7 +102,7 @@ export const RESOURCES_DATA: ResourceItem[] = [
     title: "Transforming the Patient Experience with a Strong Direct-to-Consumer Program",
     topics: ["direct", "patient"],
     type: "blog",
-    url: "https://phil.us/transforming-the-patient-experience-with-a-strong-direct-to-consumer-program/",
+    url: "/transforming-the-patient-experience-with-a-strong-direct-to-consumer-program/",
     buttonLabel: "Read",
   },
   {

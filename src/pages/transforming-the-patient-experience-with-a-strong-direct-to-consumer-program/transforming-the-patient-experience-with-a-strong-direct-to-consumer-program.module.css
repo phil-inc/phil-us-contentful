@@ -1,0 +1,135 @@
+.title {
+  font-size: 38px;
+  margin-bottom: 56px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-size: 60px;
+    margin-bottom: 68px;
+  }
+}
+
+.paragraph {
+  font-size: 18px;
+  font-family: Lato, sans-serif;
+  margin-bottom: 24px;
+
+  + .unorderedList,
+  + .orderedList {
+    padding-top: 0px;
+  }
+}
+
+.orderedList {
+  padding-top: 16px;
+  padding-bottom: 32px;
+
+  li {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}
+
+.unorderedList {
+  padding-left: 32px;
+  padding-top: 12px;
+  padding-bottom: 16px;
+
+  li {
+    margin-top: 0px;
+    margin-bottom: 0px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+li {
+  .paragraph {
+    padding-bottom: 0;
+  }
+}
+
+.anchor {
+  color: #00827e;
+  font-size: 18px;
+}
+
+.wrapper {
+  margin-top: 40px;
+  margin-bottom: 64px;
+}
+
+.listItem {
+  overflow: hidden;
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.listItem::marker {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.floatingImage {
+  float: none;
+  display: flex;
+  place-content: center;
+  padding: 30px 40px;
+  height: 300px;
+  width: 300px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    float: right;
+  }
+}
+
+.heading {
+  padding-top: 20px;
+  padding-bottom: 16px;
+
+  &3 {
+    font-size: 20px;
+    padding-top: 28px;
+    padding-bottom: 20px;
+  }
+}
+
+.socialShareText {
+  font-size: 14px;
+  color: var(--mantine-color-dimmed);
+}
+
+.socialButton {
+  background-color: var(--mantine-color-philBranding-filled);
+  color: var(--mantine-color-white);
+  border-radius: var(--mantine-radius-xl);
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 150ms ease;
+
+  &:hover {
+    background-color: var(--mantine-color-philBranding-filled-hover);
+  }
+
+  svg {
+    fill: currentColor;
+  }
+}
+
+.bannerContainer {
+  background: #f4f4f4;
+  min-height: 100%;
+  padding-block: 7.5rem;
+}
+
+.bannerCard {
+  border-radius: 0;
+}
+
+.bannerButton {
+  margin-top: var(--mantine-spacing-sm);
+}
