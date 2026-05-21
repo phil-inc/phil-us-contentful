@@ -79,7 +79,7 @@ const LinkIcon = () => (
 const BlogPage: React.FC = () => {
   return (
     <Layout>
-      <Container size="sm" mt={40} mb={64} className={classes.wrapper}>
+      <Container size="xl" className={classes.wrapper}>
         <Title order={1} className={classes.title}>
           {TITLE}
         </Title>

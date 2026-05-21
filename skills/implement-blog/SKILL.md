@@ -140,6 +140,28 @@ import * as classes from "./<slug>.module.css";
 - Any other component from existing codebase — these may be outdated or Contentful-dependent
 
 
+### Layout structure
+
+The outer wrapper **must** use `Container size="xl"` — this matches the existing blog template (`src/templates/blog.tsx`) and the live site's page width. Only the floating image uses `Container size="sm"`.
+
+```tsx
+<Layout>
+  <Container size="xl" className={classes.wrapper}>   {/* ← xl, NOT sm */}
+    <Title order={1} className={classes.title}>{TITLE}</Title>
+    <Container size="sm" className={classes.floatingImage}>  {/* ← sm for image only */}
+      <img src="..." />
+    </Container>
+    <Box mb={42}>
+      {/* article body */}
+    </Box>
+    {/* social share */}
+  </Container>
+  {/* bottom banner — outside the xl container */}
+</Layout>
+```
+
+**Common mistake:** using `size="sm"` for the outer wrapper shrinks the entire page width. Always verify against `src/templates/blog.tsx` line ~391.
+
 ### Principles
 
 1. **HTML is the source of truth** — extract every word, every link, every icon.
