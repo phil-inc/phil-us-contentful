@@ -33,7 +33,7 @@ const DTCBlogPage: React.FC = () => (
     <Container size="xl" className={classes.wrapper}>
       <Title order={1} className={classes.title}>
         Transforming the Patient Experience with a Strong Direct-to-Consumer
-        Program
+        Program (Without Contentful)
       </Title>
 
       <Container size="sm" className={classes.floatingImage}>
