@@ -3,6 +3,7 @@ import type { HeadFC } from "gatsby";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
+import { getOgImage } from "utils/getOgImage";
 
 import {
   PATIENT_LOGIN_URL,
@@ -194,14 +195,16 @@ const HeroSection = () => {
 const TrustpilotStrip = () => (
   <section className={classes.trust}>
     <div className="xl-container">
-      <Eyebrow text="Trusted by Patients" />
-      <h2 className={classes.trustTitle}>Hear from Happy PHILRx Patients</h2>
+      <div className={classes.trustHead}>
+        <Eyebrow text="Trusted by Patients" />
+        <h2 className={classes.trustTitle}>Hear from Happy PHILRx Patients</h2>
+      </div>
       <div
         className="trustpilot-widget"
         data-locale="en-US"
         data-template-id="53aa8912dec7e10d38f59f36"
         data-businessunit-id="60e5837e95cb800001e58b14"
-        data-style-height="240px"
+        data-style-height="140px"
         data-style-width="100%"
         data-token="2756914d-336b-4583-b3f4-75c0b1f9734f"
         data-stars="4,5"
@@ -279,6 +282,7 @@ const TestimonialsCarousel = () => {
   const [page, setPage] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const hoverRef = useRef(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const totalPages = Math.ceil(TESTIMONIALS.length / perPage);
 
@@ -326,6 +330,7 @@ const TestimonialsCarousel = () => {
   }, [start, stop]);
 
   const dotCount = Math.ceil(TESTIMONIALS.length / perPage);
+  const cardGap = perPage === 1 ? 20 : 28;
 
   return (
     <section className={classes.testimonials__section}>
@@ -335,13 +340,14 @@ const TestimonialsCarousel = () => {
         </div>
 
         <div
+          ref={carouselRef}
           className={classes.carousel}
           onMouseEnter={() => { hoverRef.current = true; }}
-          onMouseLeave={() => { hoverRef.current = false; }}
+          onMouseLeave={() => { hoverRef.current = false; start(); }}
         >
           <div
             className={classes.carouselTrack}
-            style={{ transform: `translateX(${-(page * 100)}%)` }}
+            style={{ transform: `translateX(${-(page * ((carouselRef.current?.offsetWidth ?? 0) + cardGap))}px)` }}
           >
             {TESTIMONIALS.map((t) => (
               <article key={t.name} className={classes.testimonialCard}>
@@ -527,12 +533,38 @@ const PatientsPage: React.FC = () => {
 
 export default PatientsPage;
 
+const PATIENTS_TITLE = "Medication Access Services for Patients — PHIL";
+const PATIENTS_DESC =
+  "At Phil, we are on a mission to help people get their prescriptions quickly, easily and affordably. Our easy mobile experience helps get your meds covered by insurance and delivered to your door while providing real-time updates and refill reminders.";
+const PATIENTS_URL = "https://phil.us/patients";
+const PATIENTS_OG_IMAGE = getOgImage(null);
+const PATIENTS_SCHEMA = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": PATIENTS_URL,
+  url: PATIENTS_URL,
+  name: PATIENTS_TITLE,
+  description: PATIENTS_DESC,
+  image: PATIENTS_OG_IMAGE,
+  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
+});
+
 export const Head: HeadFC = () => (
   <>
-    <title>Medication Access Services for Patients — PHIL</title>
-    <meta
-      name="description"
-      content="Get your prescriptions quickly and affordably with PHILRx. Free home delivery, real-time updates, and easy refills."
-    />
+    <title>{PATIENTS_TITLE}</title>
+    <meta name="description" content={PATIENTS_DESC} />
+    <link rel="canonical" href={PATIENTS_URL} />
+    <meta property="og:title" content={PATIENTS_TITLE} />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={PATIENTS_DESC} />
+    <meta property="og:image" content={PATIENTS_OG_IMAGE} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content={PATIENTS_URL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={PATIENTS_TITLE} />
+    <meta name="twitter:description" content={PATIENTS_DESC} />
+    <meta name="twitter:image" content={PATIENTS_OG_IMAGE} />
+    <script type="application/ld+json">{PATIENTS_SCHEMA}</script>
   </>
 );
