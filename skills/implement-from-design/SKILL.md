@@ -104,10 +104,17 @@ git checkout <branch> && git pull origin <branch>
 ### What to look at for patterns
 
 Don't follow frozen templates. Look at existing implementations:
-- `src/pages/gtn/` — recent reference for a code-driven landing page
+- `src/pages/gtn/`, `src/pages/press/`, `src/pages/resources/` — canonical flat page structure
 - `src/components/common/` — component structure conventions
 - `src/layouts/Layout/` — shared layout, header, footer
 - `src/layouts/Layout/theme.ts` — Mantine theme config
+
+**Layout width** — always `xl-container` for content-width wrappers, never a custom `.wrap`:
+```jsx
+<div className="xl-container">…</div>
+<div className={`xl-container ${classes.heroInner}`}>…</div>
+Do not change anything else when applying `xl-container` — preserve all existing aspect ratios, spacing, and visual design exactly as-is.
+```
 
 ## Phase 5: Verify and Ship
 
