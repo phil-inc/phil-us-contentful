@@ -537,8 +537,6 @@ const FooterCta = () => (
         <div className={classes.footerCtaButtons}>
           <a
             href={CONTACT_PAGE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
             className={`${classes.btn} ${classes.btnFooterLight}`}
           >
             Contact PHILRx Support
