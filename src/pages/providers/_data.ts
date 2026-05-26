@@ -3,7 +3,7 @@ export const CONTACT_PHONE_HREF = "tel:8559770975";
 export const CONTACT_EMAIL = "mdsupport@phil.us";
 export const CONTACT_EMAIL_HREF = "mailto:mdsupport@phil.us";
 export const HELP_CENTER_URL = "https://philhelp.zendesk.com/hc/en-us/p/faq";
-export const CONTACT_PAGE_URL = "https://phil.us/contact/";
+export const CONTACT_PAGE_URL = "/contact";
 
 export const STEPS = [
   {
