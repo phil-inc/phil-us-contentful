@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import { navigate } from "gatsby";
+import { getOgImage } from "utils/getOgImage";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -241,12 +242,38 @@ const PressPage: React.FC<PageProps> = ({ location }) => {
 
 export default PressPage;
 
-export const Head: HeadFC = () => (
-  <>
-    <title>Press | PHIL</title>
-    <meta
-      name="description"
-      content="Read PHIL's latest news, announcements, and thought leadership on pharmacy innovation and direct-to-patient programs."
-    />
-  </>
-);
+const PRESS_TITLE = "Press | PHIL — News, Announcements & Thought Leadership";
+const PRESS_DESC = "Read PHIL's latest news, announcements, and thought leadership on pharmacy innovation and direct-to-patient programs.";
+const PRESS_OG_IMAGE = getOgImage(null);
+
+export const Head: HeadFC = ({ location }) => {
+  const url = `https://phil.us${location.pathname}`;
+  const schema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": url, url,
+    name: PRESS_TITLE,
+    description: PRESS_DESC,
+    image: PRESS_OG_IMAGE,
+    publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
+  });
+  return (
+    <>
+      <title>{PRESS_TITLE}</title>
+      <meta name="description" content={PRESS_DESC} />
+      <link rel="canonical" href={url} />
+      <meta property="og:title" content={PRESS_TITLE} />
+      <meta property="og:type" content="website" />
+      <meta property="og:description" content={PRESS_DESC} />
+      <meta property="og:image" content={PRESS_OG_IMAGE} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:url" content={url} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={PRESS_TITLE} />
+      <meta name="twitter:description" content={PRESS_DESC} />
+      <meta name="twitter:image" content={PRESS_OG_IMAGE} />
+      <script type="application/ld+json">{schema}</script>
+    </>
+  );
+};

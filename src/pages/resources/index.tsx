@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback, useRef } from "react";
 import type { HeadFC, PageProps } from "gatsby";
 import { Link, navigate } from "gatsby";
+import { getOgImage } from "utils/getOgImage";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -352,9 +353,38 @@ const ResourcesPage: React.FC<PageProps> = ({ location }) => {
 
 export default ResourcesPage;
 
-export const Head: HeadFC = () => (
-  <>
-    <title>Resources | PHIL</title>
-    <meta name="description" content="Explore PHIL's library of reports, webinars, blogs, and press coverage on patient access, direct-to-patient programs, and pharmaceutical commercialization." />
-  </>
-);
+const RESOURCES_TITLE = "Resources | PHIL — Patient Access & Pharma Insights";
+const RESOURCES_DESC = "Explore PHIL's library of reports, webinars, blogs, and press coverage on patient access, direct-to-patient programs, and pharmaceutical commercialization.";
+const RESOURCES_OG_IMAGE = getOgImage(null);
+
+export const Head: HeadFC = ({ location }) => {
+  const url = `https://phil.us${location.pathname}`;
+  const schema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": url, url,
+    name: RESOURCES_TITLE,
+    description: RESOURCES_DESC,
+    image: RESOURCES_OG_IMAGE,
+    publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
+  });
+  return (
+    <>
+      <title>{RESOURCES_TITLE}</title>
+      <meta name="description" content={RESOURCES_DESC} />
+      <link rel="canonical" href={url} />
+      <meta property="og:title" content={RESOURCES_TITLE} />
+      <meta property="og:type" content="website" />
+      <meta property="og:description" content={RESOURCES_DESC} />
+      <meta property="og:image" content={RESOURCES_OG_IMAGE} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:url" content={url} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={RESOURCES_TITLE} />
+      <meta name="twitter:description" content={RESOURCES_DESC} />
+      <meta name="twitter:image" content={RESOURCES_OG_IMAGE} />
+      <script type="application/ld+json">{schema}</script>
+    </>
+  );
+};
