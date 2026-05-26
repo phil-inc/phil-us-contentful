@@ -37,7 +37,7 @@ For each question, provide your recommended answer. If a question can be answere
 
 Seed topics (starting points, not the full scope — keep going until 100% clarity):
 
-- **Scope** — is this a new page, an update to an existing page, or a shared component change (navbar, footer)?
+- **Scope** — is this a new page, an update to an existing page, or a shared component change (navbar, footer)? If new page, what should the page title and meta description say?
 - **Route** — what URL? Check for conflicts with existing Contentful slugs and file-based pages.
 - **Layout** — use shared Layout (header/footer) or standalone?
 - **Forms** — does the design have a form? HubSpot embed or custom? Portal/form IDs?
@@ -100,6 +100,7 @@ git checkout <branch> && git pull origin <branch>
 6. **Minimal blast radius** — don't change existing routes, don't touch Contentful, don't modify shared components unless explicitly approved during the grill.
 7. **Log every deviation** — any difference from the design HTML goes in SPEC.md.
 8. **Design for AI maintainability** — clear structure, obvious data boundaries, no clever abstractions. Future updates will be made by AI agents or devs with AI.
+9. **SEO** — copy `Head` export from `src/pages/providers/index.tsx` as template. Update `TITLE`, `DESC`, `PROVIDERS_*` constants only. Audit: one `<h1>`, no skipped heading levels, title 50–60 chars, description 150–160 chars.
 
 ### What to look at for patterns
 

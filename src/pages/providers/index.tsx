@@ -607,6 +607,8 @@ const PROVIDERS_SCHEMA = JSON.stringify({
   url: PROVIDERS_URL,
   name: PROVIDERS_TITLE,
   description: PROVIDERS_DESC,
+  image: PROVIDERS_OG_IMAGE,
+  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
