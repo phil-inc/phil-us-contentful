@@ -404,7 +404,7 @@ const FaqSection = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      const probe = 140;
+      const probe = 132;
       let current = FAQ_CATEGORIES[0].id;
       for (const cat of FAQ_CATEGORIES) {
         const el = anchorsRef.current.get(cat.id);
@@ -422,7 +422,7 @@ const FaqSection = () => {
   const scrollToCategory = (id: string) => {
     const el = anchorsRef.current.get(id);
     if (!el) return;
-    const y = el.getBoundingClientRect().top + window.scrollY - 100;
+    const y = el.getBoundingClientRect().top + window.scrollY - 130;
     window.scrollTo({ top: y, behavior: "smooth" });
     setActiveCat(id);
   };
