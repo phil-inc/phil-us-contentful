@@ -649,50 +649,80 @@
    ========================================================================== */
 .footerCta {
   position: relative;
-  background: linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%);
+  background: linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%);
   color: #fff;
-  padding: 78px 0;
+  padding: 80px 60px 96px;
+  min-height: 474px;
+  display: flex;
+  align-items: center;
   overflow: hidden;
-  isolation: isolate;
+}
+
+.footerCta::before {
+  content: "";
+  position: absolute;
+  top: -160px;
+  right: -100px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.footerCta::after {
+  content: "";
+  position: absolute;
+  bottom: -200px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(109, 223, 193, 0.25), transparent 70%);
+  pointer-events: none;
 }
 
 .footerCtaInner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.4fr auto;
+  gap: 48px;
   align-items: center;
-  justify-content: space-between;
-  gap: 40px;
+  position: relative;
+  z-index: 1;
 }
 
 .footerCtaTitle {
-  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-family: Raleway, sans-serif;
   font-weight: 700;
-  font-size: clamp(28px, 3.0vw, 40px);
-  line-height: 1.15;
-  letter-spacing: -0.012em;
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   color: #fff;
   margin: 0;
-  flex: 1 1 auto;
-  min-width: 0;
+  max-width: 720px;
+  text-wrap: balance;
 }
 
 .footerCtaButtons {
   display: flex;
   gap: 14px;
+  align-items: center;
   flex-wrap: wrap;
-  flex-shrink: 0;
+  justify-self: end;
+  margin-right: 64px;
 }
 
 .btnFooterLight {
   background: #fff;
-  color: #00827E;
+  color: #00827e;
   letter-spacing: 0.01em;
-  box-shadow: 0 8px 20px rgba(10,50,50,0.18);
+  box-shadow: 0 8px 20px rgba(10, 50, 50, 0.18);
 }
 
 .btnFooterOutline {
   background: transparent;
   color: #fff;
-  border: 1.5px solid rgba(255,255,255,0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
   letter-spacing: 0.01em;
 }
 
@@ -706,14 +736,15 @@
   opacity: 0;
   transform: translateX(-6px);
   transition:
-    width       0.2s cubic-bezier(0.2,0,0,1),
-    opacity     0.2s cubic-bezier(0.2,0,0,1),
-    margin-left 0.2s cubic-bezier(0.2,0,0,1),
-    transform   0.2s cubic-bezier(0.2,0,0,1);
+    width       0.2s cubic-bezier(0.2, 0, 0, 1),
+    opacity     0.2s cubic-bezier(0.2, 0, 0, 1),
+    margin-left 0.2s cubic-bezier(0.2, 0, 0, 1),
+    transform   0.2s cubic-bezier(0.2, 0, 0, 1);
   font-weight: 700;
   font-size: 18px;
   line-height: 1;
 }
+
 .footerCtaButtons .btn:hover::after {
   width: 1em;
   opacity: 1;
@@ -725,16 +756,19 @@
 .footerCtaButtons .btnFooterLight:hover,
 .footerCtaButtons .btnFooterOutline:hover {
   background: #fff;
-  color: #00827E;
+  color: #00827e;
   border-color: #fff;
-  box-shadow: 0 10px 24px rgba(10,50,50,0.18);
+  box-shadow: 0 10px 24px rgba(10, 50, 50, 0.18);
 }
 
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
-@media (max-width: 1100px) {
-  .footerCtaInner { flex-wrap: wrap; }
+@media (max-width: $phil-breakpoint-lg) {
+  .footerCta { padding: 64px 32px 72px; min-height: auto; }
+  .footerCtaInner { grid-template-columns: 1fr; gap: 32px; }
+  .footerCtaButtons { justify-self: start; margin-right: 0; flex-direction: column; gap: 12px; }
+  .footerCtaButtons .btn { width: 100%; padding: 14px 24px; }
 }
 
 @media (max-width: 880px) {
@@ -814,12 +848,6 @@
   .faqAInner strong,
   .faqAInner a { font-size: 16px; line-height: 1.55; }
 
-  /* footer cta */
-  .footerCta { padding: 56px 0; }
-  .footerCtaInner { gap: 28px; }
-  .footerCtaTitle { font-size: clamp(26px, 6.4vw, 32px); }
-  .footerCtaButtons { width: 100%; flex-direction: column; gap: 12px; }
-  .footerCtaButtons .btn { width: 100%; padding: 14px 24px; }
 }
 
 @media (max-width: 380px) {
