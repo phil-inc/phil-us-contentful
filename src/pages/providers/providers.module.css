@@ -813,8 +813,7 @@
   flex: 1 1 0;
   min-width: 0;
     @media (max-width: $phil-breakpoint-xl) {
-      /* font-size: clamp(36px, 4.4vw, 46px); */
-      font-size: 46px;
+      font-size: clamp(36px, 4.4vw, 46px);
     }
 }
 
@@ -869,10 +868,15 @@
    RESPONSIVE
    ========================================================================== */
 @media (max-width: $phil-breakpoint-lg) {
-  .footerCta { padding: 64px 32px 72px; min-height: auto; }
+  .footerCta { padding: 40px 20px 48px; min-height: auto; }
   .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; }
-  .footerCtaButtons { flex-direction: column; gap: 12px; }
-  .footerCtaButtons .btn { width: 100%; padding: 14px 24px; }
+  .footerCtaButtons .btn { width: 100%; padding: 14px 24px; text-align: center; }
+}
+
+@media (max-width: $phil-breakpoint-md) {
+  .footerCtaTitle { max-width: 100%;}
+  .footerCtaButtons { flex-direction: column; gap: 12px; width: 100%; }
+  .footerCta .ctaContainer { padding-inline: 0; }
 }
 
 @media (max-width: 900px) {

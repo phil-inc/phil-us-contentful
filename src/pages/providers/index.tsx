@@ -529,7 +529,7 @@ const FaqSection = () => {
 
 const FooterCta = () => (
   <section className={classes.footerCta}>
-    <div className="xl-container">
+    <div className={`xl-container ${classes.ctaContainer}`}>
       <div className={classes.footerCtaInner}>
         <h2 className={classes.footerCtaTitle}>
           Get MD Support from the PHILRx Team
