@@ -683,8 +683,8 @@
 }
 
 .footerCtaInner {
-  display: grid;
-  grid-template-columns: 1.4fr auto;
+  display: flex;
+  justify-content: space-between;
   gap: 48px;
   align-items: center;
   position: relative;
@@ -699,8 +699,9 @@
   letter-spacing: -0.015em;
   color: #fff;
   margin: 0;
-  max-width: 720px;
-  text-wrap: balance;
+  max-width: 66%;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .footerCtaButtons {
@@ -708,8 +709,7 @@
   gap: 14px;
   align-items: center;
   flex-wrap: wrap;
-  justify-self: end;
-  margin-right: 64px;
+  flex: 0 0 auto;
 }
 
 .btnFooterLight {
