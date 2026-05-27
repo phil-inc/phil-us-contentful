@@ -519,6 +519,9 @@
   border: 0; padding: 0;
   cursor: pointer;
   transition: background 0.2s ease, width 0.2s ease;
+  @media (max-width: $phil-breakpoint-sm) {
+    width: 28px;
+  }
 }
 .dotActive { background: #00827E; width: 48px; }
 
@@ -765,11 +768,23 @@
    RESPONSIVE
    ========================================================================== */
 @media (max-width: $phil-breakpoint-lg) {
-  .footerCta { padding: 64px 32px 72px; min-height: auto; }
-  .footerCtaInner { grid-template-columns: 1fr; gap: 32px; }
-  .footerCtaButtons { justify-self: start; margin-right: 0; flex-direction: column; gap: 12px; }
-  .footerCtaButtons .btn { width: 100%; padding: 14px 24px; }
+  .footerCta { padding: 40px 20px 48px; min-height: auto; }
+  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .footerCtaTitle { max-width: 100%; }
+  .footerCtaButtons .btn { width: 100%; padding: 14px 24px; text-align: center; }
 }
+
+@media (max-width: $phil-breakpoint-lg) {
+  .testimonialCard { flex: 0 0 calc((100% - 28px) / 2); }
+}
+
+@media (max-width: $phil-breakpoint-sm) {
+  .footerCtaButtons { flex-direction: column; gap: 12px; width: 100%; }
+  .footerCta .ctaContainer { padding-inline: 0; }
+  .testimonialCard { flex: 0 0 100%; }
+}
+
+
 
 @media (max-width: 880px) {
   .heroGrid { grid-template-columns: 1fr; gap: 48px; }
@@ -820,12 +835,7 @@
   /* testimonials */
   .testimonials__section { padding: 56px 0; }
   .carouselTrack { gap: 20px; }
-  .testimonialCard {
-    flex: 0 0 100%;
-    padding: 32px 24px 28px;
-    min-height: 0;
-    border-radius: 20px;
-  }
+  .testimonialCard { padding: 32px 24px 28px; min-height: 0; border-radius: 20px; }
   .quoteMark { font-size: 72px; top: 16px; right: 22px; }
   .tQuote { font-size: 16px; margin-bottom: 22px; }
   .carouselControls { margin-top: 28px; gap: 14px; }
@@ -847,6 +857,9 @@
   .faqAInner li,
   .faqAInner strong,
   .faqAInner a { font-size: 16px; line-height: 1.55; }
+  @media (max-width: $phil-breakpoint-xs) {
+  .arrowBtn { width: 32px; height: 32px; }
+}
 
 }
 
