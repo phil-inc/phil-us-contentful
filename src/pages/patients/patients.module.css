@@ -22,64 +22,38 @@
 
 /* filled gradient */
 .btnFilled {
-  position: relative;
-  background: linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%);
+  background:
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) padding-box,
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) border-box;
+  border: 2px solid transparent;
   color: #fff;
   letter-spacing: 0.01em;
   box-shadow: 0 8px 20px rgba(0,130,126,0.22);
-  isolation: isolate;
-}
-.btnFilled::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2.5px;
-  background: linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-  z-index: 0;
 }
 .btnFilled:hover {
-  background: #fff;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) border-box;
   color: #00827E;
   box-shadow: none;
 }
-.btnFilled:hover::before { opacity: 1; }
 
-/* ghost gradient border */
+/* ghost gradient border — border technique matches MegaNav .btnNavLogin */
 .btnOutlineGradient {
-  position: relative;
-  background: #fff;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) border-box;
+  border: 2px solid transparent;
   color: #00827E;
   letter-spacing: 0.01em;
-  isolation: isolate;
-}
-.btnOutlineGradient::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2.5px;
-  background: linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
-  z-index: 0;
 }
 .btnOutlineGradient:hover {
-  background: linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%);
+  background:
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) padding-box,
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) border-box;
   color: #fff;
   box-shadow: 0 8px 20px rgba(0,130,126,0.22);
 }
-.btnOutlineGradient:hover::before { opacity: 0; }
 
 /* ── Shared: eyebrow ─────────────────────────────────────────────────── */
 .eyebrow {
