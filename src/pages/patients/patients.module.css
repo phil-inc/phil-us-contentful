@@ -767,10 +767,11 @@
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
-@media (max-width: $phil-breakpoint-lg) {
+@media (max-width: $phil-breakpoint-md) {
   .footerCta { padding: 40px 20px 48px; min-height: auto; }
   .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; }
   .footerCtaTitle { max-width: 100%; }
+  .footerCtaButtons{width: 100%;}
   .footerCtaButtons .btn { width: 100%; padding: 14px 24px; text-align: center; }
 }
 
@@ -779,7 +780,6 @@
 }
 
 @media (max-width: $phil-breakpoint-sm) {
-  .footerCtaButtons { flex-direction: column; gap: 12px; width: 100%; }
   .footerCta .ctaContainer { padding-inline: 0; }
   .testimonialCard { flex: 0 0 100%; }
 }
