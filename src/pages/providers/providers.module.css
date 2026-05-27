@@ -13,7 +13,6 @@
   font-size: 16px;
   padding: 16px 32px;
   border-radius: 999px;
-  border: 0;
   text-decoration: none;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -22,64 +21,38 @@
 
 /* filled gradient */
 .btnFilled {
-  position: relative;
-  background: linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%);
+  background:
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) padding-box,
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) border-box;
+  border: 2px solid transparent;
   color: #fff;
   letter-spacing: 0.01em;
   box-shadow: 0 8px 20px rgba(0,130,126,0.22);
-  isolation: isolate;
-}
-.btnFilled::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2.5px;
-  background: linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-  z-index: 0;
 }
 .btnFilled:hover {
-  background: #fff;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) border-box;
   color: #00827E;
   box-shadow: none;
 }
-.btnFilled:hover::before { opacity: 1; }
 
 /* outline gradient */
 .btnOutlineGradient {
-  position: relative;
-  background: #fff;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) border-box;
+  border: 2px solid transparent;
   color: #00827E;
   letter-spacing: 0.01em;
-  isolation: isolate;
-}
-.btnOutlineGradient::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2.5px;
-  background: linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
-  z-index: 0;
 }
 .btnOutlineGradient:hover {
-  background: linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%);
+  background:
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) padding-box,
+    linear-gradient(135deg, #5ABEA4 0%, #2AA89E 45%, #00827E 100%) border-box;
   color: #fff;
   box-shadow: 0 8px 20px rgba(0,130,126,0.22);
 }
-.btnOutlineGradient:hover::before { opacity: 0; }
 
 /* ── Shared: eyebrow ─────────────────────────────────────────────────── */
 .eyebrow {
@@ -786,56 +759,120 @@
    ========================================================================== */
 .footerCta {
   position: relative;
-  background: linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%);
+  background: linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%);
   color: #fff;
-  padding: 78px 0;
+  padding: 80px 60px 96px;
+  min-height: 474px;
+  display: flex;
+  align-items: center;
   overflow: hidden;
-  isolation: isolate;
+}
+
+.footerCta::before {
+  content: "";
+  position: absolute;
+  top: -160px;
+  right: -100px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.footerCta::after {
+  content: "";
+  position: absolute;
+  bottom: -200px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(109, 223, 193, 0.25), transparent 70%);
+  pointer-events: none;
 }
 
 .footerCtaInner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
+  gap: 48px;
+  position: relative;
+  z-index: 1;
 }
 
 .footerCtaTitle {
-  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-family: Raleway, sans-serif;
   font-weight: 700;
-  font-size: clamp(28px, 3.0vw, 40px);
-  line-height: 1.15;
-  letter-spacing: -0.012em;
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   color: #fff;
   margin: 0;
-  flex: 1 1 auto;
+  max-width: 66%;
+  flex: 1 1 0;
   min-width: 0;
+    @media (max-width: $phil-breakpoint-xl) {
+      /* font-size: clamp(36px, 4.4vw, 46px); */
+      font-size: 46px;
+    }
 }
 
 .footerCtaButtons {
   display: flex;
   gap: 14px;
+  align-items: center;
   flex-wrap: wrap;
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 .btnFooterLight {
   background: #fff;
-  color: #00827E;
+  color: #00827e;
   letter-spacing: 0.01em;
-  box-shadow: 0 8px 20px rgba(10,50,50,0.18);
+  box-shadow: 0 8px 20px rgba(10, 50, 50, 0.18);
 }
+
+/* arrow slides in on hover */
+.footerCtaButtons .btn::after {
+  content: "→";
+  display: inline-block;
+  width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    width       0.2s cubic-bezier(0.2, 0, 0, 1),
+    opacity     0.2s cubic-bezier(0.2, 0, 0, 1),
+    margin-left 0.2s cubic-bezier(0.2, 0, 0, 1),
+    transform   0.2s cubic-bezier(0.2, 0, 0, 1);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.footerCtaButtons .btn:hover::after {
+  width: 1em;
+  opacity: 1;
+  margin-left: 10px;
+  transform: translateX(0);
+}
+
 .btnFooterLight:hover {
   background: #fff;
-  color: #00827E;
-  box-shadow: 0 10px 24px rgba(10,50,50,0.18);
+  color: #00827e;
+  box-shadow: 0 10px 24px rgba(10, 50, 50, 0.18);
 }
 
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
-@media (max-width: 1100px) {
-  .footerCtaInner { flex-wrap: wrap; }
+@media (max-width: $phil-breakpoint-lg) {
+  .footerCta { padding: 64px 32px 72px; min-height: auto; }
+  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .footerCtaButtons { flex-direction: column; gap: 12px; }
+  .footerCtaButtons .btn { width: 100%; padding: 14px 24px; }
 }
 
 @media (max-width: 900px) {
@@ -918,12 +955,6 @@
   .faqA { font-size: 15px; }
   .faqAInner { padding-bottom: 22px; }
 
-  /* footer cta */
-  .footerCta { padding: 56px 0; }
-  .footerCtaInner { gap: 28px; }
-  .footerCtaTitle { font-size: clamp(26px, 6.4vw, 32px); }
-  .footerCtaButtons { width: 100%; flex-direction: column; gap: 12px; }
-  .footerCtaButtons .btn { width: 100%; padding: 14px 24px; }
 }
 
 @media (max-width: 380px) {
