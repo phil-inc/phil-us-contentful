@@ -769,7 +769,7 @@
    ========================================================================== */
 @media (max-width: $phil-breakpoint-lg) {
   .footerCta { padding: 40px 20px 48px; min-height: auto; }
-  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; padding: 48px 0;}
   .footerCtaTitle { max-width: 100%; }
   .footerCtaButtons .btn { width: 100%; padding: 14px 24px; text-align: center; }
 }
