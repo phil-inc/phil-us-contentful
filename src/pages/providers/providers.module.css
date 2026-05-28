@@ -233,6 +233,9 @@
 @media (prefers-reduced-motion: reduce) {
   .heroVisual { opacity: 1; animation: none; }
 }
+@media (min-width: $phil-breakpoint-xl) {
+  .heroVisual { transform: scale(1.13); transform-origin: center center;}
+}
 
 .bgRings {
   position: absolute;
@@ -867,16 +870,17 @@
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
-@media (max-width: $phil-breakpoint-lg) {
+@media (max-width: $phil-breakpoint-md) {
   .footerCta { padding: 40px 20px 48px; min-height: auto; }
-  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; padding: 48px 0;}
+  .footerCtaTitle { max-width: 100%; }
+  .footerCtaButtons{width: 100%;}
   .footerCtaButtons .btn { width: 100%; padding: 14px 24px; text-align: center; }
 }
 
 @media (max-width: $phil-breakpoint-md) {
   .footerCtaTitle { max-width: 100%;}
   .footerCtaButtons { flex-direction: column; gap: 12px; width: 100%; }
-  .footerCta .ctaContainer { padding-inline: 0; }
 }
 
 @media (max-width: 900px) {
