@@ -834,7 +834,7 @@
 
   /* testimonials */
   .testimonials__section { padding: 56px 0; }
-  .carouselTrack { gap: 20px; }
+  .carouselTrack { gap: 28px; }
   .testimonialCard { padding: 32px 24px 28px; min-height: 0; border-radius: 20px; }
   .quoteMark { font-size: 72px; top: 16px; right: 22px; }
   .tQuote { font-size: 16px; margin-bottom: 22px; }

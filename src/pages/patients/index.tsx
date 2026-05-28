@@ -274,7 +274,9 @@ const VideoSection = () => (
 
 function getPerPage() {
   if (typeof window === "undefined") return 3;
-  return window.innerWidth <= 640 ? 1 : 3;
+  if (window.innerWidth <= 768) return 1;   // <= phil-breakpoint-sm
+  if (window.innerWidth <= 1280) return 2;  // <= phil-breakpoint-lg
+  return 3;
 }
 
 const TestimonialsCarousel = () => {
@@ -330,7 +332,7 @@ const TestimonialsCarousel = () => {
   }, [start, stop]);
 
   const dotCount = Math.ceil(TESTIMONIALS.length / perPage);
-  const cardGap = perPage === 1 ? 20 : 28;
+  const cardGap = 28;
 
   return (
     <section className={classes.testimonials__section}>
