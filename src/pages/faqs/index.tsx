@@ -178,9 +178,17 @@ const FaqPage = () => {
       e.preventDefault();
       setActiveSection(section);
       const el = document.getElementById(section);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      if (!el) return;
+
+      // Calculate offset: navbar + info bar (if visible)
+      const navbar = document.querySelector<HTMLElement>('.sticky-wrapper, [class*="MegaNav"]');
+      const infoBar = document.getElementById("topInfoBar");
+      let offset = 90; // fallback --navbar-height
+      if (navbar) offset = navbar.offsetHeight;
+      if (infoBar && infoBar.offsetHeight > 0) offset += infoBar.offsetHeight;
+
+      const top = el.getBoundingClientRect().top + window.scrollY - offset + 40;
+      window.scrollTo({ top, behavior: "smooth" });
     },
     []
   );
@@ -258,26 +266,11 @@ const FaqPage = () => {
               <h2 className={classes.sectionTitle}>Patients</h2>
               <a
                 className={classes.sectionCta}
-                href="https://philhelp.zendesk.com/hc/en-us/p/faq"
+                href="https://philhelp.zendesk.com/hc/en-us/requests/new?ticket_form_id=18810700002196"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Get Support
-                <svg
-                  viewBox="0 0 14 14"
-                  width="14"
-                  height="14"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M3 11 L11 3 M5 3 H11 V9"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
               </a>
             </header>
             <FlatAccordion items={PATIENT_FAQS} />
