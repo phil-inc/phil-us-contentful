@@ -84,7 +84,7 @@ const CARDS = [
     body: "Interested in partnering with PHIL? Book a discovery call with our sales team.",
     ctaText: "Book Demo",
     href: "/demo",
-    external: true,
+    external: false,
   },
   {
     icon: <PatientIcon />,
