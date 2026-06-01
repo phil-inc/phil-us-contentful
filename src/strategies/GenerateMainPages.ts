@@ -141,8 +141,13 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   // /demo is served by the static file-based page at src/pages/demo/index.tsx
   if (page.slug === "demo") return;
 
+  // /contact is served by the static file-based page at src/pages/contact/index.tsx
+  if (page.slug === "contact") return;
+
   // TODO: Remove this override once the Contentful GTN page slug is changed to "gtn/calculator"
   const slug = page.title === "GTN" ? "gtn/calculator" : page.slug;
+
+  
 
   const config = {
     slug,
