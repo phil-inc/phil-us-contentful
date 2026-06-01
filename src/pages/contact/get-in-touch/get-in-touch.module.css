@@ -1,0 +1,204 @@
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 88px 64px 120px;
+}
+
+.formWrap {
+  max-width: 100%;
+}
+
+/* ── HubSpot form title + description (from form config) ─── */
+
+.formWrap :global(.hs-richtext) {
+  margin-bottom: 56px;
+}
+
+.formWrap :global(.hs-richtext h1),
+.formWrap :global(.hs-richtext h2),
+.formWrap :global(.hs-richtext h3),
+.formWrap :global(.hs-richtext h4) {
+  font-family: var(--mantine-font-family, "Lato", Arial, sans-serif) !important;
+  font-weight: 800 !important;
+  font-size: clamp(40px, 5.4vw, 64px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.01em !important;
+  color: #0f1a14 !important;
+  margin: 0 0 28px !important;
+}
+
+.formWrap :global(.hs-richtext p) {
+  font-size: 18px !important;
+  line-height: 1.55 !important;
+  color: #00615e !important;
+  margin: 0 !important;
+}
+
+/* ── HubSpot form overrides ─────────────────────────────────── */
+
+.formWrap :global(.hs-form) {
+  font-family: var(--mantine-font-family, "Lato", Arial, sans-serif) !important;
+  color: #00615e !important;
+}
+
+.formWrap :global(.hs-form fieldset) {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 0 4px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  display: flex;
+  gap: 18px;
+}
+
+.formWrap :global(.hs-form fieldset.form-columns-1 > .hs-form-field) {
+  width: 100% !important;
+}
+
+.formWrap :global(.hs-form fieldset.form-columns-2 > .hs-form-field) {
+  width: 50% !important;
+}
+
+.formWrap :global(.hs-form fieldset .input) {
+  margin-right: 0 !important;
+}
+
+.formWrap :global(.hs-form-field) {
+  margin-bottom: 22px !important;
+}
+
+.formWrap :global(.hs-form-field > label),
+.formWrap :global(.hs-form-field .hs-field-desc),
+.formWrap :global(.hs-form-field legend) {
+  display: block;
+  font-family: var(--mantine-font-family, "Lato", Arial, sans-serif) !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  line-height: 1.3 !important;
+  color: #00615e !important;
+  margin: 0 0 10px !important;
+}
+
+.formWrap :global(.hs-form-required) {
+  color: #00615e !important;
+  margin-left: 2px;
+}
+
+.formWrap :global(.hs-input:not([type="checkbox"]):not([type="radio"])) {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  height: 56px;
+  padding: 14px 16px !important;
+  font-family: var(--mantine-font-family, "Lato", Arial, sans-serif) !important;
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  color: #00615e !important;
+  background: #ffffff !important;
+  border: 1.5px solid #00615e !important;
+  border-radius: 4px !important;
+  outline: none !important;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.formWrap :global(textarea.hs-input) {
+  height: auto !important;
+  min-height: 140px;
+  resize: vertical;
+}
+
+.formWrap :global(.hs-input:focus) {
+  border-color: #00827e !important;
+  box-shadow: 0 0 0 3px rgba(0, 130, 126, 0.18) !important;
+}
+
+.formWrap :global(.hs-input::placeholder) {
+  color: rgba(35, 75, 55, 0.45);
+}
+
+.formWrap :global(select.hs-input) {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #00615e 50%),
+    linear-gradient(135deg, #00615e 50%, transparent 50%);
+  background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 44px !important;
+}
+
+.formWrap :global(.hs-error-msg),
+.formWrap :global(.hs-error-msgs label) {
+  color: #b5371d !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  margin-top: 6px !important;
+}
+
+.formWrap :global(.hs-input.invalid.error) {
+  border-color: #b5371d !important;
+}
+
+.formWrap :global(.hs-form .hs-button),
+.formWrap :global(.hs-form input[type="submit"]) {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 32px;
+  margin-top: 14px;
+  font-family: var(--mantine-font-family, "Lato", Arial, sans-serif) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  letter-spacing: 0.01em;
+  color: #ffffff !important;
+  background: #00827e !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  cursor: pointer;
+  transition: filter 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 8px 22px rgba(0, 130, 126, 0.22);
+}
+
+.formWrap :global(.hs-form .hs-button:hover),
+.formWrap :global(.hs-form input[type="submit"]:hover) {
+  filter: brightness(1.05);
+  box-shadow: 0 12px 28px rgba(0, 130, 126, 0.28);
+}
+
+.formWrap :global(.hs-form .hs-button:active),
+.formWrap :global(.hs-form input[type="submit"]:active) {
+  transform: translateY(1px);
+}
+
+.formWrap :global(.submitted-message) {
+  padding: 24px;
+  border: 1.5px solid #00827e;
+  border-radius: 8px;
+  background: #f4faf8;
+  font-size: 17px;
+  color: #00615e;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  .page {
+    padding: 56px 22px 80px;
+  }
+  .formWrap :global(.hs-richtext) {
+    margin-bottom: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .formWrap :global(.hs-form fieldset.form-columns-2) {
+    flex-direction: column;
+    gap: 0;
+  }
+  .formWrap :global(.hs-form fieldset.form-columns-2 > .hs-form-field) {
+    width: 100% !important;
+  }
+}
