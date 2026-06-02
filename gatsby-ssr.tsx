@@ -1,7 +1,7 @@
 import React from 'react';
 import {ColorSchemeScript, MantineProvider} from '@mantine/core';
 import {theme} from './src/layouts/Layout/theme';
-
+//Hubspot fix
 // 1. Google Tag Manager (loads after consent default)
 const gtmScript = (
 	<script
