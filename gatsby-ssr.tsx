@@ -31,10 +31,23 @@ const gtmNoscript = (
 	</noscript>
 );
 
+// HubSpot tracking script — loaded outside GTM so hubspotutk cookie is set
+// before form embed reads it (required for form prefill/autofill)
+const hubspotTrackingScript = (
+	<script
+		key="hubspot-tracking"
+		id="hs-script-loader"
+		async
+		defer
+		src="https://js.hs-scripts.com/20880193.js"
+	/>
+);
+
 const resourceHints = [
 	// Full handshake (DNS + TCP + TLS) for domains that serve critical early resources
 	<link key="preconnect-ctfassets" rel="preconnect" href="https://images.ctfassets.net" />,
 	<link key="preconnect-gtm" rel="preconnect" href="https://www.googletagmanager.com" />,
+	<link key="preconnect-hs-scripts" rel="preconnect" href="https://js.hs-scripts.com" />,
 	// DNS-only for deferred/analytics scripts
 	<link key="dns-hsforms" rel="dns-prefetch" href="//js.hsforms.net" />,
 	<link key="dns-trustpilot" rel="dns-prefetch" href="//widget.trustpilot.com" />,
@@ -48,6 +61,7 @@ export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	replaceHeadComponents([
 		...resourceHints,
 		gtmScript,
+		hubspotTrackingScript,
 		...headComponents,
 		<ColorSchemeScript key="color-scheme-script" />,
 	]);
