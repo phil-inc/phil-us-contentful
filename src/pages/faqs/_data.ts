@@ -72,7 +72,7 @@ export const PHARMA_CATEGORIES: FaqCategory[] = [
       },
       {
         question: "Do you have a cash pharmacy?",
-        answer: `<p>Yes. PHIL offers a highly flexible, end-to-end patient access platform that empowers brands to custom-build the optimal path to therapy. While we excel at Direct-to-Patient (DTP) models, our capabilities span comprehensive coverage, cash-pay, and hybrid solutions.</p><p>We offer a flexible, multi-pharmacy ecosystem that combines PHIL's cash pharmacies with a robust, national network of partner pharmacies. Rather than relying on a single channel, brands leverage this comprehensive network to ensure seamless nationwide fulfillment, maximize patient reach, and optimize gross-to-net.</p><p><a href="/demo/" target="_blank" rel="noopener">Reach out and we can help you determine the right-fit access solution for your brand</a>.</p>`,
+        answer: `<p>Yes! PHIL offers a highly flexible, end-to-end patient access platform that empowers brands to custom-build the optimal path to therapy. While we excel at Direct-to-Patient (DTP) models, our capabilities span comprehensive coverage, cash-pay, and hybrid solutions.</p><p>We offer a flexible, multi-pharmacy ecosystem that combines PHIL's cash pharmacies with a robust, national network of partner pharmacies. Rather than relying on a single channel, brands leverage this comprehensive network to support nationwide fulfillment and maximize patient reach.</p><p><a href="/demo/" target="_blank" rel="noopener">Reach out</a> and we can help you determine the right-fit access solution for your brand.</p>`,
       },
       {
         question:
