@@ -1,0 +1,489 @@
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+form {
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+/* ── iFrame body ── */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    background: #ffffff;
+    color: #1a1a1a;
+    padding: 4px 0 0;
+    margin: 0;
+    height: auto !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Main table (formType 0 / 1) ── */
+.mainTable {
+    display: block;
+    width: 100%;
+    height: auto !important;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.mainTable tbody {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    height: auto !important;
+}
+
+/* ── All rows: full-width by default ── */
+.mainTable tr {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+/* ── Row ordering ── */
+.creNameRow {
+    order: 1;
+    width: 100%;
+}
+
+.creNumberRow {
+    order: 2;
+    width: 100%;
+}
+
+.creExpirationRow {
+    order: 3;
+}
+
+.creCVV2Row {
+    order: 4;
+}
+
+.creButtonRow {
+    order: 10;
+    width: 100% !important;
+}
+
+/* ── Hide card-type row (auto-detected from card number) ── */
+.creTypeRow {
+    display: none !important;
+}
+
+/* ── Hide amount row (set by merchant in the request) ── */
+.creAmountRow {
+    display: none !important;
+}
+
+/* ── Hide all unused rows (Chase renders ALL possible fields; collapse the ones
+   we don't use so they don't create blank space via margin-bottom) ── */
+.creAddressOneRow,
+.creAddressTwoRow,
+.creCityRow,
+.creStateRow,
+.creZipRow,
+.creCountryRow,
+.creCardOnFileCheckRow,
+.creAccountNameRow,
+.creAccountTypeRow,
+.creRoutingNumberRow,
+.creAccountNumberRow,
+.creBankNameRow {
+    display: none !important;
+}
+
+/* ── Label cells ── */
+.creNameLabel,
+.creNumberLabel,
+.creCVV2Label,
+.creExpirationLabel,
+.creTypeLabel,
+.creAmountLabel,
+.creAddressOneLabel,
+.creAddressTwoLabel,
+.creCityLabel,
+.creStateLabel,
+.creCardOnFileCheckLabel,
+.creAccountNameLabel,
+.creAccountTypeLabel,
+.creRoutingNumberLabel,
+.creAccountNumberLabel,
+.creBankNameLabel {
+    display: block;
+    width: 100% !important;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555555;
+    margin-bottom: 5px;
+    padding: 0;
+    text-align: left;
+    line-height: 1.3;
+}
+
+/* ── Text / number input fields ── */
+.creNameField,
+.creNumberField,
+.creCVV2Field,
+.creZipField,
+.creCityField,
+.creAddressOneField,
+.creAddressTwoField,
+.creAccountNameField,
+.creAccountNumberField,
+.creBankNameField {
+    display: block !important;
+    width: 100% !important;
+    padding: 11px 14px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #1a1a1a;
+    background: #ffffff;
+    border: 1.5px solid #cccccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.creNameField:focus,
+.creNumberField:focus,
+.creCVV2Field:focus,
+.creZipField:focus,
+.creCityField:focus,
+.creAddressOneField:focus,
+.creAddressTwoField:focus {
+    border-color: #1a56ff;
+    box-shadow: 0 0 0 3px rgba(26, 86, 255, 0.12);
+}
+
+/* ── Placeholder styling (activates if Chase adds placeholder= attributes) ── */
+.creNameField::placeholder {
+    color: #aaaaaa;
+    font-size: 15px;
+}
+
+.creNumberField::placeholder {
+    color: #aaaaaa;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+}
+
+.creCVV2Field::placeholder {
+    color: #aaaaaa;
+    font-size: 15px;
+}
+
+/* ── Select / dropdown fields ── */
+.creTypeInput,
+.creExpirationMonth,
+.creExpirationYear,
+.creStateField,
+.creCountryField,
+.creAccountTypeField {
+    display: inline-block;
+    padding: 11px 34px 11px 14px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #1a1a1a;
+    background: #ffffff;
+    border: 1.5px solid #cccccc;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    transition: border-color 0.15s ease;
+}
+
+.creExpirationMonth:focus,
+.creExpirationYear:focus,
+.creStateField:focus,
+.creCountryField:focus {
+    border-color: #1a56ff;
+    box-shadow: 0 0 0 3px rgba(26, 86, 255, 0.12);
+}
+
+/* ── Expiration + CVV: side by side, 50% / 50% ── */
+.creExpirationRow {
+    width: 50% !important;
+    padding-right: 4px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+}
+
+/* Label — always takes the full first "row" inside the flex container,
+   whether it lives on a <td> directly or as a child element inside a <td>. */
+.creExpirationLabel,
+td.creExpirationLabel {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    display: block !important;
+    margin-bottom: 5px;
+}
+
+/* Make every <td> inside the expiration row a flex-row container.
+   This covers the case where Chase puts both selects in a single <td>
+   (they stack by default in block layout — flex-direction:row fixes it). */
+.creExpirationRow td {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+}
+
+/* But if the label IS a <td>, give it full width and block layout */
+td.creExpirationLabel,
+.creExpirationRow td:has(.creExpirationLabel) {
+    flex: 0 0 100% !important;
+    display: block !important;
+}
+
+/* Month and Year selects — flex children, split 50/50, joined appearance */
+.creExpirationMonth {
+    flex: 1 1 0% !important;
+    width: 100% !important;
+    margin-right: 0 !important;
+    border-right: none !important;
+    border-radius: 8px 0 0 8px !important;
+}
+
+.creExpirationYear {
+    flex: 1 1 0% !important;
+    width: 100% !important;
+    border-radius: 0 8px 8px 0 !important;
+}
+
+.creCVV2Row {
+    width: 50% !important;
+    padding-left: 4px !important;
+}
+
+.creCVV2Field {
+    width: 100% !important;
+}
+
+/* ── Hide the CVV "What's this?" link ── */
+.creCVV2WhatLink {
+    display: none !important;
+}
+
+/* ── Card-on-file checkbox ── */
+.creCardOnFileCheckRow {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.creCardOnFileCheck {
+    width: 16px;
+    height: 16px;
+    accent-color: #1a56ff;
+    cursor: pointer;
+}
+
+/* ── Button label ── */
+.creButtonLabel {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ── Complete / Submit button ── */
+.completeButton {
+    display: block !important;
+    width: 100% !important;
+    padding: 14px 20px;
+    margin-bottom: 0 !important;
+    background-color: #2363c3;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    letter-spacing: 0.01em;
+    transition: background-color 0.15s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.completeButton:hover {
+    background-color: #3c7cdc;
+}
+
+.completeButton:active {
+    background-color: #2363c3;
+}
+
+.processingCompleteButton {
+    background-color: #7a9fff !important;
+    cursor: not-allowed !important;
+}
+
+.finishedCompleteButton {
+    background-color: #28a745 !important;
+}
+
+/* ── Cancel button ── */
+.cancelButton {
+    display: none;
+}
+
+.cancelButton:hover {
+    color: #1a1a1a;
+}
+
+/* ================================================================
+   formType 7 — DIV / UL based (IDs, not classes)
+   ================================================================ */
+
+#nameBlock,
+#ccTypeBlock,
+#ccNumberBlock,
+#expDateBlock,
+#cvcBlock,
+#countryOption {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+    width: 100%;
+}
+
+#name,
+#ccNumber,
+#CVV2 {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #1a1a1a;
+    background: #ffffff;
+    border: 1.5px solid #cccccc;
+    border-radius: 8px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#name:focus,
+#ccNumber:focus,
+#CVV2:focus {
+    border-color: #1a56ff;
+    box-shadow: 0 0 0 3px rgba(26, 86, 255, 0.12);
+}
+
+#ccType {
+    padding: 11px 34px 11px 14px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #1a1a1a;
+    background: #ffffff;
+    border: 1.5px solid #cccccc;
+    border-radius: 8px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+}
+
+#ccTypeBlock {
+    display: none;
+}
+
+#expDateBlock {
+    width: 50%;
+    padding-right: 8px;
+}
+
+#cvcBlock {
+    width: 50%;
+}
+
+#expDateBlock,
+#cvcBlock {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: top;
+}
+
+#expMonth,
+#expYear {
+    width: calc(50% - 4px);
+    display: inline-block;
+    padding: 11px 14px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 1.5px solid #cccccc;
+    border-radius: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#expMonth {
+    margin-right: 8px;
+}
+
+/* ================================================================
+   Responsive — Mobile (<= 480px)
+   ================================================================ */
+@media (max-width: 480px) {
+    body {
+        padding: 2px 0 12px;
+    }
+
+    .creExpirationRow,
+    .creCVV2Row {
+        width: 100% !important;
+        padding-right: 0 !important;
+    }
+
+    #expDateBlock,
+    #cvcBlock {
+        width: 100%;
+        display: flex;
+        padding: 0;
+    }
+
+    /* Prevent iOS auto-zoom on input focus */
+    .creNameField,
+    .creNumberField,
+    .creCVV2Field,
+    .creExpirationMonth,
+    .creExpirationYear,
+    .creTypeInput,
+    #name,
+    #ccNumber,
+    #CVV2,
+    #expMonth,
+    #expYear {
+        font-size: 16px !important;
+    }
+
+    .completeButton {
+        padding: 15px 20px;
+    }
+}
