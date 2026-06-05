@@ -919,7 +919,7 @@ function EndCtaSection() {
   return (
     <section className={classes.endcta} id="cta">
       <div className={classes.endctaBg}>
-        <div className={`${classes.endctaRow} ${classes.reveal}`}>
+        <div className={`xl-container ${classes.endctaRow} ${classes.reveal}`}>
           <div className={classes.endctaCopy}>
             <div className={classes.endctaEyebrow}>
               <span className={classes.endctaRule} />
