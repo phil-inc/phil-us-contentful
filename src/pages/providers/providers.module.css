@@ -753,9 +753,15 @@
 .faqAInner a {
   color: #00827E;
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
 }
+.faqAInner a:hover { color: #00615E; }
+.faqAInner dl { margin: 8px 0; }
+.faqAInner dt { font-weight: 700; color: #0A0A0A; margin-top: 12px; }
+.faqAInner dt:first-child { margin-top: 0; }
+.faqAInner dd { margin: 4px 0 0; }
+.faqAInner :global(.phone-list) li span:first-child::after { content: ": "; }
 
 /* ==========================================================================
    FOOTER CTA
@@ -911,11 +917,8 @@
   .heroGrid { gap: 40px; }
   .h1 { font-size: clamp(32px, 9vw, 44px); line-height: 1.1; margin-bottom: 18px; }
   .heroLead { font-size: 17px; max-width: none; margin-bottom: 24px; }
-  .heroHelp { gap: 18px; margin-top: 22px; flex-wrap: wrap; }
-  .heroContact { gap: 12px; }
-  .heroContactIcon { width: 40px; height: 40px; }
-  .heroContactText { font-size: 15px; line-height: 1.5; }
-  .heroContactLabel { font-size: 16px; }
+  .heroHelp { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 22px; }
+  .heroHelp .btn { width: 100%; padding: 14px 24px; text-align: center; }
 
   /* wf card */
   .heroVisual { min-height: 0; max-width: 100%; }
