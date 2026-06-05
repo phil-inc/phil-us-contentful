@@ -1727,16 +1727,16 @@
   left: 6%;
   top: auto;
   right: auto;
-  width: 240px;
+  width: 290px;
   background: #FFFFFF;
   border: 1px solid rgba(10,10,10,0.06);
-  border-radius: 12px;
-  padding: 12px 14px;
+  border-radius: 14px;
+  padding: 16px 18px;
   box-shadow: 0 12px 28px rgba(10,30,20,0.10);
   z-index: 3;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   transform: scale(0.85);
   transform-origin: bottom left;
 }
@@ -1744,37 +1744,47 @@
 .chipName {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
+  gap: 10px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--phil-pitch, #0A0A0A);
-  margin-bottom: 4px;
 }
 
 .chipIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(0, 130, 126, 0.10);
   color: var(--phil-foliage, #00827E);
+  flex-shrink: 0;
 }
 
 .chipSub {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ink-2);
-  margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 .chipBtns {
   display: flex;
-  gap: 6px;
+  gap: 8px;
+  margin-top: 2px;
 }
 
 .chipBtn {
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 11px;
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
   font-weight: 700;
   border: 1px solid var(--phil-base, #D7DCDC);
   background: transparent;
   color: var(--phil-pitch, #0A0A0A);
   cursor: default;
+  text-align: center;
 }
 
 .chipBtnPrimary {
@@ -1790,16 +1800,16 @@
   right: 6%;
   bottom: auto;
   left: auto;
-  width: 230px;
+  width: 240px;
   background: #FFFFFF;
   border: 1px solid rgba(10,10,10,0.06);
-  border-radius: 12px;
-  padding: 12px 14px;
+  border-radius: 14px;
+  padding: 16px 18px;
   box-shadow: 0 12px 28px rgba(10,30,20,0.10);
   z-index: 3;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   transform: scale(0.85);
   transform-origin: top right;
 }
@@ -1807,32 +1817,43 @@
 .shipHead {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: 10px;
 }
 
 .shipIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(0, 130, 126, 0.10);
   color: var(--phil-foliage, #00827E);
+  flex-shrink: 0;
 }
 
 .shipTitle {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--phil-pitch, #0A0A0A);
 }
 
 .shipMeta {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ink-2);
-  margin-bottom: 10px;
 }
 
-.shipTrack { margin-top: 8px; }
+.shipMeta strong {
+  color: var(--phil-foliage, #00827E);
+  font-weight: 700;
+}
+
+.shipTrack { margin-top: 2px; }
 
 .shipLine {
-  height: 3px;
+  height: 4px;
   background: var(--phil-base, #D7DCDC);
-  border-radius: 2px;
+  border-radius: 999px;
   position: relative;
   margin-bottom: 8px;
 }
@@ -1844,7 +1865,7 @@
   bottom: 0;
   width: 60%;
   background: var(--phil-foliage, #00827E);
-  border-radius: 2px;
+  border-radius: 999px;
 }
 
 .shipTruck {
@@ -1852,24 +1873,33 @@
   top: 50%;
   left: 60%;
   transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid var(--phil-foliage, #00827E);
   color: var(--phil-foliage, #00827E);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .shipStops {
   display: flex;
   justify-content: space-between;
   font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--ink-2);
 }
 
 .shipStopDone {
   color: var(--phil-foliage, #00827E);
-  font-weight: 700;
 }
 
 .shipStopActive {
-  color: var(--phil-foliage, #00827E);
-  font-weight: 700;
+  color: var(--ink, #0A0A0A);
 }
 
 /* ======================== DASHBOARD MOCKUP (Data & Insights card) ======================== */
