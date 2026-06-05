@@ -771,6 +771,7 @@ function VoiceCard({
   useEffect(() => {
     const el = cardRef.current;
     if (!el) return;
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -780,8 +781,30 @@ function VoiceCard({
       { threshold: 0.25 }
     );
     io.observe(el);
+
+    // Pause timer when tab is hidden to prevent background throttle issues
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+        // Cancel any in-flight leaving transition
+        if (transitionRef.current) {
+          clearTimeout(transitionRef.current);
+          transitionRef.current = null;
+          setLeaving(false);
+        }
+      } else {
+        // Resume when tab becomes visible again
+        if (!timerRef.current) startTimer();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
     return () => {
       io.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibility);
       if (timerRef.current) clearInterval(timerRef.current);
       if (transitionRef.current) clearTimeout(transitionRef.current);
     };
@@ -944,17 +967,11 @@ function EndCtaSection() {
 
 // ─── Page Component ──────────────────────────────────────────────────────────
 
-declare global {
-  interface Window {
-    Trustpilot?: { loadFromElement: (el: HTMLElement) => void };
-  }
-}
-
 const HomePage = () => {
   const shellRef = useReveal();
 
   return (
-    <PageContext.Provider value={{ slug: "" }}>
+    <PageContext.Provider value={{ title: "" }}>
       <Layout>
         <div ref={shellRef} className={classes.shell}>
           <HeroSection />
