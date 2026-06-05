@@ -25,7 +25,9 @@
 }
 
 @media (min-width: 1680px) {
-  .container { max-width: 1536px; }
+  .container,
+  .outcomesInner,
+  .endctaRow { max-width: 1536px !important; }
 }
 
 @media (max-width: 800px) {
@@ -103,9 +105,9 @@
 
 /* ======================== HERO ======================== */
 .hero {
-  padding: 80px 0 88px;
+  padding: 84px 0;
   position: relative;
-  overflow: hidden;
+  /* No overflow:hidden — chip box-shadows extend below the section boundary */
   isolation: isolate;
 }
 
@@ -168,15 +170,16 @@
   color: var(--phil-foliage, #00827E);
   position: relative;
   white-space: nowrap;
+  display: inline-block; /* keeps underline tight to text at all sizes */
   z-index: 1;
 }
 
 .heroUnderline {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -8px;
+  width: 100%;
   height: 14px;
   pointer-events: none;
   z-index: -1;
@@ -376,7 +379,7 @@
 .outcomesInner {
   position: relative;
   z-index: 1;
-  max-width: 1320px;
+  max-width: 1256px;
   margin: 0 auto;
   padding: 0 56px;
 }
@@ -388,6 +391,8 @@
   text-transform: uppercase;
   color: var(--phil-spindrift, #6DDFC1);
   margin: 0 0 36px;
+  text-align: left;
+  padding-left: 32px;
 }
 
 .outcomesGrid {
@@ -450,9 +455,9 @@
 
 @media (max-width: 900px) {
   .outcomes { padding: 40px 0 48px; }
-  .outcomesGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .outcomesGrid { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
+  .outcomesHead { padding-left: 16px; }
+  .outcome { padding: 6px 16px; }
 }
 
 @media (max-width: 800px) {
@@ -461,20 +466,90 @@
 
 @media (max-width: 720px) {
   .outcomes { padding: 32px 0 36px; }
+  .outcomesHead { font-size: 11px; margin: 0 0 18px; padding-left: 0; text-align: left; }
+  .outcomesGrid { grid-template-columns: repeat(2, 1fr); gap: 28px 18px; }
+  .outcome { padding: 8px 4px; }
+  .outcomeNum { font-size: 40px; }
+  .cuSuf { font-size: 0.5em; padding-top: 0.2em; }
+  .outcomeLabel { font-size: 11px; line-height: 1.3; margin-top: 8px; }
+
+  /* ---- Hero title ---- */
+  .heroTitle {
+    font-size: clamp(32px, 9vw, 44px);
+    line-height: 1.18;
+    text-wrap: balance;
+  }
+
+  /* ---- Hero subtitle ---- */
+  .heroSub {
+    font-size: 17px;
+    line-height: 1.45;
+    max-width: 100%;
+  }
+
+  /* ---- Chips: single column, centered, compact ---- */
+  .heroChips {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .audchip {
+    padding: 20px 22px 18px;
+    gap: 10px;
+    border-radius: 16px;
+    align-items: center;
+    text-align: center;
+  }
+  .audchipTag {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .audchipH {
+    font-size: 15px;
+    line-height: 1.35;
+    margin: 0 0 14px;
+    text-align: center;
+  }
+  /* CTA becomes pill button on mobile */
+  .audchipCta {
+    font-size: 13px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    color: #FFFFFF;
+    padding: 9px 18px;
+    border-radius: 999px;
+    align-self: center;
+    margin-top: 2px;
+    backdrop-filter: blur(4px);
+    opacity: 1;
+    gap: 6px;
+  }
 }
 
 /* ======================== SOLUTION / REIMAGINE CAROUSEL ======================== */
 .reimagine {
-  padding: 120px 0;
+  padding: 88px 0 24px;
   background: var(--phil-pure, #FFFFFF);
   position: relative;
   overflow: hidden;
 }
 
 .rmx2Container {
-  composes: container;
+  max-width: 1256px;
+  margin: 0 auto;
+  padding: 0 56px;
   text-align: center;
   margin-bottom: 24px;
+}
+
+@media (max-width: 800px) {
+  .rmx2Container { padding: 0 24px; }
+}
+
+@media (max-width: 720px) {
+  .reimagine { padding: 56px 0 24px; }
 }
 
 .rmx2Head {
@@ -482,6 +557,8 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  text-align: center;
+  width: 100%;
 }
 
 .rmx2Title {
@@ -494,6 +571,7 @@
   margin: 0;
   max-width: 1240px;
   text-wrap: balance;
+  text-align: center;
 }
 
 .rmx2Sub {
@@ -502,6 +580,7 @@
   color: var(--ink-2);
   max-width: 1120px;
   margin: 4px auto 0;
+  text-align: center;
 }
 
 .rmx2Lead {
@@ -517,6 +596,7 @@
   color: transparent;
   margin: 44px 0 0;
   text-wrap: balance;
+  text-align: center;
 }
 
 .rmx2LeadEm {
@@ -540,15 +620,38 @@
   pointer-events: none;
 }
 
+/* Lead "the way" underline — always visible, no wipe animation */
+.rmx2LeadUnderline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 14px;
+  pointer-events: none;
+}
+
 /* Pills */
 .rmx2Pills {
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 8px;
   margin-top: 28px;
   margin-bottom: 0;
   padding: 0 24px;
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .rmx2Pills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 16px;
+    margin-top: 20px;
+  }
 }
 
 .rmx2Pill {
@@ -739,6 +842,16 @@
   align-items: baseline;
 }
 
+/* Carousel stat suffix: foliage (not spindrift — design uses --accent = foliage) */
+.rmx2StatNum .cuSuf {
+  font-size: 0.5em;
+  margin-left: 2px;
+  font-weight: 700;
+  color: var(--phil-foliage, #00827E);
+  align-self: auto;
+  padding-top: 0;
+}
+
 .rmx2StatLabel {
   font-size: 14px;
   letter-spacing: 0.02em;
@@ -787,6 +900,7 @@
 .rmx2Card:not(.rmx2CardActive) .dash2,
 .rmx2Card:not(.rmx2CardActive) .dispenseMapImg,
 .rmx2Card:not(.rmx2CardActive) .paBanner,
+.rmx2Card:not(.rmx2CardActive) .paformBtn,
 .rmx2Card:not(.rmx2CardActive) .chipReminder,
 .rmx2Card:not(.rmx2CardActive) .chipShipping {
   animation: none;
@@ -821,15 +935,38 @@
 }
 
 /* PA floating banners — stagger in (resting transform: none) */
-.rmx2CardActive .paBanner {
-  animation: rmxBannerIn 500ms cubic-bezier(0.2, 0, 0, 1) both;
+/* Banners pop in together (380ms), then each glows in a staggered spotlight */
+.rmx2CardActive .paBanner1 {
+  animation: rmxBannerIn 600ms cubic-bezier(0.2, 0, 0, 1) 380ms both,
+             rmxBadgeSpotlight 1000ms cubic-bezier(0.4, 0, 0.2, 1) 700ms;
 }
-.rmx2CardActive .paBanner1 { animation-delay: 360ms; }
-.rmx2CardActive .paBanner2 { animation-delay: 540ms; }
-.rmx2CardActive .paBanner3 { animation-delay: 720ms; }
+.rmx2CardActive .paBanner3 {
+  animation: rmxBannerIn 600ms cubic-bezier(0.2, 0, 0, 1) 380ms both,
+             rmxBadgeSpotlight 1000ms cubic-bezier(0.4, 0, 0.2, 1) 1200ms;
+}
+.rmx2CardActive .paBanner2 {
+  animation: rmxBannerIn 600ms cubic-bezier(0.2, 0, 0, 1) 380ms both,
+             rmxBadgeSpotlight 1000ms cubic-bezier(0.4, 0, 0.2, 1) 2200ms;
+}
 @keyframes rmxBannerIn {
   from { opacity: 0; transform: translateY(12px) scale(0.9); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes rmxBadgeSpotlight {
+  0%   { box-shadow: 0 1px 2px rgba(15,30,28,0.04), 0 10px 22px -10px rgba(15,30,28,0.16), 0 0 0 0 rgba(0,130,126,0); }
+  40%  { box-shadow: 0 1px 2px rgba(15,30,28,0.04), 0 12px 28px -10px rgba(15,30,28,0.22), 0 0 0 6px rgba(0,130,126,0.18); }
+  100% { box-shadow: 0 1px 2px rgba(15,30,28,0.04), 0 10px 22px -10px rgba(15,30,28,0.16), 0 0 0 0 rgba(0,130,126,0); }
+}
+
+/* Submit PA button — spotlight pulse */
+.rmx2CardActive .paformBtn {
+  animation: rmxBtnSpotlight 1100ms cubic-bezier(0.4, 0, 0.2, 1) 1700ms;
+}
+@keyframes rmxBtnSpotlight {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(0,130,126,0); }
+  35%  { transform: scale(0.97); box-shadow: 0 0 0 2px rgba(0,130,126,0.18); }
+  60%  { transform: scale(1.03); box-shadow: 0 0 0 6px rgba(0,130,126,0.16); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 14px rgba(0,130,126,0); }
 }
 
 /* Dispense chips — stagger in, preserve resting scale(0.85) */
@@ -1123,6 +1260,7 @@
   .rmx2CardActive .dash2,
   .rmx2CardActive .dispenseMapImg,
   .rmx2CardActive .paBanner,
+  .rmx2CardActive .paformBtn,
   .rmx2CardActive .chipReminder,
   .rmx2CardActive .chipShipping {
     animation: none !important;
@@ -1252,6 +1390,11 @@
     width: min(310px, 100%);
     margin: 0 auto;
   }
+
+  /* ---- Carousel section headings ---- */
+  .rmx2Title { font-size: 28px; line-height: 1.15; }
+  .rmx2Sub   { font-size: 15px; line-height: 1.5; max-width: 100%; }
+  .rmx2Lead  { font-size: 22px; margin-top: 24px; }
 }
 
 /* ======================== PHONE MOCKUP (Digital Access card) ======================== */
@@ -2117,9 +2260,10 @@
   line-height: 1.5;
   letter-spacing: -0.003em;
   margin: 0;
+  font-style: normal;
   color: var(--ink, #0A0A0A);
   text-wrap: pretty;
-  transition: opacity 240ms ease;
+  transition: opacity 320ms cubic-bezier(0.2, 0, 0, 1), transform 320ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .voiceQuoteLeaving {
@@ -2128,6 +2272,8 @@
 
 .voiceAttr {
   margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--phil-base, #D7DCDC);
   color: var(--ink-2, #525252);
   font-size: 13px;
   font-weight: 500;
@@ -2171,7 +2317,7 @@
 /* ======================== INSIGHTS ======================== */
 .insights {
   padding: 32px 0 96px;
-  background: var(--paper, #F4F4F4);
+  background: var(--phil-pure, #FFFFFF);
 }
 
 .insightsHead {
@@ -2366,40 +2512,55 @@
 }
 
 .endctaBg {
-  background: linear-gradient(110deg, #00615E 0%, #00827E 55%, #2BAFA1 100%);
-  color: #FFFFFF;
-  padding: 60px 0;
   position: relative;
+  background: linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%);
+  color: #fff;
+  padding: 80px 60px 96px;
+  min-height: 474px;
+  display: flex;
+  align-items: center;
   overflow: hidden;
-  isolation: isolate;
 }
 
 .endctaBg::before {
   content: "";
   position: absolute;
-  inset: -50% -10% auto auto;
-  width: 720px;
-  height: 720px;
+  top: -160px;
+  right: -100px;
+  width: 480px;
+  height: 480px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(109,223,193,0.30) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
   pointer-events: none;
-  z-index: 0;
+}
+
+.endctaBg::after {
+  content: "";
+  position: absolute;
+  bottom: -200px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(109, 223, 193, 0.25), transparent 70%);
+  pointer-events: none;
 }
 
 .endctaRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 48px;
+  align-items: center;
   position: relative;
   z-index: 1;
   max-width: 1320px;
   margin: 0 auto;
-  padding: 0 96px;
-  display: grid;
-  grid-template-columns: 1.4fr auto;
-  align-items: center;
-  gap: 64px;
+  width: 100%;
 }
 
 .endctaCopy {
-  max-width: 760px;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .endctaEyebrow {
@@ -2422,14 +2583,14 @@
 }
 
 .endctaTitle {
-  font-family: var(--font-display, "Raleway", sans-serif);
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
   font-weight: 700;
-  font-size: clamp(40px, 5vw, 64px);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
-  color: #FFFFFF;
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: #fff;
   margin: 0 0 24px;
-  text-wrap: balance;
+  max-width: 66%;
 }
 
 .endctaBody {
@@ -2442,8 +2603,10 @@
 
 .endctaCtas {
   display: flex;
-  justify-content: flex-end;
-  align-self: center;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
 }
 
 .endctaBtn {
@@ -2460,6 +2623,7 @@
   text-decoration: none;
   border: 0;
   white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(10, 50, 50, 0.18);
   transition: transform 240ms cubic-bezier(0.2, 0, 0, 1),
               box-shadow 240ms cubic-bezier(0.2, 0, 0, 1);
 }
@@ -2479,17 +2643,40 @@
 }
 
 @media (max-width: 1000px) {
-  .endctaBg { padding: 64px 0; }
+  .endctaBg { padding: 40px 20px 48px; min-height: auto; }
   .endctaRow {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 32px;
-    padding: 0 32px;
+    padding: 0;
   }
+  .endctaTitle { max-width: 100%; }
+  .endctaCtas { width: 100%; }
+  .endctaBtn { width: 100%; padding: 16px 24px; text-align: center; justify-content: center; }
   .endctaCtas { justify-content: flex-start; }
 }
 
 @media (max-width: 720px) {
-  .endctaBg { padding: 48px 0; }
+  .endctaBg { padding: 40px 20px 48px; }
+  .endctaRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 0;
+  }
+  .endctaTitle { font-size: 34px; line-height: 1.1; max-width: 100%; }
+  .endctaBody  { font-size: 16px; }
+  .endctaEyebrow { font-size: 11px; margin-bottom: 16px; }
+  .endctaCtas { width: 100%; justify-content: flex-start; }
+  .endctaBtn { width: 100%; padding: 16px 24px; text-align: center; justify-content: center; }
+
+  /* Voices section headings */
+  .voicesTitle { font-size: 28px; line-height: 1.1; }
+  .voicesSub   { font-size: 15px; line-height: 1.5; }
+
+  /* Insights section headings */
+  .insightsTitle { font-size: 28px; line-height: 1.1; white-space: normal; }
+  .insightsBody  { font-size: 15px; line-height: 1.5; }
 }
 
 /* ======================== COUNT-UP ANIMATION ======================== */

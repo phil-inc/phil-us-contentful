@@ -609,7 +609,7 @@ function SolutionCarousel() {
             {SOLUTION.lead}{" "}
             <em className={classes.rmx2LeadEm}>
               {SOLUTION.leadEmphasis}
-              <svg className={classes.heroUnderline} viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true" style={{ clipPath: "inset(0 0 0 0)" }}>
+              <svg className={classes.rmx2LeadUnderline} viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true">
                 <path d="M2 8 Q 60 -2 120 6 T 238 6" stroke="#6DDFC1" strokeWidth="6" strokeLinecap="round" fill="none" />
               </svg>
             </em>
@@ -722,36 +722,82 @@ const VOICE_VARIANT_CLASS: Record<string, string> = {
   providers: classes.voiceProviders,
 };
 
+// Each card owns its own quote index — independent navigation
 function VoiceCard({
   variant,
   tag,
   quotes,
-  activeIdx,
-  onDotClick,
 }: {
   variant: string;
   tag: string;
   quotes: VoiceQuote[];
-  activeIdx: number;
-  onDotClick: (i: number) => void;
 }) {
+  const DURATION = 7000;
+  const [activeIdx, setActiveIdx] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [displayed, setDisplayed] = useState(quotes[0]);
-  const prevIdx = useRef(0);
+  const activeIdxRef = useRef(0);       // always-current mirror for interval cb
+  const transitionRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const cardRef = useRef<HTMLElement>(null);
+
+  const showQuote = useCallback((i: number) => {
+    const next = (i + quotes.length) % quotes.length;
+    if (next === activeIdxRef.current) return;
+
+    // Cancel any in-flight transition
+    if (transitionRef.current) clearTimeout(transitionRef.current);
+
+    // Dot updates immediately; text swaps after fade-out
+    setActiveIdx(next);
+    activeIdxRef.current = next;
+    setLeaving(true);
+
+    transitionRef.current = setTimeout(() => {
+      setDisplayed(quotes[next]);
+      setLeaving(false);
+      transitionRef.current = null;
+    }, 240);
+  }, [quotes]);
+
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      // Always reads latest index via ref — no stale closure
+      showQuote(activeIdxRef.current + 1);
+    }, DURATION);
+  }, [showQuote]);
 
   useEffect(() => {
-    if (activeIdx === prevIdx.current) return;
-    setLeaving(true);
-    const timer = setTimeout(() => {
-      setDisplayed(quotes[activeIdx]);
-      setLeaving(false);
-      prevIdx.current = activeIdx;
-    }, 240);
-    return () => clearTimeout(timer);
-  }, [activeIdx, quotes]);
+    const el = cardRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && !timerRef.current) startTimer();
+        });
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (transitionRef.current) clearTimeout(transitionRef.current);
+    };
+  }, [startTimer]);
+
+  const handleDotClick = useCallback((i: number) => {
+    showQuote(i);
+    // Restart 7s countdown from click — only if timer already running
+    if (timerRef.current) startTimer();
+  }, [showQuote, startTimer]);
 
   return (
-    <article className={`${classes.voice} ${VOICE_VARIANT_CLASS[variant] || ""}`}>
+    <article
+      ref={cardRef}
+      className={`${classes.voice} ${VOICE_VARIANT_CLASS[variant] || ""}`}
+    >
       <div className={classes.voiceTag}>{tag}</div>
       <div className={classes.voiceQuotebox}>
         <blockquote
@@ -768,7 +814,7 @@ function VoiceCard({
           <button
             key={i}
             className={`${classes.voiceDot} ${i === activeIdx ? classes.voiceDotActive : ""}`}
-            onClick={() => onDotClick(i)}
+            onClick={() => handleDotClick(i)}
             aria-label={`Quote ${i + 1}`}
           />
         ))}
@@ -778,60 +824,10 @@ function VoiceCard({
 }
 
 function VoicesSection() {
-  const DURATION = 7000;
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [cycling, setCycling] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const advance = useCallback(() => {
-    setActiveIdx((prev) => (prev + 1) % 3);
-  }, []);
-
-  const startTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    setCycling(true);
-    timerRef.current = setInterval(() => {
-      if (!paused) advance();
-    }, DURATION);
-  }, [advance, paused]);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting && !timerRef.current) startTimer();
-        });
-      },
-      { threshold: 0.25 }
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [startTimer]);
-
-  const handleDotClick = useCallback(
-    (i: number) => {
-      setActiveIdx(i);
-      setCycling(false);
-      requestAnimationFrame(() => setCycling(true));
-      startTimer();
-    },
-    [startTimer]
-  );
-
   return (
     <section
-      ref={sectionRef}
       className={classes.voices}
       id="voices"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
     >
       <div className={classes.container}>
         <div className={`${classes.voicesHead} ${classes.reveal}`}>
@@ -845,8 +841,6 @@ function VoicesSection() {
               variant={card.variant}
               tag={card.tag}
               quotes={card.quotes}
-              activeIdx={activeIdx}
-              onDotClick={handleDotClick}
             />
           ))}
         </div>
