@@ -1,3 +1,5 @@
+import { PATIENT_FAQ_ITEMS } from "data/faq-content";
+
 export const PATIENT_LOGIN_URL =
   "https://my.phil.us/?_gl=1*1w3p6v6*_gcl_au*MTE2OTYwMTc1NS4xNzc4MTAwOTkx*_ga*NjY4MzgyODEwLjE3NzU2NzA1NTg.*_ga_0D2JJPD1QY*czE3Nzg3MDA2Njgkbzg3JGcxJHQxNzc4NzAyMjc3JGo0OCRsMCRoMA";
 
@@ -68,29 +70,7 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export type FaqItem = { q: string; aHtml: string };
 
-export const FAQS: FaqItem[] = [
-  {
-    q: "Is my information secure with PHILRx?",
-    aHtml: `<p>Our fully HIPAA-compliant system protects your health data at all times. Your information is only seen by licensed pharmacy personnel and HIPAA-certified Patient Advocates.</p><p>We take reasonable administrative, physical and electronic measures designed to protect the information that we collect from or about you (including your personally identifiable information and personal health information) from unauthorized access, use, or disclosure. When you enter sensitive information on our forms, we encrypt this data using SSL or other technologies.</p>`,
-  },
-  {
-    q: "Can I cancel my prescription?",
-    aHtml: `<p><strong>To cancel your prescription:</strong></p><ol><li>Log into your account at <a href="https://my.phil.us" target="_blank" rel="noopener noreferrer">my.phil.us</a></li><li>Make sure you are on the RX Prescriptions section</li><li>Click on the green arrow next to the prescription you'd like to manage</li><li>Select "More Options"</li><li>Click on "Remove This Prescription." From here, you also have the ability to pause, unpause, and change your refill date.</li></ol>`,
-  },
-  {
-    q: "How do I update my payment information?",
-    aHtml: `<p>You can log into your My.Phil account and upload a photo of your payment card:</p><ol><li>From the homepage, click on the person icon on the upper right-hand corner</li><li>Click the arrow next to the Payment Card Section</li><li>Select "Add Card"</li><li>Enter your card information (card number, expiration date, CVV code)</li><li>Check the box if the payment card is an FSA, HSA, or HRA card</li><li>Confirm or add your billing address</li><li>Click "Save"</li></ol>`,
-  },
-  {
-    q: "How much will my prescription cost?",
-    aHtml: `<p>While the final cost of your prescriptions will vary based on your insurance coverage and medication need, we offer lifetime free delivery to all Phil patients who maintain an active account. We never charge for shipping, making prescription management with Phil a completely free service.</p>`,
-  },
-  {
-    q: "When will I receive my prescription?",
-    aHtml: `<p>Your first fill is sent out via first class mail and should arrive within 1–5 business days. Refills are processed ahead of time and are shipped standard shipping to ensure you receive your prescription before your previous fill runs out.</p><p>If you have any concerns or questions please contact us for assistance.</p>`,
-  },
-  {
-    q: "Why did my doctor send my prescription to Phil?",
-    aHtml: `<p>There are several reasons why doctors choose to send your prescription to Phil:</p><ul><li><strong>Pricing:</strong> We are able to get special pricing from the manufacturer on numerous commonly used, brand name medications. In addition to special pricing, we take the time to add any applicable manufacturer's coupons to bring pricing down as much as possible for you.</li><li><strong>Prior Authorizations:</strong> We work with your doctor to submit Prior Authorizations should they be required by your insurance for your prescription.</li><li><strong>Shipping:</strong> Shipping is always free. Your first fill is expedited at no cost to ensure medication can be started ASAP.</li><li><strong>Automatic Refills:</strong> Removing the hassle of remembering to pick up medications.</li><li><strong>Support:</strong> Our Patient Advocate team is comprised of compassionate and enthusiastic problem-solvers who are here to help. We offer 365 days of support should you have any questions and need assistance.</li></ul>`,
-  },
-];
+export const FAQS: FaqItem[] = PATIENT_FAQ_ITEMS.map((i) => ({
+  q: i.question,
+  aHtml: i.answer,
+}));

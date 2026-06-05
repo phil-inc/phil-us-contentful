@@ -753,9 +753,15 @@
 .faqAInner a {
   color: #00827E;
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
 }
+.faqAInner a:hover { color: #00615E; }
+.faqAInner dl { margin: 8px 0; }
+.faqAInner dt { font-weight: 700; color: #0A0A0A; margin-top: 12px; }
+.faqAInner dt:first-child { margin-top: 0; }
+.faqAInner dd { margin: 4px 0 0; }
+.faqAInner :global(.phone-list) li span:first-child::after { content: ": "; }
 
 /* ==========================================================================
    FOOTER CTA
