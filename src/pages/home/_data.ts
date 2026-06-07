@@ -42,8 +42,8 @@ export const OUTCOMES = {
   heading: "Helping Pharma Brands Grow",
   stats: [
     { value: 2, suffix: "X+", label: "Patient Starts", sublabel: "vs. Traditional Channels" },
-    { value: 3, suffix: "X+", label: "Covered Dispenses", sublabel: "vs. Traditional Channels" },
     { value: 3, suffix: "X+", label: "Adherence", sublabel: "vs. Traditional Channels" },
+    { value: 2, suffix: "X+", label: "Covered Dispenses", sublabel: "vs. Traditional Channels" },
     { value: 4.8, decimals: 1, suffix: "/5.0", label: "Patient Satisfaction Score" },
   ],
   trustpilot: {
@@ -87,7 +87,7 @@ export const SOLUTION = {
       title: "Superior Prior Authorization & Coverage Outcomes",
       body: "Improve affordability with an advanced prior authorization process and built-in coverage workflows to help reduce out-of-pocket costs for patients. We bring copay support, financial assistance, and flexible access pathways together in one seamless experience.",
       stats: [
-        { value: 85, suffix: "%+", label: "PA Submission Rate" },
+        { value: 90, suffix: "%+", label: "PA Submission Rate" },
         { value: 2, suffix: "x+", label: "Covered Dispenses" },
       ],
     },
@@ -98,7 +98,7 @@ export const SOLUTION = {
       body: "Deliver medications quickly through our nationwide pharmacy network with commercial and cash dispense capabilities. Our integrated dispense network offers fast fulfillment with free shipping, refill reminders, and a seamless delivery experience.",
       stats: [
         { value: 50, suffix: "-state", label: "Dispense Network" },
-        { value: 98, suffix: "%+", label: "Plan Coverage" },
+        { value: 99, suffix: "%+", label: "Plan Coverage" },
       ],
     },
     {
