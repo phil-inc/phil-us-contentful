@@ -18,6 +18,7 @@ import {
   Mail,
   HelpCircle,
   ChevronDown,
+  Target,
 } from "lucide-react";
 import cx from "clsx";
 
@@ -107,6 +108,7 @@ const NAV_SECTIONS: NavSection[] = [
       {
         title: "Why PHIL",
         links: [
+          { to: "/approach-outcomes/", label: "Our Approach and Outcomes", icon: Target },
           { to: "/insights/case-studies/", label: "Customer Success Stories", icon: Trophy },
           { to: "/gtn/", label: "GTN Calculator", icon: Calculator },
         ],
