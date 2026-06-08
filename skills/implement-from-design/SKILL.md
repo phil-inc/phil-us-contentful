@@ -101,6 +101,7 @@ git checkout <branch> && git pull origin <branch>
 7. **Log every deviation** — any difference from the design HTML goes in SPEC.md.
 8. **Design for AI maintainability** — clear structure, obvious data boundaries, no clever abstractions. Future updates will be made by AI agents or devs with AI.
 9. **SEO** — copy `Head` export from `src/pages/providers/index.tsx` as template. Update `TITLE`, `DESC`, `PROVIDERS_*` constants only. Audit: one `<h1>`, no skipped heading levels, title 50–60 chars, description 150–160 chars.
+10. **Internal links use relative URLs** — never use absolute URLs (e.g. `https://phil.us/demo`) for links within the site. Use relative paths (`/demo`, `/gtn/calculator`). This applies to `href`, `navigate()`, and `<Link to="">`. Design HTML may contain absolute URLs — convert them.
 
 ### What to look at for patterns
 
