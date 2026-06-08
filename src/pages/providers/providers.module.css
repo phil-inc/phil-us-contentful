@@ -889,6 +889,10 @@
   .footerCtaButtons { flex-direction: column; gap: 12px; width: 100%; }
 }
 
+@media (max-width: $phil-breakpoint-sm) {
+  .footerCta .ctaContainer { padding-inline: 0; }
+}
+
 @media (max-width: 900px) {
   .heroGrid { grid-template-columns: 1fr; gap: 48px; }
   .heroVisual { min-height: 0; margin: 0 auto; max-width: 440px; width: 100%; }
