@@ -1,12 +1,13 @@
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 96px 60px 72px;
+  padding: 96px 0 72px;
 }
 
 .heroInner {
-  max-width: 1280px;
+  max-width: 1320px;
   margin: 0 auto;
+  padding-inline: 32px;
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 80px;
@@ -493,6 +494,50 @@
   gap: 28px;
 }
 
+/* Filter-unavailable notice */
+.filterNotice {
+  max-width: 1280px;
+  margin: 0 auto 8px;
+  padding: 0 60px;
+}
+
+.filterNoticeInner {
+  padding: 14px 20px;
+  background: #edf9f8;
+  border: 1px solid #a8e2da;
+  border-radius: 12px;
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00615e;
+}
+
+/* Empty state */
+.emptyState {
+  border: 1.5px dashed #d7dcdc;
+  border-radius: 18px;
+  padding: 56px 32px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.emptyStateTitle {
+  font-family: Raleway, sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #00615e;
+  margin: 0 0 10px;
+}
+
+.emptyStateHint {
+  font-family: Lato, sans-serif;
+  font-size: 15px;
+  color: #525252;
+  margin: 0;
+}
+
 .card {
   border: 1px solid #d7dcdc;
   border-radius: 18px;
@@ -835,13 +880,59 @@
   height: 16px;
 }
 
+/* XL viewport expansion */
+@media (min-width: 1680px) {
+  .heroInner {
+    max-width: 1600px;
+  }
+
+  .featured {
+    max-width: 1408px;
+    zoom: 1.06;
+  }
+
+  .topics {
+    max-width: 1408px;
+    zoom: 1.06;
+  }
+
+  .filterBar {
+    max-width: 1408px;
+    zoom: 1.06;
+  }
+
+  .section {
+    max-width: 1408px;
+    zoom: 1.06;
+  }
+
+  .showMoreRow {
+    max-width: 1408px;
+    zoom: 1.06;
+  }
+
+  .resultsBanner {
+    max-width: 1408px;
+    zoom: 1.06;
+  }
+
+  .pressSection {
+    zoom: 1.06;
+  }
+
+  .pressInner {
+    max-width: 1408px;
+  }
+}
+
 /* Responsive */
 @media (max-width: $phil-breakpoint-lg) {
   .hero {
-    padding: 64px 32px 56px;
+    padding: 64px 0 56px;
   }
 
   .heroInner {
+    padding-inline: 32px;
     grid-template-columns: 1fr;
     gap: 48px;
   }
@@ -934,6 +1025,9 @@
   text-align: left;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dropdownTrigger:hover {

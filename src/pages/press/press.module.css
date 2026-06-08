@@ -1,12 +1,13 @@
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 96px 60px 72px;
+  padding: 96px 0 72px;
 }
 
 .heroInner {
-  max-width: 1280px;
+  max-width: 1320px;
   margin: 0 auto;
+  padding-inline: 32px;
   display: grid;
   grid-template-columns: 1.4fr 1fr;
   gap: 80px;
@@ -336,13 +337,34 @@
   letter-spacing: -0.01em;
 }
 
+/* XL container expansion */
+@media (min-width: 1680px) {
+  .heroInner {
+    max-width: 1600px;
+  }
+
+  .featured {
+    max-width: 1408px;
+    zoom: 1.06;
+  }
+
+  .pressSection {
+    zoom: 1.06;
+  }
+
+  .pressInner {
+    max-width: 1408px;
+  }
+}
+
 /* Responsive */
 @media (max-width: $phil-breakpoint-lg) {
   .hero {
-    padding: 64px 32px 56px;
+    padding: 64px 0 56px;
   }
 
   .heroInner {
+    padding-inline: 32px;
     grid-template-columns: 1fr;
     gap: 48px;
   }

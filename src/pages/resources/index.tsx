@@ -1,27 +1,40 @@
 import React, { useState, useMemo, useCallback, useRef } from "react";
 import type { HeadFC } from "gatsby";
-import { Link } from "gatsby";
+import { Link, navigate } from "gatsby";
+import { useLocation } from "@reach/router";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import DemoCta from "components/common/DemoCta/DemoCta";
 import Pagination from "components/common/Pagination/Pagination";
 
-import { RESOURCES_DATA, ResourceItem } from "./_data";
+import { RESOURCES_DATA, TOPICS, TYPES } from "./_data";
+import {
+  parseFiltersFromSearch,
+  filterResources,
+  buildFilterUrl,
+  serializeFiltersToSearch,
+  titleForSelection,
+  descriptionForSelection,
+} from "./_urlFilters";
 import * as classes from "./resources.module.css";
 
 /* ─── Custom Dropdown ─── */
 
 type DropdownProps = {
-  options: { key: string; label: string }[];
+  options: readonly { key: string; label: string }[];
   value: string;
   placeholder: string;
   onChange: (value: string) => void;
 };
 
+let dropdownUid = 0;
+
 const Dropdown: React.FC<DropdownProps> = ({ options, value, placeholder, onChange }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const idRef = useRef(`dropdown-${++dropdownUid}`);
+  const listId = `${idRef.current}-list`;
 
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -39,6 +52,10 @@ const Dropdown: React.FC<DropdownProps> = ({ options, value, placeholder, onChan
         type="button"
         className={`${classes.dropdownTrigger} ${open ? classes.dropdownTriggerOpen : ""}`}
         onClick={() => setOpen(!open)}
+        title={selected ? selected.label : placeholder}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={open ? listId : undefined}
       >
         {selected ? (
           <span>{selected.label}</span>
@@ -46,25 +63,31 @@ const Dropdown: React.FC<DropdownProps> = ({ options, value, placeholder, onChan
           <span className={classes.dropdownPlaceholder}>{placeholder}</span>
         )}
       </button>
-      <svg className={classes.filterIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" /></svg>
+      <svg className={classes.filterIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
       {open && (
-        <div className={classes.dropdownPanel}>
-          <button
-            type="button"
+        <div className={classes.dropdownPanel} role="listbox" id={listId} aria-label={placeholder}>
+          <div
+            role="option"
+            aria-selected={!value}
             className={`${classes.dropdownOption} ${!value ? classes.dropdownOptionActive : ""}`}
             onClick={() => { onChange(""); setOpen(false); }}
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onChange(""); setOpen(false); } }}
           >
             {placeholder}
-          </button>
+          </div>
           {options.map((o) => (
-            <button
+            <div
               key={o.key}
-              type="button"
+              role="option"
+              aria-selected={value === o.key}
               className={`${classes.dropdownOption} ${value === o.key ? classes.dropdownOptionActive : ""}`}
               onClick={() => { onChange(o.key); setOpen(false); }}
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onChange(o.key); setOpen(false); } }}
             >
               {o.label}
-            </button>
+            </div>
           ))}
         </div>
       )}
@@ -74,24 +97,6 @@ const Dropdown: React.FC<DropdownProps> = ({ options, value, placeholder, onChan
 
 const CARD_ART_CYCLE = [classes.cardArtForest, classes.cardArtMeadow, classes.cardArtHeritage, classes.cardArtTidewater];
 const PER_PAGE = 9;
-
-const TOPICS = [
-  { key: "direct", label: "Direct-to-Patient" },
-  { key: "access", label: "Access Strategy & Channel Design" },
-  { key: "patient", label: "Patient Experience, Support & Assistance" },
-  { key: "utilization", label: "Utilization Management" },
-  { key: "field", label: "Field Enablement & HCP Engagement" },
-  { key: "data", label: "Data, Technology & Optimization" },
-  { key: "commercial", label: "Commercial Performance" },
-];
-
-const TYPES = [
-  { key: "report", label: "Reports" },
-  { key: "webinar", label: "Webinars" },
-  { key: "blog", label: "Blog" },
-  { key: "press", label: "Press" },
-  { key: "casestudy", label: "Case Studies" },
-];
 
 const PRESS_CARDS = [
   { outlet: "Drug Channels", title: "Beyond DTP 2.0: How Flexible FTP Programs Power Superior Patient Experiences", url: "https://www.drugchannels.net/2025/02/from-data-gaps-to-revenue-gains.html", art: classes.pressArtA },
@@ -134,31 +139,159 @@ function CardLink({ url, className, children }: { url: string; className: string
 }
 
 const ResourcesPage: React.FC = () => {
-  const [topic, setTopic] = useState("");
-  const [type, setType] = useState("");
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  const location = useLocation();
+
+  // Lazy initializer runs once on mount. On the server `location.search` is ""
+  // so we start unfiltered (matches the static HTML). On the client's first
+  // render it reads the real query string and applies the filter immediately.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const initial = useMemo(() => parseFiltersFromSearch(location.search), []);
+
+  const [hadUnavailableFilter, setHadUnavailableFilter] = useState(() => {
+    let rawTopic = "";
+    let rawType = "";
+    try {
+      const params = new URLSearchParams(location.search.replace(/^\?/, ""));
+      rawTopic = params.get("topic") ?? "";
+      rawType = params.get("type") ?? "";
+    } catch {
+      return false;
+    }
+    const topicUnavailable = rawTopic !== "" && initial.topic === "";
+    const typeUnavailable = rawType !== "" && initial.type === "";
+    return topicUnavailable || typeUnavailable;
+  });
+
+  const [topic, setTopic] = useState(initial.topic);
+  const [type, setType] = useState(initial.type);
+  const [search, setSearch] = useState(initial.search);
+  const [page, setPage] = useState(initial.page);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const filtered = useMemo(() => {
-    return RESOURCES_DATA.filter((item) => {
-      if (topic && !item.topics.includes(topic)) return false;
-      if (type && item.type !== type) return false;
-      if (search && !item.title.toLowerCase().includes(search.toLowerCase())) return false;
-      return true;
-    });
-  }, [topic, type, search]);
+  const filtered = useMemo(
+    () => filterResources(RESOURCES_DATA, { topic, type, search }),
+    [topic, type, search],
+  );
+
+  // Single source of URL sync for all filter dimensions (topic, type, search,
+  // page). Each navigate() rewrites the whole query string, so one effect owns
+  // it to avoid two effects clobbering each other's params. This effect is
+  // keyed on STATE only (not location), so it reacts to the user changing a
+  // filter — not to the URL changing underneath it (Back/Forward is handled by
+  // the reconciliation effect below).
+  //
+  // Strategy by what changed:
+  // - Only the free-text `search` differs from the URL → DEBOUNCED + REPLACE,
+  //   so typing a word doesn't flood history with one entry per keystroke.
+  // - Anything else (topic, type, page) → IMMEDIATE + PUSH, so each discrete
+  //   choice is its own history entry and Back restores it.
+  // Never navigates when the canonical target already equals the current URL,
+  // which prevents loops and no-ops on mount.
+  React.useEffect(() => {
+    const sel = { topic, type, search, page };
+    const targetSearch = serializeFiltersToSearch(sel);
+    const currentSearch = location.search === "?" ? "" : location.search;
+    if (targetSearch === currentSearch) {
+      return;
+    }
+
+    const target = buildFilterUrl(location.pathname, sel);
+    const current = parseFiltersFromSearch(location.search);
+    const onlySearchDiffers =
+      current.topic === topic &&
+      current.type === type &&
+      current.page === page &&
+      current.search !== search;
+
+    if (onlySearchDiffers) {
+      const handle = setTimeout(() => {
+        void navigate(target, { replace: true });
+      }, 400);
+      return () => clearTimeout(handle);
+    }
+
+    void navigate(target);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [topic, type, search, page]);
+
+  // Reconcile state FROM the URL when the browser location changes without a
+  // local state change — i.e. the Back/Forward buttons. Reach-router keeps this
+  // page mounted across same-path query changes, so `useState` does not reset on
+  // its own; without this, pressing Back would change the URL but leave the
+  // filters stale (and the sync effect above would fight it). We only set state
+  // when it actually differs from the parsed URL, so the two effects settle in a
+  // single pass rather than ping-ponging. (Navigating away to a card and back
+  // remounts the page, where the lazy initializer already restores state.)
+  React.useEffect(() => {
+    const parsed = parseFiltersFromSearch(location.search);
+    if (parsed.topic !== topic) setTopic(parsed.topic);
+    if (parsed.type !== type) setType(parsed.type);
+    if (parsed.search !== search) setSearch(parsed.search);
+    if (parsed.page !== page) setPage(parsed.page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
+
+  // Layer dynamic, filter-aware metadata on top of the static `Head` export.
+  // Runs only on the client (a `useEffect` never executes during SSR/SSG), so
+  // crawlers fetching raw HTML still see the build-time base title/description,
+  // while human visitors and JS-rendering crawlers get the filtered values.
+  // The helpers apply topic-over-type precedence and return the base defaults
+  // for an empty/invalid selection, so this restores defaults when no valid
+  // filter is active (R8.1–R8.7).
+  React.useEffect(() => {
+    const title = titleForSelection({ topic, type });
+    const description = descriptionForSelection({ topic, type });
+    document.title = title;
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement("meta");
+      metaDesc.setAttribute("name", "description");
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute("content", description);
+  }, [topic, type]);
 
   const isFiltered = topic || type || search;
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const currentPage = Math.min(page, totalPages);
   const paged = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
 
-  const handleFilterChange = useCallback(() => setPage(1), []);
-  const setTopicFilter = (v: string) => { setTopic(v); handleFilterChange(); setTimeout(() => gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0); };
+  const handleFilterChange = useCallback(() => {
+    setPage(1);
+    setHadUnavailableFilter(false);
+  }, []);
+
+  // Smooth-scroll the results into view. Used only by the "Explore topics"
+  // chips, which sit far above the results grid — so clicking one brings the
+  // filtered results into view. The dropdown/search controls deliberately do
+  // NOT scroll, since the user is already at the filter bar.
+  //
+  // We wait two animation frames so the scroll measures the layout AFTER React
+  // commits the new render and the browser lays it out — protecting against any
+  // filter-bar height change (e.g. a long selected label) shifting the target.
+  const scrollToResults = () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  };
+
+  // Dropdown / search handlers — update in place, no scroll.
+  const setTopicFilter = (v: string) => { setTopic(v); handleFilterChange(); };
   const setTypeFilter = (v: string) => { setType(v); handleFilterChange(); };
   const setSearchFilter = (v: string) => { setSearch(v); handleFilterChange(); };
-  const clearFilters = () => { setTopic(""); setType(""); setSearch(""); setPage(1); };
+
+  // "Explore topics" chip handlers — set the filter, then scroll to results.
+  const selectTopicChip = (v: string) => { setTopicFilter(v); scrollToResults(); };
+  const selectCaseStudiesChip = () => { setTypeFilter("casestudy"); scrollToResults(); };
+
+  // Clear ALL active filters — topic, type, AND the free-text search — and reset
+  // pagination. The topic/type sync effect drives the URL back toward the base,
+  // and the debounced search effect clears the `search` param, so the URL ends
+  // at the bare Base_Resources_URL. If nothing was active, the serialized target
+  // already equals the current search and no navigation occurs.
+  const clearFilters = () => { setTopic(""); setType(""); setSearch(""); setPage(1); setHadUnavailableFilter(false); };
 
   const filterLabel = [
     topic && TOPICS.find((t) => t.key === topic)?.label,
@@ -225,7 +358,7 @@ const ResourcesPage: React.FC = () => {
           <div className={classes.topicsEyebrow}>Explore topics</div>
           <div className={classes.topicsGrid}>
             {TOPICS.map((t) => (
-              <button key={t.key} className={classes.topicChip} onClick={() => setTopicFilter(t.key)}>
+              <button key={t.key} className={classes.topicChip} onClick={() => selectTopicChip(t.key)}>
                 <span className={classes.topicGlyph}>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M3 17l6-6 4 4 8-8" /><path d="M14 7h7v7" />
@@ -237,7 +370,7 @@ const ResourcesPage: React.FC = () => {
                 </svg>
               </button>
             ))}
-            <button className={classes.topicChip} onClick={() => setTypeFilter("casestudy")}>
+            <button className={classes.topicChip} onClick={() => selectCaseStudiesChip()}>
               <span className={classes.topicGlyph}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M3 17l6-6 4 4 8-8" /><path d="M14 7h7v7" />
@@ -282,20 +415,37 @@ const ResourcesPage: React.FC = () => {
           </div>
         )}
 
+        {/* Filter-unavailable notice — shown only when the opening URL carried a
+            non-empty topic/type value that no longer resolves to a valid key (R7.4). */}
+        {hadUnavailableFilter && (
+          <div className={classes.filterNotice} role="status">
+            <div className={classes.filterNoticeInner}>
+              The requested filter is unavailable, showing all resources.
+            </div>
+          </div>
+        )}
+
         {/* All Resources */}
         <section className={classes.section}>
-          <div className={classes.cardGrid}>
-            {paged.map((item, i) => (
-              <CardLink key={item.url} url={item.url} className={classes.card}>
-                <div className={`${classes.cardArt} ${CARD_ART_CYCLE[(i + (currentPage - 1) * PER_PAGE) % 4]}`} />
-                <div className={classes.cardBody}>
-                  <span className={classes.cardType}>{item.type}</span>
-                  <h3 className={classes.cardTitle}>{item.title}</h3>
-                  <span className={classes.cardBtn}>{item.buttonLabel} {getCtaIcon(item.buttonLabel)}</span>
-                </div>
-              </CardLink>
-            ))}
-          </div>
+          {filtered.length === 0 ? (
+            <div className={classes.emptyState} role="status">
+              <p className={classes.emptyStateTitle}>No resources match your filters.</p>
+              <p className={classes.emptyStateHint}>Try clearing a filter or adjusting your search.</p>
+            </div>
+          ) : (
+            <div className={classes.cardGrid}>
+              {paged.map((item, i) => (
+                <CardLink key={item.url} url={item.url} className={classes.card}>
+                  <div className={`${classes.cardArt} ${CARD_ART_CYCLE[(i + (currentPage - 1) * PER_PAGE) % 4]}`} />
+                  <div className={classes.cardBody}>
+                    <span className={classes.cardType}>{item.type}</span>
+                    <h3 className={classes.cardTitle}>{item.title}</h3>
+                    <span className={classes.cardBtn}>{item.buttonLabel} {getCtaIcon(item.buttonLabel)}</span>
+                  </div>
+                </CardLink>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Show more / pagination */}
