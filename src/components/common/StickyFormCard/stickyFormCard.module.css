@@ -133,3 +133,25 @@
   line-height: 1.5;
   text-align: center;
 }
+
+@media (max-width: $phil-breakpoint-xl) {
+  .card {
+    padding: 36px 32px;
+  }
+
+  .desc {
+    margin-bottom: 28px;
+  }
+
+  .hubspotForm :global(.hs-form-field) {
+    margin-bottom: 18px;
+  }
+
+  .hubspotForm :global(.hs-submit) {
+    margin-top: 24px;
+  }
+
+  .disclaimer {
+    margin-top: 14px;
+  }
+}

@@ -22,9 +22,9 @@ const HUBSPOT_PORTAL_ID = "20880193";
 const HUBSPOT_FORM_ID = "ca766c17-c6b5-4b29-a1b5-5e4f25655386";
 
 const stats = [
-  { value: 1.9, suffix: "×", decimals: 1, label: "Patient starts", sublabel: "vs. baseline" },
+  { value: 2.2, suffix: "×", decimals: 1, label: "Patient starts", sublabel: "vs. baseline" },
   { value: 2.8, suffix: "×", decimals: 1, label: "Covered dispenses", sublabel: "vs. baseline" },
-  { value: 2.7, suffix: "×", decimals: 1, label: "Gross Revenue Potential", sublabel: "vs. baseline", highlight: true },
+  { value: 2.6, suffix: "×", decimals: 1, label: "Gross Revenue Potential", sublabel: "vs. baseline", highlight: true },
 ];
 
 const benchmarks = [
@@ -164,7 +164,7 @@ const GtnLandingPage: React.FC = () => (
                 <OpportunityCard
                   tag="Higher Coverage"
                   title="Convert covered scripts into covered dispenses."
-                  description="Drive 85%+ PA submission rates and 2x+ covered dispenses vs. traditional channels."
+                  description="Drive 90%+ PA submission rates and 2x+ covered dispenses vs. traditional channels."
                   visual={<CoverageVisual />}
                 />
                 <OpportunityCard
