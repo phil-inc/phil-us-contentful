@@ -187,7 +187,9 @@ body {
 /* ── Select / dropdown fields ── */
 .creTypeInput,
 .creExpirationMonth,
+.creExpirationMonthField,
 .creExpirationYear,
+.creExpirationYearField,
 .creStateField,
 .creCountryField,
 .creAccountTypeField {
@@ -210,7 +212,9 @@ body {
 }
 
 .creExpirationMonth:focus,
+.creExpirationMonthField:focus,
 .creExpirationYear:focus,
+.creExpirationYearField:focus,
 .creStateField:focus,
 .creCountryField:focus {
     border-color: #1a56ff;
@@ -237,6 +241,14 @@ td.creExpirationLabel {
     margin-bottom: 5px;
 }
 
+/* Hide the empty <label> Chase inserts between month and year selects —
+   it becomes a flex child that creates a gap and shifts the chevron positions. */
+.creExpirationRow td label {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
 /* Make every <td> inside the expiration row a flex-row container.
    Also position:relative so the ::after chevron can be placed inside it. */
 .creExpirationRow td {
@@ -256,10 +268,12 @@ td.creExpirationLabel,
     display: block !important;
 }
 
-/* CSS border chevron on each td that wraps a select.
-   <select> elements don't reliably render background-image in WebKit/iOS Safari
-   even with appearance:none, so we use ::after on the parent <td> instead.
-   Excludes the label <td> via :not(.creExpirationLabel). */
+/* CSS border chevrons for month + year selects.
+   Chase places BOTH selects inside a single <td>, so there is only one
+   pseudo-element slot per TD. We use ::after for the year (right side)
+   and ::before for the month (positioned at the midpoint of the TD). */
+
+/* Year chevron — right side of the shared TD */
 .creExpirationRow td:not(.creExpirationLabel)::after {
     content: "";
     position: absolute;
@@ -274,22 +288,38 @@ td.creExpirationLabel,
     z-index: 2;
 }
 
+/* Month chevron — 11px from the midpoint (right edge of month select) */
+.creExpirationRow td:not(.creExpirationLabel)::before {
+    content: "";
+    position: absolute;
+    right: calc(50% + 11px);
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid #888888;
+    border-bottom: 1.5px solid #888888;
+    pointer-events: none;
+    z-index: 2;
+}
+
 /* Month and Year selects — flex children, split 50/50, joined appearance.
    Background-image removed — chevron is handled by the parent td ::after above. */
-.creExpirationMonth {
+.creExpirationMonth,
+.creExpirationMonthField {
     flex: 1 1 0% !important;
     width: 100% !important;
-    margin-right: 0 !important;
-    border-right: none !important;
-    border-radius: 8px 0 0 8px !important;
+    margin-right: 4px !important;
+    border-radius: 8px !important;
     background-image: none !important;
     padding-right: 28px !important;
 }
 
-.creExpirationYear {
+.creExpirationYear,
+.creExpirationYearField {
     flex: 1 1 0% !important;
     width: 100% !important;
-    border-radius: 0 8px 8px 0 !important;
+    border-radius: 8px !important;
     background-image: none !important;
     padding-right: 28px !important;
 }
