@@ -255,19 +255,29 @@ td.creExpirationLabel,
     display: block !important;
 }
 
-/* Month and Year selects — flex children, split 50/50, joined appearance */
+/* Month and Year selects — flex children, split 50/50, joined appearance.
+   Background-image is re-declared with !important because the flex override
+   can cause some browsers to drop the inherited chevron from the base rule. */
 .creExpirationMonth {
     flex: 1 1 0% !important;
     width: 100% !important;
     margin-right: 0 !important;
     border-right: none !important;
     border-radius: 8px 0 0 8px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    padding-right: 30px !important;
 }
 
 .creExpirationYear {
     flex: 1 1 0% !important;
     width: 100% !important;
     border-radius: 0 8px 8px 0 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    padding-right: 30px !important;
 }
 
 .creCVV2Row {
