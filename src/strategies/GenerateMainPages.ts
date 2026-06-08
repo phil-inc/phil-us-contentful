@@ -132,6 +132,9 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   
   if (page.slug === "faqs") return;
 
+  // /pharma is served by the static file-based page at src/pages/pharma/index.tsx
+  if (page.slug === "pharma") return;
+
   // TODO: Remove this override once the Contentful GTN page slug is changed to "gtn/calculator"
   const slug = page.title === "GTN" ? "gtn/calculator" : page.slug;
 
