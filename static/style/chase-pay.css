@@ -238,46 +238,60 @@ td.creExpirationLabel {
 }
 
 /* Make every <td> inside the expiration row a flex-row container.
-   This covers the case where Chase puts both selects in a single <td>
-   (they stack by default in block layout — flex-direction:row fixes it). */
+   Also position:relative so the ::after chevron can be placed inside it. */
 .creExpirationRow td {
     display: flex !important;
     flex-direction: row !important;
     flex: 1 1 auto !important;
     min-width: 0 !important;
     padding: 0 !important;
+    position: relative !important;
+    overflow: visible !important;
 }
 
-/* But if the label IS a <td>, give it full width and block layout */
+/* But if the label IS a <td>, give it full width and block layout, no chevron */
 td.creExpirationLabel,
 .creExpirationRow td:has(.creExpirationLabel) {
     flex: 0 0 100% !important;
     display: block !important;
 }
 
+/* CSS border chevron on each td that wraps a select.
+   <select> elements don't reliably render background-image in WebKit/iOS Safari
+   even with appearance:none, so we use ::after on the parent <td> instead.
+   Excludes the label <td> via :not(.creExpirationLabel). */
+.creExpirationRow td:not(.creExpirationLabel)::after {
+    content: "";
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid #888888;
+    border-bottom: 1.5px solid #888888;
+    pointer-events: none;
+    z-index: 2;
+}
+
 /* Month and Year selects — flex children, split 50/50, joined appearance.
-   Background-image is re-declared with !important because the flex override
-   can cause some browsers to drop the inherited chevron from the base rule. */
+   Background-image removed — chevron is handled by the parent td ::after above. */
 .creExpirationMonth {
     flex: 1 1 0% !important;
     width: 100% !important;
     margin-right: 0 !important;
     border-right: none !important;
     border-radius: 8px 0 0 8px !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-    background-repeat: no-repeat !important;
-    background-position: right 10px center !important;
-    padding-right: 30px !important;
+    background-image: none !important;
+    padding-right: 28px !important;
 }
 
 .creExpirationYear {
     flex: 1 1 0% !important;
     width: 100% !important;
     border-radius: 0 8px 8px 0 !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-    background-repeat: no-repeat !important;
-    background-position: right 10px center !important;
-    padding-right: 30px !important;
+    background-image: none !important;
+    padding-right: 28px !important;
 }
 
 .creCVV2Row {
