@@ -9,6 +9,7 @@ import DemoCta from "components/common/DemoCta/DemoCta";
 import Pagination from "components/common/Pagination/Pagination";
 
 import { RESOURCES_DATA, TOPICS, TYPES } from "./_data";
+import { PRESS_DATA } from "../press/_data";
 import {
   parseFiltersFromSearch,
   filterResources,
@@ -98,12 +99,11 @@ const Dropdown: React.FC<DropdownProps> = ({ options, value, placeholder, onChan
 const CARD_ART_CYCLE = [classes.cardArtForest, classes.cardArtMeadow, classes.cardArtHeritage, classes.cardArtTidewater];
 const PER_PAGE = 9;
 
-const PRESS_CARDS = [
-  { outlet: "Drug Channels", title: "Beyond DTP 2.0: How Flexible FTP Programs Power Superior Patient Experiences", url: "https://www.drugchannels.net/2025/02/from-data-gaps-to-revenue-gains.html", art: classes.pressArtA },
-  { outlet: "Fierce Pharma", title: "The Hidden GTN Drain: Why Streamlining the PA Process is Key to Commercial Success", url: "https://www.fiercepharma.com/sponsored/hidden-gtn-drain-why-specialty-lite-brands-need-streamline-their-pa-process-optimal", art: classes.pressArtB },
-  { outlet: "Life Science Leader", title: "Pharma Direct-To-Patient 2.0: From Experiment to Imperative", url: "https://www.lifescienceleader.com/doc/pharma-direct-to-patient-from-experiment-to-imperative-0001", art: classes.pressArtC },
-  { outlet: "BioPharma Dive", title: "Bridging Data Gaps that Impact Retail and Specialty-lite Success", url: "https://www.biopharmadive.com/spons/bridging-the-data-gaps-that-impact-retail-and-specialty-lite-success/747704/", art: classes.pressArtD },
-];
+const PRESS_ART_CYCLE = [classes.pressArtA, classes.pressArtB, classes.pressArtC, classes.pressArtD];
+const PRESS_CARDS = PRESS_DATA
+  .filter((d) => d.type === "Thought Leadership")
+  .slice(0, 4)
+  .map((d, i) => ({ outlet: d.outlet, title: d.title, url: d.url, art: PRESS_ART_CYCLE[i] }));
 
 const ArrowIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
@@ -167,6 +167,17 @@ const ResourcesPage: React.FC = () => {
   const [search, setSearch] = useState(initial.search);
   const [page, setPage] = useState(initial.page);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (initial.topic || initial.type || initial.search) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filtered = useMemo(
     () => filterResources(RESOURCES_DATA, { topic, type, search }),

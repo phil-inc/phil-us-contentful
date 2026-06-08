@@ -37,7 +37,7 @@ export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({routerP
 	const prevPath = prevRouterProps?.location?.pathname;
 	const nextPath = routerProps?.location?.pathname;
 	if (prevPath && nextPath && prevPath === nextPath) {
-		if (nextPath.startsWith('/resources') || nextPath.startsWith('/press')) {
+		if (nextPath === '/resources' || nextPath === '/resources/' || nextPath === '/press' || nextPath === '/press/') {
 			return false;
 		}
 	}

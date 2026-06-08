@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import type { HeadFC } from "gatsby";
 import { navigate } from "gatsby";
 import { useLocation } from "@reach/router";
@@ -51,6 +51,18 @@ const PressPage: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const initialPage = useMemo(() => parsePageFromSearch(location.search), []);
   const [page, setPage] = useState(initialPage);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (initialPage > 1) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Sync state → URL
   React.useEffect(() => {
@@ -148,7 +160,7 @@ const PressPage: React.FC = () => {
         </section>
 
         {/* All Coverage */}
-        <section className={classes.pressSection}>
+        <section className={classes.pressSection} ref={gridRef}>
           <div className={classes.pressInner}>
             <div className={classes.pressEyebrow}>All Coverage</div>
             <div className={classes.pressGrid}>

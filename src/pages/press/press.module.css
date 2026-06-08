@@ -252,6 +252,7 @@
 /* Press grid section */
 .pressSection {
   padding: 0 0 96px;
+  scroll-margin-top: 140px;
 }
 
 .pressInner {
