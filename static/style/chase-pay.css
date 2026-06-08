@@ -241,14 +241,6 @@ td.creExpirationLabel {
     margin-bottom: 5px;
 }
 
-/* Hide the empty <label> Chase inserts between month and year selects —
-   it becomes a flex child that creates a gap and shifts the chevron positions. */
-.creExpirationRow td label {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-}
-
 /* Make every <td> inside the expiration row a flex-row container.
    Also position:relative so the ::after chevron can be placed inside it. */
 .creExpirationRow td {
