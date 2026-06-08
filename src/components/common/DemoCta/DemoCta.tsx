@@ -8,6 +8,7 @@ type DemoCtaProps = {
   description?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  className?: string;
 };
 
 const DemoCta: React.FC<DemoCtaProps> = ({
@@ -16,8 +17,9 @@ const DemoCta: React.FC<DemoCtaProps> = ({
   description,
   ctaLabel = "Book A Demo",
   ctaHref = "/demo",
+  className,
 }) => (
-  <section className={classes.section}>
+  <section className={`${classes.section} ${className || ''}`}>
     <div className={classes.inner}>
       <div>
         {eyebrow && <div className={classes.eyebrow}>{eyebrow}</div>}

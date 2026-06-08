@@ -6,6 +6,32 @@ export interface ResourceItem {
   buttonLabel: string;
 }
 
+/**
+ * Canonical topic key → label map. Single source of truth shared by the
+ * Resources page controls, the URL filter helper, and metadata generation.
+ */
+export const TOPICS = [
+  { key: "direct", label: "Direct-to-Patient" },
+  { key: "access", label: "Access Strategy & Channel Design" },
+  { key: "patient", label: "Patient Experience, Support & Assistance" },
+  { key: "utilization", label: "Utilization Management" },
+  { key: "field", label: "Field Enablement & HCP Engagement" },
+  { key: "data", label: "Data, Technology & Optimization" },
+  { key: "commercial", label: "Commercial Performance" },
+] as const;
+
+/**
+ * Canonical type key → label map. Single source of truth shared by the
+ * Resources page controls, the URL filter helper, and metadata generation.
+ */
+export const TYPES = [
+  { key: "report", label: "Reports" },
+  { key: "webinar", label: "Webinars" },
+  { key: "blog", label: "Blog" },
+  { key: "press", label: "Press" },
+  { key: "casestudy", label: "Case Studies" },
+] as const;
+
 export const RESOURCES_DATA: ResourceItem[] = [
   {
     title: "Protecting Gross-to-Net Performance Through Single-Channel Ecosystems",
