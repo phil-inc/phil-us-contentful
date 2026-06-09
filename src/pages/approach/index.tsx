@@ -218,15 +218,28 @@ const ApproachOutcomesPage = () => {
     if (idx >= 0 && idx < JOURNEY_STEPS.length) setActiveStep(idx);
   }, []);
 
-  // Trustpilot widget loader
+  // Trustpilot widget loader (matches providers pattern)
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js";
-    script.async = true;
-    document.head.appendChild(script);
-    return () => {
-      document.head.removeChild(script);
+    if (typeof window === "undefined") return;
+    const initWidgets = () => {
+      document
+        .querySelectorAll<HTMLElement>(".trustpilot-widget:not([data-initialized])")
+        .forEach((el) => {
+          if (window.Trustpilot) {
+            window.Trustpilot.loadFromElement(el);
+            el.dataset.initialized = "true";
+          }
+        });
     };
+    if (window.Trustpilot) {
+      initWidgets();
+    } else {
+      const script = document.createElement("script");
+      script.src = "https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js";
+      script.async = true;
+      script.onload = initWidgets;
+      document.body.appendChild(script);
+    }
   }, []);
 
   // Animate sol-direct-wrap sidebar on scroll

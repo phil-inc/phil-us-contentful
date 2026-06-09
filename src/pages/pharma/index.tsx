@@ -483,19 +483,27 @@ const ReviewQuoteCard = ({
 };
 
 const SupportSection = () => {
-  const tpRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js";
-    script.async = true;
-    script.onload = () => {
-      if (tpRef.current && window.Trustpilot) {
-        window.Trustpilot.loadFromElement(tpRef.current);
-      }
+    if (typeof window === "undefined") return;
+    const initWidgets = () => {
+      document
+        .querySelectorAll<HTMLElement>(".trustpilot-widget:not([data-initialized])")
+        .forEach((el) => {
+          if (window.Trustpilot) {
+            window.Trustpilot.loadFromElement(el);
+            el.dataset.initialized = "true";
+          }
+        });
     };
-    document.head.appendChild(script);
-    return () => { document.head.removeChild(script); };
+    if (window.Trustpilot) {
+      initWidgets();
+    } else {
+      const script = document.createElement("script");
+      script.src = "https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js";
+      script.async = true;
+      script.onload = initWidgets;
+      document.body.appendChild(script);
+    }
   }, []);
 
   return (
@@ -529,7 +537,6 @@ const SupportSection = () => {
 
         <div className={classes.trustpilotStrip}>
           <div
-            ref={tpRef}
             className="trustpilot-widget tp-horizontal"
             data-locale="en-US"
             data-template-id="5406e65db0d04a09e042d5fc"
