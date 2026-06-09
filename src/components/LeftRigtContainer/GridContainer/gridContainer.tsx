@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Flex, Grid, Text, Title } from "@mantine/core";
+import { Box, Button, Flex, Grid, Text, Title } from "@mantine/core";
 import PageContext from "contexts/PageContext";
 import {
   ITextandTextColumnsWithFooterSection,
@@ -15,6 +15,9 @@ import {
   DEMO_FROM_SECTION,
   THANKS_FOR_YOUR_INTEREST_IN_PHILRX,
 } from "constants/identifiers";
+import { BUTTON_STYLE } from "constants/global.constant";
+import { getLink } from "utils/getLink";
+import { Link } from "gatsby";
 
 import BasicSectionColumn from "components/sectionInColumn/basicSectionColumn/BasicSectionColumn";
 
@@ -194,16 +197,57 @@ const GridContainer: React.FunctionComponent<IGridContainerProps> = ({
       >
         {column?.references &&
           column.references.map((entry: any, idx: number) => {
-            return (
-              <React.Fragment key={entry.id || idx}>
-                {[
-                  DEMO_FROM_SECTION,
-                  THANKS_FOR_YOUR_INTEREST_IN_PHILRX,
-                ].includes(entry.header) && (
+            const isDemo = [
+              DEMO_FROM_SECTION,
+              THANKS_FOR_YOUR_INTEREST_IN_PHILRX,
+            ].includes(entry.header);
+
+            if (isDemo) {
+              return (
+                <React.Fragment key={entry.id || idx}>
                   <BasicSectionColumn section={entry} />
-                )}
-              </React.Fragment>
-            );
+                </React.Fragment>
+              );
+            }
+
+            if (entry?.__typename === "ContentfulButton") {
+              const isSecondary = entry.buttonStyle === BUTTON_STYLE.Secondary;
+              const isOvalButton = /oval/i.test(entry.buttonStyle ?? "");
+              const { link, isExternal } = getLink(entry, true);
+              const label = `${entry.buttonText ?? ""}${isOvalButton ? " \u2192" : ""}`;
+              
+              const btn = (
+                <Button
+                  className={cx(classes.button, {
+                    [classes.ovalBtn]: isOvalButton,
+                  })}
+                  variant={isSecondary ? "white" : "philDefault"}
+                >
+                  {label}
+                </Button>
+              );
+
+              return (
+                <Box key={entry.id || idx} className={classes.gtnCtaButtonWrap}>
+                  {isExternal ? (
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={classes.gtnCtaButtonLink}
+                    >
+                      {btn}
+                    </a>
+                  ) : (
+                    <Link to={link} className={classes.gtnCtaButtonLink}>
+                      {btn}
+                    </Link>
+                  )}
+                </Box>
+              );
+            }
+
+            return null;
           })}
       </div>
     );

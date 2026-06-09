@@ -1,0 +1,128 @@
+/* Matches GTN standalone: .opp-card, .opp-card:hover, .opp-card .vis, .vis svg */
+.main {
+	--ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	min-height: 360px;
+	border-radius: 20px;
+	border: 1px solid #d7dcdc;
+	background: #ffffff;
+	padding: 36px 32px 32px;
+	box-sizing: border-box;
+	transition:
+		transform 250ms var(--ease-standard),
+		box-shadow 250ms var(--ease-standard),
+		border-color 250ms var(--ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.main:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 20px 44px -12px rgba(0, 75, 72, 0.22);
+		border-color: #00827e;
+	}
+
+	/* Spotlight keeps shadow on hover; base rule below sets box-shadow: none */
+	.main[data-spotlight="true"]:hover {
+		box-shadow: 0 20px 44px -12px rgba(0, 75, 72, 0.22);
+	}
+
+	.main:hover .graphic :is(img, svg) {
+		transform: scale(1.04);
+	}
+}
+
+.main[data-spotlight="true"] {
+	border: none;
+	background: var(--opp-spotlight-bg, #00827e);
+	color: #ffffff;
+	box-shadow: none;
+}
+
+.graphic {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 96px;
+	margin: 0 0 28px;
+	position: relative;
+}
+
+.graphic :is(img, svg) {
+	transition: transform 350ms var(--ease-standard);
+	transform-origin: left center;
+}
+
+.graphic img,
+.graphic picture {
+	max-width: 220px;
+	width: 100%;
+	height: auto;
+}
+
+.eyebrow {
+	font-family: Raleway, sans-serif;
+	font-weight: 700;
+	font-size: 12px;
+	line-height: 1.2;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: #00827e;
+	margin: 0 0 14px;
+}
+
+.main[data-spotlight="true"] .eyebrow {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	min-width: 0;
+}
+
+.spotlightHero {
+	font-family: Raleway, sans-serif;
+	font-weight: 800;
+	font-size: clamp(56px, 8vw, 88px);
+	line-height: 0.95;
+	letter-spacing: -0.02em;
+	color: #ffffff;
+	margin: 0 0 8px;
+
+	@media (min-width: $phil-breakpoint-md) {
+		margin-bottom: 12px;
+	}
+}
+
+.cardTitle {
+	font-family: Raleway, sans-serif;
+	font-weight: 700;
+	font-size: 30px;
+	line-height: 1.1;
+	letter-spacing: -0.01em;
+	color: #0a0a0a;
+	margin: 0 0 12px !important;
+}
+
+.main[data-spotlight="true"] .cardTitle {
+	color: #ffffff;
+}
+
+.paragraph {
+	font-family: Lato, sans-serif;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 1.55;
+	color: #525252;
+	margin: 0 !important;
+}
+
+.main[data-spotlight="true"] .paragraph {
+	color: rgba(255, 255, 255, 0.85);
+}
