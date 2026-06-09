@@ -50,7 +50,7 @@ export const JOURNEY_STEPS = [
     breaks:
       "Prescribers have no reliable way to know where to send a script, scripts can be routed to pharmacies not contracted within plan, and coverage is left on the table before the journey even starts.",
     helps:
-      "PHIL is a single solution for pharmacy fulfillment, helping to connect each script to the right pharmacy, based on patient coverage and preference, across our 50-state network. The result: 3×+ covered dispenses compared to traditional channels.",
+      "PHIL is a single solution for pharmacy fulfillment, helping to connect each script to the right pharmacy, based on patient coverage and preference, across our 50-state network to help enable brand access to more covered dispenses compared to traditional channels."
   },
   {
     title: "Digital Patient Enrollment & Onboarding",
@@ -115,19 +115,19 @@ export const SOLUTIONS_HUB = {
 export const SOLUTIONS_PILLARS = [
   {
     title: "Direct-to-Patient",
-    text: "A fully integrated, eCommerce-like experience that streamlines intake, telemedicine, coverage, routing, and fulfillment, supporting conversion from scripts to start and maximizing overall program performance.",
+    text: "A fully integrated, eCommerce-like experience that streamlines intake, telemedicine, coverage, routing, and fulfillment, supporting the script journey from start to finish and maximizing program performance."
   },
   {
     title: "Digital Hub",
-    text: "A technology-driven hub that streamlines medication access through proprietary prior authorization and benefits verification, optimizing navigation for payer-covered, patient access to therapy.",
+    text: "A technology-driven hub that streamlines medication access through proprietary prior authorization and benefits verification, enabling flexible navigation across both payer-covered and cash pathways to therapy."
   },
   {
     title: "Pharmacy Network",
-    text: "A fully integrated dispense model within our 50-state network with 98%+ plan coverage helps enable more covered dispenses and provide patients the most affordable cost.",
+    text: "A fully integrated dispense model across our PHIL pharmacies and 50-state partner network, with 98% plan coverage, enables seamless fulfillment and patient access to medications at the most affordable price."
   },
   {
     title: "Data & Insights",
-    text: "End-to-end script visibility with access to continuous data-driven insights and consultative support to refine programs for better outcomes and brand success.",
+    text: "End-to-end script visibility with access to continuous data-driven insights and consultative support with suggestions to help refine programs for better outcomes and brand success."
   },
 ] as const;
 
