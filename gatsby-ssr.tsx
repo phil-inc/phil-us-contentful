@@ -38,8 +38,6 @@ const resourceHints = [
 	// DNS-only for deferred/analytics scripts
 	<link key="dns-hsforms" rel="dns-prefetch" href="//js.hsforms.net" />,
 	<link key="dns-trustpilot" rel="dns-prefetch" href="//widget.trustpilot.com" />,
-	<link key="dns-linkedin" rel="dns-prefetch" href="//snap.licdn.com" />,
-	<link key="dns-zoominfo" rel="dns-prefetch" href="//js.zi-scripts.com" />,
 	<link key="dns-ytimg" rel="dns-prefetch" href="//i.ytimg.com" />,
 ];
 
