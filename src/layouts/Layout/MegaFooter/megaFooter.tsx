@@ -36,7 +36,7 @@ const NAV_COLUMNS: NavColumn[] = [
       { label: "Overview", href: "/solution/" },
       { label: "Digital Hub", href: "/solution/core/" },
       { label: "Direct-to-Patient", href: "/solution/direct/" },
-      { label: "Approach & Impact", href: "/approach-outcomes/" },
+      { label: "Approach & Impact", href: "/approach/" },
     ],
   },
   {

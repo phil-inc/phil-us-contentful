@@ -55,7 +55,7 @@
 .sectionHead h2 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 54px;
+  font-size: 48px;
   line-height: 1.05;
   letter-spacing: -0.015em;
   margin: 0 0 22px;
@@ -74,7 +74,11 @@
 .band {
   position: relative;
   overflow: hidden;
-  padding: 110px 0;
+  padding: 70px 0;
+}
+/* ROI section: 70px bottom padding + 70px margin = 140px total gap to the CTA */
+.roiSection {
+  margin-bottom: 10px;
 }
 .bandMuted {
   background: var(--phil-paper);
@@ -94,14 +98,14 @@
     radial-gradient(ellipse 60% 40% at 0% 0%, rgba(0, 130, 126, 0.06), transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 0%, rgba(0, 130, 126, 0.06), transparent 70%),
     var(--phil-pure);
-  padding: 56px 0 110px;
+  padding: 70px 0;
 }
 .bandStories {
   background:
     radial-gradient(ellipse 60% 40% at 0% 100%, rgba(0, 130, 126, 0.06), transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 100%, rgba(0, 130, 126, 0.06), transparent 70%),
     var(--phil-pure);
-  padding: 56px 0;
+  padding: 70px 0;
 }
 
 /* ---------- Buttons ---------- */
@@ -150,8 +154,8 @@
   text-decoration: none;
 }
 .learnLink svg {
-  width: 32px;
-  height: 16px;
+  width: 22px;
+  height: 12px;
   flex-shrink: 0;
 }
 
@@ -160,7 +164,7 @@
    ============================================================= */
 .hero {
   position: relative;
-  padding: 96px 0 0;
+  padding: 70px 0;
   background:
     radial-gradient(ellipse 60% 40% at 0% 100%, rgba(0, 130, 126, 0.06), transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 100%, rgba(0, 130, 126, 0.06), transparent 70%),
@@ -185,26 +189,28 @@
 
 .heroSub {
   font-family: var(--font-body);
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.55;
   color: var(--phil-gunmetal);
+  max-width: none;
   margin: 0 0 32px;
   text-wrap: pretty;
 }
 
-/* ---------- Challenge/Solution grid ---------- */
+/* ---------- Challenge/Solution grid (single gradient panel + nested stat) ---------- */
 .cpGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 22px;
   align-items: stretch;
 }
 .cpRow {
+  height: 100%;
   border-radius: 22px;
   padding: 22px 22px 20px;
   display: grid;
-  grid-template-rows: 1fr 56px 1fr;
-  gap: 0;
+  grid-template-rows: auto auto;
+  gap: 14px;
   overflow: hidden;
   position: relative;
   box-shadow: 0 24px 50px -18px rgba(0, 75, 72, 0.32);
@@ -220,25 +226,18 @@
   background: linear-gradient(135deg, #D5F1F0 0%, #A8E2DA 50%, #F2E8C0 100%);
 }
 
-/* Connector arrow between impact and barrier cards */
+/* Connector is hidden in this layout (kept in DOM for parity) */
 .cpConnector {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--phil-foliage);
-}
-.cpConnector svg {
-  width: 28px;
-  height: 28px;
-  transform: rotate(90deg);
+  display: none;
 }
 
-/* Impact card (top of each column) */
+/* Impact text sits on top of the gradient, transparent */
 .impactCard {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   padding: 4px 4px 0 6px;
-  height: 100%;
-  min-height: 220px;
-  align-content: start;
+  min-height: 0;
 }
 .impactCardH3 {
   font-family: var(--font-display);
@@ -264,21 +263,25 @@
   color: var(--phil-pitch);
 }
 
-/* Barrier card (bottom of each column) */
+/* Nested translucent stat card */
 .barrierCard {
   background: rgba(255, 255, 255, 0.55);
   color: var(--phil-pitch);
   border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 22px;
-  height: 100%;
-  min-height: 240px;
+  border-radius: 16px;
+  box-shadow: none;
   backdrop-filter: blur(2px);
   padding: 18px 22px 16px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-decoration: none;
   transition: transform 250ms var(--ease-standard), box-shadow 250ms var(--ease-standard);
+}
+.cpRow:nth-child(3) .barrierCard {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.9);
 }
 .barrierCard:hover {
   transform: translateY(-4px);
@@ -312,19 +315,25 @@
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.01em;
+  text-transform: none;
   color: var(--phil-foliage);
   padding-top: 14px;
   margin: auto 0 0;
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 8px;
   opacity: 0.95;
-  transition: opacity 200ms var(--ease-standard);
+  transition: opacity 200ms var(--ease-standard), color 200ms var(--ease-standard);
 }
 .barrierCard:hover .barrierCite {
   opacity: 1;
 }
 .barrierCiteArr {
+  font-style: normal;
+  font-size: 17px;
+  line-height: 1;
+  display: inline-block;
   transition: transform 240ms var(--ease-emphasis);
 }
 .barrierCard:hover .barrierCiteArr {
@@ -346,7 +355,7 @@
     radial-gradient(ellipse 60% 40% at 0% 0%, rgba(0, 130, 126, 0.06), transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 0%, rgba(0, 130, 126, 0.06), transparent 70%),
     var(--phil-pure);
-  padding: 110px 0 56px;
+  padding: 70px 0;
 }
 
 /* Stepper */
@@ -368,6 +377,25 @@
   background: var(--phil-base);
   z-index: 0;
 }
+/* Animated foliage progress line — grows with the active step */
+.journeyStepper::after {
+  content: "";
+  position: absolute;
+  left: 6%;
+  top: 50px;
+  height: 2px;
+  background: var(--phil-foliage);
+  z-index: 1;
+  width: 0;
+  transition: width 400ms var(--ease-standard);
+}
+.journeyStepper[data-step="1"]::after { width: 0; }
+.journeyStepper[data-step="2"]::after { width: calc((100% - 12%) * 0.1667); }
+.journeyStepper[data-step="3"]::after { width: calc((100% - 12%) * 0.3333); }
+.journeyStepper[data-step="4"]::after { width: calc((100% - 12%) * 0.5); }
+.journeyStepper[data-step="5"]::after { width: calc((100% - 12%) * 0.6667); }
+.journeyStepper[data-step="6"]::after { width: calc((100% - 12%) * 0.8333); }
+.journeyStepper[data-step="7"]::after { width: calc(100% - 12%); }
 
 .jNode {
   position: relative;
@@ -452,10 +480,37 @@
   color: var(--phil-foliage);
 }
 
+/* Pulsing "next step" arrow — sits in the gap before the next circle */
+.jNode::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50px;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  background: var(--phil-foliage);
+  clip-path: polygon(0 38%, 55% 38%, 55% 12%, 100% 50%, 55% 88%, 55% 62%, 0 62%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms var(--ease-standard);
+  z-index: 1;
+}
+.jNodeActive + .jNode::before {
+  opacity: 1;
+  animation: jStepNudge 2.6s var(--ease-standard) infinite;
+}
+@keyframes jStepNudge {
+  0%, 100% { transform: translate(-65%, -50%) scale(0.95); opacity: 0.5; }
+  50%      { transform: translate(-35%, -50%) scale(1.08); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jNodeActive + .jNode::before { animation: none; opacity: 0.85; }
+}
+
 /* Step panels */
 .jSteps {
   position: relative;
-  min-height: 380px;
 }
 .jStep {
   position: absolute;
@@ -466,6 +521,8 @@
   transition: opacity 350ms var(--ease-standard), transform 350ms var(--ease-standard), visibility 0s linear 350ms;
 }
 .jStepActive {
+  position: relative;
+  inset: auto;
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -535,7 +592,7 @@
   color: var(--phil-pitch);
   margin: 6px 0 12px;
 }
-.fieldLabel {
+.jStepInner .fieldLabel {
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 11px;
@@ -547,7 +604,7 @@
   align-items: center;
   gap: 8px;
 }
-.fieldLabelBreaks {
+.jStepInner .fieldLabelBreaks {
   color: #B45A4B;
 }
 .fieldLabelBreaks::before {
@@ -557,7 +614,7 @@
   background: #B45A4B;
   border-radius: 999px;
 }
-.fieldLabelHelps {
+.jStepInner .fieldLabelHelps {
   color: var(--phil-foliage);
 }
 .fieldLabelHelps::before {
@@ -844,7 +901,7 @@
   justify-content: center;
   align-items: center;
   gap: 48px;
-  margin-top: 96px;
+  margin-top: 40px;
   flex-wrap: wrap;
 }
 
@@ -878,6 +935,23 @@
   padding: 0;
   min-height: 240px;
 }
+.hcpHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 0 0 28px;
+}
+.hcpHeading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  color: var(--phil-pitch);
+  margin: 0;
+  text-wrap: balance;
+}
 .hcpGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -898,8 +972,7 @@
   position: relative;
   min-height: 220px;
   background:
-    radial-gradient(ellipse 90% 80% at 100% 0%, rgba(125, 230, 203, 0.32), transparent 70%),
-    linear-gradient(140deg, #EEF7F3 0%, #DCEFE7 100%);
+    linear-gradient(160deg, #FAFEFC 0%, #ECF7F3 60%, #DDEFEA 100%);
   overflow: hidden;
   transition: transform 320ms var(--ease-standard), box-shadow 320ms var(--ease-standard);
   box-shadow: 0 1px 2px rgba(10, 30, 20, 0.04);
@@ -920,24 +993,17 @@
   align-self: center;
 }
 .quoteMark {
-  grid-area: mark;
-  align-self: start;
-  width: 32px;
-  height: 28px;
-  position: relative;
-}
-.quoteMark::before,
-.quoteMark::after {
-  content: "";
   position: absolute;
-  top: 0;
-  width: 11px;
-  height: 18px;
-  border-radius: 0 0 12px 12px;
-  background: rgba(42, 168, 158, 0.55);
+  top: 18px;
+  right: 24px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(0, 130, 126, 0.15);
+  pointer-events: none;
+  user-select: none;
 }
-.quoteMark::before { left: 0; transform: rotate(180deg); }
-.quoteMark::after { left: 18px; transform: rotate(180deg); }
 .hcpQuote {
   grid-area: quote;
   margin: 0;
@@ -947,6 +1013,11 @@
   line-height: 1.55;
   color: var(--phil-pitch);
   align-self: start;
+  transition: opacity 280ms var(--ease-standard), transform 280ms var(--ease-standard);
+}
+.hcpQuoteLeaving {
+  opacity: 0;
+  transform: translateY(4px);
 }
 .hcpAttrib {
   grid-area: attrib;
@@ -956,6 +1027,10 @@
   font-weight: 400;
   margin: 0;
   align-self: end;
+  transition: opacity 280ms var(--ease-standard);
+}
+.hcpAttribLeaving {
+  opacity: 0;
 }
 .hcpAttrib strong {
   font-weight: 700;
@@ -966,46 +1041,55 @@
   font-weight: 400;
   color: var(--phil-gunmetal);
   font-size: 13px;
-  margin-left: 6px;
+}
+.hcpAttribRole::before {
+  content: ", ";
 }
 .hcpBar {
   grid-area: bar;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 10px;
+  align-items: center;
   margin-top: 6px;
 }
-.hcpBar span {
+.hcpDot {
+  appearance: none;
+  border: 0;
+  padding: 0;
   display: block;
   height: 3px;
+  flex: 1;
   border-radius: 2px;
   background: rgba(8, 80, 65, 0.16);
+  cursor: pointer;
+  transition: background 240ms var(--ease-standard);
 }
-.hcpBar span:last-child {
+.hcpDot:hover {
+  background: rgba(8, 80, 65, 0.4);
+}
+.hcpDotActive {
   background: var(--phil-forest);
 }
 
 /* =============================================================
-   SECTION 5 — CUSTOMER SUCCESS  (1:1 with design HTML)
+   SECTION 5 — CUSTOMER SUCCESS
    ============================================================= */
 .csGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  align-items: start;
 }
 .csCard {
   position: relative;
   border-radius: 24px;
   padding: 26px 28px 22px;
-  height: 340px;
-  display: flex;
-  flex-direction: column;
+  min-height: 280px;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
   gap: 14px;
   overflow: hidden;
   text-decoration: none;
   isolation: isolate;
-  align-self: start;
   transition: transform 320ms var(--ease-standard), box-shadow 320ms var(--ease-standard);
 }
 .csCard:hover,
@@ -1073,6 +1157,7 @@
   color: #FFFFFF;
   margin: 0;
   text-wrap: balance;
+  align-self: start;
 }
 .csStatLine em {
   font-style: normal;
@@ -1319,26 +1404,52 @@
 .btnOnDark {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: #ffffff;
-  color: #00827e;
-  font-family: "Lato", sans-serif;
+  gap: 12px;
+  background: var(--phil-pure);
+  color: var(--phil-foliage);
+  border: 1.5px solid var(--phil-pure);
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: 15px;
-  padding: 16px 28px;
+  font-size: 16px;
+  padding: 20px 36px;
   border-radius: 999px;
+  cursor: pointer;
   text-decoration: none;
-  transition: transform 0.15s, gap 0.15s;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(10, 50, 50, 0.18);
+  transition: background 200ms var(--ease-standard), color 200ms var(--ease-standard), border-color 200ms var(--ease-standard), transform 120ms var(--ease-standard), box-shadow 200ms var(--ease-standard);
 }
-.btnOnDark svg {
-  width: 16px;
-  height: 16px;
+.btnOnDark::after {
+  content: "→";
+  display: inline-block;
+  width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: width 0.2s var(--ease-emphasis), opacity 0.2s var(--ease-emphasis), margin-left 0.2s var(--ease-emphasis), transform 0.2s var(--ease-emphasis);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1;
 }
 .btnOnDark:hover {
+  box-shadow: 0 10px 24px rgba(10, 50, 50, 0.18);
+}
+.btnOnDark:hover::after {
+  width: 1em;
+  opacity: 1;
+  margin-left: 10px;
+  transform: translateX(0);
+}
+.btnOnDark:active {
+  transform: translateY(1px);
+}
+.finalCtaButtons {
+  display: flex;
   gap: 14px;
-  transform: translateY(-1px);
-  color: #00827e;
-  text-decoration: none;
+  align-items: center;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
 }
 
 /* =============================================================
@@ -1350,18 +1461,24 @@
   .impactCardH3 { font-size: 34px; }
   .csGrid { grid-template-columns: repeat(2, 1fr); }
   .hcpGrid { grid-template-columns: 1fr 1fr; }
-  .jStepInner { grid-template-columns: 80px 1fr; row-gap: 16px; }
+  .jStepInner { grid-template-columns: 80px 1fr; row-gap: 16px; column-gap: 28px; }
+  .jStepInner .stepNum { grid-column: 1; grid-row: 1 / span 3; }
+  .jStepInner > div:not(.stepNum) { grid-column: 2; }
+  .jStepInner .helpsCol { margin-top: 0; }
   .journeyStepper { grid-template-columns: repeat(3, 1fr); row-gap: 32px; }
   .journeyStepper::before { display: none; }
+  .journeyStepper::after { display: none; }
+  .jNode::before { display: none; }
   .roiBanner { grid-template-columns: 1fr; padding: 48px; }
   .finalCta { padding: 40px 20px 48px; min-height: auto; }
   .finalCtaWrap { flex-direction: column; align-items: flex-start; gap: 32px; padding: 48px 0; }
   .finalCtaH2 { max-width: 100%; font-size: 40px; }
+  .finalCtaButtons { width: 100%; }
+  .finalCtaButtons .btnOnDark { width: 100%; padding: 14px 24px; text-align: center; justify-content: center; }
 }
 
 @media (max-width: 980px) {
   .cpGrid { grid-template-columns: 1fr; }
-  .cpRow { grid-template-rows: auto 36px auto; }
   .cpRow:nth-child(2) { transform: none; }
   .solPillars { grid-template-columns: 1fr; gap: 12px; }
   .solHub { padding: 36px 28px 110px; }
@@ -1387,13 +1504,14 @@
   .journey { padding: 64px 0; }
   .journeyStepper { grid-template-columns: repeat(4, 1fr); gap: 8px; row-gap: 16px; padding-top: 0; }
   .journeyStepper::before { display: none; }
+  .journeyStepper::after { display: none; }
+  .jNode::before { display: none; }
   .jCircle { width: 56px; height: 56px; }
   .jCircle svg { width: 24px; height: 24px; }
   .jTitle { font-size: 11.5px; max-width: 100%; }
-  .jSteps { min-height: 0; }
-  .jStep { position: relative; }
-  .jStepActive { position: relative; inset: auto; }
   .jStepInner { padding: 26px 22px; grid-template-columns: 1fr; gap: 16px; border-radius: 16px; }
+  .jStepInner .stepNum { grid-column: 1; grid-row: auto; }
+  .jStepInner > div:not(.stepNum) { grid-column: 1; }
   .stepNum { font-size: 44px; }
 
   .solHub { padding: 32px 24px 100px; border-radius: 22px; }
@@ -1412,7 +1530,7 @@
   .roiBanner { gap: 28px; padding: 32px 26px; border-radius: 22px; }
   .roiBanner h2 { font-size: 26px; }
 
-  .finalCta { padding: 56px 0; }
+  .finalCta { padding: 56px 20px; }
   .finalCtaH2 { font-size: 32px; }
   .heroFoot { margin-top: 40px; }
 }

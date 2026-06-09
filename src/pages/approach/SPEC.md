@@ -1,14 +1,14 @@
 # Approach & Outcomes Page — SPEC
 
 ## Scope
-New page at `/approach-outcomes`.
+New page at `/approach`.
 
 ## Route
-`/approach-outcomes` — file-based Gatsby page at `src/pages/approach-outcomes/index.tsx`.
+`/approach` — file-based Gatsby page at `src/pages/approach/index.tsx`.
 
 ## Component List
-- **New:** `src/pages/approach-outcomes/index.tsx` (page component)
-- **New:** `src/pages/approach-outcomes/approachOutcomes.module.css` (all styles)
+- **New:** `src/pages/approach/index.tsx` (page component)
+- **New:** `src/pages/approach/approachOutcomes.module.css` (all styles)
 - **Reused:** `Layout` (shared header/footer)
 - **Modified:** `MegaNav.tsx` (add nav link under Why PHIL)
 - **Modified:** `megaFooter.tsx` (add footer link under Our Solution)
@@ -18,8 +18,8 @@ New page at `/approach-outcomes`.
 - Description: "PHIL's platform removes barriers to branded prescriptions by solving access, affordability, and adherence — driving measurable commercial outcomes for pharma brands."
 
 ## Navigation Changes
-- **MegaNav:** Add "Our Approach and Outcomes" as first item under Our Solution → Why PHIL, linking to `/approach-outcomes/`
-- **MegaFooter:** Add "Approach & Impact" under Our Solution, linking to `/approach-outcomes/`
+- **MegaNav:** Add "Our Approach and Outcomes" as first item under Our Solution → Why PHIL, linking to `/approach/`
+- **MegaFooter:** Add "Approach & Impact" under Our Solution, linking to `/approach/`
 
 ## Sections (in order)
 1. Hero — headline + 3 gradient challenge/solution columns (Access, Affordability, Adherence)

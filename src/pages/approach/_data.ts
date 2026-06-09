@@ -1,7 +1,7 @@
 export const APPROACH_TITLE = "Our Approach & Outcomes | PHIL";
 export const APPROACH_DESC =
   "PHIL's platform removes barriers to branded prescriptions by solving access, affordability, and adherence — driving measurable commercial outcomes for pharma brands.";
-export const APPROACH_URL = "https://phil.us/approach-outcomes/";
+export const APPROACH_URL = "https://phil.us/approach/";
 
 export const APPROACH_HERO = {
   eyebrow: "Our Approach & Outcomes",
@@ -40,7 +40,7 @@ export const APPROACH_PILLARS = [
 export const JOURNEY_HEAD = {
   eyebrow: "The Patient Journey",
   h2: "Keeping Patients Adherent from First Fill to Refill",
-  lead: "Every year, millions of patients abandon their branded prescriptions, not because a therapy doesn't exist, but because of the complexity and expense of navigating a path to treatment. PHIL's platform removes those barriers, driving measurable outcomes across access, affordability, and adherence.",
+  lead: "From the moment a prescription is written to every refill that follows, patients face obstacles that can prevent starting and staying on therapy. PHIL simplifies the experience end-to-end, helping patients access, afford, and stay adherent with their medication.",
 } as const;
 
 export const JOURNEY_STEPS = [
@@ -58,7 +58,7 @@ export const JOURNEY_STEPS = [
     breaks:
       "Long enrollment forms, call-center waits, and app downloads create abandonment and many patients never complete this step.",
     helps:
-      "App-free SMS enrollment and an eCommerce-like digital experience make joining frictionless, getting patients into the program and on their way to therapy in under 1 minute.",
+      "App-free SMS enrollment and an eCommerce-like digital experience make joining frictionless, getting patients enrolled into the program and on their way to therapy in minutes.",
   },
   {
     title: "Benefits Verification & Prior Authorization",
@@ -66,7 +66,7 @@ export const JOURNEY_STEPS = [
     breaks:
       "Prior Authorization requests get stuck in manual workflows, patients wait, and providers may not submit a Prior Authorization, resulting in delays to patient therapy access.",
     helps:
-      "PHIL's electronic benefits verification and Prior Authorization process works within existing providers workflows, reducing delays and supporting timely script fulfillment. PHIL delivers 85%+ HCP PA submission rates across our programs.",
+      "PHIL's electronic benefits verification and Prior Authorization process works within existing providers workflows, reducing delays and supporting timely script fulfillment. PHIL delivers 90%+ HCP PA submission rates across our programs.",
   },
   {
     title: "Patient Out-of-pocket Cost",
@@ -170,22 +170,99 @@ export const PROOF_HEAD = {
   lead: "The best measure of whether a patient access program works isn't a metric on a dashboard, it's whether patients receive their medication, have a positive experience along the way, and whether providers feel confident guiding them through the program. Here's what they say about PHIL.",
 } as const;
 
-export const HCP_TESTIMONIALS = [
+export const TP_HEADING = "Hear from Happy PHILRx Patients";
+export const HCP_HEADING = "Feedback from Providers, Patients, and Pharma Partners";
+
+// One card per category; each card rotates through its own items.
+// DOM/display order: Providers, Patients, Pharma.
+export const TESTIMONIAL_GROUPS = [
   {
-    quote: "PHILRx is very helpful with getting my patients their medications quickly.",
-    name: "Jeffrey T.",
-    role: "Healthcare provider",
+    cat: "providers",
+    tag: "What providers say",
+    items: [
+      {
+        quote: "PHILRx provides great support for patients, and convenient ways for providers to reach out.",
+        name: "Elizabeth R.",
+        role: "Healthcare provider",
+      },
+      {
+        quote:
+          "Communication is fantastic! From start to finish, PHILRx does a great job keeping [our office] in the loop.",
+        name: "Susan F.",
+        role: "Healthcare provider",
+      },
+      {
+        quote: "PHILRx is very helpful with getting my patients their medications quickly.",
+        name: "Jeffrey T.",
+        role: "Healthcare provider",
+      },
+    ],
   },
   {
-    quote:
-      "Communication is fantastic! From start to finish, PHILRx does a great job keeping [our office] in the loop.",
-    name: "Susan F.",
-    role: "Healthcare provider",
+    cat: "patients",
+    tag: "What patients say",
+    items: [
+      {
+        quote:
+          "I wasn't able to afford a medication that helped me. My doctor found it through PHILRx, and I could continually purchase 3 months of this prescription at a time to receive a HUGE discount. It changed my life.",
+        name: "Carla R.",
+        role: "PHIL Patient",
+      },
+      {
+        quote:
+          "I felt that my needs were being considered from the very beginning. That was so refreshing to me because it was out of the ordinary for a company to express such consideration, especially for a new customer like myself!",
+        name: "Dawn M.",
+        role: "PHIL Patient",
+      },
+      {
+        quote:
+          "The staff at PHILRx are very customer-oriented, staying connected and providing guidance throughout the whole prescription process. They are knowledgeable and friendly. The experience was pleasant!",
+        name: "Ryan S.",
+        role: "PHIL Patient",
+      },
+      {
+        quote:
+          "PHILRx does everything right! They ship quickly, bill my insurance directly, and I do not have to remember to ask for a refill. The entire process is easy and simple — it's really a no brainer. Love the service!",
+        name: "Margaret Y.",
+        role: "PHIL Patient",
+      },
+      {
+        quote:
+          "My experience with PHILRx is always reliable. My medication delivery has always been exactly when they said it would be, the packaging has been very good, and I appreciate the updates about my prescription and refills.",
+        name: "Henry L.",
+        role: "PHIL Patient",
+      },
+      {
+        quote:
+          "PHILRx makes it so easy to get your prescription! From getting the required authorization to delivering it right to your door, they do it all for you.",
+        name: "Joyce W.",
+        role: "PHIL Patient",
+      },
+    ],
   },
   {
-    quote: "PHILRx provides great support for patients, and convenient ways for providers to reach out.",
-    name: "Elizabeth R.",
-    role: "Healthcare provider",
+    cat: "pharma",
+    tag: "What pharma says",
+    items: [
+      {
+        quote:
+          "Phil is very strong in driving starts and adherence across our portfolio. As a partner, we love their willingness to be agile and create new things with us that hadn't necessarily been done before.",
+        name: "SVP, Market Access",
+        role: "PHIL Client",
+      },
+      {
+        quote:
+          "We consider PHIL's integrated digital platform and their ability to drive conversions to be first-in-class. They deliver a true, e-commerce experience for patients versus the much more cumbersome traditional patient experience.",
+        name: "Director, Patient Support Services",
+        role: "PHIL Client",
+      },
+      {
+        quote:
+          "We selected Phil because of their leadership in the space, as well as their ability to offer real-time access to end-to-end data in a centrally accessible platform. This was really important to us and our brand.",
+        name: "Head of Commercial",
+        role: "PHIL Client",
+      },
+    ],
   },
 ] as const;
 
@@ -201,6 +278,7 @@ export const CASE_STUDIES = [
     stat: "Continued engagement. Simple refill management.",
     em: "3× more refills",
     suffix: " than retail.",
+    brBeforeEm: false,
     brand: "Neurology brand",
     href: "/insights/case-studies/philrx-launches-robust-channel-strategy-for-specialty-lite-migraine-brand/",
   },
@@ -210,6 +288,7 @@ export const CASE_STUDIES = [
     stat: "Less abandonment. More coverage.",
     em: "4× covered dispenses",
     suffix: " where other channels fell short.",
+    brBeforeEm: false,
     brand: "Women's health brand",
     href: "/insights/case-studies/philrx-unlocks-90-dispense-coverage-for-womens-health-brand/",
   },
@@ -219,6 +298,7 @@ export const CASE_STUDIES = [
     stat: "Two minutes. Easy enrollment.",
     em: "5× first fills",
     suffix: " per patient for the ophthalmology brand.",
+    brBeforeEm: false,
     brand: "Ophthalmology brand",
     href: "/insights/case-studies/philrx-drives-high-adoption-for-ophthalmology-brand/",
   },
@@ -228,6 +308,7 @@ export const CASE_STUDIES = [
     stat: "No PA bottlenecks. No provider frustration.",
     em: "91% HCP PA submission rate",
     suffix: " from day one.",
+    brBeforeEm: true,
     brand: "Women's health DTP",
     href: "/insights/case-studies/philrx-designs-transformative-telemedicine-channel-for-womens-health-brand/",
   },

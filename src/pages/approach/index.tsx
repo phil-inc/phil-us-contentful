@@ -5,9 +5,8 @@ import type { HeadFC } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import { getOgImage } from "utils/getOgImage";
-import DemoCta from "components/common/DemoCta/DemoCta";
 
-import * as classes from "./approachOutcomes.module.css";
+import * as classes from "./approach.module.css";
 import {
   APPROACH_TITLE,
   APPROACH_DESC,
@@ -21,7 +20,9 @@ import {
   SOLUTIONS_PILLARS,
   SOLUTIONS_DIRECT_GROUPS,
   PROOF_HEAD,
-  HCP_TESTIMONIALS,
+  TP_HEADING,
+  HCP_HEADING,
+  TESTIMONIAL_GROUPS,
   STORIES_HEAD,
   CASE_STUDIES,
   ROI,
@@ -134,12 +135,80 @@ const CpConnector = () => (
   </div>
 );
 
-// ─── Arrow SVG ───────────────────────────────────────────────────────────────
+// ─── Arrow SVG (matches design .learn-link arrow) ────────────────────────────
 const ArrowRight = () => (
-  <svg viewBox="0 0 32 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M2 8h26M22 3l6 5-6 5" />
+  <svg viewBox="0 0 22 12" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M1 6h18M16 2.5l3.5 3.5L16 9.5" />
   </svg>
 );
+
+// ─── Rotating testimonial card (per-card timer + fade, matches pharma) ────────
+const HcpTestimonialCard: React.FC<{ group: (typeof TESTIMONIAL_GROUPS)[number] }> = ({ group }) => {
+  const [idx, setIdx] = useState(0);
+  const [leaving, setLeaving] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const idxRef = useRef(idx);
+  idxRef.current = idx;
+
+  const goTo = useCallback(
+    (n: number) => {
+      setLeaving(true);
+      setTimeout(() => {
+        setIdx(n % group.items.length);
+        setLeaving(false);
+      }, 280);
+    },
+    [group.items.length],
+  );
+
+  const start = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => goTo(idxRef.current + 1), 6000);
+  }, [goTo]);
+
+  useEffect(() => {
+    start();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [start]);
+
+  const item = group.items[idx];
+
+  return (
+    <article
+      className={classes.hcpCard}
+      onMouseEnter={() => {
+        if (timerRef.current) clearInterval(timerRef.current);
+      }}
+      onMouseLeave={start}
+    >
+      <p className={classes.hcpTag}>{group.tag}</p>
+      <span className={classes.quoteMark} aria-hidden="true">{"\u201C"}</span>
+      <blockquote className={`${classes.hcpQuote} ${leaving ? classes.hcpQuoteLeaving : ""}`}>
+        &ldquo;{item.quote}&rdquo;
+      </blockquote>
+      <p className={`${classes.hcpAttrib} ${leaving ? classes.hcpAttribLeaving : ""}`}>
+        <strong>{item.name}</strong>
+        <span className={classes.hcpAttribRole}>{item.role}</span>
+      </p>
+      <div className={classes.hcpBar} role="tablist">
+        {group.items.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            className={`${classes.hcpDot} ${i === idx ? classes.hcpDotActive : ""}`}
+            onClick={() => {
+              goTo(i);
+              start();
+            }}
+            aria-label={`Testimonial ${i + 1}`}
+          />
+        ))}
+      </div>
+    </article>
+  );
+};
 
 // ─── Page Component ──────────────────────────────────────────────────────────
 const ApproachOutcomesPage = () => {
@@ -193,7 +262,7 @@ const ApproachOutcomesPage = () => {
   }, [activeStep, goToStep]);
 
   return (
-    <PageContext.Provider value={{ slug: "approach-outcomes" }}>
+    <PageContext.Provider value={{ slug: "approach" }}>
       <Layout>
         <div className={classes.page}>
           {/* ═══ HERO ═══ */}
@@ -233,7 +302,7 @@ const ApproachOutcomesPage = () => {
                         <p className={classes.barrierLabel}>{pillar.barrierLabel}</p>
                       </div>
                       <p className={classes.barrierCite}>
-                        PHIL Research Report, 2026 <span className={classes.barrierCiteArr}>→</span>
+                        PHIL Research Report, 2026 <span className={classes.barrierCiteArr} aria-hidden="true">→</span>
                       </p>
                     </a>
                   </div>
@@ -258,7 +327,7 @@ const ApproachOutcomesPage = () => {
               </div>
 
               {/* Stepper */}
-              <div className={classes.journeyStepper}>
+              <div className={classes.journeyStepper} data-step={activeStep + 1}>
                 {JOURNEY_STEPS.map((step, i) => {
                   const Icon = JourneyIcons[i];
                   return (
@@ -390,7 +459,7 @@ const ApproachOutcomesPage = () => {
               </div>
 
               {/* Trustpilot */}
-              <h3 className={classes.tpHeading}>Hear from Happy PHILRx Patients</h3>
+              <h3 className={classes.tpHeading}>{TP_HEADING}</h3>
               <div className={classes.tpWidgetWrap}>
                 <div
                   className="trustpilot-widget"
@@ -409,24 +478,13 @@ const ApproachOutcomesPage = () => {
                 </div>
               </div>
 
-              {/* HCP testimonials */}
-              <h3 className={classes.tpHeading}>Real Feedback from Real Providers</h3>
-              <div className={classes.hcpGrid}>
-                {HCP_TESTIMONIALS.map((t, i) => (
-                  <article key={i} className={classes.hcpCard}>
-                    <p className={classes.hcpTag}>What providers say</p>
-                    <div className={classes.quoteMark} aria-hidden="true" />
-                    <blockquote className={classes.hcpQuote}>
-                      &ldquo;{t.quote}&rdquo;
-                    </blockquote>
-                    <p className={classes.hcpAttrib}>
-                      <strong>{t.name}</strong>
-                      <span className={classes.hcpAttribRole}>{t.role}</span>
-                    </p>
-                    <div className={classes.hcpBar} aria-hidden="true">
-                      <span /><span /><span /><span />
-                    </div>
-                  </article>
+              {/* HCP / Patient / Pharma testimonials */}
+              <div className={classes.hcpHead}>
+                <h3 className={classes.hcpHeading}>{HCP_HEADING}</h3>
+              </div>
+              <div className={classes.hcpGrid} aria-live="polite">
+                {TESTIMONIAL_GROUPS.map((group) => (
+                  <HcpTestimonialCard key={group.cat} group={group} />
                 ))}
               </div>
             </div>
@@ -442,7 +500,13 @@ const ApproachOutcomesPage = () => {
 
               <div className={classes.csGrid}>
                 {CASE_STUDIES.map((cs, i) => (
-                  <Link key={i} className={`${classes.csCard} ${COLOR_CLASS_MAP[cs.colorKey]}`} to={cs.href}>
+                  <a
+                    key={i}
+                    className={`${classes.csCard} ${COLOR_CLASS_MAP[cs.colorKey]}`}
+                    href={cs.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <svg className={classes.csRings} viewBox="0 0 380 380" aria-hidden="true">
                       <circle cx="190" cy="190" r="60" />
                       <circle cx="190" cy="190" r="110" />
@@ -451,7 +515,7 @@ const ApproachOutcomesPage = () => {
                     <div className={classes.csWave} aria-hidden="true" />
                     <p className={classes.csTag}>{cs.tag}</p>
                     <p className={classes.csStatLine}>
-                      {cs.stat} <em>{cs.em}</em>{cs.suffix}
+                      {cs.stat}{cs.brBeforeEm ? <br /> : " "}<em>{cs.em}</em>{cs.suffix}
                     </p>
                     <p className={classes.csBrand}>{cs.brand}</p>
                     <span className={classes.csLink}>
@@ -465,7 +529,7 @@ const ApproachOutcomesPage = () => {
                     <div className={classes.csDots} aria-hidden="true">
                       <span /><span /><span /><span /><span /><span />
                     </div>
-                  </Link>
+                  </a>
                 ))}
               </div>
 
@@ -478,7 +542,7 @@ const ApproachOutcomesPage = () => {
           </section>
 
           {/* ═══ ROI CALCULATOR ═══ */}
-          <section className={classes.band} style={{ padding: "64px 0" }}>
+          <section className={`${classes.band} ${classes.roiSection}`}>
             <div className="xl-container">
               <p className={classes.eyebrow} style={{ marginBottom: 22 }}>{ROI.eyebrow}</p>
               <div className={classes.roiBanner}>
@@ -504,7 +568,19 @@ const ApproachOutcomesPage = () => {
           </section>
 
           {/* ═══ FINAL CTA ═══ */}
-          <DemoCta heading={FINAL_CTA.heading} description={FINAL_CTA.description} />
+          <section className={classes.finalCta}>
+            <div className={`xl-container ${classes.finalCtaWrap}`}>
+              <div>
+                <h2 className={classes.finalCtaH2}>{FINAL_CTA.heading}</h2>
+                <p className={classes.finalCtaP}>{FINAL_CTA.description}</p>
+              </div>
+              <div className={classes.finalCtaButtons}>
+                <Link className={classes.btnOnDark} to="/demo/">
+                  Book Demo
+                </Link>
+              </div>
+            </div>
+          </section>
         </div>
       </Layout>
     </PageContext.Provider>
