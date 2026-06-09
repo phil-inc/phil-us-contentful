@@ -44,7 +44,7 @@ export const STAKEHOLDERS = [
     name: "Brand & Commercial Leaders",
     icon: "chart",
     problem: "Traditional retail is eroding net revenue and limiting visibility into script performance.",
-    solve: "We optimize program performance by improving visibility across the journey, enabling data-driven decisions that strengthen access and outcomes and promote more consistent script-to-start conversions.",
+    solve: "We optimize program performance by improving visibility across the journey, enabling data-driven decisions that strengthen access and outcomes and drive smarter commercial decisions.",
     learnMoreHref: "/resources/?topic=commercial",
   },
   {
