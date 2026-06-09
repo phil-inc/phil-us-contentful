@@ -159,8 +159,7 @@ const HeroSection = () => {
                   </div>
                   <div className={classes.checks}>
                     <div className={classes.checkRow}>
-                      <span className={classes.check}>✓</span> Enroll in &lt; 1
-                      min
+                      <span className={classes.check}>✓</span> Enroll in minutes
                     </div>
                     <div className={classes.checkRow}>
                       <span className={classes.check}>✓</span> Fast, free
