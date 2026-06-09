@@ -62,6 +62,56 @@ const stakeholderIcons: Record<string, React.ReactNode> = {
   ),
 };
 
+// ─── Count-up animation ─────────────────────────────────────────────────────
+
+/** Parse "3×+" → { num: 3, decimals: 0, suffix: "×+" } */
+function parseStatValue(raw: string) {
+  const match = raw.match(/^([\d.]+)(.*)/);
+  if (!match) return null;
+  const num = parseFloat(match[1]);
+  const decimals = match[1].includes(".") ? match[1].split(".")[1].length : 0;
+  return { num, decimals, suffix: match[2] };
+}
+
+function AnimatedStat({ value }: { value: string }) {
+  const parsed = parseStatValue(value);
+  const ref = useRef<HTMLSpanElement>(null);
+  const [display, setDisplay] = useState(parsed ? "0" + (parsed.decimals > 0 ? "." + "0".repeat(parsed.decimals) : "") + parsed.suffix : value);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!parsed || !ref.current) return;
+    const el = ref.current;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const { num, decimals, suffix } = parsed;
+          const duration = 1600;
+          const start = performance.now();
+
+          const tick = (now: number) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = eased * num;
+            setDisplay(current.toFixed(decimals) + suffix);
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [parsed]);
+
+  return <span ref={ref}>{display}</span>;
+}
+
 // ─── Variant class map ───────────────────────────────────────────────────────
 
 const variantClass: Record<string, string> = {
@@ -100,7 +150,7 @@ const HeroSection = () => (
                 aria-hidden={i >= STATS.length ? true : undefined}
               >
                 <div>
-                  <p className={classes.statNum}>{stat.value}</p>
+                  <p className={classes.statNum}><AnimatedStat value={stat.value} /></p>
                   <p className={classes.statLabel}>{stat.label}</p>
                 </div>
               </article>
@@ -260,8 +310,21 @@ const PlatformSection = () => (
 // ─── SECTION 4: Stakeholders ─────────────────────────────────────────────────
 
 const StakeholdersSection = () => {
-  const [activeKey, setActiveKey] = useState(STAKEHOLDERS[0].key);
+  const [activeKey, setActiveKey] = useState(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.replace("#", "");
+      if (STAKEHOLDERS.some((s) => s.key === hash)) return hash;
+    }
+    return STAKEHOLDERS[0].key;
+  });
   const active = STAKEHOLDERS.find((s) => s.key === activeKey)!;
+
+  const selectTab = (key: string) => {
+    setActiveKey(key);
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `#${key}`);
+    }
+  };
 
   return (
     <section className={`${classes.band} ${classes.stkBg}`}>
@@ -284,7 +347,7 @@ const StakeholdersSection = () => {
                 role="tab"
                 aria-selected={activeKey === s.key}
                 className={activeKey === s.key ? classes.stkTabActive : classes.stkTab}
-                onClick={() => setActiveKey(s.key)}
+                onClick={() => selectTab(s.key)}
               >
                 <span className={classes.stkTabIcon} aria-hidden="true">
                   {stakeholderIcons[s.icon]}
@@ -335,7 +398,7 @@ const StakeholdersSection = () => {
                   </div>
                 </div>
 
-                <Link className={classes.stkLearn} to="/resources/">
+                <Link className={classes.stkLearn} to={s.learnMoreHref}>
                   Learn More
                   <span aria-hidden="true">
                     <ArrowRight />
@@ -453,7 +516,7 @@ const SupportSection = () => {
               See how leading retail and specialty-lite brands are partnering with PHIL to drive
               measurable performance across patient access, affordability, and adherence.
             </p>
-            <Link className={classes.rcCta} to="/resources/">
+            <Link className={classes.rcCta} to="/resources/?type=casestudy">
               Read More
               <span className={classes.rcCtaArrow} aria-hidden="true">
                 <svg viewBox="0 0 28 18"><path d="M2 9h22M18 3l6 6-6 6" /></svg>

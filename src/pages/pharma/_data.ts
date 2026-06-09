@@ -1,6 +1,6 @@
 import { PHARMA_FAQ_GROUPS } from "data/faq-content";
 
-export const PHARMA_TITLE = "Pharma · PHIL";
+export const PHARMA_TITLE = "Pharma | PHIL";
 export const PHARMA_DESC =
   "PHIL is the all-in-one access platform for retail and specialty lite pharma brands to maximize outcomes and drive measurable performance.";
 export const PHARMA_URL = "https://phil.us/pharma/";
@@ -33,7 +33,7 @@ export const PARTNER_PANELS = [
   },
   {
     key: "value",
-    title: "Maximize Script-to-Start Conversion",
+    title: "Deliver Measurable Commercial Impact",
     body: "PHIL helps pharma brands improve patient access to therapy from the moment a script is written. From navigating utilization management hurdles to delivering an exceptional patient experience, our platform improves affordability and adherence while helping to deliver real results. Brands on PHIL see improved script to fill rates and stronger patient adherence compared to traditional channels.",
   },
 ] as const;
@@ -45,6 +45,7 @@ export const STAKEHOLDERS = [
     icon: "chart",
     problem: "Traditional retail is eroding net revenue and limiting visibility into script performance.",
     solve: "We optimize program performance by improving visibility across the journey, enabling data-driven decisions that strengthen access and outcomes and promote more consistent script-to-start conversions.",
+    learnMoreHref: "/resources/?topic=commercial",
   },
   {
     key: "access",
@@ -52,6 +53,7 @@ export const STAKEHOLDERS = [
     icon: "package",
     problem: "Fragmented access experience, payer restrictions and prior auth burdens can block patients from starting therapy.",
     solve: "We help close the loop between program activation and dispense data, equipping market access teams with visibility into real patient engagement while streamlining the access journey to reduce friction and maximize conversion of eligible scripts into filled prescriptions.",
+    learnMoreHref: "/resources/?topic=access",
   },
   {
     key: "trade",
@@ -59,6 +61,7 @@ export const STAKEHOLDERS = [
     icon: "truck",
     problem: "With too many handoffs and inconsistent program offerings, traditional retail channels weren't built to optimize for brand performance.",
     solve: "We optimize pharmacy routing and channel performance across all 50 states, helping connect every script to the fastest, most cost-effective path to the patient based on patient coverage and preference.",
+    learnMoreHref: "/resources/?topic=field",
   },
   {
     key: "hub",
@@ -66,6 +69,7 @@ export const STAKEHOLDERS = [
     icon: "people",
     problem: "Fragmented hub operations create delays, drop-offs, and a poor patient experience.",
     solve: "Our integrated platform connects every touchpoint, from affordability to fulfillment, in one seamless and top rated patient experience.",
+    learnMoreHref: "/resources/?topic=patient",
   },
   {
     key: "innovation",
@@ -73,6 +77,7 @@ export const STAKEHOLDERS = [
     icon: "bulb",
     problem: "Legacy access infrastructure can't keep pace with how patients and providers expect to engage with brands today.",
     solve: "Our platform is built for what's next, with the flexibility, scalability, and AI-driven capabilities to integrate with the digital health ecosystem your brand is building.",
+    learnMoreHref: "/resources/?topic=data",
   },
 ] as const;
 

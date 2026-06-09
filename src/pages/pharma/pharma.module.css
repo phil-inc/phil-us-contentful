@@ -73,25 +73,21 @@
 }
 .btnOnDark::after {
   content: "→";
-  display: inline-block;
-  width: 0;
-  margin-left: 0;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: width 0.2s var(--ease-emphasis), opacity 0.2s var(--ease-emphasis), margin-left 0.2s var(--ease-emphasis), transform 0.2s var(--ease-emphasis);
+  display: inline-flex;
+  align-items: center;
   font-weight: 700;
-  font-size: 18px;
-  line-height: 1;
+  font-size: 27px;
+  line-height: 0;
+  vertical-align: middle;
+  transform: scaleX(0.8) scaleY(1.1);
+  transition: transform 0.2s var(--ease-emphasis);
 }
 .btnOnDark:hover {
-  box-shadow: 0 10px 24px rgba(10, 50, 50, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(10, 50, 50, 0.25);
 }
 .btnOnDark:hover::after {
-  width: 1em;
-  opacity: 1;
-  margin-left: 10px;
-  transform: translateX(0);
+  transform: scaleX(0.8) scaleY(1.1) translateX(7px);
 }
 .btnOnDark:active { transform: translateY(1px); }
 
@@ -188,6 +184,7 @@
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  max-width: 1020px;
 }
 
 /* =============================================================
@@ -356,8 +353,6 @@
 .partnerTab:hover {
   border-color: var(--phil-foliage);
   color: var(--phil-foliage);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px -14px rgba(0, 75, 72, 0.35);
 }
 .partnerTabActive {
   composes: partnerTab;
@@ -369,7 +364,6 @@
 .partnerTabActive:hover {
   border-color: transparent;
   color: var(--phil-pure);
-  transform: translateY(-3px);
 }
 .partnerPanel {
   display: none;

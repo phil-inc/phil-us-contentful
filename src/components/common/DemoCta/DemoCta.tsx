@@ -29,9 +29,6 @@ const DemoCta: React.FC<DemoCtaProps> = ({
       <div className={classes.actions}>
         <Link to={ctaHref} className={classes.btnPrimary}>
           {ctaLabel}
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
         </Link>
       </div>
     </div>
