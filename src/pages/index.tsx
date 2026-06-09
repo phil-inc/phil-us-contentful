@@ -267,7 +267,7 @@ function PhoneMockup() {
         <div className={classes.phoneBubble}>
           Hi Sarah! Dr. Jones sent your Adaptrex® prescription to the PHILRx pharmacy. Tap below to get started.
         </div>
-        {["Enroll in < 1 min", "Fast, free shipping", "Easy refills"].map((text, i) => (
+        {["Enroll in minutes", "Fast, free shipping", "Easy refills"].map((text, i) => (
           <div key={i} className={classes.phoneFeature} data-i={i}>
             <div className={classes.phoneFeatureIcon}>
               <svg viewBox="0 0 14 14" width="12" height="12" fill="none">
