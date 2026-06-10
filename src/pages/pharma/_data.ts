@@ -2,7 +2,7 @@ import { PHARMA_FAQ_GROUPS } from "data/faq-content";
 
 export const PHARMA_TITLE = "Pharma | PHIL";
 export const PHARMA_DESC =
-  "PHIL is the all-in-one access platform for retail and specialty lite pharma brands to maximize outcomes and drive measurable performance.";
+  "PHIL is the end-to-end access platform for retail and specialty-lite pharma brands to maximize outcomes and drive measurable performance.";
 export const PHARMA_URL = "https://phil.us/pharma/";
 
 export const STATS = [
@@ -74,6 +74,7 @@ export const STAKEHOLDERS = [
   {
     key: "innovation",
     name: "Innovation & Digital Health",
+    panelName: "Innovation & Digital Health Teams",
     icon: "bulb",
     problem: "Legacy access infrastructure can't keep pace with how patients and providers expect to engage with brands today.",
     solve: "Our platform is built for what's next, with the flexibility, scalability, and AI-driven capabilities to integrate with the digital health ecosystem your brand is building.",

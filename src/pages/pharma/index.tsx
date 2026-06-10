@@ -133,7 +133,7 @@ const HeroSection = () => (
         Secure Commercial Success in <em>Retail and Specialty-Lite</em>
       </h1>
       <p className={classes.heroLead}>
-        PHIL is the all-in-one access platform built for retail and specialty lite pharma brands to
+        PHIL is the end-to-end access platform built for retail and specialty-lite pharma brands to
         overcome access barriers, maximize outcomes, and drive measurable performance at every stage
         of the script journey. Turning enrollment into starts, starts into covered dispenses, and
         dispenses into long-term adherence.
@@ -171,7 +171,6 @@ const PartnersSection = () => {
     <section className={`${classes.band} ${classes.partnerBg}`}>
       <div className="xl-container">
         <div className={classes.sectionHeadCenter}>
-          <p className={classes.eyebrow}>Our Partners</p>
           <h2>Enhance Performance Across Your Patient Access Strategy at Any Stage</h2>
           <p className={classes.leadCenter}>
             PHIL partners with pharma brands of all sizes, from top global biopharma companies to
@@ -223,7 +222,6 @@ const PlatformSection = () => (
   <section className={classes.band}>
     <div className="xl-container">
       <div className={classes.sectionHeadCenter}>
-        <p className={classes.eyebrow}>Our Platform</p>
         <h2>Deliver a Seamless Medication Access Experience for Patients and Providers</h2>
         <p className={classes.leadCenter}>
           PHIL's platform pairs an innovative digital hub with a Direct-to-Patient solution, giving
@@ -330,7 +328,6 @@ const StakeholdersSection = () => {
     <section className={`${classes.band} ${classes.stkBg}`}>
       <div className="xl-container">
         <div className={classes.sectionHeadCenter}>
-          <p className={classes.eyebrow}>How We Help You</p>
           <h2>The Right Partner for Every Commercial Stakeholder</h2>
           <p className={classes.leadCenter}>
             Select your role to see the access challenges PHIL solves and how we drive measurable
@@ -373,7 +370,7 @@ const StakeholdersSection = () => {
                   </span>
                   <div>
                     <p className={classes.stkTag}>For You</p>
-                    <h3 className={classes.stkPanelTitle}>{s.name}</h3>
+                    <h3 className={classes.stkPanelTitle}>{("panelName" in s && s.panelName) || s.name}</h3>
                   </div>
                 </div>
 
@@ -510,7 +507,6 @@ const SupportSection = () => {
     <section className={`${classes.band} ${classes.supportBg}`}>
       <div className="xl-container">
         <div className={classes.sectionHeadCenter}>
-          <p className={classes.eyebrow}>PHIL Support</p>
           <h2>Improve Patient Outcomes and Provider Engagement While Driving Brand Performance</h2>
         </div>
 

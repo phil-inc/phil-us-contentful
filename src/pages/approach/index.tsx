@@ -334,7 +334,6 @@ const ApproachOutcomesPage = () => {
           <section id="journey" className={classes.journey}>
             <div className="xl-container">
               <div className={classes.sectionHead} style={{ maxWidth: "none" }}>
-                <p className={classes.eyebrow}>{JOURNEY_HEAD.eyebrow}</p>
                 <h2>{JOURNEY_HEAD.h2}</h2>
                 <p className="lead" style={{ maxWidth: "none" }}>{JOURNEY_HEAD.lead}</p>
               </div>
@@ -402,7 +401,6 @@ const ApproachOutcomesPage = () => {
           <section className={`${classes.band} ${classes.bandSolutions}`}>
             <div className="xl-container">
               <div className={classes.sectionHead} style={{ maxWidth: "none" }}>
-                <p className={classes.eyebrow} style={{ textAlign: "left" }}>{SOLUTIONS_HEAD.eyebrow}</p>
                 <h2>{SOLUTIONS_HEAD.h2}</h2>
               </div>
 
@@ -466,7 +464,6 @@ const ApproachOutcomesPage = () => {
           <section className={`${classes.band} ${classes.bandProof}`}>
             <div className="xl-container">
               <div className={classes.sectionHead} style={{ maxWidth: "none" }}>
-                <p className={classes.eyebrow}>{PROOF_HEAD.eyebrow}</p>
                 <h2>{PROOF_HEAD.h2}</h2>
                 <p className="lead" style={{ maxWidth: "none" }}>{PROOF_HEAD.lead}</p>
               </div>
@@ -507,7 +504,6 @@ const ApproachOutcomesPage = () => {
           <section className={`${classes.band} ${classes.bandStories}`}>
             <div className="xl-container">
               <div className={classes.sectionHead} style={{ maxWidth: "none" }}>
-                <p className={classes.eyebrow}>{STORIES_HEAD.eyebrow}</p>
                 <h2>{STORIES_HEAD.h2}</h2>
               </div>
 

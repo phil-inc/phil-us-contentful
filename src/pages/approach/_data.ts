@@ -82,7 +82,7 @@ export const JOURNEY_STEPS = [
     breaks:
       "Patients are defaulted to retail pickup with no guidance, missed pickups, long specialty pharmacy wait times, and confusing logistics cause patients to never start therapy.",
     helps:
-      "PHIL leverages 98%+ plan coverage across our 50-state contracted pharmacy network with free home delivery options, and proactive shipment notifications, tracking, and flexible scheduling.",
+      "PHIL leverages 99%+ plan coverage across our 50-state contracted pharmacy network with free home delivery options, and proactive shipment notifications, tracking, and flexible scheduling.",
   },
   {
     title: "Ongoing Refills",
@@ -123,7 +123,7 @@ export const SOLUTIONS_PILLARS = [
   },
   {
     title: "Pharmacy Network",
-    text: "A fully integrated dispense model across our PHIL pharmacies and 50-state partner network, with 98% plan coverage, enables seamless fulfillment and patient access to medications at the most affordable price."
+    text: "A fully integrated dispense model across our PHIL pharmacies and 50-state partner network, with 99%+ plan coverage, enables seamless fulfillment and patient access to medications at the most affordable price."
   },
   {
     title: "Data & Insights",
@@ -322,7 +322,7 @@ export const ROI = {
   ctaHref: "/gtn",
   stats: [
     { label: "Patient Starts", value: "2×+", sub: "vs. baseline" },
-    { label: "Covered Dispenses", value: "3×+", sub: "vs. baseline" },
+    { label: "Covered Dispenses", value: "2×+", sub: "vs. baseline" },
     { label: "Gross Revenue", value: "3×", sub: "vs. baseline" },
     { label: "Net Revenue", value: "4.1×", sub: "vs. baseline" },
   ],
