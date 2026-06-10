@@ -20,7 +20,7 @@ export const APPROACH_PILLARS = [
     barrierHref: "/dtp-research/",
   },
   {
-    title: "Affordability, Built In",
+    title: "Affordability,\nBuilt In",
     body: "PHIL builds a tailored access path for every patient, automatically navigating insurance, copay programs, and cash-pay options to find the most affordable route to their medication.",
     barrierBig: "96%",
     barrierLabel:
@@ -28,7 +28,7 @@ export const APPROACH_PILLARS = [
     barrierHref: "/dtp-research/",
   },
   {
-    title: "Adherence, By Design",
+    title: "Adherence,\nBy Design",
     body: "PHIL promotes patients adherent with proactive refill reminders, live support, and a frictionless digital experience built around how patients actually want to engage.",
     barrierBig: "70%",
     barrierLabel:
