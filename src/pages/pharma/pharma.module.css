@@ -315,6 +315,10 @@
 .statCard.v5 .statLabel,
 .statCard.v6 .statLabel { color: #00615E; opacity: 0.85; }
 
+.statText { display: flex; flex-direction: column; gap: 10px; }
+.statCard .tpInstat { width: 100%; min-height: 0; margin-top: 8px; }
+.statCard.v6 .statText::before { content: ""; display: block; height: 6px; }
+
 @keyframes statMarquee {
   from { transform: translateX(0); }
   to { transform: translateX(calc(-50% - 9px)); }

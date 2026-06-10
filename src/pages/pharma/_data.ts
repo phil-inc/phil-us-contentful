@@ -11,7 +11,7 @@ export const STATS = [
   { value: "2×+", label: "Covered Dispenses vs Traditional Channels", variant: "v3" },
   { value: "3×+", label: "Refill Adherence vs Traditional Channels", variant: "v4" },
   { value: "99%+", label: "Plan Coverage · 50-State Network", variant: "v5" },
-  { value: "4.8/5.0", label: "Patient Satisfaction Score", variant: "v6" },
+  { value: "4.8/5.0", label: "Patient Satisfaction Score", variant: "v6", trustpilot: true },
 ] as const;
 
 export const PARTNER_TABS = [

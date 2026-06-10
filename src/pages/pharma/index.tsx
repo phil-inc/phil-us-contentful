@@ -143,18 +143,38 @@ const HeroSection = () => (
         <h2 className={classes.statRowHead}>Unlock the Full Potential of Your Program</h2>
         <div className={classes.statRow}>
           <div className={classes.statTrack}>
-            {[...STATS, ...STATS].map((stat, i) => (
-              <article
-                key={i}
-                className={`${classes.statCard} ${variantClass[stat.variant]}`}
-                aria-hidden={i >= STATS.length ? true : undefined}
-              >
-                <div>
-                  <p className={classes.statNum}><AnimatedStat value={stat.value} /></p>
-                  <p className={classes.statLabel}>{stat.label}</p>
-                </div>
-              </article>
-            ))}
+            {[...STATS, ...STATS].map((stat, i) => {
+              const isClone = i >= STATS.length;
+              const hasTrustpilot = "trustpilot" in stat && stat.trustpilot;
+              return (
+                <article
+                  key={i}
+                  className={`${classes.statCard} ${variantClass[stat.variant]}`}
+                  aria-hidden={isClone ? true : undefined}
+                >
+                  <div className={classes.statText}>
+                    <p className={classes.statNum}><AnimatedStat value={stat.value} /></p>
+                    <p className={classes.statLabel}>{stat.label}</p>
+                    {hasTrustpilot && (
+                      <div
+                        className={`trustpilot-widget ${classes.tpInstat}`}
+                        aria-hidden={isClone ? true : undefined}
+                        data-locale="en-US"
+                        data-template-id="5406e65db0d04a09e042d5fc"
+                        data-businessunit-id="60e5837e95cb800001e58b14"
+                        data-style-height="28px"
+                        data-style-width="100%"
+                        data-token="15539b64-5152-4e8e-84fc-f412ffa7d912"
+                      >
+                        <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener noreferrer">
+                          Trustpilot
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </div>
