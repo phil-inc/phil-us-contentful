@@ -48,13 +48,17 @@ function useCountUp(
   targetRef: React.RefObject<HTMLElement | null>,
   value: number,
   decimals = 0,
-  duration = 1600
+  duration = 1600,
+  skip = false,
+  controlledActive?: boolean
 ) {
   const counted = useRef(false);
 
+  // IntersectionObserver mode (uncontrolled — fires once when visible)
   useEffect(() => {
+    if (controlledActive !== undefined) return;
     const el = targetRef.current;
-    if (!el || counted.current) return;
+    if (!el || counted.current || skip) return;
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -79,7 +83,32 @@ function useCountUp(
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [value, decimals, duration]);
+  }, [value, decimals, duration, skip, controlledActive]);
+
+  // Controlled mode — animates whenever controlledActive flips true, resets when false
+  useEffect(() => {
+    if (controlledActive === undefined) return;
+    const el = targetRef.current;
+    if (!el || skip) return;
+
+    if (!controlledActive) {
+      el.textContent = "0";
+      return;
+    }
+
+    const start = performance.now();
+    let raf = 0;
+    const animate = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = eased * value;
+      el.textContent =
+        decimals > 0 ? current.toFixed(decimals) : String(Math.round(current));
+      if (progress < 1) raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, [controlledActive, value, decimals, duration, skip]);
 }
 
 // ─── CountUp component ───────────────────────────────────────────────────────
@@ -89,21 +118,30 @@ function CountUp({
   suffix,
   decimals = 0,
   className,
+  active,
 }: {
   value: number;
   suffix: string;
   decimals?: number;
   className?: string;
+  active?: boolean;
 }) {
   const valRef = useRef<HTMLSpanElement>(null);
-  useCountUp(valRef, value, decimals);
+  const isDegree = suffix === "°";
+  useCountUp(valRef, value, decimals, undefined, isDegree, active);
 
   return (
     <span className={className}>
       <span ref={valRef} className={classes.cuVal}>
-        0
+        {isDegree ? value : 0}
       </span>
-      <span className={classes.cuSuf}>{suffix}</span>
+      <span
+        className={
+          isDegree ? `${classes.cuSuf} ${classes.cuSufDeg}` : classes.cuSuf
+        }
+      >
+        {suffix}
+      </span>
     </span>
   );
 }
@@ -355,14 +393,123 @@ function PAFormMockup() {
   );
 }
 
+const DISPNET_NODES: Array<[number, number]> = [
+  [82, 104], [500, 118], [115, 328], [332, 328], [476, 345], [642, 328], [796, 280], [933, 245],
+  [173, 437], [332, 459], [491, 463], [664, 442], [778, 429], [918, 385], [570, 564], [712, 547],
+  [829, 520], [902, 560], [330, 150], [648, 156], [250, 235], [965, 158], [505, 622],
+];
+
+const DISPNET_EDGES: Array<[number, number, number, number]> = [
+  [82, 104, 115, 328], [500, 118, 476, 345], [115, 328, 332, 328], [115, 328, 173, 437],
+  [332, 328, 476, 345], [332, 328, 332, 459], [476, 345, 642, 328], [476, 345, 491, 463],
+  [642, 328, 664, 442], [642, 328, 796, 280], [796, 280, 933, 245], [796, 280, 778, 429],
+  [796, 280, 664, 442], [933, 245, 918, 385], [173, 437, 332, 459], [332, 459, 491, 463],
+  [491, 463, 664, 442], [491, 463, 570, 564], [664, 442, 778, 429], [664, 442, 712, 547],
+  [778, 429, 918, 385], [778, 429, 829, 520], [918, 385, 829, 520], [570, 564, 712, 547],
+  [712, 547, 829, 520], [829, 520, 902, 560], [82, 104, 332, 328], [500, 118, 332, 328],
+  [332, 328, 173, 437], [332, 328, 491, 463], [82, 104, 330, 150], [330, 150, 500, 118],
+  [330, 150, 332, 328], [648, 156, 500, 118], [648, 156, 642, 328], [648, 156, 796, 280],
+  [250, 235, 330, 150], [250, 235, 332, 328], [250, 235, 115, 328], [965, 158, 933, 245],
+  [505, 622, 332, 459], [505, 622, 570, 564], [505, 622, 491, 463],
+];
+
+function DispnetMap() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const nodeEls = Array.from(
+      wrap.querySelectorAll<SVGGElement>(`.${classes.dnode}`)
+    );
+    if (!nodeEls.length) return;
+    const xByNode = new Map<SVGGElement, number>();
+    nodeEls.forEach((g) => {
+      const dot = g.querySelector<SVGCircleElement>(`.${classes.dnodeDot}`);
+      xByNode.set(g, dot ? Number(dot.getAttribute("cx")) : 0);
+    });
+    const order = nodeEls.slice().sort((a, b) => (xByNode.get(a) ?? 0) - (xByNode.get(b) ?? 0));
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    const STEP = 300;
+    const HOLD = 1400;
+    let timers: Array<ReturnType<typeof setTimeout>> = [];
+    const clearTimers = () => {
+      timers.forEach(clearTimeout);
+      timers = [];
+    };
+    const light = (g: SVGGElement) => {
+      g.classList.remove(classes.isLit);
+      g.getBoundingClientRect();
+      g.classList.add(classes.isLit);
+    };
+    const run = () => {
+      clearTimers();
+      nodeEls.forEach((g) => g.classList.remove(classes.isLit));
+      order.forEach((g, i) => {
+        timers.push(setTimeout(() => light(g), i * STEP));
+      });
+      if (reduce) return;
+      const total = order.length * STEP + HOLD;
+      timers.push(setTimeout(run, total));
+    };
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      run();
+    };
+    start();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) start();
+        });
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(wrap);
+    return () => {
+      clearTimers();
+      io.disconnect();
+    };
+  }, []);
+
+  return (
+    <div ref={wrapRef} className={classes.dispnet}>
+      <div className={classes.dispnetMap}>
+        <img
+          src="/images/dispense-map-teal.png"
+          alt="Pharmacy network spanning all 50 states with 99%+ plan coverage"
+        />
+        <svg
+          className={classes.dispnetNet}
+          viewBox="0 0 1128 682"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        >
+          <g className={classes.dispnetEdges}>
+            {DISPNET_EDGES.map(([x1, y1, x2, y2], i) => (
+              <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />
+            ))}
+          </g>
+          <g className={classes.dispnetNodes}>
+            {DISPNET_NODES.map(([cx, cy], i) => (
+              <g key={i} className={classes.dnode}>
+                <circle className={classes.dnodeHalo} cx={cx} cy={cy} r={10} />
+                <circle className={classes.dnodeDot} cx={cx} cy={cy} r={9} />
+              </g>
+            ))}
+          </g>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 function DispenseMapMockup() {
   return (
     <>
-      <img
-        className={classes.dispenseMapImg}
-        src="/images/usa-pharmacy-network.png"
-        alt="Nationwide pharmacy network across 50 states"
-      />
+      <DispnetMap />
       <div className={classes.chipReminder}>
         <div className={classes.chipName}>
           <span className={classes.chipIcon}>
@@ -682,6 +829,7 @@ function SolutionCarousel() {
                             value={stat.value}
                             suffix={stat.suffix}
                             decimals={stat.decimals || 0}
+                            active={i === active}
                           />
                         </div>
                         <div className={classes.rmx2StatLabel}>{stat.label}</div>

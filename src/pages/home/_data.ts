@@ -14,7 +14,7 @@ export const AUDIENCE_CHIPS = [
     variant: "pharma" as const,
     tag: "For Pharma",
     heading:
-      "Improve patient outcomes and commercial performance for your retail and specialty-lite brands.",
+      "Improve patient outcomes and commercial performance for your retail and specialty-lite brands",
     cta: "Brand Experience",
     href: "/pharma/",
   },
@@ -23,7 +23,7 @@ export const AUDIENCE_CHIPS = [
     variant: "patients" as const,
     tag: "For Patients",
     heading:
-      "Get affordable medications delivered right to your door with PHILRx.",
+      "Get affordable medications delivered right to your door with PHILRx",
     cta: "Patient Experience",
     href: "/patients/",
   },
@@ -32,7 +32,7 @@ export const AUDIENCE_CHIPS = [
     variant: "providers" as const,
     tag: "For Providers",
     heading:
-      "Improve patient care with in-workflow prescribing and PA tools through PHILRx.",
+      "Improve patient care with in-workflow prescribing and PA tools through PHILRx",
     cta: "Provider Experience",
     href: "/providers/",
   },
@@ -42,8 +42,8 @@ export const OUTCOMES = {
   heading: "Helping Pharma Brands Grow",
   stats: [
     { value: 2, suffix: "X+", label: "Patient Starts", sublabel: "vs. Traditional Channels" },
-    { value: 3, suffix: "X+", label: "Adherence", sublabel: "vs. Traditional Channels" },
     { value: 2, suffix: "X+", label: "Covered Dispenses", sublabel: "vs. Traditional Channels" },
+    { value: 3, suffix: "X+", label: "Refill Adherence", sublabel: "vs. Traditional Channels" },
     { value: 4.8, decimals: 1, suffix: "/5.0", label: "Patient Satisfaction Score" },
   ],
   trustpilot: {
@@ -105,7 +105,7 @@ export const SOLUTION = {
       key: "impact",
       tag: "Data & Insights",
       title: "End-to-End Technology, Data & Insights",
-      body: "Build a lasting commercial advantage with a unified access platform. PHIL's advanced data capabilities, AI-powered workflows, and dedicated Client Insights team work seamlessly to surface improvement opportunities to improve patient outcomes and brand performance.",
+      body: "Build a lasting commercial advantage with a unified access platform. PHIL's advanced data capabilities, AI-powered workflows, and dedicated Client Insights team work seamlessly to surface opportunities to improve patient outcomes and brand performance.",
       stats: [
         { value: 3, suffix: "x+", label: "GTN Lift" },
         { value: 360, suffix: "°", label: "Program Insights" },
@@ -135,7 +135,7 @@ export const VOICES = {
           a: "Director of Patient Support Services, PHIL Client",
         },
         {
-          q: "We selected Phil because of their leadership in the space, as well as their ability to offer real-time access to end-to-end data in a centrally accessible platform. This was really important to us and our brand.",
+          q: "We selected Phil because of their leadership in the space, as well as their ability to offer real-time access to end-to-end data in a single platform. This was really important to us and our brand.",
           a: "Head of Commercial, PHIL Client",
         },
       ] as VoiceQuote[],
@@ -183,7 +183,7 @@ export const VOICES = {
 export const INSIGHTS = {
   title: "Our Commitment to Your Success",
   subtitle:
-    "We're advancing the medication access for patients, providers, and pharma brands through innovative technology and dedicated partnership. Explore our latest news and insights to help move your brand forward.",
+    "We're advancing medication access for patients, providers, and pharma brands through innovative technology and dedicated partnership. Explore our latest news and insights to help move your brand forward.",
   cards: [
     {
       variant: "report" as const,

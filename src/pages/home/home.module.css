@@ -852,6 +852,24 @@
   padding-top: 0;
 }
 
+/* Degree symbol: render as a proper top-right superscript */
+.cuSufDeg {
+  align-self: flex-start;
+  font-size: 1.0em;
+  margin-left: 1px;
+  margin-top: -0.12em;
+  line-height: 1;
+}
+
+.rmx2StatNum .cuSufDeg {
+  align-self: flex-start;
+  font-size: 1.0em;
+  margin-left: 1px;
+  margin-top: -0.12em;
+  padding-top: 0;
+  line-height: 1;
+}
+
 .rmx2StatLabel {
   font-size: 14px;
   letter-spacing: 0.02em;
@@ -898,11 +916,13 @@
 .rmx2Card:not(.rmx2CardActive) .phone,
 .rmx2Card:not(.rmx2CardActive) .paform,
 .rmx2Card:not(.rmx2CardActive) .dash2,
-.rmx2Card:not(.rmx2CardActive) .dispenseMapImg,
+.rmx2Card:not(.rmx2CardActive) .dispnetMap,
 .rmx2Card:not(.rmx2CardActive) .paBanner,
 .rmx2Card:not(.rmx2CardActive) .paformBtn,
 .rmx2Card:not(.rmx2CardActive) .chipReminder,
-.rmx2Card:not(.rmx2CardActive) .chipShipping {
+.rmx2Card:not(.rmx2CardActive) .chipShipping,
+.rmx2Card:not(.rmx2CardActive) .shipLineFill,
+.rmx2Card:not(.rmx2CardActive) .shipTruck {
   animation: none;
 }
 
@@ -926,12 +946,12 @@
 }
 
 /* USA map — gentle fade + scale to resting 1 */
-.rmx2CardActive .dispenseMapImg {
+.rmx2CardActive .dispnetMap {
   animation: rmxMapIn 700ms cubic-bezier(0.2, 0, 0, 1) 120ms both;
 }
 @keyframes rmxMapIn {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 /* PA floating banners — stagger in (resting transform: none) */
@@ -1258,7 +1278,7 @@
   .rmx2CardActive .phone,
   .rmx2CardActive .paform,
   .rmx2CardActive .dash2,
-  .rmx2CardActive .dispenseMapImg,
+  .rmx2CardActive .dispnetMap,
   .rmx2CardActive .paBanner,
   .rmx2CardActive .paformBtn,
   .rmx2CardActive .chipReminder,
@@ -1336,17 +1356,16 @@
     gap: 14px;
     padding: 24px 16px 28px;
   }
-  .rmx2CardAdhere .dispenseMapImg {
+  .rmx2CardAdhere .dispnet {
     grid-area: map;
     position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
+    inset: auto;
+    width: 100%;
+  }
+  .rmx2CardAdhere .dispnetMap {
     width: 100%;
     max-width: 480px;
-    height: auto;
     margin: 0 auto;
-    display: block;
   }
   .rmx2CardAdhere .chipShipping {
     grid-area: ship;
@@ -1395,6 +1414,57 @@
   .rmx2Title { font-size: 28px; line-height: 1.15; }
   .rmx2Sub   { font-size: 15px; line-height: 1.5; max-width: 100%; }
   .rmx2Lead  { font-size: 22px; margin-top: 24px; }
+}
+
+/* ---- Tighten PA & Coverage + Dispense Network mockups on narrow phones ---- */
+@media (max-width: 420px) {
+  /* PA & Coverage */
+  .rmx2CardAfford .rmx2Viz {
+    padding: 20px 8px;
+    row-gap: 12px;
+    column-gap: 6px;
+  }
+  .rmx2CardAfford .paform {
+    width: 100% !important;
+  }
+  .rmx2CardAfford .paformHead { padding: 8px 10px; font-size: 10.5px; }
+  .rmx2CardAfford .paformGrid { padding: 9px 10px 6px; gap: 6px; }
+  .rmx2CardAfford .paformLabel { font-size: 8.5px; }
+  .rmx2CardAfford .paformValue { font-size: 10px; padding: 5px 6px; border-radius: 6px; }
+  .rmx2CardAfford .paformSection { padding: 8px 10px 10px; }
+  .rmx2CardAfford .paformSectionTitle { font-size: 8.5px; margin-bottom: 6px; }
+  .rmx2CardAfford .paformRow { grid-template-columns: 72px 1fr; gap: 6px; margin-bottom: 5px; }
+  .rmx2CardAfford .paformRowLabel { font-size: 9.5px; }
+  .rmx2CardAfford .paformRowValue { font-size: 10px; padding: 4px 6px; border-radius: 6px; }
+  .rmx2CardAfford .paformActions { padding: 8px 10px 10px; }
+  .rmx2CardAfford .paformBtn { font-size: 9.5px; padding: 5px 11px; }
+  .rmx2CardAfford .paBanner1,
+  .rmx2CardAfford .paBanner3 {
+    font-size: 9.5px;
+    padding: 6px 8px;
+    border-radius: 10px;
+    gap: 6px;
+  }
+
+  /* Dispense Network */
+  .rmx2CardAdhere .rmx2Viz {
+    padding: 18px 10px 22px;
+    gap: 7px;
+  }
+  .rmx2CardAdhere .dispnetMap { max-width: 320px; }
+  .rmx2CardAdhere .chipShipping,
+  .rmx2CardAdhere .chipReminder {
+    padding: 8px 10px;
+    font-size: 11px;
+    border-radius: 10px;
+  }
+  .rmx2CardAdhere .chipName { font-size: 11px; }
+  .rmx2CardAdhere .chipSub { font-size: 10px; }
+  .rmx2CardAdhere .chipBtnPrimary,
+  .rmx2CardAdhere .chipBtn { font-size: 10px; padding: 5px 9px; }
+  .rmx2CardAdhere .shipTitle { font-size: 11px; }
+  .rmx2CardAdhere .shipMeta { font-size: 10px; }
+  .rmx2CardAdhere .shipStops { font-size: 9px; }
 }
 
 /* ======================== PHONE MOCKUP (Digital Access card) ======================== */
@@ -1707,17 +1777,65 @@
 }
 
 /* ======================== DISPENSE MAP ======================== */
-.dispenseMapImg {
+.dispnet {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(86%, 460px);
-  height: auto;
-  object-fit: contain;
+  inset: 0;
   z-index: 2;
-  mix-blend-mode: multiply;
-  clip-path: inset(3% 0 0 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dispnetMap {
+  position: relative;
+  width: min(88%, 500px);
+}
+.dispnetMap > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 20px 34px rgba(10, 90, 86, 0.24));
+}
+.dispnetNet {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.dispnetEdges line {
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.dispnetNodes .dnodeDot {
+  fill: #ffffff;
+  stroke: rgba(8, 70, 66, 0.16);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.dispnetNodes .dnodeHalo {
+  fill: #ffffff;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  filter: blur(2.5px);
+}
+.dispnetNodes .dnode.isLit .dnodeHalo {
+  animation: haloPulse 780ms ease-out;
+}
+.dispnetNodes .dnode.isLit .dnodeDot {
+  animation: dotPop 780ms ease-out;
+}
+@keyframes haloPulse {
+  0%   { opacity: 0; transform: scale(0.5); }
+  22%  { opacity: 0.55; }
+  100% { opacity: 0; transform: scale(2.7); }
+}
+@keyframes dotPop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.55); }
+  100% { transform: scale(1); }
 }
 
 /* Floating chips on dispense card */
@@ -1863,7 +1981,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 60%;
+  width: 0%;
   background: var(--phil-foliage, #00827E);
   border-radius: 999px;
 }
@@ -1871,7 +1989,7 @@
 .shipTruck {
   position: absolute;
   top: 50%;
-  left: 60%;
+  left: 0%;
   transform: translate(-50%, -50%);
   width: 24px;
   height: 24px;
@@ -1882,6 +2000,21 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.rmx2CardActive .shipLineFill {
+  animation: shipFill 2400ms cubic-bezier(0.4, 0, 0.2, 1) 800ms forwards;
+}
+.rmx2CardActive .shipTruck {
+  animation: shipTruck 2400ms cubic-bezier(0.4, 0, 0.2, 1) 800ms forwards;
+}
+@keyframes shipFill {
+  from { width: 0%; }
+  to   { width: 60%; }
+}
+@keyframes shipTruck {
+  from { left: 0%; }
+  to   { left: 60%; }
 }
 
 .shipStops {
