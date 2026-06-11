@@ -252,6 +252,8 @@ const ApproachOutcomesPage = () => {
         if (entry.isIntersecting) {
           el.classList.add(classes.solDirectWrapVisible);
           observer.unobserve(el);
+          // Trigger initial reveal-all animation
+          revealAll();
         }
       },
       { threshold: 0.3 },
@@ -259,6 +261,51 @@ const ApproachOutcomesPage = () => {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  // Flexible By Design — scenario interactivity
+  const SCENARIO_LABELS = ["Coverage Path", "Cash Path", "Hybrid Path"];
+  const SCENARIOS: number[][] = [
+    [0, 3, 6, 8],        // Coverage
+    [1, 4, 7, 8],        // Cash
+    [0, 1, 2, 5, 6, 7],  // Hybrid
+  ];
+  const [activeScenario, setActiveScenario] = useState<number | null>(null);
+  const [scenarioMode, setScenarioMode] = useState(false);
+  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
+  const scenarioTimers = useRef<NodeJS.Timeout[]>([]);
+
+  const clearScenarioTimers = useCallback(() => {
+    scenarioTimers.current.forEach(clearTimeout);
+    scenarioTimers.current = [];
+  }, []);
+
+  const revealAll = useCallback(() => {
+    clearScenarioTimers();
+    setScenarioMode(false);
+    setActiveScenario(null);
+    setVisibleItems(new Set());
+    for (let i = 0; i < 9; i++) {
+      scenarioTimers.current.push(
+        setTimeout(() => setVisibleItems(prev => new Set([...prev, i])), 400 + i * 250)
+      );
+    }
+  }, [clearScenarioTimers]);
+
+  const showScenario = useCallback((idx: number) => {
+    clearScenarioTimers();
+    setScenarioMode(true);
+    setActiveScenario(idx);
+    setVisibleItems(new Set());
+    const seq = SCENARIOS[idx];
+    seq.forEach((itemIdx, k) => {
+      scenarioTimers.current.push(
+        setTimeout(() => setVisibleItems(prev => new Set([...prev, itemIdx])), 160 + k * 320)
+      );
+    });
+    // Auto-reset after 10s
+    const resetDelay = 160 + seq.length * 320 + 10000;
+    scenarioTimers.current.push(setTimeout(() => revealAll(), resetDelay));
+  }, [clearScenarioTimers, revealAll]);
 
   // Keyboard nav for journey
   useEffect(() => {
@@ -424,7 +471,7 @@ const ApproachOutcomesPage = () => {
 
                 {/* Direct */}
                 <div className={classes.solDirectWrap} ref={solDirectRef}>
-                  <div className={classes.solProgram}>
+                  <div className={`${classes.solProgram} ${scenarioMode ? classes.scenarioMode : ""}`}>
                     <div className={classes.programFlex}>
                       <div className={classes.programFlexLabel}>
                         <p className={classes.pflWord}>Flexible</p>
@@ -436,9 +483,16 @@ const ApproachOutcomesPage = () => {
                         </p>
                         <p className={classes.pflModels}>Sample patient journey pathways</p>
                         <div className={classes.pflScenarios}>
-                          <span className={`${classes.pflDot} ${classes.pflDotActive}`}>Coverage Path</span>
-                          <span className={classes.pflDot}>Cash Path</span>
-                          <span className={classes.pflDot}>Hybrid Path</span>
+                          {SCENARIO_LABELS.map((label, si) => (
+                            <button
+                              key={si}
+                              type="button"
+                              className={`${classes.pflDot} ${activeScenario === si ? classes.pflDotActive : ""}`}
+                              onClick={() => showScenario(si)}
+                            >
+                              {label}
+                            </button>
+                          ))}
                         </div>
                       </div>
                       <div className={classes.programCols}>
@@ -446,14 +500,18 @@ const ApproachOutcomesPage = () => {
                           <div key={gi} className={classes.programCol}>
                             <h3>{group.label}</h3>
                             <ul>
-                              {group.features.map((f, fi) => (
-                                <li key={fi}>
-                                  <span className={classes.plCheck} aria-hidden="true">
-                                    <svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                                  </span>
-                                  <span className={classes.plText}><strong>{f.title}:</strong> {f.text}</span>
-                                </li>
-                              ))}
+                              {group.features.map((f, fi) => {
+                                const itemIdx = gi * 3 + fi;
+                                const isOn = visibleItems.has(itemIdx);
+                                return (
+                                  <li key={fi} className={isOn ? classes.itemOn : ""}>
+                                    <span className={`${classes.plCheck} ${isOn ? classes.plCheckChecked : ""}`} aria-hidden="true">
+                                      <svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                    </span>
+                                    <span className={classes.plText}><strong>{f.title}:</strong> {f.text}</span>
+                                  </li>
+                                );
+                              })}
                             </ul>
                           </div>
                         ))}

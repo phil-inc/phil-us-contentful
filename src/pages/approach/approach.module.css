@@ -1012,6 +1012,33 @@
   .programCol { border-left: 0; border-top: 1px solid rgba(8, 80, 65, 0.14); }
 }
 
+/* Scenario mode */
+.scenarioMode .programCol li {
+  opacity: 0.36;
+  transition: opacity 320ms var(--ease-standard);
+}
+.scenarioMode .programCol li.itemOn {
+  opacity: 1;
+}
+.programCol li {
+  transition: opacity 320ms var(--ease-standard);
+}
+.itemOn {}
+.plCheckChecked {
+  background: var(--phil-foliage, #2AA89E) !important;
+  border-color: var(--phil-foliage, #2AA89E) !important;
+  transform: scale(1.08);
+}
+.plCheckChecked svg {
+  opacity: 1;
+  transform: scale(1);
+}
+.plCheck svg {
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 220ms var(--ease-standard), transform 300ms var(--ease-emphasis, cubic-bezier(0.2, 0, 0, 1));
+}
+
 /* Section-level CTAs */
 .solStackFoot {
   display: flex;
