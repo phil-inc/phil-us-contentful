@@ -195,27 +195,29 @@ export const TP_HEADING = "Hear from Happy PHILRx Patients";
 export const HCP_HEADING = "Feedback from Pharma, Patients, and Providers";
 
 // One card per category; each card rotates through its own items.
-// DOM/display order: Providers, Patients, Pharma.
+// DOM/display order: Pharma, Patients, Providers.
 export const TESTIMONIAL_GROUPS = [
   {
-    cat: "providers",
-    tag: "What providers say",
+    cat: "pharma",
+    tag: "What pharma says",
     items: [
       {
-        quote: "PHILRx provides great support for patients, and convenient ways for providers to reach out.",
-        name: "Elizabeth R.",
-        role: "Healthcare provider",
+        quote:
+          "Phil is very strong in driving starts and adherence across our portfolio. As a partner, we love their willingness to be agile and create new things with us that hadn't necessarily been done before.",
+        name: "SVP, Market Access",
+        role: "PHIL Client",
       },
       {
         quote:
-          "Communication is fantastic! From start to finish, PHILRx does a great job keeping [our office] in the loop.",
-        name: "Susan F.",
-        role: "Healthcare provider",
+          "We consider PHIL's integrated digital platform and their ability to drive conversions to be first-in-class. They deliver a true, e-commerce experience for patients versus the much more cumbersome traditional patient experience.",
+        name: "Director, Patient Support Services",
+        role: "PHIL Client",
       },
       {
-        quote: "PHILRx is very helpful with getting my patients their medications quickly.",
-        name: "Jeffrey T.",
-        role: "Healthcare provider",
+        quote:
+          "We selected Phil because of their leadership in the space, as well as their ability to offer real-time access to end-to-end data in a centrally accessible platform. This was really important to us and our brand.",
+        name: "Head of Commercial",
+        role: "PHIL Client",
       },
     ],
   },
@@ -262,26 +264,24 @@ export const TESTIMONIAL_GROUPS = [
     ],
   },
   {
-    cat: "pharma",
-    tag: "What pharma says",
+    cat: "providers",
+    tag: "What providers say",
     items: [
       {
-        quote:
-          "Phil is very strong in driving starts and adherence across our portfolio. As a partner, we love their willingness to be agile and create new things with us that hadn't necessarily been done before.",
-        name: "SVP, Market Access",
-        role: "PHIL Client",
+        quote: "PHILRx provides great support for patients, and convenient ways for providers to reach out.",
+        name: "Elizabeth R.",
+        role: "Healthcare provider",
       },
       {
         quote:
-          "We consider PHIL's integrated digital platform and their ability to drive conversions to be first-in-class. They deliver a true, e-commerce experience for patients versus the much more cumbersome traditional patient experience.",
-        name: "Director, Patient Support Services",
-        role: "PHIL Client",
+          "Communication is fantastic! From start to finish, PHILRx does a great job keeping [our office] in the loop.",
+        name: "Susan F.",
+        role: "Healthcare provider",
       },
       {
-        quote:
-          "We selected Phil because of their leadership in the space, as well as their ability to offer real-time access to end-to-end data in a centrally accessible platform. This was really important to us and our brand.",
-        name: "Head of Commercial",
-        role: "PHIL Client",
+        quote: "PHILRx is very helpful with getting my patients their medications quickly.",
+        name: "Jeffrey T.",
+        role: "Healthcare provider",
       },
     ],
   },

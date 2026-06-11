@@ -558,7 +558,7 @@ const ApproachOutcomesPage = () => {
               </div>
 
               <div className={classes.csFoot}>
-                <Link className={classes.learnLink} to="/resources/">
+                <Link className={classes.learnLink} to="/resources/?type=casestudy">
                   Explore Customer Stories <ArrowRight />
                 </Link>
               </div>

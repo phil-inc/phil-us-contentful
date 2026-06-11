@@ -84,6 +84,7 @@
   background: var(--phil-paper);
 }
 .bandSolutions {
+  overflow: visible;
   background:
     linear-gradient(105deg,
       rgba(168, 226, 218, 0.12) 0%,
