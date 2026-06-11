@@ -93,6 +93,7 @@ git checkout <branch> && git pull origin <branch>
 ### Principles
 
 1. **HTML is source of truth** — do not fabricate content. If something looks incomplete, ask.
+2. **Extract all behavior, not just markup** — design HTML files may contain `<script>` blocks with interactive logic (click handlers, scroll animations, scenario toggles, tab switches). Extract and reimplement this behavior in React. If the design is bundled/compressed, use Puppeteer or open in a browser to identify all interactive elements and their JS behavior.
 2. **No Contentful** — new pages are code-driven. Only reference Contentful for existing/old content.
 3. **No sub-agents** — do all work in the main session. Sub-agents lose context and produce code that doesn't match the design.
 4. **Components accept props, data lives at page level** — hardcode content at the page level, pass to components via props.
