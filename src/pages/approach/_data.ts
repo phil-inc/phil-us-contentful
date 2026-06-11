@@ -29,7 +29,7 @@ export const APPROACH_PILLARS = [
   },
   {
     title: "Adherence,\nBy Design",
-    body: "PHIL promotes patients adherent with proactive refill reminders, live support, and a frictionless digital experience built around how patients actually want to engage.",
+    body: "PHIL promotes patient adherence with proactive refill reminders, live support, and a frictionless digital experience built around how patients actually want to engage.",
     barrierBig: "70%",
     barrierLabel:
       "of HCPs agree that issues in the PA process create an immediate hurdle to staying on therapy",
@@ -40,7 +40,7 @@ export const APPROACH_PILLARS = [
 export const JOURNEY_HEAD = {
   eyebrow: "The Patient Journey",
   h2: "Keeping Patients Adherent from First Fill to Refill",
-  lead: "From the moment a prescription is written to every refill that follows, patients face obstacles that can prevent starting and staying on therapy. PHIL simplifies the experience end-to-end, helping patients access, afford, and stay adherent with their medication.",
+  lead: "Retail and specialty-lite pharmaceutical brands face unique access barriers at every step of the prescription journey. From the moment a prescription is written to every refill that follows, patients face obstacles that can prevent starting and staying on therapy. We put human-first care at the heart of our platform, layering in compliance-first technology to break through these barriers and improve access, affordability, and adherence for long-term therapy success.",
 } as const;
 
 export const JOURNEY_STEPS = [
@@ -127,38 +127,59 @@ export const SOLUTIONS_PILLARS = [
   },
   {
     title: "Data & Insights",
-    text: "End-to-end script visibility with access to continuous data-driven insights and consultative support with suggestions to help refine programs for better outcomes and brand success."
+    text: "AI-powered program intelligence continuously surfaces end-to-end script visibility and commercial optimization opportunities, with consultative, white-glove support from PHIL's Client Insights team."
   },
 ] as const;
 
 export const SOLUTIONS_DIRECT_GROUPS = [
   {
-    label: "Expanded intake options",
+    label: "Expanded Intake Paths",
     features: [
       {
-        title: "Digital / telehealth intake",
-        text: "Frictionless online enrollment with integrated telemed prescribing from the comfort of home.",
+        title: "In-Person HCP Visits",
+        text: "Seamless integration into existing physician workflows.",
       },
       {
-        title: "Traditional HCP intake",
-        text: "Full support for in-person prescribing workflows that seamlessly connect to your PHIL infrastructure.",
+        title: "Digital & Telemedicine",
+        text: "Expand your brand's reach by meeting patients online with a seamless, digital onboarding experience that integrates telemedicine appointments directly into the hub.",
+      },
+      {
+        title: "Rx Transfers",
+        text: "Effortless onboarding of existing prescriptions.",
       },
     ],
   },
   {
-    label: "Flexible program structures",
+    label: "Adjustable Routing & Coverage",
     features: [
       {
-        title: "Coverage programs",
-        text: "Navigate insurance complexity with confidence. PHIL handles benefits verification, prior authorization, and appeals workflows.",
+        title: "Coverage-First Models",
+        text: "Focused on maximizing payer reimbursement.",
       },
       {
-        title: "Cash programs",
-        text: "Simple, transparent, fast. Ideal for brands prioritizing speed to patient with a predictable cost structure.",
+        title: "Cash-Pay Programs",
+        text: "Streamlined, predictable cash pricing for immediate access.",
       },
       {
-        title: "Hybrid programs",
-        text: "The best of both worlds. Blend direct and traditional channels to maximize reach without sacrificing payer access.",
+        title: "Hybrid Models",
+        text: "Dynamic routing designed to optimize your Gross-to-Net.",
+      },
+    ],
+  },
+  {
+    label: "Scalable Dispensing",
+    features: [
+      {
+        title: "National Pharmacy Network",
+        text: "Deliver medications directly to patients' homes via a fully integrated, 50-state dispense network.",
+      },
+      {
+        title: "PHIL In-House Pharmacies",
+        text: "Provide a dedicated, predictable cash-pay program through our own specialized pharmacies.",
+      },
+      {
+        title: "Wholesale Services",
+        text: "Streamline and optimize product distribution with efficient, integrated wholesale fulfillment.",
       },
     ],
   },
@@ -171,7 +192,7 @@ export const PROOF_HEAD = {
 } as const;
 
 export const TP_HEADING = "Hear from Happy PHILRx Patients";
-export const HCP_HEADING = "Feedback from Providers, Patients, and Pharma Partners";
+export const HCP_HEADING = "Feedback from Pharma, Patients, and Providers";
 
 // One card per category; each card rotates through its own items.
 // DOM/display order: Providers, Patients, Pharma.

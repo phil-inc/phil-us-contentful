@@ -65,3 +65,17 @@ Embed real widget with:
 | "Calculate Your Potential" href | `GTN Landing Page.html` | `/gtn` | User specified |
 | Fonts | Embedded base64 in CSS | Global Mantine theme fonts | Already available site-wide |
 | Final CTA section | Design's own CTA style | Match pharma page CTA CSS/behavior | User requested |
+
+## Content Sync Log
+
+Source of truth: `~/Downloads/Approach and Outcomes v2 (Standalone).html`
+Data file: `src/pages/approach/_data.ts`
+
+| Date | Section | Change | Details |
+|---|---|---|---|
+| 2026-06-11 | Adherence pillar | Typo fix | "promotes patients adherent" → "promotes patient adherence" |
+| 2026-06-11 | Patient Journey lead | Copy updated | Expanded to include "Retail and specialty-lite pharmaceutical brands face unique access barriers..." and "human-first care" language per design |
+| 2026-06-11 | Data & Insights pillar | Copy updated | Rewritten to "AI-powered program intelligence..." per design |
+| 2026-06-11 | Testimonials heading | Order corrected | "Providers, Patients, and Pharma Partners" → "Pharma, Patients, and Providers" per design |
+| 2026-06-11 | Testimonials | DOM order differs | Design renders pharma → patients → providers; _data.ts has providers → patients → pharma. Rendering order controlled by component, not data order — no data change needed if component handles reordering. |
+| 2026-06-11 | Flexible BY DESIGN section | Data restructured | Rewrote SOLUTIONS_DIRECT_GROUPS: 2 groups → 3 columns (Expanded Intake Paths, Adjustable Routing & Coverage, Scalable Dispensing) with all-new copy per design. Component may need visual update to render 3-column layout. |

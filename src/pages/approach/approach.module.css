@@ -820,95 +820,194 @@
 }
 .solDirect {
   position: relative;
-  border-radius: 28px;
-  padding: 56px 56px 48px;
-  overflow: hidden;
-  background: linear-gradient(225deg, #F4F8F7 0%, #E9F2EF 50%, #D8E8E3 100%);
-  color: #0d3a2e;
   z-index: 1;
-  box-shadow: 0 28px 60px -20px rgba(0, 75, 72, 0.45), 0 -6px 0 rgba(255, 255, 255, 0.6) inset;
-}
-.solDirectTitle {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(26px, 2.4vw, 32px);
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-  margin: 0;
-  color: #085041;
-}
-.solDirectText {
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.55;
-  margin: 0 0 36px;
-  color: #0d3a2e;
 }
 
-/* Feature groups inside direct */
-.solGroup {
-  margin-top: 18px;
+/* ═══ Flexible By Design panel ═══ */
+.solProgram { position: relative; }
+.programFlex {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  align-items: stretch;
+  background: var(--phil-pure, #fff);
+  border: 1px solid var(--phil-base, #00827E);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 28px 60px -20px rgba(0, 75, 72, 0.45), 0 -6px 0 rgba(255, 255, 255, 0.6) inset;
 }
-.solGroup + .solGroup {
-  margin-top: 18px;
-}
-.solGroupLabel {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.programFlexLabel {
+  background: linear-gradient(135deg, #EBF7F5 0%, #DCF1EB 48%, #FAF5E9 100%);
   color: #085041;
-  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px 34px;
+  position: relative;
+  overflow: hidden;
+}
+.programFlexLabel::after {
+  content: "";
+  position: absolute;
+  right: -50px;
+  bottom: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 130, 126, 0.1), transparent 65%);
+}
+.pflWord {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  color: #085041;
+}
+.pflSub {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(8, 80, 65, 0.78);
+  margin: 14px 0 0;
+  position: relative;
+  z-index: 1;
 }
-.solGroupLabel::before {
-  content: "";
-  width: 8px;
-  height: 8px;
+.pflCheck {
+  flex-shrink: 0;
+  width: 23px;
+  height: 23px;
+  border-radius: 6px;
+  background: rgba(8, 80, 65, 0.1);
+  border: 1px solid rgba(8, 80, 65, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pflCheck svg {
+  width: 14px;
+  height: 14px;
+}
+.pflModels {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(8, 80, 65, 0.6);
+  margin: 26px 0 0;
+  position: relative;
+  z-index: 1;
+}
+.pflScenarios {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 14px;
+  position: relative;
+  z-index: 1;
+}
+.pflDot {
+  padding: 8px 16px;
   border-radius: 999px;
-  background: #085041;
+  background: rgba(8, 80, 65, 0.08);
+  border: 1px solid rgba(8, 80, 65, 0.3);
+  color: #085041;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-.solFeatureGrid {
+.pflDotActive {
+  background: var(--phil-forest, #085041);
+  color: var(--phil-pure, #fff);
+  border-color: var(--phil-forest, #085041);
+  box-shadow: 0 6px 14px -6px rgba(0, 75, 72, 0.5);
+}
+.programCols {
   display: grid;
-  gap: 10px;
-}
-.solFeatureGridTwo {
-  grid-template-columns: repeat(2, 1fr);
-}
-.solFeatureGridThree {
   grid-template-columns: repeat(3, 1fr);
 }
-.solFeature {
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  border-radius: 18px;
-  padding: 22px 18px 20px;
-  backdrop-filter: blur(2px);
-  transition: background 220ms var(--ease-standard), border-color 220ms var(--ease-standard), transform 220ms var(--ease-standard);
+.programCol {
+  padding: 38px 32px;
+  border-left: 1px solid rgba(8, 80, 65, 0.14);
 }
-.solFeature:hover {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: var(--phil-pure);
-  transform: translateY(-2px);
+.programCol:first-child {
+  border-left: 0;
 }
-.solFeature h4 {
+.programCol h3 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 19px;
-  line-height: 1.2;
-  letter-spacing: -0.005em;
-  margin: 0 0 8px;
+  font-size: 20px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   color: #085041;
+  margin: 0 0 18px;
 }
-.solFeature p {
-  font-family: var(--font-body);
+.programCol ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.programCol li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+}
+.plCheck {
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  border-radius: 5px;
+  background: var(--phil-foliage, #2AA89E);
+  border: 1.5px solid var(--phil-foliage, #2AA89E);
+  color: var(--phil-pure, #fff);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.plCheck svg {
+  width: 12px;
+  height: 12px;
+}
+.plText {
   font-size: 14.5px;
   line-height: 1.5;
-  margin: 0;
-  color: #1a3a2e;
+  color: #0d3a2e;
+}
+.plText strong {
+  color: #085041;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1px;
+}
+
+@media (max-width: 980px) {
+  .programFlex { grid-template-columns: 1fr; }
+  .programFlexLabel { flex-flow: row wrap; align-items: center; gap: 16px; padding: 28px 32px; }
+  .pflSub { margin: 0; }
+  .pflModels { margin: 0; }
+  .pflScenarios { margin: 0; }
+  .programCols { grid-template-columns: 1fr; }
+  .programCol { border-left: 0; border-top: 1px solid rgba(8, 80, 65, 0.14); }
 }
 
 /* Section-level CTAs */

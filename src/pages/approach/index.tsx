@@ -424,27 +424,42 @@ const ApproachOutcomesPage = () => {
 
                 {/* Direct */}
                 <div className={classes.solDirectWrap} ref={solDirectRef}>
-                  <article className={classes.solDirect}>
-                    {SOLUTIONS_DIRECT_GROUPS.map((group, gi) => (
-                      <div key={gi} className={classes.solGroup}>
-                        <p className={classes.solGroupLabel}>{group.label}</p>
-                        <div
-                          className={`${classes.solFeatureGrid} ${
-                            group.features.length === 2
-                              ? classes.solFeatureGridTwo
-                              : classes.solFeatureGridThree
-                          }`}
-                        >
-                          {group.features.map((f, fi) => (
-                            <div key={fi} className={classes.solFeature}>
-                              <h4>{f.title}</h4>
-                              <p>{f.text}</p>
-                            </div>
-                          ))}
+                  <div className={classes.solProgram}>
+                    <div className={classes.programFlex}>
+                      <div className={classes.programFlexLabel}>
+                        <p className={classes.pflWord}>Flexible</p>
+                        <p className={classes.pflSub}>
+                          By Design
+                          <span className={classes.pflCheck} aria-hidden="true">
+                            <svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5L13 4.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </span>
+                        </p>
+                        <p className={classes.pflModels}>Sample patient journey pathways</p>
+                        <div className={classes.pflScenarios}>
+                          <span className={`${classes.pflDot} ${classes.pflDotActive}`}>Coverage Path</span>
+                          <span className={classes.pflDot}>Cash Path</span>
+                          <span className={classes.pflDot}>Hybrid Path</span>
                         </div>
                       </div>
-                    ))}
-                  </article>
+                      <div className={classes.programCols}>
+                        {SOLUTIONS_DIRECT_GROUPS.map((group, gi) => (
+                          <div key={gi} className={classes.programCol}>
+                            <h3>{group.label}</h3>
+                            <ul>
+                              {group.features.map((f, fi) => (
+                                <li key={fi}>
+                                  <span className={classes.plCheck} aria-hidden="true">
+                                    <svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                  </span>
+                                  <span className={classes.plText}><strong>{f.title}:</strong> {f.text}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Solution CTAs */}
