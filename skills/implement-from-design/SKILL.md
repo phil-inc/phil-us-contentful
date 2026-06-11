@@ -118,6 +118,8 @@ Don't follow frozen templates. Look at existing implementations:
 Do not change anything else when applying `xl-container` — preserve all existing aspect ratios, spacing, and visual design exactly as-is.
 ```
 
+**Section spacing** — use a consistent `padding: 100px 0` for all `.band` / section wrappers on desktop. At `max-width: 720px` use `64px 0`, at `max-width: 480px` use `44px 0`. Do not vary padding between sections unless there is a specific design reason (logged in the deviation table). This keeps vertical rhythm consistent across AI-built pages.
+
 ## Phase 5: Verify and Ship
 
 1. Run `npx tsc --noEmit` — fix any errors before proceeding.

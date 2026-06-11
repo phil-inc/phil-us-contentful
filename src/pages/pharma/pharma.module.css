@@ -1,7 +1,7 @@
 /* =============================================================
    PHIL Pharma Page
    System: Raleway Bold display + Lato body + Foliage Green accent.
-   Layout: xl-container for content width, 80–110px section padding.
+   Layout: xl-container for content width, 100px section padding.
    ============================================================= */
 
 /* ---------- Typography & Color Tokens (scoped) ---------- */
@@ -149,7 +149,7 @@
 .band {
   position: relative;
   overflow: hidden;
-  padding: 110px 0;
+  padding: 100px 0;
 }
 
 .sectionHead {
@@ -192,7 +192,7 @@
    ============================================================= */
 .hero {
   position: relative;
-  padding: 96px 0 110px;
+  padding: 100px 0 100px;
   background: var(--phil-pure);
 }
 .heroH1 {
