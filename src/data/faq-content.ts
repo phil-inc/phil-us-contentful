@@ -22,7 +22,7 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         question: "What does PHIL do?",
-        answer: `<p>PHIL is a medication access platform designed to improve patient outcomes and brand performance for retail and specialty-lite brands. Through <a href="/solution/core/" target="_blank" rel="noopener">PHIL Core</a>, our digital hub, and <a href="/solution/direct/" target="_blank" rel="noopener">PHIL Direct</a>, our Direct-to-Patient (DTP) solution, we enable seamless medication access via our integrated pharmacy network and our own PHIL cash pharmacies, delivering simple, affordable paths to therapy.</p>`,
+        answer: `<p>PHIL is a medication access platform designed to improve patient outcomes and brand performance for retail and specialty-lite brands. Through <a href="/solution/core/" target="_blank" rel="noopener">PHIL Digital Hub</a>, and <a href="/solution/direct/" target="_blank" rel="noopener">PHIL Direct-to-Patient</a>, our (DTP) solution, we enable seamless medication access via our integrated pharmacy network and our own PHIL cash pharmacies, delivering simple, affordable paths to therapy.</p>`,
       },
       {
         question: "What types of medications are best suited for the PHIL platform?",
@@ -76,7 +76,7 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         question: "How are you able to achieve 90%+ PA submission rates?",
-        answer: `<p>We have a proprietary PA process that integrates directly into prescribers' existing workflows and enables 1-click PA submissions to maximize covered dispenses. A dedicated PA Specialist team actively monitors PA submissions and script quality, and field team tools let reps have proactive conversations with prescribers about the status of each script.</p>`,
+        answer: `<p>We offer a proprietary prior authorization (PA) process that integrates seamlessly into prescribers' existing workflows, enabling e-prescribing through EHR integration and one-click PA submissions. AI-driven script checks proactively resolve barriers and help maximize covered dispenses. Our dedicated PA Specialist team actively monitors PA submissions and ensures script quality, while field team tools empower representatives to be proactive and engage prescribers about the status of each script.</p>`,
       },
       {
         question: "What data capabilities does PHIL offer?",
