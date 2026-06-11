@@ -269,9 +269,9 @@ const ApproachOutcomesPage = () => {
     [1, 4, 7, 8],        // Cash
     [0, 1, 2, 5, 6, 7],  // Hybrid
   ];
-  const [activeScenario, setActiveScenario] = useState<number | null>(0);
-  const [scenarioMode, setScenarioMode] = useState(true);
-  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set(SCENARIOS[0]));
+  const [activeScenario, setActiveScenario] = useState<number | null>(null);
+  const [scenarioMode, setScenarioMode] = useState(false);
+  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
   const scenarioTimers = useRef<NodeJS.Timeout[]>([]);
 
   const clearScenarioTimers = useCallback(() => {
