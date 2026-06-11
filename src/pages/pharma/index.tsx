@@ -133,10 +133,11 @@ const HeroSection = () => (
         Secure Commercial Success in <em>Retail and Specialty-Lite</em>
       </h1>
       <p className={classes.heroLead}>
-        PHIL is the end-to-end access platform built for retail and specialty-lite pharma brands to
-        overcome access barriers, maximize outcomes, and drive measurable performance at every stage
-        of the script journey. Turning enrollment into starts, starts into covered dispenses, and
-        dispenses into long-term adherence.
+        PHIL is the end-to-end access platform that helps retail and specialty lite brands overcome
+        access barriers, improve patient outcomes, and optimize commercial performance at every stage
+        of the script journey. Our platform combines human-first care with thoughtful AI integration,
+        turning enrollment into starts, starts into covered dispenses, and dispenses into long-term
+        adherence.
       </p>
 
       <div>
@@ -269,12 +270,13 @@ const PlatformSection = () => (
           </a>
           <div className={classes.pfVideoBody}>
             <h3 className={classes.pfVideoTitle}>
-              Experience Commercial Success with a Flexible Digital Hub Solution
+              Achieve Commercial Success with a Flexible Digital Hub Solution
             </h3>
             <p className={classes.pfVideoDesc}>
-              With PHIL, every step of the prescription journey is supported. Automating prior
-              authorization, benefits verification, and pharmacy routing, reduces potential
-              prescription drop-off points and supports more patients when starting therapy.
+              With PHIL, every step of the prescription journey is supported. Our advanced prior
+              authorization, benefits verification, and pharmacy routing process with AI-driven
+              script checks to proactively resolve barriers, supports patients in a seamless and
+              affordable path to therapy.
             </p>
             <Link className={classes.btnText} to="/solution/core/">
               Explore PHIL Digital Hub <span aria-hidden="true">→</span>

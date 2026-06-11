@@ -441,6 +441,7 @@
   border-radius: 18px;
   overflow: hidden;
   isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
   aspect-ratio: 16 / 9;
   display: block;
   background: var(--phil-paper);
@@ -448,6 +449,7 @@
   box-shadow: 0 18px 40px -18px rgba(0, 75, 72, 0.35);
   transition: transform 280ms var(--ease-standard), box-shadow 280ms var(--ease-standard);
   width: 100%;
+  min-width: 0;
 }
 .pfVideoThumb:hover {
   transform: translateY(-3px);
@@ -458,6 +460,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  background: var(--phil-paper);
   transform: scale(1.55);
   border-radius: inherit;
   display: block;
@@ -506,6 +509,7 @@
   flex-direction: column;
   gap: 14px;
   padding: 4px 4px 0;
+  min-width: 0;
 }
 .pfVideoTitle {
   font-family: var(--font-display);
@@ -1343,7 +1347,7 @@
   .pfVideoCardFlipped .pfVideoThumb { order: 0; }
   .pfVideoCardFlipped .pfVideoBody { order: 0; }
   .pfVideoTitle { font-size: 22px; }
-  .pfCombine { margin: -16px 0; }
+  .pfCombine { margin: 18px 0; }
   .pfPlus { width: 56px; height: 56px; box-shadow: 0 12px 28px -10px rgba(0, 75, 72, 0.35), 0 0 0 6px rgba(255,255,255,0.9); }
   .pfPlus svg { width: 22px; height: 22px; }
 }

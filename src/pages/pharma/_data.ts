@@ -29,12 +29,12 @@ export const PARTNER_PANELS = [
   {
     key: "ta",
     title: "To Improve Access, Affordability, and Adherence Across Different Products and Therapeutic Areas",
-    body: "With 10+ years of digital hub experience across specialty and retail channels, we help pharmaceutical manufacturers with pharmacy benefit, across medications achieve transformative results. Improving access, affordability, and adherence across a broad range of therapeutic areas.",
+    body: "With over 10 years of digital hub experience across specialty and retail channels, we help pharmaceutical manufacturers navigate pharmacy benefit design and access pathways to drive transformative results, improving patient access, affordability, and adherence across a wide range of therapeutic areas.",
   },
   {
     key: "value",
     title: "Deliver Measurable Commercial Impact",
-    body: "PHIL helps pharma brands improve patient access to therapy from the moment a script is written. From navigating utilization management hurdles to delivering an exceptional patient experience, our platform improves affordability and adherence while helping to deliver real results. Brands on PHIL see improved script to fill rates and stronger patient adherence compared to traditional channels.",
+    body: "PHIL helps pharma brands improve patient access to therapy from the moment a script is written. From delivering an exceptional patient experience to implementing custom business rules design, we bring together best-in-class care and technology-driven outcomes in one seamless platform. Brands on PHIL see improved script to fill rates and stronger patient adherence compared to traditional channels.",
   },
 ] as const;
 
@@ -44,7 +44,7 @@ export const STAKEHOLDERS = [
     name: "Brand & Commercial Leaders",
     icon: "chart",
     problem: "Traditional retail is eroding net revenue and limiting visibility into script performance.",
-    solve: "We optimize program performance by improving visibility across the journey, enabling data-driven decisions that strengthen access and outcomes and drive smarter commercial decisions.",
+    solve: "We optimize program performance by providing end-to-end visibility across the journey, delivering AI-enabled data insights that strengthen access and outcomes.",
     learnMoreHref: "/resources/?topic=commercial",
   },
   {
@@ -77,7 +77,7 @@ export const STAKEHOLDERS = [
     panelName: "Innovation & Digital Health Teams",
     icon: "bulb",
     problem: "Legacy access infrastructure can't keep pace with how patients and providers expect to engage with brands today.",
-    solve: "Our platform is built for what's next, with the flexibility, scalability, and AI-driven capabilities to integrate with the digital health ecosystem your brand is building.",
+    solve: "Our platform helps brands deliver on what's next through advanced technology and AI-powered workflows that deliver the flexibility and scalability in a single, end-to-end channel.",
     learnMoreHref: "/resources/?topic=data",
   },
 ] as const;
