@@ -420,22 +420,23 @@
   width: 80px;
   height: 80px;
   border-radius: 999px;
-  background: var(--phil-foliage);
+  background: linear-gradient(rgba(0, 130, 126, 0.42), rgba(0, 130, 126, 0.42)), white;
   border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--phil-pure);
+  color: rgba(255, 255, 255, 0.42);
   position: relative;
   margin-bottom: 18px;
-  opacity: 0.42;
-  transition: opacity 220ms var(--ease-standard), box-shadow 220ms var(--ease-standard), transform 220ms var(--ease-standard);
+  transition: background 220ms var(--ease-standard), box-shadow 220ms var(--ease-standard), transform 220ms var(--ease-standard), color 220ms var(--ease-standard);
 }
 .jNode:hover .jCircle {
-  opacity: 0.7;
+  background: linear-gradient(rgba(0, 130, 126, 0.7), rgba(0, 130, 126, 0.7)), white;
+  color: rgba(255, 255, 255, 0.7);
 }
 .jNodeActive .jCircle {
-  opacity: 1;
+  background: var(--phil-foliage);
+  color: var(--phil-pure);
   box-shadow: 0 0 0 6px rgba(0, 130, 126, 0.16);
   transform: scale(1.04);
 }
