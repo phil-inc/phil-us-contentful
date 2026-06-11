@@ -58,3 +58,13 @@ None — no forms on this page.
 | Sticky help banner | Included | Omitted | Already exists globally per dev instruction |
 | Font loading | Base64 embedded in HTML | `@fontsource/*` packages | Fonts already loaded site-wide via gatsby-browser |
 | Container width | `max-width: 1256px` on `.page` | `xl-container` class | Site standard per SKILL.md principles |
+
+## Content Sync Log
+
+Source of truth: `~/Downloads/FAQ.html`
+Shared data file: `src/data/faq-content.ts`
+
+| Date | Section | Change | Details |
+|---|---|---|---|
+| 2026-06-11 | Pharma → Platform & Partnership | Product naming updated | "PHIL Core" → "PHIL Digital Hub", "PHIL Direct" → "PHIL Direct-to-Patient" |
+| 2026-06-11 | Pharma → Impact & Outcomes | PA submission answer expanded | Added EHR integration, AI-driven script checks, "one-click PA submissions" language per FAQ.html |

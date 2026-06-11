@@ -10,12 +10,12 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 96px;
+  gap: 48px;
 }
 
 .rail {
   position: sticky;
-  top: 100px;
+  top: calc(var(--announcment-bar-height, 0px) + var(--navbar-height, 90px) + 3px);
   align-self: start;
 }
 

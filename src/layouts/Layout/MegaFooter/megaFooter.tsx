@@ -36,6 +36,7 @@ const NAV_COLUMNS: NavColumn[] = [
       { label: "Overview", href: "/solution/" },
       { label: "Digital Hub", href: "/solution/core/" },
       { label: "Direct-to-Patient", href: "/solution/direct/" },
+      { label: "Approach & Impact", href: "/approach/" },
     ],
   },
   {
@@ -115,7 +116,9 @@ const DesktopFooter: React.FC = () => (
             src="../../../assets/images/phil-logo-green.png"
             alt="PHIL"
             objectFit="contain"
-            loading="lazy"
+            placeholder="none"
+            width={125}
+            loading="eager"
           />
         </Link>
       </Box>
@@ -195,7 +198,9 @@ const MobileFooter: React.FC = () => (
             src="../../../assets/images/phil-logo-green.png"
             alt="PHIL"
             objectFit="contain"
-            loading="lazy"
+            placeholder="none"
+            width={125}
+            loading="eager"
           />
         </Link>
       </Box>

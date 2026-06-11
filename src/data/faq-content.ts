@@ -22,7 +22,7 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         question: "What does PHIL do?",
-        answer: `<p>PHIL is a medication access platform designed to improve patient outcomes and brand performance for retail and specialty-lite brands. Through <a href="/solution/core/" target="_blank" rel="noopener">PHIL Core</a>, our digital hub, and <a href="/solution/direct/" target="_blank" rel="noopener">PHIL Direct</a>, our Direct-to-Patient (DTP) solution, we enable seamless medication access via our integrated pharmacy network and our own PHIL cash pharmacies, delivering simple, affordable paths to therapy.</p>`,
+        answer: `<p>PHIL is a medication access platform designed to improve patient outcomes and brand performance for retail and specialty-lite brands. Through <a href="/solution/core/" target="_blank" rel="noopener">PHIL Digital Hub</a>, and <a href="/solution/direct/" target="_blank" rel="noopener">PHIL Direct-to-Patient</a>, our (DTP) solution, we enable seamless medication access via our integrated pharmacy network and our own PHIL cash pharmacies, delivering simple, affordable paths to therapy.</p>`,
       },
       {
         question: "What types of medications are best suited for the PHIL platform?",
@@ -58,7 +58,7 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         question: "How does your pharmacy network work?",
-        answer: `<p>Our integrated pharmacy network of retail, chain, and specialty pharmacy partners offers <strong>98%+ plan coverage</strong> across all 50 states and territories, with free Rx delivery. A dedicated Partner Pharmacy team manages our network, and each partner pharmacy is fully integrated and contracted with PHIL, equipping our pharma clients with full control and visibility at the point of dispense. We also offer wholesale capabilities to support our integrated network.</p>`,
+        answer: `<p>Our integrated pharmacy network of retail, chain, and specialty pharmacy partners offers <strong>99%+ plan coverage</strong> across all 50 states and territories, with free Rx delivery. A dedicated Partner Pharmacy team manages our network, and each partner pharmacy is fully integrated and contracted with PHIL, equipping our pharma clients with full control and visibility at the point of dispense. We also offer wholesale capabilities to support our integrated network.</p>`,
       },
       {
         question: "Do you have a cash pharmacy?",
@@ -75,8 +75,8 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
     title: "Impact & Outcomes",
     items: [
       {
-        question: "How are you able to achieve 85%+ PA submission rates?",
-        answer: `<p>We have a proprietary PA process that integrates directly into prescribers' existing workflows and enables 1-click PA submissions to maximize covered dispenses. A dedicated PA Specialist team actively monitors PA submissions and script quality, and field team tools let reps have proactive conversations with prescribers about the status of each script.</p>`,
+        question: "How are you able to achieve 90%+ PA submission rates?",
+        answer: `<p>We offer a proprietary prior authorization (PA) process that integrates seamlessly into prescribers' existing workflows, enabling e-prescribing through EHR integration and one-click PA submissions. AI-driven script checks proactively resolve barriers and help maximize covered dispenses. Our dedicated PA Specialist team actively monitors PA submissions and ensures script quality, while field team tools empower representatives to be proactive and engage prescribers about the status of each script.</p>`,
       },
       {
         question: "What data capabilities does PHIL offer?",
@@ -84,7 +84,7 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
       },
       {
         question: "How does PHIL improve Gross-to-Net (GTN)?",
-        answer: `<p>We are proud to achieve industry-leading outcomes for our clients: <strong>90%+ patient enrollment</strong>, <strong>85%+ PA submissions</strong>, <strong>2x+ covered dispenses</strong> (vs retail), and <strong>3x+ adherence rates</strong> (vs retail), which have a multiplicative effect on improving gross-to-net performance.</p><p>We help pharmaceutical brands improve commercial performance through our tech-enabled hub, proprietary PA process, and integrated pharmacy network, seamlessly integrated into a high-touch support model and white-glove partnership approach.</p><p>Want to forecast your brand's GTN potential with PHIL? <a href="/gtn/" target="_blank" rel="noopener">Use our self-serve GTN calculator</a>.</p>`,
+        answer: `<p>We are proud to achieve industry-leading outcomes for our clients: <strong>2x+ patient starts</strong>, <strong>90%+ PA submissions</strong>, <strong>2x+ covered dispenses</strong>, and <strong>3x+ refill adherence</strong> (vs traditional channels), which have a multiplicative effect, driving <strong>3x+ gross-to-net</strong> performance.</p><p>We help pharmaceutical brands improve commercial performance through our tech-enabled hub, proprietary PA process, and integrated pharmacy network, seamlessly integrated into a high-touch support model and white-glove partnership approach.</p><p>Want to forecast your brand's GTN potential with PHIL? <a href="/gtn/" target="_blank" rel="noopener">Use our self-serve GTN calculator</a>.</p>`,
       },
     ],
   },

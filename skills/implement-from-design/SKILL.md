@@ -93,6 +93,7 @@ git checkout <branch> && git pull origin <branch>
 ### Principles
 
 1. **HTML is source of truth** — do not fabricate content. If something looks incomplete, ask.
+2. **Extract all behavior, not just markup** — design HTML files may contain `<script>` blocks with interactive logic (click handlers, scroll animations, scenario toggles, tab switches). Extract and reimplement this behavior in React. If the design is bundled/compressed, use Puppeteer or open in a browser to identify all interactive elements and their JS behavior.
 2. **No Contentful** — new pages are code-driven. Only reference Contentful for existing/old content.
 3. **No sub-agents** — do all work in the main session. Sub-agents lose context and produce code that doesn't match the design.
 4. **Components accept props, data lives at page level** — hardcode content at the page level, pass to components via props.
@@ -101,6 +102,7 @@ git checkout <branch> && git pull origin <branch>
 7. **Log every deviation** — any difference from the design HTML goes in SPEC.md.
 8. **Design for AI maintainability** — clear structure, obvious data boundaries, no clever abstractions. Future updates will be made by AI agents or devs with AI.
 9. **SEO** — copy `Head` export from `src/pages/providers/index.tsx` as template. Update `TITLE`, `DESC`, `PROVIDERS_*` constants only. Audit: one `<h1>`, no skipped heading levels, title 50–60 chars, description 150–160 chars.
+10. **Internal links use relative URLs** — never use absolute URLs (e.g. `https://phil.us/demo`) for links within the site. Use relative paths (`/demo`, `/gtn/calculator`). This applies to `href`, `navigate()`, and `<Link to="">`. Design HTML may contain absolute URLs — convert them.
 
 ### What to look at for patterns
 
@@ -116,6 +118,8 @@ Don't follow frozen templates. Look at existing implementations:
 <div className={`xl-container ${classes.heroInner}`}>…</div>
 Do not change anything else when applying `xl-container` — preserve all existing aspect ratios, spacing, and visual design exactly as-is.
 ```
+
+**Section spacing** — use a consistent `padding: 100px 0` for all `.band` / section wrappers on desktop. At `max-width: 720px` use `64px 0`, at `max-width: 480px` use `44px 0`. Do not vary padding between sections unless there is a specific design reason (logged in the deviation table). This keeps vertical rhythm consistent across AI-built pages.
 
 ## Phase 5: Verify and Ship
 

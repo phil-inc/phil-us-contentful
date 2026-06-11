@@ -93,28 +93,47 @@
 .btnPrimary {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-family: Lato, sans-serif;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 16px;
   color: #00827e;
   background: #ffffff;
+  border: 1.5px solid #ffffff;
   border-radius: 999px;
-  padding: 16px 28px;
-  transition: transform 0.15s, gap 0.15s;
+  padding: 20px 36px;
+  box-shadow: 0 8px 20px rgba(10, 50, 50, 0.18);
+  transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
+  flex-shrink: 0;
 }
 
-.btnPrimary svg {
-  width: 16px;
-  height: 16px;
+.btnPrimary::after {
+  content: "→";
+  display: inline-flex;
+  align-items: center;
+  font-family: Lato, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 27px;
+  line-height: 0;
+  vertical-align: middle;
+  transform: scaleX(0.8) scaleY(1.1);
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
 .btnPrimary:hover {
-  gap: 14px;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(10, 50, 50, 0.25);
   color: #00827e;
   text-decoration: none;
+}
+
+.btnPrimary:hover::after {
+  transform: scaleX(0.8) scaleY(1.1) translateX(7px);
+}
+
+.btnPrimary:active {
+  transform: translateY(1px);
 }
 
 @media (min-width: 1680px) {
