@@ -162,9 +162,12 @@ const TrustpilotStat: React.FC<{ active: boolean }> = ({ active }) => {
 const DemoPage: React.FC = () => {
   const [statRef, statIn] = useInView();
 
+  // Full-screen landing page: hide the shared navbar + promo banner so the hero
+  // owns the entire viewport (see `canHideHeader` below and `height: 100vh` in
+  // demo.module.css).
   return (
     <PageContext.Provider value={{ slug: "demo" }}>
-      <Layout>
+      <Layout canHideHeader>
         <section className={classes.hero}>
           <div className={classes.depthA} />
           <div className={classes.depthB} />
@@ -181,6 +184,11 @@ const DemoPage: React.FC = () => {
             <div className={`xl-container ${classes.grid}`}>
               {/* HEAD */}
               <div className={classes.head}>
+                <img
+                  className={classes.heroLogo}
+                  src="/images/demo-phil-logo-white.png"
+                  alt="PHIL"
+                />
                 <h1 className={classes.h1}>
                   {DEMO_HERO.headingLead}{" "}
                   <span className={classes.accent}>{DEMO_HERO.headingAccent}</span>

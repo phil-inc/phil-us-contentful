@@ -1,7 +1,9 @@
 /* =======================================================================
    /demo — Book a Demo page
-   Ported from the design export (app.css .bd-* / directionA.jsx),
-   adapted to render inside the shared Layout (no 100vh lock).
+   Ported from the design export (app.css .bd-* / directionA.jsx). Renders
+   inside the shared Layout with the navbar + promo banner hidden
+   (`canHideHeader`), so the desktop hero is a full-viewport, full-size
+   replica of the design (the footer still follows below the fold).
    ======================================================================= */
 
 .hero {
@@ -26,6 +28,66 @@
     var(--phil-foliage) 56%,
     #74ceb5 100%
   );
+}
+
+/* Full-screen hero on desktop, faithful to the design (directionA / app.css).
+   The shared navbar + promo banner are hidden on /demo (Layout `canHideHeader`),
+   so the page owns the full viewport at its native, full-size type/spacing
+   (no compression). Content anchors to the top (`align-content: start` from the
+   base `.grid`); if it ever exceeds the viewport the hero grows past 100vh
+   rather than clipping. Only applies at >= 861px, mirroring the design's two-
+   column `100vh` view.
+
+   The form card (`.card` / `.cardHeading` / `.cardSub` / `.hsForm`) is left
+   exactly as previously styled — those overrides are intentionally preserved. */
+@media (min-width: 861px) {
+  /* Selectors are scoped under `.hero` to raise specificity above the base
+     rules (the CSS-module compiler emits base rules after this block, so equal
+     specificity would lose the cascade). */
+  .hero {
+    min-height: 100vh;
+  }
+  .hero .stage {
+    min-height: 100vh;
+    padding: 56px 0;
+  }
+  /* Direction-A vertical offsets: drop the form card, lift the bullets. */
+  .hero .formCol {
+    transform: translateY(5%);
+  }
+  .hero .bullets {
+    transform: translateY(-5%);
+  }
+
+  /* ---- form card: preserved as-is (do not touch the form) ------------- */
+  .hero .card {
+    padding: 24px 30px;
+  }
+  .hero .cardHeading {
+    font-size: 27px;
+  }
+  .hero .cardSub {
+    font-size: 15px;
+    margin: 6px 0 14px;
+  }
+  .hero .hsForm :global(.hs-input) {
+    height: 46px;
+    font-size: 15.5px;
+  }
+  .hero .hsForm :global(.hs-form-field) {
+    margin-bottom: 10px;
+  }
+  .hero .hsForm :global(label) {
+    margin-bottom: 5px;
+  }
+  .hero .hsForm :global(.hs-submit) {
+    margin-top: 14px;
+  }
+  .hero .hsForm :global(.hs-button),
+  .hero .hsForm :global(input[type="submit"]) {
+    height: 50px;
+    font-size: 16.5px;
+  }
 }
 
 /* depth gradients — deepen top-left, lift bottom-right */
@@ -133,6 +195,11 @@
 }
 
 /* ---- headline ---------------------------------------------------------- */
+.heroLogo {
+  height: 30px;
+  width: auto;
+  display: block;
+}
 .h1 {
   font-family: var(--font-display);
   font-weight: 800;
@@ -140,7 +207,7 @@
   font-size: 50px;
   line-height: 1.08;
   letter-spacing: -0.02em;
-  margin: 0;
+  margin: 64px 0 0;
   text-wrap: balance;
 }
 .accent {
@@ -300,9 +367,127 @@
   color: var(--phil-gunmetal);
   margin: 8px 0 28px;
 }
-/* constrain the embedded HubSpot form to the card width */
+/* =======================================================================
+   Embedded HubSpot form — skinned to match the design.
+   The app applies generic global `.hs-*` styles; these scoped `:global`
+   overrides (under the hashed `.hsForm` wrapper) win on specificity.
+   ======================================================================= */
 .hsForm {
   width: 100%;
+}
+
+/* fieldsets / rows */
+.hsForm :global(fieldset) {
+  max-width: 100% !important;
+  margin-bottom: 0 !important;
+}
+.hsForm :global(.hs-form-field) {
+  position: relative;
+  margin-bottom: 18px;
+}
+/* horizontal gutter for the two-up rows */
+.hsForm :global(.form-columns-2 .hs-form-field) {
+  box-sizing: border-box;
+  padding-right: 9px;
+}
+.hsForm :global(.form-columns-2 .hs-form-field:last-child) {
+  padding-right: 0;
+  padding-left: 9px;
+}
+
+/* labels */
+.hsForm :global(label) {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--phil-pitch);
+  margin-bottom: 7px;
+}
+.hsForm :global(.hs-form-required) {
+  color: #c0473b;
+  margin-left: 2px;
+}
+
+/* inputs */
+.hsForm :global(.input) {
+  margin-top: 0;
+}
+.hsForm :global(.hs-input) {
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  height: 56px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1.5px solid #d7dcdc;
+  background: #fff;
+  color: var(--phil-pitch);
+  width: 100% !important;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.hsForm :global(.hs-input::placeholder) {
+  color: #9e9e9e;
+}
+.hsForm :global(.hs-input:hover) {
+  border-color: #9e9e9e;
+}
+.hsForm :global(.hs-input:focus) {
+  border-color: var(--phil-foliage);
+  box-shadow: 0 0 0 4px rgba(0, 130, 126, 0.16);
+  outline: none;
+}
+.hsForm :global(.hs-input.invalid),
+.hsForm :global(.hs-input.error) {
+  border-color: #c0473b;
+  box-shadow: 0 0 0 4px rgba(192, 71, 59, 0.12);
+}
+
+/* validation messages */
+.hsForm :global(.hs-error-msgs) {
+  list-style: none;
+  margin: 5px 0 0 !important;
+  padding: 0;
+}
+.hsForm :global(.hs-error-msg),
+.hsForm :global(label.hs-error-msg) {
+  color: #c0473b;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+/* submit button */
+.hsForm :global(.hs-submit) {
+  margin-top: 26px;
+}
+.hsForm :global(.hs-submit .actions) {
+  padding: 0;
+  margin: 0;
+}
+.hsForm :global(.hs-button),
+.hsForm :global(input[type="submit"]) {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  background: var(--phil-foliage) !important;
+  border: 0;
+  height: 60px;
+  width: 100% !important;
+  padding: 0 32px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0, 130, 126, 0.32);
+  transition: background 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
+}
+.hsForm :global(.hs-button:hover),
+.hsForm :global(input[type="submit"]:hover) {
+  background: var(--phil-forest) !important;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 130, 126, 0.4);
+  outline: none !important;
 }
 
 /* ---- responsive -------------------------------------------------------- */
@@ -322,7 +507,7 @@
   }
   .bullets { margin-top: 0; }
   .metricsBand { margin-top: 6px; }
-  .h1 { font-size: 34px; }
+  .h1 { font-size: 34px; margin-top: 22px; }
   .sub { font-size: 18px; max-width: none; }
   .card { padding: 28px; }
   .stats { flex-wrap: wrap; gap: 28px 24px; }
