@@ -23,35 +23,41 @@
 }
 .btn:hover { text-decoration: none; }
 
-/* gradient filled pill */
+/* gradient filled pill (dual-bg padding-box + border-box — no transparent edge) */
 .btnPill {
-  background: linear-gradient(135deg, #5abea4 0%, #2aa89e 45%, #00827e 100%);
-  color: #fff;
+  background:
+    linear-gradient(135deg, #5abea4 0%, #2aa89e 45%, #00827e 100%) padding-box,
+    linear-gradient(135deg, #5abea4 0%, #2aa89e 45%, #00827e 100%) border-box;
   border: 2px solid transparent;
-  padding: 14px 30px;
-  box-shadow: 0 6px 16px rgba(0, 130, 126, 0.18);
+  color: #fff;
+  letter-spacing: 0.01em;
+  padding: 16px 32px;
+  box-shadow: 0 8px 20px rgba(0, 130, 126, 0.22);
 }
 .btnPill:hover {
-  background: #fff;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #5abea4 0%, #2aa89e 45%, #00827e 100%) border-box;
   color: #00827e;
-  border-color: #00827e;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 130, 126, 0.22);
+  box-shadow: none;
 }
 
-/* inverse pill: white default, gradient on hover */
+/* gradient outline pill */
 .btnPillOutline {
-  background: #fff;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #5abea4 0%, #2aa89e 45%, #00827e 100%) border-box;
+  border: 2px solid transparent;
   color: #00827e;
-  border: 2px solid #00827e;
-  padding: 14px 30px;
+  letter-spacing: 0.01em;
+  padding: 16px 32px;
 }
 .btnPillOutline:hover {
-  background: linear-gradient(135deg, #5abea4 0%, #2aa89e 45%, #00827e 100%);
+  background:
+    linear-gradient(135deg, #5abea4 0%, #2aa89e 45%, #00827e 100%) padding-box,
+    linear-gradient(135deg, #5abea4 0%, #2aa89e 45%, #00827e 100%) border-box;
   color: #fff;
-  border-color: transparent;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 130, 126, 0.22);
+  box-shadow: 0 8px 20px rgba(0, 130, 126, 0.22);
 }
 
 /* text + underline CTA */
@@ -65,8 +71,10 @@
   color: #00827e;
   padding: 6px 2px 8px;
   position: relative;
+  text-decoration: none;
   transition: color 0.2s ease;
 }
+.btnText:hover { text-decoration: none; }
 .btnText::after {
   content: "";
   position: absolute;
@@ -81,28 +89,6 @@
 .btnText:hover { color: #00615e; }
 .btnText:hover::after { background: #00615e; height: 2px; }
 .btnText:hover svg { transform: translateX(4px); }
-
-/* footer CTA light button */
-.btnGradientFilledLight {
-  background: #fff;
-  color: #00827e;
-  padding: 16px 36px;
-  letter-spacing: 0.01em;
-  box-shadow: 0 8px 20px rgba(10, 50, 50, 0.18);
-  position: relative;
-}
-.btnGradientFilledLight::after {
-  content: "\2192";
-  display: inline-block;
-  margin-left: 4px;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1;
-  transform: translateX(0);
-  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
-}
-.btnGradientFilledLight:hover::after { transform: translateX(6px); }
-.btnLg { padding: 16px 32px; font-size: 16px; }
 
 /* ── Eyebrow ─────────────────────────────────────────────────────────── */
 .eyebrow {
@@ -148,12 +134,12 @@
   text-align: center;
 }
 
-.section { padding: 72px 0; }
+.section { padding: 100px 0; }
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  padding: 100px 0 80px;
+  padding: 100px 0;
   background:
     radial-gradient(900px 600px at 85% -10%, rgba(213, 241, 240, 0.5), transparent 65%),
     radial-gradient(700px 500px at -10% 110%, rgba(213, 241, 240, 0.45), transparent 65%),
@@ -311,6 +297,15 @@
 }
 .metricDotActive { background: #fff; width: 44px; }
 
+/* Hero is still 2-col here but the right card is narrow — stack the metric
+   number above its label so the label isn't clipped by overflow:hidden. */
+@media (max-width: 1200px) {
+  .metricSlot { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .metricNum { min-width: 0; font-size: clamp(48px, 5.4vw, 64px); }
+  .metricLbl { max-width: none; }
+  .metricStack { height: 150px; }
+}
+
 @media (max-width: 880px) {
   .heroGrid { grid-template-columns: 1fr; gap: 40px; }
   .heroGrid > * { min-width: 0; }
@@ -330,7 +325,10 @@
 /* ── Results / case study tabs ───────────────────────────────────────── */
 .resultsSection {
   background: linear-gradient(135deg, #eaf7f5 0%, #def1ec 50%, #f8f1da 100%);
-  padding: 96px 0;
+  padding: 100px 0;
+  /* #case-studies anchor target — offset for sticky navbar so "Read Proof"
+     doesn't land under the header. */
+  scroll-margin-top: calc(var(--navbar-height) + 20px);
 }
 .resultsSection .sectionHead { margin-bottom: 56px; }
 
@@ -363,12 +361,14 @@
   box-shadow: 0 12px 24px -14px rgba(0, 75, 72, 0.35);
 }
 .csTabActive {
-  background: linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%);
+  background:
+    linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%) padding-box,
+    linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%) border-box;
   border-color: transparent;
   color: #fff;
   box-shadow: 0 14px 32px -16px rgba(0, 75, 72, 0.45);
 }
-.csTabActive:hover { color: #fff; }
+.csTabActive:hover { color: #fff; border-color: transparent; }
 
 .csPanel {
   background: #fff;
@@ -710,7 +710,7 @@
 
 /* ── Trustpilot strip ────────────────────────────────────────────────── */
 .trust {
-  padding: 72px 0;
+  padding: 100px 0;
   background:
     radial-gradient(700px 380px at 90% 10%, rgba(213, 241, 240, 0.45), transparent 70%),
     #ffffff;
@@ -825,10 +825,15 @@
 
 @media (max-width: 880px) {
   .trustGrid { grid-template-columns: 1fr; gap: 24px; }
+  /* Carousel card wraps taller on narrow widths — give the iframe room so
+     the rating + pager row isn't clipped. !important beats the inline
+     data-style-height set by the Trustpilot script. */
+  .trustRight .trustpilotWidget,
+  .trustRight .trustpilotWidget iframe { height: 380px !important; }
 }
 
 /* ── ROI banner ──────────────────────────────────────────────────────── */
-.roiSection { background: #ffffff; padding: 32px 0 80px; }
+.roiSection { background: #ffffff; padding: 100px 0; }
 .roiBanner {
   background: linear-gradient(135deg, #d5f1f0 0%, #a8e2da 50%, #f2e8c0 100%);
   color: #085041;
@@ -940,49 +945,141 @@
   .calcCardStack { grid-template-columns: 1fr; }
 }
 
-/* ── Footer CTA ──────────────────────────────────────────────────────── */
-.footerCta {
+/* ── End CTA (Demo) — mirrors home EndCtaSection ─────────────────────── */
+.endcta {
+  padding: 0;
+  margin: 0;
+}
+.endctaBg {
   position: relative;
   background: linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%);
   color: #fff;
-  padding: 78px 0;
-  overflow: hidden;
-}
-.footerCtaInner {
+  padding: 80px 60px 96px;
+  min-height: 474px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  text-align: left;
+  overflow: hidden;
 }
-.footerCtaCopy { flex: 1 1 auto; min-width: 0; }
-.footerCtaTitle {
+.endctaBg::before {
+  content: "";
+  position: absolute;
+  top: -160px;
+  right: -100px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
+  pointer-events: none;
+}
+.endctaBg::after {
+  content: "";
+  position: absolute;
+  bottom: -200px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(109, 223, 193, 0.25), transparent 70%);
+  pointer-events: none;
+}
+.endctaRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 48px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.endctaCopy { flex: 1 1 0; min-width: 0; }
+.endctaEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 28px;
+}
+.endctaRule {
+  width: 40px;
+  height: 2px;
+  background: #fff;
+  display: inline-block;
+}
+.endctaTitle {
   font-family: "Raleway", "Arial Black", Arial, sans-serif;
   font-weight: 700;
-  font-size: clamp(28px, 3vw, 40px);
-  line-height: 1.15;
-  letter-spacing: -0.012em;
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   color: #fff;
+  margin: 0 0 24px;
+  max-width: 66%;
+}
+.endctaBody {
+  font-size: 21px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
   margin: 0;
+  max-width: 580px;
 }
-.footerCtaBody {
+.endctaCtas {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+.endctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  color: #00827e;
+  border-radius: 999px;
+  padding: 20px 36px;
   font-family: "Lato", Arial, sans-serif;
-  font-size: 17px;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 14px 0 0;
-  max-width: 640px;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  border: 0;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(10, 50, 50, 0.18);
+  transition: transform 240ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 240ms cubic-bezier(0.2, 0, 0, 1);
 }
-.footerCtaButtons { flex-shrink: 0; display: flex; gap: 14px; flex-wrap: wrap; }
+.endctaBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  color: #00827e;
+}
+.endctaArrow { transition: transform 240ms cubic-bezier(0.2, 0, 0, 1); }
+.endctaBtn:hover .endctaArrow { transform: translateX(4px); }
 
-@media (max-width: 880px) {
-  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; }
+@media (max-width: 1000px) {
+  .endctaBg { padding: 40px 20px 48px; min-height: auto; }
+  .endctaRow { flex-direction: column; align-items: flex-start; gap: 32px; padding: 0; }
+  .endctaTitle { max-width: 100%; }
+  .endctaCtas { width: 100%; justify-content: flex-start; }
+  .endctaBtn { width: 100%; padding: 16px 24px; text-align: center; justify-content: center; }
+}
+
+@media (max-width: 720px) {
+  .section, .resultsSection, .trust, .roiSection { padding: 64px 0; }
+  .hero { padding: 64px 0 80px; }
+  .endctaBg { padding: 40px 20px 48px; }
+  .endctaRow { flex-direction: column; align-items: flex-start; gap: 24px; padding: 0; }
+  .endctaTitle { font-size: 34px; line-height: 1.1; max-width: 100%; }
+  .endctaBody { font-size: 16px; }
+  .endctaEyebrow { font-size: 11px; margin-bottom: 16px; }
+  .endctaCtas { width: 100%; justify-content: flex-start; }
+  .endctaBtn { width: 100%; padding: 16px 24px; text-align: center; justify-content: center; }
 }
 
 /* ── Phone breakpoint ────────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .section { padding: 56px 0; }
-  .resultsSection { padding-top: 64px; }
   .sectionHead { margin-bottom: 32px; }
   .h1 { font-size: clamp(32px, 8.5vw, 42px); }
   .h1Break { display: none; }
@@ -998,4 +1095,14 @@
   .csMetric { padding: 22px; }
   .mNum { font-size: 48px; }
   .calcCardStack { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .heroCta { flex-direction: column; align-items: stretch; }
+  .heroCta .btnPill, .heroCta .btnPillOutline { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .section, .resultsSection, .trust, .roiSection { padding: 44px 0; }
+  .hero { padding: 48px 0 60px; }
 }

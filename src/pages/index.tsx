@@ -880,7 +880,7 @@ function VoiceCard({
   tag: string;
   quotes: VoiceQuote[];
 }) {
-  const DURATION = 7000;
+  const DURATION = 6000;
   const [activeIdx, setActiveIdx] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [displayed, setDisplayed] = useState(quotes[0]);
@@ -968,6 +968,13 @@ function VoiceCard({
     <article
       ref={cardRef}
       className={`${classes.voice} ${VOICE_VARIANT_CLASS[variant] || ""}`}
+      onMouseEnter={() => {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+      }}
+      onMouseLeave={startTimer}
     >
       <div className={classes.voiceTag}>{tag}</div>
       <div className={classes.voiceQuotebox}>
