@@ -140,32 +140,52 @@ const HeroCtas = ({ mobile = false }: { mobile?: boolean }) => (
 );
 
 const MetricTicker = () => {
+  const DURATION = 3600;
   const [idx, setIdx] = useState(0);
   const [leavingIdx, setLeavingIdx] = useState<number | null>(null);
-  const pausedRef = useRef(false);
-
-  // keep a ref of idx so the interval reads the latest value
-  const idxRef = useRef(idx);
-  useEffect(() => {
-    idxRef.current = idx;
-  }, [idx]);
+  const idxRef = useRef(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const leavingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const advanceTo = useCallback((next: number) => {
     const len = HERO_METRICS.length;
     const normalized = ((next % len) + len) % len;
     const cur = idxRef.current;
     if (cur === normalized) return;
+    if (leavingTimeoutRef.current) clearTimeout(leavingTimeoutRef.current);
     setLeavingIdx(cur);
-    window.setTimeout(() => setLeavingIdx(null), 600);
+    leavingTimeoutRef.current = setTimeout(() => {
+      setLeavingIdx(null);
+      leavingTimeoutRef.current = null;
+    }, 600);
+    idxRef.current = normalized;
     setIdx(normalized);
   }, []);
 
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      if (!pausedRef.current) advanceTo(idxRef.current + 1);
-    }, 3600);
-    return () => window.clearInterval(id);
+  const start = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => advanceTo(idxRef.current + 1), DURATION);
   }, [advanceTo]);
+
+  useEffect(() => {
+    start();
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+      } else if (!timerRef.current) {
+        start();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (leavingTimeoutRef.current) clearTimeout(leavingTimeoutRef.current);
+    };
+  }, [start]);
 
   return (
     <div
@@ -173,11 +193,12 @@ const MetricTicker = () => {
       aria-live="polite"
       aria-label="PHIL impact metrics"
       onMouseEnter={() => {
-        pausedRef.current = true;
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
       }}
-      onMouseLeave={() => {
-        pausedRef.current = false;
-      }}
+      onMouseLeave={start}
     >
       <span className={classes.metricEyebrow}>PHIL&rsquo;s Impact</span>
       <div className={classes.metricStack}>
@@ -206,7 +227,10 @@ const MetricTicker = () => {
             type="button"
             aria-label={`Show metric ${i + 1}`}
             className={`${classes.metricDot} ${i === idx ? classes.metricDotActive : ""}`}
-            onClick={() => advanceTo(i)}
+            onClick={() => {
+              advanceTo(i);
+              start();
+            }}
           />
         ))}
       </div>
@@ -393,48 +417,89 @@ const VOICE_BG: Record<string, string> = {
   providers: classes.voiceProviders,
 };
 
-const VoiceCard: React.FC<{
-  voice: Voice;
-  tick: number;
-  onHover: (paused: boolean) => void;
-}> = ({ voice, tick, onHover }) => {
+const VoiceCard: React.FC<{ voice: Voice }> = ({ voice }) => {
+  const DURATION = 6000;
+  const count = voice.quotes.length;
   const [idx, setIdx] = useState(0);
   const [leaving, setLeaving] = useState(false);
-  const firstRender = useRef(true);
-  const count = voice.quotes.length;
+  const idxRef = useRef(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const transitionRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cardRef = useRef<HTMLElement>(null);
 
   const goTo = useCallback(
     (next: number) => {
+      const normalized = ((next % count) + count) % count;
+      if (normalized === idxRef.current) return;
+      if (transitionRef.current) clearTimeout(transitionRef.current);
       setLeaving(true);
-      window.setTimeout(() => {
-        setIdx(((next % count) + count) % count);
+      transitionRef.current = setTimeout(() => {
+        idxRef.current = normalized;
+        setIdx(normalized);
         setLeaving(false);
+        transitionRef.current = null;
       }, 240);
     },
     [count],
   );
 
+  const start = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => goTo(idxRef.current + 1), DURATION);
+  }, [goTo]);
+
   useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
-    setLeaving(true);
-    const id = window.setTimeout(() => {
-      setIdx((cur) => (cur + 1) % count);
-      setLeaving(false);
-    }, 240);
-    return () => window.clearTimeout(id);
-  }, [tick, count]);
+    const el = cardRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && !timerRef.current) start();
+        });
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+        if (transitionRef.current) {
+          clearTimeout(transitionRef.current);
+          transitionRef.current = null;
+          setLeaving(false);
+        }
+      } else if (!timerRef.current) {
+        start();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (transitionRef.current) clearTimeout(transitionRef.current);
+    };
+  }, [start]);
 
   const current = voice.quotes[idx];
 
   return (
     <article
+      ref={cardRef}
       className={`${classes.voice} ${VOICE_BG[voice.id] || ""}`}
-      onClick={() => goTo(idx + 1)}
-      onMouseEnter={() => onHover(true)}
-      onMouseLeave={() => onHover(false)}
+      onMouseEnter={() => {
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+      }}
+      onMouseLeave={start}
     >
       <div className={classes.voiceTag}>{voice.tag}</div>
       <div className={classes.voiceQuotebox}>
@@ -456,9 +521,9 @@ const VoiceCard: React.FC<{
             type="button"
             aria-label={`Quote ${i + 1}`}
             className={`${classes.voiceDot} ${i === idx ? classes.voiceDotActive : ""}`}
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               goTo(i);
+              start();
             }}
           />
         ))}
@@ -467,41 +532,20 @@ const VoiceCard: React.FC<{
   );
 };
 
-const TestimonialsSection = () => {
-  const [tick, setTick] = useState(0);
-  const pausedRef = useRef(false);
-  const [sectionRef, inView] = useInView<HTMLDivElement>();
-
-  useEffect(() => {
-    if (!inView) return;
-    const id = window.setInterval(() => {
-      if (!pausedRef.current) setTick((t) => t + 1);
-    }, 7000);
-    return () => window.clearInterval(id);
-  }, [inView]);
-
-  return (
-    <section className={`${classes.section} ${classes.testimonialsSection}`}>
-      <div className="xl-container" ref={sectionRef}>
-        <div className={classes.sectionHead}>
-          <h2>A Dedicated Partner to Pharma, Patients, and Providers</h2>
-        </div>
-        <div className={classes.voicesGrid}>
-          {VOICES.map((voice) => (
-            <VoiceCard
-              key={voice.id}
-              voice={voice}
-              tick={tick}
-              onHover={(paused) => {
-                pausedRef.current = paused;
-              }}
-            />
-          ))}
-        </div>
+const TestimonialsSection = () => (
+  <section className={`${classes.section} ${classes.testimonialsSection}`}>
+    <div className="xl-container">
+      <div className={classes.sectionHead}>
+        <h2>A Dedicated Partner to Pharma, Patients, and Providers</h2>
       </div>
-    </section>
-  );
-};
+      <div className={classes.voicesGrid}>
+        {VOICES.map((voice) => (
+          <VoiceCard key={voice.id} voice={voice} />
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 // ─── Trustpilot strip ─────────────────────────────────────────────────────────
 
@@ -615,24 +659,41 @@ const RoiSection = () => (
 // ─── Footer CTA ───────────────────────────────────────────────────────────────
 
 const FooterCta = () => (
-  <section className={classes.footerCta}>
-    <div className="xl-container">
-      <div className={classes.footerCtaInner}>
-        <div className={classes.footerCtaCopy}>
-          <h2 className={classes.footerCtaTitle}>
+  <section className={classes.endcta} id="cta">
+    <div className={classes.endctaBg}>
+      <div className={`xl-container ${classes.endctaRow}`}>
+        <div className={classes.endctaCopy}>
+          <div className={classes.endctaEyebrow}>
+            <span className={classes.endctaRule} />
+            Ready to simplify medication access?
+          </div>
+          <h2 className={classes.endctaTitle}>
             Streamline the Medication Access Experience
           </h2>
-          <p className={classes.footerCtaBody}>
+          <p className={classes.endctaBody}>
             Discover how the PHIL platform can help your brands maximize coverage,
             adherence, and commercial performance.
           </p>
         </div>
-        <div className={classes.footerCtaButtons}>
-          <Link
-            to={DEMO_URL}
-            className={`${classes.btn} ${classes.btnGradientFilledLight} ${classes.btnLg}`}
-          >
+        <div className={classes.endctaCtas}>
+          <Link to={DEMO_URL} className={classes.endctaBtn}>
             Book Demo
+            <svg
+              className={classes.endctaArrow}
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 9h12m-4-4 4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </Link>
         </div>
       </div>

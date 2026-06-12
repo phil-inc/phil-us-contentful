@@ -109,6 +109,10 @@ function handleResourcePage(
     const headerSlug = slugify(section.header, { lower: true, strict: true });
     resourceSubPages.push(headerSlug);
 
+    // /insights/case-studies is served by the static file-based page at
+    // src/pages/insights/case-studies/index.tsx
+    if (headerSlug === "case-studies") return;
+
     const numPages = pagination.numberOfPages(
       (section as IReferencedSection).references.length,
       POSTS_PER_SECTION,
@@ -137,10 +141,6 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
 
   // /pharma is served by the static file-based page at src/pages/pharma/index.tsx
   if (page.slug === "pharma") return;
-
-  // /insights/case-studies is served by the static file-based page at
-  // src/pages/insights/case-studies/index.tsx
-  if (page.slug === "insights/case-studies") return;
 
   // TODO: Remove this override once the Contentful GTN page slug is changed to "gtn/calculator"
   const slug = page.title === "GTN" ? "gtn/calculator" : page.slug;
