@@ -182,18 +182,39 @@ const DemoPage: React.FC = () => {
 
           <div className={classes.stage}>
             <div className={`xl-container ${classes.grid}`}>
-              {/* HEAD */}
-              <div className={classes.head}>
-                <img
-                  className={classes.heroLogo}
-                  src="/images/demo-phil-logo-white.png"
-                  alt="PHIL"
-                />
-                <h1 className={classes.h1}>
-                  {DEMO_HERO.headingLead}{" "}
-                  <span className={classes.accent}>{DEMO_HERO.headingAccent}</span>
-                </h1>
-                <p className={classes.sub}>{DEMO_HERO.sub}</p>
+              <div className={classes.topRow}>
+                <div className={classes.content}>
+                {/* HEAD */}
+                <div className={classes.head}>
+                  <img
+                    className={classes.heroLogo}
+                    src="/images/demo-phil-logo-white.png"
+                    alt="PHIL"
+                  />
+                  <h1 className={classes.h1}>
+                    {DEMO_HERO.headingLead}{" "}
+                    <span className={classes.accent}>{DEMO_HERO.headingAccent}</span>
+                  </h1>
+                  <p className={classes.sub}>{DEMO_HERO.sub}</p>
+                </div>
+
+                {/* BULLETS */}
+                <div className={classes.bullets}>
+                  {DEMO_BULLETS.map((b, i) => (
+                    <div className={classes.bullet} key={i}>
+                      <span
+                        className={classes.checkCircle}
+                        style={{ animationDelay: `${0.3 + i * 0.18}s` }}
+                      >
+                        <IconCheck />
+                      </span>
+                      <span className={classes.bulletText}>
+                        <strong>{b.lead}</strong>
+                        <span className={classes.bulletSub}>{b.rest}</span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* FORM */}
@@ -208,26 +229,9 @@ const DemoPage: React.FC = () => {
                   />
                 </div>
               </div>
-
-              {/* BULLETS */}
-              <div className={classes.bullets}>
-                {DEMO_BULLETS.map((b, i) => (
-                  <div className={classes.bullet} key={i}>
-                    <span
-                      className={classes.checkCircle}
-                      style={{ animationDelay: `${0.3 + i * 0.18}s` }}
-                    >
-                      <IconCheck />
-                    </span>
-                    <span className={classes.bulletText}>
-                      <strong>{b.lead}</strong>
-                      <span className={classes.bulletSub}>{b.rest}</span>
-                    </span>
-                  </div>
-                ))}
               </div>
 
-              {/* METRICS BAND */}
+              {/* METRICS BAND — full width below the 2-column row */}
               <div ref={statRef} className={classes.metricsBand}>
                 <div className={classes.eyebrow}>{DEMO_STATS_EYEBROW}</div>
                 <div className={classes.stats}>
