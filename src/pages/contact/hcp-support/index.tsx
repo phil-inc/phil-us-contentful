@@ -53,10 +53,12 @@ const REQUIRED_FIELDS: (keyof FormState)[] = [
   "npi",
   "specialty",
   "email",
+  "phone",
+  "message",
 ];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const NPI_RE = /^\d{10}$/;
+const PHONE_RE = /^\+?\d{7,15}$/;
 
 type FieldErrors = Partial<Record<keyof FormState, string>>;
 
@@ -93,6 +95,21 @@ const HcpSupportPage = () => {
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
+  // Digits-only fields (NPI) — strip any non-digit before it lands in state
+  const setDigits = (field: "npi") => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, "");
+    setForm((prev) => ({ ...prev, [field]: digits }));
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
+  // Phone — allow a single leading "+" plus digits (flexible international)
+  const setPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let v = e.target.value.replace(/[^\d+]/g, "");
+    v = (v.startsWith("+") ? "+" : "") + v.replace(/\+/g, "");
+    setForm((prev) => ({ ...prev, phone: v }));
+    if (errors.phone) setErrors((prev) => ({ ...prev, phone: undefined }));
+  };
+
   const validate = (): FieldErrors => {
     const errs: FieldErrors = {};
 
@@ -107,9 +124,9 @@ const HcpSupportPage = () => {
       errs.email = "Please enter a valid email address.";
     }
 
-    // NPI must be exactly 10 digits
-    if (form.npi.trim() && !NPI_RE.test(form.npi.trim())) {
-      errs.npi = "NPI must be exactly 10 digits.";
+    // Phone format — optional leading "+", then 7–15 digits
+    if (form.phone.trim() && !PHONE_RE.test(form.phone.trim())) {
+      errs.phone = "Please enter a valid phone number.";
     }
 
     return errs;
@@ -235,9 +252,8 @@ const HcpSupportPage = () => {
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
-                  maxLength={10}
                   value={form.npi}
-                  onChange={set("npi")}
+                  onChange={setDigits("npi")}
                 />
                 {errors.npi && <span className={classes.error}>{errors.npi}</span>}
               </div>
@@ -269,23 +285,31 @@ const HcpSupportPage = () => {
             </div>
 
             <div className={classes.field}>
-              <label className={classes.label}>Phone number</label>
+              <label className={classes.label}>
+                Phone number<span className={classes.required}>*</span>
+              </label>
               <input
-                className={classes.input}
+                className={`${classes.input} ${errors.phone ? classes.inputError : ""}`}
                 type="tel"
+                inputMode="tel"
+                placeholder="5551234567 or +1 5551234567"
                 value={form.phone}
-                onChange={set("phone")}
+                onChange={setPhone}
               />
+              {errors.phone && <span className={classes.error}>{errors.phone}</span>}
             </div>
 
             <div className={classes.field}>
-              <label className={classes.label}>Message</label>
+              <label className={classes.label}>
+                Message<span className={classes.required}>*</span>
+              </label>
               <textarea
-                className={classes.textarea}
+                className={`${classes.textarea} ${errors.message ? classes.inputError : ""}`}
                 rows={6}
                 value={form.message}
                 onChange={set("message")}
               />
+              {errors.message && <span className={classes.error}>{errors.message}</span>}
             </div>
 
             <button className={classes.submit} type="submit" disabled={status === "submitting"}>
