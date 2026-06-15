@@ -283,7 +283,7 @@ const ResultsSection = () => {
           <p>
             Turn access challenges into measurable brand growth across every stage
             of the lifecycle. Our flexible program structures and data-driven
-            approach maximizes program performance while delivering the seamless
+            approach maximize program performance while delivering the seamless
             experience patients and providers expect.
           </p>
         </div>

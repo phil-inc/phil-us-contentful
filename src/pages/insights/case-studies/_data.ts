@@ -4,7 +4,7 @@
    ========================================================================== */
 
 export const DEMO_URL = "/demo";
-export const RESOURCES_URL = "/resources/";
+export const RESOURCES_URL = "/resources/?type=casestudy";
 export const PRESS_URL = "/press/";
 export const GTN_CALCULATOR_URL = "/gtn/";
 export const CASE_STUDIES_BASE = "/insights/case-studies/";
@@ -52,7 +52,7 @@ export const CASE_STUDY_TABS: CaseStudyTab[] = [
     challenge:
       "Low patient enrollment, poor coverage conversion, and high drop-off threatened financial viability.",
     solution:
-      "Partnered with PHIL to implement a digital-first access program with seamless enrollment, 1-click PA submission, optimized routing, tailored workflows, and real-time insights.",
+      "Partnered with PHIL to implement a modern, digital-first access program with seamless enrollment, optimized workflows, and ongoing digital and live patient support.",
     metrics: [
       { value: 2, suffix: "x", label: "First Fills" },
       { value: 4, suffix: "x", label: "Covered Dispenses" },
@@ -67,7 +67,7 @@ export const CASE_STUDY_TABS: CaseStudyTab[] = [
     challenge:
       "Low PA submission rates and an inconsistent patient access experience created barriers to growth and hindered full revenue realization for the brand.",
     solution:
-      "Partnered with PHIL to launch a Direct-to-Patient access channel to evolve with consumer preference, promote growth and provide a seamless patient experience.",
+      "Partnered with PHIL to launch a Direct-to-Patient channel with an integrated PA portal, simplifying HCP submissions and maximizing support for payer-covered access to improve patient affordability.",
     metrics: [
       { value: 91, suffix: "%", label: "HCP PA Submissions" },
       { value: 5, suffix: "x", label: "Refill Adherence" },
@@ -84,7 +84,7 @@ export const CASE_STUDY_TABS: CaseStudyTab[] = [
     challenge:
       "Low adherence, PA hurdles, coverage challenges, and limited flexibility within the patient access channel was stunting brand growth opportunities.",
     solution:
-      "Partnered with PHIL to deliver seamless enrollment, tailored dispense workflows, intelligent routing, and actionable data.",
+      "Partnered with PHIL to deliver seamless enrollment, tailored dispense workflows, intelligent routing, and simplified refill management for continued adherence support.",
     metrics: [
       { value: 3, suffix: "x", label: "Refill Adherence" },
       { value: 4, suffix: "x", label: "Net Sales" },
@@ -101,7 +101,7 @@ export const CASE_STUDY_TABS: CaseStudyTab[] = [
     challenge:
       "Low provider awareness and engagement, high amount of competing brands, and retail channel limitations made it challenging to meet modern patient expectations.",
     solution:
-      "Partnered with PHIL to deliver a digital-first program featuring seamless enrollment, bridge access, automated PA support, contracted pharmacy routing, and real-time insights.",
+      "Partnered with PHIL to deliver a digital-first program that streamlines patient enrollment, embeds ePrescribing into HCP workflows, and simplifies PA submission with prepopulated forms and dedicated support.",
     metrics: [
       { value: 1.5, suffix: "x", label: "Pull Through" },
       { value: 5, suffix: "x", label: "Covered Dispenses" },
@@ -154,7 +154,7 @@ export const VOICES: Voice[] = [
     ariaLabel: "Pharma quotes",
     quotes: [
       {
-        q: "Phil is very strong in driving starts and adherence across our portfolio. As a partner, we love their willingness to be agile and create new things with us that hadn\u2019t necessarily been done before.",
+        q: "PHIL is very strong in driving starts and adherence across our portfolio. As a partner, we love their willingness to be agile and create new things with us that hadn\u2019t necessarily been done before.",
         a: "SVP Market Access, PHIL Client",
       },
       {
@@ -162,7 +162,7 @@ export const VOICES: Voice[] = [
         a: "Director of Patient Support Services, PHIL Client",
       },
       {
-        q: "We selected Phil because of their leadership in the space, as well as their ability to offer real-time access to end-to-end data in a centrally accessible platform. This was really important to us and our brand.",
+        q: "We selected PHIL because of their leadership in the space, as well as their ability to offer real-time access to end-to-end data in a centrally accessible platform. This was really important to us and our brand.",
         a: "Head of Commercial, PHIL Client",
       },
     ],
