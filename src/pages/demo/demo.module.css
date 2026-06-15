@@ -217,6 +217,11 @@
 }
 
 /* ---- headline ---------------------------------------------------------- */
+.heroLogoLink {
+  display: inline-block;
+  line-height: 0;
+  text-decoration: none;
+}
 .heroLogo {
   height: 30px;
   width: auto;

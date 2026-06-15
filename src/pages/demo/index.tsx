@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import type { HeadFC } from "gatsby";
+import { Link, type HeadFC } from "gatsby";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -186,11 +186,13 @@ const DemoPage: React.FC = () => {
                 <div className={classes.content}>
                 {/* HEAD */}
                 <div className={classes.head}>
-                  <img
-                    className={classes.heroLogo}
-                    src="/images/demo-phil-logo-white.png"
-                    alt="PHIL"
-                  />
+                  <Link to="/" className={classes.heroLogoLink} aria-label="PHIL — go to home">
+                    <img
+                      className={classes.heroLogo}
+                      src="/images/demo-phil-logo-white.png"
+                      alt="PHIL"
+                    />
+                  </Link>
                   <h1 className={classes.h1}>
                     {DEMO_HERO.headingLead}{" "}
                     <span className={classes.accent}>{DEMO_HERO.headingAccent}</span>
