@@ -1,14 +1,7 @@
-/* =======================================================================
-   /demo — Book a Demo page
-   Ported from the design export (app.css .bd-* / directionA.jsx). Renders
-   inside the shared Layout with the navbar + promo banner hidden
-   (`canHideHeader`), so the desktop hero is a full-viewport, full-size
-   replica of the design (the footer still follows below the fold).
-   ======================================================================= */
 
+
+/* ---- tokens + hero shell ----------------------------------------------- */
 .hero {
-  /* Design tokens scoped to this page (the app's global CSS does not define
-     these — each static page declares the tokens it needs, like approach). */
   --font-display: "Raleway", "Arial Black", Arial, sans-serif;
   --font-body: "Lato", Arial, sans-serif;
   --phil-foliage: #00827e;
@@ -30,89 +23,7 @@
   );
 }
 
-/* Full-screen hero on desktop, faithful to the design (directionA / app.css).
-   The shared navbar + promo banner are hidden on /demo (Layout `canHideHeader`),
-   so the page owns the full viewport at its native, full-size type/spacing
-   (no compression), including the form card and submit button below. Content
-   anchors to the top (`align-content: start` from the base `.grid`); if it
-   ever exceeds the viewport the hero grows past 100vh rather than clipping.
-   Only applies at >= $phil-breakpoint-md (1024px) — keeps the two-column view
-   from being cramped on narrow desktops/tablets. */
-@media (min-width: $phil-breakpoint-md) {
-  /* Selectors are scoped under `.hero` to raise specificity above the base
-     rules (the CSS-module compiler emits base rules after this block, so equal
-     specificity would lose the cascade). */
-  .hero {
-    min-height: 100vh;
-  }
-  .hero .stage {
-    min-height: 100vh;
-  }
-  /* Form card padding trimmed: top/bottom -5% (37→35, 48→46) and side
-     -2% (40→33) for the overall -4% width / -5% height shrink. */
-  .hero .card {
-    padding: 35px 33px 46px;
-  }
-  /* Two-column row inside `.topRow`: left content block + 520px form card.
-     `.grid` stays a column stack so `.metricsBand` sits full-width below. */
-  .hero .topRow {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 64px;
-  }
-  .hero .content {
-    flex: 1 1 0;
-    min-width: 0;
-  }
-  /* Form column flex trimmed (0.9 → 0.82) for the overall -2% width share —
-     combined with the card padding trim below, the form is ~4% narrower than
-     the content column. Form shrinks fluidly with the viewport; inputs use
-     `width: 100%`, so they follow the card width automatically. */
-  .hero .formCol {
-    flex: 0.82 1 0;
-    min-width: 0;
-    transform: translateY(5%);
-  }
-  .hero .bullets {
-    transform: translateY(-5%);
-  }
-}
-
-/* Metrics band 2-column layout (left title | right stat grid), mirroring the
-   previous Contentful demo page's "Proven Success" section. Scoped to the
-   md–lg range (1024–1280) only — outside that range the metrics fall back
-   to the default stacked layout. */
-@media (min-width: $phil-breakpoint-md) and (max-width: $phil-breakpoint-lg) {
-  .hero .metricsBand {
-    display: grid;
-    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
-    column-gap: 48px;
-    align-items: center;
-  }
-  .hero .metricsBand .eyebrow {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 26px;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    text-transform: none;
-    color: #fff;
-    padding-right: 32px;
-    border-right: 1px solid rgba(255, 255, 255, 0.22);
-  }
-  .hero .stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 28px;
-    row-gap: 28px;
-    margin-top: 0;
-  }
-  .hero .stat {
-    flex: none;
-  }
-}
-
-/* depth gradients — deepen top-left, lift bottom-right */
+/* ---- decorative depth + orbs ------------------------------------------- */
 .depthA,
 .depthB {
   position: absolute;
@@ -120,22 +31,13 @@
   pointer-events: none;
 }
 .depthA {
-  background: radial-gradient(
-    125% 110% at 0% 0%,
-    rgba(0, 46, 44, 0.62) 0%,
-    rgba(0, 46, 44, 0) 58%
-  );
+  background: radial-gradient(125% 110% at 0% 0%, rgba(0, 46, 44, 0.62), transparent 58%);
 }
 .depthB {
-  background: radial-gradient(
-    110% 95% at 100% 100%,
-    rgba(165, 240, 220, 0.28) 0%,
-    rgba(165, 240, 220, 0) 55%
-  );
+  background: radial-gradient(110% 95% at 100% 100%, rgba(165, 240, 220, 0.28), transparent 55%);
 }
-
-/* decorative circles motif (top-right) */
 .deco {
+  display: none; /* shown at md+ */
   position: absolute;
   top: -40px;
   right: -30px;
@@ -144,7 +46,6 @@
   transform: rotate(8deg);
   pointer-events: none;
 }
-
 .orb {
   position: absolute;
   border-radius: 50%;
@@ -167,54 +68,40 @@
   animation: orbFloat 9s ease-in-out infinite;
 }
 @keyframes orbFloat {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-22px) translateX(8px); }
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(8px, -22px); }
 }
 @keyframes orbFloatSlow {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(16px) translateX(-10px); }
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(-10px, 16px); }
 }
 
-/* ---- layout grid -------------------------------------------------------
-   `.grid` is a 2-column flex row on desktop: `.content` (heading + bullets +
-   metrics, stacked) on the left and `.formCol` on the right. Using flex
-   instead of a shared-track grid means a taller form card never stretches
-   `.head`/`.bullets`/`.metricsBand` apart — `.content` just keeps its own
-   natural height (`align-items: flex-start`). */
+/* ---- layout: mobile stacks; md+ flips to two-column hero --------------- */
 .stage {
   position: relative;
   display: flex;
   justify-content: center;
-  padding: 40px 0;
+  padding: 52px 0;
 }
+/* `.grid` is centered + capped on mobile; on md+ it fills its xl-container. */
 .grid {
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
-.topRow {
-  display: flex;
-  flex-direction: column;
-}
+/* `.topRow` + `.content` dissolve on mobile so head / formCol / bullets /
+   metricsBand become direct flex items of `.grid` (and reorder via `order`). */
+.topRow,
 .content {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+  display: contents;
 }
-
-.head {
-  color: #fff;
-}
-.bullets {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-top: 26px;
-}
-.metricsBand {
-  margin-top: 36px;
-}
+.head     { order: 1; color: #fff; }
+.formCol  { order: 2; margin: 26px 0; }
+.bullets  { order: 3; display: flex; flex-direction: column; gap: 24px; }
+.metricsBand { order: 4; margin-top: 30px; }
 
 /* ---- headline ---------------------------------------------------------- */
 .heroLogoLink {
@@ -223,37 +110,34 @@
   text-decoration: none;
 }
 .heroLogo {
+  display: block;
   height: 30px;
   width: auto;
-  display: block;
 }
 .h1 {
   font-family: var(--font-display);
   font-weight: 800;
-  color: #fff;
-  font-size: 50px;
+  font-size: 29px;
   line-height: 1.08;
   letter-spacing: -0.02em;
-  margin: 64px 0 0;
+  color: #fff;
+  margin: 22px 0 0;
   text-wrap: balance;
 }
 .accent {
-  color: #fff;
-  position: relative;
   display: inline-block;
   padding-bottom: 0.16em;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M3 9 C 60 2, 120 14, 180 8 S 270 3, 297 9' fill='none' stroke='%237FE3C4' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  background-size: 100% 0.34em;
+  color: #fff;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 16' preserveAspectRatio='none'%3E%3Cpath d='M3 9 C 60 2, 120 14, 180 8 S 270 3, 297 9' fill='none' stroke='%237FE3C4' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat bottom center / 100% 0.34em;
 }
 .sub {
   font-family: var(--font-body);
-  font-size: 26px;
+  font-size: 18px;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.92);
   margin: 18px 0 0;
-  max-width: 560px;
 }
 
 /* ---- bullets ----------------------------------------------------------- */
@@ -280,10 +164,10 @@
   100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(168, 237, 215, 0); }
 }
 .bulletText {
-  font-size: 21.5px;
+  font-size: 19.5px;
   line-height: 1.4;
-  color: rgba(255, 255, 255, 0.78);
   font-weight: 400;
+  color: rgba(255, 255, 255, 0.78);
 }
 .bulletText strong {
   display: block;
@@ -292,10 +176,10 @@
 }
 .bulletSub {
   display: block;
-  font-size: 19.5px;
+  font-size: 17.5px;
 }
 
-/* ---- metrics band ------------------------------------------------------ */
+/* ---- metrics ----------------------------------------------------------- */
 .eyebrow {
   font-family: var(--font-body);
   font-weight: 700;
@@ -303,24 +187,27 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #c6f3e4;
+  margin-bottom: 30px;
 }
 .stats {
   display: flex;
-  gap: 32px;
-  margin-top: 28px;
+  flex-wrap: wrap;
+  gap: 28px 24px;
 }
 .stat {
-  flex: 1 1 0;
+  flex: 1 1 100%;
   min-width: 0;
+  text-align: center;
 }
 .statNum {
   font-family: var(--font-display);
   font-weight: 800;
+  font-size: 52px;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  font-size: 52px;
   color: #fff;
   display: flex;
+  justify-content: center;
   align-items: baseline;
   gap: 1px;
 }
@@ -328,25 +215,20 @@
   font-size: 24px;
   color: #c6f3e4;
 }
-.statLabel {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 16.5px;
-  color: #fff;
-  margin-top: 12px;
-  line-height: 1.3;
-}
+.statLabel,
 .statSub {
   font-family: var(--font-body);
-  font-weight: 400;
   font-size: 16.5px;
-  color: rgba(255, 255, 255, 0.62);
   line-height: 1.3;
+  margin-top: 12px;
 }
+.statLabel { font-weight: 700; color: #fff; }
+.statSub   { font-weight: 400; color: rgba(255, 255, 255, 0.62); margin-top: 0; }
 
-/* trustpilot stat */
+/* Trustpilot stat */
 .tpRow {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 9px;
   margin-top: 9px;
@@ -355,13 +237,10 @@
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 17.5px;
-  color: #fff;
   letter-spacing: -0.01em;
+  color: #fff;
 }
-.tpStars {
-  display: flex;
-  gap: 3px;
-}
+.tpStars { display: flex; gap: 3px; }
 .tpStar {
   width: 18px;
   height: 18px;
@@ -373,20 +252,20 @@
 
 /* ---- form card --------------------------------------------------------- */
 .card {
+  position: relative;
   width: 100%;
   background: #fff;
   border-radius: 24px;
   box-shadow: 0 44px 100px rgba(0, 30, 28, 0.5);
-  padding: 44px 44px 48px;
-  position: relative;
+  padding: 24px;
 }
 .cardHeading {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 32px;
+  letter-spacing: -0.01em;
   color: var(--phil-pitch);
   margin: 0;
-  letter-spacing: -0.01em;
 }
 .cardSub {
   font-family: var(--font-body);
@@ -394,16 +273,14 @@
   color: var(--phil-gunmetal);
   margin: 8px 0 28px;
 }
-/* =======================================================================
-   Embedded HubSpot form — skinned to match the design.
-   The app applies generic global `.hs-*` styles; these scoped `:global`
-   overrides (under the hashed `.hsForm` wrapper) win on specificity.
-   ======================================================================= */
-.hsForm {
-  width: 100%;
-}
 
-/* fieldsets / rows */
+/* =======================================================================
+   Embedded HubSpot form — skinned to match the design. The app applies
+   generic global `.hs-*` styles; scoped `:global` overrides under `.hsForm`
+   (a hashed module class) win on specificity.
+   ======================================================================= */
+.hsForm { width: 100%; }
+
 .hsForm :global(fieldset) {
   max-width: 100% !important;
   margin-bottom: 0 !important;
@@ -412,19 +289,18 @@
   position: relative;
   margin-bottom: 17px;
 }
-/* horizontal gutter for the two-up rows */
-.hsForm :global(.form-columns-2 .hs-form-field) {
-  box-sizing: border-box;
-  padding-right: 9px;
-}
+/* No two-up gutter on mobile (single column), restored at md+. */
+.hsForm :global(.form-columns-2 .hs-form-field),
 .hsForm :global(.form-columns-2 .hs-form-field:last-child) {
-  padding-right: 0;
-  padding-left: 9px;
+  box-sizing: border-box;
+  padding: 0;
 }
-
-/* labels */
+/* Field labels hidden on mobile (placeholder labels the input). The child
+   combinator avoids hiding `<label class="hs-error-msg">`. */
+.hsForm :global(.hs-form-field > label) {
+  display: none;
+}
 .hsForm :global(label) {
-  display: block;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 13px;
@@ -437,33 +313,26 @@
   margin-left: 2px;
 }
 
-/* inputs */
-.hsForm :global(.input) {
-  margin-top: 0;
-}
+.hsForm :global(.input) { margin-top: 0; }
 .hsForm :global(.hs-input) {
   font-family: var(--font-body);
   font-size: 16.5px;
   height: 53px;
-  padding: 0 18px;
-  border-radius: 10px;
-  border: 1.5px solid #d7dcdc;
-  background: #fff;
-  color: var(--phil-pitch);
   width: 100% !important;
   box-sizing: border-box;
+  padding: 0 18px;
+  border: 1.5px solid #d7dcdc;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--phil-pitch);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.hsForm :global(.hs-input::placeholder) {
-  color: #9e9e9e;
-}
-.hsForm :global(.hs-input:hover) {
-  border-color: #9e9e9e;
-}
+.hsForm :global(.hs-input::placeholder) { color: #9e9e9e; }
+.hsForm :global(.hs-input:hover)        { border-color: #9e9e9e; }
 .hsForm :global(.hs-input:focus) {
+  outline: none;
   border-color: var(--phil-foliage);
   box-shadow: 0 0 0 4px rgba(0, 130, 126, 0.16);
-  outline: none;
 }
 .hsForm :global(.hs-input.invalid),
 .hsForm :global(.hs-input.error) {
@@ -471,7 +340,6 @@
   box-shadow: 0 0 0 4px rgba(192, 71, 59, 0.12);
 }
 
-/* validation messages */
 .hsForm :global(.hs-error-msgs) {
   list-style: none;
   margin: 5px 0 0 !important;
@@ -484,13 +352,10 @@
   font-weight: 700;
 }
 
-/* submit button */
-.hsForm :global(.hs-submit) {
-  margin-top: 24px;
-}
-/* Wrap the submit in a clipped, rounded container so the shimmer sweep
-   (added via `::after`) is masked to the button's pill shape. HubSpot renders
-   `<input type="submit">`, which can't host pseudo-elements itself. */
+/* Submit button — mirrors the design's `.bd-cta--brand`. The shimmer sweep
+   needs a wrapper (HubSpot renders the submit as `<input>`, which can't host
+   pseudo-elements); we put `::after` on `.hs-submit .actions` instead. */
+.hsForm :global(.hs-submit) { margin-top: 24px; }
 .hsForm :global(.hs-submit .actions) {
   position: relative;
   padding: 0;
@@ -505,28 +370,16 @@
   left: -120%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    100deg,
-    transparent,
-    rgba(255, 255, 255, 0.28),
-    transparent
-  );
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
   transform: skewX(-18deg);
   pointer-events: none;
 }
 .hsForm :global(.hs-submit:hover .actions::after) {
-  animation: demoCtaSweep 0.8s cubic-bezier(0.2, 0, 0, 1);
+  animation: demoCtaSweep 0.8s var(--ease-emphasis);
 }
 @keyframes demoCtaSweep {
-  to {
-    left: 130%;
-  }
+  to { left: 130%; }
 }
-/* Submit button — mirrors the design's `.bd-cta--brand` look:
-   foliage green pill, white text, arrow inset on the right, lifted on hover
-   with a deeper shadow. The arrow is a background SVG (HubSpot renders the
-   submit as `<input type="submit">`, which doesn't support ::before/::after
-   for a real arrow child), and slides 4px on hover via background-position. */
 .hsForm :global(.hs-button),
 .hsForm :global(input[type="submit"]) {
   font-family: var(--font-body);
@@ -534,10 +387,10 @@
   font-size: 18px;
   color: #fff;
   background-color: var(--phil-foliage) !important;
+  /* Arrow SVG anchored 62px right of center so it sits next to "Book Demo"
+     instead of floating at the button edge; +4px shift on hover. */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='M13 6l6 6-6 6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  /* Anchor the arrow ~62px right of center so it sits right next to the
-     centered "Book Demo" label instead of floating at the button's edge. */
   background-position: calc(50% + 62px) center;
   background-size: 18px 18px;
   border: 0;
@@ -556,9 +409,7 @@
 .hsForm :global(.hs-button:hover),
 .hsForm :global(input[type="submit"]:hover) {
   background-color: var(--phil-forest) !important;
-  /* Arrow slides 4px to the right, matching `.bd-cta:hover .bd-arrow`. */
   background-position: calc(50% + 66px) center;
-  color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 12px 30px rgba(0, 130, 126, 0.4);
   outline: none !important;
@@ -568,60 +419,88 @@
   transform: translateY(0);
 }
 
-/* ---- responsive --------------------------------------------------------
-   Title size by tier:
-     >= lg (1280)         h1 50    (full desktop, only on real desktops)
-     < lg                 h1 35    (any narrower viewport — laptop, tablet, phone)
-     <= xs (640)          h1 29    (tightest phone)
-   Layout still stacks (single col) below md (1024). */
-@media (max-width: $phil-breakpoint-lg) {
-  .h1 { font-size: 35px; }
-  /* Sub + bullet text trimmed ~10% to match the smaller h1 at this tier. */
-  .sub { font-size: 23.5px; }
-  .bulletText { font-size: 19.5px; }
-  .bulletSub { font-size: 17.5px; }
-}
-/* Mid-desktop tier (md–lg, 1024–1280): bump h1 back up to 43px so the title
-   has more presence on laptop-sized screens. */
-@media (min-width: $phil-breakpoint-md) and (max-width: $phil-breakpoint-lg) {
-  .h1 { font-size: 43px; }
-}
-@media (max-width: $phil-breakpoint-md) {
-  .deco { display: none; }
-  .stage { padding: 52px 0; }
-  .grid {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  /* Dissolve `.topRow` + `.content` so head/bullets/formCol/metrics re-join
-     `.grid` as direct flex items and can be reordered via `order`. */
-  .topRow,
-  .content {
-    display: contents;
-  }
-  .head { order: 1; }
-  /* 26px breathing room above + below the form so it doesn't crowd the head
-     copy or the bullets in the stacked mobile layout. */
-  .formCol { order: 2; margin-top: 26px; margin-bottom: 26px; }
-  .bullets { order: 3; margin-top: 0; }
-  /* 30px gap above the eyebrow ("Helping Pharma Brands Grow") and 30px below
-     it before the stat numbers. */
-  .metricsBand { order: 4; margin-top: 30px; }
-  .eyebrow { margin-bottom: 30px; }
-  .stats { margin-top: 0; }
-  .h1 { margin-top: 22px; }
-  .sub { font-size: 18px; max-width: none; }
+/* =======================================================================
+   Responsive tiers (mobile-first, min-width only).
+     base (< xs / 640):  single col, centered stats, smallest type
+     xs+   (>= 640):     stat 2-up wrap, left-aligned, h1 35, card 28
+     md+   (>= 1024):    two-col hero (text|form), metrics 2-col, h1 43
+     lg+   (>= 1280):    full desktop — metrics revert to stacked, h1 50
+   ======================================================================= */
+
+@media (min-width: $phil-breakpoint-xs) {
+  .h1   { font-size: 35px; }
   .card { padding: 28px; }
-  .stats { flex-wrap: wrap; gap: 28px 24px; }
-  .stat { flex: 1 1 40%; }
+  .stat    { flex: 1 1 40%; text-align: left; }
+  .statNum { justify-content: flex-start; }
+  .tpRow   { justify-content: flex-start; }
 }
-@media (max-width: $phil-breakpoint-xs) {
-  .h1 { font-size: 29px; }
-  .card { padding: 24px; }
-  /* Center stat numbers + labels on the smallest phones (single-col layout). */
-  .stat { flex: 1 1 100%; text-align: center; }
-  .statNum { justify-content: center; }
-  .tpRow { justify-content: center; }
+
+@media (min-width: $phil-breakpoint-md) {
+  /* Full-viewport hero. */
+  .hero  { min-height: 100vh; }
+  .stage { min-height: 100vh; padding: 40px 0; }
+  .deco  { display: block; }
+
+  /* Inner column fills the surrounding xl-container. */
+  .grid  { max-width: none; margin: 0; }
+
+  /* Un-dissolve the layout primitives for the two-column hero. */
+  .topRow  { display: flex; flex-direction: row; align-items: flex-start; gap: 64px; }
+  .content { display: flex; flex-direction: column; flex: 1 1 0; min-width: 0; }
+
+  /* Form ~5% narrower than content, ~5% lower (Direction-A offset). */
+  .formCol {
+    flex: 0.82 1 0;
+    min-width: 0;
+    margin: 0;
+    transform: translateY(5%);
+  }
+  .bullets     { margin-top: 26px; transform: translateY(-5%); }
+  .metricsBand { margin-top: 36px; }
+
+  /* Typography step-up (lg+ bumps higher again). */
+  .h1   { font-size: 43px; margin-top: 64px; }
+  .sub  { font-size: 23.5px; max-width: 560px; }
+  .card { padding: 35px 33px 46px; }
+
+  /* HubSpot paired-field gutter restored, field labels back above inputs. */
+  .hsForm :global(.form-columns-2 .hs-form-field)            { padding-right: 9px; }
+  .hsForm :global(.form-columns-2 .hs-form-field:last-child) { padding-right: 0; padding-left: 9px; }
+  .hsForm :global(.hs-form-field > label) { display: block; }
+
+  /* Metrics 2-col grid (title | stat grid) with subtle vertical divider —
+     mirrors the previous Contentful demo page's "Proven Success" layout. */
+  .metricsBand {
+    display: grid;
+    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+    column-gap: 48px;
+    align-items: center;
+  }
+  .eyebrow {
+    margin-bottom: 0;
+    padding-right: 32px;
+    border-right: 1px solid rgba(255, 255, 255, 0.22);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    margin-top: 0;
+  }
+  .stat { flex: none; }
+}
+
+@media (min-width: $phil-breakpoint-lg) {
+  .h1        { font-size: 50px; }
+  .sub       { font-size: 26px; }
+  .bulletText { font-size: 21.5px; }
+  .bulletSub  { font-size: 19.5px; }
+
+  /* Revert metrics to a stacked block + horizontal 5-stat row. */
+  .metricsBand { display: block; }
+  .eyebrow     { padding-right: 0; border-right: none; }
+  .stats       { display: flex; gap: 32px; margin-top: 28px; }
+  .stat        { flex: 1 1 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

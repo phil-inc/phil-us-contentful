@@ -181,8 +181,9 @@ const DemoPage: React.FC = () => {
           <div className={`${classes.orb} ${classes.orbB}`} />
 
           <div className={classes.stage}>
-            <div className={`xl-container ${classes.grid}`}>
-              <div className={classes.topRow}>
+            <div className="xl-container">
+              <div className={classes.grid}>
+                <div className={classes.topRow}>
                 <div className={classes.content}>
                 {/* HEAD */}
                 <div className={classes.head}>
@@ -246,6 +247,7 @@ const DemoPage: React.FC = () => {
                     <TrustpilotStat active={statIn} />
                   </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>
