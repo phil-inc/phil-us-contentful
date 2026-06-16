@@ -5,7 +5,7 @@
     radial-gradient(520px 520px at 8% 95%, rgba(0, 130, 126, 0.06), rgba(0, 130, 126, 0) 70%),
     radial-gradient(420px 420px at 60% 110%, rgba(109, 223, 193, 0.10), rgba(109, 223, 193, 0) 72%),
     #ffffff;
-  padding-bottom: 96px;
+  padding-bottom: 100px;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -16,7 +16,7 @@
   position: relative;
   background: linear-gradient(135deg, #00615e 0%, #00827e 55%, #2bafa1 100%);
   color: #ffffff;
-  padding: 112px 0 200px;
+  padding: 100px 0 200px;
   overflow: hidden;
 }
 
