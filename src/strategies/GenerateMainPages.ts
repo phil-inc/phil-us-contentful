@@ -109,6 +109,10 @@ function handleResourcePage(
     const headerSlug = slugify(section.header, { lower: true, strict: true });
     resourceSubPages.push(headerSlug);
 
+    // /insights/case-studies is served by the static file-based page at
+    // src/pages/insights/case-studies/index.tsx
+    if (headerSlug === "case-studies") return;
+
     const numPages = pagination.numberOfPages(
       (section as IReferencedSection).references.length,
       POSTS_PER_SECTION,
