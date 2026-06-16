@@ -46,6 +46,7 @@ const config: GatsbyConfig = {
           `**/assets/**`, // Ignore asset directories
           `**/styles/**`, // Ignore style directories
           `**/constants/**`, // Ignore constants directories
+          `**/interactions.ts`, // Ignore page-local behavior modules (not pages)
         ],
       },
     },
