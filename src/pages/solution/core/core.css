@@ -282,7 +282,9 @@
 /* ---------- Sections ---------- */
 .scope section { position: relative; overflow: hidden; }
 
-.scope section.band { padding: 110px 0; }
+.scope section.band { padding: 100px 0; }
+
+.scope section.band.video-band-section { padding: 78px 0; }
 
 .scope section.band.muted { background: var(--phil-paper); }
 
@@ -330,9 +332,17 @@
 }
 
 .scope .hero h1 {
-  font-family: var(--font-display); font-weight: 700; font-size: 52px;
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(38px, 5.4vw, 60px);
   line-height: 1.05; letter-spacing: -0.015em; margin: 0 0 28px;
   color: var(--phil-forest); text-wrap: balance; max-width: 1040px;
+}
+/* Lock the hero h1 to 60px from phil-breakpoint-md upward and bump
+   to 66px above phil-breakpoint-xl (overrides the clamp). */
+@media (min-width: $phil-breakpoint-md) {
+  .scope .hero h1 { font-size: 58px; }
+}
+@media (min-width: $phil-breakpoint-xl) {
+  .scope .hero h1 { font-size: 66px; }
 }
 
 .scope .hero h1 em { font-style: normal; color: var(--phil-foliage); }
@@ -573,6 +583,19 @@
 
 }
 
+/* Hero CTA — full-width pill button on small screens */
+@media (max-width: 640px) {
+
+  .scope .hero .hero-cta-row { width: 100%; }
+  .scope .hero .hero-cta-row .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 0px;
+    font-size: 17px;
+  }
+
+}
+
 .scope .btn-ghost-dark {
   display: inline-flex; align-items: center; gap: 10px;
   background: transparent; color: var(--phil-pure); border: 1.5px solid rgba(255,255,255,0.65);
@@ -596,7 +619,7 @@
 .scope .stat-bar {
   position: relative; z-index: 0;
   background: linear-gradient(135deg, #00615E 0%, #00827E 50%, #5ABEA4 100%);
-  padding: 62px 0 134px;
+  padding: 100px 0 134px;
 }
 
 .scope .stat-bar .xl-container { position: relative; z-index: 1; }
@@ -644,7 +667,7 @@
 
 @media (max-width: 1100px) {
 
-  .scope .stat-banner { grid-template-columns: repeat(3, 1fr); row-gap: 40px; padding: 40px 16px; }
+  .scope .stat-banner { grid-template-columns: repeat(3, 1fr); row-gap: 40px; padding: 40px 16px;  margin-top: -65px;}
   .scope .stat-item:nth-child(3n+1)::before { display: none; }
 
 }
@@ -791,26 +814,18 @@
 .scope .jx2 { position: relative; }
 
 /* Sticky breaks if an ancestor clips overflow — the journey section must not clip */
-.scope #journey { overflow: visible; padding-top: 0; padding-bottom: 0; background: var(--phil-pure); }
+.scope #journey { overflow: visible; padding-top: 0; padding-bottom: 100px; background: var(--phil-pure); }
 
-.scope .jx2-sticky::before, .scope .jx2-sticky::after {
-  content: ""; position: absolute; width: 540px; height: 540px; border-radius: 50%; z-index: -1; pointer-events: none;
-  background: radial-gradient(circle, rgba(109, 223, 193, 0.24) 0%, rgba(168, 226, 218, 0.11) 40%, rgba(255,255,255,0) 70%);
-}
 
-.scope .jx2-sticky::before { top: -120px; right: -160px; }
-
-.scope .jx2-sticky::after { bottom: -120px; left: -180px; }
-
-.scope .jx2-track { position: relative; }
-                 /* tall scroll track; height set inline */
+/* Tall scroll track that gives the pinned pane its scrub distance. */
+.scope .jx2-track { position: relative; height: 480vh; }
 .scope .jx2-triggers { position: absolute; inset: 0; display: flex; flex-direction: column; z-index: 0; pointer-events: none; }
 
 .scope .jx2-trigger { flex: 1 0 0; }
 
 .scope .jx2-sticky {
   position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: stretch;
-  z-index: 1; padding: 36px 0 26px;
+  z-index: 1; padding: 100px 0 90px;
 }
 
 .scope .jx2-head { flex: 0 0 auto; text-align: left; max-width: none; margin: 0 0 6px; }
@@ -1037,7 +1052,11 @@
 /* Step 1 — telehealth call mockup (white bg, black bezel) + Send e-Prescription pop-out */
 .scope .jx2-tele-compose { position: relative; container-type: size; }
 
-.scope .jx2-tele-compose .jx2-erx-pop { position: absolute; bottom: 65px; left: -116px; z-index: 6; width: 14.5em; font-size: 15.6px; background: var(--phil-pure); border-radius: 0.95em; overflow: hidden; box-shadow: 0 24px 46px -10px rgba(0,75,72,0.34); font-family: var(--font-body); transition: transform 220ms var(--ease-standard), box-shadow 220ms var(--ease-standard); }
+.scope .jx2-tele-compose .jx2-erx-pop { position: absolute; bottom: 65px; left: -116px; z-index: 6; width: 14.5em; font-size: 15.6px; background: var(--phil-pure); border-radius: 0.95em; overflow: hidden; box-shadow: 0 24px 46px -10px rgba(0,75,72,0.34); font-family: var(--font-body); transition: transform 220ms var(--ease-standard), box-shadow 220ms var(--ease-standard); 
+@media (max-width: 1080px) {
+  left: -15px;
+}
+}
 
 .scope .jx2-tele-compose .jx2-erx-pop:hover { transform: translateY(-4px); box-shadow: 0 30px 56px -10px rgba(0,75,72,0.42); }
 
@@ -1338,7 +1357,7 @@
 }
 
 .scope .jx2-skip {
-  display: inline-flex; align-items: center; gap: 14px; margin-top: 48px;
+  display: inline-flex; align-items: center; gap: 14px; margin-top: 22px;
   background: transparent; color: var(--phil-forest); border: 0;
   font-family: var(--font-body); font-weight: 700; font-size: 17px; letter-spacing: -0.005em;
   padding-bottom: 5px; border-bottom: 1px solid var(--phil-forest); border-radius: 0;
@@ -1351,6 +1370,27 @@
 .scope .jx2-skip:hover { background: transparent; color: #003C3A; border-bottom-width: 2.67px; border-bottom-color: #003C3A; text-decoration: none; }
 
 .scope .jx2-skip svg { width: 30px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Skip link is absolutely positioned at the bottom of .jx2-sticky so it
+   visually rests 15px above the viewport bottom while the journey is
+   pinned. Absolute over flex avoids fighting .jx2-grid's flex: 1 1 auto. */
+.scope .jx2-skip-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 18px ;
+  pointer-events: none;
+  z-index: 2;
+}
+.scope .jx2-skip-row .jx2-skip {
+  margin: 0;
+  pointer-events: auto;
+}
 
 
 /* Right vertical step rail */
@@ -2404,9 +2444,11 @@
 
 .scope .video-band .vb-copy p { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.92); margin: 0 0 32px; max-width: 520px; }
 
-.scope .video-thumb { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; display: block; background: rgba(255,255,255,0.1); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.5); }
+.scope .video-thumb { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; display: block; width: 100%; padding: 0; border: 0; background: rgba(255,255,255,0.1); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.5); cursor: pointer; }
 
 .scope .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.scope .video-thumb iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
 
 .scope .video-thumb .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,40,38,0.18); transition: background 220ms var(--ease-standard); }
 
@@ -2419,7 +2461,7 @@
 .scope .video-thumb .play-btn svg { width: 30px; height: 30px; fill: var(--phil-foliage); margin-left: 4px; }
 
 @media (max-width: 900px) {
- .scope .video-band { grid-template-columns: 1fr; gap: 36px; } .scope .video-band .vb-copy h2 { font-size: 34px; } 
+ .scope .video-band { grid-template-columns: 1fr; gap: 20px; } .scope .video-band .vb-copy h2 { font-size: 34px; } .scope .video-band .vb-copy p { margin-bottom: 0; } 
 }
 
 
@@ -2634,18 +2676,30 @@
 
 /* ---------- Responsive type ---------- */
 @media (max-width: 1100px) {
- .scope .hero h1 { font-size: 42px; } .scope .section-head h2 { font-size: 40px; } 
+  .scope .section-head h2 { font-size: 40px; }
+  .scope section.band { padding: 65px 0; }
+  .scope section.band.video-band-section { padding: 51px 0; }
+  .scope .hero { padding: 62px 0 65px; }
+  .scope section.stat-section { padding: 0 0 62px; }
+  .scope .stat-bar { padding: 65px 0 87px; }
+  .scope #journey { padding-bottom: 65px; }
+  .scope .reviews-head { margin-top: 68px; }
 }
 
 @media (max-width: 720px) {
 
-  .scope section.band { padding: 64px 0; }
-  .scope .hero { padding: 56px 0 64px; }
+  /* Match the design's mobile gutter (was `.wrap { padding: 0 24px }`). */
+  .scope .xl-container { padding-inline: 24px; }
+  .scope section.band { padding: 50px 0; }
+  .scope section.band.video-band-section { padding: 50px 0; }
+  .scope .hero { padding: 48px 0 50px; }
+  .scope section.stat-section { padding: 0 0 48px; }
+  .scope .stat-bar { padding: 50px 0 67px; }
+  .scope #journey { padding-bottom: 50px; }
+  .scope .reviews-head { margin-top: 52px; }
   .scope .hero h1 { font-size: 32px; }
   .scope .section-head { margin-bottom: 36px; }
   .scope .section-head h2 { font-size: 30px; }
-  
-  
   .scope .btn-primary, .scope .btn-on-dark, .scope .header-cta { min-height: 44px; }
 
 }
@@ -2654,8 +2708,6 @@
 
   .scope .hero h1 { font-size: 28px; }
   .scope .section-head h2 { font-size: 26px; }
-  
-  
 
 }
 
@@ -2667,8 +2719,15 @@
 
 @media (max-width: 600px) {
 
-  .scope section.band { padding: 52px 0; }
-  .scope .hero { padding: 44px 0 52px; }
+  /* Match the design's mobile gutter (was `.wrap { padding: 0 20px }`). */
+  .scope .xl-container { padding-inline: 20px; }
+  .scope section.band { padding: 44px 0; }
+  .scope section.band.video-band-section { padding: 44px 0; }
+  .scope .hero { padding: 40px 0 44px; }
+  .scope section.stat-section { padding: 0 0 44px; }
+  .scope .stat-bar { padding: 44px 0 60px; }
+  .scope #journey { padding-bottom: 44px; }
+  .scope .reviews-head { margin-top: 46px; }
   .scope .hero .lead, .scope .section-head .lead, .scope .lead { font-size: 16px; }
   /* wide scorecard / data tables scroll horizontally instead of cramping */
   .scope .sq-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -2684,10 +2743,20 @@
 
 @media (max-width: 430px) {
 
+  /* Match the design's mobile gutter (was `.wrap { padding: 0 16px }`). */
+  .scope .xl-container { padding-inline: 16px; }
   .scope .hero h1 { font-size: 26px; }
   .scope .di-pill { padding: 8px 13px; font-size: 12px; }
   .scope .jx2-frame { max-width: 248px; }
 
 }
+
+
+/* Above phil-breakpoint-xl: scale the hero hub collage by 1.15x
+   so it fills the larger right column. */
+@media (min-width: $phil-breakpoint-xl) {
+  .scope .hero .hero-art { transform: scale(1.15); transform-origin: center center; }
+}
+
 
 

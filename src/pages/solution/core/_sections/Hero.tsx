@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import networkMap from '../assets/network-map.png';
 import philLogo from 'assets/images/phil-logo-green.png';
 
@@ -11,7 +12,7 @@ export const HeroSection: React.FC = () => (
       <h1>An End-to-End Access Solution that Maximizes <em>Commercial Success</em></h1>
       <p className="lead">PHIL combines a flexible digital hub, integrated pharmacy network, and script-level data to help brands improve patient outcomes while driving stronger commercial performance. By bringing these capabilities together, PHIL enables more efficient patient access, better adherence, and greater economic impact.</p>
       <div className="hero-cta-row">
-        <a className="btn-primary" href="/demo">Book Demo</a>
+        <Link className="btn-primary" to="/demo">Book Demo</Link>
       </div>
     </div>
     <div className="hero-art">

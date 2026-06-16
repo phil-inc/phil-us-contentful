@@ -7,7 +7,7 @@ export const StatBandSection: React.FC = () => (
     <div className="xl-container">
       <div className="section-head stat-bar-head">
         <h2>Where Brands Win with PHIL</h2>
-        <p className="lead" style={{maxWidth: 'none', whiteSpace: 'nowrap'}}>PHIL offers 10+ years experience building technology-driven access programs for branded retail and specialty-lite therapies.</p>
+        <p className="lead" style={{maxWidth: 'none'}}>PHIL offers 10+ years experience building technology-driven access programs for branded retail and specialty-lite therapies.</p>
       </div>
     </div>
   </div>

@@ -20,6 +20,12 @@ export function attachSolutionCoreInteractions(): () => void {
       if (id.length > 1) {
         var el = document.querySelector(id);
         if (el) { e.preventDefault(); window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 84, behavior: 'smooth' }); }
+      } else if (id === '#') {
+        // Bare "#" placeholder (e.g. "Explore PHIL Direct-to-Patient") — the
+        // original HTML scrolled smoothly to top via `html { scroll-behavior:
+        // smooth }`. Replicate that smooth scroll-to-top here.
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
   });
@@ -115,24 +121,19 @@ export function attachSolutionCoreInteractions(): () => void {
       });
     });
 
-    // One-way pinning: step through on the way DOWN, but once the section is
-    // Step-through pins for the full track; scrolling is symmetric and smooth.
-    // (No scroll-driven height change — that previously caused a jump/bounce.)
-    var EXPAND_VH = 4;
-    var COLLAPSE_VH = 1;
-    var expanded = true;
+    // The pinned pane scrubs symmetrically — pins going down, un-pins going
+    // up, exactly like any sticky section. No scroll-driven height change.
     function curY(){ return window.pageYOffset || document.documentElement.scrollTop || 0; }
 
-    // "Continue to Next Section" — collapse the track instantly (no scroll
-    // compensation) so it doesn't fight the navigation, then scroll DOWN to
-    // the next section.
+    // "Continue to Next Section" — smooth-scroll past the journey track to the
+    // next section. The track stays at full height (no collapse), so scrolling
+    // back up scrubs through the steps normally.
     var skip = document.getElementById('jx2Skip');
     if (skip) {
       function goNext(){
-        if (expanded) { track.style.height = (COLLAPSE_VH * 100) + 'vh'; expanded = false; }
-        var prog = document.getElementById('program') || document.getElementById('data');
-        if (prog) {
-          var y = curY() + prog.getBoundingClientRect().top - 76;
+        var next = document.getElementById('program') || document.getElementById('data');
+        if (next) {
+          var y = curY() + next.getBoundingClientRect().top - 76;
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
       }
@@ -897,6 +898,7 @@ export function attachSolutionCoreInteractions(): () => void {
     cycle();
   })();
 
+  // ---- Journey: pin ONLY while scrolling down. ----
   return () => {
     // Cleanup is best-effort. The ported IIFEs install their own listeners,
     // timers, and observers; for SPA navigation they will be garbage-collected

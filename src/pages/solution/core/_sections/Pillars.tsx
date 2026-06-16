@@ -2,7 +2,7 @@ import React from 'react';
 
 export const PillarsSection: React.FC = () => (
 
-<section id="pillars" className="band" data-screen-label="03 PHIL Pillars" style={{paddingTop: '48px'}}>
+<section id="pillars" className="band" data-screen-label="03 PHIL Pillars">
   <div className="xl-container">
     <div className="section-head">
       <h2 style={{maxWidth: 'none'}}>Advance Patient Outcomes and Brand Performance with a Flexible Digital Hub Solution</h2>

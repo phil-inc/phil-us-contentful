@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import networkMap from '../assets/network-map.png';
 
 export const JourneySection: React.FC = () => (
@@ -6,9 +7,8 @@ export const JourneySection: React.FC = () => (
 <section id="journey" className="band muted" data-screen-label="04 Prescription Journey">
   <div className="xl-container">
     <div className="jx2" id="jx2" style={{'--steps': '7'}}>
-      <div className="jx2-track" id="jx2Track" style={{height: '480vh'}}>
-        <div className="jx2-triggers" id="jx2Triggers" aria-hidden="true">
-          
+      <div className="jx2-track" id="jx2Track">
+        <div className="jx2-triggers" id="jx2Triggers" aria-hidden="true">  
           <div className="jx2-spacer" style={{flex: '0 0 50vh'}}></div>
           <div className="jx2-trigger" data-i="0" style={{flex: '2.4 0 0'}}></div>
           <div className="jx2-trigger" data-i="1"></div>
@@ -97,7 +97,7 @@ export const JourneySection: React.FC = () => (
                         <span className="rc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 11V6.5a1.5 1.5 0 0 0-3 0M15 10.5V5a1.5 1.5 0 0 0-3 0v1M12 6.5a1.5 1.5 0 0 0-3 0v6" /><path d="M9 12.5v-2a1.5 1.5 0 0 0-3 0v5.5a6 6 0 0 0 6 6h1.5a6 6 0 0 0 6-6V9.5a1.5 1.5 0 0 0-3 0V11" /></svg></span>
                         <span className="rc-opt-text"><span className="rc-opt-title">Other Non-Commercial</span><span className="rc-opt-sub">PAP, Bridge, Quick start</span></span>
                       </button>
-                      <a className="rc-start" href="/demo/">Get Started</a>
+                      <Link className="rc-start" to="/demo/">Get Started</Link>
                     </div>
                   </div></div></div>
                   <div className="jx2-shot" data-i="3"><div className="jx2-compose"><div className="tc-card" id="jx2TcCard">
@@ -179,7 +179,6 @@ export const JourneySection: React.FC = () => (
                   </div></div></div>
                   <div className="jx2-progressbar" aria-hidden="true"><i id="jx2Bar"></i></div>
                 </div>
-                <a className="jx2-skip" id="jx2Skip" role="button" tabIndex="0"><span className="pl-text">Continue to Next Section</span><span className="pl-arrow" aria-hidden="true"><svg viewBox="0 0 30 16"><path d="M1 8h25M21 3l5 5-5 5" /></svg></span></a>
               </div>
 
               
@@ -194,9 +193,19 @@ export const JourneySection: React.FC = () => (
                 <button className="jx2-step" type="button" data-i="6" role="tab"><span className="jx2-dot">7</span><span className="jx2-name">Seamless Refill Management</span></button>
               </div>
             </div>
+            <div className="jx2-skip-row">
+              <a className="jx2-skip" id="jx2Skip" role="button" tabIndex={0}>
+                <span className="pl-text">Continue to Next Section</span>
+                <span className="pl-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 30 16"><path d="M1 8h25M21 3l5 5-5 5" /></svg>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
+        
       </div>
     </div>
+    
 </section>
 );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 
 export const RoiSection: React.FC = () => (
 
@@ -8,7 +9,7 @@ export const RoiSection: React.FC = () => (
       <div className="roi-text">
         <h2>Calculate your GTN Performance Potential with PHIL</h2>
         <p>The calculator was build by Phil's Commercial Insights architects to translate our sophisticated GTN modeling to provide a clear view into a brand's GTN potential.</p>
-      <a className="btn-primary" href="/gtn/">Calculate Your Potential <span className="arr" aria-hidden="true"></span></a>
+      <Link className="btn-primary" to="/gtn/">Calculate Your Potential <span className="arr" aria-hidden="true"></span></Link>
       </div>
       <div className="calc-preview">
         <div className="calc-card-stack">

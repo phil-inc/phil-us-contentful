@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'gatsby';
 
 export const FinalCtaSection: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,7 +34,7 @@ export const FinalCtaSection: React.FC = () => {
             </p>
           </div>
           <div className="endcta-ctas">
-            <a className="endcta-btn" href="/demo">
+            <Link className="endcta-btn" to="/demo">
               Book Demo
               <svg
                 className="endcta-arrow"
@@ -51,7 +52,7 @@ export const FinalCtaSection: React.FC = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
