@@ -128,7 +128,7 @@ All new components are page-specific, built inline or in `src/pages/home/compone
 - /providers/
 - /solution/
 - /demo/
-- /insights/case-studies/
+- /customer-success/
 - /dtp-research/
 - /hcp-research/
 - /key-success-factors-to-drive-brand-excellence/

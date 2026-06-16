@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import type { HeadFC } from "gatsby";
+import { Link, type HeadFC } from "gatsby";
 import { getOgImage } from "utils/getOgImage";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -189,7 +189,7 @@ function HeroSection() {
 
           <div className={`${classes.heroChips} ${classes.reveal} ${classes.revealIn}`}>
             {AUDIENCE_CHIPS.map((chip) => (
-              <a
+              <Link
                 key={chip.id}
                 className={`${classes.audchip} ${
                   chip.variant === "pharma"
@@ -198,7 +198,7 @@ function HeroSection() {
                     ? classes.audchipPatients
                     : classes.audchipProviders
                 }`}
-                href={chip.href}
+                to={chip.href}
               >
                 <div className={classes.audchipTag}>{chip.tag}</div>
                 <div className={classes.audchipH}>{chip.heading}</div>
@@ -206,7 +206,7 @@ function HeroSection() {
                   {chip.cta}{" "}
                   <span className={classes.audchipArrow}>→</span>
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -853,9 +853,9 @@ function SolutionCarousel() {
 
       <div className={classes.container}>
         <p className={classes.reveal} style={{ marginTop: 32, textAlign: "center" }}>
-          <a className={classes.linkarrow} href={SOLUTION.cta.href}>
+          <Link className={classes.linkarrow} to={SOLUTION.cta.href}>
             {SOLUTION.cta.text}
-          </a>
+          </Link>
         </p>
       </div>
     </section>
@@ -1023,9 +1023,9 @@ function VoicesSection() {
           ))}
         </div>
         <div className={classes.reveal} style={{ marginTop: 32, textAlign: "center" }}>
-          <a className={classes.linkarrow} href={VOICES.cta.href}>
+          <Link className={classes.linkarrow} to={VOICES.cta.href}>
             {VOICES.cta.text}
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -1051,7 +1051,7 @@ function InsightsSection() {
               : card.variant === "webinar" ? classes.icardWebinar
               : classes.icardBlog;
             return (
-              <a key={card.href} className={`${classes.icard} ${variantClass}`} href={card.href}>
+              <Link key={card.href} className={`${classes.icard} ${variantClass}`} to={card.href}>
                 <svg className={classes.icardRings} viewBox="0 0 380 380" aria-hidden="true">
                   <circle cx="190" cy="190" r="60" />
                   <circle cx="190" cy="190" r="110" />
@@ -1077,14 +1077,14 @@ function InsightsSection() {
                     </span>
                   </span>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>
         <div className={classes.reveal} style={{ marginTop: 32, textAlign: "center" }}>
-          <a className={classes.linkarrow} href={INSIGHTS.cta.href}>
+          <Link className={classes.linkarrow} to={INSIGHTS.cta.href}>
             {INSIGHTS.cta.text}
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -1107,12 +1107,12 @@ function EndCtaSection() {
             <p className={classes.endctaBody}>{END_CTA.body}</p>
           </div>
           <div className={classes.endctaCtas}>
-            <a className={classes.endctaBtn} href={END_CTA.cta.href}>
+            <Link className={classes.endctaBtn} to={END_CTA.cta.href}>
               {END_CTA.cta.text}
               <svg className={classes.endctaArrow} width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                 <path d="M3 9h12m-4-4 4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

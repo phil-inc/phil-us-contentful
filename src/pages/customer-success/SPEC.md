@@ -4,16 +4,16 @@ Source design: `docs/adr/Customer Success Page/Customer Success.html` (+ `assets
 
 ## Scope
 
-New code-driven page that **replaces** the existing Contentful-driven page at `/insights/case-studies/`. This is the "Customer Success Stories" landing/index that the MegaNav and MegaFooter already link to.
+New code-driven page that **replaces** the existing Contentful-driven page at `/customer-success`. This is the "Customer Success Stories" landing/index that the MegaNav and MegaFooter already link to.
 
 ## Route
 
-- `/insights/case-studies/` → file-based page at `src/pages/insights/case-studies/index.tsx`
-- Per-case-study children (`/insights/case-studies/<slug>`) are still generated from Contentful by `GenerateCaseStudyPages` — unaffected (they are child paths, no collision with the index).
+- `/customer-success` → file-based page at `src/pages/customer-successindex.tsx`
+- Per-case-study children (`/customer-success<slug>`) are still generated from Contentful by `GenerateCaseStudyPages` — unaffected (they are child paths, no collision with the index).
 
 ### Contentful override (required)
 
-A Contentful page currently serves `/insights/case-studies/`. To let the file-based page win, a guard is added to `src/strategies/GenerateMainPages.ts` → `handleRegularPage`, matching the existing `providers` / `pharma` pattern:
+A Contentful page currently serves `/customer-success`. To let the file-based page win, a guard is added to `src/strategies/GenerateMainPages.ts` → `handleRegularPage`, matching the existing `providers` / `pharma` pattern:
 
 ```ts
 // /insights/case-studies is served by the static file-based page
@@ -67,7 +67,7 @@ Internal links use relative paths (per skill rule 10); genuinely external links 
 | ROI "Calculate Your Potential" | `/gtn/` |
 | View All Case Studies | `/resources/` |
 | View All Coverage | `/press/` |
-| Case-study "Read the full story" | `/insights/case-studies/<slug>/` |
+| Case-study "Read the full story" | `/customer-success<slug>/` |
 | Press cards | businesswire.com / prnewswire.com (absolute, external) |
 | Trustpilot | trustpilot.com (absolute, external) |
 
@@ -75,7 +75,7 @@ Internal links use relative paths (per skill rule 10); genuinely external links 
 
 Modeled on `src/pages/providers/index.tsx`.
 - Title ~50–60 chars, description ~150–160 chars.
-- `canonical` = `https://phil.us/insights/case-studies/`.
+- `canonical` = `https://phil.us/customer-success`.
 - One `<h1>` (hero), no skipped heading levels.
 
 ## Assets

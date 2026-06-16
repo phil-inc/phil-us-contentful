@@ -177,7 +177,7 @@ export const VOICES = {
       ] as VoiceQuote[],
     },
   ],
-  cta: { text: "Explore Customer Stories →", href: "/resources/?type=casestudy" },
+  cta: { text: "Explore Customer Stories →", href: "/customer-success" },
 };
 
 export const INSIGHTS = {

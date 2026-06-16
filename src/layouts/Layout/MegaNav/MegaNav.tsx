@@ -109,7 +109,7 @@ const NAV_SECTIONS: NavSection[] = [
         title: "Why PHIL",
         links: [
           { to: "/approach/", label: "Our Approach and Outcomes", icon: Target },
-          { to: "/insights/case-studies/", label: "Customer Success Stories", icon: Trophy },
+          { to: "/customer-success/", label: "Customer Success Stories", icon: Trophy },
           { to: "/gtn/", label: "GTN Calculator", icon: Calculator },
         ],
       },

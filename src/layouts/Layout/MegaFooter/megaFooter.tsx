@@ -42,7 +42,7 @@ const NAV_COLUMNS: NavColumn[] = [
   {
     title: "Resources",
     links: [
-      { label: "Customer Stories", href: "/insights/case-studies/" },
+      { label: "Customer Stories", href: "/customer-success/" },
       { label: "GTN Calculator", href: "/gtn/" },
       { label: "Resource Hub", href: "/resources/" },
       { label: "Press Library", href: "/press/" },
