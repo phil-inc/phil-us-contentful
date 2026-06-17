@@ -64,21 +64,9 @@ const SolutionCorePage: React.FC = () => {
         <div className="scope">
           <HeroSection />
           <StatBandSection />
-          <div className="xl-container">
-            <hr className="ss-line" />
-          </div>
           <PillarsSection />
-          <div className="xl-container">
-            <hr className="ss-line" />
-          </div>
           <JourneySection />
-          <div className="xl-container">
-            <hr className="ss-line" />
-          </div>
           <DataTabsSection />
-          <div className="xl-container">
-            <hr className="ss-line" />
-          </div>
           <SupportSection />
           <VideoBandSection />
           <RoiSection />

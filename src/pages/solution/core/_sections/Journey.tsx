@@ -171,7 +171,7 @@ export const JourneySection: React.FC = () => (
                         <p className="rf-rx-name">Adaptrex®</p>
                         <p className="rf-rx-refills">2 refills remaining</p>
                       </div>
-                      <div className="rf-note">Your next Refill is scheduled. Please confirm below.</div>
+                      <div className="rf-note">Your next refill is scheduled. Please confirm below.</div>
                       <div className="rf-gap"></div>
                       <button className="rf-btn-primary" type="button">Confirm Next Refill</button>
                       <button className="rf-btn-ghost" type="button">Manage Prescription</button>

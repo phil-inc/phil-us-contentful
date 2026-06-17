@@ -5,8 +5,8 @@ export const PillarsSection: React.FC = () => (
 <section id="pillars" className="band" data-screen-label="03 PHIL Pillars">
   <div className="xl-container">
     <div className="section-head">
-      <h2 style={{maxWidth: 'none'}}>Advance Patient Outcomes and Brand Performance with a Flexible Digital Hub Solution</h2>
-      <p className="lead" style={{maxWidth: '1100px'}}>Traditional access solutions address only part of the problem. The PHIL Digital Hub delivers an end-to-end access platform designed to maximize patient outcomes and optimize gross-to-net performance in retail and specialty-lite. We build flexible access programs that evolve with your brand, bringing together human-first care and AI-driven outcomes in one powerful solution.</p>
+      <h2 className="h2--full">Advance Patient Outcomes and Brand Performance with a Flexible Digital Hub Solution</h2>
+      <p className="lead lead--wide">Traditional access solutions address only part of the problem. The PHIL Digital Hub delivers an end-to-end access platform designed to maximize patient outcomes and optimize gross-to-net performance in retail and specialty-lite. We build flexible access programs that evolve with your brand, bringing together human-first care and AI-driven outcomes in one powerful solution.</p>
     </div>
     <div className="pillar-grid">
       <article className="pillar-card t1">
@@ -14,14 +14,14 @@ export const PillarsSection: React.FC = () => (
         <div className="pc-title-row">
           <h3>Direct-to-Patient &amp; Program Flexibility</h3>
         </div>
-        <p>Experience total flexibility to build custom coverage, cash-pay, or hybrid routing models for your brand, with AI-driven workflows and business rule adherence. To maximize your brand’s reach, seamlessly deploy our Direct-to-Patient (DTP) extension, integrating your brand marketing assets and telemedicine channels directly into the hub to expand intake options.</p>
+        <p>Experience total flexibility to build custom coverage, cash-pay, or hybrid routing models for your brand, with AI-driven workflows and business rule adherence. To maximize your brand’s reach, seamlessly deploy Direct-to-Patient (DTP), integrating your brand marketing assets and telemedicine channels directly into the hub to expand intake options.</p>
       </article>
       <article className="pillar-card t2">
         <div className="pc-spacer"></div>
         <div className="pc-title-row">
           <h3>Advanced Digital Hub &amp; PA Process</h3>
         </div>
-        <p>Streamline the script journey with PHIL, we help verify coverage needs and provide HCPs support for seamless PA submission and routing. With prepopulated forms, reminders, education, and real-time support, PHIL works to improve script quality, keep HCPs in workflow to enable higher submission and approval rates.</p>
+        <p>Streamline the prescription journey with PHIL. We help verify coverage requirements and support HCPs for seamless prior authorization submission and routing. With prepopulated forms, reminders, education, and real-time support, PHIL keeps HCPs in workflow for easy PA submission and maximized opportunity for payer-covered dispenses.</p>
       </article>
       <article className="pillar-card t3">
         <div className="pc-spacer"></div>
@@ -35,7 +35,7 @@ export const PillarsSection: React.FC = () => (
         <div className="pc-title-row">
           <h3>End-to-End Data &amp; Insights</h3>
         </div>
-        <p>Drive brand performance by connecting every data point, from the first ad click to final fulfillment. We leverage advanced AI-powered data dashboards to surface commercial opportunities and minimize access friction. Dedicated partners continuously analyze your data, translating metrics into actionable, strategic program enhancements.</p>
+        <p>Drive brand performance by connecting every data point, from the first ad, to final fulfillment and adherence. We leverage advanced AI-powered data dashboards to surface commercial opportunities and minimize access friction. Dedicated partners continuously analyze your data, translating metrics into actionable, strategic program enhancements.</p>
       </article>
     </div>
     <div className="pillar-cta-row">

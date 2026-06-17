@@ -6,7 +6,7 @@ export const VideoBandSection: React.FC = () => {
   const [playing, setPlaying] = useState(false);
 
   return (
-    <section className="band video-band-section" style={{background: 'linear-gradient(135deg, #00615E 0%, #00827E 45%, #5ABEA4 100%)'}} data-screen-label="08 Video Our Solution">
+    <section className="band video-band-section" data-screen-label="08 Video Our Solution">
       <div className="xl-container">
         <div className="video-band">
           <div className="vb-copy">

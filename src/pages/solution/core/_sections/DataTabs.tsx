@@ -6,8 +6,8 @@ export const DataTabsSection: React.FC = () => (
 <section id="data" className="band" data-screen-label="06 Data & Insights">
   <div className="xl-container">
     <div className="section-head">
-      <h2 style={{maxWidth: 'none'}}>Turn End-to-End Program Visibility into Stronger Patient Outcomes and Brand Performance</h2>
-      <p className="lead" style={{maxWidth: '1100px'}}>Unlock end-to-end visibility into the entire prescription journey, with AI-powered data capabilities that uncover improvement opportunities across patient engagement, market access, and payer dynamics. Driving brand success through an outcomes-based partnership, PHIL’s Client Insights Team, led by former management consultants, serves as a strategic partner, analyzing this real-time program data to uncover trends, identify optimization opportunities, and deliver tailored recommendations that maximize patient outcomes and improve GTN impact.</p>
+      <h2 className="h2--full">Turn End-to-End Program Visibility into Stronger Patient Outcomes and Brand Performance</h2>
+      <p className="lead lead--wide">Unlock end-to-end visibility into the entire prescription journey, with AI-powered data capabilities that uncover improvement opportunities across patient engagement, market access, and payer dynamics. Driving brand success through an outcomes-based partnership, PHIL’s Client Insights Team, led by former management consultants, serves as a strategic partner, analyzing this real-time program data to uncover trends, identify optimization observations, and deliver tailored recommendations that maximize patient outcomes and improve commercial impact.</p>
     </div>
 
     <div className="dx-wrap">
@@ -57,7 +57,7 @@ export const DataTabsSection: React.FC = () => (
             </div>
             <div className="di-copy">
               <h3>Elevate Field Performance and HCP Engagement</h3>
-              <p className="di-body">PHIL’s integrated portal provides territory-level visibility into script quality, enrollment, and prescriber engagement, helping field teams identify success drivers and accelerate patient access. By keeping providers in their existing workflows, PHIL reduces friction, drives hub adoption, and provides support throughout the prescribing journey.</p>
+              <p className="di-body">PHIL’s integrated portal provides territory-level visibility into script quality, enrollment, and prescriber engagement, helping field teams identify success drivers and accelerate patient access. PHIL reduces friction, drives hub adoption, and provides support throughout the prescribing journey.</p>
             </div>
           </article>
 
@@ -96,7 +96,7 @@ export const DataTabsSection: React.FC = () => (
             </div>
             <div className="di-copy">
               <h3>Optimize Script Quality</h3>
-              <p className="di-body">PHIL monitors incoming scripts with quality checks to identify missing payer-required details and gives field teams insight into coverage gaps, while ensuring complete and accurate information drives smooth access and the highest rate of covered dispenses.</p>
+              <p className="di-body">PHIL monitors incoming scripts with quality checks to identify missing payer-required details and gives field teams insight into coverage gaps, while ensuring complete and accurate information maximizes support for payer-covered access to therapy.</p>
             </div>
           </article>
 
@@ -193,7 +193,7 @@ export const DataTabsSection: React.FC = () => (
               </div>
             </div>
             <div className="di-copy">
-              <h3>Support The Entire Patient Journey with End-to-end Visibility</h3>
+              <h3>Support the Entire Patient Journey with End-to-End Visibility</h3>
               <p className="di-body">PHIL captures the full script journey in one unified data stream, from intake through delivery, and adherence, giving brands clear visibility to optimize performance at every step.</p>
             </div>
           </article>

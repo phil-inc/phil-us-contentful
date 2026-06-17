@@ -6,7 +6,7 @@ export const SupportSection: React.FC = () => (
   <div className="xl-container">
     <div className="section-head section-head--center">
       <h2>Your Partner in Patient Support and Provider Engagement</h2>
-      <p className="lead" style={{maxWidth: 'none'}}>We believe the best experience occurs when dedicated human-first engagement and intelligent technology work together to deliver better, faster care.</p>
+      <p className="lead lead--full">We believe the best experience occurs when dedicated human-first engagement and intelligent technology work together to deliver better, faster care.</p>
     </div>
 
     <div className="support-grid">
@@ -33,7 +33,7 @@ export const SupportSection: React.FC = () => (
       </article>
     </div>
 
-    <div className="reviews-head" style={{justifyContent: 'center', textAlign: 'center'}}>
+    <div className="reviews-head reviews-head--center">
       <h3>What PHIL Patients &amp; Providers Say</h3>
     </div>
     <div className="review-grid">
