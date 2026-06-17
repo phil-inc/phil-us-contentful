@@ -6,12 +6,20 @@
   background: linear-gradient(180deg, #00706d 0%, #00827e 100%);
   padding-bottom: var(--section-padding);
   position: relative;
-}
-
-.leftRightContainer[data-context="Hcp Research"][data-section-index="0"] {
-  background: #09AAA5;
-  padding-bottom: var(--section-padding);
-  position: relative;
+  height: 100%;
+  &[data-context="GTN"] {
+    background: #00615E;
+    border-radius: 25px;
+    overflow: hidden;
+    height: 70%;
+    display: flex;
+    padding: 20px;
+  }
+  &[data-context="Hcp Research"][data-section-index="0"] {
+    background: #09AAA5;
+    padding-bottom: var(--section-padding);
+    position: relative;
+  }
 }
 
 /* Demo page mobile: prevent horizontal scroll when form block is full viewport width */
@@ -29,6 +37,20 @@
     object-fit: cover;
     object-position: 0% 50%;
   }
+}
+
+/* GTN-only wall background positioning controls */
+.leftRightContainer[data-context="GTN"] .rightWallBgIcon {
+  @media (min-width: $phil-breakpoint-md) {
+    width: 70%;
+    left: 46%;
+    top: -30%;
+    opacity: 0.35;
+  }
+}
+
+.leftRightContainer[data-context="GTN"] .rightWallBgIcon > img {
+  object-position: 65% 50%;
 }
 
 .leftRightContainer .rightWallBgIcon {

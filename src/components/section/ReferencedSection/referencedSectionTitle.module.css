@@ -27,6 +27,12 @@
 		text-align: center;
 	}
 
+	&[data-context='GTN'] {
+		font-weight: 700;
+    	font-size: 42px;
+		text-align: left !important;
+	}
+
 	@media (min-width: $phil-breakpoint-sm) {
 		&[data-context='Field'] {
 			font-size: 30px;
@@ -68,6 +74,10 @@
 			gap: 30px;
 		}
 
+		&[data-context='GTN'] {
+			gap: 30px;
+		}
+
 		&[data-context='Field'] {
 			align-items: start;
 		}
@@ -96,6 +106,11 @@
 	&[data-is-home-brand-outcome='true'] {
 		max-width: 945px;
 		margin: 0 auto;
+	}
+
+	&[data-context='GTN'] {
+		text-align: left;
+		color: #525252;
 	}
 }
 
