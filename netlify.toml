@@ -194,6 +194,17 @@ from = "/about-us/*"
 to = "/company"
 status = 200
 
+# /solution/ (Overview) removed; replaced by the new Digital Hub at /solution/core/
+[[redirects]]
+from = "/solution/"
+to = "/solution/core/"
+status = 301
+
+[[redirects]]
+from = "/solution"
+to = "/solution/core/"
+status = 301
+
 [[redirects]]
 from = "/manufacturers/*"
 to = "/pharma"

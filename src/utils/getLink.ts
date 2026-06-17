@@ -6,6 +6,21 @@ import type { TResource } from "types/resource";
 import type { IReferencedSection, ISection } from "types/section";
 
 /**
+ * Pages removed from the site but still referenced by Contentful internal links.
+ * Maps the removed page's slug to its live replacement so links resolve to the
+ * new page instead of "#"/404 (the removed page is no longer in allSitePage).
+ */
+const REMOVED_PAGE_REDIRECTS: Record<string, string> = {
+  // /solution/ (Overview) removed; replaced by the new Digital Hub.
+  solution: "/solution/core/",
+};
+
+const remapRemovedPage = (
+  internalContent?: { slug?: string } | null,
+): string | undefined =>
+  internalContent?.slug ? REMOVED_PAGE_REDIRECTS[internalContent.slug] : undefined;
+
+/**
  * Get internal and external hyperlinks from contentful data models.
  * @param section A section or resource.
  * @returns a link string.
@@ -107,6 +122,11 @@ export const getLink = (
         break;
 
       default:
+        const removedPageLink = remapRemovedPage(section?.link?.internalContent);
+        if (removedPageLink) {
+          return { link: removedPageLink, isExternal: false };
+        }
+
         const staticPage = paths.find(
           (path) =>
             path.id === (section?.link?.internalContent?.id ?? section?.id),
@@ -126,6 +146,15 @@ export const getLink = (
 
   if (section?.link) {
     if (section.link[0].internalContent) {
+      const removedPageLink = remapRemovedPage(section.link[0].internalContent);
+      if (removedPageLink) {
+        return {
+          link: removedPageLink,
+          isExternal: false,
+          linkLabel: section.link[0].linkLabel,
+        };
+      }
+
       const paths = useInternalPaths();
       const staticPage = paths.find(
         (path) => path.id === section.link[0].internalContent.id,
@@ -159,6 +188,15 @@ export const getLink = (
   }
 
   if (section?.hyperlink?.internalContent) {
+    const removedPageLink = remapRemovedPage(section.hyperlink.internalContent);
+    if (removedPageLink) {
+      return {
+        link: removedPageLink,
+        isExternal: false,
+        linkLabel: section.hyperlink.linkLabel,
+      };
+    }
+
     const paths = useInternalPaths();
     const staticPage = paths.find(
       (path) => path.id === section.hyperlink.internalContent.id,

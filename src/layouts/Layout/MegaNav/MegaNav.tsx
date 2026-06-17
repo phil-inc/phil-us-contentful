@@ -5,7 +5,6 @@ import {
   PillBottle,
   UserRound,
   Stethoscope,
-  LayoutGrid,
   MonitorSmartphone,
   SmartphoneCharging,
   Trophy,
@@ -75,7 +74,7 @@ const NAV_SECTIONS: NavSection[] = [
     ],
     features: [
       {
-        to: "/solution/",
+        to: "/solution/core/",
         variant: "tidewater",
         eyebrow: "For Pharma Manufacturers",
         title: "Streamline Your Prescription Access Experience.",
@@ -100,7 +99,6 @@ const NAV_SECTIONS: NavSection[] = [
     groups: [
       {
         links: [
-          { to: "/solution/", label: "Overview", icon: LayoutGrid },
           { to: "/solution/core/", label: "Digital Hub", icon: MonitorSmartphone },
           { to: "/solution/direct/", label: "Direct\u2011to\u2011Patient", icon: SmartphoneCharging },
         ],
