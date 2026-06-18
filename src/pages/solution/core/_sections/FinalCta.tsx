@@ -34,7 +34,7 @@ export const FinalCtaSection: React.FC = () => {
             </p>
           </div>
           <div className="endcta-ctas">
-            <Link className="endcta-btn" to="/demo">
+            <Link className="endcta-btn" to="/demo/">
               Book Demo
               <svg
                 className="endcta-arrow"

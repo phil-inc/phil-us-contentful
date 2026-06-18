@@ -14,14 +14,14 @@ export const PillarsSection: React.FC = () => (
         <div className="pc-title-row">
           <h3>Direct-to-Patient &amp; Program Flexibility</h3>
         </div>
-        <p>Experience total flexibility to build custom coverage, cash-pay, or hybrid routing models for your brand, with AI-driven workflows and business rule adherence. To maximize your brand’s reach, seamlessly deploy Direct-to-Patient (DTP), integrating your brand marketing assets and telemedicine channels directly into the hub to expand intake options.</p>
+        <p>Experience total flexibility to build coverage, cash-pay, or hybrid models with AI-driven workflows and business rule adherence. Expand your brands reach with Direct-to-Patient (DTP), seamlessly connecting your brand marketing assets and telemedicine channels directly into the hub to expand intake options.</p>
       </article>
       <article className="pillar-card t2">
         <div className="pc-spacer"></div>
         <div className="pc-title-row">
           <h3>Advanced Digital Hub &amp; PA Process</h3>
         </div>
-        <p>Streamline the prescription journey with PHIL. We help verify coverage requirements and support HCPs for seamless prior authorization submission and routing. With prepopulated forms, reminders, education, and real-time support, PHIL keeps HCPs in workflow for easy PA submission and maximized opportunity for payer-covered dispenses.</p>
+        <p>Streamline the prescription journey with PHIL. We help verify coverage needs and support HCPs with seamless prior authorization submission and routing. Prepopulated forms, reminders, education, and real-time support keep HCPs in workflow for easy submission and maximized opportunity for payer-covered dispenses.</p>
       </article>
       <article className="pillar-card t3">
         <div className="pc-spacer"></div>
@@ -35,7 +35,7 @@ export const PillarsSection: React.FC = () => (
         <div className="pc-title-row">
           <h3>End-to-End Data &amp; Insights</h3>
         </div>
-        <p>Drive brand performance by connecting every data point, from the first ad, to final fulfillment and adherence. We leverage advanced AI-powered data dashboards to surface commercial opportunities and minimize access friction. Dedicated partners continuously analyze your data, translating metrics into actionable, strategic program enhancements.</p>
+        <p>Drive brand performance by connecting data from first touch, through fulfillment and adherence. Leverage our AI-powered dashboards to surface commercial opportunities and reduce access friction, while dedicated partners analyze your data to translate metrics into strategic program enhancements.</p>
       </article>
     </div>
     <div className="pillar-cta-row">

@@ -8,7 +8,7 @@ export const RoiSection: React.FC = () => (
     <div className="roi-banner">
       <div className="roi-text">
         <h2>Calculate your GTN Performance Potential with PHIL</h2>
-        <p>The calculator was build by Phil's Commercial Insights architects to translate our sophisticated GTN modeling to provide a clear view into a brand's GTN potential.</p>
+        <p>The calculator was built by PHIL's Commercial Insights architects to translate our sophisticated GTN modeling into a clear view of a brand's GTN potential.</p>
       <Link className="btn-primary" to="/gtn/">Calculate Your Potential <span className="arr" aria-hidden="true"></span></Link>
       </div>
       <div className="calc-preview">

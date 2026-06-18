@@ -7,15 +7,15 @@ export const DataTabsSection: React.FC = () => (
   <div className="xl-container">
     <div className="section-head">
       <h2 className="h2--full">Turn End-to-End Program Visibility into Stronger Patient Outcomes and Brand Performance</h2>
-      <p className="lead lead--wide">Unlock end-to-end visibility into the entire prescription journey, with AI-powered data capabilities that uncover improvement opportunities across patient engagement, market access, and payer dynamics. Driving brand success through an outcomes-based partnership, PHIL’s Client Insights Team, led by former management consultants, serves as a strategic partner, analyzing this real-time program data to uncover trends, identify optimization observations, and deliver tailored recommendations that maximize patient outcomes and improve commercial impact.</p>
+      <p className="lead lead--wide">Gain end-to-end visibility into the entire prescription journey, with AI-powered data capabilities that uncover improvement opportunities across patient engagement, market access, and payer dynamics. PHIL’s Client Insights Team serves as your dedicated strategic partner, delivering targeted recommendations to continually optimize brand performance.</p>
     </div>
 
     <div className="dx-wrap">
       <div className="di-pills" role="tablist" aria-label="Dashboard views">
-        <button className="di-pill is-active" type="button" data-i="0" role="tab" aria-selected="true">Gain AI-Powered Insights</button>
-        <button className="di-pill" type="button" data-i="1" role="tab" aria-selected="false">Elevate Field &amp; HCP Performance</button>
-        <button className="di-pill" type="button" data-i="2" role="tab" aria-selected="false">Optimize Script Quality</button>
-        <button className="di-pill" type="button" data-i="3" role="tab" aria-selected="false">Access End-to-End Visibility</button>
+        <button className="di-pill is-active" type="button" data-i="0" data-slug="ai-powered-insights" role="tab" aria-selected="true">Gain AI-Powered Insights</button>
+        <button className="di-pill" type="button" data-i="1" data-slug="field-hcp-performance" role="tab" aria-selected="false">Elevate Field &amp; HCP Performance</button>
+        <button className="di-pill" type="button" data-i="2" data-slug="script-quality" role="tab" aria-selected="false">Optimize Script Quality</button>
+        <button className="di-pill" type="button" data-i="3" data-slug="end-to-end-visibility" role="tab" aria-selected="false">Access End-to-End Visibility</button>
       </div>
 
       <div className="di-stage">
@@ -243,8 +243,8 @@ export const DataTabsSection: React.FC = () => (
               </div>
             </div>
             <div className="di-copy">
-              <h3>Gain AI-Powered Insight into Brand Performance</h3>
-              <p className="di-body">PHIL's AI-powered program dashboards give you end-to-end insight into your brand's performance, with a built-in agent that surfaces actionable program insights in real time.</p>
+              <h3>Gain AI-Driven Insights into Brand Performance</h3>
+              <p className="di-body">PHIL's program dashboards give you end-to-end insights into your brand's performance, with a built-in agent that surfaces actionable program insights in real time.</p>
             </div>
           </article>
 

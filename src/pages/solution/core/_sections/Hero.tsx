@@ -10,9 +10,9 @@ export const HeroSection: React.FC = () => (
     <div className="hero-copy">
       <p className="eyebrow">PHIL Digital Hub</p>
       <h1>An End-to-End Access Solution that Maximizes <em>Commercial Success</em></h1>
-      <p className="lead">PHIL brings together a flexible digital hub, an integrated pharmacy network, and script-level data to help brands improve patient outcomes while strengthening commercial performance, enabling more efficient patient access, better adherence, and greater economic impact.</p>
+      <p className="lead">PHIL combines a technology-driven hub, integrated dispense network, and end-to-end data capabilities into one powerful platform, helping pharma brands maximize patient outcomes and commercial performance.</p>
       <div className="hero-cta-row">
-        <Link className="btn-primary" to="/demo">Book Demo</Link>
+        <Link className="btn-primary" to="/demo/">Book Demo</Link>
       </div>
     </div>
     <div className="hero-art">

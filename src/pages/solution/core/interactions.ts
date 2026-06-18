@@ -13,6 +13,46 @@ export function attachSolutionCoreInteractions(): () => void {
 
   const cleanups: Array<() => void> = [];
 
+  // Track timers/observers/listeners so cleanup can tear them down (SPA-safe).
+  // setTimeout/setInterval/IntersectionObserver are lexically shadowed (this fn only);
+  // window/document.addEventListener are patched during sync setup, restored after.
+  const _timeoutIds = new Set<number>();
+  const _intervalIds = new Set<number>();
+  const _observers: IntersectionObserver[] = [];
+  const _winListeners: Array<[string, any, any]> = [];
+  const _docListeners: Array<[string, any, any]> = [];
+
+  const _nativeSetTimeout = window.setTimeout.bind(window);
+  const _nativeSetInterval = window.setInterval.bind(window);
+  const _NativeIO = window.IntersectionObserver;
+
+  const setTimeout = (handler: any, timeout?: number, ...args: any[]) => {
+    const id = _nativeSetTimeout(handler, timeout as number, ...args);
+    _timeoutIds.add(id);
+    return id;
+  };
+  const setInterval = (handler: any, timeout?: number, ...args: any[]) => {
+    const id = _nativeSetInterval(handler, timeout as number, ...args);
+    _intervalIds.add(id);
+    return id;
+  };
+  function IntersectionObserver(cb: any, opts?: any) {
+    const obs = new _NativeIO(cb, opts);
+    _observers.push(obs);
+    return obs;
+  }
+
+  const _origWinAdd = window.addEventListener;
+  const _origDocAdd = document.addEventListener;
+  window.addEventListener = function (type: any, handler: any, opts?: any) {
+    _winListeners.push([type, handler, opts]);
+    return _origWinAdd.call(window, type, handler, opts);
+  };
+  document.addEventListener = function (type: any, handler: any, opts?: any) {
+    _docListeners.push([type, handler, opts]);
+    return _origDocAdd.call(document, type, handler, opts);
+  };
+
   // Smooth scroll for in-page anchors (header offset)
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
@@ -36,9 +76,9 @@ export function attachSolutionCoreInteractions(): () => void {
     var steps = [
       { name: 'Versatile Intake', body: 'Seamless HCP workflow within existing EMRs, telemedicine intake, or prescription transfer requests.' },
       { name: 'Fast Enrollment', body: 'Patients enroll in minutes, with real-time insurance and benefit eligibility verification.' },
-      { name: 'Flexible Access Paths', body: 'PHIL uses flexible routing to align patients with the optimal path based on brand preferences, across coverage, cash and non-commercial options.' },
+      { name: 'Flexible Access Paths', body: 'PHIL uses flexible routing to align patients with the optimal path based on brand preferences, across coverage, cash, and non-commercial options.' },
       { name: 'Transparent Cost', body: 'Patient receives transparent and affordable pricing through AI-driven copay workflows.' },
-      { name: 'Nationwide Pharmacy Reach', body: 'Medications are dispensed via a 99%+ coverage network, combining partner pharmacies with PHIL\u2019s in-house cash pharmacy and distribution capabilities.' },
+      { name: 'Nationwide Pharmacy Reach', body: 'Medications are dispensed via a 99%+ coverage network, combining partner pharmacies with PHIL\u2019s in-house cash pharmacies and distribution capabilities.' },
       { name: 'Fast, Trackable Fulfillment', body: 'Patients can choose a delivery option that suits their needs including home delivery.' },
       { name: 'Seamless Refill Management', body: 'Simple refill management provides patients flexibility to reschedule or adjust upcoming shipments.' }
     ];
@@ -502,9 +542,13 @@ export function attachSolutionCoreInteractions(): () => void {
     pills.sort(byDataI); cards.sort(byDataI);
     var total = cards.length;
     if (!total) return;
+    var slugs = pills.map(function(p){ return p.getAttribute('data-slug') || ''; });
     var active = 0;
-    function setActive(i){
+    function setActive(i, updateHash){
       active = (i + total) % total;
+      if (updateHash !== false && typeof window !== 'undefined' && slugs[active]) {
+        window.history.replaceState(null, '', '#' + slugs[active]);
+      }
       pills.forEach(function(p, idx){ var on = idx === active; p.classList.toggle('is-active', on); p.setAttribute('aria-selected', on ? 'true' : 'false'); });
       cards.forEach(function(c, idx){
         c.classList.remove('is-active', 'is-prev', 'is-next');
@@ -517,7 +561,13 @@ export function attachSolutionCoreInteractions(): () => void {
     cards.forEach(function(c){ c.addEventListener('click', function(){ if (c.classList.contains('is-active')) return; setActive(parseInt(c.getAttribute('data-i'), 10)); }); });
     var pillbar = sec.querySelector('.di-pills');
     if (pillbar) pillbar.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') setActive(active + 1); if (e.key === 'ArrowLeft') setActive(active - 1); });
-    setActive(0);
+    var initial = 0;
+    if (typeof window !== 'undefined') {
+      var hash = window.location.hash.replace('#', '');
+      var hashIdx = slugs.indexOf(hash);
+      if (hashIdx !== -1) initial = hashIdx;
+    }
+    setActive(initial, false);
 
     // count-up stats
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -898,12 +948,18 @@ export function attachSolutionCoreInteractions(): () => void {
     cycle();
   })();
 
-  // ---- Journey: pin ONLY while scrolling down. ----
+  // Sync setup done — restore patched native methods.
+  window.addEventListener = _origWinAdd;
+  document.addEventListener = _origDocAdd;
+
   return () => {
-    // Cleanup is best-effort. The ported IIFEs install their own listeners,
-    // timers, and observers; for SPA navigation they will be garbage-collected
-    // when the page DOM unmounts. attached flag prevents double-binding.
+    // SPA-safe teardown of all timers/observers/listeners installed above.
     cleanups.forEach(fn => { try { fn(); } catch {} });
+    _timeoutIds.forEach(id => clearTimeout(id)); _timeoutIds.clear();
+    _intervalIds.forEach(id => clearInterval(id)); _intervalIds.clear();
+    _observers.forEach(o => { try { o.disconnect(); } catch {} }); _observers.length = 0;
+    _winListeners.forEach(([t, h, o]) => { try { window.removeEventListener(t, h, o); } catch {} }); _winListeners.length = 0;
+    _docListeners.forEach(([t, h, o]) => { try { document.removeEventListener(t, h, o); } catch {} }); _docListeners.length = 0;
     attached = false;
   };
 }
