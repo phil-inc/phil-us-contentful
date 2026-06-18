@@ -598,8 +598,8 @@ export function attachSolutionCoreInteractions(): () => void {
     var answer = card.querySelector('.aid-answer');
     var segs = [
       { t: "NRx is up 156%", c: "b" },
-      { t: " this month \u2014 driven by ", c: "" },
-      { t: "faster prior-auth approvals", c: "hl" },
+      { t: " this month \u2014 driven by the ", c: "" },
+      { t: "new copay assistance program", c: "hl" },
       { t: ".", c: "" }
     ];
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -886,8 +886,8 @@ export function attachSolutionCoreInteractions(): () => void {
     var answer = card ? card.querySelector('.aid-answer') : null;
     var segs = [
       { t: "NRx is up 156%", c: "b" },
-      { t: " this month \u2014 driven by ", c: "" },
-      { t: "faster prior-auth approvals", c: "hl" },
+      { t: " this month \u2014 driven by the ", c: "" },
+      { t: "new copay assistance program", c: "hl" },
       { t: ".", c: "" }
     ];
     function renderAll(){
