@@ -151,6 +151,9 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   // /solution/core/ is served by the static file-based page at src/pages/solution/core/index.tsx
   if (page.slug === "solution/core") return;
 
+  // /solution/direct/ is served by the static file-based page at src/pages/solution/direct/index.tsx
+  if (page.slug === "solution/direct") return;
+
   // /solution/ (Overview) is removed; redirected to /solution/core/ via netlify.toml
   if (page.slug === "solution") return;
 
