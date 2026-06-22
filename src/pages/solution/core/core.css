@@ -199,6 +199,7 @@
 /* Hero CTA — gradient teal fill, inverts to white on hover */
 .scope .hero .hero-cta-row .btn-primary {
   background: linear-gradient(135deg, #35A88F 0%, #12695F 100%);
+  background-clip: padding-box;
   color: var(--phil-pure); border-color: transparent;
 }
 
