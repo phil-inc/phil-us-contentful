@@ -331,7 +331,7 @@
 /* =============================================================
    SECTION 1 — HERO
    ============================================================= */
-.scope .hero { position: relative; padding: 96px 0 100px; background: var(--phil-pure); }
+.scope .hero { position: relative; padding: 100px 0 114px; background: var(--phil-pure); }
 
 .scope .hero .xl-container { position: relative; z-index: 2; }
 
@@ -2453,9 +2453,13 @@
    ============================================================= */
 .scope .video-band { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
 
-.scope .video-band .vb-copy h2 { font-family: var(--font-display); font-weight: 700; font-size: 44px; line-height: 1.05; letter-spacing: -0.02em; color: var(--phil-pure); margin: 0 0 20px; text-wrap: balance; }
+.scope .video-band .vb-copy h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -0.015em; color: var(--phil-pure); margin: 0 0 24px; text-wrap: balance; }
 
-.scope .video-band .vb-copy p { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.92); margin: 0 0 32px; max-width: 520px; }
+.scope .video-band .vb-copy p { font-size: 21px; line-height: 1.5; color: rgba(255,255,255,0.88); margin: 0 0 32px; max-width: 580px; }
+
+.scope .vb-reveal { opacity: 0; transform: translateY(24px); transition: opacity 800ms cubic-bezier(0.2,0,0,1), transform 800ms cubic-bezier(0.2,0,0,1); }
+.scope .vb-reveal-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .scope .vb-reveal { opacity: 1; transform: none; } }
 
 .scope .video-thumb { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 9; display: block; width: 100%; padding: 0; border: 0; background: rgba(255,255,255,0.1); box-shadow: 0 24px 60px -20px rgba(0,0,0,0.5); cursor: pointer; }
 
@@ -2474,7 +2478,10 @@
 .scope .video-thumb .play-btn svg { width: 30px; height: 30px; fill: var(--phil-foliage); margin-left: 4px; }
 
 @media (max-width: $phil-breakpoint-md) {
- .scope .video-band { grid-template-columns: 1fr; gap: 20px; } .scope .video-band .vb-copy h2 { font-size: 34px; } .scope .video-band .vb-copy p { margin-bottom: 0; } 
+ .scope .video-band { grid-template-columns: 1fr; gap: 20px; } .scope .video-band .vb-copy p { margin-bottom: 0; }
+}
+@media (max-width: $phil-breakpoint-sm) {
+ .scope .video-band .vb-copy h2 { font-size: 34px; line-height: 1.1; } .scope .video-band .vb-copy p { font-size: 16px; }
 }
 
 
@@ -2702,8 +2709,6 @@
 
 @media (max-width: $phil-breakpoint-sm) {
 
-  /* Match the design's mobile gutter (was `.wrap { padding: 0 24px }`). */
-  .scope .xl-container { padding-inline: 24px; }
   .scope section.band { padding: 18px 0; }
   .scope section.band.video-band-section { padding: 50px 0; }
   .scope .hero { padding: 48px 0 50px; }
@@ -2734,8 +2739,6 @@
 
 @media (max-width: 600px) {
 
-  /* Match the design's mobile gutter (was `.wrap { padding: 0 20px }`). */
-  .scope .xl-container { padding-inline: 20px; }
   .scope section.band { padding: 36px 0; }
   .scope section.band.video-band-section { padding: 44px 0; }
   .scope .hero { padding: 40px 0 44px; }
@@ -2759,8 +2762,6 @@
 
 @media (max-width: 430px) {
 
-  /* Match the design's mobile gutter (was `.wrap { padding: 0 16px }`). */
-  .scope .xl-container { padding-inline: 16px; }
   .scope .hero h1 { font-size: 26px; }
   .scope .di-pill { padding: 8px 13px; font-size: 12px; }
   .scope .jx2-frame { max-width: 248px; }

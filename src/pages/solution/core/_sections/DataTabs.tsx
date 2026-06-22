@@ -57,7 +57,7 @@ export const DataTabsSection: React.FC = () => (
             </div>
             <div className="di-copy">
               <h3>Elevate Field Performance and HCP Engagement</h3>
-              <p className="di-body">PHIL’s integrated portal provides territory-level visibility into script quality, enrollment, and prescriber engagement, helping field teams identify success drivers and accelerate patient access. PHIL reduces friction, drives hub adoption, and provides support throughout the prescribing journey.</p>
+              <p className="di-body">PHIL’s integrated portal provides territory-level visibility into script quality, enrollment, and prescriber engagement, helping field teams identify success drivers and accelerate patient access.</p>
             </div>
           </article>
 
@@ -96,7 +96,7 @@ export const DataTabsSection: React.FC = () => (
             </div>
             <div className="di-copy">
               <h3>Optimize Script Quality</h3>
-              <p className="di-body">PHIL monitors incoming scripts with quality checks to identify missing payer-required details and gives field teams insight into coverage gaps, while ensuring complete and accurate information maximizes support for payer-covered access to therapy.</p>
+              <p className="di-body">PHIL monitors incoming scripts with AI-driven quality checks to identify missing payer-required details and gives field teams insight into coverage gaps, while ensuring complete and accurate information maximizes support for payer-covered access to therapy.</p>
             </div>
           </article>
 

@@ -22,7 +22,7 @@ export const JourneySection: React.FC = () => (
         <div className="jx2-sticky">
           <div className="jx2-head">
             <h2>A Frictionless Path From Prescription to Fulfillment</h2>
-            <p className="jx2-lead">PHIL Digital Hub is designed to be configured around your brand's specific patient population, payer landscape, and program goals. Work with our team to define the intake channels, pharmacy network, support model, and program economics that fit your strategy, and adjust as your program scales.</p>
+            <p className="jx2-lead">PHIL Digital Hub is configured around your brand's unique patient population, payer landscape, and program goals. Work with our team to define the intake channels, pharmacy network, support model, and program economics that fit your strategy, and optimize as your program scales.</p>
           </div>
           <div className="jx2-grid">
               
