@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 
 export const PillarsSection: React.FC = () => (
 
@@ -21,7 +22,7 @@ export const PillarsSection: React.FC = () => (
         <div className="pc-title-row">
           <h3>Advanced Digital Hub &amp; PA Process</h3>
         </div>
-        <p>Streamline the prescription journey with PHIL. We help verify coverage needs and support HCPs with seamless prior authorization submission and routing. Prepopulated forms, reminders, education, and real-time support keep HCPs in workflow for easy submission and maximized opportunity for payer-covered dispenses.</p>
+        <p>Maximize covered dispenses with PHIL’s digital hub and proprietary PA process. We help verify coverage needs and provide support for easy prior authorization submission, with a simple prescribing process that keeps HCPs in their existing workflows and provides timely updates, education, and support to drive ongoing engagement.</p>
       </article>
       <article className="pillar-card t3">
         <div className="pc-spacer"></div>
@@ -39,10 +40,10 @@ export const PillarsSection: React.FC = () => (
       </article>
     </div>
     <div className="pillar-cta-row">
-      <a className="pillar-link" href="#">
+      <Link className="pillar-link" to="/solution/direct/">
         <span className="pl-text">Explore PHIL Direct-to-Patient</span>
         <span className="pl-arrow" aria-hidden="true"><svg viewBox="0 0 30 16"><path d="M1 8h25M21 3l5 5-5 5" /></svg></span>
-      </a>
+      </Link>
     </div>
   </div>
 </section>

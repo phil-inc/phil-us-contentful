@@ -1846,27 +1846,28 @@
 
 /* Flipped insights: rendered on the opposite side of the spine with a lead line back to the step icon */
 .scope .jt-insight--flip { animation: none !important; }
+.scope .jt-insight--flip.jt-flip-anim { animation: jt-float 3.6s var(--ease-standard) infinite !important; }
 
 .scope .jt-col .jt-insight--flip { position: absolute; left: 50%; transform: translateX(calc(-50% + var(--jt-shift, 0px))); }
 
-.scope .jt-above .jt-insight--flip { top: 212px; bottom: auto; }
+.scope .jt-above .jt-insight--flip { top: 227px; bottom: auto; }
 
 .scope .jt-below .jt-insight--flip { top: -82px; bottom: auto; }
 
 .scope .jt-insight--flip::after { content: ""; position: absolute; left: calc(50% - var(--jt-shift, 0px)); transform: translateX(-50%); border-left: 2px dotted var(--phil-foliage); opacity: 0.55; }
 
-.scope .jt-above .jt-insight--flip::after { bottom: 100%; top: auto; height: 150px; }
+.scope .jt-above .jt-insight--flip::after { bottom: 100%; top: auto; height: 165px; }
 
 .scope .jt-below .jt-insight--flip::after { top: 100%; bottom: auto; height: 150px; }
 
 .scope .jt-insight--flip::before { content: ""; position: absolute; left: calc(50% - var(--jt-shift, 0px)); transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: var(--phil-foliage); }
 
-.scope .jt-above .jt-insight--flip::before { bottom: calc(100% + 150px); top: auto; }
+.scope .jt-above .jt-insight--flip::before { bottom: calc(100% + 165px); top: auto; }
 
 .scope .jt-below .jt-insight--flip::before { top: calc(100% + 150px); bottom: auto; }
 
 /* Centered top-zone insight with a short downward stub (no timeline connection) */
-.scope .jt-insight--top { animation: none !important; }
+.scope .jt-insight--top { animation: jt-float 3.6s var(--ease-standard) infinite !important; }
 
 .scope .jt-below .jt-insight--top { top: -82px; bottom: auto; }
 

@@ -37,9 +37,8 @@ src/pages/solution/core/
     Journey.tsx          section 4 (pinned scroll, 7 steps)
     DataTabs.tsx         section 5 (4 dashboard tabs)
     Support.tsx          section 6 (tiles + connector + reviews)
-    VideoBand.tsx        section 7 (gradient + YouTube)
-    Roi.tsx              section 8 (calculator banner)
-    FinalCta.tsx         section 9 (book demo)
+    Roi.tsx              section 7 (calculator banner)
+    FinalCta.tsx         section 8 (book demo)
 ```
 
 Each section returns static JSX (hardcoded copy lives at section level — page is content-driven, not data-driven). All interactive behavior is centralized in `interactions.ts`, which exports `attachSolutionCoreInteractions()` and is invoked from a single `useEffect` in `index.tsx` on mount. The ported script uses `document.getElementById` / `document.querySelector` against rendered DOM (IDs preserved on the source nodes).

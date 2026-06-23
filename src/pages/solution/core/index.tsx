@@ -11,7 +11,6 @@ import { PillarsSection } from "./_sections/Pillars";
 import { JourneySection } from "./_sections/Journey";
 import { DataTabsSection } from "./_sections/DataTabs";
 import { SupportSection } from "./_sections/Support";
-import { VideoBandSection } from "./_sections/VideoBand";
 import { RoiSection } from "./_sections/Roi";
 import { FinalCtaSection } from "./_sections/FinalCta";
 
@@ -68,7 +67,6 @@ const SolutionCorePage: React.FC = () => {
           <JourneySection />
           <DataTabsSection />
           <SupportSection />
-          <VideoBandSection />
           <RoiSection />
           <FinalCtaSection />
         </div>
