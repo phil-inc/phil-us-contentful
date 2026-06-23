@@ -255,7 +255,7 @@ const PlatformSection = () => (
         <div className={classes.pfVideoCard}>
           <a
             className={classes.pfVideoThumb}
-            href="https://www.youtube.com/watch?v=7Oyyt-tjrsE"
+            href="https://youtu.be/dn-MvZkdHTU"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Watch PHIL Core video"
