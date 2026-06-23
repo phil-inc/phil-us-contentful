@@ -11,7 +11,7 @@ export const HeroSection: React.FC = () => (
           <em>Direct-to-Patient</em> Solution
         </h1>
         <p className="lead">
-          PHIL Direct delivers a future-ready, ecommerce-like Direct-to-Patient
+          PHIL Direct-to-Patient delivers a future-ready, ecommerce-like
           experience, combining intake, fulfillment, and analytics into one
           flexible solution that grows with your brand, boosts performance, and
           expands affordable access to medications with coverage, cash-pay, and

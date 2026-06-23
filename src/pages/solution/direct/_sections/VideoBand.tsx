@@ -15,12 +15,15 @@ export const VideoBandSection: React.FC = () => (
           className="video-thumb"
           href="https://www.youtube.com/watch?v=WmuyIuwHkgM"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           aria-label="Watch the PHIL Direct video"
         >
           <img
             src="https://img.youtube.com/vi/WmuyIuwHkgM/maxresdefault.jpg"
             alt="PHIL Direct overview video"
+            width={1280}
+            height={720}
+            loading="lazy"
           />
           <span className="play-overlay" aria-hidden="true">
             <span className="play-btn">

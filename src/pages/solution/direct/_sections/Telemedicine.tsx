@@ -4,6 +4,12 @@ import { Link } from "gatsby";
 // tcdPick is attached to window by interactions.ts (ported from the design script).
 const pickTcd = (e: React.MouseEvent<HTMLDivElement>) =>
   (window as any).tcdPick?.(e.currentTarget);
+const keyTcd = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    (window as any).tcdPick?.(e.currentTarget);
+  }
+};
 
 export const TelemedicineSection: React.FC = () => (
   <section className="band band-tele tele-section" data-screen-label="04 Telemedicine">
@@ -13,9 +19,10 @@ export const TelemedicineSection: React.FC = () => (
         <p className="lead">
           PHIL Direct-to-Patient enables a flexible, connected experience that
           meets patients where they begin and guides them seamlessly through
-          access, prescription, and fulfillment. Design programs around your
-          needs, white-labeled or branded, cash or coverage-based, or hybrid,
-          and configure each step from intake to fulfillment. We help you
+          access, prescription, and fulfillment. Design programs to fit your
+          strategy, with branded or white-labeled experiences and support for
+          cash pay, coverage, or hybrid models, while configuring each step
+          from intake to fulfillment. We help you
           deliver a seamless, personalized journey that ensures consistent,
           trusted engagement across every path to therapy.
         </p>
@@ -328,10 +335,7 @@ export const TelemedicineSection: React.FC = () => (
                         </div>
                         <div className="tin-btns">
                           <button className="tin-primary" type="button">
-                            Schedule Now
-                          </button>
-                          <button className="tin-outline" type="button">
-                            Submit Interest Form
+                            Submit interest form
                           </button>
                         </div>
                       </div>
@@ -377,7 +381,7 @@ export const TelemedicineSection: React.FC = () => (
                         </div>
                       </div>
                       <div className="enr-spacer" />
-                      <div className="enr-cta">Confirm &amp; Enroll</div>
+                      <div className="enr-cta">Confirm &amp; enroll</div>
                     </div>
                     <div className="tp-home" />
                   </div>
@@ -656,7 +660,7 @@ export const TelemedicineSection: React.FC = () => (
                         </div>
                       </div>
                       <div className="enr-spacer" />
-                      <div className="enr-cta">Confirm &amp; Enroll</div>
+                      <div className="enr-cta">Confirm &amp; enroll</div>
                     </div>
                     <div className="tp-home" />
                   </div>
@@ -685,7 +689,7 @@ export const TelemedicineSection: React.FC = () => (
                       <div className="tcd-lead">
                         We found your best price on Adaptrex&reg;!
                       </div>
-                      <div className="tcd-option" onClick={pickTcd}>
+                      <div className="tcd-option" role="button" tabIndex={0} onClick={pickTcd} onKeyDown={keyTcd}>
                         <span className="tcd-radio is-empty" />
                         <div>
                           <p className="tcd-opt-title">
@@ -694,7 +698,7 @@ export const TelemedicineSection: React.FC = () => (
                           <span className="tcd-off">58% OFF</span>
                         </div>
                       </div>
-                      <div className="tcd-option is-selected" onClick={pickTcd}>
+                      <div className="tcd-option is-selected" role="button" tabIndex={0} onClick={pickTcd} onKeyDown={keyTcd}>
                         <span className="tcd-radio" />
                         <div>
                           <p className="tcd-opt-title">
@@ -710,7 +714,7 @@ export const TelemedicineSection: React.FC = () => (
                         Next
                       </button>
                       <button className="tcd-manage" type="button">
-                        Manage Prescription
+                        Manage prescription
                       </button>
                     </div>
                     <div className="tp-home" />
@@ -835,7 +839,7 @@ export const TelemedicineSection: React.FC = () => (
                       </div>
                     </div>
                     <div className="adx-cta">Request an Rx</div>
-                    <div className="adx-cta adx-cta--ghost">Transfer a Script</div>
+                    <div className="adx-cta adx-cta--ghost">Transfer a script</div>
                     <div className="tp-home" />
                   </div>
                 </div>
@@ -877,7 +881,7 @@ export const TelemedicineSection: React.FC = () => (
                         </div>
                       </div>
                       <div className="enr-spacer" />
-                      <div className="enr-cta">Confirm &amp; Enroll</div>
+                      <div className="enr-cta">Confirm &amp; enroll</div>
                     </div>
                     <div className="tp-home" />
                   </div>
@@ -905,24 +909,24 @@ export const TelemedicineSection: React.FC = () => (
                       <div className="tcd-lead">
                         We found your best price on Adaptrex&reg;!
                       </div>
-                      <div className="tcd-option is-selected" onClick={pickTcd}>
+                      <div className="tcd-option is-selected" role="button" tabIndex={0} onClick={pickTcd} onKeyDown={keyTcd}>
                         <span className="tcd-radio" />
                         <div>
                           <p className="tcd-opt-title">
-                            30 Day Supply with Insurance Copay for $50
+                            30 Day Supply with Insurance Copay for $25
                           </p>
-                          <span className="tcd-off">58% OFF</span>
+                          <span className="tcd-off">79% OFF</span>
                         </div>
                       </div>
-                      <div className="tcd-option" onClick={pickTcd}>
+                      <div className="tcd-option" role="button" tabIndex={0} onClick={pickTcd} onKeyDown={keyTcd}>
                         <span className="tcd-radio is-empty" />
                         <div>
                           <p className="tcd-opt-title">
                             30 Day Supply with
                             <br />
-                            Cash Price for $25
+                            Cash Price for $50
                           </p>
-                          <span className="tcd-off">79% OFF</span>
+                          <span className="tcd-off">58% OFF</span>
                         </div>
                       </div>
                       <div className="tcd-spacer" />
@@ -930,7 +934,7 @@ export const TelemedicineSection: React.FC = () => (
                         Next
                       </button>
                       <button className="tcd-manage" type="button">
-                        Manage Prescription
+                        Manage prescription
                       </button>
                     </div>
                     <div className="tp-home" />
@@ -963,7 +967,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="1"
                   data-title="Patient Digital Enrollment"
-                  data-desc="The moment the electronic script is sent, the PHIL triggers an automated SMS text message to the patient&rsquo;s smartphone, making it easy to enroll and access the treatment they need."
+                  data-desc="The moment the electronic script is sent, PHIL triggers an automated SMS text message to the patient&rsquo;s smartphone, making it easy to enroll and access the treatment they need."
                 >
                   <button className="tele-thumb" type="button" data-i="1" aria-label="View patient digital enrollment" />
                   <span className="tj-num">2</span>

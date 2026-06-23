@@ -185,8 +185,8 @@ export const ThoughtLeadershipSection: React.FC = () => (
             </div>
             <p className="tl-body">
               One seamless experience for prescribing, coverage, payment, and
-              fulfillment, no handoffs, no friction with pathways that meet
-              patients where they are.
+              fulfillment that meets patients where they are, without handoffs
+              or friction.
             </p>
           </div>
         </div>

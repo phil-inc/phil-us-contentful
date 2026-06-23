@@ -21,13 +21,13 @@ export const FunnelSection: React.FC = () => (
         <h3 className="insights-title">Full-Funnel Program Insights</h3>
 
         <div className="it-tabs" role="tablist" aria-label="Program insight sections">
-          <button className="it-tab is-active" role="tab" aria-selected="true" data-panel="funnel" id="ittab-funnel">
+          <button type="button" className="it-tab is-active" role="tab" aria-selected="true" data-panel="funnel" id="ittab-funnel">
             <span className="it-tab-label">Explore End-to-End Journey Data</span>
           </button>
-          <button className="it-tab" role="tab" aria-selected="false" data-panel="metrics" id="ittab-metrics">
+          <button type="button" className="it-tab" role="tab" aria-selected="false" data-panel="metrics" id="ittab-metrics">
             <span className="it-tab-label">Access Key Metrics</span>
           </button>
-          <button className="it-tab" role="tab" aria-selected="false" data-panel="ai" id="ittab-ai">
+          <button type="button" className="it-tab" role="tab" aria-selected="false" data-panel="ai" id="ittab-ai">
             <span className="it-tab-label">Leverage AI Insights</span>
           </button>
         </div>

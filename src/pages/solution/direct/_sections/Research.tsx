@@ -92,10 +92,10 @@ export const ResearchSection: React.FC = () => (
               </svg>
             </button>
             <div className="mc-dots" role="tablist" aria-label="Select finding">
-              <button className="mc-dot is-active" type="button" aria-label="Finding 1" />
-              <button className="mc-dot" type="button" aria-label="Finding 2" />
-              <button className="mc-dot" type="button" aria-label="Finding 3" />
-              <button className="mc-dot" type="button" aria-label="Finding 4" />
+              <button className="mc-dot is-active" type="button" role="tab" aria-selected="true" aria-label="Finding 1" />
+              <button className="mc-dot" type="button" role="tab" aria-selected="false" aria-label="Finding 2" />
+              <button className="mc-dot" type="button" role="tab" aria-selected="false" aria-label="Finding 3" />
+              <button className="mc-dot" type="button" role="tab" aria-selected="false" aria-label="Finding 4" />
             </div>
           </div>
         </div>
