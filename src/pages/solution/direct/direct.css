@@ -876,6 +876,16 @@
 .scope-direct .fi-item.checked .fi-check { background: var(--phil-foliage); border-color: var(--phil-foliage); }
 .scope-direct .fi-item.checked .fi-check svg { stroke-dashoffset: 0; }
 @media (max-width: 620px) {
+/* DTP resources carousel — one card per frame, no clipped copy */
+.scope-direct .res-track .bt,
+.scope-direct .res-track .bt[class*="sz-"] {
+  flex: 0 0 calc(100vw - 64px) !important;   /* xl-container = 32px padding each side */
+  width: calc(100vw - 64px) !important;
+  min-height: auto !important;               /* let height follow content; kill tall gaps */
+  margin: 0 16px 0 0 !important;             /* gap → next card peeks behind edge */
+}
+/* relax edge mask so a full-width card isn't nibbled at the sides */
+.scope-direct .res-viewport { -webkit-mask: none; mask: none; }
 .scope-direct .funnel-head, .scope-direct .funnel-card--full .funnel-layout { display: contents; }
 .scope-direct .funnel-card--full { align-items: center; gap: 0; }
 .scope-direct .funnel-card--full .funnel-head h4 { order: 1; flex: none; width: 100%; text-align: center; margin: 0 0 16px; }
@@ -1028,7 +1038,9 @@
 .scope-direct .res-nav.prev { left: -12px; }
 .scope-direct .res-nav.next { right: -12px; }
 @media (max-width: 720px) {
-.scope-direct .res-nav { width: 44px; height: 44px; opacity: 1; pointer-events: auto; }
+.scope-direct .res-nav { width: 34px; height: 34px; opacity: 1; pointer-events: auto;
+  background: rgba(255,255,255,0.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 6px 16px -8px rgba(0,75,72,0.35); }
+.scope-direct .res-nav svg { width: 16px; height: 16px; }
 }
 .scope-direct .res-track .bt { flex: 0 0 340px; width: 340px; margin: 0 24px 0 0; display: flex; flex-direction: column; }
 .scope-direct .res-track .bt.sz-a { flex-basis: 298px; width: 298px; min-height: 369px; }

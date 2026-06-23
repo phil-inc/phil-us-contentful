@@ -117,7 +117,7 @@ and external press/feature articles.
 | Funnel segment / check / metric reveal | class toggles + timeouts; count-up via `requestAnimationFrame` |
 | AI typewriter | char-by-char insert, replays after 10s; reduced-motion renders full text |
 | Stat coverflow carousel | absolute transforms by offset, auto-advance interval, count-up |
-| tcd / tin phone-mock toggles | `window.tcdPick` etc. (inline `onClick` for tcd; tin handlers exposed for parity) |
+| tcd phone-mock radio-pick | `window.tcdPick` wired via JSX `onClick`/`onKeyDown` on `.tcd-option` |
 | Smooth in-page anchors | single page-level handler (no in-page anchors currently, kept for parity) |
 
 All wrapped in a re-attach-safe `attachSolutionDirectInteractions()`:
@@ -187,10 +187,10 @@ None. The design includes the Trustpilot bootstrap `<script>` tag but has no
   `coverage-grid` / `cov-card` / section 6, `bento` masonry). The transform kept
   them (~16 rule-groups). Harmless — no markup references them. Left in to keep
   the stylesheet a faithful transform of the source; can be pruned later.
-- **Inert phone-mock dropdowns**: the telemed questionnaire's `tin-*-trigger`
-  selects have no list elements or click wiring in the design markup, so they do
-  nothing (matches the design). `window.tinToggleDrop/tinSelectOpt/tinConfirm`
-  are defined for parity but never invoked.
+- **Static phone-mock dropdowns**: the telemed questionnaire's `tin-*-trigger`
+  selects are display-only (no list elements, no wiring), matching the rest of the
+  mock (e.g. `tin-input` is a static div). The unused `window.tinToggleDrop/
+  tinSelectOpt/tinConfirm` handlers were removed.
 - **Performance**: page is heavy (multiple animated SVGs, marquee RAF, 3 cloned
   journeys). Consider lazy-loading below-the-fold sections if LCP regresses.
   Out of scope for this PR.

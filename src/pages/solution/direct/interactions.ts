@@ -58,7 +58,8 @@ export function attachSolutionDirectInteractions(): () => void {
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href');
       if (id.length > 1) {
-        var el = document.querySelector(id);
+        var el;
+        try { el = document.querySelector(id); } catch (err) { el = null; }
         if (el) {
           e.preventDefault();
           var top = el.getBoundingClientRect().top + window.pageYOffset;
@@ -93,7 +94,7 @@ export function attachSolutionDirectInteractions(): () => void {
         c.classList.toggle('is-active', off === 0);
         c.setAttribute('aria-hidden', off === 0 ? 'false' : 'true');
       });
-      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === active); });
+      dots.forEach(function (d, i) { var on = i === active; d.classList.toggle('is-active', on); d.setAttribute('aria-selected', on ? 'true' : 'false'); });
     }
     function go(i) { active = (i % n + n) % n; render(); maybeCount(); }
 
@@ -428,26 +429,34 @@ export function attachSolutionDirectInteractions(): () => void {
     var track = document.querySelector('.res-track');
     if (!track || !marquee) return;
     var originals = Array.prototype.slice.call(track.children);
+    var n = originals.length;
+    // Triple the track: [left clones][originals][right clones]. Paging can then
+    // ease into a buffer set on either end instead of animating into blank space.
+    var rightFrag = document.createDocumentFragment();
+    var leftFrag = document.createDocumentFragment();
     originals.forEach(function (node) {
-      var clone = node.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      track.appendChild(clone);
+      var r = node.cloneNode(true); r.setAttribute('aria-hidden', 'true'); rightFrag.appendChild(r);
+      var l = node.cloneNode(true); l.setAttribute('aria-hidden', 'true'); leftFrag.appendChild(l);
     });
+    track.appendChild(rightFrag);
+    track.insertBefore(leftFrag, track.firstChild);
+
     var setWidth = 0;
-    function computeSet() { setWidth = track.scrollWidth / 2; }
+    function computeSet() { setWidth = track.scrollWidth / 3; }
     computeSet();
-    window.addEventListener('resize', computeSet);
-    var pos = 0, speed = 30, last = null, paused = false;
+    var pos = -setWidth, speed = 30, last = null, paused = false; // park on the middle (originals) set
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var slideTween = null;
     function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+    // Keep the viewport over the middle set; recenter seamlessly once it drifts a full set.
     function normalize() {
       if (setWidth > 0) {
-        while (pos <= -setWidth) pos += setWidth;
-        while (pos > 0) pos -= setWidth;
+        while (pos <= -2 * setWidth) pos += setWidth;
+        while (pos > -setWidth) pos -= setWidth;
       }
     }
     function apply() { track.style.transform = 'translateX(' + pos + 'px)'; }
+    window.addEventListener('resize', function () { computeSet(); normalize(); apply(); });
     function frame(ts) {
       if (last == null) last = ts;
       var dt = (ts - last) / 1000; last = ts;
@@ -463,16 +472,35 @@ export function attachSolutionDirectInteractions(): () => void {
     }
     marquee.addEventListener('mouseenter', function () { paused = true; });
     marquee.addEventListener('mouseleave', function () { paused = false; });
-    var step = 404;
+    // Left-edge offset of each original card (middle set); each in [setWidth, 2*setWidth).
+    function boundaries() {
+      var b = [];
+      for (var i = 0; i < n; i++) b.push(track.children[n + i].offsetLeft);
+      return b;
+    }
+    function snap(dir) {            // dir: +1 next, -1 prev
+      normalize();
+      var b = boundaries();
+      var cur = -pos;              // track-x at the frame's left edge (within the middle set)
+      var idx = 0, best = Infinity;
+      for (var i = 0; i < n; i++) {
+        var d = Math.abs(b[i] - cur);
+        if (d < best) { best = d; idx = i; }
+      }
+      var ti = idx + dir;          // -1 .. n
+      var targetX;
+      if (ti < 0)       targetX = b[n - 1] - setWidth;  // last card, in the left clone set
+      else if (ti >= n) targetX = b[0] + setWidth;      // first card, in the right clone set
+      else              targetX = b[ti];
+      slideTween = { from: pos, to: -targetX, start: performance.now(), dur: 400 };
+    }
     var prev = marquee.querySelector('.res-nav.prev');
     var next = marquee.querySelector('.res-nav.next');
-    function slideBy(delta) {
-      normalize();
-      slideTween = { from: pos, to: pos + delta, start: performance.now(), dur: 400 };
-    }
-    if (prev) prev.addEventListener('click', function () { slideBy(step); });
-    if (next) next.addEventListener('click', function () { slideBy(-step); });
-    requestAnimationFrame(frame);
+    if (prev) prev.addEventListener('click', function () { snap(-1); });
+    if (next) next.addEventListener('click', function () { snap(1); });
+    apply(); // set the initial middle-set transform before the first frame (no flash at 0)
+    var rafId = requestAnimationFrame(frame);
+    cleanups.push(function () { cancelAnimationFrame(rafId); });
   })();
 
   // Sequential pop-in of the 1·2·3 thought-leadership badges on scroll-in
@@ -626,7 +654,7 @@ export function attachSolutionDirectInteractions(): () => void {
     });
   })();
 
-  // tcd / tin phone-mock interactions (exposed on window for inline handlers)
+  // tcd phone-mock radio-pick (exposed on window for the JSX onClick handler)
   (function () {
     window.tcdPick = function (el) {
       var screen = el.closest('.tcd-screen');
@@ -640,51 +668,6 @@ export function attachSolutionDirectInteractions(): () => void {
       var radio = el.querySelector('.tcd-radio');
       if (radio) radio.classList.remove('is-empty');
     };
-    window.tinToggleDrop = function (id) {
-      var list = document.getElementById('tin-' + id + '-list');
-      var trig = document.getElementById('tin-' + id + '-trigger');
-      if (!list || !trig) return;
-      var willOpen = !list.classList.contains('open');
-      ['med', 'diag'].forEach(function (k) {
-        var l = document.getElementById('tin-' + k + '-list');
-        var t = document.getElementById('tin-' + k + '-trigger');
-        if (l) l.classList.remove('open');
-        if (t) t.classList.remove('open');
-      });
-      if (willOpen) { list.classList.add('open'); trig.classList.add('open'); }
-    };
-    window.tinSelectOpt = function (id, el) {
-      document.querySelectorAll('#tin-' + id + '-list .tin-opt').forEach(function (o) { o.classList.remove('active'); });
-      el.classList.add('active');
-      var val = document.getElementById('tin-' + id + '-val');
-      if (val) val.textContent = el.textContent;
-      var trig = document.getElementById('tin-' + id + '-trigger');
-      if (trig) { trig.classList.add('selected'); trig.classList.remove('open'); }
-      var list = document.getElementById('tin-' + id + '-list');
-      if (list) list.classList.remove('open');
-    };
-    window.tinConfirm = function (btn, confirmText, originalText) {
-      if (btn.dataset.busy === '1') return;
-      btn.dataset.busy = '1';
-      btn.innerHTML = confirmText;
-      btn.classList.add('is-done');
-      setTimeout(function () {
-        btn.textContent = originalText;
-        btn.classList.remove('is-done');
-        btn.dataset.busy = '0';
-      }, 2500);
-    };
-    document.addEventListener('click', function (e) {
-      ['med', 'diag'].forEach(function (id) {
-        var trigger = document.getElementById('tin-' + id + '-trigger');
-        var list = document.getElementById('tin-' + id + '-list');
-        if (!trigger || !list) return;
-        if (!trigger.contains(e.target) && !list.contains(e.target)) {
-          list.classList.remove('open');
-          trigger.classList.remove('open');
-        }
-      });
-    });
   })();
 
   // ============================ END PORTED SCRIPTS ============================
