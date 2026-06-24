@@ -199,7 +199,7 @@ export const FunnelSection: React.FC = () => (
       </div>
 
       <div className="funnel-cta">
-        <Link className="btn-text" to="/solution/core/">
+        <Link className="btn-text" to="/solution/core/#data">
           Access Full End-to-End Data Insights{" "}
           <svg viewBox="0 0 28 24" aria-hidden="true">
             <line x1="2" y1="12" x2="23" y2="12" />

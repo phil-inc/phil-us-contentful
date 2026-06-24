@@ -41,7 +41,7 @@ export const PillarsSection: React.FC = () => (
     </div>
     <div className="pillar-cta-row">
       <Link className="pillar-link" to="/solution/direct/">
-        <span className="pl-text">Explore PHIL Direct-to-Patient</span>
+        <span className="pl-text">Explore PHIL Direct</span>
         <span className="pl-arrow" aria-hidden="true"><svg viewBox="0 0 30 16"><path d="M1 8h25M21 3l5 5-5 5" /></svg></span>
       </Link>
     </div>

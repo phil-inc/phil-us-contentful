@@ -76,9 +76,19 @@ export const SupportSection: React.FC = () => (
     </div>
     
     <div className="trustpilot-bar">
-      <div className="trustpilot-widget" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%" data-token="27482d6b-f7e5-4cc9-aff3-d03b20ea51d0">
-        <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>
-      </div>
+      <div
+        className="trustpilot-widget"
+        data-locale="en-US"
+        data-template-id="5406e65db0d04a09e042d5fc"
+        data-businessunit-id="60e5837e95cb800001e58b14"
+        data-style-height="28px"
+        data-style-width="100%"
+        data-token="27482d6b-f7e5-4cc9-aff3-d03b20ea51d0"
+        dangerouslySetInnerHTML={{
+          __html:
+            '<a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>',
+        }}
+      />
     </div>
     
   </div>

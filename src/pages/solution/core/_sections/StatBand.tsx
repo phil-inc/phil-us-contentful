@@ -19,9 +19,19 @@ export const StatBandSection: React.FC = () => (
       <div className="stat-item"><p className="stat-num" data-target="3" data-suffix="x+">3x+</p><p className="stat-label">Gross-to-Net <span className="stat-vs">vs. Traditional Channels</span></p></div>
       <div className="stat-item"><p className="stat-num" data-target="4.8" data-decimals="1" data-suffix="/5.0">4.8/5.0</p><p className="stat-label">Patient Satisfaction Score</p>
         
-        <div className="trustpilot-widget stat-trustpilot" data-locale="en-US" data-template-id="5406e65db0d04a09e042d5fc" data-businessunit-id="60e5837e95cb800001e58b14" data-style-height="28px" data-style-width="100%" data-token="aef95708-e9c9-48b3-a7b6-2defc6c49f2e">
-          <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>
-        </div>
+        <div
+          className="trustpilot-widget stat-trustpilot"
+          data-locale="en-US"
+          data-template-id="5406e65db0d04a09e042d5fc"
+          data-businessunit-id="60e5837e95cb800001e58b14"
+          data-style-height="28px"
+          data-style-width="100%"
+          data-token="aef95708-e9c9-48b3-a7b6-2defc6c49f2e"
+          dangerouslySetInnerHTML={{
+            __html:
+              '<a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">Trustpilot</a>',
+          }}
+        />
         
       </div>
     </div>
