@@ -8,10 +8,10 @@ export const HeroSection: React.FC = () => (
         <p className="eyebrow">PHIL Direct-to-Patient</p>
         <h1>
           Create a Seamless Access Experience with a Proven{" "}
-          <em>Direct-to-Patient</em> Solution
+          <em>Direct-to-Patient</em> <em>Solution</em>
         </h1>
         <p className="lead">
-          PHIL Direct-to-Patient delivers a future-ready, ecommerce-like
+          PHIL Direct delivers a future-ready, ecommerce-like Direct-to-Patient
           experience, combining intake, fulfillment, and analytics into one
           flexible solution that grows with your brand, boosts performance, and
           expands affordable access to medications with coverage, cash-pay, and

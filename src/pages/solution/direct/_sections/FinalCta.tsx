@@ -30,8 +30,8 @@ export const FinalCtaSection: React.FC = () => {
           <div className="endcta-copy">
             <h2 className="endcta-title">Direct-to-Patient Success,<br />Solved</h2>
             <p className="endcta-body">
-              Take a tour of the PHIL Direct-to-Patient platform today and
-              discover how our team of experts can build a tailored DTP program
+              Take a tour of the PHIL Direct platform today and discover how our
+              team of experts can build a tailored DTP program
               that maximizes access, affordability, and adherence for your
               patients.
             </p>

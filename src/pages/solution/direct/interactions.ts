@@ -286,7 +286,33 @@ export function attachSolutionDirectInteractions(): () => void {
 
     // metrics
     var metricCards = Array.prototype.slice.call(card.querySelectorAll('.ifm-card'));
-    var metricCounter = makeCounter(Array.prototype.slice.call(card.querySelectorAll('.ifm-value, .ifm-delta')));
+    var metricCounter = makeCounter(Array.prototype.slice.call(card.querySelectorAll('.ifm-value:not(.ifm-nocount), .ifm-delta')));
+    function animateCountToArrow(box) {
+      if (!box) return;
+      var numEl = box.querySelector('.dropoff-num');
+      var arrowEl = box.querySelector('.dropoff-arrow');
+      if (!numEl || !arrowEl) return;
+      function finish() { numEl.hidden = true; arrowEl.hidden = false; arrowEl.classList.add('in'); }
+      if (reduce) { finish(); return; }
+      numEl.hidden = false; numEl.textContent = '0%';
+      arrowEl.hidden = true; arrowEl.classList.remove('in');
+      var start = null, dur = 1200;
+      function tick(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);
+        numEl.textContent = Math.round(100 * e) + '%';
+        if (p < 1) requestAnimationFrame(tick);
+        else finish();
+      }
+      requestAnimationFrame(tick);
+      setTimeout(finish, dur + 500);
+    }
+    function animateDropoff() {
+      animateCountToArrow(card.querySelector('#dropoffValue'));
+      animateCountToArrow(card.querySelector('#enrollValue'));
+      animateCountToArrow(card.querySelector('#speedValue'));
+    }
     function animateMetrics() {
       if (!reduce) {
         metricCards.forEach(function (c, i) {
@@ -305,6 +331,7 @@ export function attachSolutionDirectInteractions(): () => void {
         }, metricCards.length * 120 + 900);
       }
       metricCounter.run(1200);
+      animateDropoff();
     }
 
     var anim = { ai: function () { var t = card.querySelector('.ai-text[data-typewriter]'); if (t && t.__typeStart) t.__typeStart(); }, reach: animateReach, funnel: animateFunnel, metrics: animateMetrics };

@@ -907,6 +907,13 @@
 .scope-direct .ifm-list--full .ifm-card:nth-child(1) .ifm-value { background: color-mix(in srgb, var(--phil-foliage) 16%, #fff); color: var(--phil-forest); }
 .scope-direct .ifm-list--full .ifm-card:nth-child(2) .ifm-value { background: color-mix(in srgb, var(--phil-tradewind) 30%, #fff); color: #0C6A70; }
 .scope-direct .ifm-list--full .ifm-card:nth-child(3) .ifm-value { background: color-mix(in srgb, var(--phil-grass) 32%, #fff); color: var(--phil-forest); }
+.scope-direct .ifm-list--full .ifm-body { width: 100%; }
+.scope-direct .ifm-list--full .ifm-value.ifm-nocount { display: flex; width: 100%; align-items: center; justify-content: center; min-height: 130px; margin-top: 16px; padding: 24px; border-radius: 18px; }
+.scope-direct .ifm-value .dropoff-num { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.01em; }
+.scope-direct .ifm-value .dropoff-arrow { display: none; align-items: center; justify-content: center; }
+.scope-direct .ifm-value .dropoff-arrow:not([hidden]) { display: inline-flex; }
+.scope-direct .ifm-value .dropoff-arrow svg { width: 64px; height: 64px; display: block; }
+.scope-direct .ifm-list--full .ifm-card:hover .ifm-value.ifm-nocount { transform: none; }
 .scope-direct .ifm-list--full .ifm-label { font-size: 17px; }
 .scope-direct .ifm-list--full .ifm-icon { width: 48px; height: 48px; }
 .scope-direct .ifm-list--full .ifm-icon svg { width: 24px; height: 24px; }

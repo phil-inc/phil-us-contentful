@@ -77,7 +77,7 @@ const SolutionCorePage: React.FC = () => {
 
 export default SolutionCorePage;
 
-const CORE_TITLE = "Core Hub | PHIL";
+const CORE_TITLE = "Digital Hub | PHIL";
 const CORE_DESC =
   "PHIL combines a flexible digital hub, integrated pharmacy network, and script-level data to maximize patient access, adherence, and brand performance.";
 const CORE_URL = "https://phil.us/solution/core/";

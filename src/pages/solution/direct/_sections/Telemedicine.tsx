@@ -17,20 +17,16 @@ export const TelemedicineSection: React.FC = () => (
       <div className="section-head section-head--center">
         <h2>Enable Every Path to Your Patient with a Fully Customizable Solution</h2>
         <p className="lead">
-          PHIL Direct-to-Patient enables a flexible, connected experience that
-          meets patients where they begin and guides them seamlessly through
-          access, prescription, and fulfillment. Design programs to fit your
-          strategy, with branded or white-labeled experiences and support for
-          cash pay, coverage, or hybrid models, while configuring each step
-          from intake to fulfillment. We help you
-          deliver a seamless, personalized journey that ensures consistent,
-          trusted engagement across every path to therapy.
+          PHIL Direct delivers a flexible Direct-to-Patient experience that
+          meets patients where they are, with a seamless and affordable path to
+          therapy. Our custom program design supports branded and white-labeled
+          experiences with hybrid, cash-pay and coverage models.
         </p>
       </div>
 
       <div className="tele-showcase">
         <div className="tele-journey-head">
-          <p className="tele-journey-eyebrow">Design Your Program with PHIL DTP</p>
+          <p className="tele-journey-eyebrow">Design Your DTP Program with PHIL Direct</p>
           <div className="tele-journey-tabs" role="tablist" aria-label="Choose a journey">
             <button className="tjt is-active" type="button" role="tab" aria-selected="true" data-journey="0">
               Telemed DTP
@@ -51,9 +47,9 @@ export const TelemedicineSection: React.FC = () => (
               <p className="tj-eyebrow">Patient Journey</p>
               <h3 className="tj-step-title">Advertisement Click</h3>
               <p className="tj-step-desc">
-                With DTP, patients can begin their journey the moment they click,
-                transforming interest into action instantly while capturing data
-                from first touch through dispense.
+                Enable an immediate start to the patient journey the moment they
+                click, transforming interest into action instantly while
+                capturing data from first touch through dispense.
               </p>
               <Link className="btn-solid tele-copy-cta" to="/solution/core/">
                 Explore PHIL Digital Hub{" "}
@@ -403,7 +399,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row is-active"
                   data-i="0"
                   data-title="Advertisement Click"
-                  data-desc="With DTP, patients can begin their journey the moment they click, transforming interest into action instantly while capturing data from first touch through dispense."
+                  data-desc="Enable an immediate start to the patient journey the moment they click, transforming interest into action instantly while capturing data from first touch through dispense."
                 >
                   <button className="tele-thumb" type="button" data-i="0" aria-label="View social ad placement" />
                   <span className="tj-num">1</span>
@@ -413,7 +409,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="1"
                   data-title="Brand Website"
-                  data-desc="Keeps patients in a trusted, on-brand experience that reduces friction and builds trust and empowers them to request a consultation and confidently move toward treatment."
+                  data-desc="Keep patients in a trusted, on-brand experience that reduces friction and builds trust and empowers them to request a consultation and confidently move toward treatment."
                 >
                   <button className="tele-thumb" type="button" data-i="1" aria-label="View Adaptrex landing page" />
                   <span className="tj-num">2</span>
@@ -423,7 +419,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="2"
                   data-title="Telemedicine Appointment"
-                  data-desc="Enables a seamless consult-to-script journey through a virtual telemedicine visit, chat, or form-based intake, allowing a licensed provider to evaluate the patient and determine if the medication is appropriate."
+                  data-desc="Create a seamless consult-to-script journey through a virtual telemedicine visit, chat, or form-based intake, allowing a licensed provider to evaluate the patients and determine therapy appropriateness."
                 >
                   <button className="tele-thumb" type="button" data-i="2" aria-label="View telehealth visit" />
                   <span className="tj-num">3</span>
@@ -433,7 +429,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="3"
                   data-title="Connect the Journey into PHIL&rsquo;s Platform"
-                  data-desc="Extends the brand experience with an optional white-labeled program that feels fully integrated, even as patients move from the manufacturer site through PHIL."
+                  data-desc="Extend your brand experience with an optional white-labeled program that feels fully integrated as patients move across every step of the journey."
                 >
                   <button className="tele-thumb" type="button" data-i="3" aria-label="View enrollment screen" />
                   <span className="tj-num">4</span>
@@ -451,10 +447,9 @@ export const TelemedicineSection: React.FC = () => (
               <p className="tj-eyebrow">Patient Journey</p>
               <h3 className="tj-step-title">In-Office Visit</h3>
               <p className="tj-step-desc">
-                DTP supports more than just a digital front door, patients can
-                also enter through a trusted in-office provider, where diagnosis
-                and therapy selection begin and the foundation is set for a fully
-                supported journey.
+                Keep patients supported across varied entry points by enabling
+                in-office visits where providers can diagnose, select therapy,
+                and initiate a fully supported treatment journey.
               </p>
               <Link className="btn-solid tele-copy-cta" to="/solution/core/">
                 Explore PHIL Digital Hub{" "}
@@ -644,7 +639,7 @@ export const TelemedicineSection: React.FC = () => (
                       </div>
                       <div className="enr-bubble">
                         Hi Sarah! Dr. Jones sent your Adaptrex&reg; prescription
-                        to the PHILRx pharmacy. Tap below to get started.
+                        to the Manufacturer Rx pharmacy. Tap below to get started.
                       </div>
                       <div className="enr-checks">
                         <div className="enr-row">
@@ -736,7 +731,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row is-active"
                   data-i="0"
                   data-title="In-Office Visit"
-                  data-desc="DTP supports more than just a digital front door, patients can also enter through a trusted in-office provider, where diagnosis and therapy selection begin and the foundation is set for a fully supported journey."
+                  data-desc="Keep patients supported across varied entry points by enabling in-office visits where providers can diagnose, select therapy, and initiate a fully supported treatment journey."
                 >
                   <button className="tele-thumb" type="button" data-i="0" aria-label="View in-office visit" />
                   <span className="tj-num">1</span>
@@ -746,7 +741,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="1"
                   data-title="HCP e-prescription"
-                  data-desc="If a patient is a fit for therapy, the HCP can submit the prescription within their EHR by selecting a white-labeled, manufacturer-designated name within the drop down, ensuring brand consistency and a seamless experience."
+                  data-desc="Enable HCPs to easily submit prescriptions directly within their EHR using a white-labeled, manufacturer-designated option, ensuring brand consistency and a seamless experience."
                 >
                   <button className="tele-thumb" type="button" data-i="1" aria-label="View HCP e-prescription" />
                   <span className="tj-num">2</span>
@@ -756,7 +751,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="2"
                   data-title="Patient Digital Enrollment"
-                  data-desc="The moment the electronic script is sent, the PHIL triggers an automated SMS text message to the patient&rsquo;s smartphone, making it easy to enroll and access the treatment they need."
+                  data-desc="Simplify enrollment with a triggered SMS text to the patient the moment the electronic script is sent, making it easy to enroll and access the treatment they need."
                 >
                   <button className="tele-thumb" type="button" data-i="2" aria-label="View patient digital enrollment" />
                   <span className="tj-num">3</span>
@@ -766,7 +761,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="3"
                   data-title="Payment and Dispense"
-                  data-desc="PHIL delivers a clear, affordable cash price upfront, then ships medication directly to the patient&rsquo;s door for a seamless experience."
+                  data-desc="Provide a clear, affordable cash price, then ship medication directly to the patient&rsquo;s door for a seamless experience."
                 >
                   <button className="tele-thumb" type="button" data-i="3" aria-label="View payment and dispense" />
                   <span className="tj-num">4</span>
@@ -784,10 +779,10 @@ export const TelemedicineSection: React.FC = () => (
               <p className="tj-eyebrow">Patient Journey</p>
               <h3 className="tj-step-title">Branded Direct Intake</h3>
               <p className="tj-step-desc">
-                DTP empowers patients to take action directly from the brand
-                website, whether initiating a prescription request with their
-                doctor or transferring an existing script into PHIL, creating a
-                connected, seamless path to access.
+                Empower patients to take action directly from the brand website,
+                whether initiating a prescription request with their doctor or
+                transferring an existing script into PHIL, creating a connected,
+                seamless path to access.
               </p>
               <Link className="btn-solid tele-copy-cta" to="/solution/core/">
                 Explore PHIL Digital Hub{" "}
@@ -957,7 +952,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row is-active"
                   data-i="0"
                   data-title="Branded Direct Intake"
-                  data-desc="DTP empowers patients to take action directly from the brand website, whether initiating a prescription request with their doctor or transferring an existing script into PHIL, creating a connected, seamless path to access."
+                  data-desc="Empower patients to take action directly from the brand website, whether initiating a prescription request with their doctor or transferring an existing script into PHIL, creating a connected, seamless path to access."
                 >
                   <button className="tele-thumb" type="button" data-i="0" aria-label="View branded direct intake" />
                   <span className="tj-num">1</span>
@@ -967,7 +962,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="1"
                   data-title="Patient Digital Enrollment"
-                  data-desc="The moment the electronic script is sent, PHIL triggers an automated SMS text message to the patient&rsquo;s smartphone, making it easy to enroll and access the treatment they need."
+                  data-desc="Simplify enrollment with a triggered SMS text to the patient the moment the electronic script is sent, making it easy to enroll and access the treatment they need."
                 >
                   <button className="tele-thumb" type="button" data-i="1" aria-label="View patient digital enrollment" />
                   <span className="tj-num">2</span>
@@ -977,7 +972,7 @@ export const TelemedicineSection: React.FC = () => (
                   className="tele-row"
                   data-i="2"
                   data-title="PA & Affordability Optimization"
-                  data-desc="To help secure an affordable price for the patient, PHIL supports HCPs with streamlined tools to make prior authorization submission simple, helping secure coverage and provide smooth access to therapy."
+                  data-desc="Secure an affordable price for the patient, with streamlined tools for HCPs to make prior authorization submission simple, helping secure coverage and provide smooth access to therapy."
                 >
                   <button className="tele-thumb" type="button" data-i="2" aria-label="View PA and affordability optimization" />
                   <span className="tj-num">3</span>

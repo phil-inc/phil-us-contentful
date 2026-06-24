@@ -184,9 +184,9 @@ export const ThoughtLeadershipSection: React.FC = () => (
               <h3 className="tl-title">Seamless Digital Access</h3>
             </div>
             <p className="tl-body">
-              One seamless experience for prescribing, coverage, payment, and
-              fulfillment that meets patients where they are, without handoffs
-              or friction.
+              Deliver one seamless experience for prescribing, coverage,
+              payment, and fulfillment that meets patients where they are,
+              without handoffs or friction.
             </p>
           </div>
         </div>
@@ -200,8 +200,8 @@ export const ThoughtLeadershipSection: React.FC = () => (
               <h3 className="tl-title">Transparent Affordability</h3>
             </div>
             <p className="tl-body">
-              Lead with transparent pricing that shows out-of-pocket price
-              upfront, reducing financial uncertainty so patients can start and
+              Lead with transparent pricing that makes out-of-pocket costs
+              clear, reducing financial uncertainty so patients can start and
               stay on therapy.
             </p>
           </div>
@@ -226,7 +226,7 @@ export const ThoughtLeadershipSection: React.FC = () => (
 
       {/* CTA bar — full library of resources */}
       <div className="bt bt-cta bt-cta--full" style={{ marginTop: "48px" }}>
-        <h4>Explore the full library of PHIL DTP resources.</h4>
+        <h4>Explore our full library of DTP resources.</h4>
         <Link className="bt-link" to="/resources/?topic=direct">
           Explore All Resources <Arrow />
         </Link>
