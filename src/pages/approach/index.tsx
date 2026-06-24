@@ -370,7 +370,7 @@ const ApproachOutcomesPage = () => {
               </div>
 
               <div className={classes.heroFoot}>
-                <Link className={classes.learnLink} to="/solution/">
+                <Link className={classes.learnLink} to="/solution/core/">
                   Learn About PHIL Solutions <ArrowRight />
                 </Link>
               </div>

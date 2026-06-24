@@ -112,7 +112,7 @@ export const SOLUTION = {
       ],
     },
   ] as SolutionCard[],
-  cta: { text: "Explore Our Solution →", href: "/solution/" },
+  cta: { text: "Explore Our Solution →", href: "/solution/core/" },
 };
 
 export type VoiceQuote = { q: string; a: string };
