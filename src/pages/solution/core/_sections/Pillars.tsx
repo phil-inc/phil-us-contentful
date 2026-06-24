@@ -7,7 +7,7 @@ export const PillarsSection: React.FC = () => (
   <div className="xl-container">
     <div className="section-head">
       <h2 className="h2--full">Advance Patient Outcomes and Brand Performance with a Flexible Digital Hub Solution</h2>
-      <p className="lead lead--wide">Traditional access solutions address only part of the problem. The PHIL Digital Hub delivers an end-to-end access platform designed to maximize patient outcomes and optimize gross-to-net performance in retail and specialty-lite. We build flexible access programs that evolve with your brand, bringing together human-first care and AI-driven outcomes into one powerful solution.</p>
+      <p className="lead lead--wide">Traditional access solutions address only part of the problem. PHIL Digital Hub delivers an end-to-end access platform designed to maximize patient outcomes and optimize gross-to-net performance in retail and specialty-lite. We build flexible access programs that evolve with your brand, bringing together human-first care and AI-driven outcomes into one powerful solution.</p>
     </div>
     <div className="pillar-grid">
       <article className="pillar-card t1">
@@ -15,7 +15,7 @@ export const PillarsSection: React.FC = () => (
         <div className="pc-title-row">
           <h3>Direct-to-Patient &amp; Program Flexibility</h3>
         </div>
-        <p>Experience total flexibility to build coverage, cash-pay, or hybrid models. With custom program design and AI-driven workflows, expand your brand’s reach with an end-to-end Direct-to-Patient (DTP) platform that seamlessly connects your brand assets into a hub that expands intake, routing, and dispense options.</p>
+        <p>Experience total flexibility to build coverage, cash-pay, or hybrid models. With custom program design and AI-driven workflows, expand your brand’s reach with our integrated Direct-to-Patient platform that seamlessly connects your brand assets into a hub, expanding intake, routing, and dispense options.</p>
       </article>
       <article className="pillar-card t2">
         <div className="pc-spacer"></div>
@@ -36,7 +36,7 @@ export const PillarsSection: React.FC = () => (
         <div className="pc-title-row">
           <h3>End-to-End Data &amp; Insights</h3>
         </div>
-        <p>Drive brand performance by connecting data from first touch, through fulfillment and adherence. Leverage our AI-powered dashboards to surface commercial opportunities and reduce access friction, while dedicated partners analyze your data to translate metrics into strategic program enhancements.</p>
+        <p>Drive brand performance by connecting data from first touch through intake, fulfillment, and adherence. Leverage our AI-powered dashboards to surface commercial opportunities and reduce access friction, and partner with our dedicated PHIL Client Insights team to translate in-depth performance data into strategic program optimizations.</p>
       </article>
     </div>
     <div className="pillar-cta-row">

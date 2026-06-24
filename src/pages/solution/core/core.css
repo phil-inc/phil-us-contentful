@@ -289,7 +289,7 @@
 .scope section.band.muted { background: var(--phil-paper); }
 
 /* ROI — separated from the .band rhythm; fixed 100px top/bottom on all screens */
-.scope section.band.roi-band { padding: 100px 0; }
+.scope section.band.roi-band { padding: 40px 0 100px; }
 
 /* Data & Support get the looser bottom gap, mirroring Journey (100 → 65 → 50 → 44) */
 .scope #data, .scope #support { padding-bottom: 100px; }
@@ -837,7 +837,7 @@
 
 .scope .jx2-sticky {
   position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: stretch;
-  z-index: 1; padding: 100px 0 90px;
+  z-index: 1; padding: 150px 0 90px;
 }
 
 .scope .jx2-head { flex: 0 0 auto; text-align: left; max-width: none; margin: 0 0 6px; }
@@ -875,7 +875,7 @@
 .scope .jx2-screen { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
 
 .scope .jx2-frame {
-  position: relative; width: auto; height: min(75vh, calc(100vh - 314px), 760px); aspect-ratio: 4 / 5; max-width: 100%;
+  position: relative; height: calc(min(75vh, calc(100vh - 314px), 760px) - 41px); width: calc((min(75vh, calc(100vh - 314px), 760px) - 41px) * 0.8); aspect-ratio: 4 / 5; max-width: 100%;
   background: var(--phil-pure); border: 0; border-radius: 28px;
   box-shadow: 0 30px 70px -30px rgba(0, 75, 72, 0.26);
   display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 20px;
@@ -1962,12 +1962,7 @@
 
 .scope .di-copy h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.1vw, 30px); line-height: 1.14; letter-spacing: -0.015em; color: var(--phil-pitch); margin: 0; text-wrap: balance; }
 
-.scope .di-body { font-size: 15px; line-height: 1.6; color: var(--phil-gunmetal); margin: 0; max-width: 820px; }
-
-/* End-to-End Visibility card — text bumped +2px */
-.scope .di-card[data-i="3"] .di-copy h3 { font-size: clamp(24px, 2.3vw, 32px); }
-
-.scope .di-card[data-i="3"] .di-body { font-size: 17px; }
+.scope .di-body { font-size: clamp(13px, 1.05vw, 15px); line-height: 1.6; color: var(--phil-gunmetal); margin: 0; max-width: 820px; }
 
 .scope .di-rollup { position: relative; max-width: 1000px; margin: 12px auto 0; text-align: center; }
 
@@ -2489,6 +2484,19 @@
 /* =============================================================
    SECTION 9 — ROI Calculator banner
    ============================================================= */
+/* Corner glow accent (faithful to v2: unclipped, anchored to section) */
+.scope .glow { position: relative; }
+.scope .glow > .xl-container { position: relative; z-index: 1; }
+.scope .glow::before, .scope .glow::after {
+  content: ""; position: absolute; width: 980px; height: 760px; border-radius: 50%;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(120,206,182,0.24) 0%, rgba(120,206,182,0.10) 34%, rgba(120,206,182,0) 68%);
+  pointer-events: none; z-index: 0;
+}
+.scope .glow-tr::before { content: ""; top: -380px; right: -260px; }
+.scope .glow-tl::before { content: ""; top: -300px; left: -260px; }
+.scope .glow-br::after  { content: ""; bottom: -380px; right: -260px; }
+.scope .glow-bl::after  { content: ""; bottom: -300px; left: -260px; }
+
 .scope .roi-banner {
   background: linear-gradient(135deg, #D5F1F0 0%, #A8E2DA 50%, #F2E8C0 100%); color: #085041;
   border-radius: 24px; padding: 40px 56px; display: grid; grid-template-columns: 1.25fr 1fr; gap: 44px; align-items: center; position: relative; overflow: hidden;
@@ -2704,7 +2712,7 @@
   .scope .stat-bar { padding: 65px 0 87px; }
   .scope #journey { padding-bottom: 65px; }
   .scope #data, .scope #support { padding-bottom: 65px; }
-  .scope section.band.roi-band { padding: 65px 0; }
+  .scope section.band.roi-band { padding: 34px 0 65px; }
   .scope .reviews-head { margin-top: 68px; }
 }
 
@@ -2716,7 +2724,7 @@
   .scope .stat-bar { padding: 50px 0 67px; }
   .scope #journey { padding-bottom: 50px; }
   .scope #data, .scope #support { padding-bottom: 50px; }
-  .scope section.band.roi-band { padding: 50px 0; }
+  .scope section.band.roi-band { padding: 28px 0 50px; }
   .scope .reviews-head { margin-top: 52px; }
   .scope .hero h1 { font-size: 32px; }
   .scope .section-head { margin-bottom: 36px; }
@@ -2746,7 +2754,7 @@
   .scope .stat-bar { padding: 44px 0 60px; }
   .scope #journey { padding-bottom: 44px; }
   .scope #data, .scope #support { padding-bottom: 44px; }
-  .scope section.band.roi-band { padding: 44px 0; }
+  .scope section.band.roi-band { padding: 20px 0 44px;}
   .scope .reviews-head { margin-top: 46px; }
   .scope .hero .lead, .scope .section-head .lead, .scope .lead { font-size: 16px; }
   /* wide scorecard / data tables scroll horizontally instead of cramping */

@@ -41,6 +41,13 @@ export function attachSolutionCoreInteractions(): () => void {
     _observers.push(obs);
     return obs;
   }
+  const _mObservers: MutationObserver[] = [];
+  const _NativeMO = window.MutationObserver;
+  function MutationObserver(cb: any) {
+    const m = new _NativeMO(cb);
+    _mObservers.push(m);
+    return m;
+  }
 
   const _origWinAdd = window.addEventListener;
   const _origDocAdd = document.addEventListener;
@@ -52,6 +59,8 @@ export function attachSolutionCoreInteractions(): () => void {
     _docListeners.push([type, handler, opts]);
     return _origDocAdd.call(document, type, handler, opts);
   };
+
+  try {
 
   // Smooth scroll for in-page anchors (header offset)
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
@@ -70,17 +79,52 @@ export function attachSolutionCoreInteractions(): () => void {
     });
   });
 
+  // Shared scale-to-fit for the journey phone/card mockups: one resize listener,
+  // batched per animation frame (avoids N synchronous reflows per resize event).
+  const _fitters: Array<() => void> = [];
+  let _fitRaf = 0;
+  function _runFitters(){ _fitRaf = 0; _fitters.forEach(function(f){ f(); }); }
+  window.addEventListener('resize', function(){
+    if (_fitRaf) return;
+    _fitRaf = requestAnimationFrame(_runFitters);
+  });
+  function fitElToShot(el: any){
+    var shot = el.closest('.jx2-shot'); if (!shot) return;
+    el.style.transform = 'none';
+    var h = el.offsetHeight, w = el.offsetWidth;
+    if (!h || !w) return;
+    var s = Math.min(shot.clientHeight / h, shot.clientWidth / w);
+    el.style.transformOrigin = 'center center';
+    el.style.transform = 'scale(' + s.toFixed(4) + ')';
+  }
+  // Scale `el` now, on resize (shared handler), and whenever its step activates.
+  // onActivate(isActive) is optional, for per-step extras (auto-play pops).
+  function registerFitter(el: any, onActivate?: (active: boolean) => void){
+    var fit = function(){ fitElToShot(el); };
+    _fitters.push(fit);
+    requestAnimationFrame(fit); setTimeout(fit, 300);
+    var shot = el.closest('.jx2-shot');
+    if (shot && 'MutationObserver' in window) {
+      new MutationObserver(function(){
+        var active = shot.classList.contains('is-active');
+        if (active) fit();
+        if (onActivate) onActivate(active);
+      }).observe(shot, { attributes: true, attributeFilter: ['class'] });
+    }
+    return fit;
+  }
+
   // ---- Section 4: Prescription Journey click-through ----
   // ---- Section 4: Prescription Journey — scroll-pinned experience ----
   (function(){
     var steps = [
       { name: 'Versatile Intake', body: 'Seamless HCP workflow within existing EMRs, telemedicine intake, or prescription transfer requests.' },
       { name: 'Fast Enrollment', body: 'Patients enroll in minutes, with real-time insurance and benefit eligibility verification.' },
-      { name: 'Flexible Access Paths', body: 'PHIL uses flexible routing to align patients with the optimal path based on brand preferences, across coverage, cash, and non-commercial options.' },
-      { name: 'Transparent Cost', body: 'Patient receives transparent and affordable pricing through AI-driven copay workflows.' },
-      { name: 'Nationwide Pharmacy Reach', body: 'Medications are dispensed via a 99%+ coverage network, combining partner pharmacies with PHIL\u2019s in-house cash pharmacies and distribution capabilities.' },
-      { name: 'Fast, Trackable Fulfillment', body: 'Patients can choose a delivery option that suits their needs including home delivery.' },
-      { name: 'Seamless Refill Management', body: 'Simple refill management provides patients flexibility to reschedule or adjust upcoming shipments.' }
+      { name: 'Flexible Access Paths', body: 'Flexible routing works to align patients with the optimal path based on brand preferences, across coverage, cash, and non-commercial options.' },
+      { name: 'Transparent Cost', body: 'Patients receive transparent and affordable pricing through AI-driven copay workflows.' },
+      { name: 'Nationwide Pharmacy Reach', body: 'Medications are seamlessly dispensed through our nationwide pharmacy network with 99%+ plan coverage, combining partner pharmacies with PHIL\u2019s in-house cash dispense capabilities.' },
+      { name: 'Fast, Trackable Fulfillment', body: 'Patients choose the delivery option that best suits their needs, including fast home delivery with free shipping.' },
+      { name: 'Seamless Refill Management', body: 'Patients manage refills easily, with the flexibility to reschedule or adjust upcoming shipments.' }
     ];
     var total = steps.length;
     var jx = document.getElementById('jx2');
@@ -108,15 +152,17 @@ export function attachSolutionCoreInteractions(): () => void {
         b.setAttribute('aria-selected', k === i ? 'true' : 'false');
       });
       if (bar) bar.style.width = ((i + 1) / total * 100).toFixed(1) + '%';
-      // fade copy out, swap text, fade back in
-      copy.classList.add('is-swapping');
-      if (swapTimer) clearTimeout(swapTimer);
-      swapTimer = setTimeout(function(){
-        numEl.textContent = (i + 1);
-        titleEl.textContent = steps[i].name;
-        bodyEl.textContent = steps[i].body;
-        copy.classList.remove('is-swapping');
-      }, 200);
+      // fade copy out, swap text, fade back in (only if the copy nodes exist)
+      if (copy && numEl && titleEl && bodyEl) {
+        copy.classList.add('is-swapping');
+        if (swapTimer) clearTimeout(swapTimer);
+        swapTimer = setTimeout(function(){
+          numEl.textContent = (i + 1);
+          titleEl.textContent = steps[i].name;
+          bodyEl.textContent = steps[i].body;
+          copy.classList.remove('is-swapping');
+        }, 200);
+      }
     }
 
     // Drive the step from scroll position using IntersectionObserver on stacked
@@ -213,7 +259,7 @@ export function attachSolutionCoreInteractions(): () => void {
         phoneStage.style.transformOrigin = 'center center';
         phoneStage.style.transform = 'scale(' + s.toFixed(4) + ')';
       }
-      window.addEventListener('resize', scalePhone);
+      _fitters.push(scalePhone);
       requestAnimationFrame(scalePhone);
       setTimeout(scalePhone, 300);
       // Auto-play once whenever step 2 becomes the active step
@@ -230,126 +276,29 @@ export function attachSolutionCoreInteractions(): () => void {
     }
   })();
 
-  // ---- Section 4 step 1: Telehealth phone (editable HTML) — scale to fill frame ----
-  (function(){
-    var card = document.getElementById('jx2ThCard');
-    if (!card) return;
-    function fit(){
-      var shot = card.closest('.jx2-shot'); if (!shot) return;
-      card.style.transform = 'none';
-      var h = card.offsetHeight, w = card.offsetWidth;
-      if (!h || !w) return;
-      var s = Math.min(shot.clientHeight / h, shot.clientWidth / w);
-      card.style.transformOrigin = 'center center';
-      card.style.transform = 'scale(' + s.toFixed(4) + ')';
-    }
-    window.addEventListener('resize', fit);
-    requestAnimationFrame(fit); setTimeout(fit, 300);
-    var shot = card.closest('.jx2-shot');
-    if (shot && 'MutationObserver' in window) {
-      new MutationObserver(function(){ if (shot.classList.contains('is-active')) fit(); })
-        .observe(shot, { attributes: true, attributeFilter: ['class'] });
-    }
-  })();
+  // ---- Section 4 steps 1/5/6/7: phone/card mockups — scale to fill frame ----
+  ['jx2ThCard', 'jx2TcCard', 'jx2SdCard', 'jx2RfCard'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) registerFitter(el);
+  });
 
-  // ---- Section 4 step 5: Transparent Cost phone — scale to fill frame ----
-  (function(){
-    var card = document.getElementById('jx2TcCard');
-    if (!card) return;
-    function fit(){
-      var shot = card.closest('.jx2-shot'); if (!shot) return;
-      card.style.transform = 'none';
-      var h = card.offsetHeight, w = card.offsetWidth;
-      if (!h || !w) return;
-      var s = Math.min(shot.clientHeight / h, shot.clientWidth / w);
-      card.style.transformOrigin = 'center center';
-      card.style.transform = 'scale(' + s.toFixed(4) + ')';
-    }
-    window.addEventListener('resize', fit);
-    requestAnimationFrame(fit); setTimeout(fit, 300);
-    var shot = card.closest('.jx2-shot');
-    if (shot && 'MutationObserver' in window) {
-      new MutationObserver(function(){ if (shot.classList.contains('is-active')) fit(); })
-        .observe(shot, { attributes: true, attributeFilter: ['class'] });
-    }
-  })();
-
-  // ---- Section 4 step 6: Shipping & Delivery phone — scale to fill frame ----
-  (function(){
-    var card = document.getElementById('jx2SdCard');
-    if (!card) return;
-    function fit(){
-      var shot = card.closest('.jx2-shot'); if (!shot) return;
-      card.style.transform = 'none';
-      var h = card.offsetHeight, w = card.offsetWidth;
-      if (!h || !w) return;
-      var s = Math.min(shot.clientHeight / h, shot.clientWidth / w);
-      card.style.transformOrigin = 'center center';
-      card.style.transform = 'scale(' + s.toFixed(4) + ')';
-    }
-    window.addEventListener('resize', fit);
-    requestAnimationFrame(fit); setTimeout(fit, 300);
-    var shot = card.closest('.jx2-shot');
-    if (shot && 'MutationObserver' in window) {
-      new MutationObserver(function(){ if (shot.classList.contains('is-active')) fit(); })
-        .observe(shot, { attributes: true, attributeFilter: ['class'] });
-    }
-  })();
-
-  // ---- Section 4 step 7: Refills phone — scale to fill frame ----
-  (function(){
-    var card = document.getElementById('jx2RfCard');
-    if (!card) return;
-    function fit(){
-      var shot = card.closest('.jx2-shot'); if (!shot) return;
-      card.style.transform = 'none';
-      var h = card.offsetHeight, w = card.offsetWidth;
-      if (!h || !w) return;
-      var s = Math.min(shot.clientHeight / h, shot.clientWidth / w);
-      card.style.transformOrigin = 'center center';
-      card.style.transform = 'scale(' + s.toFixed(4) + ')';
-    }
-    window.addEventListener('resize', fit);
-    requestAnimationFrame(fit); setTimeout(fit, 300);
-    var shot = card.closest('.jx2-shot');
-    if (shot && 'MutationObserver' in window) {
-      new MutationObserver(function(){ if (shot.classList.contains('is-active')) fit(); })
-        .observe(shot, { attributes: true, attributeFilter: ['class'] });
-    }
-  })();
-
-  // ---- Section 4 step 3: Flexible Routing card — scale to fill frame ----
+  // ---- Section 4 step 3: Flexible Routing card — scale to fill frame + auto-pop ----
   (function(){
     var card = document.getElementById('jx2RcCard');
     if (!card) return;
-    function fit(){
-      var shot = card.closest('.jx2-shot'); if (!shot) return;
-      card.style.transform = 'none';
-      var h = card.offsetHeight, w = card.offsetWidth;
-      if (!h || !w) return;
-      var s = Math.min(shot.clientHeight / h, shot.clientWidth / w);
-      card.style.transformOrigin = 'center center';
-      card.style.transform = 'scale(' + s.toFixed(4) + ')';
-    }
-    window.addEventListener('resize', fit);
-    requestAnimationFrame(fit); setTimeout(fit, 300);
-    var shot = card.closest('.jx2-shot');
-    if (shot && 'MutationObserver' in window) {
-      var rcPlayed = false;
-      new MutationObserver(function(){
-        if (shot.classList.contains('is-active')) {
-          fit();
-          if (!rcPlayed) {
-            rcPlayed = true;
-            card.classList.add('is-playing');
-            setTimeout(function(){ card.classList.remove('is-playing'); }, 2400);
-          }
-        } else {
-          rcPlayed = false;
-          card.classList.remove('is-playing');
+    var rcPlayed = false;
+    registerFitter(card, function(active){
+      if (active) {
+        if (!rcPlayed) {
+          rcPlayed = true;
+          card.classList.add('is-playing');
+          setTimeout(function(){ card.classList.remove('is-playing'); }, 2400);
         }
-      }).observe(shot, { attributes: true, attributeFilter: ['class'] });
-    }
+      } else {
+        rcPlayed = false;
+        card.classList.remove('is-playing');
+      }
+    });
   })();
 
   // ---- Section 4 steps 1, 4, 5, 6, 7 — auto-pop each step's items when it becomes active ----
@@ -396,22 +345,14 @@ export function attachSolutionCoreInteractions(): () => void {
   (function(){
     var map = document.getElementById('jx2NetMap');
     if (!map) return;
-    function fit(){
-      var shot = map.closest('.jx2-shot'); if (!shot) return;
-      map.style.transform = 'none';
-      var h = map.offsetHeight, w = map.offsetWidth;
-      if (!h || !w) return;
-      var s = Math.min(shot.clientHeight / h, shot.clientWidth / w);
-      map.style.transformOrigin = 'center center';
-      map.style.transform = 'scale(' + s.toFixed(4) + ')';
-    }
-    window.addEventListener('resize', fit);
-    requestAnimationFrame(fit); setTimeout(fit, 300);
+    registerFitter(map);
     var badge = map.querySelector('.nm-badge');
     var stage = map.querySelector('.nm-stage');
     var svg = map.querySelector('.nm-lines');
+    if (!svg) return;
     var line1 = svg.querySelector('.nm-line1');
     var line2 = svg.querySelector('.nm-line2');
+    if (!line1 || !line2) return;
     var dots = Array.prototype.slice.call(map.querySelectorAll('.nm-dot'));
     // dot coordinates (viewBox px), in DOM order
     var COORD = [[295,154],[757,230],[442,287],[898,298],[1225,329],[160,401],[880,410],[610,449],[1045,550],[442,568],[228,572],[858,658],[1128,658],[624,676],[1129,779]];
@@ -457,7 +398,7 @@ export function attachSolutionCoreInteractions(): () => void {
     var shot = map.closest('.jx2-shot');
     if (shot && 'MutationObserver' in window) {
       new MutationObserver(function(){
-        if (shot.classList.contains('is-active')) { fit(); playNetwork(); }
+        if (shot.classList.contains('is-active')) { playNetwork(); }
         else { resetNetwork(); }
       }).observe(shot, { attributes: true, attributeFilter: ['class'] });
       if (shot.classList.contains('is-active')) { playNetwork(); }
@@ -488,7 +429,7 @@ export function attachSolutionCoreInteractions(): () => void {
       var s = w / 500;
       inner.style.transform = 'scale(' + s.toFixed(4) + ')';
     }
-    window.addEventListener('resize', fit);
+    _fitters.push(fit);
     if (document.readyState !== 'loading') fit();
     document.addEventListener('DOMContentLoaded', fit);
     window.addEventListener('load', fit);
@@ -625,6 +566,7 @@ export function attachSolutionCoreInteractions(): () => void {
         var caret = document.createElement('span'); caret.className = 'aid-caret'; answer.appendChild(caret);
         var si = 0, ci = 0, cur = null;
         (function type(){
+          if (!caret.parentNode) return; // caret detached by a re-trigger — abort stale run
           if (si >= segs.length) { caret.remove(); return; }
           var s = segs[si];
           if (ci === 0) {
@@ -677,6 +619,7 @@ export function attachSolutionCoreInteractions(): () => void {
         var caret = document.createElement('span'); caret.className = 'aid-caret'; body.appendChild(caret);
         var si = 0, ci = 0, cur = null;
         timers.push(setTimeout(function step(){
+          if (!caret.parentNode) return; // caret detached by a re-trigger — abort stale run
           if (si >= segs.length) { caret.remove(); return; }
           var s = segs[si];
           if (ci === 0) {
@@ -915,7 +858,8 @@ export function attachSolutionCoreInteractions(): () => void {
         var caret = document.createElement('span'); caret.className = 'aid-caret'; answer.appendChild(caret);
         var si = 0, ci = 0, cur = null;
         (function type(){
-          if (si >= segs.length) { typeTimers.push(setTimeout(function(){ caret.remove(); }, 250)); return; }
+          if (!caret.parentNode) return; // caret detached by a re-trigger — abort stale run
+          if (si >= segs.length) { typeTimers.push(setTimeout(function(){ if (caret.parentNode) caret.remove(); }, 250)); return; }
           var s = segs[si];
           if (ci === 0) {
             cur = (s.c === 'b') ? document.createElement('b') : document.createElement('span');
@@ -948,9 +892,12 @@ export function attachSolutionCoreInteractions(): () => void {
     cycle();
   })();
 
-  // Sync setup done — restore patched native methods.
-  window.addEventListener = _origWinAdd;
-  document.addEventListener = _origDocAdd;
+  } finally {
+    // Always restore patched native methods, even if setup threw — otherwise the
+    // globals stay patched forever and leak every future listener.
+    window.addEventListener = _origWinAdd;
+    document.addEventListener = _origDocAdd;
+  }
 
   return () => {
     // SPA-safe teardown of all timers/observers/listeners installed above.
@@ -958,6 +905,7 @@ export function attachSolutionCoreInteractions(): () => void {
     _timeoutIds.forEach(id => clearTimeout(id)); _timeoutIds.clear();
     _intervalIds.forEach(id => clearInterval(id)); _intervalIds.clear();
     _observers.forEach(o => { try { o.disconnect(); } catch {} }); _observers.length = 0;
+    _mObservers.forEach(m => { try { m.disconnect(); } catch {} }); _mObservers.length = 0;
     _winListeners.forEach(([t, h, o]) => { try { window.removeEventListener(t, h, o); } catch {} }); _winListeners.length = 0;
     _docListeners.forEach(([t, h, o]) => { try { document.removeEventListener(t, h, o); } catch {} }); _docListeners.length = 0;
     attached = false;

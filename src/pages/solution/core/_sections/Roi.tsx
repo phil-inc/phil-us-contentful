@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 
 export const RoiSection: React.FC = () => (
 
-<section className="band muted roi-band" data-screen-label="09 ROI Calculator">
+<section className="band glow glow-tr roi-band" data-screen-label="09 ROI Calculator">
   <div className="xl-container">
     <div className="roi-banner">
       <div className="roi-text">

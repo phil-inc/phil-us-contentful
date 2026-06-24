@@ -2,7 +2,7 @@ import React from 'react';
 
 export const SupportSection: React.FC = () => (
 
-<section id="support" className="band" data-screen-label="07 Patient & Provider Support">
+<section id="support" className="band glow glow-tl glow-br" data-screen-label="07 Patient & Provider Support">
   <div className="xl-container">
     <div className="section-head section-head--center">
       <h2>Your Partner in Patient Support and Provider Engagement</h2>

@@ -3,7 +3,7 @@ import philLogo from 'assets/images/phil-logo-green.png';
 
 export const DataTabsSection: React.FC = () => (
 
-<section id="data" className="band" data-screen-label="06 Data & Insights">
+<section id="data" className="band glow glow-bl" data-screen-label="06 Data & Insights">
   <div className="xl-container">
     <div className="section-head">
       <h2 className="h2--full">Turn End-to-End Program Visibility into Stronger Patient Outcomes and Brand Performance</h2>
@@ -109,7 +109,7 @@ export const DataTabsSection: React.FC = () => (
                     <div className="jt-ext jt-ext-right" aria-hidden="true"><i></i><i></i><i></i></div>
 
                     <div className="jt-col jt-above">
-                      <div className="jt-visual"><div className="jt-insight" style={{'--jt-shift': '35px'}}><div className="jt-ins-head"><span className="jt-ins-ico"><svg viewBox="0 0 24 24"><path d="M9 18h6" /><path d="M10 22h4" /><path d="M12 2a7 7 0 00-4.2 12.6c.5.4.8 1 .9 1.6l.1.8h6.4l.1-.8c.1-.6.4-1.2.9-1.6A7 7 0 0012 2z" /></svg></span><span className="jt-ins-ey">Insight</span></div><div className="jt-ins-tx"><span className="jt-tx-d">Understand intake channel conversion</span><span className="jt-tx-m">View intake conversion</span></div>
+                      <div className="jt-visual"><div className="jt-insight" style={{'--jt-shift': '35px'}}><div className="jt-ins-head"><span className="jt-ins-ico"><svg viewBox="0 0 24 24"><path d="M9 18h6" /><path d="M10 22h4" /><path d="M12 2a7 7 0 00-4.2 12.6c.5.4.8 1 .9 1.6l.1.8h6.4l.1-.8c.1-.6.4-1.2.9-1.6A7 7 0 0012 2z" /></svg></span><span className="jt-ins-ey">Insight</span></div><div className="jt-ins-tx"><span className="jt-tx-d">Understand intake channel impact</span><span className="jt-tx-m">View intake conversion</span></div>
                       </div><div className="jt-circle"><span className="jt-icon">
                         <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="4" rx="1" /><path d="M5 4h2a2 2 0 012 2v0a2 2 0 002 2h2a2 2 0 002-2v0a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" /><line x1="9" y1="12" x2="15" y2="12" /><line x1="9" y1="16" x2="13" y2="16" /></svg>
                       </span></div></div>
@@ -153,7 +153,7 @@ export const DataTabsSection: React.FC = () => (
                       </span></div></div>
                       <div className="jt-stem"></div>
                       <div className="jt-dot"></div>
-                      <div className="jt-label">Affordability Navigation</div>
+                      <div className="jt-label">Affordable Pathways</div>
                     </div>
 
                     <div className="jt-col jt-below">
