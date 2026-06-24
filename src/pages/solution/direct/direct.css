@@ -821,7 +821,7 @@
 .scope-direct .it-tab { appearance: none; cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 16px 14px; border-radius: 14px; border: 1px solid var(--phil-base); background: var(--phil-pure); color: var(--phil-mortar); transition: transform 200ms var(--ease-standard), box-shadow 200ms var(--ease-standard), border-color 200ms var(--ease-standard), background 200ms var(--ease-standard); }
 .scope-direct .it-tab:hover { transform: translateY(-3px); border-color: var(--phil-tradewind); box-shadow: 0 16px 30px -20px rgba(0,75,72,0.32); }
 .scope-direct .it-tab-num { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: 0.16em; color: var(--phil-tradewind); transition: color 200ms var(--ease-standard); }
-.scope-direct .it-tab-label { font-family: var(--font-body); font-weight: 700; font-size: 15px; line-height: 1.2; white-space: nowrap; text-align: center; color: var(--phil-gunmetal); transition: color 200ms var(--ease-standard); }
+.scope-direct .it-tab-label { font-family: var(--font-body); font-weight: 700; font-size: 15px; line-height: 1.2; white-space: normal; text-align: center; color: var(--phil-gunmetal); transition: color 200ms var(--ease-standard); }
 .scope-direct .it-tab.is-active { background: var(--gradient-tidewater); box-shadow: 0 18px 34px -18px rgba(0,75,72,0.5); }
 .scope-direct .it-tab.is-active .it-tab-num { color: var(--phil-spindrift); }
 .scope-direct .it-tab.is-active .it-tab-label { color: var(--phil-pure); }

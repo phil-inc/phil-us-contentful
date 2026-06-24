@@ -845,7 +845,7 @@
 
 .scope .jx2-head .eyebrow { display: flex; justify-content: flex-start; }
 
-.scope .jx2-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 2.8vw, 40px); line-height: 1.05; letter-spacing: -0.018em; color: var(--phil-pitch); margin: 0 0 14px; max-width: none; text-align: center; text-wrap: balance; }
+.scope .jx2-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3.4vw, 48px); line-height: 1.05; letter-spacing: -0.018em; color: var(--phil-pitch); margin: 0 0 14px; max-width: none; text-align: center; text-wrap: balance; }
 
 .scope .jx2-head .jx2-lead { font-size: clamp(15px, 1.05vw, 17px); line-height: 1.55; color: var(--phil-gunmetal); margin: 0; max-width: none; text-align: center; }
 
