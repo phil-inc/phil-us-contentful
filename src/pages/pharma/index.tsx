@@ -339,7 +339,7 @@ const PlatformSection = () => (
             videoId="WmuyIuwHkgM"
             thumb={philDirectThumb}
             alt="PHIL Direct video thumbnail"
-            tag="PHIL Direct-to-Patient"
+            tag="PHIL Direct"
             label="Watch PHIL Direct video"
           />
           <div className={classes.pfVideoBody}>
