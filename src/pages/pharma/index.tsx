@@ -237,6 +237,56 @@ const PartnersSection = () => {
   );
 };
 
+// ─── Inline click-to-play video facade ──────────────────────────────────────
+
+const VideoThumb = ({
+  videoId,
+  thumb,
+  alt,
+  tag,
+  label,
+}: {
+  videoId: string;
+  thumb: string;
+  alt: string;
+  tag: string;
+  label: string;
+}) => {
+  const [playing, setPlaying] = useState(false);
+
+  if (playing) {
+    return (
+      <div className={classes.pfVideoThumb}>
+        <iframe
+          className={classes.pfVideoIframe}
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`}
+          title={label}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className={classes.pfVideoThumb}
+      onClick={() => setPlaying(true)}
+      aria-label={label}
+    >
+      <img src={thumb} alt={alt} loading="lazy" />
+      <span className={classes.pfVideoTag}>{tag}</span>
+      <span className={classes.playOverlay} aria-hidden="true">
+        <span className={classes.playBtn}>
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z" /></svg>
+        </span>
+      </span>
+    </button>
+  );
+};
+
 // ─── SECTION 3: Our Platform ─────────────────────────────────────────────────
 
 const PlatformSection = () => (
@@ -253,21 +303,13 @@ const PlatformSection = () => (
 
       <div className={classes.pfVideos}>
         <div className={classes.pfVideoCard}>
-          <a
-            className={classes.pfVideoThumb}
-            href="https://youtu.be/dn-MvZkdHTU"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Watch PHIL Core video"
-          >
-            <img src={philCoreThumb} alt="PHIL Core video thumbnail" loading="lazy" />
-            <span className={classes.pfVideoTag}>PHIL Digital Hub</span>
-            <span className={classes.playOverlay} aria-hidden="true">
-              <span className={classes.playBtn}>
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z" /></svg>
-              </span>
-            </span>
-          </a>
+          <VideoThumb
+            videoId="kfMiJUwZkFE"
+            thumb={philCoreThumb}
+            alt="PHIL Core video thumbnail"
+            tag="PHIL Digital Hub"
+            label="Watch PHIL Core video"
+          />
           <div className={classes.pfVideoBody}>
             <h3 className={classes.pfVideoTitle}>
               Achieve Commercial Success with a Flexible Digital Hub Solution
@@ -293,32 +335,22 @@ const PlatformSection = () => (
         </div>
 
         <div className={classes.pfVideoCardFlipped}>
-          <a
-            className={classes.pfVideoThumb}
-            href="https://www.youtube.com/watch?v=WmuyIuwHkgM"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Watch PHIL Direct video"
-          >
-            <img src={philDirectThumb} alt="PHIL Direct video thumbnail" loading="lazy" />
-            <span className={classes.pfVideoTag}>PHIL Direct-to-Patient</span>
-            <span className={classes.playOverlay} aria-hidden="true">
-              <span className={classes.playBtn}>
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z" /></svg>
-              </span>
-            </span>
-          </a>
+          <VideoThumb
+            videoId="WmuyIuwHkgM"
+            thumb={philDirectThumb}
+            alt="PHIL Direct video thumbnail"
+            tag="PHIL Direct-to-Patient"
+            label="Watch PHIL Direct video"
+          />
           <div className={classes.pfVideoBody}>
             <h3 className={classes.pfVideoTitle}>
               Create a Future-ready, Direct-to-Patient Experience with a Proven DTP Solution
             </h3>
             <p className={classes.pfVideoDesc}>
-              PHIL Direct-to-Patient (DTP) connects intake, telemedicine, coverage routing, and
-              fulfillment in one seamless experience, helping brands drive patient starts, maximize
-              affordability, and promote adherence beyond the first fill.
+              PHIL Direct connects intake, telemedicine, coverage routing, and fulfillment in one seamless DTP experience, helping brands drive patient starts, maximize affordability, and promote adherence beyond the first fill.
             </p>
             <Link className={classes.btnText} to="/solution/direct/">
-              Explore PHIL Direct-to-Patient <span aria-hidden="true">→</span>
+              Explore PHIL Direct <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

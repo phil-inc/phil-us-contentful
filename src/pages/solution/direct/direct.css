@@ -337,7 +337,8 @@
 .scope-direct .vb-watch .vw-ico svg { width: 12px; height: 12px; fill: var(--phil-pure); margin-left: 1px; }
 .scope-direct .vb-watch:hover { color: var(--phil-pure); }
 .scope-direct .vb-watch:hover .vw-ico { background: rgba(255,255,255,0.16); border-color: var(--phil-pure); }
-.scope-direct .video-thumb { position: relative; display: block; border-radius: 18px; overflow: hidden; box-shadow: 0 40px 70px -28px rgba(0,40,38,0.6); aspect-ratio: 16 / 9; background: #00615E; }
+.scope-direct .video-thumb { position: relative; display: block; border-radius: 18px; overflow: hidden; box-shadow: 0 40px 70px -28px rgba(0,40,38,0.6); aspect-ratio: 16 / 9; background: #00615E; width: 100%; padding: 0; border: none; appearance: none; cursor: pointer; }
+.scope-direct .video-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: inherit; }
 .scope-direct .video-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-standard); }
 .scope-direct .video-thumb:hover img { transform: scale(1.04); }
 .scope-direct .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(10,10,10,0) 40%, rgba(0,40,38,0.35) 100%); }
