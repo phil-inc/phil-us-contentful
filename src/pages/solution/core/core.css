@@ -1708,7 +1708,7 @@
 
 .scope .di-pill:hover { border-color: var(--phil-foliage); color: var(--phil-pitch); }
 
-.scope .di-pill.is-active { background: linear-gradient(135deg, #003D3B 0%, #00615E 50%, #00827E 100%); border-color: transparent; color: #FFFFFF; box-shadow: 0 6px 18px -8px rgba(0,97,94,0.45); }
+.scope .di-pill.is-active { background: linear-gradient(135deg, #003D3B 0%, #00615E 50%, #00827E 100%); border-color: #00615E; color: #FFFFFF; box-shadow: 0 6px 18px -8px rgba(0,97,94,0.45); }
 
 .scope .di-stage { position: relative; padding: 0 0 8px; }
 
@@ -1908,31 +1908,118 @@
 
 .scope .jt-below .jt-insight--top::before, .scope .jt-below .jt-insight--flip::before { top: calc(100% + 14px) !important; bottom: auto !important; }
 
+/* ──────────────────────────────────────────────────────────────────────────
+   Mobile vertical timeline (shown ≤640px, replaces the horizontal .jt-wrap).
+   Native CSS at real font sizes — no zoom / transform scale — so iOS WebKit has
+   no tiny text to autosize/boost. Hidden by default; toggled on in the xs query. */
+.scope .jt-mobile { display: none; position: relative; }
+
+/* Vertical layout matching the design screenshot: a centered line with a dot per step; the
+   icon offset to one side via a stem; the stage label on the OPPOSITE side; the insight card
+   on an independently-alternating side. align-items:center keeps the dot, label and icon on
+   the same vertical centre → they stay in line with the icon circle. */
+.scope .jtm-list { position: relative; list-style: none; margin: 0 auto; padding: 0; max-width: 480px; }
+
+/* the centered connector line; shorter top stub, longer bottom stub (tunable) */
+.scope .jtm-list::before { content: ""; position: absolute; top: 16px; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; background: var(--phil-foliage); opacity: 0.35; }
+
+/* pulsing "bubbles" extending the line past each end (mirrors the desktop .jt-ext dots) */
+.scope .jtm-ext { position: absolute; left: 50%; width: 0; height: 0; pointer-events: none; z-index: 0; }
+.scope .jtm-ext-top { top: 16px; }
+.scope .jtm-ext-bottom { bottom: 0; }
+.scope .jtm-ext i { position: absolute; top: 0; left: 0; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; background: var(--phil-foliage); opacity: 0; }
+.scope .jtm-ext i:nth-child(2) { animation-delay: 0.6s; }
+.scope .jtm-ext i:nth-child(3) { animation-delay: 1.2s; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes jtm-ext-up { 0% { opacity: 0; transform: translateY(0) scale(0.4); } 22% { opacity: 0.85; } 100% { opacity: 0; transform: translateY(-22px) scale(1); } }
+  @keyframes jtm-ext-down { 0% { opacity: 0; transform: translateY(0) scale(0.4); } 22% { opacity: 0.85; } 100% { opacity: 0; transform: translateY(22px) scale(1); } }
+  .scope .jtm-ext-top i { animation: jtm-ext-up 3.4s var(--ease-standard) infinite; }
+  .scope .jtm-ext-bottom i { animation: jtm-ext-down 3.4s var(--ease-standard) infinite; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scope .jtm-ext i { opacity: 0.5; }
+  .scope .jtm-ext-top i:nth-child(2) { transform: translateY(-11px); }
+  .scope .jtm-ext-top i:nth-child(3) { transform: translateY(-22px); }
+  .scope .jtm-ext-bottom i:nth-child(2) { transform: translateY(11px); }
+  .scope .jtm-ext-bottom i:nth-child(3) { transform: translateY(22px); }
+}
+
+.scope .jtm-step { position: relative; display: grid; grid-template-columns: 1fr 44px 1fr; align-items: center; padding-bottom: 14px; --d: 0s; }
+
+.scope .jtm-step:last-child { padding-bottom: 0; }
+
+/* dot on the centre line (above the stem so the join is clean) */
+.scope .jtm-dot { grid-column: 2; justify-self: center; position: relative; z-index: 1; width: 10px; height: 10px; border-radius: 50%; background: var(--phil-foliage); border: 2px solid var(--phil-pure); outline: 2px solid var(--phil-foliage); }
+
+/* one zone each side of the line. The inner item (icon or label) hugs the line; the insight
+   card fills the outer space (space-between when the zone holds both). */
+.scope .jtm-zone { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.scope .jtm-zone--l { grid-column: 1; flex-direction: row-reverse; justify-content: flex-start; }
+.scope .jtm-zone--r { grid-column: 3; justify-content: flex-start; }
+.scope .jtm-zone.is-pair { justify-content: space-between; }
+
+.scope .jtm-icon { position: relative; flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; background: var(--phil-pure); border: 2px solid var(--phil-foliage); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 14px -8px rgba(0,75,72,0.4); }
+
+.scope .jtm-icon svg { width: 18px; height: 18px; fill: none; stroke: var(--phil-foliage); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* straight stem joining the icon to the dot; direction depends on which zone the icon is in.
+   26px ≈ half the 44px centre column + ~4px overlap under the dot. Horizontal → no height. */
+.scope .jtm-icon::before { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 26px; height: 2px; background: var(--phil-foliage); opacity: 0.55; }
+.scope .jtm-zone--r .jtm-icon::before { right: 100%; }
+.scope .jtm-zone--l .jtm-icon::before { left: 100%; }
+
+.scope .jtm-label { font-family: var(--font-body); font-size: 13px; font-weight: 700; color: var(--phil-forest); line-height: 1.25; }
+.scope .jtm-zone--r .jtm-label { text-align: left; }
+.scope .jtm-zone--l .jtm-label { text-align: right; }
+
+.scope .jtm-insight { flex: 1; min-width: 0; max-width: 150px; border-radius: 8px; overflow: hidden; background: var(--phil-pure); border: 1px solid var(--phil-base); box-shadow: 0 10px 24px -16px rgba(0,75,72,0.3); }
+
+.scope .jtm-ins-head { display: flex; align-items: center; gap: 6px; background: var(--phil-foliage); padding: 4px 9px; }
+
+.scope .jtm-ins-ico { width: 13px; height: 13px; color: #fff; display: inline-flex; flex-shrink: 0; }
+
+.scope .jtm-ins-ico svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.scope .jtm-ins-ey { font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+
+.scope .jtm-ins-tx { font-family: var(--font-body); font-size: 12px; font-weight: 600; line-height: 1.3; color: var(--phil-pitch); padding: 6px 9px 8px; }
+
+/* Reveal + dot-pop, staggered per step, when the tab becomes active (mirrors desktop). */
+.scope .jt-mobile .jtm-step:nth-child(1) { --d: 0.05s; }
+.scope .jt-mobile .jtm-step:nth-child(2) { --d: 0.14s; }
+.scope .jt-mobile .jtm-step:nth-child(3) { --d: 0.23s; }
+.scope .jt-mobile .jtm-step:nth-child(4) { --d: 0.32s; }
+.scope .jt-mobile .jtm-step:nth-child(5) { --d: 0.41s; }
+.scope .jt-mobile .jtm-step:nth-child(6) { --d: 0.50s; }
+.scope .jt-mobile .jtm-step:nth-child(7) { --d: 0.59s; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes jtm-pop { 0%, 100% { transform: scale(1); box-shadow: 0 6px 14px -8px rgba(0,75,72,0.4); } 50% { transform: scale(1.18); box-shadow: 0 0 0 6px rgba(0,130,126,0.16); } }
+  @keyframes jtm-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .scope .di-card.is-active .jt-mobile .jtm-icon { animation: jtm-pop 0.6s var(--ease-emphasis) var(--d) both; }
+  .scope .di-card.is-active .jt-mobile .jtm-zone { animation: jtm-rise 0.5s var(--ease-emphasis) var(--d) both; }
+}
+
 @media (max-width: $phil-breakpoint-sm) {
 
-  .scope .di-viz .jt-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .scope .di-viz .jt-track { min-width: 700px; }
+  /* Tablet + mobile (≤768px): use the native vertical timeline (.jt-mobile) instead of the
+     horizontal one. The old approach (jt-wrap overflow-x:auto + jt-track min-width:700) gave
+     the timeline an internal horizontal scrollbar at tablet widths — this removes it. */
+  .scope .di-card[data-i="3"] .jt-wrap { display: none; }
+  .scope .di-card[data-i="3"] .jt-mobile { display: block; }
+  /* With the vertical timeline, drop the floating "PHIL AI Insights" card to the bottom of
+     the section at full width (instead of overlapping the journey). */
+  .scope .di-card[data-i="3"] .di-viz { flex-direction: column; }
+  .scope .di-card[data-i="3"] .tq-pop { position: relative; right: auto !important; bottom: auto !important; width: 100% !important; max-width: none; margin: 22px 0 0; }
 
 }
 
-/* On phones, scale the whole timeline down so it fits without horizontal scroll */
 @media (max-width: $phil-breakpoint-xs) {
 
   /* tighter side padding on mobile to give the dashboards more room */
   .scope .di-card .di-viz { padding: 28px 14px; }
-  /* Let the floating insight boxes show (the zoomed timeline doesn't overflow
-     horizontally, so visible overflow is safe — scoped to this tab only). */
-  .scope .di-card[data-i="3"] .jt-wrap, .scope .di-card[data-i="3"] .dx-shot { overflow: visible; }
-  .scope .di-viz .jt-track { min-width: 640px; zoom: 0.36; transform: none; margin: 46px auto 26px; }
-  /* Show only the three insights along the top; hide the two that hang below the line */
-  .scope .di-card[data-i="3"] .jt-above .jt-insight--flip, .scope .di-card[data-i="3"] .jt-below .jt-insight:not(.jt-insight--flip):not(.jt-insight--top) { display: none; }
-  /* Line the three top insights up horizontally at the same level as the middle one */
-  .scope .di-card[data-i="3"] .jt-above .jt-insight, .scope .di-card[data-i="3"] .jt-below .jt-insight--top, .scope .di-card[data-i="3"] .jt-below .jt-insight--flip { top: -104px !important; bottom: auto !important; animation: none !important; }
-  /* First insight: shorter mobile text, wider box so it fits on one line */
-  .scope .di-card[data-i="3"] .jt-tx-d { display: none; }
-  .scope .di-card[data-i="3"] .jt-tx-m { display: inline; }
-  .scope .di-card[data-i="3"] .jt-above .jt-insight { width: 230px !important; max-width: 230px !important; }
-  .scope .di-card[data-i="3"] .jt-above .jt-insight .jt-ins-tx { white-space: nowrap; }
   /* Shrink the scorecard tables so they fit the screen instead of scrolling */
   .scope .di-card[data-i="1"] .sq-table { zoom: 0.58; margin: 0 auto; }
   .scope .di-card[data-i="2"] .sq-table { zoom: 0.64; margin: 0 auto; }
@@ -1941,7 +2028,7 @@
 
 .scope .di-viz { position: relative; order: 1; overflow: hidden; background: linear-gradient(135deg, #F0FAF9 0%, #E8F4F1 100%); border-top: 1px solid var(--phil-base); display: flex; align-items: center; justify-content: center; padding: 28px; flex: 1 1 auto; }
 
-.scope .di-viz .dx-shot { margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; width: 100%; }
+.scope .di-viz .dx-shot { margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; width: 100%; overflow-x: clip; }
 
 .scope .di-viz .sq-table-wrap, .scope .di-viz .sq-table-wrap.sq-hcp { max-width: 920px; margin: 0 auto; }
 
@@ -2127,7 +2214,6 @@
 
   .scope .di-viz { flex-direction: column; }
   .scope .tq-pop { position: relative; right: auto; bottom: auto; width: auto; max-width: 340px; margin: 18px auto 0; }
-  .scope .di-card[data-i="3"] .tq-pop { width: auto !important; right: auto !important; bottom: auto !important; }
 
 }
 

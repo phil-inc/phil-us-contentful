@@ -1,6 +1,71 @@
 import React from 'react';
 import philLogo from 'assets/images/phil-logo-green.png';
 
+// Lightbulb icon reused inside every mobile insight card.
+const INSIGHT_ICON = (
+	<svg viewBox="0 0 24 24"><path d="M9 18h6" /><path d="M10 22h4" /><path d="M12 2a7 7 0 00-4.2 12.6c.5.4.8 1 .9 1.6l.1.8h6.4l.1-.8c.1-.6.4-1.2.9-1.6A7 7 0 0012 2z" /></svg>
+);
+
+// Single source for the vertical mobile timeline (≤640px). Icons match the desktop
+// horizontal timeline; `insight` is optional (only 5 of the 7 steps have one).
+// `iconSide` = which side of the centre line the icon sits (label goes opposite). `insightSide`
+// = which side the insight card sits (alternates independently of the icon, matching design).
+type JourneyStep = {
+	label: string;
+	icon: React.ReactNode;
+	iconSide: 'left' | 'right';
+	insight?: string;
+	insightSide?: 'left' | 'right';
+};
+
+const JOURNEY_STEPS: JourneyStep[] = [
+	{
+		label: 'Intake',
+		iconSide: 'right',
+		insight: 'Understand intake channel impact',
+		insightSide: 'left',
+		icon: (<svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="4" rx="1" /><path d="M5 4h2a2 2 0 012 2v0a2 2 0 002 2h2a2 2 0 002-2v0a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" /><line x1="9" y1="12" x2="15" y2="12" /><line x1="9" y1="16" x2="13" y2="16" /></svg>),
+	},
+	{
+		label: 'Patient Appointment',
+		iconSide: 'left',
+		icon: (<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="3" y1="10" x2="21" y2="10" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="16" y1="2" x2="16" y2="6" /></svg>),
+	},
+	{
+		label: 'Prescription Generation',
+		iconSide: 'right',
+		insight: 'Analyze provider adoption',
+		insightSide: 'right',
+		icon: (<svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="5" rx="1.5" /><rect x="5" y="7" width="14" height="15" rx="2" /><line x1="9" y1="11" x2="15" y2="11" /><line x1="12" y1="11" x2="12" y2="17" /></svg>),
+	},
+	{
+		label: 'Prior Authorization',
+		iconSide: 'left',
+		insight: 'Track payer responses',
+		insightSide: 'left',
+		icon: (<svg viewBox="0 0 24 24"><path d="M12 2l7 4v6c0 4.4-3.1 8.5-7 10C8.1 20.5 5 16.4 5 12V6l7-4z" /><polyline points="9 12 11 14 15 10" /></svg>),
+	},
+	{
+		label: 'Affordable Pathways',
+		iconSide: 'right',
+		insight: 'Get visibility into program utilization',
+		insightSide: 'right',
+		icon: (<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M15 9h-4.5a1.75 1.75 0 0 0 0 3.5h3a1.75 1.75 0 0 1 0 3.5H9" /><path d="M12 7.25v9.5" /></svg>),
+	},
+	{
+		label: 'Shipping & Dispensing',
+		iconSide: 'left',
+		insight: 'Spot patient drop-off points',
+		insightSide: 'left',
+		icon: (<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" /><polyline points="16 2 12 7 8 2" /><line x1="2" y1="12" x2="22" y2="12" /></svg>),
+	},
+	{
+		label: 'Refills',
+		iconSide: 'right',
+		icon: (<svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 102.13-9.36L1 10" /></svg>),
+	},
+];
+
 export const DataTabsSection: React.FC = () => (
 
 <section id="data" className="band glow glow-bl" data-screen-label="06 Data & Insights">
@@ -176,6 +241,35 @@ export const DataTabsSection: React.FC = () => (
                     </div>
 
                   </div>
+                </div>
+                <div className="jt-mobile">
+                  <span className="jtm-ext jtm-ext-top" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <ol className="jtm-list">
+                    {JOURNEY_STEPS.map(step => {
+                      const labelSide = step.iconSide === 'right' ? 'left' : 'right';
+                      const iconEl = <span className="jtm-icon" key="icon">{step.icon}</span>;
+                      const labelEl = <span className="jtm-label" key="label">{step.label}</span>;
+                      const insightEl = step.insight ? (
+                        <div className="jtm-insight" key="insight">
+                          <div className="jtm-ins-head"><span className="jtm-ins-ico">{INSIGHT_ICON}</span><span className="jtm-ins-ey">Insight</span></div>
+                          <div className="jtm-ins-tx">{step.insight}</div>
+                        </div>
+                      ) : null;
+                      const left: React.ReactNode[] = [];
+                      const right: React.ReactNode[] = [];
+                      (step.iconSide === 'left' ? left : right).push(iconEl);
+                      (labelSide === 'left' ? left : right).push(labelEl);
+                      if (insightEl) (step.insightSide === 'left' ? left : right).push(insightEl);
+                      return (
+                        <li className="jtm-step" key={step.label}>
+                          <div className={`jtm-zone jtm-zone--l${left.length > 1 ? ' is-pair' : ''}`}>{left}</div>
+                          <span className="jtm-dot" aria-hidden="true"></span>
+                          <div className={`jtm-zone jtm-zone--r${right.length > 1 ? ' is-pair' : ''}`}>{right}</div>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                  <span className="jtm-ext jtm-ext-bottom" aria-hidden="true"><i></i><i></i><i></i></span>
                 </div>
               </div>
               <div className="tq-pop">

@@ -643,7 +643,7 @@ export function attachSolutionCoreInteractions(): () => void {
         var caret = document.createElement('span'); caret.className = 'aid-caret'; answer.appendChild(caret);
         var si = 0, ci = 0, cur = null;
         (function type(){
-          if (si >= segs.length) { caret.remove(); return; }
+          if (si >= segs.length) { if (caret.parentNode) caret.parentNode.removeChild(caret); return; }
           var s = segs[si];
           if (ci === 0) {
             cur = (s.c === 'b') ? document.createElement('b') : document.createElement('span');
@@ -695,7 +695,7 @@ export function attachSolutionCoreInteractions(): () => void {
         var caret = document.createElement('span'); caret.className = 'aid-caret'; body.appendChild(caret);
         var si = 0, ci = 0, cur = null;
         timers.push(setTimeout(function step(){
-          if (si >= segs.length) { caret.remove(); return; }
+          if (si >= segs.length) { if (caret.parentNode) caret.parentNode.removeChild(caret); return; }
           var s = segs[si];
           if (ci === 0) {
             cur = (s.kind === 'b') ? document.createElement('b') : document.createElement('span');
@@ -933,7 +933,7 @@ export function attachSolutionCoreInteractions(): () => void {
         var caret = document.createElement('span'); caret.className = 'aid-caret'; answer.appendChild(caret);
         var si = 0, ci = 0, cur = null;
         (function type(){
-          if (si >= segs.length) { typeTimers.push(setTimeout(function(){ caret.remove(); }, 250)); return; }
+          if (si >= segs.length) { typeTimers.push(setTimeout(function(){ if (caret.parentNode) caret.parentNode.removeChild(caret); }, 250)); return; }
           var s = segs[si];
           if (ci === 0) {
             cur = (s.c === 'b') ? document.createElement('b') : document.createElement('span');
