@@ -2016,19 +2016,12 @@
      horizontal one. The old approach (jt-wrap overflow-x:auto + jt-track min-width:700) gave
      the timeline an internal horizontal scrollbar at tablet widths — this removes it. */
   .scope .di-card[data-i="3"] .jt-wrap { display: none; }
-  /* !important overrides the inline display:none on .jt-mobile (FOUC guard, see DataTabs). */
-  .scope .di-card[data-i="3"] .jt-mobile { display: block !important; }
+  .scope .di-card[data-i="3"] .jt-mobile { display: block; }
   /* With the vertical timeline, drop the floating "PHIL AI Insights" card to the bottom of
      the section at full width (instead of overlapping the journey). */
   .scope .di-card[data-i="3"] .di-viz { flex-direction: column; }
   .scope .di-card[data-i="3"] .tq-pop { position: relative; right: auto !important; bottom: auto !important; width: 100% !important; max-width: none; margin: 22px 0 0; }
 
-}
-
-/* Desktop (>768px): reveal the horizontal timeline, overriding its inline display:none
-   (FOUC guard). Above the sm breakpoint so it never overlaps the vertical layout. */
-@media (min-width: 48.0625em) {
-  .scope .di-card[data-i="3"] .jt-wrap { display: block !important; }
 }
 
 @media (max-width: $phil-breakpoint-xs) {
