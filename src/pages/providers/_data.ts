@@ -25,43 +25,92 @@ export const STEPS = [
   },
 ] as const;
 
-export type Testimonial = { quote: string; author: string };
+export type PatientTestimonial = {
+  initial: string;
+  name: string;
+  role: string;
+  quote: string;
+};
 
-export const PATIENT_TESTIMONIALS: Testimonial[] = [
+// Order matches the design's paged carousel (page 1, then page 2).
+export const PATIENT_TESTIMONIALS: PatientTestimonial[] = [
   {
+    initial: "M",
+    name: "Margaret Y.",
+    role: "PHILRx Patient",
     quote:
-      "I wasn't able to afford a medication that helped me. My doctor found it through PHIL, I could continually purchase 3 months of this prescription at a time to receive a HUGE discount. It changed my life.",
-    author: "Carla R., Patient",
+      "PHILRx does everything right! They ship quickly, bill my insurance directly, and I do not have to remember to ask for a refill. The entire process is easy and simple, it's really a no brainer. Love the service!",
   },
   {
+    initial: "H",
+    name: "Henry L.",
+    role: "PHILRx Patient",
     quote:
-      "I felt that my needs were being considered from the very beginning. That was so refreshing to me because it was out of the ordinary for a company to express such consideration, especially for a new customer like myself!",
-    author: "Dawn M., Patient",
+      "My experience with PHILRx is always reliable. My medication delivery has always been exactly when they said it would be, the packaging has been very good, and I appreciate the updates about my prescription and refills.",
   },
   {
+    initial: "J",
+    name: "Joyce W.",
+    role: "PHILRx Patient",
+    quote:
+      "PHILRx makes it so easy to get your prescription! From getting the required authorization to delivering it right to your door, they do it all for you.",
+  },
+  {
+    initial: "C",
+    name: "Carla R.",
+    role: "PHILRx Patient",
+    quote:
+      "I wasn't able to afford a medication that helped me. My doctor found it through PHILRx, and I could purchase 3 months at a time to receive a HUGE discount. It changed my life.",
+  },
+  {
+    initial: "D",
+    name: "Dawn M.",
+    role: "PHILRx Patient",
+    quote:
+      "I felt that my needs were being considered from the very beginning. That was so refreshing because it was out of the ordinary for a company to express such consideration, especially for a new customer like myself!",
+  },
+  {
+    initial: "R",
+    name: "Ryan S.",
+    role: "PHILRx Patient",
     quote:
       "The staff at PHILRx are very customer-oriented, staying connected and providing guidance throughout the whole prescription process. They are knowledgeable and friendly. The experience was pleasant!",
-    author: "Ryan S., Patient",
   },
 ];
 
-export const PROVIDER_TESTIMONIALS: Testimonial[] = [
+export type ProviderTestimonial = {
+  quote: string;
+  name: string;
+  loc: string;
+  photoKey: "susan" | "elizabeth" | "jeffrey";
+};
+
+export const PROVIDER_TESTIMONIALS: ProviderTestimonial[] = [
   {
     quote:
-      "Communication is fantastic! From start to finish, PHILRx does a great job keeping [our office] in the loop.",
-    author: "Susan F., Healthcare provider",
+      "Communication is fantastic! From start to finish, PHILRx does a great job keeping our office in the loop.",
+    name: "Susan F.",
+    loc: "Dermatology",
+    photoKey: "susan",
   },
   {
     quote:
       "PHILRx provides great support for patients, and convenient ways for providers to reach out.",
-    author: "Elizabeth R., Healthcare provider",
+    name: "Elizabeth R.",
+    loc: "Neurology",
+    photoKey: "elizabeth",
   },
   {
     quote:
       "PHILRx is very helpful with getting my patients their medications quickly.",
-    author: "Jeffrey T., Healthcare provider",
+    name: "Jeffrey T.",
+    loc: "Ophthalmology",
+    photoKey: "jeffrey",
   },
 ];
+
+export const PROVIDER_QUOTE_DISCLAIMER =
+  "*Real provider quote, stock image used to protect privacy";
 
 export type FaqCategory = {
   id: string;
