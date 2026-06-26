@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Link } from "gatsby";
 import type { HeadFC } from "gatsby";
 import { getOgImage } from "utils/getOgImage";
 
@@ -8,13 +7,25 @@ import PageContext from "contexts/PageContext";
 
 import {
   HELP_CENTER_URL,
-  CONTACT_PAGE_URL,
   STEPS,
   PATIENT_TESTIMONIALS,
   PROVIDER_TESTIMONIALS,
+  PROVIDER_QUOTE_DISCLAIMER,
   FAQ_CATEGORIES,
 } from "./_data";
 import * as classes from "./providers.module.css";
+
+import hsSusan from "./assets/hs-susan.png";
+import hsElizabeth from "./assets/hs-elizabeth.png";
+import hsJeffrey from "./assets/hs-jeffrey.png";
+
+const HCP_SUPPORT_URL = "https://phil.us/contact/hcp-support/";
+
+const PROVIDER_PHOTOS: Record<string, string> = {
+  susan: hsSusan,
+  elizabeth: hsElizabeth,
+  jeffrey: hsJeffrey,
+};
 
 declare global {
   interface Window {
@@ -37,7 +48,7 @@ const HeroSection = () => (
         <div className={classes.heroCopy}>
           <Eyebrow text="For Healthcare Providers" />
           <h1 className={classes.h1}>
-            Affordable Medications for Your Patients with{" "}
+            Affordable Medications for<br />Your Patients with{" "}
             <span className={classes.accent}>
               PHILRx
               <svg
@@ -57,8 +68,8 @@ const HeroSection = () => (
             </span>
           </h1>
           <p className={classes.heroLead}>
-            PHIL makes it easy for your patients to get their medication at an
-            affordable price, with free home delivery and PA support for your
+            PHILRx makes it easy for your patients to get their medication at an
+            affordable price with free home delivery and PA support for your
             office.
           </p>
           <div className={classes.heroHelp}>
@@ -68,12 +79,14 @@ const HeroSection = () => (
             >
               Read FAQs
             </a>
-            <Link
-              to="/contact/"
+            <a
+              href={HCP_SUPPORT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`${classes.btn} ${classes.btnOutlineGradient}`}
             >
               Get Support
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -136,13 +149,13 @@ const HeroSection = () => (
           <div className={classes.wfStage}>
             <div className={classes.wfCard}>
               <h3 className={classes.wfCardTitle}>
-                Drive Affordable Medication Access For Your Patients
+                Deliver Affordable Medication Access For Your Patients
               </h3>
               <div className={classes.wfSteps}>
                 {[
-                  "Quick, app‑free enrollment in < 1 minute for your patients",
-                  "In‑workflow prescribing and 1‑click PA submissions for your office",
-                  "Affordable copay cost and free home delivery for your patients",
+                  "Affordable prescriptions with fast, free delivery",
+                  "Prior authorization support for your office",
+                  "Dedicated patient & provider support",
                 ].map((text) => (
                   <div key={text} className={classes.wfStep}>
                     <div className={classes.wfNum}>
@@ -173,33 +186,308 @@ const HeroSection = () => (
   </header>
 );
 
-// ─── Trustpilot Strip ─────────────────────────────────────────────────────────
+// ─── Access (affordable medication access) ────────────────────────────────────
 
-const TrustpilotStrip = () => (
-  <section className={classes.trust}>
-    <div className="xl-container">
-      <div className={classes.trustHead}>
-        <Eyebrow text="Trusted by Patients" />
-        <h2 className={classes.trustTitle}>Hear from Happy PHILRx Patients</h2>
+const ACCESS_STATS = [
+  {
+    to: 2,
+    label: "Patient starts",
+    desc: "More patients start the medications you prescribed",
+  },
+  {
+    to: 2,
+    label: "Covered dispenses",
+    desc: "More prescriptions covered by insurance",
+  },
+  {
+    to: 3,
+    label: "Refill adherence",
+    desc: "More patients stay on track with their medications",
+  },
+] as const;
+
+const ACCESS_POINTS = [
+  {
+    title: "Affordable Medications",
+    body: (
+      <>
+        We work hard to get patients an affordable price for their medications,
+        every time. We check what their insurance covers and make sure they're
+        getting the right savings with transparent pricing throughout the
+        process.
+      </>
+    ),
+  },
+  {
+    title: "Convenient Access",
+    body: (
+      <>
+        Patients enroll in minutes, and we keep them informed about their
+        prescription status at every step of the journey. We offer fast, free
+        home delivery on all prescriptions, with easy refill management to
+        support access and adherence.
+      </>
+    ),
+  },
+  {
+    title: "Seamless Experience",
+    body: (
+      <>
+        Our friendly support team is available to help patients via phone, chat,
+        and email. We're proud to have a{" "}
+        <strong>4.8/5.0</strong> satisfaction score on Trustpilot from our strong
+        and growing patient community.
+      </>
+    ),
+  },
+];
+
+const PointCheckIcon = () => (
+  <span className={classes.pointIcon} aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path
+        d="M9 16.5l5 5L23 11"
+        stroke="#fff"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </span>
+);
+
+const AccessSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [counts, setCounts] = useState<number[]>(ACCESS_STATS.map(() => 0));
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node || typeof window === "undefined") return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let raf = 0;
+    const run = () => {
+      if (reduce) {
+        setCounts(ACCESS_STATS.map((s) => s.to));
+        return;
+      }
+      const dur = 1400;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setCounts(ACCESS_STATS.map((s) => Math.round(eased * s.to)));
+        if (p < 1) raf = requestAnimationFrame(tick);
+        else setCounts(ACCESS_STATS.map((s) => s.to));
+      };
+      raf = requestAnimationFrame(tick);
+    };
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          run();
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    obs.observe(node);
+    return () => {
+      obs.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <section ref={sectionRef} className={classes.accessSection}>
+      <div className="xl-container">
+        <div className={classes.accessHead}>
+          <h2>
+            Helping Your Patients Get the Medications You Prescribed at a Price
+            They Can Afford
+          </h2>
+          <p>
+            PHILRx helps patients get their medications at the right price, with
+            a simple and easy way to receive them.
+          </p>
+        </div>
+
+        <div className={classes.accessGrid}>
+          <div className={classes.accessStats}>
+            <div className={classes.eyebrowDash}>Why providers choose PHILRx</div>
+            <div className={classes.statList}>
+              {ACCESS_STATS.map((s, i) => (
+                <div key={s.label} className={classes.statBlock}>
+                  <div className={classes.statNum}>
+                    {counts[i]}
+                    <span className={classes.statSuffix}>
+                      <span className={classes.statX}>×</span>
+                      <span className={classes.statPlus}>+</span>
+                    </span>
+                  </div>
+                  <p className={classes.statLabel}>{s.label}</p>
+                  <p className={classes.statDesc}>{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={classes.accessPoints}>
+            <div className={`${classes.eyebrowDash} ${classes.pointsEyebrow}`}>
+              How we support patients
+            </div>
+            <div className={classes.pointsGrid}>
+              {ACCESS_POINTS.map((p) => (
+                <article key={p.title} className={classes.pointCard}>
+                  <div className={classes.pointHead}>
+                    <PointCheckIcon />
+                    <h3 className={classes.pointTitle}>{p.title}</h3>
+                  </div>
+                  <p className={classes.pointBody}>{p.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className={classes.accessReviews}>
+          <div className={classes.eyebrowDash}>Hear from PHILRx patients</div>
+          {/* TrustBox — Carousel (relocated from former standalone Trustpilot strip) */}
+          <div
+            className="trustpilot-widget"
+            data-locale="en-US"
+            data-template-id="53aa8912dec7e10d38f59f36"
+            data-businessunit-id="60e5837e95cb800001e58b14"
+            data-style-height="150px"
+            data-style-width="100%"
+            data-token="2756914d-336b-4583-b3f4-75c0b1f9734f"
+            data-stars="4,5"
+            data-review-languages="en"
+          >
+            <a
+              href="https://www.trustpilot.com/review/phil.us"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Trustpilot
+            </a>
+          </div>
+        </div>
       </div>
-      <div
-        className="trustpilot-widget"
-        data-locale="en-US"
-        data-template-id="53aa8912dec7e10d38f59f36"
-        data-businessunit-id="60e5837e95cb800001e58b14"
-        data-style-height="140px"
-        data-style-width="100%"
-        data-token="2756914d-336b-4583-b3f4-75c0b1f9734f"
-        data-stars="4,5"
-        data-review-languages="en"
-      >
-        <a
-          href="https://www.trustpilot.com/review/phil.us"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Trustpilot
-        </a>
+    </section>
+  );
+};
+
+// ─── Why prescribers write to PHILRx ──────────────────────────────────────────
+
+const WHY_ROWS = [
+  {
+    title: "Better Patient Outcomes",
+    body: "A great patient experience that improves medication access, affordability, and adherence.",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none">
+        <path
+          d="M16 27s-9-5.7-9-12.2A5.3 5.3 0 0 1 16 11a5.3 5.3 0 0 1 9 3.8C25 21.3 16 27 16 27z"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Prior Authorization Support",
+    body: "A seamless prior authorization process with dedicated PA support and timely prescription status updates for your office.",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none">
+        <path
+          d="M16 5l9 3v6.5c0 5.6-3.8 9.9-9 11.5-5.2-1.6-9-5.9-9-11.5V8l9-3z"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M12.2 15.8l2.6 2.6 5-5.4"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    title: "Dedicated Patient & HCP Support",
+    body: "An expert team handles questions and follow-ups, so your patients can start and stay on therapy with confidence.",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none">
+        <path
+          d="M7 17v-2a9 9 0 0 1 18 0v2"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M25 17v4a3 3 0 0 1-3 3h-3"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <rect
+          x="4.5"
+          y="16.5"
+          width="4"
+          height="6.5"
+          rx="2"
+          stroke="currentColor"
+          strokeWidth="2.4"
+        />
+        <rect
+          x="23.5"
+          y="16.5"
+          width="4"
+          height="6.5"
+          rx="2"
+          stroke="currentColor"
+          strokeWidth="2.4"
+        />
+      </svg>
+    ),
+  },
+];
+
+const WhySection = () => (
+  <section className={classes.whySection}>
+    <div className="xl-container">
+      <div className={classes.whyLayout}>
+        <div className={classes.whyIntro}>
+          <h2>
+            Why Prescribers Write to <span className={classes.accent}>PHILRx</span>
+          </h2>
+          <p>
+            We take on the work that gets in the way of timely medication access,
+            so your practice can focus on delivering care and your patients can
+            start their prescribed therapies faster, pay less, and stay on track.
+          </p>
+        </div>
+        <div className={classes.whyList}>
+          {WHY_ROWS.map((row) => (
+            <div key={row.title} className={classes.whyRow}>
+              <span className={classes.whyIco} aria-hidden="true">
+                {row.icon}
+              </span>
+              <div className={classes.whyRt}>
+                <h3>{row.title}</h3>
+                <p>{row.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -210,7 +498,7 @@ const TrustpilotStrip = () => (
 const StepsSection = () => (
   <section className={classes.stepsSection}>
     <div className="xl-container">
-      <div className={classes.sectionHead}>
+      <div className={`${classes.sectionHead} ${classes.sectionHeadWide}`}>
         <h2>How to Prescribe to PHILRx</h2>
       </div>
       <div className={classes.stepsGrid}>
@@ -232,12 +520,12 @@ const StepsSection = () => (
 const VideoSection = () => (
   <section className={classes.videoSection}>
     <div className="xl-container">
-      <div className={classes.sectionHead}>
+      <div className={`${classes.sectionHead} ${classes.sectionHeadWide}`}>
         <h2>Sending a Script to PHILRx is Easy</h2>
       </div>
       <div className={classes.videoFrame}>
         <iframe
-          src="https://www.youtube-nocookie.com/embed/Fkq1ncdE2ug?rel=0&modestbranding=1"
+          src="https://www.youtube-nocookie.com/embed/Fkq1ncdE2ug?rel=0&modestbranding=1&playsinline=1"
           title="PHILRx for Healthcare Providers"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -249,116 +537,352 @@ const VideoSection = () => (
   </section>
 );
 
-// ─── Testimonials ─────────────────────────────────────────────────────────────
+// ─── Arrow icons ──────────────────────────────────────────────────────────────
 
-const TestimonialsSection = () => {
-  const [idx, setIdx] = useState(0);
+const ArrowLeft = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="15 18 9 12 15 6" />
+  </svg>
+);
+const ArrowRight = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+);
+
+// ─── Providers (featured quote carousel) ──────────────────────────────────────
+
+// Gap between provider slides; shrinks on smaller screens.
+function getPvGap() {
+  if (typeof window === "undefined") return 12;
+  if (window.innerWidth <= 640) return 6;
+  if (window.innerWidth <= 880) return 8;
+  return 12;
+}
+
+const PV_TRANSITION = "transform 0.55s cubic-bezier(0.2,0,0,1)";
+
+const ProvidersSection = () => {
+  const count = PROVIDER_TESTIMONIALS.length;
+  // Render an extra clone of the first slide at the end so advancing past the
+  // last real slide slides forward into it, then we snap back invisibly.
+  const slides = [...PROVIDER_TESTIMONIALS, PROVIDER_TESTIMONIALS[0]];
+
+  // pos walks 0..count (count = the trailing clone). active dot = pos % count.
+  const [pos, setPos] = useState(0);
+  const [animate, setAnimate] = useState(true);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const hoverRef = useRef(false);
-  const maxCount = Math.max(
-    PATIENT_TESTIMONIALS.length,
-    PROVIDER_TESTIMONIALS.length,
-  );
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [metrics, setMetrics] = useState({ width: 0, gap: 12 });
+
+  useEffect(() => {
+    const measure = () => {
+      setMetrics({
+        width: viewportRef.current?.offsetWidth ?? 0,
+        gap: getPvGap(),
+      });
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   const stop = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
   }, []);
-
   const start = useCallback(() => {
     stop();
-    timerRef.current = setInterval(() => {
-      if (!hoverRef.current) {
-        setIdx((i) => (i + 1) % maxCount);
-      }
-    }, 2975);
-  }, [stop, maxCount]);
-
-  const goTo = useCallback(
-    (n: number) => {
-      setIdx(((n % maxCount) + maxCount) % maxCount);
-      stop();
-      start();
-    },
-    [maxCount, stop, start],
-  );
+    // Never advance past the trailing clone; handleTransitionEnd snaps it back.
+    timerRef.current = setInterval(
+      () => setPos((p) => (p >= count ? p : p + 1)),
+      7000,
+    );
+  }, [stop, count]);
 
   useEffect(() => {
     start();
     return stop;
   }, [start, stop]);
 
-  const renderCard = (
-    eyebrow: string,
-    testimonials: typeof PATIENT_TESTIMONIALS,
-  ) => {
-    const cardIdx = idx % testimonials.length;
-    return (
-      <article
-        className={classes.testimonialCard}
-        onMouseEnter={() => {
-          hoverRef.current = true;
-        }}
-        onMouseLeave={() => {
-          hoverRef.current = false;
-          start();
-        }}
-      >
-        <span className={classes.quoteMark} aria-hidden="true">
-          &ldquo;
-        </span>
-        <div className={classes.tEyebrow}>{eyebrow}</div>
-        <div className={classes.tQuoteStack}>
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className={`${classes.tSlide}${i === cardIdx ? ` ${classes.tSlideActive}` : ""}`}
-            >
-              <p className={classes.tQuote}>&ldquo;{t.quote}&rdquo;</p>
-              <div className={classes.tAuthor}>{t.author}</div>
-            </div>
-          ))}
-        </div>
-        <div className={classes.tSegments} role="tablist">
-          {testimonials.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              aria-label={`Quote ${i + 1}`}
-              className={`${classes.tSeg}${i === cardIdx ? ` ${classes.tSegActive}` : ""}`}
-              onClick={() => goTo(i)}
-            />
-          ))}
-        </div>
-      </article>
-    );
+  // After the forward slide lands on the trailing clone, jump back to the real
+  // first slide with the transition off so it's seamless. Driven by a timer
+  // (not transitionEnd) so a backgrounded/idle tab can't drop the event and
+  // leave the carousel stuck on the clone.
+  useEffect(() => {
+    if (pos !== count) return;
+    const id = setTimeout(() => {
+      setAnimate(false);
+      setPos(0);
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => setAnimate(true)),
+      );
+    }, 600);
+    return () => clearTimeout(id);
+  }, [pos, count]);
+
+  const next = () => {
+    stop();
+    // Cap at the clone (count) so fast clicks can't overshoot into blank space.
+    setPos((p) => (p >= count ? p : p + 1));
+    start();
   };
 
+  const prev = () => {
+    stop();
+    if (pos === 0) {
+      // Jump (no animation) to the trailing clone — visually identical to the
+      // first slide — then animate back to the last real slide.
+      setAnimate(false);
+      setPos(count);
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          setAnimate(true);
+          setPos(count - 1);
+        }),
+      );
+    } else {
+      setPos((p) => p - 1);
+    }
+    start();
+  };
+
+  const goTo = (k: number) => {
+    stop();
+    setAnimate(true);
+    setPos(k);
+    start();
+  };
+
+  const active = pos % count;
+
   return (
-    <section className={classes.testimonialsSection}>
+    <section className={classes.providersSection}>
       <div className="xl-container">
         <div className={classes.sectionHead}>
-          <h2>What Our Patients &amp; Providers Say</h2>
-        </div>
-        <div className={classes.testimonialPair}>
-          {renderCard("What Patients Say", PATIENT_TESTIMONIALS)}
-          {renderCard("What Providers Say", PROVIDER_TESTIMONIALS)}
+          <h2>Trusted by Healthcare Providers</h2>
         </div>
         <div
-          className={`trustpilot-widget ${classes.tpHorizontal}`}
-          data-locale="en-US"
-          data-template-id="5406e65db0d04a09e042d5fc"
-          data-businessunit-id="60e5837e95cb800001e58b14"
-          data-style-height="28px"
-          data-style-width="100%"
-          data-token="ad3b342b-7145-4316-9ca6-4f5a47f3d796"
+          className={classes.pvCarousel}
+          onMouseEnter={stop}
+          onMouseLeave={start}
         >
-          <a
-            href="https://www.trustpilot.com/review/phil.us"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Trustpilot
-          </a>
+          <div className={classes.pvViewport} ref={viewportRef}>
+            <div
+              className={classes.pvTrack}
+              style={{
+                gap: `${metrics.gap}px`,
+                transition: animate ? PV_TRANSITION : "none",
+                transform: `translateX(${-pos * (metrics.width + metrics.gap)}px)`,
+              }}
+            >
+              {slides.map((t, k) => (
+                <div key={k} className={classes.pvSlide}>
+                  <div className={classes.pvMark} aria-hidden="true">
+                    &ldquo;
+                  </div>
+                  <p className={classes.pvQuote}>{t.quote}</p>
+                  <div className={classes.pvPerson}>
+                    <div className={classes.pvPhoto}>
+                      <img
+                        src={PROVIDER_PHOTOS[t.photoKey]}
+                        alt={`${t.name}, ${t.loc}`}
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className={classes.pvPersonText}>
+                      <div className={classes.pvName}>{t.name}</div>
+                      <div className={classes.pvLoc}>{t.loc}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <p className={classes.pvFoot}>{PROVIDER_QUOTE_DISCLAIMER}</p>
+          <div className={classes.pvControls}>
+            <button
+              className={classes.pvArrow}
+              type="button"
+              aria-label="Previous testimonial"
+              onClick={prev}
+            >
+              <ArrowLeft />
+            </button>
+            <div className={classes.pvDots} role="tablist">
+              {PROVIDER_TESTIMONIALS.map((_, k) => (
+                <button
+                  key={k}
+                  type="button"
+                  aria-label={`Testimonial ${k + 1}`}
+                  className={`${classes.pvDot}${k === active ? ` ${classes.isActive}` : ""}`}
+                  onClick={() => goTo(k)}
+                />
+              ))}
+            </div>
+            <button
+              className={classes.pvArrow}
+              type="button"
+              aria-label="Next testimonial"
+              onClick={next}
+            >
+              <ArrowRight />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ─── Patients (3-up paged carousel) ───────────────────────────────────────────
+
+function getPatientPerPage() {
+  if (typeof window === "undefined") return 3;
+  return window.innerWidth <= 880 ? 1 : 3;
+}
+
+const PatientsSection = () => {
+  const [perPage, setPerPage] = useState(3);
+  const [page, setPage] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const hoverRef = useRef(false);
+
+  const pages: (typeof PATIENT_TESTIMONIALS)[] = [];
+  for (let n = 0; n < PATIENT_TESTIMONIALS.length; n += perPage) {
+    pages.push(PATIENT_TESTIMONIALS.slice(n, n + perPage));
+  }
+  const count = pages.length;
+
+  const stop = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+  }, []);
+  const start = useCallback(() => {
+    stop();
+    timerRef.current = setInterval(() => {
+      if (!hoverRef.current) {
+        setPage((p) => (p + 1) % Math.ceil(PATIENT_TESTIMONIALS.length / getPatientPerPage()));
+      }
+    }, 6000);
+  }, [stop]);
+  const goTo = useCallback(
+    (n: number) => {
+      setPage(((n % count) + count) % count);
+      stop();
+      start();
+    },
+    [count, stop, start],
+  );
+
+  useEffect(() => {
+    setPerPage(getPatientPerPage());
+    const onResize = () => {
+      const next = getPatientPerPage();
+      setPerPage(next);
+      setPage((p) => Math.min(p, Math.ceil(PATIENT_TESTIMONIALS.length / next) - 1));
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    start();
+    return stop;
+  }, [start, stop]);
+
+  return (
+    <section className={classes.patientsSection}>
+      <div className="xl-container">
+        <div className={classes.sectionHead}>
+          <h2>Hear from Happy Patients</h2>
+        </div>
+        <div
+          className={classes.ptCarousel}
+          onMouseEnter={() => {
+            hoverRef.current = true;
+          }}
+          onMouseLeave={() => {
+            hoverRef.current = false;
+            start();
+          }}
+        >
+          <div className={classes.ptViewport}>
+            <div
+              className={classes.ptTrack}
+              style={{ transform: `translateX(${-100 * page}%)` }}
+            >
+              {pages.map((group, gi) => (
+                <div
+                  key={gi}
+                  className={classes.ptPage}
+                  style={{ gridTemplateColumns: `repeat(${perPage}, 1fr)` }}
+                >
+                  {group.map((t) => (
+                    <article key={t.name} className={classes.ptCard}>
+                      <p className={classes.ptQuote}>&ldquo;{t.quote}&rdquo;</p>
+                      <div className={classes.ptDivider} />
+                      <div className={classes.ptMeta}>
+                        <div className={classes.ptAvatar} aria-hidden="true">
+                          {t.initial}
+                        </div>
+                        <div>
+                          <div className={classes.ptName}>{t.name}</div>
+                          <div className={classes.ptRole}>{t.role}</div>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={classes.ptControls}>
+            <button
+              className={classes.ptArrow}
+              type="button"
+              aria-label="Previous reviews"
+              onClick={() => goTo(page - 1)}
+            >
+              <ArrowLeft />
+            </button>
+            <div className={classes.ptDots} role="tablist">
+              {pages.map((_, k) => (
+                <button
+                  key={k}
+                  type="button"
+                  aria-label={`Reviews page ${k + 1}`}
+                  className={`${classes.ptDot}${k === page ? ` ${classes.isActive}` : ""}`}
+                  onClick={() => goTo(k)}
+                />
+              ))}
+            </div>
+            <button
+              className={classes.ptArrow}
+              type="button"
+              aria-label="Next reviews"
+              onClick={() => goTo(page + 1)}
+            >
+              <ArrowRight />
+            </button>
+          </div>
+          <div className={classes.ptTrustbar}>
+            <div
+              className="trustpilot-widget"
+              data-locale="en-US"
+              data-template-id="5406e65db0d04a09e042d5fc"
+              data-businessunit-id="60e5837e95cb800001e58b14"
+              data-style-height="28px"
+              data-style-width="100%"
+              data-token="6100d50c-77a5-4123-ba13-e8cf4c6bec64"
+            >
+              <a
+                href="https://www.trustpilot.com/review/phil.us"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Trustpilot
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -514,10 +1038,12 @@ const FooterCta = () => (
         </h2>
         <div className={classes.footerCtaButtons}>
           <a
-            href={CONTACT_PAGE_URL}
+            href={HCP_SUPPORT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className={`${classes.btn} ${classes.btnFooterLight}`}
           >
-            Contact PHILRx Support
+            Contact Support
           </a>
         </div>
       </div>
@@ -558,10 +1084,12 @@ const ProvidersPage: React.FC = () => {
     <PageContext.Provider value={{ title: "Providers" }}>
       <Layout>
         <HeroSection />
-        <TrustpilotStrip />
+        <AccessSection />
+        <WhySection />
         <StepsSection />
         <VideoSection />
-        <TestimonialsSection />
+        <ProvidersSection />
+        <PatientsSection />
         <FaqSection />
         <FooterCta />
       </Layout>

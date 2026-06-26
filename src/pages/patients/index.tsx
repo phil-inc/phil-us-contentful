@@ -132,10 +132,10 @@ const HeroSection = () => {
               </span>
             </h1>
             <p className={classes.heroCopy__lead}>
-              We are on a mission to help you get your medications quickly and
-              affordably. Our easy mobile experience helps get your prescriptions
-              covered by insurance with free home delivery while providing
-              real‑time updates and refill reminders.
+              We're here to help you get your medications quickly and affordably.
+              Our easy mobile experience helps get your prescriptions covered by
+              insurance for an affordable cost, with free home delivery, real‑time
+              prescription updates, and timely refill reminders.
             </p>
             <div className={classes.heroCta}>
               <BtnFilled href={PATIENT_LOGIN_URL}>Patient Login</BtnFilled>
@@ -189,37 +189,191 @@ const HeroSection = () => {
   );
 };
 
-// ─── Trustpilot Strip ─────────────────────────────────────────────────────────
+// ─── Value Prop / Mission ─────────────────────────────────────────────────────
 
-const TrustpilotStrip = () => (
-  <section className={classes.trust}>
-    <div className="xl-container">
-      <div className={classes.trustHead}>
-        <Eyebrow text="Trusted by Patients" />
-        <h2 className={classes.trustTitle}>Hear from Happy PHILRx Patients</h2>
-      </div>
-      <div
-        className="trustpilot-widget"
-        data-locale="en-US"
-        data-template-id="53aa8912dec7e10d38f59f36"
-        data-businessunit-id="60e5837e95cb800001e58b14"
-        data-style-height="140px"
-        data-style-width="100%"
-        data-token="2756914d-336b-4583-b3f4-75c0b1f9734f"
-        data-stars="4,5"
-        data-review-languages="en"
-      >
-        <a
-          href="https://www.trustpilot.com/review/phil.us"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Trustpilot
-        </a>
-      </div>
-    </div>
-  </section>
+const VP_STATS = [
+  {
+    to: 2,
+    label: "Patient Starts",
+    text: "You're more likely to start the medications you're prescribed",
+  },
+  {
+    to: 2,
+    label: "Covered Dispenses",
+    text: "More prescriptions covered by insurance, so you pay less out of pocket",
+  },
+  {
+    to: 3,
+    label: "Refill Adherence",
+    text: "You're more likely to stay on track with your medications",
+  },
+] as const;
+
+const VpCheckIcon = () => (
+  <span className={classes.vpFicon} aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path
+        className={classes.vpCheckPath}
+        d="M9 16.5l5 5L23 11"
+        stroke="#fff"
+        strokeWidth="3.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </span>
 );
+
+const ValueProp = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [on, setOn] = useState(false);
+  const [counts, setCounts] = useState<number[]>(VP_STATS.map(() => 0));
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node || typeof window === "undefined") return;
+
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    let raf = 0;
+    const run = () => {
+      setOn(true);
+      if (reduce) {
+        setCounts(VP_STATS.map((s) => s.to));
+        return;
+      }
+      const dur = 1400;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setCounts(VP_STATS.map((s) => Math.round(eased * s.to)));
+        if (p < 1) raf = requestAnimationFrame(tick);
+        else setCounts(VP_STATS.map((s) => s.to));
+      };
+      raf = requestAnimationFrame(tick);
+    };
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          run();
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+    obs.observe(node);
+
+    return () => {
+      obs.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <section ref={sectionRef} className={classes.valueProp}>
+      <div className="xl-container">
+        <div className={classes.sectionHead}>
+          <h2>We Believe Patients Deserve Affordable Medications</h2>
+          <p className={classes.sectionSub}>
+            PHILRx helps you get your medications at the right price, with a quick
+            and simple way to receive them.
+          </p>
+        </div>
+
+        <div className={classes.vpGrid}>
+          <div className={classes.vpPanel}>
+            <p className={classes.vpPanelLabel}>Why patients choose PHILRx</p>
+            <div className={classes.vpStats}>
+              {VP_STATS.map((s, i) => (
+                <div key={s.label} className={classes.vpStat}>
+                  <div className={classes.vpStatNum}>
+                    <span>{counts[i]}</span>
+                    <span className={classes.vpSuffix}>
+                      <span className={classes.vpX}>×</span>
+                      <span className={classes.vpPlus}>+</span>
+                    </span>
+                  </div>
+                  <div className={classes.vpStatLabel}>{s.label}</div>
+                  <div className={classes.vpStatText}>{s.text}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div
+            className={`${classes.vpFeatures}${on ? ` ${classes.isOn}` : ""}`}
+          >
+            <p className={classes.vpFeatEyebrow}>How we support patients</p>
+            <div className={classes.vpFeature}>
+              <div className={classes.vpFeatureHead}>
+                <VpCheckIcon />
+                <h3>Affordable Medications</h3>
+              </div>
+              <p>
+                We work hard to get you an affordable price for your medications.
+                We check what your insurance covers and make sure you're getting
+                the right savings with transparent pricing throughout the process.
+              </p>
+            </div>
+            <div className={classes.vpFeature}>
+              <div className={classes.vpFeatureHead}>
+                <VpCheckIcon />
+                <h3>Convenient Access</h3>
+              </div>
+              <p>
+                Skip the trip to the pharmacy. We deliver your medications straight
+                to your door for free. Refills are easy to manage, and our
+                dedicated team is available if you have questions or need support.
+              </p>
+            </div>
+            <div className={classes.vpFeature}>
+              <div className={classes.vpFeatureHead}>
+                <VpCheckIcon />
+                <h3>Seamless Experience</h3>
+              </div>
+              <p>
+                We keep you and your doctor informed about your prescriptions at
+                every step of the process. We're proud to have a{" "}
+                <span className={classes.vpMark}>4.8/5.0</span> satisfaction score
+                on TrustPilot from our strong and growing patient community.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* TrustBox — Carousel (relocated from former standalone Trustpilot strip) */}
+        <div className={classes.vpTrust}>
+          <div className={classes.vpTrustEyebrow}>
+            <Eyebrow text="Hear From PHILRx Patients" />
+          </div>
+          <div
+            className="trustpilot-widget"
+            data-locale="en-US"
+            data-template-id="53aa8912dec7e10d38f59f36"
+            data-businessunit-id="60e5837e95cb800001e58b14"
+            data-style-height="170px"
+            data-style-width="100%"
+            data-token="2756914d-336b-4583-b3f4-75c0b1f9734f"
+            data-stars="4,5"
+            data-review-languages="en"
+          >
+            <a
+              href="https://www.trustpilot.com/review/phil.us"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Trustpilot
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // ─── Steps ───────────────────────────────────────────────────────────────────
 
@@ -228,6 +382,9 @@ const StepsSection = () => (
     <div className="xl-container">
       <div className={classes.sectionHead}>
         <h2>Getting Your Medications with PHILRx is Easy</h2>
+        <p className={classes.sectionSub}>
+          Here's how we work to get you quick, affordable medication access:
+        </p>
       </div>
       <div className={classes.stepsGrid}>
         <div className={classes.stepLine} aria-hidden="true" />
@@ -257,7 +414,7 @@ const VideoSection = () => (
       </div>
       <div className={classes.videoFrame}>
         <iframe
-          src="https://www.youtube-nocookie.com/embed/-yW2FBSAtd8?rel=0"
+          src="https://www.youtube-nocookie.com/embed/-yW2FBSAtd8?rel=0&playsinline=1&modestbranding=1"
           title="How PHILRx Helps You Save on Your Prescriptions"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -337,7 +494,7 @@ const TestimonialsCarousel = () => {
     <section className={classes.testimonials__section}>
       <div className="xl-container">
         <div className={classes.sectionHead}>
-          <h2>What Our Patients Say</h2>
+          <h2>Hear from Happy Patients</h2>
         </div>
 
         <div
@@ -521,7 +678,7 @@ const PatientsPage: React.FC = () => {
     <PageContext.Provider value={{ title: "Patients" }}>
       <Layout>
         <HeroSection />
-        <TrustpilotStrip />
+        <ValueProp />
         <StepsSection />
         <VideoSection />
         <TestimonialsCarousel />
