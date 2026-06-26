@@ -2022,6 +2022,13 @@
   .scope .di-card[data-i="3"] .di-viz { flex-direction: column; }
   .scope .di-card[data-i="3"] .tq-pop { position: relative; right: auto !important; bottom: auto !important; width: 100% !important; max-width: none; margin: 22px 0 0; }
 
+  /* Re-apply horizontal clipping ONLY on mobile. Here the horizontal `.jt-wrap`
+     (whose `.jt-above` cards overflow upward) is display:none, so the Safari
+     `overflow-x: clip` "clips both axes" bug can't cut anything vertically — the
+     vertical `.jt-mobile` timeline only needs its sideways spill contained, which
+     keeps the horizontal scrollbar away. Desktop intentionally leaves this off. */
+  .scope .di-viz .dx-shot { overflow-x: clip; }
+
 }
 
 @media (max-width: $phil-breakpoint-xs) {
@@ -2036,7 +2043,12 @@
 
 .scope .di-viz { position: relative; order: 1; overflow: hidden; background: linear-gradient(135deg, #F0FAF9 0%, #E8F4F1 100%); border-top: 1px solid var(--phil-base); display: flex; align-items: center; justify-content: center; padding: 28px; flex: 1 1 auto; }
 
-.scope .di-viz .dx-shot { margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; width: 100%; overflow-x: clip; }
+/* No `overflow-x: clip` here. Safari/WebKit treats `overflow-x: clip` as clipping
+   BOTH axes, which cut off the `.jt-above` insight cards that intentionally overflow
+   upward (Chromium clips x-only and was fine). `.di-viz` already has `overflow: hidden`,
+   so the wide timeline is still clipped horizontally — this just lets the insight
+   cards show consistently across browsers. */
+.scope .di-viz .dx-shot { margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; width: 100%; }
 
 .scope .di-viz .sq-table-wrap, .scope .di-viz .sq-table-wrap.sq-hcp { max-width: 920px; margin: 0 auto; }
 
