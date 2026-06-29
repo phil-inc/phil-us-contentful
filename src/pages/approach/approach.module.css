@@ -84,6 +84,7 @@
   background: var(--phil-paper);
 }
 .bandSolutions {
+  scroll-margin-top: calc(var(--navbar-height, 90px) + 20px);
   overflow: visible;
   background:
     linear-gradient(105deg,
