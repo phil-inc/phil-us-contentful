@@ -370,8 +370,8 @@ const ApproachOutcomesPage = () => {
               </div>
 
               <div className={classes.heroFoot}>
-                <Link className={classes.learnLink} to="/solution/core/">
-                  Learn About PHIL Solutions <ArrowRight />
+                <Link className={classes.learnLink} to="#solutions">
+                  See Our Solution <ArrowRight />
                 </Link>
               </div>
             </div>
@@ -390,18 +390,23 @@ const ApproachOutcomesPage = () => {
                 {JOURNEY_STEPS.map((step, i) => {
                   const Icon = JourneyIcons[i];
                   return (
-                    <button
+                    <div
                       key={i}
-                      type="button"
                       className={`${classes.jNode} ${i === activeStep ? classes.jNodeActive : ""}`}
-                      onClick={() => goToStep(i)}
                     >
-                      <div className={classes.jCircle}>
+                      <div className={classes.jCircle} onClick={() => goToStep(i)} role="button" tabIndex={-1}>
                         <Icon step={i} />
                         <span className={classes.jBadge}>{i + 1}</span>
                       </div>
-                      <p className={classes.jTitle}>{step.title}</p>
-                    </button>
+                      <button
+                        type="button"
+                        className={classes.jTitle}
+                        onClick={() => goToStep(i)}
+                        aria-label={`Step ${i + 1}: ${step.title}`}
+                      >
+                        {step.title}
+                      </button>
+                    </div>
                   );
                 })}
               </div>
@@ -445,7 +450,7 @@ const ApproachOutcomesPage = () => {
           </section>
 
           {/* ═══ OUR SOLUTIONS ═══ */}
-          <section className={`${classes.band} ${classes.bandSolutions}`}>
+          <section id="solutions" className={`${classes.band} ${classes.bandSolutions}`}>
             <div className="xl-container">
               <div className={classes.sectionHead} style={{ maxWidth: "none" }}>
                 <h2>{SOLUTIONS_HEAD.h2}</h2>

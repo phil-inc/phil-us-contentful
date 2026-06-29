@@ -133,7 +133,7 @@ const HeroSection = () => (
         Secure Commercial Success in <em>Retail and Specialty-Lite</em>
       </h1>
       <p className={classes.heroLead}>
-        PHIL is the end-to-end access platform that helps retail and specialty lite brands overcome
+        PHIL is the end-to-end access platform that helps retail and specialty-lite brands overcome
         access barriers, improve patient outcomes, and optimize commercial performance at every stage
         of the script journey. Our platform combines human-first care with thoughtful AI integration,
         turning enrollment into starts, starts into covered dispenses, and dispenses into long-term
