@@ -409,12 +409,12 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
               <div
                 key={section.key}
                 className={cx(classes.navItem, { [classes.navItemOpen]: openMenu === section.key })}
-                onMouseEnter={() => handleMouseEnter(section.key)}
                 onMouseLeave={handleMouseLeave}
               >
                 <button
                   className={classes.navTrigger}
                   onClick={() => handleOpen(openMenu === section.key ? null : section.key)}
+                  onMouseEnter={() => handleMouseEnter(section.key)}
                 >
                   {section.label}
                 </button>
