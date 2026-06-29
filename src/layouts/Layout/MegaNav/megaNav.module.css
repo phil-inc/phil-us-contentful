@@ -114,11 +114,12 @@
 
 .navTrigger:hover {
   color: #00827E;
+  background: #D5F1F0;
 }
 
 .navItemOpen .navTrigger {
   color: #00827E;
-  background: rgba(0, 130, 126, 0.08);
+  background: #D5F1F0;
 }
 
 .navActions {
