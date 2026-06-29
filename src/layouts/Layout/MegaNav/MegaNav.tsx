@@ -386,7 +386,7 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
 
   return (
     <>
-      <header className={classes.navShell} ref={shellRef}>
+      <header className={classes.navShell} ref={shellRef} onMouseLeave={handleMouseLeave}>
         {/* Promo Banner */}
         {showPromoBanner && (
           <div className={classes.promoBanner}>
@@ -404,12 +404,11 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
         <div className={`xl-container ${classes.navBar}`}>
           {logo}
 
-          <nav className={classes.navPrimary} aria-label="Primary">
+          <nav className={classes.navPrimary} aria-label="Primary" onMouseEnter={() => { if (hoverTimer.current) clearTimeout(hoverTimer.current); }}>
             {NAV_SECTIONS.map((section) => (
               <div
                 key={section.key}
                 className={cx(classes.navItem, { [classes.navItemOpen]: openMenu === section.key })}
-                onMouseLeave={handleMouseLeave}
               >
                 <button
                   className={classes.navTrigger}
