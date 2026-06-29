@@ -2021,7 +2021,7 @@
      the section at full width (instead of overlapping the journey). */
   .scope .di-card[data-i="3"] .di-viz { flex-direction: column; }
   .scope .di-card[data-i="3"] .tq-pop { position: relative; right: auto !important; bottom: auto !important; width: 100% !important; max-width: none; margin: 22px 0 0; }
-
+  .scope .di-viz .dx-shot { overflow-x: clip; }
 }
 
 @media (max-width: $phil-breakpoint-xs) {
@@ -2036,7 +2036,7 @@
 
 .scope .di-viz { position: relative; order: 1; overflow: hidden; background: linear-gradient(135deg, #F0FAF9 0%, #E8F4F1 100%); border-top: 1px solid var(--phil-base); display: flex; align-items: center; justify-content: center; padding: 28px; flex: 1 1 auto; }
 
-.scope .di-viz .dx-shot { margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; width: 100%; overflow-x: clip; }
+.scope .di-viz .dx-shot { margin: 0; padding: 0; background: transparent; border: 0; box-shadow: none; width: 100%;}
 
 .scope .di-viz .sq-table-wrap, .scope .di-viz .sq-table-wrap.sq-hcp { max-width: 920px; margin: 0 auto; }
 
