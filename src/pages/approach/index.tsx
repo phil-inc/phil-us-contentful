@@ -370,9 +370,17 @@ const ApproachOutcomesPage = () => {
               </div>
 
               <div className={classes.heroFoot}>
-                <Link className={classes.learnLink} to="#solutions">
+                <a
+                  className={classes.learnLink}
+                  href="#solutions"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById("solutions");
+                    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 110, behavior: "smooth" });
+                  }}
+                >
                   See Our Solution <ArrowRight />
-                </Link>
+                </a>
               </div>
             </div>
           </section>
