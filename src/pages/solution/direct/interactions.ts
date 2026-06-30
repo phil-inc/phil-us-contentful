@@ -287,21 +287,21 @@ export function attachSolutionDirectInteractions(): () => void {
     // metrics
     var metricCards = Array.prototype.slice.call(card.querySelectorAll('.ifm-card'));
     var metricCounter = makeCounter(Array.prototype.slice.call(card.querySelectorAll('.ifm-value:not(.ifm-nocount), .ifm-delta')));
-    function animateCountToArrow(box) {
+    function animateCountToArrow(box, down) {
       if (!box) return;
       var numEl = box.querySelector('.dropoff-num');
       var arrowEl = box.querySelector('.dropoff-arrow');
       if (!numEl || !arrowEl) return;
-      function finish() { numEl.hidden = true; arrowEl.hidden = false; arrowEl.classList.add('in'); }
-      if (reduce) { finish(); return; }
-      numEl.hidden = false; numEl.textContent = '0%';
-      arrowEl.hidden = true; arrowEl.classList.remove('in');
-      var start = null, dur = 1200;
+      function finish() { numEl.classList.add('out'); arrowEl.hidden = false; arrowEl.classList.add('in'); }
+      if (reduce) { numEl.hidden = true; arrowEl.hidden = false; arrowEl.classList.add('in'); return; }
+      numEl.hidden = false; numEl.classList.remove('out'); numEl.textContent = (down ? 100 : 0) + '%';
+      arrowEl.hidden = false; arrowEl.classList.remove('in');
+      var start = null, dur = 2400;
       function tick(ts) {
         if (!start) start = ts;
         var p = Math.min((ts - start) / dur, 1);
         var e = 1 - Math.pow(1 - p, 3);
-        numEl.textContent = Math.round(100 * e) + '%';
+        numEl.textContent = Math.round(100 * (down ? 1 - e : e)) + '%';
         if (p < 1) requestAnimationFrame(tick);
         else finish();
       }
@@ -309,7 +309,7 @@ export function attachSolutionDirectInteractions(): () => void {
       setTimeout(finish, dur + 500);
     }
     function animateDropoff() {
-      animateCountToArrow(card.querySelector('#dropoffValue'));
+      animateCountToArrow(card.querySelector('#dropoffValue'), true);
       animateCountToArrow(card.querySelector('#enrollValue'));
       animateCountToArrow(card.querySelector('#speedValue'));
     }

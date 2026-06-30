@@ -217,7 +217,7 @@ export const TelemedicineSection: React.FC = () => (
                     </div>
                     <div className="adx-hero tp-bokeh">
                       <h5>
-                        Learn if Adaptrex&reg;
+                        Learn if Adaptrex
                         <br />
                         may be right for you
                       </h5>
@@ -360,7 +360,7 @@ export const TelemedicineSection: React.FC = () => (
                         <span className="ph-tag">Rx at your fingertips</span>
                       </div>
                       <div className="enr-bubble">
-                        Hi Sarah! Dr. Jones sent your Adaptrex&reg; prescription
+                        Hi Sarah! Dr. Jones sent your Adaptrex prescription
                         to the PHILRx pharmacy. Tap below to get started.
                       </div>
                       <div className="enr-checks">
@@ -436,6 +436,10 @@ export const TelemedicineSection: React.FC = () => (
                   <span className="tj-label">Into PHIL&rsquo;s Platform</span>
                 </div>
               </div>
+              <p className="tele-disclaimer">
+                *Adaptrex is a fictional product used for illustrative purposes
+                only.
+              </p>
             </div>
           </div>
         </div>
@@ -586,7 +590,7 @@ export const TelemedicineSection: React.FC = () => (
                             </div>
                             <div className="ehr-rx">
                               <span className="ehr-rx-label">New Prescription</span>
-                              <b className="ehr-rx-name">Adaptrex&reg;</b>
+                              <b className="ehr-rx-name">Adaptrex</b>
                             </div>
                           </div>
                         </div>
@@ -638,7 +642,7 @@ export const TelemedicineSection: React.FC = () => (
                         <span className="ph-tag">Rx at your fingertips</span>
                       </div>
                       <div className="enr-bubble">
-                        Hi Sarah! Dr. Jones sent your Adaptrex&reg; prescription
+                        Hi Sarah! Dr. Jones sent your Adaptrex prescription
                         to the Manufacturer Rx pharmacy. Tap below to get started.
                       </div>
                       <div className="enr-checks">
@@ -682,15 +686,15 @@ export const TelemedicineSection: React.FC = () => (
                         <span>Rx at your fingertips</span>
                       </div>
                       <div className="tcd-lead">
-                        We found your best price on Adaptrex&reg;!
+                        We found your best price on Adaptrex!
                       </div>
                       <div className="tcd-option" role="button" tabIndex={0} onClick={pickTcd} onKeyDown={keyTcd}>
                         <span className="tcd-radio is-empty" />
                         <div>
                           <p className="tcd-opt-title">
-                            30 Day Supply with Insurance Copay for $50
+                            30 Day Supply with Copay Offer for $25
                           </p>
-                          <span className="tcd-off">58% OFF</span>
+                          <span className="tcd-off">79% OFF</span>
                         </div>
                       </div>
                       <div className="tcd-option is-selected" role="button" tabIndex={0} onClick={pickTcd} onKeyDown={keyTcd}>
@@ -699,9 +703,9 @@ export const TelemedicineSection: React.FC = () => (
                           <p className="tcd-opt-title">
                             30 Day Supply with
                             <br />
-                            Cash Price for $25
+                            Cash Price for $50
                           </p>
-                          <span className="tcd-off">79% OFF</span>
+                          <span className="tcd-off">58% OFF</span>
                         </div>
                       </div>
                       <div className="tcd-spacer" />
@@ -768,6 +772,10 @@ export const TelemedicineSection: React.FC = () => (
                   <span className="tj-label">Payment and Dispense</span>
                 </div>
               </div>
+              <p className="tele-disclaimer">
+                *Adaptrex is a fictional product used for illustrative purposes
+                only.
+              </p>
             </div>
           </div>
         </div>
@@ -808,7 +816,7 @@ export const TelemedicineSection: React.FC = () => (
                       <h5>
                         Begin your path to
                         <br />
-                        Adaptrex&reg;
+                        Adaptrex
                       </h5>
                     </div>
                     <div className="adx-pill">
@@ -859,7 +867,7 @@ export const TelemedicineSection: React.FC = () => (
                         <span className="ph-tag">Rx at your fingertips</span>
                       </div>
                       <div className="enr-bubble">
-                        Hi Sarah! Dr. Jones sent your Adaptrex&reg; prescription
+                        Hi Sarah! Dr. Jones sent your Adaptrex prescription
                         to the PHILRx pharmacy. Tap below to get started.
                       </div>
                       <div className="enr-checks">
@@ -902,15 +910,15 @@ export const TelemedicineSection: React.FC = () => (
                         <span>Rx at your fingertips</span>
                       </div>
                       <div className="tcd-lead">
-                        We found your best price on Adaptrex&reg;!
+                        We found your best price on Adaptrex!
                       </div>
                       <div className="tcd-option is-selected" role="button" tabIndex={0} onClick={pickTcd} onKeyDown={keyTcd}>
                         <span className="tcd-radio" />
                         <div>
                           <p className="tcd-opt-title">
-                            30 Day Supply with Insurance Copay for $25
+                            30 Day Supply with Insurance Copay for $125
                           </p>
-                          <span className="tcd-off">79% OFF</span>
+                          <span className="tcd-off">5% OFF</span>
                         </div>
                       </div>
                       <div className="tcd-option" role="button" tabIndex={0} onClick={pickTcd} onKeyDown={keyTcd}>
@@ -979,6 +987,10 @@ export const TelemedicineSection: React.FC = () => (
                   <span className="tj-label">PA &amp; Affordability Optimization</span>
                 </div>
               </div>
+              <p className="tele-disclaimer">
+                *Adaptrex is a fictional product used for illustrative purposes
+                only.
+              </p>
             </div>
           </div>
         </div>

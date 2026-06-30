@@ -31,29 +31,6 @@ const SolutionCorePage: React.FC = () => {
     return detach;
   }, []);
 
-  // Arriving with a section hash (e.g. /solution/core/#data from the Direct
-  // page). gatsby-browser skips the instant jump, so slide to the section here.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const { hash } = window.location;
-    if (!hash) return;
-    // Start from the very top, then slide down to the target section.
-    window.scrollTo(0, 0);
-    let raf = 0;
-    const timer = window.setTimeout(() => {
-      const el = document.querySelector(hash);
-      if (!el) return;
-      raf = window.requestAnimationFrame(() => {
-        const y = el.getBoundingClientRect().top + window.scrollY - 94;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      });
-    }, 100);
-    return () => {
-      window.clearTimeout(timer);
-      if (raf) window.cancelAnimationFrame(raf);
-    };
-  }, []);
-
   useEffect(() => {
     if (typeof window === "undefined") return;
     const initWidgets = () => {

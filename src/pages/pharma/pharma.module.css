@@ -1370,12 +1370,15 @@
   .hero { padding: 64px 0 80px; }
   .heroH1 { font-size: 34px; }
   .heroH1 em { font-style: normal; }
+  .heroLead { font-size: 16px; }
   .sectionHead h2, .sectionHeadCenter h2, .faqHeaderH2 { font-size: 32px; }
   .leadCenter { font-size: 15.5px; line-height: 1.55; }
   .statRowHead { font-size: 20px; margin-bottom: 22px; }
-  .statCard { padding: 26px 22px; min-height: 0; min-width: 240px; }
-  .statNum { font-size: 56px; letter-spacing: -0.02em; }
-  .statLabel { font-size: 15px; }
+  .statCard { flex: 0 0 210px; width: 210px; height: 210px; min-width: 0; min-height: 0; padding: 20px 18px; border-radius: 18px; }
+  .statNum { font-size: 42px; letter-spacing: -0.02em; }
+  .statLabel { font-size: 13px; }
+  .statText { gap: 6px; }
+  .statTrack:hover { animation-play-state: running; }
   .partnerTabs { grid-template-columns: 1fr 1fr; gap: 8px; }
   .partnerTab, .partnerTabActive { padding: 11px 16px; font-size: 12.5px; }
   .partnerPanel, .partnerPanelActive { padding: 22px; border-radius: 18px; }
@@ -1428,13 +1431,12 @@
   .leadCenter { font-size: 16px; }
   .eyebrow { font-size: 11px; }
   .statRowHead { font-size: 17px; }
-  .statCard { padding: 22px 20px; }
-  .statNum { font-size: clamp(36px, 11vw, 56px) !important; }
-  .statLabel { font-size: 14px; }
+  .statCard { flex: 0 0 168px; width: 168px; height: 168px; padding: 16px; border-radius: 16px; }
+  .statNum { font-size: 34px !important; }
+  .statLabel { font-size: 12px; }
   .partnerCtas { flex-direction: column; align-items: stretch; gap: 18px; }
-  .partnerCtas .btnPrimary,
-  .partnerCtas .btnText { width: 100%; justify-content: center; }
-  .partnerCtas .btnText { padding: 4px 0; }
+  .partnerCtas .btnPrimary { width: 100%; justify-content: center; }
+  .partnerCtas .btnText { width: fit-content; align-self: center; justify-content: center; padding: 4px 0; }
   .stkRail { gap: 8px; }
   .stkTab, .stkTabActive { grid-template-columns: 40px 1fr 14px; gap: 12px; padding: 12px 14px; font-size: 14px; }
   .stkTabIcon { width: 40px; height: 40px; border-radius: 10px; }
