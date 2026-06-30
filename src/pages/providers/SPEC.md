@@ -15,7 +15,7 @@ Shared `Layout` (site navbar + footer).
 3. **Steps** — H2 "How to Prescribe to PHILRx", 3 numbered cards.
 4. **Video** — YouTube `Fkq1ncdE2ug`.
 5. **Testimonials** — 2-column synchronized rotator: "What Patients Say" / "What Providers Say". Auto-advances every ~3s. Below: Trustpilot horizontal widget.
-6. **FAQ** — sidebar category nav (8 categories) + scroll-spy + accordion items. "Visit Help Center" button.
+6. **FAQ** — sidebar category nav (8 categories) + scroll-spy + accordion items.
 7. **Footer CTA** — "Get MD Support from the PHILRx Team", "Contact PHILRx Support" → `https://phil.us/contact/`.
 
 ## Interactivity

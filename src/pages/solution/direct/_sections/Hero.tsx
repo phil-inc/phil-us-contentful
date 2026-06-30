@@ -87,7 +87,7 @@ export const HeroSection: React.FC = () => (
                   </svg>
                 </div>
                 <div className="dtp-prod-info">
-                  <p className="dtp-prod-name">Adaptrex&reg;</p>
+                  <p className="dtp-prod-name">Adaptrex</p>
                   <p className="dtp-prod-sub">30-day supply</p>
                   <span className="dtp-instock">
                     <i /> In stock &middot; ships free

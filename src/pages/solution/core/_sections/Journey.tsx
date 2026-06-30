@@ -71,7 +71,7 @@ export const JourneySection: React.FC = () => (
                     <div className="jx-notch"></div>
                     <div className="phone-screen">
                       <div className="phone-brandrow"><span className="phone-brand">PHILRx</span><span className="phone-tagline">Rx at your fingertips</span></div>
-                      <div className="bubble">Hi Sarah! Dr. Jones sent your Adaptrex® prescription to the PHILRx pharmacy. Tap below to get started.</div>
+                      <div className="bubble">Hi Sarah! Dr. Jones sent your Adaptrex prescription to the PHILRx pharmacy. Tap below to get started.</div>
                       <div className="checks">
                         <div className="check-row"><span className="check">✓</span> Enroll in minutes</div>
                         <div className="check-row"><span className="check">✓</span> Fast, free shipping</div>
@@ -104,7 +104,7 @@ export const JourneySection: React.FC = () => (
                     <div className="jx-notch"></div>
                     <div className="tc-screen">
                       <div className="tc-brandrow"><span className="tc-brand">PHILRx</span><span className="tc-tagline">Rx at your fingertips</span></div>
-                      <div className="tc-lead">We found your best price on Adaptrex®!</div>
+                      <div className="tc-lead">We found your best price on Adaptrex!</div>
                       <div className="tc-option">
                         <span className="tc-radio"></span>
                         <div><p className="tc-opt-title">Purchase a 30 Day Supply for $25</p><span className="tc-off">79% OFF</span></div>
@@ -153,7 +153,7 @@ export const JourneySection: React.FC = () => (
                       <div className="sd-brandrow"><span className="sd-brand">PHILRx</span><span className="sd-tagline">Rx at your fingertips</span></div>
                       <p className="sd-title">My prescriptions</p>
                       <div className="sd-rx">
-                        <p className="sd-rx-name">Adaptrex®</p>
+                        <p className="sd-rx-name">Adaptrex</p>
                         <p className="sd-rx-refills">3 refills remaining</p>
                         <p className="sd-rx-choose">Choose your preferred delivery option</p>
                       </div>
@@ -168,7 +168,7 @@ export const JourneySection: React.FC = () => (
                       <div className="rf-brandrow"><span className="rf-brand">PHILRx</span><span className="rf-tagline">Rx at your fingertips</span></div>
                       <p className="rf-title">My prescriptions</p>
                       <div className="rf-rx">
-                        <p className="rf-rx-name">Adaptrex®</p>
+                        <p className="rf-rx-name">Adaptrex</p>
                         <p className="rf-rx-refills">2 refills remaining</p>
                       </div>
                       <div className="rf-note">Your next refill is scheduled. Please confirm below.</div>
@@ -191,6 +191,7 @@ export const JourneySection: React.FC = () => (
                 <button className="jx2-step" type="button" data-i="4" role="tab"><span className="jx2-dot">5</span><span className="jx2-name">Nationwide Pharmacy Reach</span></button>
                 <button className="jx2-step" type="button" data-i="5" role="tab"><span className="jx2-dot">6</span><span className="jx2-name">Fast, Trackable Fulfillment</span></button>
                 <button className="jx2-step" type="button" data-i="6" role="tab"><span className="jx2-dot">7</span><span className="jx2-name">Seamless Refill Management</span></button>
+                <p className="jx2-disclaimer">*Adaptrex is a fictional product used for illustrative purposes only.</p>
               </div>
             </div>
             <div className="jx2-skip-row">

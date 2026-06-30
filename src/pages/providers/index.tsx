@@ -6,7 +6,6 @@ import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 
 import {
-  HELP_CENTER_URL,
   STEPS,
   PATIENT_TESTIMONIALS,
   PROVIDER_TESTIMONIALS,
@@ -942,14 +941,6 @@ const FaqSection = () => {
                 Your Questions About PHILRx, Answered
               </h2>
             </aside>
-            <a
-              href={HELP_CENTER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${classes.btn} ${classes.btnOutlineGradient}`}
-            >
-              Visit Help Center
-            </a>
           </div>
 
           <div className={classes.faqBody}>

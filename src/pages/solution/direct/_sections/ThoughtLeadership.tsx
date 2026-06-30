@@ -225,12 +225,16 @@ export const ThoughtLeadershipSection: React.FC = () => (
       </div>
 
       {/* CTA bar — full library of resources */}
-      <div className="bt bt-cta bt-cta--full" style={{ marginTop: "48px" }}>
+      <Link
+        className="bt bt-cta bt-cta--full"
+        to="/resources/?topic=direct"
+        style={{ marginTop: "48px" }}
+      >
         <h4>Explore our full library of DTP resources.</h4>
-        <Link className="bt-link" to="/resources/?topic=direct">
+        <span className="bt-link">
           Explore All Resources <Arrow />
-        </Link>
-      </div>
+        </span>
+      </Link>
     </div>
   </section>
 );

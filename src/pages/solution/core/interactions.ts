@@ -179,19 +179,35 @@ export function attachSolutionCoreInteractions(): () => void {
       });
     });
 
-    // The pinned pane scrubs symmetrically — pins going down, un-pins going
-    // up, exactly like any sticky section. No scroll-driven height change.
+    // Current scroll offset (used by the rail-jump and the upward-escape
+    // controller below).
     function curY(){ return window.pageYOffset || document.documentElement.scrollTop || 0; }
 
-    // "Continue to Next Section" — smooth-scroll past the journey track to the
-    // next section. The track stays at full height (no collapse), so scrolling
-    // back up scrubs through the steps normally.
+    // "Continue to Next Section" — collapse the track instantly (no scroll
+    // compensation) so it doesn't fight the navigation, then scroll DOWN to the
+    // next section. (Ported from the design reference Solutions Page v2.html.)
+    var expanded = true;
     var skip = document.getElementById('jx2Skip');
     if (skip) {
       function goNext(){
+        // Collapsing the track pulls the next section UP in the document, which
+        // can land it above the current scroll position (the skip button is
+        // pinned, so it's clickable from anywhere in the 480vh track) and make
+        // the "slide" go the wrong way. Re-anchor to the journey's top first —
+        // invisible because the sticky card is pinned to the viewport either way
+        // — so the slide to the next section is always DOWNWARD and short.
+        if (expanded) {
+          var jxTop = curY() + jx.getBoundingClientRect().top;
+          track.style.height = '100vh';
+          expanded = false;
+          window.scrollTo(0, Math.max(0, jxTop));
+        }
         var next = document.getElementById('program') || document.getElementById('data');
         if (next) {
-          var y = curY() + next.getBoundingClientRect().top - 76;
+          // 94px matches the `scroll-margin-top` used when arriving at #data via
+          // the Direct page link, so the section lands the same distance below
+          // the sticky navbar (76 was too small and the navbar clipped the title).
+          var y = curY() + next.getBoundingClientRect().top - 94;
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
       }
@@ -200,6 +216,34 @@ export function attachSolutionCoreInteractions(): () => void {
     }
 
     setStep(0);
+
+    // Upward escape: once the journey has been pinned and the user starts
+    // scrolling back UP, don't make them re-scroll through every step — snap
+    // out just above the section so their upward momentum carries them past it.
+    // (Ported verbatim from the design reference Solutions Page v2.html.)
+    (function(){
+      var lastY = curY();
+      var escaping = false;
+      window.addEventListener('scroll', function(){
+        if (mqMobile.matches || jumping) { lastY = curY(); return; }
+        var y = curY();
+        var goingUp = y < lastY - 0.5;
+        lastY = y;
+        if (escaping || !goingUp) return;
+        var rect = jx.getBoundingClientRect();
+        // pinned mid-section = top scrolled above the viewport but bottom still below it
+        var pinned = rect.top <= 1 && rect.bottom > window.innerHeight + 1;
+        if (!pinned) return;
+        escaping = true;
+        var target = Math.max(0, y + rect.top - 88); // land just above the section
+        // The reference relies on a global `html { scroll-behavior: smooth }` to
+        // animate this escape; the codebase scopes smooth scrolling to the Direct
+        // page only, so request it explicitly here to match the reference feel.
+        window.scrollTo({ top: target, behavior: 'smooth' });
+        lastY = curY();
+        setTimeout(function(){ escaping = false; }, 80);
+      }, { passive: true });
+    })();
 
     // Step 2 — interactive PHILRx enrollment phone: animate the check sequence
     // on hover/focus, and auto-play once when the step becomes active.

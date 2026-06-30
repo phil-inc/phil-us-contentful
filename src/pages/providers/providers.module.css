@@ -962,10 +962,6 @@
 }
 
 .faqHeaderRow {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 40px;
   margin-bottom: 48px;
 }
 
@@ -1257,7 +1253,6 @@
 @media (max-width: 900px) {
   .heroGrid { grid-template-columns: 1fr; gap: 48px; }
   .heroVisual { min-height: 0; margin: 0 auto; max-width: 440px; width: 100%; }
-  .faqHeaderRow { flex-direction: column; align-items: flex-start; gap: 20px; }
 }
 
 @media (max-width: 880px) {
@@ -1342,8 +1337,7 @@
 
   /* faq */
   .faqSection { padding: 48px 0; }
-  .faqHeaderRow { margin-bottom: 28px; gap: 16px; }
-  .faqHeaderRow .btnOutlineGradient { width: 100%; }
+  .faqHeaderRow { margin-bottom: 28px; }
   .faqH2 { font-size: clamp(26px, 6.2vw, 32px); }
   .faqQ { font-size: 16px; padding: 20px 0; gap: 12px; }
   .faqToggle { width: 32px; height: 32px; }

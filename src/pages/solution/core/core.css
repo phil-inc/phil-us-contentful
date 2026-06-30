@@ -294,6 +294,8 @@
 
 /* Data & Support get the looser bottom gap, mirroring Journey (100 → 65 → 50 → 44) */
 .scope #data, .scope #support { padding-bottom: 100px; }
+/* Offset native hash-jump landing (e.g. /solution/core/#data) below the sticky header */
+.scope #data, .scope #support { scroll-margin-top: 94px; }
 
 
 .scope .section-head { max-width: none; margin: 0 0 56px; text-align: center; }
@@ -1443,6 +1445,7 @@
 }
 
 .scope .jx2-step .jx2-name { font-family: var(--font-body); font-weight: 700; font-size: 14px; line-height: 1.25; }
+.scope .jx2-disclaimer { font-family: var(--font-body); font-size: 11.5px; line-height: 1.4; color: var(--phil-mortar); margin: 36px 0 0; padding-left: 28px; max-width: 250px; }
 
 .scope .jx2-step:hover { color: var(--phil-foliage); }
 
@@ -1483,6 +1486,7 @@
   /* 1) Numbered steps in a row along the top (no "Scroll to Learn More" label) */
   .scope .jx2-rail { display: flex; flex-flow: row wrap; justify-content: center; align-items: center; order: 1; width: 100%; gap: 11px; margin: 0; }
   .scope .jx2-rail-label { display: none; }
+  .scope .jx2-disclaimer { display: none; }
   .scope .jx2-step { grid-template-columns: auto; gap: 0; padding: 0; cursor: pointer; }
   .scope .jx2-step .jx2-name { display: none; }
   .scope .jx2-step::before { display: none; }

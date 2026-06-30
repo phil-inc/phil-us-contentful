@@ -42,13 +42,6 @@ export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({routerP
 		}
 	}
 
-	// Arriving on the Solution Core page with a section hash (e.g. /solution/core/#data):
-	// skip Gatsby's instant jump so the page can smooth-scroll ("slide") to the section itself.
-	const nextHash = routerProps?.location?.hash;
-	if (nextHash && (nextPath === '/solution/core' || nextPath === '/solution/core/')) {
-		return false;
-	}
-
 	return true;
 };
 
