@@ -84,6 +84,7 @@
   background: var(--phil-paper);
 }
 .bandSolutions {
+  scroll-margin-top: calc(var(--navbar-height, 90px) + 20px);
   overflow: visible;
   background:
     linear-gradient(105deg,
@@ -406,16 +407,6 @@
   align-items: center;
   text-align: center;
   padding: 0 8px;
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-  font: inherit;
-  color: inherit;
-}
-.jNode:focus-visible {
-  outline: 2px solid var(--phil-foliage);
-  outline-offset: 4px;
-  border-radius: 8px;
 }
 .jCircle {
   width: 80px;
@@ -429,9 +420,10 @@
   color: rgba(255, 255, 255, 0.42);
   position: relative;
   margin-bottom: 18px;
+  cursor: pointer;
   transition: background 220ms var(--ease-standard), box-shadow 220ms var(--ease-standard), transform 220ms var(--ease-standard), color 220ms var(--ease-standard);
 }
-.jNode:hover .jCircle {
+.jCircle:hover {
   background: linear-gradient(rgba(0, 130, 126, 0.7), rgba(0, 130, 126, 0.7)), white;
   color: rgba(255, 255, 255, 0.7);
 }
@@ -477,6 +469,20 @@
   color: var(--phil-pitch);
   margin: 0;
   max-width: 130px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.jTitle:hover {
+  color: var(--phil-foliage);
+  background: rgba(0, 130, 126, 0.06);
+}
+.jTitle:focus-visible {
+  outline: 2px solid var(--phil-foliage);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 .jNodeActive .jTitle {
   color: var(--phil-foliage);

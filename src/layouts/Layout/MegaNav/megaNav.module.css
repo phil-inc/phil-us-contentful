@@ -113,11 +113,13 @@
 }
 
 .navTrigger:hover {
-  color: #00827E;
+  color: #00615E;
+  background: #D5F1F0;
 }
 
 .navItemOpen .navTrigger {
-  color: #00827E;
+  color: #00615E;
+  background: #D5F1F0;
 }
 
 .navActions {
@@ -526,6 +528,11 @@
   font-size: 16px;
   color: #0A0A0A;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobileAccordionTriggerOpen {
+  color: #00827E;
 }
 
 .mobileAccordionTrigger svg {
@@ -726,6 +733,11 @@
   font-size: 16px;
   color: #0A0A0A;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobileAccordionTriggerOpen {
+  color: #00827E;
 }
 
 .mobileAccordionTrigger svg {
