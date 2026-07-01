@@ -940,6 +940,9 @@
   align-items: center;
   justify-content: center;
 }
+.pflDotShort {
+  display: none;
+}
 .pflDotActive {
   background: var(--phil-forest, #085041);
   color: var(--phil-pure, #fff);
@@ -1666,7 +1669,12 @@
   .solDirect { padding: 32px 24px 28px !important; border-radius: 22px; }
   .solFeature h4 { font-size: 17px; }
   .solFeature p { font-size: 13.5px; }
-  .solStackFoot { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 22px; }
+  .solStackFoot { flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 22px; }
+
+  .pflScenarios { flex-direction: row; flex-wrap: nowrap; align-items: center; }
+  .pflDot { flex: 1; padding: 8px 10px; }
+  .pflDotFull { display: none; }
+  .pflDotShort { display: inline; }
 
   .hcpGrid { grid-template-columns: 1fr; gap: 14px; }
   .csGrid { grid-template-columns: 1fr; gap: 14px; }

@@ -126,6 +126,9 @@ export function attachSolutionCoreInteractions(): () => void {
         b.setAttribute('aria-selected', k === i ? 'true' : 'false');
       });
       if (bar) bar.style.width = ((i + 1) / total * 100).toFixed(1) + '%';
+      // Mobile disclaimer shows only on the steps where Adaptrex appears (1,3,5,6).
+      var fnm = document.getElementById('jx2FootnoteMobile');
+      if (fnm) fnm.classList.toggle('show', i === 1 || i === 3 || i === 5 || i === 6);
       // fade copy out, swap text, fade back in
       copy.classList.add('is-swapping');
       if (swapTimer) clearTimeout(swapTimer);

@@ -596,7 +596,11 @@ export function attachSolutionDirectInteractions(): () => void {
         var y = tabsEl.getBoundingClientRect().top + window.pageYOffset - 20;
         window.scrollTo({ top: y, behavior: 'smooth' });
       });
+      var mobileFootnote = document.createElement('p');
+      mobileFootnote.className = 'tele-disclaimer tele-footnote--mobile';
+      mobileFootnote.textContent = '*Adaptrex is a fictional product used for illustrative purposes only.';
       main.appendChild(reselectBtn);
+      main.appendChild(mobileFootnote);
       var thumbs = Array.prototype.slice.call(journeyEl.querySelectorAll('.tele-thumb'));
       var rows = Array.prototype.slice.call(journeyEl.querySelectorAll('.tele-row'));
       var fill = journeyEl.querySelector('.tj-progress-fill');

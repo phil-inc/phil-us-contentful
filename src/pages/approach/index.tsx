@@ -264,6 +264,7 @@ const ApproachOutcomesPage = () => {
 
   // Flexible By Design — scenario interactivity
   const SCENARIO_LABELS = ["Coverage Path", "Cash Path", "Hybrid Path"];
+  const SCENARIO_LABELS_SHORT = ["Coverage", "Cash", "Hybrid"];
   const SCENARIOS: number[][] = [
     [0, 3, 6, 8],        // Coverage
     [1, 4, 7, 8],        // Cash
@@ -503,7 +504,8 @@ const ApproachOutcomesPage = () => {
                               className={`${classes.pflDot} ${activeScenario === si ? classes.pflDotActive : ""}`}
                               onClick={() => showScenario(si)}
                             >
-                              {label}
+                              <span className={classes.pflDotFull}>{label}</span>
+                              <span className={classes.pflDotShort}>{SCENARIO_LABELS_SHORT[si]}</span>
                             </button>
                           ))}
                         </div>
@@ -539,7 +541,7 @@ const ApproachOutcomesPage = () => {
                     Explore PHIL Digital Hub <ArrowRight />
                   </Link>
                   <Link className={classes.learnLink} to="/solution/direct/">
-                    Explore PHIL Direct-to-Patient <ArrowRight />
+                    Explore PHIL Direct <ArrowRight />
                   </Link>
                 </div>
               </div>

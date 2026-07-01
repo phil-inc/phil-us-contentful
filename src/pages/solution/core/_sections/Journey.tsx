@@ -30,6 +30,7 @@ export const JourneySection: React.FC = () => (
                 <p className="jx2-eyebrow jx2-anim">STEP <span id="jx2Num">1</span></p>
                 <h3 className="jx2-anim" id="jx2Title">Versatile Intake</h3>
                 <p className="jx2-anim" id="jx2Body">Seamless HCP workflow within existing EMRs, telemedicine intake, or prescription transfer requests.</p>
+                <p className="jx2-footnote-mobile jx2-anim" id="jx2FootnoteMobile">*Adaptrex is a fictional product used for illustrative purposes only.</p>
               </div>
 
               

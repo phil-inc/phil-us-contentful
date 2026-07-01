@@ -567,20 +567,20 @@ const SupportSection = () => {
         <div className={classes.reviewGrid}>
           <ReviewQuoteCard quotes={PATIENT_QUOTES} label="What Patients Say" variant="patients" />
 
-          <article className={classes.reviewCardFeature}>
+          <Link className={classes.reviewCardFeature} to="/resources/?type=casestudy">
             <p className={classes.rcTag}>Customer Stories</p>
             <h3 className={classes.rcFeatureTitle}>Real brands. Real results.</h3>
             <p className={classes.rcFeatureDesc}>
               See how leading retail and specialty-lite brands are partnering with PHIL to drive
               measurable performance across patient access, affordability, and adherence.
             </p>
-            <Link className={classes.rcCta} to="/resources/?type=casestudy">
+            <span className={classes.rcCta}>
               Read More
               <span className={classes.rcCtaArrow} aria-hidden="true">
                 <svg viewBox="0 0 28 18"><path d="M2 9h22M18 3l6 6-6 6" /></svg>
               </span>
-            </Link>
-          </article>
+            </span>
+          </Link>
 
           <ReviewQuoteCard quotes={PROVIDER_QUOTES} label="What Providers Say" variant="providers" />
         </div>
