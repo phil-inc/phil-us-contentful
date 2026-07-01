@@ -567,7 +567,7 @@ const SupportSection = () => {
         <div className={classes.reviewGrid}>
           <ReviewQuoteCard quotes={PATIENT_QUOTES} label="What Patients Say" variant="patients" />
 
-          <Link className={classes.reviewCardFeature} to="/resources/?type=casestudy">
+          <Link className={classes.reviewCardFeature} to="/customer-success/">
             <p className={classes.rcTag}>Customer Stories</p>
             <h3 className={classes.rcFeatureTitle}>Real brands. Real results.</h3>
             <p className={classes.rcFeatureDesc}>
@@ -677,7 +677,7 @@ const FaqSection = () => {
             <p className={classes.eyebrow}>Frequently Asked Questions</p>
             <h2 className={classes.faqHeaderH2}>Everything Pharma Teams Want to Know</h2>
           </div>
-          <Link className={classes.btnPrimary} to="/contact/">
+          <Link className={classes.btnPrimary} to="/demo/">
             Talk to Our Team
           </Link>
         </div>
