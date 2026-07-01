@@ -1080,6 +1080,7 @@
 .scope-direct .bt-link svg { width: 16px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 200ms var(--ease-standard); }
 .scope-direct .bt:hover .bt-link { color: var(--phil-forest); }
 .scope-direct .bt:hover .bt-link svg { transform: translateX(4px); }
+.scope-direct .bt-cta:hover .bt-link { color: #fff; }
 .scope-direct .bt-pillbtn { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--phil-foliage); color: var(--phil-foliage); font-family: var(--font-body); font-weight: 700; font-size: 14px; padding: 10px 22px; border-radius: 999px; text-decoration: none; transition: background 200ms var(--ease-standard), color 200ms var(--ease-standard), border-color 200ms var(--ease-standard); }
 .scope-direct .bt-pillbtn svg { width: 15px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 200ms var(--ease-standard); }
 .scope-direct .bt-pillbtn:hover { background: var(--phil-forest); border-color: var(--phil-forest); color: #fff; }
