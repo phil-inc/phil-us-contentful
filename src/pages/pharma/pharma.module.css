@@ -1430,7 +1430,7 @@
 
 @media (max-width: 480px) {
   .pharmaPage { --container-pad: 18px; }
-  .band { padding: 44px 0; }
+  .band { padding: 42px 0; }
   .hero { padding: 48px 0 60px; }
   .heroH1 { font-size: clamp(26px, 8vw, 34px); }
   .heroLead { font-size: 16px !important; line-height: 1.55 !important; margin-bottom: 28px !important; }

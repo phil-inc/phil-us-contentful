@@ -393,7 +393,7 @@
    ACCESS (affordable medication access)
    ========================================================================== */
 .accessSection {
-  padding: 54px 0 64px;
+  padding: 64px 0 50px;
   /* top-left mint blob, same as the hero's bottom-left gradient */
   background:
     radial-gradient(700px 500px at -10% -10%, rgba(213,241,240,0.45), transparent 65%);
@@ -554,7 +554,7 @@
    WHY PRESCRIBERS WRITE
    ========================================================================== */
 .whySection {
-  padding: 72px 0;
+  padding: 70px 0 50px;
   background: transparent;
 }
 .whyLayout {
@@ -626,7 +626,7 @@
    STEPS
    ========================================================================== */
 .stepsSection {
-  padding: 72px 0;
+  padding: 70px 0 50px;
   background: #ffffff;
 }
 
@@ -699,7 +699,7 @@
    VIDEO
    ========================================================================== */
 .videoSection {
-  padding: 72px 0;
+  padding: 70px 0 50px;
   background: #ffffff;
 }
 
@@ -724,7 +724,7 @@
    PROVIDERS (featured quote carousel)
    ========================================================================== */
 .providersSection {
-  padding: 72px 0;
+  padding: 70px 0 50px;
   background: transparent;
 }
 .pvCarousel {
@@ -840,7 +840,7 @@
    PATIENTS (3-up paged carousel)
    ========================================================================== */
 .patientsSection {
-  padding: 72px 0;
+  padding: 70px 0 50px;
   /* subtle mint tint, bottom-right — sized/positioned to flow into the
      FAQ section's top-right blob (at 95% 5%) so there's no seam */
   background:
@@ -948,7 +948,7 @@
    FAQ
    ========================================================================== */
 .faqSection {
-  padding: 72px 0;
+  padding: 70px 0 100px;
   background:
     radial-gradient(900px 500px at 95% 5%, rgba(213,241,240,0.55), transparent 65%),
     radial-gradient(700px 460px at 5% 95%, rgba(213,241,240,0.40), transparent 65%),
@@ -1276,7 +1276,7 @@
 
 @media (max-width: 640px) {
   /* hero */
-  .hero { padding: 40px 0 32px; }
+  .hero { padding: 40px 0 42px; }
   .heroGrid { gap: 40px; }
   .h1 { font-size: clamp(32px, 9vw, 44px); line-height: 1.1; margin-bottom: 18px; }
   .heroLead { font-size: 17px; max-width: none; margin-bottom: 24px; }
@@ -1291,7 +1291,7 @@
   .wfStepTitle { font-size: 14px; }
 
   /* access */
-  .accessSection { padding: 16px 0 48px; }
+  .accessSection { padding: 40px 0 4px; }
   .accessStats { padding: 32px 24px; }
   .statBlock { padding: 16px 0; }
   .statBlock:first-child { padding-top: 0; }
@@ -1301,11 +1301,11 @@
   .accessReviews { margin-top: 40px; }
 
   /* why */
-  .whySection { padding: 48px 0; }
+  .whySection { padding: 40px 0; }
   .whyIntro p { font-size: 15.5px; }
 
   /* steps */
-  .stepsSection { padding: 48px 0; }
+  .stepsSection { padding: 40px 0; }
   .sectionHead { margin-bottom: 32px; }
   .sectionHead h2 { font-size: clamp(26px, 7.5vw, 34px); }
   .step { padding: 28px 22px 30px; border-radius: 20px; }
@@ -1314,16 +1314,16 @@
   .stepBody { font-size: 16px; }
 
   /* video */
-  .videoSection { padding: 48px 0; }
+  .videoSection { padding: 40px 0; }
   .videoFrame { border-radius: 14px; }
 
   /* providers carousel */
-  .providersSection { padding: 48px 0; }
+  .providersSection { padding: 40px 0; }
   .pvSlide { padding: 36px 26px 32px; }
   .pvQuote { font-size: clamp(20px, 6vw, 26px); margin-bottom: 26px; }
 
   /* patients carousel */
-  .patientsSection { padding: 48px 0; }
+  .patientsSection { padding: 40px 0; }
   .ptCard { padding: 32px 26px 28px; border-radius: 18px; }
   .ptQuote { font-size: 17px; margin-bottom: 22px; padding-right: 0; }
   .ptControls { margin-top: 32px; gap: 14px; }
@@ -1336,7 +1336,7 @@
   .pvDot.isActive { width: 34px; }
 
   /* faq */
-  .faqSection { padding: 48px 0; }
+  .faqSection { padding: 40px 0 48px; }
   .faqHeaderRow { margin-bottom: 28px; }
   .faqH2 { font-size: clamp(26px, 6.2vw, 32px); }
   .faqQ { font-size: 16px; padding: 20px 0; gap: 12px; }

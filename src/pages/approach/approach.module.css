@@ -100,7 +100,7 @@
     radial-gradient(ellipse 60% 40% at 0% 0%, rgba(0, 130, 126, 0.06), transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 0%, rgba(0, 130, 126, 0.06), transparent 70%),
     var(--phil-pure);
-  padding: 100px 0;
+  padding: 100px 0 20px;
 }
 .bandStories {
   background:
@@ -166,7 +166,7 @@
    ============================================================= */
 .hero {
   position: relative;
-  padding: 100px 0;
+  padding: 100px 0 0;
   background:
     radial-gradient(ellipse 60% 40% at 0% 100%, rgba(0, 130, 126, 0.06), transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 100%, rgba(0, 130, 126, 0.06), transparent 70%),
@@ -357,7 +357,7 @@
     radial-gradient(ellipse 60% 40% at 0% 0%, rgba(0, 130, 126, 0.06), transparent 70%),
     radial-gradient(ellipse 60% 40% at 100% 0%, rgba(0, 130, 126, 0.06), transparent 70%),
     var(--phil-pure);
-  padding: 100px 0;
+  padding: 70px 0 100px;
 }
 
 /* Stepper */
@@ -1620,7 +1620,7 @@
   .jNode::before { top: 36px; width: 12px; height: 12px; }
   .roiBanner { grid-template-columns: 1fr; padding: 48px; }
   .finalCta { padding: 40px 20px 48px; min-height: auto; }
-  .finalCtaWrap { flex-direction: column; align-items: flex-start; gap: 32px; padding: 48px 0; }
+  .finalCtaWrap { flex-direction: column; align-items: flex-start; gap: 32px; padding: 0; }
   .finalCtaH2 { max-width: 100%; font-size: 40px; }
   .finalCtaButtons { width: 100%; }
   .finalCtaButtons .btnOnDark { width: 100%; padding: 14px 24px; text-align: center; justify-content: center; }
@@ -1639,7 +1639,7 @@
 
 @media (max-width: 720px) {
   .band { padding: 64px 0; }
-  .hero { padding: 56px 0 0; }
+  .hero { padding: 50px 0 0; }
   .heroH1 { font-size: 34px; line-height: 1.08; }
   .heroSub { font-size: 16px; }
   .sectionHead { margin: 0 auto 28px; }
@@ -1650,7 +1650,7 @@
   .impactCardH3 { font-size: 22px; }
   .impactCardP { font-size: 14px; }
 
-  .journey { padding: 64px 0; }
+  .journey { padding: 60px 0; }
   .journeyStepper { grid-template-columns: repeat(4, 1fr); gap: 8px; row-gap: 16px; padding-top: 0; }
   .journeyStepper::before { display: none; }
   .journeyStepper::after { display: none; }
@@ -1684,13 +1684,16 @@
   .roiBanner { gap: 28px; padding: 32px 26px; border-radius: 22px; }
   .roiBanner h2 { font-size: 26px; }
 
-  .finalCta { padding: 56px 20px; }
+  .finalCta { padding: 40px 20px 48px; }
   .finalCtaH2 { font-size: 32px; }
   .heroFoot { margin-top: 40px; }
+  /* .bandProof {
+    padding: 100px 0 20px;
+} */
 }
 
 @media (max-width: 480px) {
-  .band { padding: 44px 0; }
+  .band { padding: 40px 0; }
   .heroH1 { font-size: 28px; }
   .sectionHead h2 { font-size: 28px; }
   .journeyStepper { grid-template-columns: repeat(4, 1fr); }
@@ -1706,4 +1709,7 @@
   .roiBanner h2 { font-size: 22px; }
   .roiBanner { padding: 26px 20px; }
   .finalCtaH2 { font-size: 28px; }
+  .journey {
+  padding: 40px 0 40px;
+}
 }

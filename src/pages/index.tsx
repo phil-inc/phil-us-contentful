@@ -852,7 +852,7 @@ function SolutionCarousel() {
       </div>
 
       <div className={classes.container}>
-        <p className={classes.reveal} style={{ marginTop: 32, textAlign: "center" }}>
+        <p className={classes.reveal} style={{ textAlign: "center" }}>
           <Link className={classes.linkarrow} to={SOLUTION.cta.href}>
             {SOLUTION.cta.text}
           </Link>
@@ -1022,7 +1022,7 @@ function VoicesSection() {
             />
           ))}
         </div>
-        <div className={classes.reveal} style={{ marginTop: 32, textAlign: "center" }}>
+        <div className={`${classes.reveal} ${classes.ctaCenter}`}>
           <Link className={classes.linkarrow} to={VOICES.cta.href}>
             {VOICES.cta.text}
           </Link>
@@ -1081,7 +1081,7 @@ function InsightsSection() {
             );
           })}
         </div>
-        <div className={classes.reveal} style={{ marginTop: 32, textAlign: "center" }}>
+        <div className={`${classes.reveal} ${classes.ctaCenter}`}>
           <Link className={classes.linkarrow} to={INSIGHTS.cta.href}>
             {INSIGHTS.cta.text}
           </Link>

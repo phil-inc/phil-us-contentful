@@ -105,7 +105,7 @@
    ========================================================================== */
 .hero {
   position: relative;
-  padding: 64px 0 56px;
+  padding: 64px 0 70px;
   background:
     radial-gradient(900px 600px at 85% -10%, rgba(213,241,240,0.5), transparent 65%),
     radial-gradient(620px 620px at 30% 100%, rgba(213,241,240,0.55), transparent 60%),
@@ -314,7 +314,7 @@
    VALUE PROP / MISSION
    ========================================================================== */
 .valueProp {
-  padding: 79px 0 50px;
+  padding: 50px 0 50px;
   background:
     radial-gradient(620px 620px at 30% 0%, rgba(213,241,240,0.55), transparent 60%),
     radial-gradient(720px 540px at 90% 58%, rgba(109,223,193,0.10), transparent 60%),
@@ -538,7 +538,7 @@
    STEPS
    ========================================================================== */
 .steps__section {
-  padding: 72px 0;
+  padding: 72px 0 50px;
   background: #ffffff;
 }
 
@@ -619,7 +619,7 @@
    VIDEO
    ========================================================================== */
 .video__section {
-  padding: 72px 0;
+  padding: 72px 0 50px;
   background: #ffffff;
 }
 
@@ -644,10 +644,10 @@
    TESTIMONIALS
    ========================================================================== */
 .testimonials__section {
-  padding: 72px 0;
+  padding: 72px 0 50px;
   background:
     radial-gradient(700px 380px at 10% 30%, rgba(213,241,240,0.35), transparent 70%),
-    radial-gradient(700px 380px at 90% 80%, rgba(213,241,240,0.30), transparent 70%),
+    radial-gradient(900px 500px at 95% 95%, rgba(213,241,240,0.55), transparent 65%),
     #ffffff;
 }
 
@@ -753,7 +753,7 @@
    FAQ
    ========================================================================== */
 .faq__section {
-  padding: 72px 0;
+  padding: 72px 0 100px;
   background:
     radial-gradient(900px 500px at 95% 5%, rgba(213,241,240,0.55), transparent 65%),
     radial-gradient(700px 460px at 5% 95%, rgba(213,241,240,0.40), transparent 65%),
@@ -984,7 +984,7 @@
    ========================================================================== */
 @media (max-width: $phil-breakpoint-md) {
   .footerCta { padding: 40px 20px 48px; min-height: auto; }
-  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; padding: 48px 0;}
+  .footerCtaInner { flex-direction: column; align-items: flex-start; gap: 32px; padding: 0; }
   .footerCtaTitle { max-width: 100%; }
   .footerCtaButtons{width: 100%;}
   .footerCtaButtons .btn { width: 100%; padding: 14px 24px; text-align: center; }
@@ -1019,7 +1019,7 @@
 
 @media (max-width: 640px) {
   /* hero */
-  .hero { padding: 40px 0 48px; }
+  .hero { padding: 40px 0 50px; }
   .heroGrid { gap: 36px; }
   .h1 { font-size: clamp(34px, 8.5vw, 42px); line-height: 1.08; margin-bottom: 18px; }
   .heroCopy__lead { font-size: 16px; max-width: none; margin-bottom: 24px; }
@@ -1031,7 +1031,7 @@
   .phoneScreen { min-height: 420px; padding: 20px 16px 18px; }
 
   /* value prop */
-  .valueProp { padding: 56px 0 16px; }
+  .valueProp { padding: 30px 0 0px; }
   .vpTrust { margin-top: 20px; min-height: 0; }
   .vpPanel { padding: 32px 24px; }
   .vpStat { padding: 14px 0; }
@@ -1042,7 +1042,7 @@
   .vpFeature h3 { font-size: 20px; }
 
   /* steps */
-  .steps__section { padding: 56px 0; }
+  .steps__section { padding: 40px 0; }
   .sectionHead { margin-bottom: 36px; }
   .sectionHead h2 { font-size: clamp(26px, 6.5vw, 32px); }
   .stepsGrid { gap: 20px; }
@@ -1055,11 +1055,11 @@
   .stepsFooter .btn { width: 100%; padding: 14px 24px; }
 
   /* video */
-  .video__section { padding: 56px 0; }
+  .video__section { padding: 40px 0; }
   .videoFrame { border-radius: 16px; }
 
   /* testimonials */
-  .testimonials__section { padding: 56px 0; }
+  .testimonials__section { padding: 40px 0; }
   .carouselTrack { gap: 28px; }
   .testimonialCard { padding: 32px 24px 28px; min-height: 0; border-radius: 20px; }
   .quoteMark { font-size: 72px; top: 16px; right: 22px; }
@@ -1069,7 +1069,7 @@
   .tpHorizontal { margin-top: 32px; min-height: 28px; }
 
   /* faq */
-  .faq__section { padding: 56px 0; }
+  .faq__section { padding: 40px 0 48px; }
   .faqHeader { margin-bottom: 32px; gap: 16px; }
   .faqHeader .btnOutlineGradient { width: 100%; }
   .faqH2 { font-size: clamp(26px, 6.2vw, 32px); }
