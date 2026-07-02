@@ -52,7 +52,7 @@ export const STAKEHOLDERS = [
     name: "Market Access Leaders",
     icon: "package",
     problem: "Fragmented access experience, payer restrictions and prior auth burdens can block patients from starting therapy.",
-    solve: "We help close the loop between program activation and dispense data, equipping market access teams with visibility into real patient engagement while streamlining the access journey to reduce friction and maximize conversion of eligible scripts into filled prescriptions.",
+    solve: "We give market access teams visibility across the access journey, reducing barriers to affordable therapy access, supporting patient starts, and connecting program activity to dispense outcomes.",
     learnMoreHref: "/resources/?topic=access",
   },
   {
@@ -68,7 +68,7 @@ export const STAKEHOLDERS = [
     name: "Patient Services & Hub Leaders",
     icon: "people",
     problem: "Fragmented patient journey and affordability support create delays, drop-offs and a poor patient experience.",
-    solve: "Our integrated platform connects every touchpoint, from affordability to fulfillment, in one seamless and top rated patient experience.",
+    solve: "We provide an integrated platform connecting every touchpoint, from affordability to fulfillment, in one seamless and top rated patient experience.",
     learnMoreHref: "/resources/?topic=patient",
   },
   {
@@ -77,7 +77,7 @@ export const STAKEHOLDERS = [
     panelName: "Innovation & Digital Health Teams",
     icon: "bulb",
     problem: "Legacy access infrastructure can't keep pace with how patients and providers expect to engage with brands today.",
-    solve: "Our platform helps brands deliver on what's next through advanced technology and AI-powered workflows that deliver the flexibility and scalability in a single, end-to-end channel.",
+    solve: "We help brands deliver on what's next through advanced technology and AI-powered workflows that provide the flexibility and scalability in a single, end-to-end channel.",
     learnMoreHref: "/resources/?topic=data",
   },
 ] as const;
