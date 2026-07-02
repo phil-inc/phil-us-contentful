@@ -899,6 +899,13 @@
   background: linear-gradient(140deg, #00615E 0%, #00827E 55%, #5ABEA4 100%);
   color: var(--phil-pure);
   justify-content: space-between;
+  text-decoration: none;
+}
+.reviewCardFeature:hover,
+.reviewCardFeature:visited,
+.reviewCardFeature:focus {
+  color: var(--phil-pure);
+  text-decoration: none;
 }
 .reviewCardFeature::after {
   content: "";
@@ -1027,7 +1034,7 @@
   justify-content: center;
   transition: transform 220ms var(--ease-standard);
 }
-.rcCta:hover .rcCtaArrow { transform: translateX(6px); }
+.reviewCardFeature:hover .rcCtaArrow { transform: translateX(6px); }
 .rcCtaArrow svg {
   width: 22px;
   height: 14px;
@@ -1423,7 +1430,7 @@
 
 @media (max-width: 480px) {
   .pharmaPage { --container-pad: 18px; }
-  .band { padding: 44px 0; }
+  .band { padding: 42px 0; }
   .hero { padding: 48px 0 60px; }
   .heroH1 { font-size: clamp(26px, 8vw, 34px); }
   .heroLead { font-size: 16px !important; line-height: 1.55 !important; margin-bottom: 28px !important; }

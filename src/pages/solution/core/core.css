@@ -1446,6 +1446,7 @@
 
 .scope .jx2-step .jx2-name { font-family: var(--font-body); font-weight: 700; font-size: 14px; line-height: 1.25; }
 .scope .jx2-disclaimer { font-family: var(--font-body); font-size: 11.5px; line-height: 1.4; color: var(--phil-mortar); margin: 36px 0 0; padding-left: 28px; max-width: 250px; }
+.scope .jx2-footnote-mobile { display: none; }
 
 .scope .jx2-step:hover { color: var(--phil-foliage); }
 
@@ -1471,6 +1472,14 @@
 
 }
 
+/* Tablet (rail hidden, still 2-column): the rail disclaimer is gone and the
+   mobile one hasn't kicked in yet — show it pinned to the bottom-left of the
+   copy column. Scoped above 820px so the ≤820 mobile behavior is untouched. */
+@media (min-width: 821px) and (max-width: 1080px) {
+  .scope .jx2-copy { position: relative; align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
+  .scope .jx2-copy .jx2-footnote-mobile { display: block; position: absolute; left: 0; bottom: 0; margin-bottom:12px; text-align: left; font-family: var(--font-body); font-size: 12px; line-height: 1.45; color: var(--phil-mortar); }
+}
+
 @media (max-width: 820px) {
 
   /* Mobile: static click-through — no scroll pinning. Numbered steps sit in a
@@ -1487,6 +1496,7 @@
   .scope .jx2-rail { display: flex; flex-flow: row wrap; justify-content: center; align-items: center; order: 1; width: 100%; gap: 11px; margin: 0; }
   .scope .jx2-rail-label { display: none; }
   .scope .jx2-disclaimer { display: none; }
+  .scope .jx2-footnote-mobile.show { display: block; margin: 16px 0 0; text-align: center; font-family: var(--font-body); font-size: 12px; line-height: 1.45; color: var(--phil-mortar); }
   .scope .jx2-step { grid-template-columns: auto; gap: 0; padding: 0; cursor: pointer; }
   .scope .jx2-step .jx2-name { display: none; }
   .scope .jx2-step::before { display: none; }

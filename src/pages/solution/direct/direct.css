@@ -396,6 +396,7 @@
 .scope-direct .tj-progress { width: 100%; height: 3px; background: var(--phil-base); border-radius: 2px; margin: 0 0 16px; overflow: hidden; }
 .scope-direct .tj-kicker { margin: 0 0 10px; font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--phil-tradewind); }
 .scope-direct .tele-disclaimer { margin: 16px 0 0; font-family: var(--font-body); font-size: 11.5px; line-height: 1.4; color: var(--phil-mortar); }
+.scope-direct .tele-footnote--mobile { display: none; }
 .scope-direct .tj-progress-fill { display: block; height: 100%; width: 25%; background: var(--phil-tradewind); border-radius: 2px; transition: width 360ms var(--ease-standard); }
 .scope-direct .tele-row { display: flex; align-items: center; gap: 14px; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
 .scope-direct .tele-thumb { position: relative; width: 56px; height: 119px; flex: none; background: none; border: 0; padding: 0; cursor: pointer; opacity: 0.62; overflow: hidden; border-radius: 9px; box-shadow: 0 0 0 2.5px transparent; transition: transform 240ms var(--ease-standard), opacity 240ms var(--ease-standard), box-shadow 200ms var(--ease-standard); }
@@ -740,7 +741,7 @@
 .scope-direct .tp.is-shown .lerx { animation: enrPop 640ms var(--ease-standard) 300ms; }
 .scope-direct .thd-controls .c.end { background: #e0473e; border-color: #e0473e; }
 @media (max-width: 1192px) {
-.scope-direct .tele-stage { gap: 40px; }
+/* .scope-direct .tele-stage { gap: 40px; } */
 .scope-direct .tele-copy { flex: 1 1 100%; max-width: none; text-align: center; }
 .scope-direct .tele-copy .tj-step-title, .scope-direct .tele-copy .tj-step-desc { max-width: 520px; margin-left: auto; margin-right: auto; }
 .scope-direct .tj-eyebrow { justify-content: center; }
@@ -755,6 +756,7 @@
 .scope-direct .tele-main { transform: scale(0.84); transform-origin: top center; }
 }
 @media (max-width: 760px) {
+.scope-direct .tele-footnote--mobile { display: block; max-width: 320px; margin: -48px auto 0; text-align: center; }
 .scope-direct .tele-showcase { padding: 34px 16px; gap: 0; }
 .scope-direct .tele-journey-tabs { flex-direction: column; width: 100%; max-width: 300px; border-radius: 18px; }
 .scope-direct .tele-journey-tabs .tjt { width: 100%; }
@@ -762,8 +764,7 @@
 .scope-direct .tele-copy, .scope-direct .tele-select, .scope-direct .tele-next-btn { display: none !important; }
 .scope-direct .tele-main { position: static; width: 100%; height: auto; transform: none; display: flex; flex-direction: column; align-items: center; gap: 60px; margin-top: 34px; }
 .scope-direct .tele-main .tp, .scope-direct .tele-main .tp.is-shown { display: flex !important; position: static; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; height: auto; transform: none !important; }
-.scope-direct .tele-main .tp .tp-frame, .scope-direct .tele-main .tp.is-shown .tp-frame { transform: scaleY(0.9) !important; transform-origin: top center; margin-bottom: -60px; }
-.scope-direct .tp-frame { width: min(264px, 80vw); }
+.scope-direct .tele-main .tp .tp-frame, .scope-direct .tele-main .tp.is-shown .tp-frame { transform: scale(0.943) !important; transform-origin: top center; margin-bottom: -34px; }
 .scope-direct .tele-main .tp.tp--laptop.is-shown { width: 100%; height: auto; }
 .scope-direct .tele-main .tp.tp--laptop .lap { margin-top: 80px; margin-bottom: -44px; transform: scale(0.82); transform-origin: top center; }
 .scope-direct .tele-main .tp.tp--card.is-shown { width: 100%; height: auto; }
@@ -1029,7 +1030,8 @@
 .scope-direct .bento { column-count: 1; }
 }
 .scope-direct .bento > * { break-inside: avoid; margin: 0 0 24px; display: block; }
-.scope-direct .bt { position: relative; border-radius: 16px; overflow: hidden; transition: transform 240ms var(--ease-standard), box-shadow 240ms var(--ease-standard); }
+.scope-direct .bt { position: relative; border-radius: 16px; overflow: hidden; transition: transform 240ms var(--ease-standard), box-shadow 240ms var(--ease-standard); text-decoration: none; color: inherit; }
+.scope-direct .bt:hover, .scope-direct .bt:visited, .scope-direct .bt:focus { text-decoration: none; color: inherit; }
 .scope-direct .bt-stack { break-inside: avoid; margin: 0 0 24px; display: flex; flex-direction: column; gap: 24px; }
 .scope-direct .bt-stack .bt { margin: 0; }
 .scope-direct .res-marquee { position: relative; }
@@ -1076,8 +1078,9 @@
 .scope-direct .bt-eyebrow { font-family: var(--font-body); font-weight: 700; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--phil-foliage); margin: 0 0 12px; }
 .scope-direct .bt-link { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 700; font-size: 14px; color: var(--phil-foliage); text-decoration: none; }
 .scope-direct .bt-link svg { width: 16px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 200ms var(--ease-standard); }
-.scope-direct .bt-link:hover { color: var(--phil-forest); }
-.scope-direct .bt-link:hover svg { transform: translateX(4px); }
+.scope-direct .bt:hover .bt-link { color: var(--phil-forest); }
+.scope-direct .bt:hover .bt-link svg { transform: translateX(4px); }
+.scope-direct .bt-cta:hover .bt-link { color: #fff; }
 .scope-direct .bt-pillbtn { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--phil-foliage); color: var(--phil-foliage); font-family: var(--font-body); font-weight: 700; font-size: 14px; padding: 10px 22px; border-radius: 999px; text-decoration: none; transition: background 200ms var(--ease-standard), color 200ms var(--ease-standard), border-color 200ms var(--ease-standard); }
 .scope-direct .bt-pillbtn svg { width: 15px; height: 11px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 200ms var(--ease-standard); }
 .scope-direct .bt-pillbtn:hover { background: var(--phil-forest); border-color: var(--phil-forest); color: #fff; }
