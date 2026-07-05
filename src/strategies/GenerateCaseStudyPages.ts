@@ -1,56 +1,12 @@
-import slugify from "slugify";
-import { createPageObject } from "../utils/pageObjectCreator";
-import { templateFactory } from "../factories/templateFactory";
 import { type Actions } from "gatsby";
 
-type Node = {
-  id: string;
-  slug: string | undefined;
-  heading: string;
-  title: string;
-};
-
-export default async function GenerateCaseStudyPages({
-  actions,
-  graphql,
-}: {
+// Case-study detail pages are now static file-based pages under
+// src/pages/insights/case-studies/<slug>/index.tsx, each fed from a local
+// content snapshot (./_data.ts). They no longer come from Contentful, so this
+// generator is intentionally a no-op. Because nothing creates pages from the
+// CaseStudy template anymore, its GraphQL query is dormant (never executed).
+export default async function GenerateCaseStudyPages(_: {
   actions: Actions;
-  graphql: <TData, TVariables = any>(
-    query: string,
-    variables?: TVariables | undefined,
-  ) => Promise<{
-    errors?: any;
-    data?: TData | undefined;
-  }>;
 }): Promise<void> {
-  const template = templateFactory("CaseStudy");
-
-  const {
-    data = { allContentfulCaseStudy: { nodes: [] } },
-  }: {
-    data?: { allContentfulCaseStudy: { nodes: Node[] } } | undefined;
-  } = await graphql(allCaseStudyQuery);
-
-  data?.allContentfulCaseStudy.nodes.forEach(({ id, slug, title }: Node) => {
-    // const path = slug ?? `/${slugify(title, { lower: true, strict: true })}`;
-    const path = "insights/case-studies/"+(slug ?? `/${slugify(title, { lower: true, strict: true })}`);
-    
-    const pageObject = createPageObject(path, template, {
-      id,
-      title: title,
-    });
-    actions.createPage(pageObject);
-  });
+  // no-op — see src/pages/insights/case-studies/*
 }
-
-const allCaseStudyQuery = `
-   query allCaseStudy {
-        allContentfulCaseStudy(filter: {node_locale: {eq: "en-US"}}) {
-            nodes {
-                id
-                slug
-                title
-            }
-        }
-    } 
-`;
