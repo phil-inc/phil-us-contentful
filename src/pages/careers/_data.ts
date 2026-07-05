@@ -1,0 +1,172 @@
+// AUTO-GENERATED from Contentful snapshot (migration-snapshot/careers.page-data.json).
+// Source of truth for the /careers/ page after de-coupling from Contentful.
+// Safe to hand-edit copy; regenerate wholesale from the snapshot if needed.
+import type { ContentfulPage } from "types/page";
+
+export const contentfulPage = ({
+  "id": "9372a27a-9191-5df4-a7fd-b7da9094eb80",
+  "title": "Careers",
+  "displayTitle": "Careers - Join the Phil Team ",
+  "description": "We are a rapidly growing team changing the specialty pharmaceutical industry. View a list of open roles at Phil and apply to join our team.",
+  "sections": [
+    {
+      "id": "15cc5cd2-d73a-5892-aa3c-1b8f9999dba4",
+      "isHidden": false,
+      "youtubeVideoUrl": null,
+      "body": {
+        "raw": "{\"data\":{},\"content\":[{\"data\":{},\"content\":[{\"data\":{},\"marks\":[],\"value\":\" \",\"nodeType\":\"text\"}],\"nodeType\":\"paragraph\"}],\"nodeType\":\"document\"}"
+      },
+      "isHubspotEmbed": false,
+      "isInsertSnippet": null,
+      "codeSnippet": null,
+      "asset": {
+        "gatsbyImageData": {
+          "images": {
+            "sources": [
+              {
+                "srcSet": "https://images.ctfassets.net/2h91ja0efsni/2fovkhzdY9LyuntS19EBGQ/4d69e2336952b325ecda567cb4038a0f/Frame_3226.png?w=129&h=455&q=100&fm=webp&fit=scale 129w,\nhttps://images.ctfassets.net/2h91ja0efsni/2fovkhzdY9LyuntS19EBGQ/4d69e2336952b325ecda567cb4038a0f/Frame_3226.png?w=258&h=911&q=100&fm=webp&fit=scale 258w,\nhttps://images.ctfassets.net/2h91ja0efsni/2fovkhzdY9LyuntS19EBGQ/4d69e2336952b325ecda567cb4038a0f/Frame_3226.png?w=515&h=1818&q=100&fm=webp&fit=scale 515w",
+                "sizes": "(min-width: 515px) 515px, 100vw",
+                "type": "image/webp"
+              }
+            ],
+            "fallback": {
+              "src": "https://images.ctfassets.net/2h91ja0efsni/2fovkhzdY9LyuntS19EBGQ/4d69e2336952b325ecda567cb4038a0f/Frame_3226.png?w=515&h=1818&q=100&fm=png&fit=scale",
+              "srcSet": "https://images.ctfassets.net/2h91ja0efsni/2fovkhzdY9LyuntS19EBGQ/4d69e2336952b325ecda567cb4038a0f/Frame_3226.png?w=129&h=455&q=100&fm=png&fit=scale 129w,\nhttps://images.ctfassets.net/2h91ja0efsni/2fovkhzdY9LyuntS19EBGQ/4d69e2336952b325ecda567cb4038a0f/Frame_3226.png?w=258&h=911&q=100&fm=png&fit=scale 258w,\nhttps://images.ctfassets.net/2h91ja0efsni/2fovkhzdY9LyuntS19EBGQ/4d69e2336952b325ecda567cb4038a0f/Frame_3226.png?w=515&h=1818&q=100&fm=png&fit=scale 515w",
+              "sizes": "(min-width: 515px) 515px, 100vw"
+            }
+          },
+          "layout": "constrained",
+          "width": 515,
+          "height": 1818,
+          "placeholder": {
+            "fallback": "data:image/png;base64,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"
+          }
+        },
+        "title": "Career | Hero long Image ",
+        "file": {
+          "contentType": "image/png",
+          "details": {
+            "size": 529191
+          },
+          "url": "//images.ctfassets.net/2h91ja0efsni/2fovkhzdY9LyuntS19EBGQ/4d69e2336952b325ecda567cb4038a0f/Frame_3226.png"
+        }
+      },
+      "canShowAssetImageAlignToWall": true,
+      "buttonText": null,
+      "header": "Hero Section",
+      "sectionType": "Basic Section",
+      "externalLink": null,
+      "sys": {
+        "contentType": {
+          "sys": {
+            "id": "section"
+          }
+        }
+      },
+      "subHeader": null,
+      "internalLink": null
+    },
+    {
+      "id": "f1d30749-dbb1-5185-9876-e864a89745e0",
+      "isHidden": false,
+      "hideNavigationAnchor": null,
+      "hideHeader": false,
+      "header": "Operations",
+      "subHeading": null,
+      "sectionType": "Referenced Section",
+      "references": [
+        {
+          "externalLink": null,
+          "internalLink": null,
+          "heading": "Wholesale Pharmacy Technician",
+          "subheading": null,
+          "hubspotEmbed": null,
+          "isHubspotEmbed": false,
+          "isInsertSnippet": null,
+          "codeSnippet": null,
+          "description": null,
+          "buttonText": "View Details",
+          "body": {
+            "raw": "{\"data\":{},\"content\":[{\"data\":{},\"content\":[{\"data\":{},\"marks\":[],\"value\":\"San Leandro, California, United States\",\"nodeType\":\"text\"}],\"nodeType\":\"paragraph\"}],\"nodeType\":\"document\"}"
+          },
+          "author": null,
+          "asset": null,
+          "id": "167d3d10-2877-5a59-80db-8cbcbf5553e4"
+        }
+      ],
+      "referenceType": "Career Field",
+      "externalLink": null,
+      "buttonText": null,
+      "internalLink": null
+    },
+    {
+      "id": "c8f3bb9c-8c08-56c2-9ee3-51507275495f",
+      "isHidden": false,
+      "hideNavigationAnchor": null,
+      "hideHeader": false,
+      "header": "Technical",
+      "subHeading": null,
+      "sectionType": "Referenced Section",
+      "references": [
+        {
+          "externalLink": null,
+          "internalLink": null,
+          "heading": "Senior Product Designer",
+          "subheading": null,
+          "hubspotEmbed": null,
+          "isHubspotEmbed": false,
+          "isInsertSnippet": null,
+          "codeSnippet": null,
+          "description": null,
+          "buttonText": "View Details",
+          "body": {
+            "raw": "{\"nodeType\":\"document\",\"data\":{},\"content\":[{\"nodeType\":\"paragraph\",\"data\":{},\"content\":[{\"nodeType\":\"text\",\"value\":\"United States\",\"marks\":[],\"data\":{}}]}]}"
+          },
+          "author": null,
+          "asset": null,
+          "id": "856ac5db-8ce9-5e58-b194-bb4e91acb8c6"
+        },
+        {
+          "externalLink": null,
+          "internalLink": null,
+          "heading": "Senior Product Manager, Patient Experience",
+          "subheading": null,
+          "hubspotEmbed": null,
+          "isHubspotEmbed": false,
+          "isInsertSnippet": null,
+          "codeSnippet": null,
+          "description": null,
+          "buttonText": "View Details",
+          "body": {
+            "raw": "{\"nodeType\":\"document\",\"data\":{},\"content\":[{\"nodeType\":\"paragraph\",\"data\":{},\"content\":[{\"nodeType\":\"text\",\"value\":\"United States\",\"marks\":[],\"data\":{}}]}]}"
+          },
+          "author": null,
+          "asset": null,
+          "id": "70e55abd-398f-50ca-bf2b-94d1ba73399b"
+        },
+        {
+          "externalLink": null,
+          "internalLink": null,
+          "heading": "Director of Product Management - Market and Patient Strategy",
+          "subheading": null,
+          "hubspotEmbed": null,
+          "isHubspotEmbed": false,
+          "isInsertSnippet": null,
+          "codeSnippet": null,
+          "description": null,
+          "buttonText": "View Details",
+          "body": {
+            "raw": "{\"data\":{},\"content\":[{\"data\":{},\"content\":[{\"data\":{},\"marks\":[],\"value\":\"United States\",\"nodeType\":\"text\"}],\"nodeType\":\"paragraph\"}],\"nodeType\":\"document\"}"
+          },
+          "author": null,
+          "asset": null,
+          "id": "83a868fc-57a2-562b-bad6-3b8ea7897911"
+        }
+      ],
+      "referenceType": "Career Field",
+      "externalLink": null,
+      "buttonText": null,
+      "internalLink": null
+    }
+  ]
+}) as unknown as ContentfulPage;

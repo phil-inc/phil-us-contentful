@@ -52,6 +52,20 @@ export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({ act
 
     if (stage === 'build-html' || stage === 'develop-html') {
         actions.setWebpackConfig({
+            // `undici` (pulled in via isomorphic-dompurify -> jsdom) references
+            // several Node built-ins through the `node:` scheme (e.g. node:sqlite,
+            // node:worker_threads, node:zlib). Webpack cannot resolve the `node:`
+            // scheme and fails the SSR bundle. Since these are Node built-ins that
+            // should never be bundled, externalize the whole scheme for the node
+            // (SSR) build.
+            externals: [
+                ({ request }: { request?: string }, callback: (err?: Error | null, result?: string) => void) => {
+                    if (request?.startsWith('node:')) {
+                        return callback(null, 'commonjs ' + request);
+                    }
+                    return callback();
+                },
+            ],
             module: {
                 rules: [
                     {
