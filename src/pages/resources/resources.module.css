@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 96px 0 72px;
+  padding: 96px 0 100px;
 }
 
 .heroInner {
@@ -141,7 +141,7 @@
 .featured {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 8px 60px 48px;
+  padding: 40px 60px 46px;
 }
 
 .featuredEyebrow {
@@ -253,7 +253,7 @@
 .topics {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 16px 60px 56px;
+  padding: 30px 60px 30px;
 }
 
 .topicsEyebrow {
@@ -350,11 +350,15 @@
 .filterBar {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 24px 60px 56px;
+  padding: 30px 60px 30px;
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
   gap: 18px;
   align-items: end;
+  /* Where the smooth scroll lands (scrollIntoView block:"start"): offset the
+     resting point below the sticky navbar so the filter bar isn't tucked
+     under the header. */
+  scroll-margin-top: calc(var(--navbar-height, 90px) + 20px);
 }
 
 .filterGroup {
@@ -410,7 +414,7 @@
 .resultsBanner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 60px 24px;
+  padding: 26px 60px 26px;
   display: none;
   align-items: center;
   gap: 14px;
@@ -485,7 +489,7 @@
 .section {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 8px 60px 24px;
+  padding: 30px 60px 8px;
 }
 
 .cardGrid {
@@ -657,7 +661,7 @@
 .showMoreRow {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 16px 60px 96px;
+  padding: 16px 60px 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -679,7 +683,7 @@
 /* Press section */
 .pressSection {
   background: #f4f4f4;
-  padding: 80px 0 96px;
+  padding: 94px 0 100px;
   position: relative;
   overflow: hidden;
 }
@@ -984,8 +988,7 @@
   }
 
   .showMoreRow {
-    padding-left: 32px;
-    padding-right: 32px;
+    padding: 16px 32px 60px;
     flex-direction: column;
     align-items: stretch;
   }
@@ -995,14 +998,37 @@
     padding-right: 32px;
   }
 
+  .pressSection {
+  padding: 56px 0 60px;
+  }
+
   .pressGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: $phil-breakpoint-sm) {
+  .hero {
+    padding: 40px 0 44px;
+  }
   .filterBar {
     grid-template-columns: 1fr;
+    /* Smaller offset = the page scrolls a bit further down, so the filter bar
+       rests closer to the top. Lower this number to scroll down even more. */
+    scroll-margin-top: calc(var(--navbar-height, 90px) + 12px);
+  }
+   .showMoreRow {
+    padding: 10px 32px 40px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .resultsBanner {
+    padding: 16px 60px 16px;
+  }
+
+  .pressSection {
+  padding: 40px 0 46px;
   }
 }
 

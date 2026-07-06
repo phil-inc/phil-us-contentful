@@ -273,7 +273,7 @@ const ResultsSection = () => {
   const active = CASE_STUDY_TABS.find((t) => t.id === activeId)!;
 
   return (
-    <section id="case-studies" className={`${classes.section} ${classes.resultsSection}`}>
+    <section id="case-studies" className={classes.resultsSection}>
       <div className="xl-container" ref={sectionRef}>
         <div className={classes.sectionHead}>
           <h2>
@@ -374,7 +374,7 @@ const ResultsSection = () => {
 // ─── Press / recent client news ──────────────────────────────────────────────
 
 const PressSection = () => (
-  <section className={`${classes.section} ${classes.pressSection}`}>
+  <section className={classes.pressSection}>
     <div className="xl-container">
       <div className={classes.sectionHead}>
         <h2>Recent Client News</h2>
@@ -531,7 +531,7 @@ const VoiceCard: React.FC<{ voice: Voice }> = ({ voice }) => {
 };
 
 const TestimonialsSection = () => (
-  <section className={`${classes.section} ${classes.testimonialsSection}`}>
+  <section className={classes.testimonialsSection}>
     <div className="xl-container">
       <div className={classes.sectionHead}>
         <h2>A Dedicated Partner to Pharma, Patients, and Providers</h2>
@@ -616,7 +616,7 @@ const TrustStrip = () => {
 // ─── ROI banner ────────────────────────────────────────────────────────────────
 
 const RoiSection = () => (
-  <section className={`${classes.section} ${classes.roiSection}`}>
+  <section className={classes.roiSection}>
     <div className="xl-container">
       <p className={classes.eyebrow}>Measure Your Impact</p>
       <div className={classes.roiBanner}>

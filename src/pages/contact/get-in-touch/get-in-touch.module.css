@@ -1,7 +1,7 @@
 .page {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 100px 64px 100px;
+  padding: 56px 64px 100px;
 }
 
 .formWrap {
@@ -11,7 +11,7 @@
 /* ── HubSpot form title + description (from form config) ─── */
 
 .formWrap :global(.hs-richtext) {
-  margin-bottom: 56px;
+  margin-bottom: 0;
 }
 
 .formWrap :global(.hs-richtext h1),
@@ -24,7 +24,7 @@
   line-height: 1.05 !important;
   letter-spacing: -0.01em !important;
   color: #0f1a14 !important;
-  margin: 0 0 28px !important;
+  margin: 0 0 8px !important;
 }
 
 .formWrap :global(.hs-richtext p) {
@@ -64,7 +64,7 @@
 }
 
 .formWrap :global(.hs-form-field) {
-  margin-bottom: 22px !important;
+  margin-bottom: 16px !important;
 }
 
 .formWrap :global(.hs-form-field > label),
@@ -76,7 +76,7 @@
   font-size: 15px !important;
   line-height: 1.3 !important;
   color: #00615e !important;
-  margin: 0 0 10px !important;
+  margin: 0 0 3px !important;
 }
 
 .formWrap :global(.hs-form-required) {
@@ -139,6 +139,13 @@
   border-color: #b5371d !important;
 }
 
+/* Zero the global `.hs-submit { margin-top }` (set in assets/css) so the gap
+   above the button is controlled solely by the button's own margin-top,
+   matching the hcp-support form. */
+.formWrap :global(.hs-submit) {
+  margin-top: 0 !important;
+}
+
 .formWrap :global(.hs-form .hs-button),
 .formWrap :global(.hs-form input[type="submit"]) {
   appearance: none;
@@ -146,9 +153,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 56px;
+  height: 50px;
   padding: 0 32px;
-  margin-top: 14px;
+  margin-top: 6px;
   font-family: var(--mantine-font-family, "Lato", Arial, sans-serif) !important;
   font-weight: 700 !important;
   font-size: 16px !important;
@@ -187,9 +194,6 @@
 @media (max-width: 720px) {
   .page {
     padding: 64px 22px 64px;
-  }
-  .formWrap :global(.hs-richtext) {
-    margin-bottom: 36px;
   }
 }
 

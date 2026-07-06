@@ -81,7 +81,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  padding: 52px 0;
+  padding: 32px 0;
 }
 /* `.grid` is centered + capped on mobile; on md+ it fills its xl-container. */
 .grid {
@@ -433,12 +433,14 @@
   .stat    { flex: 1 1 40%; text-align: left; }
   .statNum { justify-content: flex-start; }
   .tpRow   { justify-content: flex-start; }
+  .stage { padding: 52px 0; }
 }
+
 
 @media (min-width: $phil-breakpoint-md) {
   /* Full-viewport hero. */
   .hero  { min-height: 100vh; }
-  .stage { min-height: 100vh; padding: 40px 0; }
+  .stage { min-height: 100vh; padding: 40px 0;}
   .deco  { display: block; }
 
   /* Inner column fills the surrounding xl-container. */
@@ -456,7 +458,6 @@
     transform: translateY(5%);
   }
   .bullets     { margin-top: 26px; transform: translateY(-5%); }
-  .metricsBand { margin-top: 36px; }
 
   /* Typography step-up (lg+ bumps higher again). */
   .h1   { font-size: 43px; margin-top: 64px; }
@@ -475,6 +476,7 @@
     grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
     column-gap: 48px;
     align-items: center;
+    margin-top: 36px;
   }
   .eyebrow {
     margin-bottom: 0;
@@ -501,6 +503,12 @@
   .eyebrow     { padding-right: 0; border-right: none; }
   .stats       { display: flex; gap: 32px; margin-top: 28px; }
   .stat        { flex: 1 1 0; }
+}
+
+@media (min-width: $phil-breakpoint-xl) {
+  .metricsBand{
+    margin-top: 52px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

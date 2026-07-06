@@ -16,8 +16,9 @@
   position: relative;
   background: linear-gradient(135deg, #00615e 0%, #00827e 55%, #2bafa1 100%);
   color: #ffffff;
-  padding: 100px 0 200px;
+  padding: 68px 0 200px;
   overflow: hidden;
+  background-color: red;
 }
 
 .bandContainer {
@@ -40,7 +41,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #ffffff;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .bandEyebrowRule {
@@ -57,7 +58,7 @@
   line-height: 1;
   letter-spacing: -0.025em;
   color: #ffffff;
-  margin: 0 0 24px;
+  margin: 0 0 12px;
 }
 
 .bandIntro {
@@ -184,7 +185,7 @@
 /* ── BANNER ─────────────────────────────────────────────────── */
 
 .bannerWrap {
-  margin-top: 32px;
+  margin-top: 50px;
 }
 
 .banner {
