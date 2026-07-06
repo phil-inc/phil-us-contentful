@@ -305,7 +305,7 @@ const HcpSupportPage = () => {
               </label>
               <textarea
                 className={`${classes.textarea} ${errors.message ? classes.inputError : ""}`}
-                rows={6}
+                rows={4}
                 value={form.message}
                 onChange={set("message")}
               />

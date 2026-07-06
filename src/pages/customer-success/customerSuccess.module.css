@@ -134,7 +134,9 @@
   text-align: center;
 }
 
-.section { padding: 100px 0; }
+/* Per-section vertical padding is defined on each section class below
+   (.hero, .resultsSection, .pressSection, .testimonialsSection, .trust,
+   .roiSection, .endcta) so each can be tuned independently. */
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
 .hero {
@@ -516,6 +518,7 @@
 
 /* ── Press / recent client news ──────────────────────────────────────── */
 .pressSection {
+  padding: 100px 0 50px;
   background:
     radial-gradient(1200px 700px at 100% 0%, rgba(213, 241, 240, 0.65), transparent 60%),
     #ffffff;
@@ -599,6 +602,7 @@
 
 /* ── Testimonials / voices ───────────────────────────────────────────── */
 .testimonialsSection {
+  padding: 40px 0 100px;
   background:
     radial-gradient(700px 380px at 10% 30%, rgba(213, 241, 240, 0.35), transparent 70%),
     radial-gradient(700px 380px at 90% 80%, rgba(213, 241, 240, 0.3), transparent 70%),
@@ -710,10 +714,8 @@
 
 /* ── Trustpilot strip ────────────────────────────────────────────────── */
 .trust {
-  padding: 100px 0;
-  background:
-    radial-gradient(700px 380px at 90% 10%, rgba(213, 241, 240, 0.45), transparent 70%),
-    #ffffff;
+  padding: 100px 0 50px;
+  background: radial-gradient(1200px 700px at 100% 0%, rgba(213, 241, 240, 0.65), transparent 60%), #ffffff;
 }
 .trustHead { margin: 0 0 36px; }
 .trustTitle {
@@ -833,7 +835,7 @@
 }
 
 /* ── ROI banner ──────────────────────────────────────────────────────── */
-.roiSection { background: #ffffff; padding: 100px 0; }
+.roiSection { background: #ffffff; padding: 70px 0 100px; }
 .roiBanner {
   background: linear-gradient(135deg, #d5f1f0 0%, #a8e2da 50%, #f2e8c0 100%);
   color: #085041;
@@ -1059,6 +1061,12 @@
 .endctaBtn:hover .endctaArrow { transform: translateX(4px); }
 
 @media (max-width: 1000px) {
+  .resultsSection, .testimonialsSection, .trust, .roiSection { padding: 48px 0;}
+  .hero { padding: 64px 0; }
+  .pressFooter {margin-top: 36px;}
+  .pressSection {padding: 48px 0 24px;}
+  .csCtas { margin-top: 36px; }
+  .sectionHead p {font-size: 17px;}
   .endctaBg { padding: 40px 20px 48px; min-height: auto; }
   .endctaRow { flex-direction: column; align-items: flex-start; gap: 32px; padding: 0; }
   .endctaTitle { max-width: 100%; }
@@ -1067,8 +1075,6 @@
 }
 
 @media (max-width: 720px) {
-  .section, .resultsSection, .trust, .roiSection { padding: 64px 0; }
-  .hero { padding: 64px 0; }
   .endctaBg { padding: 40px 20px 48px; }
   .endctaRow { flex-direction: column; align-items: flex-start; gap: 24px; padding: 0; }
   .endctaTitle { font-size: 34px; line-height: 1.1; max-width: 100%; }
@@ -1103,6 +1109,9 @@
 }
 
 @media (max-width: 480px) {
-  .section, .resultsSection, .trust, .roiSection { padding: 44px 0; }
+  .resultsSection, .testimonialsSection, .trust, .roiSection { padding: 42px 0; }
+  .pressFooter {margin-top: 20px;}
+  .csCtas {margin-top: 20px; }
+  .pressSection {padding:42px 0 16px;}
   .hero { padding: 48px 0; }
 }

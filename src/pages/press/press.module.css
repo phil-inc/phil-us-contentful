@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 96px 0 72px;
+  padding: 96px 0 100px;
 }
 
 .heroInner {
@@ -251,14 +251,14 @@
 
 /* Press grid section */
 .pressSection {
-  padding: 0 0 96px;
+  padding: 0 0 100px;
   scroll-margin-top: 140px;
 }
 
 .pressInner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 60px;
+  padding: 8px 60px 0px;
 }
 
 .pressEyebrow {
@@ -364,6 +364,10 @@
     padding: 64px 0 56px;
   }
 
+  .pressSection {
+    padding: 0 0 56px;
+  }
+
   .heroInner {
     padding-inline: 32px;
     grid-template-columns: 1fr;
@@ -378,6 +382,7 @@
   .featured {
     padding-left: 32px;
     padding-right: 32px;
+    padding-bottom: 56px;
   }
 
   .featuredGrid {
@@ -395,5 +400,17 @@
 
   .pressGrid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: $phil-breakpoint-sm) {
+  .hero {
+    padding: 40px 0 44px;
+  }
+  .pressSection {
+    padding: 0 0 44px;
+  }
+   .featured {
+    padding-bottom: 44px;
   }
 }
