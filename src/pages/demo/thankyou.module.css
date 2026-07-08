@@ -1,7 +1,7 @@
-/* Post-submit demo confirmation pages — MRTG-1438.
-   Ported from the "Book Demo Page" Claude design (thankYou.jsx / thankYouTam.jsx).
-   Non-TAM = hero + demo video · TAM = hero + HubSpot Meetings scheduler.
-   Shared by demo/thank-you.tsx and demo/schedule.tsx. */
+/* Non-TAM post-submit thank-you page — MRTG-1438.
+   Ported from the "Book Demo Page" Claude design (thankYou.jsx).
+   Hero + demo video. Used only by demo/thank-you.tsx.
+   (The scheduler/TAM page has its own schedule.module.css.) */
 
 .tyPage {
   --font-display: "Raleway", "Arial Black", Arial, sans-serif;
@@ -240,101 +240,6 @@
   display: block;
 }
 
-/* ---- TAM scheduler page: centered hero + full-width embed ---------------- */
-.tyHeroTam {
-  position: relative;
-}
-.tyHeroInnerTam {
-  display: block;
-  text-align: center;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 78px 32px 128px;
-}
-.tyHeroTam .tyEyebrow {
-  justify-content: center;
-}
-.tyHeroTam .tyH1 {
-  font-size: clamp(32px, 3.7vw, 46px);
-  white-space: nowrap;
-}
-.tyHeroTam .tySub {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: none;
-  white-space: nowrap;
-  font-size: 23px;
-  margin-top: 17px;
-}
-.tySchedSection {
-  background:
-    radial-gradient(36% 32% at 3% 10%, rgba(0, 130, 126, 0.2) 0%, rgba(0, 130, 126, 0) 60%),
-    radial-gradient(32% 30% at 97% 20%, rgba(122, 227, 196, 0.33) 0%, rgba(122, 227, 196, 0) 62%),
-    radial-gradient(44% 40% at 93% 96%, rgba(0, 130, 126, 0.18) 0%, rgba(0, 130, 126, 0) 62%),
-    radial-gradient(30% 26% at 16% 94%, rgba(122, 227, 196, 0.24) 0%, rgba(122, 227, 196, 0) 60%),
-    #ffffff;
-  /* 100px gap between the scheduler and the footer. */
-  padding: 0 40px 100px;
-}
-.tySchedShell {
-  position: relative;
-  width: 100%;
-  max-width: 860px;
-  /* Reserve height so the loader is centered before the iframe is injected. */
-  min-height: 620px;
-  margin: -84px auto 0;
-  background: #fff;
-  border: none;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 30px 72px rgba(0, 30, 28, 0.18);
-}
-
-/* Centered loader shown until the HubSpot scheduler iframe finishes loading. */
-.schedLoading {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  background: #fff;
-  color: var(--phil-forest);
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 600;
-}
-.schedSpinner {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 3px solid rgba(0, 130, 126, 0.2);
-  border-top-color: var(--phil-foliage);
-  animation: schedSpin 0.8s linear infinite;
-}
-@keyframes schedSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.tySchedShell :global(.meetings-iframe-container) {
-  width: 100%;
-  line-height: 0;
-  font-size: 0;
-}
-.tySchedShell iframe {
-  width: 100% !important;
-  min-height: 620px;
-  border: 0;
-  display: block;
-  /* Crop HubSpot's own top/bottom white padding (vertical only) so the widget
-     hugs the shell. This clips the edges; it never scales or resizes it. */
-  clip-path: inset(22px 0 26px 0);
-  margin: -22px 0 -26px 0;
-}
-
 /* ---- entrance animations ------------------------------------------------ */
 .tyRise {
   animation: bdFadeUp 0.6s var(--ease-emphasis) both;
@@ -397,49 +302,18 @@
   .tySub {
     max-width: none;
   }
-  /* Reduced bottom padding since the card no longer overlaps into the hero. */
-  .tyHeroInnerTam {
-    padding: 48px 24px 40px;
-  }
-  .tyHeroTam .tyH1 {
-    font-size: 34px;
-    white-space: normal;
-  }
-  .tyHeroTam .tySub {
-    white-space: normal;
-    font-size: 18px;
-  }
-  .tySchedSection {
-    padding: 0 18px 48px;
-  }
-  /* No overlap on mobile — the card sits below the hero instead of riding up
-     over the description (the negative margin covered the text on narrow
-     screens). Desktop keeps the floating overlap. */
-  .tySchedShell {
-    margin-top: 0;
-  }
-  /* Drop the desktop padding-crop hack on mobile — there the layout is tighter,
-     so cropping clipped real content (the "Back" button). Let the auto-resizing
-     HubSpot iframe take its full natural height instead. */
-  .tySchedShell iframe {
-    clip-path: none;
-    margin: 0;
-  }
 }
 @media (max-width: 520px) {
   .tyHeroInner {
     padding: 0px 0px;
-  }
-   .tySchedSection {
-    padding: 0 10px 48px;
   }
   .tyHero:not(.tyHeroTam) {
     min-height: auto;
     padding: 28px 0;
   }
   .tyLogo {
-  height: 24px;
-}
+    height: 24px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .tyRise,

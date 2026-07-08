@@ -4,7 +4,7 @@ import type { HeadFC } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 
-import * as classes from "./thankyou.module.css";
+import * as classes from "./schedule.module.css";
 
 // TAM confirmation page (MRTG-1438): hero + HubSpot Meetings auto-scheduler.
 // Reached from the demo form when the submitter's email domain IS a target account.
@@ -108,7 +108,9 @@ const DemoSchedulePage = () => {
             <div
               ref={shellRef}
               className={`${classes.tySchedShell} ${classes.tyRise}`}
-              style={{ animationDelay: "0.1s" }}
+              // Reserve height for the centered loader until the iframe loads;
+              // afterwards the card hugs the calendar (esp. on mobile).
+              style={{ animationDelay: "0.1s", minHeight: loaded ? undefined : 620 }}
             >
               {!loaded && (
                 <div className={classes.schedLoading} aria-live="polite">
