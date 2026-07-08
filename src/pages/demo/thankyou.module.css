@@ -1,0 +1,261 @@
+/* Post-submit demo confirmation pages — MRTG-1438.
+   Ported from the "Book Demo Page" Claude design (thankYou.jsx / thankYouTam.jsx).
+   Non-TAM = hero + demo video · TAM = hero + HubSpot Meetings scheduler.
+   Shared by demo/thank-you.tsx and demo/schedule.tsx. */
+
+.tyPage {
+  --font-display: "Raleway", "Arial Black", Arial, sans-serif;
+  --font-body: "Lato", Arial, sans-serif;
+  --phil-forest: #00615e;
+  --phil-foliage: #00827e;
+  --ease-emphasis: cubic-bezier(0.2, 0, 0, 1);
+
+  width: 100%;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- hero ---------------------------------------------------------------- */
+.tyHero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #003634 0%,
+    var(--phil-forest) 24%,
+    var(--phil-foliage) 58%,
+    #74ceb5 100%
+  );
+  color: #fff;
+}
+.tyHeroDeco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(125% 110% at 0% 0%, rgba(0, 46, 44, 0.6) 0%, rgba(0, 46, 44, 0) 58%),
+    radial-gradient(110% 95% at 100% 100%, rgba(165, 240, 220, 0.26) 0%, rgba(165, 240, 220, 0) 55%);
+}
+/* Width + inline padding come from the shared `.xl-container` wrapper (as on the
+   demo page); this only owns the two-column grid and vertical rhythm. */
+.tyHeroInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 600px;
+  column-gap: 72px;
+  align-items: center;
+  padding: 56px 0 64px;
+}
+
+.tyEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c6f3e4;
+  margin-bottom: 26px;
+}
+.tyEyebrow .tyCheck {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  display: grid;
+  place-items: center;
+  flex: none;
+  animation: bdCheckPop 0.55s 0.1s var(--ease-emphasis) both;
+}
+/* Heading + lead scale mirrors the demo hero (`--font-display`, ~29→50px). */
+.tyH1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(29px, 3.4vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+  color: #fff;
+}
+.tySub {
+  font-family: var(--font-body);
+  font-size: clamp(18px, 1.4vw, 22px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 18px 0 0;
+  max-width: 520px;
+}
+
+/* ---- video card (non-TAM) ----------------------------------------------- */
+.tyVideoWrap {
+  min-width: 0;
+}
+.tyVideoLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #c6f3e4;
+  margin-bottom: 16px;
+}
+.tyVideoCard {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 44px 100px rgba(0, 30, 28, 0.5);
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.tyVideoCard iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ---- TAM scheduler page: centered hero + full-width embed ---------------- */
+.tyHeroTam {
+  position: relative;
+}
+.tyHeroInnerTam {
+  display: block;
+  text-align: center;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 78px 32px 128px;
+}
+.tyHeroTam .tyEyebrow {
+  justify-content: center;
+}
+.tyHeroTam .tyH1 {
+  font-size: clamp(32px, 3.7vw, 46px);
+  white-space: nowrap;
+}
+.tyHeroTam .tySub {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: none;
+  white-space: nowrap;
+  font-size: 23px;
+  margin-top: 17px;
+}
+.tySchedSection {
+  background:
+    radial-gradient(36% 32% at 3% 10%, rgba(0, 130, 126, 0.2) 0%, rgba(0, 130, 126, 0) 60%),
+    radial-gradient(32% 30% at 97% 20%, rgba(122, 227, 196, 0.33) 0%, rgba(122, 227, 196, 0) 62%),
+    radial-gradient(44% 40% at 93% 96%, rgba(0, 130, 126, 0.18) 0%, rgba(0, 130, 126, 0) 62%),
+    radial-gradient(30% 26% at 16% 94%, rgba(122, 227, 196, 0.24) 0%, rgba(122, 227, 196, 0) 60%),
+    #ffffff;
+  padding: 0 40px 10px;
+}
+.tySchedShell {
+  width: 100%;
+  max-width: 860px;
+  margin: -84px auto 0;
+  background: #fff;
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 30px 72px rgba(0, 30, 28, 0.18);
+}
+.tySchedShell :global(.meetings-iframe-container) {
+  width: 100%;
+  line-height: 0;
+  font-size: 0;
+}
+.tySchedShell iframe {
+  width: 100% !important;
+  min-height: 620px;
+  border: 0;
+  display: block;
+  /* Crop HubSpot's own top/bottom white padding (vertical only) so the widget
+     hugs the shell. This clips the edges; it never scales or resizes it. */
+  clip-path: inset(22px 0 26px 0);
+  margin: -22px 0 -26px 0;
+}
+
+/* ---- entrance animations ------------------------------------------------ */
+.tyRise {
+  animation: bdFadeUp 0.6s var(--ease-emphasis) both;
+}
+@keyframes bdFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes bdCheckPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+    box-shadow: 0 0 0 0 rgba(168, 237, 215, 0);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  72% {
+    box-shadow: 0 0 16px 3px rgba(168, 237, 215, 0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(168, 237, 215, 0);
+  }
+}
+
+/* ---- responsive --------------------------------------------------------- */
+@media (max-width: 980px) {
+  .tyHeroInner {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+    padding: 40px 0 48px;
+  }
+  .tySub {
+    max-width: none;
+  }
+  .tyHeroInnerTam {
+    padding: 48px 24px 96px;
+  }
+  .tyHeroTam .tyH1 {
+    font-size: 34px;
+    white-space: normal;
+  }
+  .tyHeroTam .tySub {
+    white-space: normal;
+    font-size: 18px;
+  }
+  .tySchedSection {
+    padding: 0 18px 48px;
+  }
+  .tySchedShell {
+    margin-top: -72px;
+  }
+}
+@media (max-width: 520px) {
+  .tyHeroInner {
+    padding: 32px 0 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tyRise,
+  .tyEyebrow .tyCheck {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
