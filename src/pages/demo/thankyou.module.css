@@ -43,9 +43,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(
-    100vh - var(--navbar-height, 84px) - var(--announcment-bar-height, 50px)
-  );
+  /* Only the sticky nav (84px + 1px border) sits above the hero. The banner
+     (CInfoBar) renders only on the patients/faqs routes, so it is NOT
+     subtracted here — subtracting it left a white gap at the bottom. */
+  min-height: calc(100vh - 85px);
 }
 
 /* Width + inline padding come from the shared `.xl-container` wrapper (as on the
@@ -169,7 +170,8 @@
     radial-gradient(44% 40% at 93% 96%, rgba(0, 130, 126, 0.18) 0%, rgba(0, 130, 126, 0) 62%),
     radial-gradient(30% 26% at 16% 94%, rgba(122, 227, 196, 0.24) 0%, rgba(122, 227, 196, 0) 60%),
     #ffffff;
-  padding: 0 40px 10px;
+  /* 100px gap between the scheduler and the footer. */
+  padding: 0 40px 100px;
 }
 .tySchedShell {
   width: 100%;
@@ -261,6 +263,13 @@
   }
   .tySchedShell {
     margin-top: -72px;
+  }
+  /* Drop the desktop padding-crop hack on mobile — there the layout is tighter,
+     so cropping clipped real content (the "Back" button). Let the auto-resizing
+     HubSpot iframe take its full natural height instead. */
+  .tySchedShell iframe {
+    clip-path: none;
+    margin: 0;
   }
 }
 @media (max-width: 520px) {

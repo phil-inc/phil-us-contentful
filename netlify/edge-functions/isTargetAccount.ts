@@ -9,7 +9,6 @@ import {TAM_DOMAINS} from './lib/tamDomains.ts';
  * shipped to the browser.
  */
 const targets = new Set(TAM_DOMAINS.map((d) => d.trim().toLowerCase()));
-console.log(targets);
 
 const isTargetAccount = async (request: Request) => {
 	const url = new URL(request.url);
