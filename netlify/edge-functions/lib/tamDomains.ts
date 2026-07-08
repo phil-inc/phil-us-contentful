@@ -1,8 +1,9 @@
 /**
  * Target-account (TAM) email domains — MRTG-1438.
  *
- * Server-only: imported by isTargetAccount.ts, never shipped to the browser.
- * One domain per line, lowercase.
+ * Shared module (in a subdirectory so Netlify treats it as a supporting file,
+ * not an edge function). Imported by ../isTargetAccount.ts; server-only, never
+ * shipped to the browser. One domain per line, lowercase.
  *
  * NOTE: This is a small subset (10 well-known accounts) to run the feature
  * end-to-end. Expand with the full list exported from HubSpot (the "Company

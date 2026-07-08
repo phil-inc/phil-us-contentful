@@ -1,5 +1,5 @@
 import type {Config} from 'https://edge.netlify.com';
-import {TAM_DOMAINS} from './tamDomains.ts';
+import {TAM_DOMAINS} from './lib/tamDomains.ts';
 
 /**
  * Target-account (TAM) domain check for the demo flow — MRTG-1438.
