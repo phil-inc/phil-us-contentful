@@ -62,6 +62,7 @@
   color: #c6f3e4;
 }
 .tyEyebrow .tyCheck {
+  position: relative;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -70,6 +71,51 @@
   place-items: center;
   flex: none;
   animation: bdCheckPop 0.55s 0.1s var(--ease-emphasis) both;
+}
+
+/* Eyebrow (text + tick) glows for ~2.5s, then rests ~0.5s (3s loop) — matches
+   the thank-you page. */
+.tyEyebrow {
+  animation: tyEyebrowGlow 3s ease-in-out infinite;
+}
+@keyframes tyEyebrowGlow {
+  0% {
+    filter: drop-shadow(0 0 0 rgba(122, 227, 196, 0));
+  }
+  10% {
+    filter: drop-shadow(0 0 8px rgba(122, 227, 196, 0.85));
+  }
+  42% {
+    filter: drop-shadow(0 0 14px rgba(122, 227, 196, 1));
+  }
+  75% {
+    filter: drop-shadow(0 0 8px rgba(122, 227, 196, 0.85));
+  }
+  83%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(122, 227, 196, 0));
+  }
+}
+/* Subtle "ping" ring radiating from the tick, once per glow cycle. */
+.tyEyebrow .tyCheck::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 2px solid rgba(122, 227, 196, 0.8);
+  pointer-events: none;
+  animation: tyCheckPing 3s ease-out infinite;
+}
+@keyframes tyCheckPing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.75;
+  }
+  45%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
 
 /* ---- heading + sub ------------------------------------------------------- */
@@ -199,8 +245,11 @@
 
 /* ---- responsive ---------------------------------------------------------- */
 @media (max-width: 980px) {
+  /* 96px bottom padding leaves empty green below the sub-text, so the card's
+     -72px overlap lands in that gap (~24px clearance) — the description stays
+     clear while the calendar floats up over the hero (mimics the design). */
   .tyHeroInnerTam {
-    padding: 48px 24px 40px;
+    padding: 48px 24px 96px;
   }
   .tyH1 {
     font-size: 34px;
@@ -213,11 +262,11 @@
   .tySchedSection {
     padding: 0 18px 48px;
   }
-  /* No overlap on mobile — the card sits below the hero, not over the text.
-     Drop the reserved min-height so the card hugs the calendar exactly (no
-     leftover white background below the widget). */
+  /* Floating overlap on mobile — the card pulls up into the hero's bottom
+     padding (not over the description). Keep min-height: 0 so it still hugs
+     the calendar height. */
   .tySchedShell {
-    margin-top: 0;
+    margin-top: -72px;
     min-height: 0;
   }
   /* Let the auto-resizing iframe take its exact height (no crop, no min-height). */
@@ -228,18 +277,24 @@
   }
 }
 @media (max-width: 520px) {
+  /* Keep the 96px bottom clearance so the -72px overlap doesn't ride over the
+     description on very small screens. */
   .tyHeroInnerTam {
-    padding: 38px 24px 32px;
+    padding: 38px 24px 96px;
   }
   .tySchedSection {
-    padding: 0 10px 48px;
+    padding: 0 10px 44px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .tyRise,
+  .tyEyebrow,
   .tyEyebrow .tyCheck {
     animation: none !important;
     opacity: 1;
     transform: none;
+  }
+  .tyEyebrow .tyCheck::after {
+    display: none;
   }
 }
