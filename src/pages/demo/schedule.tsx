@@ -35,16 +35,47 @@ const IconCheck = ({ size = 14 }: { size?: number }) => (
 );
 
 const DemoSchedulePage = () => {
+  const shellRef = React.useRef<HTMLDivElement>(null);
+  const [loaded, setLoaded] = React.useState(false);
+
   // Load the HubSpot Meetings embed script after mount so it finds
-  // .meetings-iframe-container and injects the scheduler iframe.
+  // .meetings-iframe-container and injects the scheduler iframe. Show a loader
+  // until that injected iframe finishes loading.
   React.useEffect(() => {
     const s = document.createElement("script");
     s.type = "text/javascript";
     s.src = MEETINGS_SCRIPT;
     s.async = true;
     document.body.appendChild(s);
+
+    const container = shellRef.current?.querySelector(
+      ".meetings-iframe-container",
+    );
+    const onIframeLoad = () => setLoaded(true);
+
+    // The iframe is injected asynchronously; watch for it, then wait for its load.
+    const attach = (iframe: HTMLIFrameElement) => {
+      observer.disconnect();
+      iframe.addEventListener("load", onIframeLoad);
+    };
+    const observer = new MutationObserver(() => {
+      const iframe = container?.querySelector("iframe");
+      if (iframe) attach(iframe as HTMLIFrameElement);
+    });
+    if (container) {
+      const existing = container.querySelector("iframe");
+      if (existing) attach(existing as HTMLIFrameElement);
+      else observer.observe(container, { childList: true, subtree: true });
+    }
+
+    // Safety net: never leave the loader up indefinitely.
+    const fallback = window.setTimeout(() => setLoaded(true), 8000);
+
     return () => {
       s.remove();
+      observer.disconnect();
+      container?.querySelector("iframe")?.removeEventListener("load", onIframeLoad);
+      window.clearTimeout(fallback);
     };
   }, []);
 
@@ -75,9 +106,16 @@ const DemoSchedulePage = () => {
 
           <section className={classes.tySchedSection}>
             <div
+              ref={shellRef}
               className={`${classes.tySchedShell} ${classes.tyRise}`}
               style={{ animationDelay: "0.1s" }}
             >
+              {!loaded && (
+                <div className={classes.schedLoading} aria-live="polite">
+                  <span className={classes.schedSpinner} />
+                  <span>Loading the scheduler…</span>
+                </div>
+              )}
               {/* Start of Meetings Embed Script */}
               <div className="meetings-iframe-container" data-src={MEETINGS_SRC} />
               {/* End of Meetings Embed Script */}

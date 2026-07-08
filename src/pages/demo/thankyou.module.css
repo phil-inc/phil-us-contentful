@@ -54,13 +54,59 @@
 .tyHeroInner {
   position: relative;
   display: grid;
-  /* Video column widened ~8% (600px → 648px). */
-  grid-template-columns: minmax(0, 1fr) 648px;
+  /* Proportional columns so the text AND video shrink together as the width
+     decreases; video stays ~8% wider than the text (1.08fr vs 1fr). */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
   column-gap: 72px;
   align-items: center;
-  padding: 56px 0 64px;
 }
 
+/* Logo + header row (eyebrow | "See Our Solution") above the content row. */
+.tyHeader {
+  margin-bottom: 22px;
+}
+
+/* Eyebrow (left) + "See Our Solution" (right) share one line, aligned above the
+   heading | video columns below (same grid template as `.tyHeroInner`). */
+.tyHeaderRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  column-gap: 72px;
+  align-items: center;
+}
+.tyHeaderRow .tyEyebrow,
+.tyHeaderRow .tyVideoLabel {
+  margin-bottom: 0;
+}
+/* "See Our Solution" sits in the header on desktop, above the video on mobile. */
+.tyHeaderRow .tyVideoLabel {
+  display: none;
+}
+@media (min-width: 981px) {
+  .tyHeaderRow .tyVideoLabel {
+    display: inline-flex;
+  }
+  .tyVideoWrap .tyVideoLabel {
+    display: none;
+  }
+  /* Lift the centered hero content up ~10% on desktop. */
+  .tyHero:not(.tyHeroTam) :global(.xl-container) {
+    transform: translateY(-4%);
+  }
+}
+
+.tyLogoLink {
+  display: block;
+  width: fit-content;
+  line-height: 0;
+  text-decoration: none;
+  margin-bottom: 56px;
+}
+.tyLogo {
+  height: 30px;
+  width: auto;
+  display: block;
+}
 .tyEyebrow {
   display: inline-flex;
   align-items: center;
@@ -71,7 +117,6 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #c6f3e4;
-  margin-bottom: 26px;
 }
 .tyEyebrow .tyCheck {
   width: 26px;
@@ -83,11 +128,59 @@
   flex: none;
   animation: bdCheckPop 0.55s 0.1s var(--ease-emphasis) both;
 }
-/* Heading tops out at 58px on desktop, scaling down on narrower screens. */
+
+/* Thank-you eyebrow (text + tick) glows for ~2.5s, then rests ~0.5s (3s loop). */
+.tyHero:not(.tyHeroTam) .tyEyebrow {
+  animation: tyEyebrowGlow 3s ease-in-out infinite;
+}
+@keyframes tyEyebrowGlow {
+  0% {
+    filter: drop-shadow(0 0 0 rgba(122, 227, 196, 0));
+  }
+  10% {
+    filter: drop-shadow(0 0 8px rgba(122, 227, 196, 0.85));
+  }
+  42% {
+    filter: drop-shadow(0 0 14px rgba(122, 227, 196, 1));
+  }
+  75% {
+    filter: drop-shadow(0 0 8px rgba(122, 227, 196, 0.85));
+  }
+  83%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(122, 227, 196, 0));
+  }
+}
+
+/* A subtle "ping" ring radiates from the tick once per glow cycle. */
+.tyHero:not(.tyHeroTam) .tyEyebrow .tyCheck {
+  position: relative;
+}
+.tyHero:not(.tyHeroTam) .tyEyebrow .tyCheck::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 2px solid rgba(122, 227, 196, 0.8);
+  pointer-events: none;
+  animation: tyCheckPing 3s ease-out infinite;
+}
+@keyframes tyCheckPing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.75;
+  }
+  45%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+/* Heading tops out at 64px on desktop, scaling down on narrower screens. */
 .tyH1 {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(34px, 5vw, 58px);
+  font-size: clamp(36px, 5.6vw, 64px);
   line-height: 1.08;
   letter-spacing: -0.02em;
   margin: 0;
@@ -101,6 +194,16 @@
   color: rgba(255, 255, 255, 0.92);
   margin: 18px 0 0;
   max-width: 520px;
+}
+
+/* Forced heading line breaks — desktop (two-column) only; mobile wraps naturally. */
+.tyBr {
+  display: none;
+}
+@media (min-width: 981px) {
+  .tyBr {
+    display: inline;
+  }
 }
 
 /* ---- video card (non-TAM) ----------------------------------------------- */
@@ -174,14 +277,47 @@
   padding: 0 40px 100px;
 }
 .tySchedShell {
+  position: relative;
   width: 100%;
   max-width: 860px;
+  /* Reserve height so the loader is centered before the iframe is injected. */
+  min-height: 620px;
   margin: -84px auto 0;
   background: #fff;
   border: none;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 30px 72px rgba(0, 30, 28, 0.18);
+}
+
+/* Centered loader shown until the HubSpot scheduler iframe finishes loading. */
+.schedLoading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #fff;
+  color: var(--phil-forest);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+}
+.schedSpinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 130, 126, 0.2);
+  border-top-color: var(--phil-foliage);
+  animation: schedSpin 0.8s linear infinite;
+}
+@keyframes schedSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 .tySchedShell :global(.meetings-iframe-container) {
   width: 100%;
@@ -235,20 +371,35 @@
 
 /* ---- responsive --------------------------------------------------------- */
 @media (max-width: 980px) {
-  /* Stacked content can exceed the viewport, so let the section grow naturally. */
+  /* Stacked content can exceed the viewport, so let the section grow naturally,
+     and add space below the navbar (desktop centers, so it doesn't need this). */
   .tyHero:not(.tyHeroTam) {
     min-height: auto;
+    padding: 50px 0;
+  }
+  /* Tighter spacing throughout on small screens. */
+  .tyHero:not(.tyHeroTam) .tyLogoLink {
+    margin-bottom: 24px;
+  }
+  .tyHero:not(.tyHeroTam) .tyEyebrow {
+    margin-bottom: 16px;
+  }
+  .tyHeader {
+    margin-bottom: 8px;
+  }
+  .tyHeaderRow {
+    grid-template-columns: 1fr;
   }
   .tyHeroInner {
     grid-template-columns: 1fr;
-    row-gap: 40px;
-    padding: 40px 0 48px;
+    row-gap: 28px;
   }
   .tySub {
     max-width: none;
   }
+  /* Reduced bottom padding since the card no longer overlaps into the hero. */
   .tyHeroInnerTam {
-    padding: 48px 24px 96px;
+    padding: 48px 24px 40px;
   }
   .tyHeroTam .tyH1 {
     font-size: 34px;
@@ -261,8 +412,11 @@
   .tySchedSection {
     padding: 0 18px 48px;
   }
+  /* No overlap on mobile — the card sits below the hero instead of riding up
+     over the description (the negative margin covered the text on narrow
+     screens). Desktop keeps the floating overlap. */
   .tySchedShell {
-    margin-top: -72px;
+    margin-top: 0;
   }
   /* Drop the desktop padding-crop hack on mobile — there the layout is tighter,
      so cropping clipped real content (the "Back" button). Let the auto-resizing
@@ -274,14 +428,28 @@
 }
 @media (max-width: 520px) {
   .tyHeroInner {
-    padding: 32px 0 40px;
+    padding: 0px 0px;
   }
+   .tySchedSection {
+    padding: 0 10px 48px;
+  }
+  .tyHero:not(.tyHeroTam) {
+    min-height: auto;
+    padding: 28px 0;
+  }
+  .tyLogo {
+  height: 24px;
+}
 }
 @media (prefers-reduced-motion: reduce) {
   .tyRise,
+  .tyEyebrow,
   .tyEyebrow .tyCheck {
     animation: none !important;
     opacity: 1;
     transform: none;
+  }
+  .tyEyebrow .tyCheck::after {
+    display: none;
   }
 }
