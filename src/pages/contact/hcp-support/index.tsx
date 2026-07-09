@@ -214,7 +214,7 @@ const HcpSupportPage = () => {
           <p className={classes.intro}>
             You're in the right place for support. Reach out below and our HCP support team will be in touch.
           </p>
-          <form className={classes.form} onSubmit={handleSubmit} noValidate>
+          <form className={classes.form} onSubmit={handleSubmit} noValidate data-hs-do-not-collect="true">
             <div className={classes.row2}>
               <div className={classes.field}>
                 <label className={classes.label}>

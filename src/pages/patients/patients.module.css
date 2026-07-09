@@ -244,7 +244,8 @@
 }
 .phoneScreen {
   background: #fff;
-  border-radius: 28px;
+  /* Concentric with the frame: outer 38px − 6px bezel padding = 32px. */
+  border-radius: 32px;
   padding: 22px 18px 20px;
   min-height: 480px;
   position: relative;

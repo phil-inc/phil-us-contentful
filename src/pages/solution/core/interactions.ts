@@ -113,6 +113,7 @@ export function attachSolutionCoreInteractions(): () => void {
     var bar = document.getElementById('jx2Bar');
     var cur = -1;
     var swapTimer = null;
+    var completed = false;   // set once the user has scrolled through to the final step
 
     function pad(n){ return (n < 10 ? '0' : '') + n; }
 
@@ -152,7 +153,12 @@ export function attachSolutionCoreInteractions(): () => void {
         entries.forEach(function(e){
           if (e.isIntersecting) {
             var i = parseInt(e.target.getAttribute('data-i'), 10);
+            // One-way on scroll: once the journey has been completed, don't walk
+            // the steps backwards as the user scrolls up — hold on the last step.
+            // (Rail clicks bypass this and can still jump anywhere.)
+            if (completed && i < cur) return;
             setStep(i);
+            if (i === total - 1) completed = true;
           }
         });
       }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
@@ -182,7 +188,7 @@ export function attachSolutionCoreInteractions(): () => void {
       });
     });
 
-    // Current scroll offset (used by the rail-jump and the upward-escape
+    // Current scroll offset (used by the rail-jump and the track-collapse
     // controller below).
     function curY(){ return window.pageYOffset || document.documentElement.scrollTop || 0; }
 
@@ -220,32 +226,37 @@ export function attachSolutionCoreInteractions(): () => void {
 
     setStep(0);
 
-    // Upward escape: once the journey has been pinned and the user starts
-    // scrolling back UP, don't make them re-scroll through every step — snap
-    // out just above the section so their upward momentum carries them past it.
-    // (Ported verbatim from the design reference Solutions Page v2.html.)
+    // Once the journey is complete, collapse the tall scroll track into a normal
+    // single-viewport section so it never re-cycles the numbers. We do this in a
+    // way that never disturbs what's on screen:
+    //   • if the section has scrolled fully OFF-SCREEN above the viewport, we
+    //     compensate scroll by exactly how much the track shrinks (zero jump);
+    //   • if it's still pinned and the user is scrolling UP, we anchor to the
+    //     section top — the only thing visible is the step-7 sticky, so the
+    //     frame is identical before/after and there's no visible jump.
+    // Either way the observer is then disconnected, so scrolling back up shows
+    // the final phone screen and simply scrolls past — no walking the numbers.
+    // (Ported from the design reference Solutions Page v2.html.)
     (function(){
       var lastY = curY();
-      var escaping = false;
-      window.addEventListener('scroll', function(){
-        if (mqMobile.matches || jumping) { lastY = curY(); return; }
+      function maybeCollapse(){
+        if (!expanded || mqMobile.matches || jumping || !completed) { lastY = curY(); return; }
         var y = curY();
         var goingUp = y < lastY - 0.5;
         lastY = y;
-        if (escaping || !goingUp) return;
         var rect = jx.getBoundingClientRect();
-        // pinned mid-section = top scrolled above the viewport but bottom still below it
-        var pinned = rect.top <= 1 && rect.bottom > window.innerHeight + 1;
-        if (!pinned) return;
-        escaping = true;
-        var target = Math.max(0, y + rect.top - 88); // land just above the section
-        // The reference relies on a global `html { scroll-behavior: smooth }` to
-        // animate this escape; the codebase scopes smooth scrolling to the Direct
-        // page only, so request it explicitly here to match the reference feel.
-        window.scrollTo({ top: target, behavior: 'smooth' });
-        lastY = curY();
-        setTimeout(function(){ escaping = false; }, 80);
-      }, { passive: true });
+        var offAbove = rect.bottom <= 0;                                  // fully above the viewport
+        var pinnedUp = goingUp && rect.top <= 1 && rect.bottom > window.innerHeight; // pinned & scrolling up
+        if (!offAbove && !pinnedUp) return;
+        var before = track.getBoundingClientRect().height;
+        var sectionTop = y + rect.top;                                    // document Y of the section top
+        track.style.height = '100vh';
+        expanded = false;
+        var after = track.getBoundingClientRect().height;
+        window.scrollTo(0, Math.max(0, offAbove ? y - (before - after) : sectionTop));
+        if (io) io.disconnect();
+      }
+      window.addEventListener('scroll', maybeCollapse, { passive: true });
     })();
 
     // Step 2 — interactive PHILRx enrollment phone: animate the check sequence
