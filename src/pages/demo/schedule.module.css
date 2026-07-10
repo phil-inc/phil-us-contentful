@@ -1,0 +1,301 @@
+/* Post-submit demo scheduler page (TAM) — MRTG-1438.
+   Centered hero + HubSpot Meetings auto-scheduler. */
+
+.tyPage {
+  --font-display: "Raleway", "Arial Black", Arial, sans-serif;
+  --font-body: "Lato", Arial, sans-serif;
+  --phil-forest: #00615e;
+  --phil-foliage: #00827e;
+  --ease-emphasis: cubic-bezier(0.2, 0, 0, 1);
+
+  width: 100%;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- hero ---------------------------------------------------------------- */
+.tyHero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    #003634 0%,
+    var(--phil-forest) 24%,
+    var(--phil-foliage) 58%,
+    #74ceb5 100%
+  );
+  color: #fff;
+}
+.tyHeroTam {
+  position: relative;
+}
+.tyHeroDeco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(125% 110% at 0% 0%, rgba(0, 46, 44, 0.6) 0%, rgba(0, 46, 44, 0) 58%),
+    radial-gradient(110% 95% at 100% 100%, rgba(165, 240, 220, 0.26) 0%, rgba(165, 240, 220, 0) 55%);
+}
+.tyHeroInner {
+  position: relative;
+}
+.tyHeroInnerTam {
+  display: block;
+  text-align: center;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 78px 32px 128px;
+}
+
+/* ---- eyebrow ------------------------------------------------------------- */
+.tyEyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c6f3e4;
+  margin-bottom: 10px;
+}
+.tyEyebrow .tyCheck {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  display: grid;
+  place-items: center;
+  flex: none;
+  animation: bdCheckPop 0.55s 0.1s var(--ease-emphasis) both;
+}
+
+/* Eyebrow (text + tick) glows for ~2.5s, then rests ~0.5s (3s loop) — matches
+   the thank-you page. */
+.tyEyebrow {
+  animation: tyEyebrowGlow 3s ease-in-out infinite;
+}
+@keyframes tyEyebrowGlow {
+  0% {
+    filter: drop-shadow(0 0 0 rgba(122, 227, 196, 0));
+  }
+  10% {
+    filter: drop-shadow(0 0 8px rgba(122, 227, 196, 0.85));
+  }
+  42% {
+    filter: drop-shadow(0 0 14px rgba(122, 227, 196, 1));
+  }
+  75% {
+    filter: drop-shadow(0 0 8px rgba(122, 227, 196, 0.85));
+  }
+  83%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(122, 227, 196, 0));
+  }
+}
+/* Subtle "ping" ring radiating from the tick, once per glow cycle. */
+.tyEyebrow .tyCheck::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 2px solid rgba(122, 227, 196, 0.8);
+  pointer-events: none;
+  animation: tyCheckPing 3s ease-out infinite;
+}
+@keyframes tyCheckPing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.75;
+  }
+  45%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* ---- heading + sub ------------------------------------------------------- */
+.tyH1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(32px, 3.7vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: #fff;
+  white-space: nowrap;
+}
+.tySub {
+  font-family: var(--font-body);
+  font-size: 23px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: none;
+  margin: 17px auto 0;
+  white-space: nowrap;
+}
+
+/* ---- scheduler section + shell ------------------------------------------- */
+.tySchedSection {
+  background:
+    radial-gradient(36% 32% at 3% 10%, rgba(0, 130, 126, 0.2) 0%, rgba(0, 130, 126, 0) 60%),
+    radial-gradient(32% 30% at 97% 20%, rgba(122, 227, 196, 0.33) 0%, rgba(122, 227, 196, 0) 62%),
+    radial-gradient(44% 40% at 93% 96%, rgba(0, 130, 126, 0.18) 0%, rgba(0, 130, 126, 0) 62%),
+    radial-gradient(30% 26% at 16% 94%, rgba(122, 227, 196, 0.24) 0%, rgba(122, 227, 196, 0) 60%),
+    #ffffff;
+  /* 100px gap between the scheduler and the footer. */
+  padding: 0 40px 100px;
+}
+.tySchedShell {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  /* Reserve height so the loader is centered before the iframe is injected. */
+  min-height: 620px;
+  margin: -84px auto 0;
+  background: #fff;
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 30px 72px rgba(0, 30, 28, 0.18);
+}
+.tySchedShell :global(.meetings-iframe-container) {
+  width: 100%;
+  line-height: 0;
+  font-size: 0;
+}
+.tySchedShell iframe {
+  width: 100% !important;
+  min-height: 620px;
+  border: 0;
+  display: block;
+  /* Crop HubSpot's own top/bottom white padding (vertical only) so the widget
+     hugs the shell. This clips the edges; it never scales or resizes it. */
+  clip-path: inset(22px 0 26px 0);
+  margin: -22px 0 -26px 0;
+}
+
+/* ---- loader (until the scheduler iframe finishes loading) ---------------- */
+.schedLoading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #fff;
+  color: var(--phil-forest);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+}
+.schedSpinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 130, 126, 0.2);
+  border-top-color: var(--phil-foliage);
+  animation: schedSpin 0.8s linear infinite;
+}
+@keyframes schedSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- entrance ------------------------------------------------------------ */
+.tyRise {
+  animation: bdFadeUp 0.6s var(--ease-emphasis) both;
+}
+@keyframes bdFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes bdCheckPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+    box-shadow: 0 0 0 0 rgba(168, 237, 215, 0);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  72% {
+    box-shadow: 0 0 16px 3px rgba(168, 237, 215, 0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(168, 237, 215, 0);
+  }
+}
+
+/* ---- responsive ---------------------------------------------------------- */
+@media (max-width: 980px) {
+  /* 96px bottom padding leaves empty green below the sub-text, so the card's
+     -72px overlap lands in that gap (~24px clearance) — the description stays
+     clear while the calendar floats up over the hero (mimics the design). */
+  .tyHeroInnerTam {
+    padding: 48px 24px 96px;
+  }
+  .tyH1 {
+    font-size: 34px;
+    white-space: normal;
+  }
+  .tySub {
+    white-space: normal;
+    font-size: 18px;
+  }
+  .tySchedSection {
+    padding: 0 18px 48px;
+  }
+  /* Floating overlap on mobile — the card pulls up into the hero's bottom
+     padding (not over the description). Keep min-height: 0 so it still hugs
+     the calendar height. */
+  .tySchedShell {
+    margin-top: -72px;
+    min-height: 0;
+  }
+  /* Let the auto-resizing iframe take its exact height (no crop, no min-height). */
+  .tySchedShell iframe {
+    clip-path: none;
+    margin: 0;
+    min-height: 0;
+  }
+}
+@media (max-width: 520px) {
+  /* Keep the 96px bottom clearance so the -72px overlap doesn't ride over the
+     description on very small screens. */
+  .tyHeroInnerTam {
+    padding: 38px 24px 96px;
+  }
+  .tySchedSection {
+    padding: 0 10px 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tyRise,
+  .tyEyebrow,
+  .tyEyebrow .tyCheck {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  .tyEyebrow .tyCheck::after {
+    display: none;
+  }
+}

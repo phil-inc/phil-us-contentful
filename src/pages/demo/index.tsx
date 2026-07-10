@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, type HeadFC } from "gatsby";
 
 import { Layout } from "layouts/Layout/Layout";
@@ -159,8 +159,33 @@ const TrustpilotStat: React.FC<{ active: boolean }> = ({ active }) => {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
+// Post-submit routing (MRTG-1438): send target accounts to the auto-scheduler,
+// everyone else to the standard thank-you page. Only the email domain is sent to
+// our edge function — the full target-account list never ships to the browser.
+const NON_TAM_PATH = "/demo/thank-you";
+const TAM_PATH = "/demo/schedule";
+
 const DemoPage: React.FC = () => {
   const [statRef, statIn] = useInView();
+
+  const resolveDemoRedirect = useCallback(
+    async ({ email }: { email?: string }) => {
+      const domain = email?.split("@")[1]?.trim().toLowerCase();
+      if (!domain) return NON_TAM_PATH;
+      try {
+        const res = await fetch(
+          `/api/is-target-account?domain=${encodeURIComponent(domain)}`,
+        );
+        if (!res.ok) return NON_TAM_PATH;
+        const { isTAM } = (await res.json()) as { isTAM?: boolean };
+        return isTAM ? TAM_PATH : NON_TAM_PATH;
+      } catch {
+        // Fail safe: on any error, use the standard thank-you page.
+        return NON_TAM_PATH;
+      }
+    },
+    [],
+  );
 
   // Full-screen landing page: hide the shared navbar + promo banner so the hero
   // owns the entire viewport (see `canHideHeader` below and `height: 100vh` in
@@ -229,6 +254,7 @@ const DemoPage: React.FC = () => {
                     portalId={DEMO_FORM.portalId}
                     formId={DEMO_FORM.formId}
                     classname={classes.hsForm}
+                    getRedirectPath={resolveDemoRedirect}
                   />
                 </div>
               </div>

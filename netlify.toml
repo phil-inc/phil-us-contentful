@@ -12,6 +12,11 @@
   function = "geminiHandler"
   path = "/api/get-gemini-chat"
 
+[[edge_functions]]
+  cache = "manual"
+  function = "isTargetAccount"
+  path = "/api/is-target-account"
+
 # Production context: all deploys from the Production branch
 # set in your site’s Branches settings in the UI will inherit
 # these settings. You can define environment variables
