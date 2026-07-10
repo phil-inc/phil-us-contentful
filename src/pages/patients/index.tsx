@@ -407,7 +407,7 @@ const StepsSection = () => (
 // ─── Video ───────────────────────────────────────────────────────────────────
 
 const VideoSection = () => (
-  <section className={classes.video__section}>
+  <section className={classes.video__section} id="video">
     <div className="xl-container">
       <div className={classes.sectionHead}>
         <h2>How PHILRx Helps You Save on Your Prescriptions</h2>
