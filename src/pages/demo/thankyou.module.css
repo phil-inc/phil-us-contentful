@@ -309,7 +309,7 @@
   }
   .tyHero:not(.tyHeroTam) {
     min-height: auto;
-    padding: 28px 0 44px;
+    padding: 28px 0 40px;
   }
   .tyLogo {
     height: 24px;

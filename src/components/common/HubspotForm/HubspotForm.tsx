@@ -23,7 +23,7 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({
   formId,
   classname = "",
   getRedirectPath,
-  submittingLabel = "Setting up your demo…",
+  submittingLabel = "Capturing your demo request...",
 }) => {
   const uuid = useId();
   const [hasRendered, setHasRendered] = React.useState<boolean>(false);
