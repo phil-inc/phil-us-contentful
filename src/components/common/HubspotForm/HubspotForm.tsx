@@ -68,7 +68,9 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({
         ? fields.find((f: any) => f?.name === "email")?.value
         : fields?.email;
       if (email) emailRef.current = String(email).trim();
-      if (d.eventName === "onFormSubmit") startRedirect(emailRef.current);
+      // Only start the redirect after HubSpot confirms submission succeeded
+      // (i.e. passed validation including blocked domain checks).
+      if (d.eventName === "onFormSubmitted") startRedirect(emailRef.current);
     };
     window.addEventListener("message", handler);
     return () => {
@@ -82,7 +84,7 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({
     portalId,
     formId,
     cssClass: classname,
-    // Backup email capture + start the redirect early.
+    // Capture email on submit attempt (before validation).
     onFormSubmit() {
       try {
         const scope = document.getElementById(uuid);
@@ -97,7 +99,6 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({
       } catch {
         /* keep any value already captured via the message event */
       }
-      startRedirect(emailRef.current);
     },
     async onFormSubmitted() {
       try {
@@ -106,7 +107,10 @@ const HubSpotForm: React.FC<HubSpotFormProps> = ({
           return;
         }
         setSubmitting(true);
-        // Await the decision started on submit (resolve fresh if needed).
+        // Start redirect decision now (post-validation, so blocked domains
+        // never reach this point).
+        startRedirect(emailRef.current);
+        // Await the decision.
         const path = await (redirectPromiseRef.current ??
           Promise.resolve(getRedirectPathRef.current({ email: emailRef.current })));
         navigate(path || DEFAULT_REDIRECT);
