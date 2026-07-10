@@ -517,7 +517,7 @@ const StepsSection = () => (
 // ─── Video ────────────────────────────────────────────────────────────────────
 
 const VideoSection = () => (
-  <section className={classes.videoSection}>
+  <section className={classes.videoSection} id="video">
     <div className="xl-container">
       <div className={`${classes.sectionHead} ${classes.sectionHeadWide}`}>
         <h2>Sending a Script to PHILRx is Easy</h2>
