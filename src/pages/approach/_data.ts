@@ -98,7 +98,7 @@ export const JOURNEY_STEPS = [
     breaks:
       "Fragmented vendors and siloed data make it nearly impossible to see where patients dropped off, why, or whether there are appropriate solutions to support adherence.",
     helps:
-      "Access 120+ real-time data points, with full data visibility across the prescription journey. Leverage AI-driven insights that provide dynamic information on channel strategy and where to take action. Brands that optimize programs with PHIL have seen meaningful improvements in patient access to drug therapies.",
+      "Access real-time data, with full data visibility across the prescription journey. Leverage AI-driven insights that provide dynamic information on channel strategy and where to take action. Brands that optimize programs with PHIL have seen meaningful improvements in patient access to drug therapies.",
   },
 ] as const;
 
