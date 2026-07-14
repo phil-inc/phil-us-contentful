@@ -627,7 +627,7 @@ export function attachSolutionCoreInteractions(): () => void {
       }
       pills.forEach(function(p, idx){ var on = idx === active; p.classList.toggle('is-active', on); p.setAttribute('aria-selected', on ? 'true' : 'false'); });
       cards.forEach(function(c, idx){
-        c.classList.remove('is-active', 'is-prev', 'is-next');
+        c.classList.remove('is-active', 'is-prev', 'is-next', 'di-swipe-l', 'di-swipe-r');
         if (idx === active) c.classList.add('is-active');
         else if (idx === (active - 1 + total) % total) c.classList.add('is-prev');
         else if (idx === (active + 1) % total) c.classList.add('is-next');
@@ -637,6 +637,67 @@ export function attachSolutionCoreInteractions(): () => void {
     cards.forEach(function(c){ c.addEventListener('click', function(){ if (c.classList.contains('is-active')) return; setActive(parseInt(c.getAttribute('data-i'), 10)); }); });
     var pillbar = sec.querySelector('.di-pills');
     if (pillbar) pillbar.addEventListener('keydown', function(e){ if (e.key === 'ArrowRight') setActive(active + 1); if (e.key === 'ArrowLeft') setActive(active - 1); });
+
+    // Mobile: slide the active card left/right with a finger to change views.
+    var stage = sec.querySelector('.di-stage');
+    var isTouch = 'ontouchstart' in window || (navigator.maxTouchPoints || 0) > 0;
+    if (stage && isTouch) {
+      var startX = 0, startY = 0, dx = 0, dragging = false, locked = false, horizontal = false, curCard = null;
+      var THRESH = 55; // px to commit a swipe
+      function reset(card, animate){
+        if (!card) return;
+        if (animate) {
+          card.style.transition = 'transform 260ms var(--ease-emphasis), opacity 260ms var(--ease-emphasis)';
+          setTimeout(function(){ card.style.transition = ''; }, 280);
+        } else {
+          card.style.transition = '';
+        }
+        card.style.transform = '';
+        card.style.opacity = '';
+      }
+      stage.addEventListener('touchstart', function(e){
+        if (e.touches.length !== 1) return;
+        // Only drive the swipe when the mobile single-card layout is in play.
+        if (window.matchMedia && !window.matchMedia('(max-width: 768px)').matches) return;
+        startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+        dx = 0; dragging = true; locked = false; horizontal = false;
+        curCard = cards[active];
+      }, { passive: true });
+      stage.addEventListener('touchmove', function(e){
+        if (!dragging || !curCard) return;
+        dx = e.touches[0].clientX - startX;
+        var dy = e.touches[0].clientY - startY;
+        if (!locked) {
+          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          locked = true; horizontal = Math.abs(dx) > Math.abs(dy);
+        }
+        if (!horizontal) return;
+        // Follow the finger with a little resistance; fade slightly as it moves.
+        curCard.style.transition = 'none';
+        curCard.style.transform = 'translateX(' + (dx * 0.6) + 'px)';
+        curCard.style.opacity = String(Math.max(0.55, 1 - Math.abs(dx) / 700));
+      }, { passive: true });
+      stage.addEventListener('touchend', function(){
+        if (!dragging) return;
+        dragging = false;
+        var released = curCard;
+        curCard = null;
+        if (horizontal && Math.abs(dx) > THRESH) {
+          var dir = dx < 0 ? 1 : -1; // swipe left -> next, swipe right -> prev
+          if (released) { released.style.transition = ''; released.style.transform = ''; released.style.opacity = ''; }
+          setActive(active + dir);
+          var incoming = cards[active];
+          if (incoming) {
+            incoming.classList.remove('di-swipe-l', 'di-swipe-r');
+            void incoming.offsetWidth; // restart the animation
+            incoming.classList.add(dir === 1 ? 'di-swipe-l' : 'di-swipe-r');
+          }
+        } else {
+          reset(released, true); // snap back
+        }
+        horizontal = false; locked = false; dx = 0;
+      }, { passive: true });
+    }
     var initial = 0;
     if (typeof window !== 'undefined') {
       var hash = window.location.hash.replace('#', '');
