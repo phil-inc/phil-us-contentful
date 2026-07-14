@@ -2119,6 +2119,17 @@
   .scope .di-card.is-prev, .scope .di-card.is-next { display: none; }
   .scope .di-viz { border-right: 0; border-top: 1px solid var(--phil-base); }
 
+  /* Finger-swipe: the incoming card slides in from the direction of the swipe. */
+  .scope .di-card.is-active.di-swipe-l { animation: di-swipe-in-l 340ms var(--ease-emphasis) both; }
+  .scope .di-card.is-active.di-swipe-r { animation: di-swipe-in-r 340ms var(--ease-emphasis) both; }
+  @keyframes di-swipe-in-l { from { transform: translateX(42px); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes di-swipe-in-r { from { transform: translateX(-42px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+}
+
+@media (max-width: $phil-breakpoint-md) and (prefers-reduced-motion: reduce) {
+  .scope .di-card.is-active.di-swipe-l,
+  .scope .di-card.is-active.di-swipe-r { animation: none; }
 }
 
 .scope .dx-panel.no-img .dx-shot {
