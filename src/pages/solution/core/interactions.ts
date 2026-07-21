@@ -697,6 +697,14 @@ export function attachSolutionCoreInteractions(): () => void {
         curCard = cards[active];
       }, { passive: true });
       stage.addEventListener('touchmove', function(e){
+        // A second finger means the user is pinch-zooming, not swiping. Abandon any
+        // in-progress single-finger drag and hand the gesture back to the browser so
+        // pinch-to-zoom works over the scorecard tables.
+        if (e.touches.length > 1) {
+          if (dragging && curCard) reset(curCard, true);
+          dragging = false; curCard = null; locked = false; horizontal = false; dx = 0;
+          return;
+        }
         if (!dragging || !curCard) return;
         dx = e.touches[0].clientX - startX;
         var dy = e.touches[0].clientY - startY;
