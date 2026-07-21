@@ -3,6 +3,14 @@
 @import "hubspot-form.css";
 @import "mantine-accordion-override.css";
 
+/* Keep text at its authored size on iOS Safari (no auto-inflation on rotation /
+   in narrow columns) while STILL allowing users to pinch-zoom. Use 100%, never
+   `none` — `none` would disable user zoom. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 :root {
   --navbar-height: 90px;
   --announcment-bar-height: 58px; /* Assume the height of the announcement bar */

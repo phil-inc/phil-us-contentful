@@ -632,7 +632,40 @@ export function attachSolutionCoreInteractions(): () => void {
         else if (idx === (active - 1 + total) % total) c.classList.add('is-prev');
         else if (idx === (active + 1) % total) c.classList.add('is-next');
       });
+      fitActiveScorecard();
     }
+
+    // On phones the wide scorecard tables (Tabs 1 & 2) are scaled down with
+    // `transform: scale()` so the whole table fits the screen with no horizontal
+    // scroll, while pinch-zoom stays available for reading. transform is used
+    // instead of CSS `zoom` because iOS Safari mis-sizes `zoom` and clipped columns.
+    // `transform` doesn't shrink the layout box, so we pull the element below (the
+    // legend, which is a sibling inside `.sq-table-wrap`) up with a negative
+    // margin-bottom equal to the height the scale removed — no empty gap, legend
+    // stays visible.
+    var SCORECARD_MQ = '(max-width: 640px)'; // matches $phil-breakpoint-xs (40em)
+    function fitScorecard(card){
+      if (!card) return;
+      var wrap = card.querySelector('.sq-table-wrap');
+      var table = wrap && wrap.querySelector('.sq-table');
+      if (!wrap || !table) return;
+      var mobile = window.matchMedia && window.matchMedia(SCORECARD_MQ).matches;
+      if (!mobile) { table.style.transform = ''; table.style.width = ''; table.style.marginBottom = ''; return; }
+      // measure natural (unscaled) size first
+      table.style.transform = 'none';
+      table.style.width = 'max-content';
+      table.style.marginBottom = '';
+      var natW = table.offsetWidth, natH = table.offsetHeight;
+      var avail = wrap.clientWidth;
+      var s = natW > 0 ? Math.min(1, avail / natW) : 1;
+      table.style.transform = 'scale(' + s + ')';
+      table.style.marginBottom = (-Math.round(natH * (1 - s))) + 'px';
+    }
+    function fitActiveScorecard(){ requestAnimationFrame(function(){ fitScorecard(cards[active]); }); }
+    window.addEventListener('resize', fitActiveScorecard);
+    window.addEventListener('load', fitActiveScorecard);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitActiveScorecard);
+
     pills.forEach(function(p){ p.addEventListener('click', function(){ setActive(parseInt(p.getAttribute('data-i'), 10)); }); });
     cards.forEach(function(c){ c.addEventListener('click', function(){ if (c.classList.contains('is-active')) return; setActive(parseInt(c.getAttribute('data-i'), 10)); }); });
     var pillbar = sec.querySelector('.di-pills');
