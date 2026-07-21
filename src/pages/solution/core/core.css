@@ -2061,15 +2061,19 @@
   .scope .di-card[data-i="1"] .sq-table,
   .scope .di-card[data-i="2"] .sq-table { border-radius: 6px; }
 
-  /* Whole scorecard table fits the screen (all columns, no horizontal scroll):
-     JS scales the table down with `transform: scale()` to fill the width and sets
-     the wrap height to the scaled height (see `fitScorecards` in interactions.ts).
-     transform is iOS-safe — unlike the old `zoom`, which iOS Safari mis-sized and
-     clipped. Text is small by design; pinch-zoom (enabled via the default viewport
-     meta, no maximum-scale) lets users zoom in to read. */
+  /* Whole scorecard table fits the screen (all columns, no horizontal scroll) with
+     pure CSS — no JS. Trick: give the table width `calc(100% / s)` and scale it by
+     the same `s`, so the visual width is always exactly 100% of the container at any
+     phone width. `transform` is iOS-safe (unlike the old `zoom`, which iOS Safari
+     mis-sized and clipped). Because `transform` doesn't shrink the layout box, a
+     negative margin-bottom pulls the legend below back up to remove the empty gap.
+     `s` is fixed per table (chosen so the narrowest phone still fits). */
   .scope .di-viz .sq-table-wrap { overflow: hidden; max-width: 100%; }
   .scope .di-card[data-i="1"] .sq-table,
-  .scope .di-card[data-i="2"] .sq-table { transform-origin: top left; margin: 0; min-width: 0; }
+  .scope .di-card[data-i="2"] .sq-table { transform-origin: top left; min-width: 0; }
+  /* margin-bottom = -(layoutHeight * (1 - s)): tab1 304*(1-0.35)=198, tab2 325*(1-0.45)=179 */
+  .scope .di-card[data-i="1"] .sq-table { width: calc(100% / 0.35); transform: scale(0.35); margin-bottom: -198px; }
+  .scope .di-card[data-i="2"] .sq-table { width: calc(100% / 0.45); transform: scale(0.45); margin-bottom: -179px; }
 
   /* keep the 3 legend items on one line under the shrunk table */
   .scope .sq-legend { gap: 10px; flex-wrap: nowrap; }
