@@ -108,6 +108,45 @@ export const DataTabsSection: React.FC = () => (
                       <tr><td>Dr. Kim Marshall</td><td><span className="sq-circle">78</span></td><td><span className="sq-pill mid sq-pop p3">83%</span></td><td><span className="sq-pill low">88%</span></td><td><span className="sq-pill low">88%</span></td><td><span className="sq-pill low">97%</span></td></tr>
                     </tbody>
                   </table>
+                  <div className="sq-cards">
+                    <div className="sqc-card sqc-territory">
+                      <div className="sqc-name">Atlanta West, GA</div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Weekly NRx</span><span className="sqc-v">97</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Enrollment</span><span className="sq-avg-box">87%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">PA Approvals</span><span className="sq-avg-box">90%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Refill Rate</span><span className="sq-avg-box">84%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">PA Submissions</span><span className="sq-avg-box">90%</span></div>
+                      </div>
+                    </div>
+                    <div className="sqc-card">
+                      <div className="sqc-head"><span className="sqc-name">Dr. Lauren Murray</span><span className="sq-circle">150</span></div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Enrollment</span><span className="sq-pill low">93%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">PA Approvals</span><span className="sq-pill low">93%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Refill Rate</span><span className="sq-pill low">96%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">PA Submissions</span><span className="sq-pill low">98%</span></div>
+                      </div>
+                    </div>
+                    <div className="sqc-card">
+                      <div className="sqc-head"><span className="sqc-name">Dr. Paul Brenner</span><span className="sq-circle">62</span></div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Enrollment</span><span className="sq-pill low">86%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">PA Approvals</span><span className="sq-pill low">89%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Refill Rate</span><span className="sq-pill high">68%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">PA Submissions</span><span className="sq-pill mid">75%</span></div>
+                      </div>
+                    </div>
+                    <div className="sqc-card">
+                      <div className="sqc-head"><span className="sqc-name">Dr. Kim Marshall</span><span className="sq-circle">78</span></div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Enrollment</span><span className="sq-pill mid">83%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">PA Approvals</span><span className="sq-pill low">88%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Refill Rate</span><span className="sq-pill low">88%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">PA Submissions</span><span className="sq-pill low">97%</span></div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="sq-legend">
                     <span><i className="low"></i> Above 85%</span>
                     <span><i className="mid"></i> 70–85%</span>
@@ -147,6 +186,48 @@ export const DataTabsSection: React.FC = () => (
                       <tr><td>Oklahoma, OK</td><td><span className="sq-pill mid">5%</span></td><td><span className="sq-pill low">2%</span></td><td><span className="sq-pill mid">3%</span></td></tr>
                     </tbody>
                   </table>
+                  <div className="sq-cards">
+                    <div className="sqc-card">
+                      <div className="sqc-head"><span className="sqc-name">Hartford West, CT</span></div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Missing Script Info</span><span className="sq-pill low">2%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing ICD-10</span><span className="sq-pill low">1%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing Sig</span><span className="sq-pill low">1%</span></div>
+                      </div>
+                    </div>
+                    <div className="sqc-card">
+                      <div className="sqc-head"><span className="sqc-name">West Palm, FL</span></div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Missing Script Info</span><span className="sq-pill high">10%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing ICD-10</span><span className="sq-pill high">6%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing Sig</span><span className="sq-pill mid">4%</span></div>
+                      </div>
+                    </div>
+                    <div className="sqc-card">
+                      <div className="sqc-head"><span className="sqc-name">Atlanta West, GA</span></div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Missing Script Info</span><span className="sq-pill high">8%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing ICD-10</span><span className="sq-pill mid">3%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing Sig</span><span className="sq-pill mid">5%</span></div>
+                      </div>
+                    </div>
+                    <div className="sqc-card">
+                      <div className="sqc-head"><span className="sqc-name">Irvine, CA</span></div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Missing Script Info</span><span className="sq-pill low">1%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing ICD-10</span><span className="sq-pill low">0%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing Sig</span><span className="sq-pill low">1%</span></div>
+                      </div>
+                    </div>
+                    <div className="sqc-card">
+                      <div className="sqc-head"><span className="sqc-name">Oklahoma, OK</span></div>
+                      <div className="sqc-metrics">
+                        <div className="sqc-row"><span className="sqc-k">Missing Script Info</span><span className="sq-pill mid">5%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing ICD-10</span><span className="sq-pill low">2%</span></div>
+                        <div className="sqc-row"><span className="sqc-k">Missing Sig</span><span className="sq-pill mid">3%</span></div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="sq-legend">
                     <span><i className="low"></i> Below 3%</span>
                     <span><i className="mid"></i> 3–5%</span>

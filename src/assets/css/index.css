@@ -3,6 +3,13 @@
 @import "hubspot-form.css";
 @import "mantine-accordion-override.css";
 
+/* Stop iOS Safari text autosizing from inflating small text (e.g. zoom-shrunk
+   tables on /core), which widens content past the viewport and gets clipped. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 :root {
   --navbar-height: 90px;
   --announcment-bar-height: 58px; /* Assume the height of the announcement bar */

@@ -2043,10 +2043,12 @@
 @media (max-width: $phil-breakpoint-xs) {
 
   /* tighter side padding on mobile to give the dashboards more room */
-  .scope .di-card .di-viz { padding: 28px 14px; }
-  /* Shrink the scorecard tables so they fit the screen instead of scrolling */
-  .scope .di-card[data-i="1"] .sq-table { zoom: 0.58; margin: 0 auto; }
-  .scope .di-card[data-i="2"] .sq-table { zoom: 0.64; margin: 0 auto; }
+  .scope .di-card .di-viz { padding: 22px 14px; }
+  /* NOTE: the scorecard tables were previously shrunk here with `zoom: 0.58/0.64`.
+     iOS Safari inflates the resulting sub-8px text back up (text autosizing /
+     page zoom), so the table rendered near natural width while the layout math
+     assumed the zoomed width — columns got clipped. Replaced by the real
+     font-size compact block at the end of this file. */
 
 }
 
@@ -2068,7 +2070,7 @@
 
 .scope .di-viz .dx-stream .dx-arrow-mini svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
-.scope .di-copy { position: relative; z-index: 2; order: 0; padding: 30px 38px 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; flex: 0 0 auto; }
+.scope .di-copy { position: relative; z-index: 2; order: 0; padding: 24px 22px 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; flex: 0 0 auto; }
 
 .scope .di-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--phil-foliage); margin: 0; }
 
@@ -2905,3 +2907,52 @@
 
 
 
+
+
+/* ---------- Phone scorecard cards (≤40em) ----------
+   On phones the wide Data & Insights scorecard tables (Tabs 1 & 2) don't fit and
+   were previously shrunk with `zoom`, which iOS Safari rendered inconsistently and
+   clipped. Instead we hide the table and show a stacked-card layout (one card per
+   provider / territory, each column becomes a labeled key -> value row). This
+   mirrors the existing desktop/mobile swap used by the Tab 3 journey timeline
+   (.jt-wrap / .jt-mobile). Cards are hidden on desktop; the table stays untouched. */
+.scope .sq-cards { display: none; }
+
+@media (max-width: $phil-breakpoint-xs) {
+
+  /* swap: hide the table, reveal the cards */
+  .scope .sq-table-wrap .sq-table { display: none; }
+  .scope .sq-cards { display: flex; flex-direction: column; gap: 7px; }
+
+  .scope .sqc-card { background: var(--phil-pure); border: 1px solid var(--phil-base); border-radius: 11px; padding: 8px 11px; box-shadow: 0 12px 30px -20px rgba(0,75,72,0.28); }
+
+  /* territory summary card reads as a neutral header block */
+  .scope .sqc-card.sqc-territory { background: #EFEFEF; border-color: var(--phil-fade); }
+
+  .scope .sqc-head { display: flex; align-items: center; justify-content: space-between; gap: 9px; margin-bottom: 5px; }
+
+  .scope .sqc-name { font-family: var(--font-display); font-weight: 700; font-size: 12px; color: var(--phil-pitch); line-height: 1.2; }
+
+  .scope .sqc-card.sqc-territory .sqc-name { margin-bottom: 5px; }
+
+  /* metric rows: label left, value pill right */
+  .scope .sqc-metrics { display: flex; flex-direction: column; gap: 4px; }
+
+  .scope .sqc-row { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
+
+  .scope .sqc-k { font-family: var(--font-body); font-size: 10.5px; font-weight: 600; color: var(--phil-gunmetal); }
+
+  .scope .sqc-v { font-family: var(--font-body); font-size: 11px; font-weight: 700; color: var(--phil-pitch); }
+
+  /* reused value chips keep table tones; size them for the card rows */
+  .scope .sqc-row .sq-pill { min-width: 40px; padding: 3px 8px; text-align: center; font-size: 10.5px; }
+  .scope .sqc-row .sq-avg-box { min-width: 40px; padding: 3px 8px; text-align: center; font-size: 10.5px; }
+  .scope .sqc-head .sq-circle { width: 31px; height: 31px; font-size: 11px; flex-shrink: 0; }
+  .scope .sqc-head .sq-avg-circle { display: inline-flex; align-items: center; justify-content: center; width: 31px; height: 31px; border-radius: 50%; border: 1.5px solid rgba(120,130,128,0.32); color: var(--phil-gunmetal); font-weight: 600; font-size: 11px; flex-shrink: 0; }
+
+  /* keep the 3 legend items on one line on phones */
+  .scope .sq-legend { gap: 10px; flex-wrap: nowrap; }
+  .scope .sq-legend span { font-size: 10.5px; gap: 5px; }
+  .scope .sq-legend i { width: 11px; height: 11px; }
+
+}
