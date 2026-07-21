@@ -19,7 +19,8 @@ import {
   OPTOUT_FORM_URL,
   CHD_EXAMPLES,
   CHD_SHARING_ENTITIES,
-  NOTICE_AT_COLLECTION,
+  PI_TABLE_HEADERS,
+  PI_TABLE_ROWS,
   USES_OF_PI,
   SENSITIVE_PI_PURPOSES,
   INCENTIVE_EXAMPLES,
@@ -80,6 +81,16 @@ const CookieBtn: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   >
     {children}
   </button>
+);
+
+// In-page cross-reference to another section of this annex (by anchor id).
+const InPage: React.FC<{ to: string; children: React.ReactNode }> = ({
+  to,
+  children,
+}) => (
+  <Link to={`/annex/#${to}`} className={classes.link}>
+    {children}
+  </Link>
 );
 
 // ─── Annex A ─────────────────────────────────────────────────────────────────
@@ -335,34 +346,35 @@ const AnnexB = () => (
     </p>
     <ul className={classes.list}>
       <li>
-        Specific consumer health data intended for “sale”: Consumer health data
-        collected via cookies and similar technologies including but not limited to
-        browsing activity on the Phil website; however, consumer health data does
-        not include PHI of current or potential Phil users.
+        <strong>Specific consumer health data intended for “sale”</strong>:
+        Consumer health data collected via cookies and similar technologies
+        including but not limited to browsing activity on the Phil website; however,
+        consumer health data does not include PHI of current or potential Phil
+        users.
       </li>
       <li>
-        Purpose of the “sale” of consumer health data: To tailor and deliver
-        personalized advertisements to you.
+        <strong>Purpose of the “sale” of consumer health data</strong>: To tailor
+        and deliver personalized advertisements to you.
       </li>
       <li>
-        How consumer health data purchasers gather and use the data: Consumer health
-        data purchasers will gather the data via cookies and other tracking
-        technologies when you visit the Phil website. These purchasers may use the
-        data to assist us to deliver personalized advertisements to you and in
-        accordance with their privacy policies linked below.
+        <strong>How consumer health data purchasers gather and use the data</strong>
+        : Consumer health data purchasers will gather the data via cookies and other
+        tracking technologies when you visit the Phil website. These purchasers may
+        use the data to assist us to deliver personalized advertisements to you and
+        in accordance with their privacy policies linked below.
       </li>
       <li>
-        Consumer health data purchasers’ contact information:
+        <strong>Consumer health data purchasers’ contact information</strong>:
         <ul className={classes.list}>
           <li>
-            Google: For more information about Google’s use of your personal
-            information, please visit{" "}
+            <strong>Google.</strong> For more information about Google’s use of your
+            personal information, please visit{" "}
             <Ext href={GOOGLE_PRIVACY_URL}>Google’s Data Policy</Ext>. To opt out of
             Google’s use of your information, please click{" "}
             <Ext href={GOOGLE_OPTOUT_URL}>here</Ext>.
           </li>
           <li>
-            Contact information for Phil: <Mail>{PRIVACY_EMAIL}</Mail>
+            <strong>Contact information for Phil</strong>: <Mail>{PRIVACY_EMAIL}</Mail>
           </li>
         </ul>
       </li>
@@ -403,6 +415,119 @@ const AnnexB = () => (
   </>
 );
 
+// ─── Annex B (second version — cookie-banner authorization) ──────────────────
+
+const AnnexB2 = () => (
+  <>
+    <h2 id="annex-b-banner" className={classes.annexTitle}>
+      Annex B – Consumer Health Data Authorization
+    </h2>
+    <p className={classes.paragraph}>
+      We and our partners use and share cookies and other tracking technologies
+      (“cookies”) to improve your experience, measure website performance, and
+      personalize marketing to you.
+    </p>
+    <p className={classes.paragraph}>
+      Under certain state privacy laws, cookies are considered to include personal
+      information and our sharing of cookies may be considered a “sale” or “sharing”
+      for behavioral or “targeted” advertising. To opt out,{" "}
+      <CookieBtn>click here</CookieBtn>.
+    </p>
+    <p className={classes.paragraph}>
+      By clicking "Accept” or otherwise opting into personalized marketing, you
+      authorize Phil to “sell” or “share” your "consumer health data” in accordance
+      with our Consumer Health Data Authorization:
+    </p>
+    <p className={classes.paragraph}>
+      This Consumer Health Data Privacy Authorization (“Authorization”) supplements
+      Phil’s Privacy Notice and Supplemental Consumer Health Data Privacy Notice, and
+      applies only to “consumer health data” subject to the Connecticut Data Privacy
+      Act, as amended (“CTDPA”), Washington My Health My Data Act (“MHMDA”), or
+      Nevada’s Consumer Health Data Privacy Law (“NVCHDPL”) (as applicable).
+    </p>
+    <p className={classes.paragraph}>
+      Terms used in this Authorization defined in CTDPA, MHMDA, or NVCHDPL will have
+      the meaning set forth in those laws to the extent such laws are applicable.
+    </p>
+    <p className={classes.paragraph}>
+      If you opt-in to “personalized marketing” through the{" "}
+      <Ext href={PHIL_HOME_URL}>www.phil.us</Ext>{" "}
+      <CookieBtn>cookie banner</CookieBtn>, you allow Phil to “sell” your consumer
+      health data as described below:
+    </p>
+    <ul className={classes.list}>
+      <li>
+        <strong>Specific consumer health data intended for “sale”</strong>:
+        Consumer health data collected via cookies and similar technologies
+        including but not limited to browsing activity on{" "}
+        <Ext href={PHIL_HOME_URL}>www.phil.us</Ext>.
+      </li>
+      <li>
+        <strong>Purpose of the “sale” of consumer health data</strong>: To tailor
+        and deliver personalized advertisements to you.
+      </li>
+      <li>
+        <strong>How consumer health data purchasers gather and use the data</strong>
+        : Consumer health data purchasers will gather the data via cookies and other
+        tracking technologies when you visit the Phil website. These purchasers may
+        use the data to assist us to deliver personalized advertisements to you and
+        in accordance with their privacy policies linked below.
+      </li>
+      <li>
+        <strong>Consumer health data purchasers’ contact information</strong>:
+        <ul className={classes.list}>
+          <li>
+            Google:{" "}
+            <Ext href="https://policies.google.com/privacy?hl=en">Privacy Policy</Ext>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p className={classes.paragraph}>
+      <strong>Contact information for Phil:</strong> <Mail>{PRIVACY_EMAIL}</Mail>
+    </p>
+
+    <h3 className={classes.sectionTitle}>Please note:</h3>
+    <ul className={classes.list}>
+      <li>
+        The provision of goods or services may not be conditioned upon you accepting
+        the terms of this authorization.
+      </li>
+      <li>
+        Purchasers may redisclose the consumer health data sold under this
+        authorization and such data may no longer be protected by the CTDPA, MHMDA,
+        and/or NVCHDPL.
+      </li>
+      <li>
+        You may revoke this authorization at any time through this{" "}
+        <CookieBtn>Phil cookie banner</CookieBtn>. To do so, please be sure the box
+        next to “Personalize marketing” is <strong>unchecked</strong> and click
+        “Save my choices.” you may also click “Decline all” to decline our use of all
+        cookies not required to operate our website.
+        <ul className={classes.list}>
+          <li>
+            A revocation will not impact previously sold consumer health data. In
+            addition, if you use different browsers or devices, you must indicate
+            your choices on each browser/device used to access{" "}
+            <Ext href={PHIL_HOME_URL}>www.phil.us</Ext>.
+          </li>
+          <li>
+            If you have any questions about how to revoke your authorization, please
+            contact us at <Mail>{PRIVACY_EMAIL}</Mail>.
+          </li>
+        </ul>
+      </li>
+      <li>This authorization will expire one (1) year after accepting it.</li>
+    </ul>
+    <p className={classes.paragraph}>
+      <strong>
+        To learn more about how we use and share personal information including
+        Cookies, please review our <Priv />.
+      </strong>
+    </p>
+  </>
+);
+
 // ─── Annex C ─────────────────────────────────────────────────────────────────
 
 const AnnexC = () => (
@@ -423,15 +548,57 @@ const AnnexC = () => (
       practices. Such consumers can find this information below.
     </p>
     <ul className={classes.list}>
-      {NOTICE_AT_COLLECTION.map((item, i) => (
-        <li key={i}>{item}</li>
-      ))}
       <li>
-        Additional Information. For more information on our privacy practices, please
-        review this Supplemental U.S. Privacy Notice and our <Priv />. Importantly,
-        the section of our Privacy Notice titled “Your Privacy Choices and Rights”
-        includes important details about how you can exercise some of the rights
-        which you have under U.S. privacy laws.
+        <strong>Personal Information Collected</strong>. See the section of this
+        Supplemental U.S. Privacy Notice titled “
+        <InPage to="annex-c-overview">
+          Overview of Personal Information Collected, Disclosed, Sold and/or Shared
+        </InPage>
+        ” for a list of personal information which may be collected. If we have
+        previously collected personal information in the past 12 months, we may
+        collect that personal information from you.
+      </li>
+      <li>
+        <strong>Uses of Personal Information</strong>. See the section of this
+        Supplemental U.S. Privacy Notice titled “
+        <InPage to="annex-c-uses">Uses of Personal Information</InPage>” for a list
+        of the purposes for which we use personal information.
+      </li>
+      <li>
+        <strong>
+          Is Personal Information “Sold” or “Shared” for “Cross-Context Behavioral
+          Advertising”?
+        </strong>{" "}
+        Yes. See the section of this Supplemental U.S. Privacy Notice titled “
+        <InPage to="annex-c-overview">
+          Overview of Personal Information Collected, Disclosed, Sold and/or Shared
+        </InPage>
+        ” for more details. If we have previously “sold” personal information or
+        “shared” personal information for “cross-context behavioral advertising” in
+        the past 12 months, we may “sell” or “share” that personal information if
+        collected from you. See the section of this Supplemental U.S. Privacy Notice
+        titled “
+        <InPage to="annex-c-optout">
+          Right to Opt Out of ‘Sales’ of Personal Information and/or ‘Sharing’ for
+          ‘Cross-Context Behavioral Advertising’
+        </InPage>
+        ” for instructions on how to opt-out of these activities.
+      </li>
+      <li>
+        <strong>Personal Information Retention.</strong> To determine the appropriate
+        retention period for personal information, we may consider applicable legal
+        requirements, the amount, nature, and sensitivity of the personal
+        information, certain risk factors, the purposes for which we process your
+        personal information, and whether we can achieve those purposes through other
+        means.
+      </li>
+      <li>
+        <strong>Additional Information</strong>. For more information on our privacy
+        practices, please review this Supplemental U.S. Privacy Notice and our{" "}
+        <Priv />. Importantly, the section of our Privacy Notice titled “
+        <Priv>Your Privacy Choices and Rights</Priv>” includes important details
+        about how you can exercise some of the rights which you have under U.S.
+        privacy laws.
       </li>
     </ul>
 
@@ -444,7 +611,7 @@ const AnnexC = () => (
       third-party sources.
     </p>
 
-    <h3 className={classes.sectionTitle}>
+    <h3 id="annex-c-overview" className={classes.sectionTitle}>
       Overview of Personal Information Collected, Disclosed, Sold, and/or Shared
     </h3>
     <p className={classes.paragraph}>
@@ -453,10 +620,53 @@ const AnnexC = () => (
       has collected about them, whether Phil disclosed that personal information for
       a business purpose (e.g., to a service provider), whether Phil “sold” that
       personal information, and whether Phil “shared” that personal information for
-      “cross-context behavioral advertising” in the preceding twelve months.
+      “cross-context behavioral advertising” in the preceding twelve months. U.S.
+      consumers residing in a state with a comprehensive privacy law can find this
+      information below:
     </p>
+    <div className={classes.tableWrap}>
+      <table className={classes.table}>
+        <thead>
+          <tr>
+            {PI_TABLE_HEADERS.map((h, i) => (
+              <th key={i} scope="col">
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {PI_TABLE_ROWS.map((row, i) => (
+            <tr key={i}>
+              <th scope="row" className={classes.tableRowHead}>
+                <span className={classes.tableCategory}>{row.category}</span>
+                {row.description && (
+                  <span className={classes.tableDesc}>{row.description}</span>
+                )}
+              </th>
+              <td data-label={PI_TABLE_HEADERS[1]}>
+                <ul className={classes.tableList}>
+                  {row.disclosedTo.map((party, j) => (
+                    <li key={j}>{party}</li>
+                  ))}
+                </ul>
+              </td>
+              <td data-label={PI_TABLE_HEADERS[2]}>
+                <ul className={classes.tableList}>
+                  {row.soldSharedTo.map((party, j) => (
+                    <li key={j}>{party}</li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
-    <h3 className={classes.sectionTitle}>Uses of Personal Information</h3>
+    <h3 id="annex-c-uses" className={classes.sectionTitle}>
+      Uses of Personal Information
+    </h3>
     <p className={classes.paragraph}>
       We may use and disclose the personal information that we collect for the
       following business and commercial purposes:
@@ -475,7 +685,7 @@ const AnnexC = () => (
       ))}
     </ul>
 
-    <h3 className={classes.sectionTitle}>
+    <h3 id="annex-c-optout" className={classes.sectionTitle}>
       Right to Opt Out of “Sales” of Personal Information and/or “Sharing” for
       “Cross-Context Behavioral Advertising”
     </h3>
@@ -542,8 +752,10 @@ const AnnexC = () => (
     </p>
     <p className={classes.paragraph}>Examples of our Incentive Offerings may include:</p>
     <ul className={classes.list}>
-      {INCENTIVE_EXAMPLES.map((item, i) => (
-        <li key={i}>{item}</li>
+      {INCENTIVE_EXAMPLES.map((ex, i) => (
+        <li key={i}>
+          <strong>{ex.label}</strong> {ex.body}
+        </li>
       ))}
     </ul>
     <p className={classes.paragraph}>
@@ -572,6 +784,7 @@ const AnnexPage = () => (
             <h1 className={classes.pageTitle}>Consumer Annex</h1>
             <AnnexA />
             <AnnexB />
+            <AnnexB2 />
             <AnnexC />
           </div>
         </div>

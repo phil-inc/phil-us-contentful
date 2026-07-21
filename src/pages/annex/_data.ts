@@ -53,13 +53,489 @@ export const CHD_SHARING_ENTITIES: string[] = [
   "Legal and regulatory bodies",
 ];
 
-// ─── Annex C — Notice at collection ──────────────────────────────────────────
+// ─── Annex C — Overview table (collected / disclosed / sold-shared) ──────────
+// NOTE: The source doc renders this as a 3-column table. The column boundaries
+// below were reconstructed from the flattened paste; legal should verify the
+// disclosed-to vs. sold/shared-to split against the original document.
 
-export const NOTICE_AT_COLLECTION: string[] = [
-  "Personal Information Collected. See the section of this Supplemental U.S. Privacy Notice titled “Overview of Personal Information Collected, Disclosed, Sold and/or Shared” for a list of personal information which may be collected. If we have previously collected personal information in the past 12 months, we may collect that personal information from you.",
-  "Uses of Personal Information. See the section of this Supplemental U.S. Privacy Notice titled “Uses of Personal Information” for a list of the purposes for which we use personal information.",
-  "Is Personal Information “Sold” or “Shared” for “Cross-Context Behavioral Advertising”? Yes. See the section of this Supplemental U.S. Privacy Notice titled “Overview of Personal Information Collected, Disclosed, Sold and/or Shared” for more details. If we have previously “sold” personal information or “shared” personal information for “cross-context behavioral advertising” in the past 12 months, we may “sell” or “share” that personal information if collected from you. See the section of this Supplemental U.S. Privacy Notice titled “Right to Opt Out of ‘Sales’ of Personal Information and/or ‘Sharing’ for ‘Cross-Context Behavioral Advertising’” for instructions on how to opt-out of these activities.",
-  "Personal Information Retention. To determine the appropriate retention period for personal information, we may consider applicable legal requirements, the amount, nature, and sensitivity of the personal information, certain risk factors, the purposes for which we process your personal information, and whether we can achieve those purposes through other means.",
+export const PI_TABLE_HEADERS = [
+  "Category of Personal Information Collected",
+  "Category of Third Parties To Whom Personal Information is Disclosed to for a Business Purpose",
+  "Category of Third Parties To Whom Personal Information is Sold and/or Shared",
+] as const;
+
+export type PiTableRow = {
+  category: string;
+  description?: string;
+  disclosedTo: string[];
+  soldSharedTo: string[];
+};
+
+export const PI_TABLE_ROWS: PiTableRow[] = [
+  {
+    category: "Identifiers",
+    description:
+      "A real name, alias, postal address, unique personal identifier, online identifier, Internet Protocol address, email address, account name, Social Security number, or other similar identifiers.",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Emergency personnel",
+      "Service providers",
+      "Healthcare providers",
+      "Health insurance companies (health plans) and other payors",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Legal and regulatory bodies and other third parties as required by law",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category:
+      "Personal information categories listed in the California Customer Records statute (Cal. Civ. Code § 1798.80(e))",
+    description:
+      "Height, weight, hair/eye color, age/date of birth, gender, race/ethnicity, citizenship status, religion, information concerning sexuality/sex life, disability, personal characteristics and preferences, marital and family status, languages spoken, and other similar data elements",
+    disclosedTo: [
+      "Emergency personnel",
+      "Service providers",
+      "Healthcare providers",
+      "Health insurance companies (health plans) and other payors",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners including those providing program enrollment and product fulfillment services",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category: "Health Insurance Data",
+    description:
+      "Policy number, reimbursement data, co-pay data, coverage amount data, health values, sensor reading data (e.g., HBA1C, blood glucose, etc.), subscriber or account identification number, claims history, benefits information, Medicare/Medicaid number, other government payer number",
+    disclosedTo: [
+      "Service Providers, including to companies assisting in program administration",
+      "Healthcare providers (including specialty pharmacies)",
+      "Health insurance companies (health plans) and other payors",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Our lawyers, auditors, and consultants",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category: "Commercial information",
+    description:
+      "Records of personal property, products or services purchased, obtained, or considered, or other purchasing or consuming histories or tendencies; propensity scores obtained from third parties, such as likelihood you may be interested in certain purchases or may be experiencing life events; products or services you have purchased; records of products or services purchased, obtained, reviewed, or considered; records of program enrollment and activity",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Our lawyers, auditors, and consultants",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category: "Personal information that reveals consumer’s genetic data",
+    description:
+      "Information derived from genetic testing, such as DNA sequences, gene mutations, chromosomal information, and inherited traits obtained through various methods including blood tests, saliva samples, and other biological specimens; information about a consumer’s predisposition to certain medical conditions, carrier status for genetic disorders, and responses to specific medications",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category:
+      "Biometric information that is processed for the purpose of uniquely identifying a consumer",
+    description:
+      "Photograph, fingerprint, voice print, retina or iris image, or other unique physical representation (such as your digital or electronic signature on a patient consent form or program enrollment form)",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category: "Internet or other electronic network activity",
+    description:
+      "Browsing history, search history, information on a consumer's interaction with an internet website, application, or advertisement",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+      "Our lawyers, auditors, and consultants",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category: "Geolocation data",
+    description: "Precise location data, geofencing data",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+      "Our lawyers, auditors, and consultants",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category: "Sensory data",
+    description:
+      "Smart device records, health values and sensor readings data (such as steps taken, movement information, data collected by our mobile apps, blood glucose levels, heart rate, and blood pressure), recording of a customer service call, recording from a CCTV camera in our facilities",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Emergency personnel",
+      "Healthcare providers",
+      "Health insurance companies (health plans) and other payors",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Legal and regulatory bodies and other third parties as required by law",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+      "Clinical research organizations",
+      "Clinical trial sites",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+      "Clinical research organizations",
+      "Clinical trial sites",
+    ],
+  },
+  {
+    category: "Professional or employment-related information",
+    description:
+      "Employer and job title, medical license, employer location, information from a resume or CV, including education and certification credentials, information included in an IRS 1040 form",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Emergency personnel",
+      "Healthcare providers",
+      "Health insurance companies (health plans) and other payors",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Legal and regulatory bodies and other third parties as required by law",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category:
+      "Non-public education information (per the Family Educational Rights and Privacy Act (20 U.S.C. Sec. 1232g, 34 C.F.R. Part 99))",
+    description:
+      "Records relating to academics, health/medical, discipline, special education, attendance, and standardized test scores.",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Healthcare providers",
+      "Health insurance companies (health plans) and other payors",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Legal and regulatory bodies and other third parties as required by law",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category:
+      "Inferences drawn from other Personal Information to create a profile about a consumer",
+    description:
+      "Profile reflecting a consumer's preferences, characteristics, psychological trends, predispositions, behavior, attitudes, intelligence, abilities, and aptitudes",
+    disclosedTo: [
+      "Service providers",
+      "Emergency personnel",
+      "Healthcare providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category:
+      "Personal information that reveals a consumer’s social security, driver’s license, state identification card, or passport number",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category:
+      "Personal information that reveals a consumer’s account log-in, financial account, debit card, or credit card number in combination with any required security or access code, password, or credentials allowing access to an account",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Emergency personnel",
+      "Healthcare providers",
+      "Health insurance companies (health plans) and other payors",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Our lawyers, auditors, and consultants",
+      "Legal and regulatory bodies and other third parties as required by law",
+      "Consumer reporting agencies",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+    ],
+    soldSharedTo: ["N/A"],
+  },
+  {
+    category:
+      "Personal information that reveals a consumer’s racial or ethnic origin, religious or philosophical beliefs, or union membership",
+    disclosedTo: [
+      "Service providers",
+      "Emergency personnel",
+      "Healthcare providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Our lawyers, auditors, and consultants",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category:
+      "Personal information that reveals the contents of a consumer’s mail, email, and text messages unless Phil is the intended recipient of the communication",
+    disclosedTo: [
+      "Service providers",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Our lawyers, auditors, and consultants",
+      "Legal and regulatory bodies and other third parties as required by law",
+    ],
+    soldSharedTo: ["N/A"],
+  },
+  {
+    category:
+      "Personal information collected and analyzed concerning a consumer’s health",
+    description:
+      "Information about physical or mental health, disease state, medical history or medical treatment or diagnosis, medicines taken; name/contact of a patient’s healthcare providers; general disease or product interest; health insurance company Insurance account number; information on payment for healthcare services (EOB forms, HSA statements, claims data, claims assistance records); health plan beneficiary names/numbers; information needed to accommodate disabilities; information about workplace accidents and occupational safety, medical record information, such as medical diagnosis, disease information, and treatment history; health values and sensor readings data, such as steps taken, blood glucose levels, heart rate, and blood pressure; drug allergies, prescriptions and dosing; medical appointment dates",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Emergency personnel",
+      "Service providers",
+      "Healthcare providers",
+      "Health insurance companies (health plans) and other payors",
+      "Authorized/legal representatives, family members, and caregivers",
+      "Legal and regulatory bodies and other third parties as required by law",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
+  {
+    category:
+      "Personal information collected and analyzed concerning a consumer’s sex life or sexual orientation",
+    disclosedTo: [
+      "Service providers",
+      "Business partners",
+      "Affiliates",
+      "Advertising partners",
+      "Internet service providers",
+      "Data analytics providers",
+      "Operating systems and platforms",
+    ],
+    soldSharedTo: [
+      "Business partners",
+      "Advertising partners",
+      "Other third parties with whom you interact",
+      "Internet service providers",
+      "Data analytics providers",
+      "Marketing technology providers",
+      "Data enrichment providers",
+      "Operating systems and platforms",
+    ],
+  },
 ];
 
 // ─── Annex C — Uses of personal information ──────────────────────────────────
@@ -114,8 +590,15 @@ export const SENSITIVE_PI_PURPOSES: string[] = [
 ];
 
 // ─── Annex C — Notice of financial incentive (examples) ──────────────────────
+// `label` renders bold, matching the source doc's bold lead-ins.
 
-export const INCENTIVE_EXAMPLES: string[] = [
-  "One-Time Discount. We may offer you a discount on your first order if you provide us your email address and agree to receive marketing emails in exchange for a one-time discount.",
-  "Refer-a-Friend Program. We may offer a discount on your future purchase when you provide your personal information along with your friends' or colleagues' personal information, and they make a purchase. The referred party may also receive a reward in the form of a discount on the first order and/or a free service for making a purchase through your referral.",
+export const INCENTIVE_EXAMPLES: { label: string; body: string }[] = [
+  {
+    label: "One-Time Discount.",
+    body: "We may offer you a discount on your first order if you provide us your email address and agree to receive marketing emails in exchange for a one-time discount.",
+  },
+  {
+    label: "Refer-a-Friend Program.",
+    body: "We may offer a discount on your future purchase when you provide your personal information along with your friends' or colleagues' personal information, and they make a purchase. The referred party may also receive a reward in the form of a discount on the first order and/or a free service for making a purchase through your referral.",
+  },
 ];
