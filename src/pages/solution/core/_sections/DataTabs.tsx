@@ -83,6 +83,8 @@ export const DataTabsSection: React.FC = () => (
         <button className="di-pill" type="button" data-i="3" data-slug="end-to-end-visibility" role="tab" aria-selected="false">Access End-to-End Visibility</button>
       </div>
 
+      <p className="di-swipe-hint">Select or Swipe to Explore Data and Insights</p>
+
       <div className="di-stage">
         <div className="di-track" id="dxTrack">
 

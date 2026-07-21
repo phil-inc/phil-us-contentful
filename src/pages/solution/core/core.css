@@ -1726,6 +1726,11 @@
 
 .scope .di-pill.is-active { background: linear-gradient(135deg, #003D3B 0%, #00615E 50%, #00827E 100%); border-color: #00615E; color: #FFFFFF; box-shadow: 0 6px 18px -8px rgba(0,97,94,0.45); }
 
+/* Swipe affordance — only shown on touch/mobile widths where the card carousel
+   is finger-swipeable (see the <=768px block). Hidden on desktop.
+   `pointer-events: none` so this label never intercepts taps on the pills/cards. */
+.scope .di-swipe-hint { display: none; pointer-events: none; }
+
 .scope .di-stage { position: relative; padding: 0 0 8px; }
 
 .scope .di-track { position: relative; height: clamp(560px, 52vw, 660px); max-width: 1160px; margin: 0 auto; }
@@ -2038,15 +2043,38 @@
   .scope .di-card[data-i="3"] .di-viz { flex-direction: column; }
   .scope .di-card[data-i="3"] .tq-pop { position: relative; right: auto !important; bottom: auto !important; width: 100% !important; max-width: none; margin: 22px 0 0; }
   .scope .di-viz .dx-shot { overflow-x: clip; }
+
+  /* swipe hint sits just under the pills */
+  .scope .di-swipe-hint { display: block; text-align: center; margin: -14px auto 20px; font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.03em; color: var(--phil-gunmetal); opacity: 0.72; }
 }
 
 @media (max-width: $phil-breakpoint-xs) {
 
-  /* tighter side padding on mobile to give the dashboards more room */
-  .scope .di-card .di-viz { padding: 28px 14px; }
-  /* Shrink the scorecard tables so they fit the screen instead of scrolling */
-  .scope .di-card[data-i="1"] .sq-table { zoom: 0.58; margin: 0 auto; }
-  .scope .di-card[data-i="2"] .sq-table { zoom: 0.64; margin: 0 auto; }
+  /* tighter side padding on mobile + halve the gap between the copy/title and the
+     table (was di-copy 20px bottom + di-viz 24px top = 44px, now ~22px). */
+  .scope .di-card .di-viz { padding: 12px 10px 20px; }
+  .scope .di-card .di-copy { padding-bottom: 10px; }
+
+  /* Smaller corner radius on the shrunk table. iOS Safari renders border-radius on
+     a `transform: scale()`d element at its UNSCALED size, so 12px looked huge on
+     the small table; 6px reads correctly there (and scales fine on Android). */
+  .scope .di-card[data-i="1"] .sq-table,
+  .scope .di-card[data-i="2"] .sq-table { border-radius: 6px; }
+
+  /* Whole scorecard table fits the screen (all columns, no horizontal scroll):
+     JS scales the table down with `transform: scale()` to fill the width and sets
+     the wrap height to the scaled height (see `fitScorecards` in interactions.ts).
+     transform is iOS-safe — unlike the old `zoom`, which iOS Safari mis-sized and
+     clipped. Text is small by design; pinch-zoom (enabled via the default viewport
+     meta, no maximum-scale) lets users zoom in to read. */
+  .scope .di-viz .sq-table-wrap { overflow: hidden; max-width: 100%; }
+  .scope .di-card[data-i="1"] .sq-table,
+  .scope .di-card[data-i="2"] .sq-table { transform-origin: top left; margin: 0; min-width: 0; }
+
+  /* keep the 3 legend items on one line under the shrunk table */
+  .scope .sq-legend { gap: 10px; flex-wrap: nowrap; }
+  .scope .sq-legend span { font-size: 10.5px; gap: 5px; }
+  .scope .sq-legend i { width: 11px; height: 11px; }
 
 }
 
@@ -2068,7 +2096,7 @@
 
 .scope .di-viz .dx-stream .dx-arrow-mini svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
-.scope .di-copy { position: relative; z-index: 2; order: 0; padding: 30px 38px 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; flex: 0 0 auto; }
+.scope .di-copy { position: relative; z-index: 2; order: 0; padding: 20px 18px 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; flex: 0 0 auto; }
 
 .scope .di-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--phil-foliage); margin: 0; }
 
