@@ -1726,6 +1726,11 @@
 
 .scope .di-pill.is-active { background: linear-gradient(135deg, #003D3B 0%, #00615E 50%, #00827E 100%); border-color: #00615E; color: #FFFFFF; box-shadow: 0 6px 18px -8px rgba(0,97,94,0.45); }
 
+/* Swipe affordance — only shown on touch/mobile widths where the card carousel
+   is finger-swipeable (see the <=768px block). Hidden on desktop.
+   `pointer-events: none` so this label never intercepts taps on the pills/cards. */
+.scope .di-swipe-hint { display: none; pointer-events: none; }
+
 .scope .di-stage { position: relative; padding: 0 0 8px; }
 
 .scope .di-track { position: relative; height: clamp(560px, 52vw, 660px); max-width: 1160px; margin: 0 auto; }
@@ -2038,12 +2043,16 @@
   .scope .di-card[data-i="3"] .di-viz { flex-direction: column; }
   .scope .di-card[data-i="3"] .tq-pop { position: relative; right: auto !important; bottom: auto !important; width: 100% !important; max-width: none; margin: 22px 0 0; }
   .scope .di-viz .dx-shot { overflow-x: clip; }
+
+  /* swipe hint sits just under the pills — light + italic so it reads as an
+     instruction, not page content */
+  .scope .di-swipe-hint { display: block; text-align: center; margin: -14px auto 20px; font-family: var(--font-body); font-size: 12px; font-weight: 400; letter-spacing: 0.03em; color: var(--phil-gunmetal); opacity: 0.6; }
 }
 
 @media (max-width: $phil-breakpoint-xs) {
 
   /* tighter side padding on mobile to give the dashboards more room */
-  .scope .di-card .di-viz { padding: 22px 14px; }
+  .scope .di-card .di-viz { padding: 14px 14px; }
   /* NOTE: the scorecard tables were previously shrunk here with `zoom: 0.58/0.64`.
      iOS Safari inflates the resulting sub-8px text back up (text autosizing /
      page zoom), so the table rendered near natural width while the layout math
