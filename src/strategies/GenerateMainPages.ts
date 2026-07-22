@@ -136,6 +136,15 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   
   if (page.slug === "faqs") return;
 
+  // /terms is served by the static file-based page at src/pages/terms/index.tsx
+  if (page.slug === "terms") return;
+
+  // /privacy is served by the static file-based page at src/pages/privacy/index.tsx
+  if (page.slug === "privacy") return;
+
+  // /hipaa is served by the static file-based page at src/pages/hipaa/index.tsx
+  if (page.slug === "hipaa") return;
+
   // / (home) is served by the static file-based page at src/pages/index.tsx
   if (page.slug === "/") return;
 

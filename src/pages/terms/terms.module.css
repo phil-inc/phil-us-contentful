@@ -33,8 +33,6 @@
   color: #000;
   margin-top: 36px;
   margin-bottom: 14px;
-  /* Clear the sticky header (promo banner + nav) for in-page anchor targets. */
-  scroll-margin-top: 140px;
 }
 
 .subTitle {
@@ -255,6 +253,26 @@
 
   .paragraph,
   .list li {
+    font-size: 16px;
+  }
+}
+
+/* Numbered list (ordered) — same type scale as .list. */
+.orderedList {
+  margin: 0 0 24px;
+  padding-left: 24px;
+  list-style: decimal;
+}
+
+.orderedList li {
+  font-size: 18px;
+  line-height: 1.55;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+@media (max-width: 47.99em) {
+  .orderedList li {
     font-size: 16px;
   }
 }
