@@ -1,6 +1,6 @@
 // ─── SEO ─────────────────────────────────────────────────────────────────────
 
-export const HIPAA_TITLE = "HIPAA Notice of Privacy Practices | PHIL";
+export const HIPAA_TITLE = "HIPAA Notice | PHIL";
 export const HIPAA_DESC =
   "PHIL's HIPAA Notice of Privacy Practices — how medical information about you may be used and disclosed, and how you can get access to this information.";
 export const HIPAA_URL = "https://phil.us/hipaa/";

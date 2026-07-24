@@ -87,7 +87,7 @@ const PrivacyPage = () => (
       <section className={classes.page}>
         <div className="xl-container">
           <div className={classes.prose}>
-            <h1 className={classes.pageTitle}>Phil, Inc. Privacy Notice</h1>
+            <h1 className={classes.pageTitle}>Privacy Notice</h1>
             <p className={classes.paragraph}>
               <strong>Last Updated:</strong> July 15, 2026
             </p>

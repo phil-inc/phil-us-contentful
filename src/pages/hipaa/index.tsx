@@ -52,12 +52,12 @@ const Tel: React.FC<{ href: string; children: React.ReactNode }> = ({
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 const HipaaPage = () => (
-  <PageContext.Provider value={{ title: "HIPAA Privacy Notice" }}>
+  <PageContext.Provider value={{ title: "HIPAA Notice" }}>
     <Layout>
       <section className={classes.page}>
         <div className="xl-container">
           <div className={classes.prose}>
-            <h1 className={classes.pageTitle}>HIPAA Privacy Notice</h1>
+            <h1 className={classes.pageTitle}>HIPAA Notice</h1>
 
             <p className={classes.paragraph}>
               <strong>
