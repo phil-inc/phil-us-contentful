@@ -28,13 +28,11 @@ banner.
 
 ## Sections (in order)
 1. Annex A — Supplemental U.S. Consumer Health Data Privacy Statement (`#annex-a`)
-2. Annex B — Consumer Health Data Authorization, v1 (`#annex-b`)
-3. Annex B — Consumer Health Data Authorization, v2 / cookie-banner variant
-   (`#annex-b-banner`)
-4. Annex C — Supplemental U.S. Privacy Notice (`#annex-c`)
+2. Annex B — Consumer Health Data Authorization (`#annex-b`)
+3. Annex C — Supplemental U.S. Privacy Notice (`#annex-c`)
 
-Both Annex B versions are rendered verbatim because the source doc contains both
-back-to-back (document is source of truth).
+Content matches the July 15 2026 Markdown export (Annex A/B/C). The earlier
+duplicate Annex B was consolidated into a single version in that export.
 
 ## CookieYes Integration
 Annex B references the consent banner. Each "cookie banner" mention renders as a
@@ -56,13 +54,11 @@ Markdown export of the source doc. Two rows have `N/A` in the sold/shared column
 (financial account credentials; contents of mail/email/text).
 
 ## Open Items (legal / non-code)
-- **Banner label mismatch:** Annex B copy says "Personalize marketing" /
-  "Save my choices" / "Decline all"; the live CookieYes banner uses
-  "Advertising and Marketing" / "Save My Preferences" / "Reject Optional
-  Cookies". Legal to reconcile copy vs. banner before publish (built verbatim
-  from the source doc per request).
-- **Duplicate Annex B:** both versions are on the page verbatim. Legal to confirm
-  whether v2 is meant for the page or is the CookieYes banner copy, and which
-  wording is canonical.
+- **Button labels now match** the live banner ("Save my preferences" /
+  "Reject Optional Cookies"). Two small mismatches remain in the source doc:
+  the category is written "Personalize Maketing" (typo for "Marketing") and the
+  live CookieYes category is currently "Advertising and Marketing" — rename the
+  banner category and/or fix the doc typo so they line up. Rendered verbatim from
+  the doc per request.
 - **Terms / Privacy / HIPAA content updates** are Contentful (CMS) work, not part
-  of this page.
+  of this page. (The HIPAA Notice V26.2 is separate content for `/hipaa`.)

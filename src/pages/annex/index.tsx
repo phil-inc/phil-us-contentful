@@ -322,107 +322,6 @@ const AnnexB = () => (
       Annex B – Consumer Health Data Authorization
     </h2>
     <p className={classes.paragraph}>
-      This Consumer Health Data Privacy Authorization (“Authorization”) supplements
-      Phil’s Privacy Notice,{" "}
-      <Link to="/annex/#annex-a" className={classes.link}>
-        Supplemental Consumer Health Data Privacy Statement
-      </Link>
-      , and the <CookieBtn>Phil cookie banner</CookieBtn> and applies only to
-      “consumer health data” subject to the Washington My Health My Data Act
-      (“MHMDA”), Nevada Consumer Health Data Privacy Law (“NVCHDPL”), Connecticut
-      Data Privacy Act (“CTDPA”), or other applicable state consumer health data
-      privacy law (as applicable).
-    </p>
-    <p className={classes.paragraph}>
-      Terms used in this Authorization defined in MHMDA, NVCHDPL, CTDPA, or other
-      applicable state consumer health data privacy law will have the meaning set
-      forth in those laws to the extent such laws are applicable.
-    </p>
-    <p className={classes.paragraph}>
-      If you opt-in to “personalized marketing” through the{" "}
-      <Ext href={PHIL_HOME_URL}>www.phil.us</Ext>{" "}
-      <CookieBtn>cookie banner</CookieBtn>, you allow Phil to “sell” your consumer
-      health data as described below:
-    </p>
-    <ul className={classes.list}>
-      <li>
-        <strong>Specific consumer health data intended for “sale”</strong>:
-        Consumer health data collected via cookies and similar technologies
-        including but not limited to browsing activity on the Phil website; however,
-        consumer health data does not include PHI of current or potential Phil
-        users.
-      </li>
-      <li>
-        <strong>Purpose of the “sale” of consumer health data</strong>: To tailor
-        and deliver personalized advertisements to you.
-      </li>
-      <li>
-        <strong>How consumer health data purchasers gather and use the data</strong>
-        : Consumer health data purchasers will gather the data via cookies and other
-        tracking technologies when you visit the Phil website. These purchasers may
-        use the data to assist us to deliver personalized advertisements to you and
-        in accordance with their privacy policies linked below.
-      </li>
-      <li>
-        <strong>Consumer health data purchasers’ contact information</strong>:
-        <ul className={classes.list}>
-          <li>
-            <strong>Google.</strong> For more information about Google’s use of your
-            personal information, please visit{" "}
-            <Ext href={GOOGLE_PRIVACY_URL}>Google’s Data Policy</Ext>. To opt out of
-            Google’s use of your information, please click{" "}
-            <Ext href={GOOGLE_OPTOUT_URL}>here</Ext>.
-          </li>
-          <li>
-            <strong>Contact information for Phil</strong>: <Mail>{PRIVACY_EMAIL}</Mail>
-          </li>
-        </ul>
-      </li>
-    </ul>
-
-    <h3 className={classes.sectionTitle}>Please note:</h3>
-    <ul className={classes.list}>
-      <li>
-        The provision of goods or services may not be conditioned upon you accepting
-        the terms of this authorization.
-      </li>
-      <li>
-        Purchasers may redisclose the consumer health data sold under this
-        authorization and such data may no longer be protected by the MHMDA,
-        NVCHDPL, or other applicable state consumer health data privacy law.
-      </li>
-      <li>
-        You may revoke this authorization at any time through the{" "}
-        <CookieBtn>Phil cookie banner</CookieBtn>. To do so, please be sure the box
-        next to “Personalize marketing” is unchecked and click “Save my choices.”
-        You may also click “Decline all” to decline our use of all cookies not
-        required to operate our website.
-        <ul className={classes.list}>
-          <li>
-            A revocation will not impact previously sold consumer health data. In
-            addition, if you use different browsers or devices, you must indicate
-            your choices on each browser/device used to access{" "}
-            <Mail>{PRIVACY_EMAIL}</Mail>.
-          </li>
-          <li>
-            If you have any questions about how to revoke your authorization, please
-            contact <Mail>{PRIVACY_EMAIL}</Mail>.
-          </li>
-        </ul>
-      </li>
-      <li>This authorization will expire one (1) year after accepting it.</li>
-    </ul>
-  </>
-);
-
-// ─── Annex B (second version — cookie-banner authorization) ──────────────────
-
-const AnnexB2 = () => (
-  <>
-    <h2 id="annex-b-banner" className={classes.annexTitle}>
-      Annex B – Consumer Health Data Authorization
-    </h2>
-    <p className={classes.paragraph}>
       We and our partners use and share cookies and other tracking technologies
       (“cookies”) to improve your experience, measure website performance, and
       personalize marketing to you.
@@ -440,14 +339,16 @@ const AnnexB2 = () => (
     </p>
     <p className={classes.paragraph}>
       This Consumer Health Data Privacy Authorization (“Authorization”) supplements
-      Phil’s Privacy Notice and Supplemental Consumer Health Data Privacy Notice, and
-      applies only to “consumer health data” subject to the Connecticut Data Privacy
-      Act, as amended (“CTDPA”), Washington My Health My Data Act (“MHMDA”), or
-      Nevada’s Consumer Health Data Privacy Law (“NVCHDPL”) (as applicable).
+      Phil’s <Priv /> and Supplemental Consumer Health Data{" "}
+      <Priv>Privacy Notice</Priv>, and applies only to “consumer health data”
+      subject to the Washington My Health My Data Act (“MHMDA”), Nevada Consumer
+      Health Data Privacy Law (“NVCHDPL”), Connecticut Data Privacy Act (“CTDPA”), or
+      other applicable state consumer health data privacy law (as applicable).
     </p>
     <p className={classes.paragraph}>
-      Terms used in this Authorization defined in CTDPA, MHMDA, or NVCHDPL will have
-      the meaning set forth in those laws to the extent such laws are applicable.
+      Terms used in this Authorization defined in MHMDA, NVCHDPL, CTDPA, or other
+      applicable state consumer health data privacy law will have the meaning set
+      forth in those laws to the extent such laws are applicable.
     </p>
     <p className={classes.paragraph}>
       If you opt-in to “personalized marketing” through the{" "}
@@ -460,32 +361,38 @@ const AnnexB2 = () => (
         <strong>Specific consumer health data intended for “sale”</strong>:
         Consumer health data collected via cookies and similar technologies
         including but not limited to browsing activity on{" "}
-        <Ext href={PHIL_HOME_URL}>www.phil.us</Ext>.
+        <Ext href={PHIL_HOME_URL}>www.phil.us</Ext>; however, consumer health data
+        does not include PHI of current or potential Phil users.
       </li>
       <li>
         <strong>Purpose of the “sale” of consumer health data</strong>: To tailor
         and deliver personalized advertisements to you.
       </li>
       <li>
-        <strong>How consumer health data purchasers gather and use the data</strong>
-        : Consumer health data purchasers will gather the data via cookies and other
+        <strong>
+          How consumer health data purchasers gather and use the data:
+        </strong>{" "}
+        Consumer health data purchasers will gather the data via cookies and other
         tracking technologies when you visit the Phil website. These purchasers may
         use the data to assist us to deliver personalized advertisements to you and
         in accordance with their privacy policies linked below.
       </li>
       <li>
-        <strong>Consumer health data purchasers’ contact information</strong>:
+        <strong>Consumer health data purchasers’ contact information:</strong>
         <ul className={classes.list}>
           <li>
-            Google:{" "}
-            <Ext href="https://policies.google.com/privacy?hl=en">Privacy Policy</Ext>
+            <strong>Google.</strong> For more information about Google’s use of your
+            personal information, please visit{" "}
+            <Ext href={GOOGLE_PRIVACY_URL}>Google’s Data Policy</Ext>. To opt out of
+            Google’s use of your information, please click{" "}
+            <Ext href={GOOGLE_OPTOUT_URL}>here</Ext>.
           </li>
         </ul>
       </li>
+      <li>
+        <strong>Contact information for Phil</strong>: <Mail>{PRIVACY_EMAIL}</Mail>
+      </li>
     </ul>
-    <p className={classes.paragraph}>
-      <strong>Contact information for Phil:</strong> <Mail>{PRIVACY_EMAIL}</Mail>
-    </p>
 
     <h3 className={classes.sectionTitle}>Please note:</h3>
     <ul className={classes.list}>
@@ -495,34 +402,34 @@ const AnnexB2 = () => (
       </li>
       <li>
         Purchasers may redisclose the consumer health data sold under this
-        authorization and such data may no longer be protected by the CTDPA, MHMDA,
-        and/or NVCHDPL.
+        authorization and such data may no longer be protected by the MHMDA,
+        NVCHDPL, CTDPA, or other applicable state consumer health data privacy law.
       </li>
       <li>
-        You may revoke this authorization at any time through this{" "}
+        You may revoke this authorization at any time through the{" "}
         <CookieBtn>Phil cookie banner</CookieBtn>. To do so, please be sure the box
-        next to “Personalize marketing” is <strong>unchecked</strong> and click
-        “Save my choices.” you may also click “Decline all” to decline our use of all
-        cookies not required to operate our website.
-        <ul className={classes.list}>
-          <li>
-            A revocation will not impact previously sold consumer health data. In
-            addition, if you use different browsers or devices, you must indicate
-            your choices on each browser/device used to access{" "}
-            <Ext href={PHIL_HOME_URL}>www.phil.us</Ext>.
-          </li>
-          <li>
-            If you have any questions about how to revoke your authorization, please
-            contact us at <Mail>{PRIVACY_EMAIL}</Mail>.
-          </li>
-        </ul>
+        next to “Personalize Marketing” is <strong>unchecked</strong> and click “Save
+        my preferences.” You may also click “Reject Optional Cookies” to decline our
+        use of all cookies not required to operate our website.
       </li>
-      <li>This authorization will expire one (1) year after accepting it.</li>
+      <li>
+        A revocation will not impact previously sold consumer health data. In
+        addition, if you use different browsers or devices, you must indicate your
+        choices on each browser/device used to access{" "}
+        <Ext href={PHIL_HOME_URL}>www.phil.us</Ext>.
+      </li>
     </ul>
+    <p className={classes.paragraph}>
+      If you have any questions about how to revoke your authorization, please contact
+      us at <Mail>{PRIVACY_EMAIL}</Mail>.
+    </p>
+    <p className={classes.paragraph}>
+      This authorization will expire one (1) year after accepting it.
+    </p>
     <p className={classes.paragraph}>
       <strong>
         To learn more about how we use and share personal information including
-        Cookies, please review our <Priv />.
+        cookies, please review our <Priv />.
       </strong>
     </p>
   </>
@@ -776,15 +683,14 @@ const AnnexC = () => (
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 const AnnexPage = () => (
-  <PageContext.Provider value={{ title: "Consumer Annex" }}>
+  <PageContext.Provider value={{ title: "Supplemental U.S. Privacy Notices" }}>
     <Layout>
       <section className={classes.page}>
         <div className="xl-container">
           <div className={classes.prose}>
-            <h1 className={classes.pageTitle}>Consumer Annex</h1>
+            <h1 className={classes.pageTitle}>Supplemental U.S. Privacy Notices</h1>
             <AnnexA />
             <AnnexB />
-            <AnnexB2 />
             <AnnexC />
           </div>
         </div>
