@@ -256,23 +256,24 @@ const TermsPage = () => (
               When using the Services, you may opt in to receive SMS text messages from us
               (“Text Messages”) by providing your express consent to receive Text Messages
               at the mobile number you provide regarding your account, Services,
-              prescriptions, refills, order status, care-related reminder, and other
+              prescriptions, refills, order status, care-related reminders, and other
               service-related communications. Your consent is not required as a condition
               of purchasing any goods or services, including pharmacy products or services.
               You can cancel the SMS service at any time by replying STOP to any message or
               by using any other opt-out method we make available in the message content.
               If you want to opt in again, you may re-enroll in SMS notifications by
-              following the identified opt-in process. By opting in, you authorize Phil and
-              our partners and service providers to send Text Messages to the mobile phone
-              number associated with your opt in, including by using an automatic telephone
+              following the identified opt-in process. By opting in, you authorize Phil to
+              send Text Messages to the mobile phone number associated with your opt in,
+              including by using an automatic telephone
               dialing system or other automated technology, as permitted by law. You
               confirm that you are the current subscriber or authorized user of the mobile
               number you provide and you are authorized to provide consent to receive Text
               Messages at that number. The frequency of Text Messages will vary depending
               upon the Services you receive and your interactions with us and your
-              communication preferences. Message and data rates may apply. For help, please
-              follow the Text Message prompts or contact us at <Mail>{TERMS_EMAIL}</Mail>.
-              We may change the short code or telephone number we use to send Text
+              communication preferences. Message and data rates may apply. For help at any
+              time, reply HELP to any Text Message, or contact us at{" "}
+              <Mail>{TERMS_EMAIL}</Mail>. Carriers are not liable for delayed or undelivered
+              messages. We may change the short code or telephone number we use to send Text
               Messages. If we do, we will notify you as required by law. Please refer to
               our <Priv /> for information on how we collect, use and disclose information,
               including information related to Text Messages.

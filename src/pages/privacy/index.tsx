@@ -350,6 +350,13 @@ const PrivacyPage = () => (
               the event of a major business transaction such as a merger, sale, or asset
               transfer, as described below.
             </p>
+            <p className={classes.paragraph}>
+              Personal information collected through our SMS/text messaging program,
+              including your mobile phone number and SMS consent status, will not be
+              shared, sold, or rented to any third party, whether affiliated or
+              unaffiliated with Phil, for that third party’s own marketing or promotional
+              purposes.
+            </p>
 
             <h3 className={classes.sectionTitle}>Disclosures to Provide the Services</h3>
             <p className={classes.paragraph}>
