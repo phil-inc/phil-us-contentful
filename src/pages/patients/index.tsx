@@ -109,7 +109,7 @@ const HeroSection = () => {
           <div className={classes.heroCopy}>
             <Eyebrow text="For Patients" />
             <h1 className={classes.h1}>
-              Easy, Affordable{" "}
+              Very Easy, Affordable{" "}
               <span className={classes.h1Line2}>
                 Prescriptions with{" "}
                 <span className={classes.accent}>
@@ -310,7 +310,6 @@ const ValueProp = () => {
             <p className={classes.vpFeatEyebrow}>How we support patients</p>
             <div className={classes.vpFeature}>
               <div className={classes.vpFeatureHead}>
-                <VpCheckIcon />
                 <h3>Affordable Medications</h3>
               </div>
               <p>
