@@ -8,6 +8,18 @@ export interface PressItem {
 
 export const PRESS_DATA: PressItem[] = [
   {
+    title: "Designing a Transformative Direct-to-Patient Program to Drive Brand Growth",
+    outlet: "Case Study",
+    type: "Thought Leadership",
+    url: "https://phil.us/insights/case-studies/philrx-designs-transformative-telemedicine-channel-for-womens-health-brand/",
+  },
+  {
+    title: "Why brands fail as a medical service. Phil will help you",
+    outlet: "Press Release New",
+    type: "Release",
+    url: "https://www.businesswire.com/news/home/20260421670832/en/PHIL-Invests-in-State-of-the-Art-Cash-Dispense-Capabilities-Expanding-Direct-to-Patient-Fulfillment-for-Pharma",
+  },
+  {
     title: "Protecting Gross-to-Net Performance Through Single-Channel Ecosystems",
     outlet: "Drug Channels",
     type: "Thought Leadership",

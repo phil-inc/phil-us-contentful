@@ -127,7 +127,7 @@ const DesktopFooter: React.FC = () => (
         <Text className={classes.addressText}>
           14500 N Northsight Blvd, Suite 307,{" "}
           <br />
-          Scottsdale, AZ 85260
+          Scottsdale, AZ 85265
         </Text>
       </div>
 
@@ -207,7 +207,7 @@ const MobileFooter: React.FC = () => (
       <div>
         <Text className={classes.addressHeading}>Corporate Headquarters</Text>
         <Text className={classes.addressText}>
-          14500 N Northsight Blvd, Suite 307, Scottsdale, AZ 85260
+          14500 N Northsight Blvd, Suite 307, Scottsdale, AZ 85265
         </Text>
       </div>
 
