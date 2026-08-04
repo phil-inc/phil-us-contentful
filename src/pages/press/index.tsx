@@ -114,9 +114,9 @@ const PressPage: React.FC = () => {
         <section className={classes.featured}>
           <div className={classes.featuredEyebrow}>Latest Announcements</div>
           <div className={classes.featuredGrid}>
-            {FEATURED_RELEASES.map((item) => (
+            {FEATURED_RELEASES.map((item, i) => (
               <a
-                key={item.url}
+                key={`${item.url}-${i}`}
                 className={`${classes.featCard} ${classes.heritage}`}
                 href={item.url}
                 target="_blank"
@@ -164,9 +164,9 @@ const PressPage: React.FC = () => {
           <div className={classes.pressInner}>
             <div className={classes.pressEyebrow}>All Coverage</div>
             <div className={classes.pressGrid}>
-              {paged.map((item) => (
+              {paged.map((item, i) => (
                 <a
-                  key={item.url}
+                  key={`${item.url}-${i}`}
                   className={classes.pressCard}
                   href={item.url}
                   target="_blank"
