@@ -66,6 +66,7 @@ const LEGAL_LINKS = [
   { label: "Terms of Use", href: "/terms" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "HIPAA Notice", href: "/hipaa" },
+  { label: "Consumer Annex", href: "/annex" },
 ]
 
 const NavColumnLinks: React.FC<{ col: NavColumn }> = ({ col }) => {
