@@ -1,0 +1,13 @@
+# Dependabot configuration for routine npm version updates.
+# Note: Security pull requests from open Dependabot alerts are delivered by
+# GitHub's security advisory system independently of this file — they arrive
+# whether or not a dependabot.yml exists.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "develop"
+    cooldown:
+      default-days: 14
