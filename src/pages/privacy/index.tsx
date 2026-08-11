@@ -354,8 +354,7 @@ const PrivacyPage = () => (
               Personal information collected through our SMS/text messaging program,
               including your mobile phone number and SMS consent status, will not be
               shared, sold, or rented to any third party, whether affiliated or
-              unaffiliated with Phil, for that third party’s own marketing or promotional
-              purposes.
+              unaffiliated with Phil, for that third party’s own purposes.
             </p>
 
             <h3 className={classes.sectionTitle}>Disclosures to Provide the Services</h3>
