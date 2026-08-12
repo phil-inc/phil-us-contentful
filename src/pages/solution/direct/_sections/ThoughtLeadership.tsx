@@ -36,6 +36,22 @@ export const ThoughtLeadershipSection: React.FC = () => (
         <div className="res-viewport">
           <div className="res-track">
             <a
+              className="bt bt-quote is-dark sz-b"
+              href="https://www.pharmaceuticalcommerce.com/view/the-critical-layer-for-pharmas-growing-direct-to-patient-play"
+              target="_blank"
+              rel="noopener"
+            >
+              <p className="bt-eyebrow">Thought Leadership</p>
+              <p className="bt-htitle">
+                Compliance-By-Design: The Critical Layer for Pharma&rsquo;s
+                Direct-to-Patient Play
+              </p>
+              <span className="bt-link">
+                Read feature <Arrow />
+              </span>
+            </a>
+
+            <a
               className="bt bt-quote is-grad-light sz-e"
               href="https://www.businesswire.com/news/home/20260402677480/en/Tenpoint-Therapeutics-Ltd-and-PHIL-Partner-to-Launch-YUVEZZI-Direct-to-Patient-Cash-Program-to-Make-Novel-Presbyopia-Therapy-More-Accessible-and-Affordable"
               target="_blank"

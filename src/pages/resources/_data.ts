@@ -34,6 +34,13 @@ export const TYPES = [
 
 export const RESOURCES_DATA: ResourceItem[] = [
   {
+    title: "Compliance-By-Design: The Critical Layer for Pharma's Direct-to-Patient Play",
+    topics: ["direct"],
+    type: "press",
+    url: "https://www.pharmaceuticalcommerce.com/view/the-critical-layer-for-pharmas-growing-direct-to-patient-play",
+    buttonLabel: "Read",
+  },
+  {
     title: "Protecting Gross-to-Net Performance Through Single-Channel Ecosystems",
     topics: ["access", "commercial"],
     type: "press",
