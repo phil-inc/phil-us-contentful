@@ -254,4 +254,31 @@ describe("getLink — an internalLink to a page entry", () => {
 
     expect(result.link).toBe("#");
   });
+
+  test("an old slug with a trailing slash resolves to /solution/hub/", () => {
+    // A Contentful editor can save the slug with a trailing slash.
+    expect(getLink(pageInternalLink("solution/core/")).link).toBe("/solution/hub/");
+    expect(getLink(pageInternalLink("solution/")).link).toBe("/solution/hub/");
+  });
+});
+
+describe("getLink — a link entry with an old slug that has a trailing slash", () => {
+  test("the link entry shape resolves to /solution/hub/", () => {
+    const result = getLink({
+      link: [{ internalContent: { slug: "solution/core/", id: "core-id" }, linkLabel: "Old" }],
+    });
+
+    expect(result.link).toBe("/solution/hub/");
+  });
+
+  test("the hyperlink shape resolves to /solution/hub/", () => {
+    const result = getLink({
+      hyperlink: {
+        internalContent: { slug: "solution/core/", id: "core-id" },
+        linkLabel: "Old",
+      },
+    });
+
+    expect(result.link).toBe("/solution/hub/");
+  });
 });

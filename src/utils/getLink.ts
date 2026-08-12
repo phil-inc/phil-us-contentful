@@ -21,7 +21,8 @@ const REMOVED_PAGE_REDIRECTS: Record<string, string> = {
 const remapRemovedPage = (
   internalContent?: { slug?: string } | null,
 ): string | undefined => {
-  const slug = internalContent?.slug;
+  // A Contentful slug can carry a trailing slash, so the lookup normalizes it.
+  const slug = internalContent?.slug?.replace(/\/+$/, "");
 
   // hasOwnProperty keeps a slug such as "constructor" from reading the prototype.
   if (
