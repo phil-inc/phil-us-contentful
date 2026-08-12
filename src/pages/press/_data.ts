@@ -9,7 +9,7 @@ export interface PressItem {
 export const PRESS_DATA: PressItem[] = [
   {
     title: "Compliance-By-Design: The Critical Layer for Pharma's Direct-to-Patient Play",
-    outlet: "Pharmaceutical Commerce",
+    outlet: "Thought Leadership",
     type: "Release",
     url: "https://www.pharmaceuticalcommerce.com/view/the-critical-layer-for-pharmas-growing-direct-to-patient-play",
   },
