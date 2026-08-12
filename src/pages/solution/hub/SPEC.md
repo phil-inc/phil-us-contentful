@@ -1,4 +1,4 @@
-# /solution/core/ — PHIL Core Hub Page
+# /solution/hub/ — PHIL Core Hub Page
 
 Source design: `~/Desktop/PHIL Core Page/Solutions Page v2.html`
 
@@ -8,7 +8,7 @@ New code-driven marketing landing page. No Contentful. Built fresh from the desi
 
 ## Route
 
-`/solution/core/` → `src/pages/solution/core/index.tsx`. Gatsby file-based routing handles the nested slug.
+`/solution/hub/` → `src/pages/solution/hub/index.tsx`. Gatsby file-based routing handles the nested slug.
 
 ## SEO
 
@@ -23,7 +23,7 @@ Wrapped in shared `src/layouts/Layout` (site header + footer + global CInfoBar s
 ## File structure
 
 ```
-src/pages/solution/core/
+src/pages/solution/hub/
   index.tsx              page composition + Trustpilot loader + Head SEO
   core.css               all section styles, scoped under .scope (global side-effect import)
   interactions.ts        ported design behavior (~880 lines), single attach() entry
@@ -110,7 +110,7 @@ Follow design's existing breakpoints. Key behaviors:
 
 | Source | Destination |
 |---|---|
-| `assets/screens/05-network-map.png` | `src/pages/solution/core/assets/network-map.png` (used in hero hub + journey step 5) |
+| `assets/screens/05-network-map.png` | `src/pages/solution/hub/assets/network-map.png` (used in hero hub + journey step 5) |
 | `https://img.youtube.com/vi/7Oyyt-tjrsE/maxresdefault.jpg` | Remote URL (no copy) |
 | `assets/phil-logo-green.png` | Skipped (footer logo lives in shared Layout) |
 

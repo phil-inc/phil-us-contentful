@@ -199,15 +199,34 @@ from = "/about-us/*"
 to = "/company"
 status = 200
 
-# /solution/ (Overview) removed; replaced by the new Digital Hub at /solution/core/
+# /solution/core/ (Digital Hub) moved to /solution/hub/
+[[redirects]]
+from = "/solution/core/*"
+to = "/solution/hub/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/solution/core/"
+to = "/solution/hub/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/solution/core"
+to = "/solution/hub/"
+status = 301
+force = true
+
+# /solution/ (Overview) removed; replaced by the Digital Hub at /solution/hub/
 [[redirects]]
 from = "/solution/"
-to = "/solution/core/"
+to = "/solution/hub/"
 status = 301
 
 [[redirects]]
 from = "/solution"
-to = "/solution/core/"
+to = "/solution/hub/"
 status = 301
 
 [[redirects]]

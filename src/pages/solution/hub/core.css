@@ -294,7 +294,7 @@
 
 /* Data & Support get the looser bottom gap, mirroring Journey (100 → 65 → 50 → 44) */
 .scope #data, .scope #support { padding-bottom: 80px; }
-/* Offset native hash-jump landing (e.g. /solution/core/#data) below the sticky header */
+/* Offset native hash-jump landing (e.g. /solution/hub/#data) below the sticky header */
 .scope #data, .scope #support { scroll-margin-top: 94px; }
 
 

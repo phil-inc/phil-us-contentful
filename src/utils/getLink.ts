@@ -12,7 +12,7 @@ import type { IReferencedSection, ISection } from "types/section";
  */
 const REMOVED_PAGE_REDIRECTS: Record<string, string> = {
   // /solution/ (Overview) removed; replaced by the new Digital Hub.
-  solution: "/solution/core/",
+  solution: "/solution/hub/",
 };
 
 const remapRemovedPage = (

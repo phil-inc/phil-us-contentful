@@ -5,18 +5,18 @@ Source design: `~/Desktop/PHIL Direct Page/PHIL Direct Page.html` (+ `colors_and
 ## Scope
 
 New code-driven marketing landing page. No Contentful. Built fresh from the
-design. Mirrors the sibling `/solution/core/` page's structure and conventions.
+design. Mirrors the sibling `/solution/hub/` page's structure and conventions.
 
 ## Route
 
 `/solution/direct/` → `src/pages/solution/direct/index.tsx`. Gatsby file-based
-routing handles the nested slug. Chosen per user (sibling to `/solution/core/`).
+routing handles the nested slug. Chosen per user (sibling to `/solution/hub/`).
 
 **Route conflict resolved:** a Contentful entry already published at slug
 `solution/direct` ("PHIL Direct DTP 2.0…"), which shadowed the new file-based
 page. `src/strategies/GenerateMainPages.ts` now skips Contentful page creation
 for `solution/direct` (`if (page.slug === "solution/direct") return;`) — the same
-mechanism used for `solution/core`, `patients`, `providers`, etc. The old
+mechanism used for `solution/hub`, `patients`, `providers`, etc. The old
 Contentful page is effectively replaced by this static page.
 
 ## SEO
@@ -67,7 +67,7 @@ preserves `@keyframes` / `:root` token blocks. Tokens (`:root`) inlined from the
 design's `colors_and_type.css`. Raleway/Lato load site-wide via the Mantine
 theme, so no `@font-face` needed.
 
-> **Why `.scope-direct`, not `.scope`:** the sibling `solution/core` page scopes
+> **Why `.scope-direct`, not `.scope`:** the sibling `solution/hub` page scopes
 > under `.scope`. Gatsby bundles all side-effect CSS imports into a shared
 > `commons.css` loaded on every page, so a generic `.scope` root would let
 > `core.css` rules bleed onto this page (and vice versa) wherever class names
@@ -92,12 +92,12 @@ theme, so no `@font-face` needed.
 
 None. All sections bespoke (design is purpose-built; no existing component is an
 exact match). `Head` SEO export adapted from `src/pages/providers/index.tsx` /
-`solution/core` template.
+`solution/hub` template.
 
 ## Forms
 
 None. The "questionnaire" / "checkout" / dropdowns are non-functional visual
-mockups inside the phone art. CTAs link to `/demo/`, `/solution/core/`,
+mockups inside the phone art. CTAs link to `/demo/`, `/solution/hub/`,
 `/resources/?topic=direct`, `/dtp-research/`, `/hcp-research/`, a case-study URL,
 and external press/feature articles.
 
@@ -149,7 +149,7 @@ The design's footer logo lives in the shared Layout footer.
 
 None. The design includes the Trustpilot bootstrap `<script>` tag but has no
 `.trustpilot-widget` mount in the body, so the loader was dropped (unlike
-`solution/core`, which has two widget mounts).
+`solution/hub`, which has two widget mounts).
 
 ## Branch & deploy
 
@@ -162,12 +162,12 @@ None. The design includes the Trustpilot bootstrap `<script>` tag but has no
 |---|---|---|---|
 | Header | Custom standalone header (none rendered in design body) | Shared `Layout` header | Site-wide nav managed via Contentful/Layout |
 | Footer | Custom `.site-footer` (logo + 4 links + ©) | Shared `Layout` footer | Same reason; footer rules dropped from CSS |
-| Container | `.wrap` (1256px → 1536px ≥1680px, 48px pad) | Site-standard global `.xl-container` | Matches sibling `solution/core`; `.wrap` sizing rules dropped, markup uses `xl-container` |
+| Container | `.wrap` (1256px → 1536px ≥1680px, 48px pad) | Site-standard global `.xl-container` | Matches sibling `solution/hub`; `.wrap` sizing rules dropped, markup uses `xl-container` |
 | Internal links | Absolute `https://phil.us/...` with `target="_blank"` | Relative Gatsby `<Link>`, same-tab | Skill rule 10; SPA nav for internal routes |
 | External links | Absolute, `target="_blank"` | Unchanged (kept absolute + `rel="noopener"`) | External destinations (businesswire, drugchannels, youtube, etc.) |
 | Research section stray `</div>` | Extra unbalanced `</div>` after `.report-grid` | Removed | Source markup typo; JSX must balance |
 | Telemed thumb stray `>` | `aria-label="…">></button>` (extra `>`) | Removed | Source markup typo |
-| Section rhythm | `section.band { padding: 110px 0 }` + per-section overrides | Preserved exactly (user override of skill 100/64/44 default, matching `solution/core`) | Keep designer's vertical rhythm consistent with sibling page |
+| Section rhythm | `section.band { padding: 110px 0 }` + per-section overrides | Preserved exactly (user override of skill 100/64/44 default, matching `solution/hub`) | Keep designer's vertical rhythm consistent with sibling page |
 
 ## Risks & TODOs
 

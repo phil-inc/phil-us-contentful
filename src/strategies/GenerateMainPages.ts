@@ -157,13 +157,16 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   // /contact is served by the static file-based page at src/pages/contact/index.tsx
   if (page.slug === "contact") return;
 
-  // /solution/core/ is served by the static file-based page at src/pages/solution/core/index.tsx
+  // /solution/hub/ is served by the static file-based page at src/pages/solution/hub/index.tsx
+  if (page.slug === "solution/hub") return;
+
+  // /solution/core/ is the old Digital Hub path; redirected to /solution/hub/ via netlify.toml
   if (page.slug === "solution/core") return;
 
   // /solution/direct/ is served by the static file-based page at src/pages/solution/direct/index.tsx
   if (page.slug === "solution/direct") return;
 
-  // /solution/ (Overview) is removed; redirected to /solution/core/ via netlify.toml
+  // /solution/ (Overview) is removed; redirected to /solution/hub/ via netlify.toml
   if (page.slug === "solution") return;
 
   // TODO: Remove this override once the Contentful GTN page slug is changed to "gtn/calculator"
