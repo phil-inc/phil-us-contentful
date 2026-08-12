@@ -89,19 +89,25 @@ describe("internal links point to /solution/hub/", () => {
     expect(source).toContain('id="data"');
   });
 
-  test("getLink remaps the removed solution slug to the new path", () => {
+  test("getLink remaps both old solution slugs to the new path", () => {
     const source = readFile("utils/getLink.ts");
 
     expect(source).toContain('solution: "/solution/hub/"');
-    expect(source).not.toContain("/solution/core");
+    expect(source).toContain('"solution/core": "/solution/hub/"');
+    // The old path appears only as a remap key, never as a link target.
+    expect(source).not.toContain('"/solution/core');
   });
 
-  test("no source file outside netlify.toml references the old path", () => {
+  test("no source file outside netlify.toml links to the old path", () => {
+    const allowedFiles = [
+      // The slug guard for the old Contentful entry.
+      path.join("strategies", "GenerateMainPages.ts"),
+      // The remap key for the old Contentful slug.
+      path.join("utils", "getLink.ts"),
+    ];
+
     const offenders = sourceFiles.filter((filePath) => {
-      // GenerateMainPages keeps a slug guard for the old Contentful entry.
-      if (filePath.endsWith(path.join("strategies", "GenerateMainPages.ts"))) {
-        return false;
-      }
+      if (allowedFiles.some((allowed) => filePath.endsWith(allowed))) return false;
 
       return fs.readFileSync(filePath, "utf8").includes("/solution/core");
     });

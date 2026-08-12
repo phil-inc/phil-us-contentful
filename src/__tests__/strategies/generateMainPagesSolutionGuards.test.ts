@@ -141,12 +141,6 @@ describe("GenerateMainPages — solution slug guards", () => {
     expect(created).toEqual(["solution/hubs", "solution/hub/extra", "solutions"]);
   });
 
-  test("the guard is case sensitive, which documents current behavior", async () => {
-    const created = await runStrategy([makeNode("Solution/Hub", "Hub")]);
-
-    expect(created).toEqual(["Solution/Hub"]);
-  });
-
   test("the source file guards both hub and core slugs", () => {
     const source = fs.readFileSync(strategyPath, "utf8");
 

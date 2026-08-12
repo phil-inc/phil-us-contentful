@@ -6,19 +6,33 @@ import type { TResource } from "types/resource";
 import type { IReferencedSection, ISection } from "types/section";
 
 /**
- * Pages removed from the site but still referenced by Contentful internal links.
- * Maps the removed page's slug to its live replacement so links resolve to the
- * new page instead of "#"/404 (the removed page is no longer in allSitePage).
+ * Pages removed or moved on the site but still referenced by Contentful
+ * internal links. Maps the old page's slug to its live replacement so links
+ * resolve to the new page instead of "#"/404 (the old page is no longer in
+ * allSitePage).
  */
 const REMOVED_PAGE_REDIRECTS: Record<string, string> = {
-  // /solution/ (Overview) removed; replaced by the new Digital Hub.
+  // /solution/ (Overview) removed; replaced by the Digital Hub.
   solution: "/solution/hub/",
+  // The Digital Hub moved from the old core path to /solution/hub/.
+  "solution/core": "/solution/hub/",
 };
 
 const remapRemovedPage = (
   internalContent?: { slug?: string } | null,
-): string | undefined =>
-  internalContent?.slug ? REMOVED_PAGE_REDIRECTS[internalContent.slug] : undefined;
+): string | undefined => {
+  const slug = internalContent?.slug;
+
+  // hasOwnProperty keeps a slug such as "constructor" from reading the prototype.
+  if (
+    !slug ||
+    !Object.prototype.hasOwnProperty.call(REMOVED_PAGE_REDIRECTS, slug)
+  ) {
+    return undefined;
+  }
+
+  return REMOVED_PAGE_REDIRECTS[slug];
+};
 
 /**
  * Get internal and external hyperlinks from contentful data models.
@@ -65,6 +79,13 @@ export const getLink = (
         const slug = hasSlash
           ? slugify(str, { lower: true, remove: /[^a-zA-Z0-9/ ]/g  })
           : slugify(str, { lower: true, strict: true });
+
+      // A moved or removed page keeps its old slug in Contentful.
+      const removedPageLink = remapRemovedPage({ slug });
+      if (removedPageLink) {
+        return { link: removedPageLink, isExternal: false };
+      }
+
       link.push(
         slug,
       );
