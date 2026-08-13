@@ -29,7 +29,7 @@
     "@fontsource/raleway": "^5.0.19",
     "@fullstory/browser": "^2.0.5",
     "@loadable/component": "^5.16.4",
-    "@mantine/carousel": "7.6.0",
+    "@mantine/carousel": "9.5.0",
     "@mantine/core": "7.6.0",
     "@mantine/form": "7.6.0",
     "@mantine/hooks": "7.6.0",
