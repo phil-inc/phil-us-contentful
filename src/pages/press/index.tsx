@@ -8,14 +8,8 @@ import PageContext from "contexts/PageContext";
 import Pagination from "components/common/Pagination/Pagination";
 import DemoCta from "components/common/DemoCta/DemoCta";
 
-import { PRESS_DATA } from "./_data";
+import { FEATURED_RELEASES, FEATURED_THOUGHT, TOTAL_PAGES, getPageItems } from "./_data";
 import * as classes from "./press.module.css";
-
-const FEATURED_RELEASES = PRESS_DATA.filter((d) => d.type === "Release").slice(0, 3);
-const FEATURED_THOUGHT = PRESS_DATA.filter((d) => d.type === "Thought Leadership").slice(0, 3);
-
-const ITEMS_PER_PAGE = 6;
-const TOTAL_PAGES = Math.ceil(PRESS_DATA.length / ITEMS_PER_PAGE);
 
 const THOUGHT_GRADIENTS: string[] = [classes.tidewater, classes.meadow, classes.forest];
 
@@ -82,7 +76,7 @@ const PressPage: React.FC = () => {
   }, [location.search]);
 
   const currentPage = Math.min(page, TOTAL_PAGES);
-  const paged = PRESS_DATA.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const paged = getPageItems(currentPage);
 
   return (
     <PageContext.Provider value={{ title: "Press" }}>

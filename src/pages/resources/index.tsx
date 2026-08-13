@@ -9,7 +9,7 @@ import DemoCta from "components/common/DemoCta/DemoCta";
 import Pagination from "components/common/Pagination/Pagination";
 
 import { RESOURCES_DATA, TOPICS, TYPES } from "./_data";
-import { PRESS_DATA } from "../press/_data";
+import { RESOURCE_PRESS_ITEMS } from "../press/_data";
 import {
   parseFiltersFromSearch,
   filterResources,
@@ -100,9 +100,7 @@ const CARD_ART_CYCLE = [classes.cardArtForest, classes.cardArtMeadow, classes.ca
 const PER_PAGE = 9;
 
 const PRESS_ART_CYCLE = [classes.pressArtA, classes.pressArtB, classes.pressArtC, classes.pressArtD];
-const PRESS_CARDS = PRESS_DATA
-  .filter((d) => d.type === "Thought Leadership")
-  .slice(0, 4)
+const PRESS_CARDS = RESOURCE_PRESS_ITEMS
   .map((d, i) => ({ outlet: d.outlet, title: d.title, url: d.url, art: PRESS_ART_CYCLE[i] }));
 
 const ArrowIcon = () => (

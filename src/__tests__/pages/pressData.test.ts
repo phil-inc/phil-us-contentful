@@ -1,19 +1,30 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { PRESS_DATA } from "../../pages/press/_data";
+import {
+  FEATURED_RELEASES,
+  FEATURED_RELEASE_SLOTS,
+  FEATURED_THOUGHT,
+  FEATURED_THOUGHT_SLOTS,
+  ITEMS_PER_PAGE,
+  PRESS_DATA,
+  RESOURCE_PRESS_ITEMS,
+  RESOURCE_PRESS_SLOTS,
+  TOTAL_PAGES,
+  getPageItems,
+} from "../../pages/press/_data";
 import type { PressItem } from "../../pages/press/_data";
 
 /**
  * Tests for the press library data (MRTG-1447).
  *
  * The repository installs no jsdom environment and no React testing library, so
- * these tests exercise the data module and re-derive the exact expressions that
- * src/pages/press/index.tsx and src/pages/resources/index.tsx use. A few tests
- * read the page sources to confirm the derivation constants still hold, because
- * a change to ITEMS_PER_PAGE or to a style cycle length would silently break the
- * expectations below. The dependabot test in this suite sets the precedent for
- * reading a repository file inside a test.
+ * a test cannot import src/pages/press/index.tsx, which imports React, Gatsby,
+ * and a CSS module. The derived lists therefore live in the pure _data module,
+ * and these tests import the same values that the two pages render. A few tests
+ * read the page sources to confirm that the pages still consume those exports.
+ * The dependabot test in this suite sets the precedent for reading a repository
+ * file inside a test.
  */
 
 const REPO_ROOT = path.resolve(__dirname, "..", "..", "..");
@@ -35,28 +46,22 @@ const ALLOWED_KEYS = ["title", "description", "outlet", "type", "url"];
 /** The two type values PressItem allows. */
 const ALLOWED_TYPES = ["Release", "Thought Leadership"];
 
-// Constants that the page modules define. The source checks below keep them true.
-const ITEMS_PER_PAGE = 6;
-const FEATURED_THOUGHT_SLOTS = 3;
-const RESOURCE_CARD_SLOTS = 4;
-
 const thoughtLeadership = (): PressItem[] => PRESS_DATA.filter((d) => d.type === "Thought Leadership");
 
-/** Mirrors FEATURED_THOUGHT in src/pages/press/index.tsx. */
-const featuredThought = (): PressItem[] => thoughtLeadership().slice(0, FEATURED_THOUGHT_SLOTS);
+/** The /press Featured Thought Leadership cards, as the page renders them. */
+const featuredThought = (): PressItem[] => FEATURED_THOUGHT;
 
-/** Mirrors FEATURED_RELEASES in src/pages/press/index.tsx. */
-const featuredReleases = (): PressItem[] => PRESS_DATA.filter((d) => d.type === "Release").slice(0, 3);
+/** The /press Latest Announcements cards, as the page renders them. */
+const featuredReleases = (): PressItem[] => FEATURED_RELEASES;
 
-/** Mirrors PRESS_CARDS in src/pages/resources/index.tsx. */
-const pressCards = (): PressItem[] => thoughtLeadership().slice(0, RESOURCE_CARD_SLOTS);
+/** The /resources "In the news" cards, as the page renders them. */
+const pressCards = (): PressItem[] => RESOURCE_PRESS_ITEMS;
 
-/** Mirrors TOTAL_PAGES in src/pages/press/index.tsx. */
-const totalPages = (): number => Math.ceil(PRESS_DATA.length / ITEMS_PER_PAGE);
+/** The /press All Coverage page count, as the page renders it. */
+const totalPages = (): number => TOTAL_PAGES;
 
-/** Mirrors the paged slice in src/pages/press/index.tsx. */
-const pageItems = (page: number): PressItem[] =>
-  PRESS_DATA.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+/** The /press All Coverage cards for one page, as the page renders them. */
+const pageItems = (page: number): PressItem[] => getPageItems(page);
 
 function readSource(file: string): string {
   return fs.readFileSync(file, "utf8");
@@ -314,7 +319,7 @@ describe("resources page press cards", () => {
   });
 
   test("holds exactly 4 items", () => {
-    expect(pressCards()).toHaveLength(RESOURCE_CARD_SLOTS);
+    expect(pressCards()).toHaveLength(RESOURCE_PRESS_SLOTS);
   });
 
   test("holds the 4 newest Thought Leadership outlets in order", () => {
@@ -340,7 +345,7 @@ describe("resources page press cards", () => {
 
     const artCount = String(match?.[1]).split(",").filter((entry) => entry.trim().length > 0).length;
 
-    expect(artCount).toBe(RESOURCE_CARD_SLOTS);
+    expect(artCount).toBe(RESOURCE_PRESS_SLOTS);
     expect(pressCards().length).toBeLessThanOrEqual(artCount);
   });
 
@@ -359,21 +364,37 @@ describe("resources page press cards", () => {
 });
 
 describe("press data module derivation contract", () => {
-  test("the press page still derives its lists from PRESS_DATA", () => {
+  test("the press page renders the lists that the data module derives", () => {
     const source = readSource(PRESS_PAGE);
 
-    expect(source).toMatch(/import \{ PRESS_DATA \} from "\.\/_data"/);
-    expect(source).toMatch(/PRESS_DATA\.filter\(\(d\) => d\.type === "Thought Leadership"\)\.slice\(0, 3\)/);
-    expect(source).toMatch(/const ITEMS_PER_PAGE = 6;/);
-    expect(source).toMatch(/Math\.ceil\(PRESS_DATA\.length \/ ITEMS_PER_PAGE\)/);
+    expect(source).toMatch(
+      /import \{ FEATURED_RELEASES, FEATURED_THOUGHT, TOTAL_PAGES, getPageItems \} from "\.\/_data"/,
+    );
+    expect(source).toMatch(/FEATURED_RELEASES\.map\(/);
+    expect(source).toMatch(/FEATURED_THOUGHT\.map\(/);
+    expect(source).toMatch(/totalPages=\{TOTAL_PAGES\}/);
+    expect(source).toMatch(/getPageItems\(currentPage\)/);
+    expect(source).toMatch(/Math\.min\(page, TOTAL_PAGES\)/);
+    expect(source).not.toMatch(/const ITEMS_PER_PAGE = 6;/);
   });
 
-  test("the resources page still derives its cards from PRESS_DATA", () => {
+  test("the resources page renders the strip that the data module derives", () => {
     const source = readSource(RESOURCES_PAGE);
 
-    expect(source).toMatch(/import \{ PRESS_DATA \} from "\.\.\/press\/_data"/);
-    expect(source).toMatch(/\.filter\(\(d\) => d\.type === "Thought Leadership"\)/);
-    expect(source).toMatch(/\.slice\(0, 4\)/);
+    expect(source).toMatch(/import \{ RESOURCE_PRESS_ITEMS \} from "\.\.\/press\/_data"/);
+    expect(source).toMatch(/const PRESS_CARDS = RESOURCE_PRESS_ITEMS/);
+    expect(source).not.toMatch(/\.filter\(\(d\) => d\.type === "Thought Leadership"\)/);
+  });
+
+  test("the data module derives every list from the one PRESS_DATA array", () => {
+    expect(FEATURED_RELEASES).toHaveLength(FEATURED_RELEASE_SLOTS);
+    expect(FEATURED_THOUGHT).toHaveLength(FEATURED_THOUGHT_SLOTS);
+    expect(ITEMS_PER_PAGE).toBe(6);
+    expect(TOTAL_PAGES).toBe(Math.ceil(PRESS_DATA.length / ITEMS_PER_PAGE));
+
+    [...FEATURED_RELEASES, ...FEATURED_THOUGHT, ...RESOURCE_PRESS_ITEMS, ...getPageItems(1)].forEach((item) => {
+      expect(PRESS_DATA).toContain(item);
+    });
   });
 
   test("the data file exports one PRESS_DATA array and the PressItem type", () => {

@@ -97,3 +97,40 @@ export const PRESS_DATA: PressItem[] = [
     url: "https://www.businesswire.com/news/home/20230109005280/en/Phil-Inc.-Adds-Duchesnay-USAs-Womens-Healthcare-Product-to-Its-Patient-Access-Platform",
   },
 ];
+
+/** The number of All Coverage cards that one /press page shows. */
+export const ITEMS_PER_PAGE = 6;
+
+/** The number of cards that the Latest Announcements section shows. */
+export const FEATURED_RELEASE_SLOTS = 3;
+
+/** The number of cards that the Featured Thought Leadership section shows. */
+export const FEATURED_THOUGHT_SLOTS = 3;
+
+/** The Latest Announcements cards on /press. */
+export const FEATURED_RELEASES: PressItem[] = PRESS_DATA.filter((d) => d.type === "Release").slice(
+  0,
+  FEATURED_RELEASE_SLOTS,
+);
+
+/** The Featured Thought Leadership cards on /press. */
+export const FEATURED_THOUGHT: PressItem[] = PRESS_DATA.filter((d) => d.type === "Thought Leadership").slice(
+  0,
+  FEATURED_THOUGHT_SLOTS,
+);
+
+/** The number of All Coverage pages on /press. */
+export const TOTAL_PAGES = Math.ceil(PRESS_DATA.length / ITEMS_PER_PAGE);
+
+/** Returns the All Coverage cards for one page. The first page is page 1. */
+export function getPageItems(page: number): PressItem[] {
+  return PRESS_DATA.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+}
+
+/** The number of press cards that the "In the news" strip on /resources shows. */
+export const RESOURCE_PRESS_SLOTS = 4;
+
+/** The press items that the "In the news" strip on /resources shows. */
+export const RESOURCE_PRESS_ITEMS: PressItem[] = PRESS_DATA.filter(
+  (d) => d.type === "Thought Leadership",
+).slice(0, RESOURCE_PRESS_SLOTS);
