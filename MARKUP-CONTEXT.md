@@ -22,6 +22,14 @@ Every page on phil.us is edited in **one of a few places**:
 | **Code** (this repo) | Needs a Jira ticket, someone edits code and deploys |
 | **Ashby (careers ATS)** | Job listings themselves are pulled live from Ashby, PHIL's applicant tracking system — not Contentful, not this repo. The Careers page shell/design is Contentful, but adding, editing, or removing an actual job posting happens in Ashby, by whoever manages hiring, not marketing or engineering. |
 
+Those three are the only destinations that exist for this site. A change that
+isn't one of them doesn't have somewhere else to go.
+
+**Extra approval, not a different destination:** the legal pages (`/terms/`,
+`/privacy/`, `/hipaa/`, `/annex/`) are still ordinary code tickets, but their
+copy has to clear legal review before it ships. Say so on the ticket; don't
+route it away from engineering.
+
 The inventory below is organized by page so the chat can tell, for any
 annotation, which bucket it falls into.
 
@@ -227,11 +235,17 @@ HIPAA compliance badges.
 
 ## Pages editable in Contentful (no ticket needed — just edit the CMS entry)
 
-Any **whole page** not listed above is managed in Contentful. This is a rule
-about *pages*, not about pieces of pages: a card, list row, link, or section
-that sits **on** one of the code-driven pages above is code, even if it isn't
+The pages and categories below are the Contentful ones. This is a rule about
+*pages*, not about pieces of pages: a card, list row, link, or section that
+sits **on** one of the code-driven pages above is code, even if it isn't
 individually named in this file. Do not reach for Contentful just because a
 specific card or item wasn't enumerated.
+
+**A page that matches nothing in this file is not automatically Contentful.**
+This file is maintained by hand and lags behind the site, so an unrecognised
+page most often means a new code page nobody has documented yet — which is
+exactly how a code ticket gets misrouted to a CMS entry that doesn't exist.
+Say the page isn't covered here and ask, rather than guessing.
 
 The Contentful pages are:
 
@@ -293,6 +307,25 @@ itself, not the listing content.
   visitors (separate from this Markup tool). If an annotation mentions "the
   chat," confirm whether it means that visitor-facing widget or something
   else — don't file it as a Markup-tool bug by mistake.
+
+## Worked examples — is the note actionable?
+
+The bar is whether an engineer can make the change without asking a follow-up
+question. These are calibrated to how this team actually writes notes.
+
+| Annotation | Verdict | Why |
+|---|---|---|
+| "Change this heading to 'The Simple Path to Affordable Medication Access'" | **clear** | Exact replacement wording. The url and selector cover which page and which element. |
+| "typo — 'recieve'" | **clear** | Short, but the fix is unambiguous. Brevity is not vagueness. |
+| "This section feels weak, can we make it punchier?" | **vague** | No replacement text. Suggest a rewrite that asks for the specific wording they want. |
+| "Fix the spacing here" | **vague** | No target state. Ask what the spacing should be, or what looks wrong about it. |
+| "The stat is wrong" | **vague** | Names the problem, not the correction. Ask what the number should be, and the source. |
+| "The CTA wraps onto two lines below 400px — should stay on one" | **clear** | Names the trigger and the expected result. |
+| "Add a press card. Title: 'PHIL secures $3M'. Link: https://phil.us/funding" | **clear** | Title and destination given; that is everything the list entry needs. |
+
+Note that copy on this site is often approved wording rather than a suggestion —
+if a note supplies exact text, take it as final and mark it clear, even when the
+phrasing seems odd.
 
 ## Worked routing examples
 

@@ -124,14 +124,21 @@ Do not change anything else when applying `xl-container` — preserve all existi
 ## Phase 5: Verify and Ship
 
 1. Run `npx tsc --noEmit` — fix any errors before proceeding.
-2. Commit with a descriptive message:
+2. **If you added, moved, renamed, or deleted a page, update `MARKUP-CONTEXT.md`**
+   in the repo root — add or edit its entry under "Pages editable in code."
+   That file is read by the Markup annotation tool to decide whether a change
+   request becomes an engineering ticket or a CMS edit; a page missing from it
+   gets reviewed as "we don't know this page" and the request stalls. Skip this
+   only if you changed content inside an existing page and nothing about its
+   route or sections moved.
+3. Commit with a descriptive message:
    ```bash
    git add .
    git commit -m "feat: <description of change>"
    ```
-3. Push and create PR:
+4. Push and create PR:
    ```bash
    git push -u origin feature/<slug>-<epoch>
    gh pr create --base develop --title "feat: <description>" --body "Preview URL will be available once Netlify deploys."
    ```
-4. Hand the Netlify preview URL to the user for visual review.
+5. Hand the Netlify preview URL to the user for visual review.
