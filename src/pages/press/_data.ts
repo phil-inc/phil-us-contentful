@@ -8,6 +8,12 @@ export interface PressItem {
 
 export const PRESS_DATA: PressItem[] = [
   {
+    title: "PHIL is Rewriting the Rules of Direct-to-Patient",
+    outlet: "Digital Medicine Society",
+    type: "Thought Leadership",
+    url: "https://dimesociety.org/newsroom/blog/deep-dive/how-phil-is-rewriting-the-rules-of-direct-to-patient/",
+  },
+  {
     title: "Compliance-By-Design: The Critical Layer for Pharma's Direct-to-Patient Play",
     outlet: "Pharmaceutical Commerce",
     type: "Thought Leadership",
