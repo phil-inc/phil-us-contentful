@@ -9,6 +9,7 @@ import Pagination from "components/common/Pagination/Pagination";
 import DemoCta from "components/common/DemoCta/DemoCta";
 
 import { FEATURED_RELEASES, FEATURED_THOUGHT, TOTAL_PAGES, getPageItems } from "./_data";
+import { AllCoverageGrid } from "./_AllCoverageGrid";
 import * as classes from "./press.module.css";
 
 const THOUGHT_GRADIENTS: string[] = [classes.tidewater, classes.meadow, classes.forest];
@@ -157,23 +158,7 @@ const PressPage: React.FC = () => {
         <section className={classes.pressSection} ref={gridRef}>
           <div className={classes.pressInner}>
             <div className={classes.pressEyebrow}>All Coverage</div>
-            <div className={classes.pressGrid}>
-              {paged.map((item) => (
-                <a
-                  key={item.url}
-                  className={classes.pressCard}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className={classes.pressArt} />
-                  <div className={classes.pressBody}>
-                    <div className={classes.pressLogo}>{item.outlet}</div>
-                    <h4 className={classes.pressCardTitle}>{item.title}</h4>
-                  </div>
-                </a>
-              ))}
-            </div>
+            <AllCoverageGrid items={paged} />
             <Pagination currentPage={currentPage} totalPages={TOTAL_PAGES} onPageChange={setPage} />
           </div>
         </section>
