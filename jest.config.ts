@@ -7,9 +7,6 @@ const config: Config.InitialOptions = {
   transform: {
     "^.+\\.(t|j)sx?$": "ts-jest",  // let ts-jest handle TypeScript + ESM
   },
-  moduleNameMapper: {
-    "\\.module\\.css$": "<rootDir>/jest/cssModuleStub.cjs",  // PostCSS builds the real class names
-  },
   moduleFileExtensions: ["ts", "js", "tsx", "jsx", "json", "node"],
 };
 
