@@ -99,7 +99,7 @@ with PHIL Direct-to-Patient), a Trustpilot + HCP testimonials section, 4
 customer success story cards, an ROI calculator promo banner, and a closing
 CTA.
 
-### Our Solution — PHIL Digital Hub — `/solution/core/`
+### Our Solution — PHIL Digital Hub — `/solution/hub/`
 Deep-dive on the PHIL "Core Hub" product. Hero, a stat band with Trustpilot,
 a 4-card pillars grid, a 7-step "Prescription Journey" scroll-driven
 walkthrough, a 4-tab "Data & Insights" dashboard showcase, a patient/HCP
@@ -369,7 +369,7 @@ Main nav (dropdown menus):
 | Menu | Label shown | Page |
 |---|---|---|
 | Who We Serve | Pharma / Patients / Providers | `/pharma/`, `/patients/`, `/providers/` |
-| Our Solution | Digital Hub | `/solution/core/` |
+| Our Solution | Digital Hub | `/solution/hub/` |
 | Our Solution | Direct-to-Patient | `/solution/direct/` |
 | Our Solution → "Why PHIL" | Our Approach and Outcomes | `/approach/` |
 | Our Solution → "Why PHIL" | Customer Success Stories | `/customer-success/` |
