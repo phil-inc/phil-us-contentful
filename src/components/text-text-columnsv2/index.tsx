@@ -199,7 +199,7 @@ const renderColumn = (column: ReferenceBodyType, contentTitle: string, sectionIn
                         <div className={classes.leftColumnLinkContainer}>
                           <Anchor
                             className={classes.greenAnchor}
-                            href={"https://phil.us/solution/core/"}
+                            href={"https://phil.us/solution/hub/"}
                           >
                             <div className={`anchor-text ${classes.leftColumnLink}`}>
                               {"Explore PHIL Core "}

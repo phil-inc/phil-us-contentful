@@ -537,7 +537,7 @@ const ApproachOutcomesPage = () => {
 
                 {/* Solution CTAs */}
                 <div className={classes.solStackFoot}>
-                  <Link className={classes.learnLink} to="/solution/core/">
+                  <Link className={classes.learnLink} to="/solution/hub/">
                     Explore PHIL Digital Hub <ArrowRight />
                   </Link>
                   <Link className={classes.learnLink} to="/solution/direct/">

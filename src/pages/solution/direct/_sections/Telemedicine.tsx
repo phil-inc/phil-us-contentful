@@ -51,7 +51,7 @@ export const TelemedicineSection: React.FC = () => (
                 click, transforming interest into action instantly while
                 capturing data from first touch through dispense.
               </p>
-              <Link className="btn-solid tele-copy-cta" to="/solution/core/">
+              <Link className="btn-solid tele-copy-cta" to="/solution/hub/">
                 Explore PHIL Digital Hub{" "}
                 <span className="btn-solid-arrow" aria-hidden="true">
                   &rarr;
@@ -455,7 +455,7 @@ export const TelemedicineSection: React.FC = () => (
                 in-office visits where providers can diagnose, select therapy,
                 and initiate a fully supported treatment journey.
               </p>
-              <Link className="btn-solid tele-copy-cta" to="/solution/core/">
+              <Link className="btn-solid tele-copy-cta" to="/solution/hub/">
                 Explore PHIL Digital Hub{" "}
                 <span className="btn-solid-arrow" aria-hidden="true">
                   &rarr;
@@ -792,7 +792,7 @@ export const TelemedicineSection: React.FC = () => (
                 transferring an existing script into PHIL, creating a connected,
                 seamless path to access.
               </p>
-              <Link className="btn-solid tele-copy-cta" to="/solution/core/">
+              <Link className="btn-solid tele-copy-cta" to="/solution/hub/">
                 Explore PHIL Digital Hub{" "}
                 <span className="btn-solid-arrow" aria-hidden="true">
                   &rarr;

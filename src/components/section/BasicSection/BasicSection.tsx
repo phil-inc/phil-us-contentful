@@ -205,7 +205,7 @@ const BasicSection: React.FC<BasicSectionProps> = ({
                 <div className={classes.greenAnchorContainer}>
                   <Anchor
                     className={classes.greenAnchor}
-                    href={"https://phil.us/solution/core"}
+                    href={"https://phil.us/solution/hub/"}
                   >
                     <div className={`anchor-text ${classes.leftColumnLink}`}>
                       {"Explore PHIL Core"}

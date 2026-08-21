@@ -22,7 +22,7 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         question: "What does PHIL do?",
-        answer: `<p>PHIL is a medication access platform designed to improve patient outcomes and brand performance for retail and specialty-lite brands. Through <a href="/solution/core/" target="_blank" rel="noopener">PHIL Digital Hub</a>, and <a href="/solution/direct/" target="_blank" rel="noopener">PHIL Direct-to-Patient</a>, our (DTP) solution, we enable seamless medication access via our integrated pharmacy network and our own PHIL cash pharmacies, delivering simple, affordable paths to therapy.</p>`,
+        answer: `<p>PHIL is a medication access platform designed to improve patient outcomes and brand performance for retail and specialty-lite brands. Through <a href="/solution/hub/" target="_blank" rel="noopener">PHIL Digital Hub</a>, and <a href="/solution/direct/" target="_blank" rel="noopener">PHIL Direct-to-Patient</a>, our (DTP) solution, we enable seamless medication access via our integrated pharmacy network and our own PHIL cash pharmacies, delivering simple, affordable paths to therapy.</p>`,
       },
       {
         question: "What types of medications are best suited for the PHIL platform?",

@@ -74,7 +74,7 @@ const NAV_SECTIONS: NavSection[] = [
     ],
     features: [
       {
-        to: "/solution/core/",
+        to: "/solution/hub/",
         variant: "tidewater",
         eyebrow: "For Pharma Manufacturers",
         title: "Streamline Your Prescription Access Experience.",
@@ -99,7 +99,7 @@ const NAV_SECTIONS: NavSection[] = [
     groups: [
       {
         links: [
-          { to: "/solution/core/", label: "Digital Hub", icon: MonitorSmartphone },
+          { to: "/solution/hub/", label: "Digital Hub", icon: MonitorSmartphone },
           { to: "/solution/direct/", label: "Direct\u2011to\u2011Patient", icon: SmartphoneCharging },
         ],
       },

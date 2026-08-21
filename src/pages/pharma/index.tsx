@@ -320,7 +320,7 @@ const PlatformSection = () => (
               script checks to proactively resolve barriers, supports patients in a seamless and
               affordable path to therapy.
             </p>
-            <Link className={classes.btnText} to="/solution/core/">
+            <Link className={classes.btnText} to="/solution/hub/">
               Explore PHIL Digital Hub <span aria-hidden="true">→</span>
             </Link>
           </div>
