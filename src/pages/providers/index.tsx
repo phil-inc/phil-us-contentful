@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import type { HeadFC } from "gatsby";
 import { getOgImage } from "utils/getOgImage";
+import { TRUSTPILOT_SCORE_LABEL } from "../../constants/trustpilot";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -234,7 +235,7 @@ const ACCESS_POINTS = [
       <>
         Our friendly support team is available to help patients via phone, chat,
         and email. We're proud to have a{" "}
-        <strong>4.9/5.0</strong> satisfaction score on Trustpilot from our strong
+        <strong>{TRUSTPILOT_SCORE_LABEL}</strong> satisfaction score on Trustpilot from our strong
         and growing patient community.
       </>
     ),

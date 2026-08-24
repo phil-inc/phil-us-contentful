@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, type HeadFC } from "gatsby";
 
 import { Layout } from "layouts/Layout/Layout";
+import { TRUSTPILOT_SCORE } from "../../constants/trustpilot";
 import PageContext from "contexts/PageContext";
 import { getOgImage } from "utils/getOgImage";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
@@ -137,7 +138,7 @@ const TrustpilotStar: React.FC = () => (
 );
 
 const TrustpilotStat: React.FC<{ active: boolean }> = ({ active }) => {
-  const n = useCountUp(4.9, active);
+  const n = useCountUp(TRUSTPILOT_SCORE, active);
   return (
     <div>
       <div className={classes.statNum}>

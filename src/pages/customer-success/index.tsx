@@ -7,6 +7,7 @@ import React, {
 import { Link } from "gatsby";
 import type { HeadFC } from "gatsby";
 import { getOgImage } from "utils/getOgImage";
+import { scoreToPct } from "../../constants/trustpilot";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -578,7 +579,7 @@ const TrustStrip = () => {
                   <div className={classes.ratingBarTrack}>
                     <div
                       className={classes.ratingBarFill}
-                      style={{ width: inView ? `${r.fillPct}%` : "0%" }}
+                      style={{ width: inView ? `${scoreToPct(r.score)}%` : "0%" }}
                     />
                   </div>
                 </div>
