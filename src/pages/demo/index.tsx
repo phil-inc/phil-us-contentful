@@ -137,7 +137,7 @@ const TrustpilotStar: React.FC = () => (
 );
 
 const TrustpilotStat: React.FC<{ active: boolean }> = ({ active }) => {
-  const n = useCountUp(4.8, active);
+  const n = useCountUp(4.9, active);
   return (
     <div>
       <div className={classes.statNum}>

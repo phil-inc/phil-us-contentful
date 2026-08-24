@@ -338,7 +338,7 @@ const ValueProp = () => {
               <p>
                 We keep you and your doctor informed about your prescriptions at
                 every step of the process. We're proud to have a{" "}
-                <span className={classes.vpMark}>4.8/5.0</span> satisfaction score
+                <span className={classes.vpMark}>4.9/5.0</span> satisfaction score
                 on TrustPilot from our strong and growing patient community.
               </p>
             </div>

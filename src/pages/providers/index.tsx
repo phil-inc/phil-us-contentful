@@ -234,7 +234,7 @@ const ACCESS_POINTS = [
       <>
         Our friendly support team is available to help patients via phone, chat,
         and email. We're proud to have a{" "}
-        <strong>4.8/5.0</strong> satisfaction score on Trustpilot from our strong
+        <strong>4.9/5.0</strong> satisfaction score on Trustpilot from our strong
         and growing patient community.
       </>
     ),

@@ -40,7 +40,7 @@ src/pages/
   - 2X+ Patient Starts
   - 3X+ Covered Dispenses
   - 3X+ Adherence
-  - 4.8/5.0 Patient Satisfaction
+  - 4.9/5.0 Patient Satisfaction
 - Trustpilot widget embed (real, using business unit ID `60e5837e95cb800001e58b14`)
 
 ### 3. Solution Carousel (tabbed)

@@ -44,7 +44,7 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         question: "What does your patient experience look like?",
-        answer: `<p>PHIL provides a seamless, e-commerce-like medication access experience for patients. This includes timely updates, free home delivery, easy refill management, and a dedicated patient support team. We're proud to have an industry-leading patient satisfaction score of <strong>4.8/5.0 on <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">TrustPilot</a></strong> from 18,000+ patients.</p><p><a href="/demo/" target="_blank" rel="noopener">Get in touch for a full tour of our patient experience and support services</a>.</p>`,
+        answer: `<p>PHIL provides a seamless, e-commerce-like medication access experience for patients. This includes timely updates, free home delivery, easy refill management, and a dedicated patient support team. We're proud to have an industry-leading patient satisfaction score of <strong>4.9/5.0 on <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">TrustPilot</a></strong> from 18,000+ patients.</p><p><a href="/demo/" target="_blank" rel="noopener">Get in touch for a full tour of our patient experience and support services</a>.</p>`,
       },
       {
         question: "What does your provider experience look like?",

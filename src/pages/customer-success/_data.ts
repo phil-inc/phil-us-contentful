@@ -217,8 +217,8 @@ export type RatingRow = {
 };
 
 export const TRUST_RATINGS: RatingRow[] = [
-  { name: "PHIL", score: 4.8, out: "/5", fillPct: 96 },
-  { name: "Industry Average", score: 2.6, out: "/5", fillPct: 48, industry: true },
+  { name: "PHIL", score: 4.9, out: "/5", fillPct: 98 },
+  { name: "Industry Average", score: 2.6, out: "/5", fillPct: 52, industry: true },
 ];
 
 export const TRUSTPILOT_WIDGET = {

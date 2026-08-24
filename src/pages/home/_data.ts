@@ -44,7 +44,7 @@ export const OUTCOMES = {
     { value: 2, suffix: "X+", label: "Patient Starts", sublabel: "vs. Traditional Channels" },
     { value: 2, suffix: "X+", label: "Covered Dispenses", sublabel: "vs. Traditional Channels" },
     { value: 3, suffix: "X+", label: "Refill Adherence", sublabel: "vs. Traditional Channels" },
-    { value: 4.8, decimals: 1, suffix: "/5.0", label: "Patient Satisfaction Score" },
+    { value: 4.9, decimals: 1, suffix: "/5.0", label: "Patient Satisfaction Score" },
   ],
   trustpilot: {
     locale: "en-US",
@@ -78,7 +78,7 @@ export const SOLUTION = {
       stats: [
         { value: 2, suffix: "x+", label: "Patient Starts" },
         { value: 3, suffix: "x+", label: "Refill Adherence" },
-        { value: 4.8, decimals: 1, suffix: "/5.0", label: "Patient Satisfaction" },
+        { value: 4.9, decimals: 1, suffix: "/5.0", label: "Patient Satisfaction" },
       ],
     },
     {
