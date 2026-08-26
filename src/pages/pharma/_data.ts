@@ -1,4 +1,5 @@
 import { PHARMA_FAQ_GROUPS } from "data/faq-content";
+import { TRUSTPILOT_SCORE_LABEL } from "../../constants/trustpilot";
 
 export const PHARMA_TITLE = "Pharma | PHIL";
 export const PHARMA_DESC =
@@ -11,7 +12,7 @@ export const STATS = [
   { value: "2×+", label: "Covered Dispenses vs Traditional Channels", variant: "v3" },
   { value: "3×+", label: "Refill Adherence vs Traditional Channels", variant: "v4" },
   { value: "99%+", label: "Plan Coverage · 50-State Network", variant: "v5" },
-  { value: "4.8/5.0", label: "Patient Satisfaction Score", variant: "v6", trustpilot: true },
+  { value: TRUSTPILOT_SCORE_LABEL, label: "Patient Satisfaction Score", variant: "v6", trustpilot: true },
 ] as const;
 
 export const PARTNER_TABS = [

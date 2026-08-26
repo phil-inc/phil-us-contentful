@@ -3,6 +3,8 @@
    Data lives here and is passed into section components via props.
    ========================================================================== */
 
+import { TRUSTPILOT_SCORE } from "../../constants/trustpilot";
+
 export const DEMO_URL = "/demo";
 export const RESOURCES_URL = "/resources/?type=casestudy";
 export const PRESS_URL = "/press/";
@@ -212,13 +214,14 @@ export type RatingRow = {
   name: string;
   score: number;
   out: string;
-  fillPct: number;
   industry?: boolean;
 };
 
+// Bar widths are derived from `score` at render time, so a bar can never
+// disagree with the number printed on it.
 export const TRUST_RATINGS: RatingRow[] = [
-  { name: "PHIL", score: 4.8, out: "/5", fillPct: 96 },
-  { name: "Industry Average", score: 2.6, out: "/5", fillPct: 48, industry: true },
+  { name: "PHIL", score: TRUSTPILOT_SCORE, out: "/5" },
+  { name: "Industry Average", score: 2.6, out: "/5", industry: true },
 ];
 
 export const TRUSTPILOT_WIDGET = {

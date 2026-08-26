@@ -4,6 +4,7 @@ import type { HeadFC } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import { getOgImage } from "utils/getOgImage";
+import { TRUSTPILOT_SCORE_LABEL } from "../../constants/trustpilot";
 
 import {
   PATIENT_LOGIN_URL,
@@ -338,7 +339,7 @@ const ValueProp = () => {
               <p>
                 We keep you and your doctor informed about your prescriptions at
                 every step of the process. We're proud to have a{" "}
-                <span className={classes.vpMark}>4.8/5.0</span> satisfaction score
+                <span className={classes.vpMark}>{TRUSTPILOT_SCORE_LABEL}</span> satisfaction score
                 on TrustPilot from our strong and growing patient community.
               </p>
             </div>
