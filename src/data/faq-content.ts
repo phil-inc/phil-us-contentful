@@ -2,7 +2,10 @@
 // All FAQ Q&A content lives here. The faqs, providers, and patients pages
 // import from this file to stay in sync.
 
-import { TRUSTPILOT_SCORE_LABEL } from "../constants/trustpilot";
+import {
+  TRUSTPILOT_SCORE_LABEL,
+  TRUSTPILOT_REVIEW_COUNT_LABEL,
+} from "../constants/trustpilot";
 
 export interface FaqQA {
   question: string;
@@ -46,7 +49,7 @@ export const PHARMA_FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         question: "What does your patient experience look like?",
-        answer: `<p>PHIL provides a seamless, e-commerce-like medication access experience for patients. This includes timely updates, free home delivery, easy refill management, and a dedicated patient support team. We're proud to have an industry-leading patient satisfaction score of <strong>${TRUSTPILOT_SCORE_LABEL} on <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">TrustPilot</a></strong> from 18,000+ patients.</p><p><a href="/demo/" target="_blank" rel="noopener">Get in touch for a full tour of our patient experience and support services</a>.</p>`,
+        answer: `<p>PHIL provides a seamless, e-commerce-like medication access experience for patients. This includes timely updates, free home delivery, easy refill management, and a dedicated patient support team. We're proud to have an industry-leading patient satisfaction score of <strong>${TRUSTPILOT_SCORE_LABEL} on <a href="https://www.trustpilot.com/review/phil.us" target="_blank" rel="noopener">TrustPilot</a></strong> from ${TRUSTPILOT_REVIEW_COUNT_LABEL} reviews.</p><p><a href="/demo/" target="_blank" rel="noopener">Get in touch for a full tour of our patient experience and support services</a>.</p>`,
       },
       {
         question: "What does your provider experience look like?",

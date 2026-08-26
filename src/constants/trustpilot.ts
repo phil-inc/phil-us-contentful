@@ -12,8 +12,21 @@ export const TRUSTPILOT_SCORE = 4.9;
 
 export const TRUSTPILOT_SCORE_MAX = 5;
 
+/**
+ * Total published reviews on the profile.
+ *
+ * Trustpilot counts reviews, not people — one patient can review more than once,
+ * so this is an upper bound on patients and must not be described as a patient count.
+ */
+export const TRUSTPILOT_REVIEW_COUNT = 22810;
+
 /** Score as it appears in copy and stat blocks, e.g. "4.9/5.0". */
 export const TRUSTPILOT_SCORE_LABEL = `${TRUSTPILOT_SCORE.toFixed(1)}/${TRUSTPILOT_SCORE_MAX.toFixed(1)}`;
+
+/** Review count rounded down to the nearest thousand for copy, e.g. "22,000+". */
+export const TRUSTPILOT_REVIEW_COUNT_LABEL = `${Math.floor(
+  TRUSTPILOT_REVIEW_COUNT / 1000,
+).toLocaleString("en-US")},000+`;
 
 /**
  * A score as a percentage of the maximum, for bar widths and similar visuals.
