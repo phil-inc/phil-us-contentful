@@ -304,7 +304,7 @@ const PlatformSection = () => (
       <div className={classes.pfVideos}>
         <div className={classes.pfVideoCard}>
           <VideoThumb
-            videoId="kfMiJUwZkFE"
+            videoId="8TLb7ehdOgM"
             thumb={philCoreThumb}
             alt="PHIL Core video thumbnail"
             tag="PHIL Digital Hub"
@@ -336,7 +336,7 @@ const PlatformSection = () => (
 
         <div className={classes.pfVideoCardFlipped}>
           <VideoThumb
-            videoId="WmuyIuwHkgM"
+            videoId="8z93MikJiHc"
             thumb={philDirectThumb}
             alt="PHIL Direct video thumbnail"
             tag="PHIL Direct"

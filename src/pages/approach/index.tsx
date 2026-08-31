@@ -14,6 +14,7 @@ import {
   APPROACH_HERO,
   APPROACH_PILLARS,
   JOURNEY_HEAD,
+  JOURNEY_VIDEO,
   JOURNEY_STEPS,
   SOLUTIONS_HEAD,
   SOLUTIONS_HUB,
@@ -210,6 +211,60 @@ const HcpTestimonialCard: React.FC<{ group: (typeof TESTIMONIAL_GROUPS)[number] 
   );
 };
 
+// ─── Solution Overview Video ─────────────────────────────────────────────────
+// Inline click-to-play video facade, mirroring VideoThumb on the pharma page:
+// the thumbnail stands in for the player until clicked, so YouTube's iframe
+// stays off the initial page load. Clicking swaps in the real embed with
+// autoplay=1, which is why the user's click is the only trigger.
+// Both branches render .solVideoThumb as the single rounded element — see the
+// note on that class for why nothing may sit transparently on top of it.
+const SolutionVideo = () => {
+  const [playing, setPlaying] = useState(false);
+
+  if (playing) {
+    return (
+      <div className={classes.solVideo}>
+        <div className={classes.solVideoThumb}>
+          <iframe
+            className={classes.solVideoIframe}
+            src={`https://www.youtube-nocookie.com/embed/${JOURNEY_VIDEO.videoId}?autoplay=1&rel=0&playsinline=1&modestbranding=1`}
+            title={JOURNEY_VIDEO.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={classes.solVideo}>
+      <button
+        type="button"
+        className={classes.solVideoThumb}
+        onClick={() => setPlaying(true)}
+        aria-label={`Play ${JOURNEY_VIDEO.title} video`}
+      >
+        {/* alt is empty: the button's aria-label already names this control. */}
+        <img
+          src={`https://img.youtube.com/vi/${JOURNEY_VIDEO.videoId}/maxresdefault.jpg`}
+          alt=""
+          loading="lazy"
+        />
+        <span className={classes.solVideoOverlay} aria-hidden="true">
+          <span className={classes.solVideoBtn}>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5.5v13l11-6.5z" />
+            </svg>
+          </span>
+        </span>
+        <span className={classes.solVideoLabel}>{JOURNEY_VIDEO.label}</span>
+      </button>
+    </div>
+  );
+};
+
 // ─── Page Component ──────────────────────────────────────────────────────────
 const ApproachOutcomesPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -393,6 +448,9 @@ const ApproachOutcomesPage = () => {
                 <h2>{JOURNEY_HEAD.h2}</h2>
                 <p className="lead" style={{ maxWidth: "none" }}>{JOURNEY_HEAD.lead}</p>
               </div>
+
+              {/* Solution overview video */}
+              <SolutionVideo />
 
               {/* Stepper */}
               <div className={classes.journeyStepper} data-step={activeStep + 1}>

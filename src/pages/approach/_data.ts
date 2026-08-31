@@ -40,7 +40,13 @@ export const APPROACH_PILLARS = [
 export const JOURNEY_HEAD = {
   eyebrow: "The Patient Journey",
   h2: "Keeping Patients Adherent from First Fill to Refill",
-  lead: "Retail and specialty-lite pharmaceutical brands face unique access barriers at every step of the prescription journey. From the moment a prescription is written to every refill that follows, patients face obstacles that can prevent starting and staying on therapy. We put human-first care at the heart of our platform, layering in compliance-first technology to break through these barriers and improve access, affordability, and adherence for long-term therapy success.",
+  lead: "Retail and specialty-lite pharmaceutical brands face unique access barriers at every step of the prescription journey. From the moment a prescription is written to every refill that follows, patients face obstacles that can prevent starting and staying on therapy. We put human-first care at the heart of our platform, layering in compliance-first technology to break through these barriers and improve access, affordability, and adherence.",
+} as const;
+
+export const JOURNEY_VIDEO = {
+  videoId: "UUaMXEu4fII",
+  label: "Solution Overview",
+  title: "PHIL solution overview",
 } as const;
 
 export const JOURNEY_STEPS = [
@@ -74,15 +80,15 @@ export const JOURNEY_STEPS = [
     breaks:
       "Sticker shock at out-of-pocket cost causes patients to abandon, especially when affordability programs are hard to find or apply.",
     helps:
-      "PHIL builds flexible brand programs that automatically helps find each patient's lowest out-of-pocket cost. Brands have options to offer cash-pay and bridge programs to compliantly support patients with coverage barriers, so no patient has to abandon medication at the counter.",
+      "PHIL builds flexible access programs that automatically identify each patient's lowest out-of-pocket cost. Our AI-driven copay workflows evaluate each patient's coverage in real time, applying the appropriate program to compliantly address access barriers, so patients receive an accurate and affordable cost.",
   },
   {
     title: "Shipping & Distribution",
     what: "After the patient pays, they need to get the medication into their hands.",
     breaks:
-      "Patients are defaulted to retail pickup with no guidance, missed pickups, long specialty pharmacy wait times, and confusing logistics cause patients to never start therapy.",
+      "Patients are often defaulted to retail pickup with little to no guidance. Missed pickups, long specialty pharmacy wait times, and confusing logistics cause many patients to never start therapy.",
     helps:
-      "PHIL leverages 99%+ plan coverage across our 50-state contracted pharmacy network with free home delivery options, and proactive shipment notifications, tracking, and flexible scheduling.",
+      "PHIL leverages 99%+ plan coverage across our 50-state contracted pharmacy network with free home delivery options combined with proactive shipment notifications, tracking, and flexible scheduling.",
   },
   {
     title: "Ongoing Refills",
@@ -98,7 +104,7 @@ export const JOURNEY_STEPS = [
     breaks:
       "Fragmented vendors and siloed data make it nearly impossible to see where patients dropped off, why, or whether there are appropriate solutions to support adherence.",
     helps:
-      "Access real-time data, with full visibility across the prescription journey. Leverage AI-driven insights that provide dynamic information on channel strategy and where to take action. Brands that optimize programs with PHIL have seen meaningful improvements in patient access to drug therapies.",
+      "Access 120+ real-time data points, with full data visibility across the prescription journey. Our AI-powered data dashboard continuously monitors program performance, automatically flagging where patients are dropping off and surfacing recommendations for your commercial team to take action. Brands that optimize programs with PHIL have seen meaningful improvements in patient access to drug therapies.",
   },
 ] as const;
 
