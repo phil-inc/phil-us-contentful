@@ -6,7 +6,19 @@ export interface PressItem {
   url: string;
 }
 
+/**
+ * MRTG-1454 — Evolved Health release. The live URL was still TBD when this
+ * landed; replace this value with the businesswire/prnewswire link before merge.
+ */
+export const EVOLVED_HEALTH_URL = "#TODO-MRTG-1454-live-url";
+
 export const PRESS_DATA: PressItem[] = [
+  {
+    title: "Evolved Health and PHIL Announce Novel Dermatology Program for New Day™ Direct-to-Patient",
+    outlet: "Press Release",
+    type: "Release",
+    url: EVOLVED_HEALTH_URL,
+  },
   {
     title: "PHIL is Rewriting the Rules of Direct-to-Patient",
     outlet: "Digital Medicine Society",

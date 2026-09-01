@@ -4,6 +4,7 @@
    ========================================================================== */
 
 import { TRUSTPILOT_SCORE } from "../../constants/trustpilot";
+import { PRESS_DATA } from "../press/_data";
 
 export const DEMO_URL = "/demo";
 export const RESOURCES_URL = "/resources/?type=casestudy";
@@ -120,26 +121,10 @@ export type PressCard = {
   href: string;
 };
 
-export const PRESS_CARDS: PressCard[] = [
-  {
-    meta: "Press Release",
-    title:
-      "PHIL Invests in State-of-the-Art Cash Dispense Capabilities, Expanding Direct-to-Patient Fulfillment for Pharma",
-    href: "https://www.businesswire.com/news/home/20260421670832/en/PHIL-Invests-in-State-of-the-Art-Cash-Dispense-Capabilities-Expanding-Direct-to-Patient-Fulfillment-for-Pharma",
-  },
-  {
-    meta: "Press Release",
-    title:
-      "Tenpoint Therapeutics Ltd and PHIL Partner to Launch YUVEZZI\u2122 Direct-to-Patient Cash Program",
-    href: "https://www.businesswire.com/news/home/20260402677480/en/Tenpoint-Therapeutics-Ltd-and-PHIL-Partner-to-Launch-YUVEZZI-Direct-to-Patient-Cash-Program-to-Make-Novel-Presbyopia-Therapy-More-Accessible-and-Affordable",
-  },
-  {
-    meta: "Press Release",
-    title:
-      "Sprout Pharmaceuticals and PHIL Expand Their Affordable Direct-to-Patient Access Program for Addyi",
-    href: "https://www.prnewswire.com/news-releases/phil-and-sprout-pharmaceuticals-expand-their-affordable-direct-to-patient-access-program-for-addyiflibanserin-302655793.html",
-  },
-];
+// Derived from the press library so /press and /customer-success can't drift.
+export const PRESS_CARDS: PressCard[] = PRESS_DATA.filter((d) => d.type === "Release")
+  .slice(0, 3)
+  .map((d) => ({ meta: d.outlet, title: d.title, href: d.url }));
 
 /* ── Testimonials (rotating voice cards) ───────────────────────────────── */
 export type Voice = {

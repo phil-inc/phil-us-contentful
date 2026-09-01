@@ -1,3 +1,5 @@
+import { EVOLVED_HEALTH_URL } from "../press/_data";
+
 export interface ResourceItem {
   title: string;
   topics: string[];
@@ -33,6 +35,13 @@ export const TYPES = [
 ] as const;
 
 export const RESOURCES_DATA: ResourceItem[] = [
+  {
+    title: "Evolved Health and PHIL Announce Novel Dermatology Program for New Day™ Direct-to-Patient",
+    topics: ["direct", "access"],
+    type: "press",
+    url: EVOLVED_HEALTH_URL,
+    buttonLabel: "Read",
+  },
   {
     title: "Compliance-By-Design: The Critical Layer for Pharma's Direct-to-Patient Play",
     topics: ["direct"],
