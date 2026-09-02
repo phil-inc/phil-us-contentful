@@ -147,6 +147,7 @@ function CardLink({ url, className, children }: { url: string; className: string
 /* ─── Press carousel ─── */
 
 const PRESS_SCROLL_SPEED = 22; // px per second
+const PRESS_STEP_DURATION = 400; // ms for one prev/next step, matching the direct marquee
 const PRESS_RESUME_DELAY = 2500; // ms of stillness after a drag before the drift resumes
 const PRESS_DRAG_SLOP = 6; // px of travel past which a pointer gesture counts as a drag, not a click
 
@@ -174,6 +175,9 @@ const PressCardLink: React.FC<{ card: PressCard; duplicate?: boolean }> = ({ car
 
 const wrapOffset = (value: number, loop: number) => (loop > 0 ? ((value % loop) + loop) % loop : 0);
 
+// Same easing and duration the direct marquee steps with.
+const easeInOutQuad = (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
+
 /**
  * "PHIL in the Press" — a continuously drifting carousel of every press item.
  *
@@ -188,16 +192,22 @@ const wrapOffset = (value: number, loop: number) => (loop > 0 ? ((value % loop) 
  * state would re-render the page on every frame.
  *
  * The drift is stopped by three sources: hover, focus inside the strip, and
- * prefers-reduced-motion. There is deliberately no visible pause/step control —
- * the design does not have one. Note this leaves no pause affordance for a
- * touch user, which WCAG 2.2.2 would want; see the ticket before adding one,
- * since it is a design decision as much as a technical one.
+ * prefers-reduced-motion. Prev/next controls follow `.res-nav` on
+ * /solution/direct — edge-overlaid, revealed on hover (or :focus-visible) at
+ * every width, so they add no resting chrome. Stepping is a tween inside the
+ * rAF loop, not a CSS transition — the loop writes `transform` every frame, so
+ * a transition would be fought frame by frame.
+ *
+ * There is deliberately no pause control (that marquee has none either), which
+ * leaves a touch user without the pause affordance WCAG 2.2.2 wants; raise it on
+ * the ticket rather than adding one here, since it is a design decision as much
+ * as a technical one.
  */
 const PressSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const nudgeTimer = useRef<ReturnType<typeof setTimeout>>();
+  const tween = useRef<{ from: number; to: number; start: number } | null>(null);
 
   // "down" only swaps the cursor; "scrubbing" additionally makes the cards inert,
   // and is entered from pointermove once the gesture clears PRESS_DRAG_SLOP.
@@ -265,6 +275,25 @@ const PressSection: React.FC = () => {
       const delta = Math.min(80, now - last) / 1000;
       last = now;
 
+      const loop = loopWidth();
+      if (loop <= 0) return;
+
+      // A step owns the track while it runs, and — as on the direct marquee —
+      // runs even while paused, so pressing a button with the cursor resting on
+      // the strip still moves. The drift picks up from wherever it lands, with
+      // no hold afterwards.
+      const active = tween.current;
+      if (active) {
+        const progress = Math.min((now - active.start) / PRESS_STEP_DURATION, 1);
+        offset.current = active.from + (active.to - active.from) * easeInOutQuad(progress);
+        if (progress >= 1) {
+          offset.current = wrapOffset(active.to, loop);
+          tween.current = null;
+        }
+        render();
+        return;
+      }
+
       if (
         hoverPaused.current ||
         focusPaused.current ||
@@ -275,8 +304,6 @@ const PressSection: React.FC = () => {
         return;
       }
 
-      const loop = loopWidth();
-      if (loop <= 0) return;
       offset.current = wrapOffset(offset.current + PRESS_SCROLL_SPEED * delta, loop);
       render();
     };
@@ -284,6 +311,61 @@ const PressSection: React.FC = () => {
     frame = requestAnimationFrame(step);
     return () => cancelAnimationFrame(frame);
   }, [onScreen, loopWidth, render]);
+
+  // Step to the adjacent card, snapping to a whole card the way `snap()` does on
+  // the /solution/direct marquee. Moving a fixed distance instead would inherit
+  // whatever fractional position the drift happens to be at and leave cards cut
+  // off mid-width — most obviously at the one-up tier, where the card on screen
+  // is the whole content of the strip.
+  const nudge = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    const loop = loopWidth();
+    if (!track || loop <= 0 || track.children.length < 2) return;
+
+    // Find the card nearest the window's left edge and target its neighbour,
+    // reading each boundary from layout rather than computing index * step:
+    // offsetLeft rounds the true 295.75px pitch to 296, which would accumulate
+    // into a visible few-pixel misalignment by the far end of the track.
+    const cards = track.children;
+    const count = cards.length / 2; // originals; the second copy mirrors them
+    let from = wrapOffset(offset.current, loop);
+
+    let nearest = 0;
+    let closest = Infinity;
+    for (let i = 0; i < count; i++) {
+      const distance = Math.abs((cards[i] as HTMLElement).offsetLeft - from);
+      if (distance < closest) {
+        closest = distance;
+        nearest = i;
+      }
+    }
+
+    const target = nearest + direction;
+    let to: number;
+    if (target < 0) {
+      to = (cards[count - 1] as HTMLElement).offsetLeft - loop;
+    } else if (target >= count) {
+      to = (cards[0] as HTMLElement).offsetLeft + loop;
+    } else {
+      to = (cards[target] as HTMLElement).offsetLeft;
+    }
+
+    // Stepping left past the head of the track would expose blank space, so
+    // re-anchor a full loop forward first. The two copies are identical, so
+    // both this and the wrap above are invisible.
+    if (to < 0) {
+      from += loop;
+      to += loop;
+    }
+
+    // Hand the step to the rAF loop as a tween rather than a CSS transition:
+    // the loop writes `transform` every frame, so a transition would be fought
+    // frame by frame — which is why this previously needed a 2.5s hold to keep
+    // the two apart. Tweening inside the loop needs no hold, so the drift
+    // resumes the instant the step lands, as it does on the direct marquee.
+    offset.current = from;
+    tween.current = { from, to, start: performance.now() };
+  };
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     dragging.current = true;
@@ -377,50 +459,74 @@ const PressSection: React.FC = () => {
         </div>
 
         <div
-          ref={viewportRef}
-          className={[
-            classes.pressViewport,
-            gesture !== "idle" ? classes.dragging : "",
-            gesture === "scrubbing" ? classes.scrubbing : "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
-          // Guarded on pointerType: touch synthesises a mouseenter on tap but
-          // often never sends the matching leave, which would latch the pause on.
+          className={classes.pressMarquee}
+          // Hover-pause lives on the marquee, not the viewport, so it also covers
+          // the nav buttons — same as the direct marquee. Guarded on pointerType:
+          // touch synthesises an enter on tap but often never sends the matching
+          // leave, which would latch the pause on.
           onPointerEnter={(event) => {
             if (event.pointerType === "mouse") hoverPaused.current = true;
           }}
           onPointerLeave={(event) => {
             if (event.pointerType === "mouse") hoverPaused.current = false;
           }}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={endDrag}
-          onPointerCancel={endDrag}
-          onScroll={handleScroll}
-          onFocus={handleFocus}
-          onBlur={() => {
-            focusPaused.current = false;
-          }}
-          // A drag that ends over a card still fires that card's click; swallow
-          // it during the capture phase so scrubbing never navigates away.
-          // Keyboard activation produces a click with detail === 0 and no
-          // preceding pointerdown, so it must never be judged by drag distance.
-          onClickCapture={(event) => {
-            if (event.detail !== 0 && Math.abs(dragMoved.current) > PRESS_DRAG_SLOP) {
-              event.preventDefault();
-            }
-            dragMoved.current = 0;
-          }}
         >
-          <div className={classes.pressGrid} ref={trackRef}>
-            {PRESS_CARDS.map((card) => (
-              <PressCardLink key={card.url} card={card} />
-            ))}
-            {PRESS_CARDS.map((card) => (
-              <PressCardLink key={`${card.url}-loop`} card={card} duplicate />
-            ))}
+          <button
+            type="button"
+            className={`${classes.pressNavBtn} ${classes.pressNavPrev}`}
+            onClick={() => nudge(-1)}
+            aria-label="Previous press items"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19" /></svg>
+          </button>
+
+          <div
+            ref={viewportRef}
+            className={[
+              classes.pressViewport,
+              gesture !== "idle" ? classes.dragging : "",
+              gesture === "scrubbing" ? classes.scrubbing : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onScroll={handleScroll}
+            onFocus={handleFocus}
+            onBlur={() => {
+              focusPaused.current = false;
+            }}
+            // A drag that ends over a card still fires that card's click; swallow
+            // it during the capture phase so scrubbing never navigates away.
+            // Keyboard activation produces a click with detail === 0 and no
+            // preceding pointerdown, so it must never be judged by drag distance.
+            onClickCapture={(event) => {
+              if (event.detail !== 0 && Math.abs(dragMoved.current) > PRESS_DRAG_SLOP) {
+                event.preventDefault();
+              }
+              dragMoved.current = 0;
+            }}
+          >
+            <div className={classes.pressGrid} ref={trackRef}>
+              {PRESS_CARDS.map((card) => (
+                <PressCardLink key={card.url} card={card} />
+              ))}
+              {PRESS_CARDS.map((card) => (
+                <PressCardLink key={`${card.url}-loop`} card={card} duplicate />
+              ))}
+            </div>
           </div>
+
+          <button
+            type="button"
+            className={`${classes.pressNavBtn} ${classes.pressNavNext}`}
+            onClick={() => nudge(1)}
+            aria-label="Next press items"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 5 16 12 9 19" /></svg>
+          </button>
         </div>
 
         <div className={classes.pressCtaRow}>
