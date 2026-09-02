@@ -180,7 +180,9 @@
   padding: 36px 36px 32px;
   color: #ffffff;
   text-decoration: none;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.2s;
   box-shadow: 0 10px 28px rgba(0, 72, 71, 0.12);
 }
 
@@ -298,7 +300,9 @@
   line-height: 1.2;
   color: #00615e;
   letter-spacing: -0.005em;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s,
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.2s,
     border-color 0.15s;
 }
 
@@ -338,7 +342,9 @@
   color: #00827e;
   opacity: 0;
   transform: translateX(-6px);
-  transition: opacity 0.2s, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    opacity 0.2s,
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .topicChip:hover .topicArrow {
@@ -387,7 +393,9 @@
   background: #ffffff;
   appearance: none;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 
 .filterSelect:focus,
@@ -551,8 +559,10 @@
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s;
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.15s;
 }
 
 .card:hover {
@@ -625,7 +635,11 @@
   border: 1.5px solid #00827e;
   border-radius: 999px;
   padding: 8px 16px;
-  transition: background 0.15s, color 0.15s, border-color 0.15s, gap 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s,
+    gap 0.15s;
 }
 
 .cardBtn svg {
@@ -652,7 +666,9 @@
 }
 
 .cardMatch {
-  box-shadow: 0 0 0 2px #00827e, 0 18px 40px rgba(0, 130, 126, 0.18);
+  box-shadow:
+    0 0 0 2px #00827e,
+    0 18px 40px rgba(0, 130, 126, 0.18);
   border-color: #00827e;
   transform: translateY(-2px);
 }
@@ -682,36 +698,95 @@
 
 /* Press section */
 .pressSection {
-  background: #f4f4f4;
-  padding: 94px 0 100px;
+  background: linear-gradient(180deg, #fbfdfc 0%, #f4f4f4 45%, #f1f8f5 100%);
+  padding: 80px 0 96px;
   position: relative;
   overflow: hidden;
 }
 
-.pressSection::before {
-  content: "";
+/* Blurred colour fields that drift behind the carousel. Purely decorative, so
+   they sit behind `.pressInner` (z-index 1) and never take pointer events. */
+.pressOrbs {
   position: absolute;
-  top: -120px;
-  right: -120px;
-  width: 360px;
-  height: 360px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #2aa89e 0%, #7de6cb 100%);
-  opacity: 0.18;
+  inset: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 
-.pressSection::after {
-  content: "";
+.orb {
   position: absolute;
-  bottom: -180px;
-  left: -120px;
-  width: 420px;
-  height: 420px;
   border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.orbOne {
+  top: -160px;
+  right: -80px;
+  width: 520px;
+  height: 520px;
+  background: linear-gradient(135deg, #2aa89e 0%, #7de6cb 100%);
+  opacity: 0.14;
+  animation: orbDriftA 26s ease-in-out infinite alternate;
+}
+
+.orbTwo {
+  bottom: -220px;
+  left: -140px;
+  width: 600px;
+  height: 600px;
   background: linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%);
   opacity: 0.12;
-  pointer-events: none;
+  animation: orbDriftB 32s ease-in-out infinite alternate;
+}
+
+.orbThree {
+  top: 30%;
+  left: 38%;
+  width: 380px;
+  height: 380px;
+  background: linear-gradient(135deg, #d5f1f0 0%, #a8e2da 50%, #f2e8c0 100%);
+  opacity: 0.09;
+  animation: orbDriftC 24s ease-in-out infinite alternate;
+}
+
+@keyframes orbDriftA {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-70px, 60px, 0) scale(1.12);
+  }
+}
+
+@keyframes orbDriftB {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  to {
+    transform: translate3d(90px, -50px, 0) scale(0.95);
+  }
+}
+
+@keyframes orbDriftC {
+  from {
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(60px, 40px, 0) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none;
+  }
+}
+
+/* Set while the section is outside the viewport. Compositing three blurred
+   520-600px layers is not free, and nobody is looking at them. */
+.orbsPaused .orb {
+  animation-play-state: paused;
 }
 
 .pressInner {
@@ -720,6 +795,14 @@
   padding: 0 60px;
   position: relative;
   z-index: 1;
+}
+
+.pressHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 44px;
 }
 
 .pressEyebrow {
@@ -751,19 +834,56 @@
   margin: 0 0 10px;
 }
 
-.pressDesc {
-  font-size: 16px;
-  color: #525252;
-  margin: 0 0 44px;
+/* Carousel window. The mask fades cards in and out at the edges so the track
+   appears to run past the section rather than being clipped by it. */
+.pressViewport {
+  position: relative;
+  /* `clip` rather than `hidden` so this is NOT a scroll container: with
+     `hidden` the browser scrolls it to reveal a focused off-screen card, which
+     silently desyncs from the transform that actually positions the track.
+     `hidden` stays as the fallback for Safari < 16, where the onScroll handler
+     folds any stray scrollLeft back in. */
+  overflow: hidden;
+  overflow: clip;
+  padding: 4px 0 18px;
+  cursor: grab;
+  touch-action: pan-y;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 3%,
+    #000 97%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 3%,
+    #000 97%,
+    transparent 100%
+  );
+}
+
+.pressViewport.dragging {
+  cursor: grabbing;
+}
+
+/* Only once the gesture is a real scrub: make the cards inert so they don't
+   jitter under the cursor. This must NOT apply on plain pointerdown — inert
+   cards would make the browser retarget the follow-up click at the viewport,
+   and the card's link would never fire. */
+.pressViewport.scrubbing .pressCard {
+  pointer-events: none;
 }
 
 .pressGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 23px;
+  will-change: transform;
 }
 
 .pressCard {
+  flex: 0 0 calc((100% - 69px) / 4);
   position: relative;
   background: #ffffff;
   border-radius: 14px;
@@ -772,7 +892,9 @@
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.2s;
 }
 
 .pressCard:hover {
@@ -780,6 +902,13 @@
   box-shadow: 0 14px 32px rgba(0, 97, 94, 0.14);
   text-decoration: none;
   color: inherit;
+}
+
+/* Keyboard focus has to be visible inside a moving strip, and the outline must
+   sit outside the card's own rounding to survive the overflow clip. */
+.pressCard:focus-visible {
+  outline: 2px solid #00827e;
+  outline-offset: 3px;
 }
 
 .pressArt {
@@ -838,17 +967,24 @@
   font-weight: 600;
   font-size: 13px;
   color: #00827e;
-  transition: color 0.15s, gap 0.15s;
+  transition:
+    color 0.15s,
+    gap 0.15s;
 }
 
 .pressCtaBtn svg {
   width: 14px;
   height: 14px;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .pressCard:hover .pressCtaBtn {
   color: #00615e;
   gap: 10px;
+}
+
+.pressCard:hover .pressCtaBtn svg {
+  transform: translateX(2px);
 }
 
 .pressCtaRow {
@@ -869,7 +1005,9 @@
   padding: 16px 32px;
   border-radius: 999px;
   text-decoration: none;
-  transition: background 0.15s, gap 0.15s;
+  transition:
+    background 0.15s,
+    gap 0.15s;
 }
 
 .pressCta:hover {
@@ -998,12 +1136,27 @@
     padding-right: 32px;
   }
 
-  .pressSection {
-  padding: 56px 0 60px;
+  .pressCtaRow {
+    margin-top: 40px;
   }
 
-  .pressGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .pressSection {
+    padding: 56px 0 60px;
+  }
+
+  .pressHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pressCard {
+    flex-basis: calc((100% - 12px) / 3);
+  }
+}
+
+@media (max-width: $phil-breakpoint-md) {
+  .pressCard {
+    flex-basis: calc((100% - 12px) / 2);
   }
 }
 
@@ -1017,7 +1170,7 @@
        rests closer to the top. Lower this number to scroll down even more. */
     scroll-margin-top: calc(var(--navbar-height, 90px) + 12px);
   }
-   .showMoreRow {
+  .showMoreRow {
     padding: 10px 32px 40px;
     flex-direction: column;
     align-items: stretch;
@@ -1028,7 +1181,35 @@
   }
 
   .pressSection {
-  padding: 40px 0 46px;
+    padding: 40px 0 46px;
+  }
+
+  .pressH2 {
+    font-size: 30px;
+  }
+
+  .pressHeader {
+    margin-bottom: 28px;
+  }
+
+  .pressCtaRow {
+    margin-top: 30px;
+  }
+
+  .pressGrid {
+    gap: 12px;
+  }
+
+  /* The edge fade eats too much of a two-up row on a phone, so drop it. */
+  .pressViewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+@media (max-width: $phil-breakpoint-xs) {
+  .pressCard {
+    flex-basis: calc((100% - 12px) / 1);
   }
 }
 
@@ -1050,7 +1231,9 @@
   cursor: pointer;
   text-align: left;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
