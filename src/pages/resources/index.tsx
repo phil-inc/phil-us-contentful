@@ -100,10 +100,16 @@ const CARD_ART_CYCLE = [classes.cardArtForest, classes.cardArtMeadow, classes.ca
 const PER_PAGE = 9;
 
 const PRESS_ART_CYCLE = [classes.pressArtA, classes.pressArtB, classes.pressArtC, classes.pressArtD];
-const PRESS_CARDS = PRESS_DATA
-  .filter((d) => d.type === "Thought Leadership")
-  .slice(0, 4)
-  .map((d, i) => ({ outlet: d.outlet, title: d.title, url: d.url, art: PRESS_ART_CYCLE[i] }));
+
+// Every press item, releases and thought leadership alike, newest first.
+// PRESS_DATA is maintained in that order on the /press page, so new coverage
+// appears at the head of the carousel here with no change to this file.
+const PRESS_CARDS = PRESS_DATA.map((d, i) => ({
+  outlet: d.outlet,
+  title: d.title,
+  url: d.url,
+  art: PRESS_ART_CYCLE[i % PRESS_ART_CYCLE.length],
+}));
 
 const ArrowIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
@@ -137,6 +143,293 @@ function CardLink({ url, className, children }: { url: string; className: string
   }
   return <a href={url} className={className} target="_blank" rel="noopener noreferrer">{children}</a>;
 }
+
+/* ─── Press carousel ─── */
+
+const PRESS_SCROLL_SPEED = 22; // px per second
+const PRESS_RESUME_DELAY = 2500; // ms of stillness after a drag before the drift resumes
+const PRESS_DRAG_SLOP = 6; // px of travel past which a pointer gesture counts as a drag, not a click
+
+type PressCard = (typeof PRESS_CARDS)[number];
+
+const PressCardLink: React.FC<{ card: PressCard; duplicate?: boolean }> = ({ card, duplicate }) => (
+  <a
+    className={classes.pressCard}
+    href={card.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    // The second copy is scenery, not content: hide it from assistive tech and
+    // keep it out of the tab order so the list is announced and tabbed once.
+    aria-hidden={duplicate || undefined}
+    tabIndex={duplicate ? -1 : undefined}
+  >
+    <div className={`${classes.pressArt} ${card.art}`} />
+    <div className={classes.pressBody}>
+      <div className={classes.pressLogo}>{card.outlet}</div>
+      <h4 className={classes.pressCardTitle}>{card.title}</h4>
+      <span className={classes.pressCtaBtn}>Read feature <ArrowIcon /></span>
+    </div>
+  </a>
+);
+
+const wrapOffset = (value: number, loop: number) => (loop > 0 ? ((value % loop) + loop) % loop : 0);
+
+/**
+ * "PHIL in the Press" — a continuously drifting carousel of every press item.
+ *
+ * The track renders PRESS_CARDS twice so the leftward drift can wrap by exactly
+ * one copy-width and read as an endless loop; the duplicate covers the seam that
+ * would otherwise appear as the first copy scrolls off. The alternative — moving
+ * DOM nodes to the end of the track, as the design prototype does — is unsafe
+ * here because this section re-renders whenever a filter or the search box
+ * changes, and React would reconcile against a child order it never wrote.
+ *
+ * Position is written straight to the node from a rAF loop. Driving it through
+ * state would re-render the page on every frame.
+ *
+ * The drift is stopped by three sources: hover, focus inside the strip, and
+ * prefers-reduced-motion. There is deliberately no visible pause/step control —
+ * the design does not have one. Note this leaves no pause affordance for a
+ * touch user, which WCAG 2.2.2 would want; see the ticket before adding one,
+ * since it is a design decision as much as a technical one.
+ */
+const PressSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const nudgeTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  // "down" only swaps the cursor; "scrubbing" additionally makes the cards inert,
+  // and is entered from pointermove once the gesture clears PRESS_DRAG_SLOP.
+  const [gesture, setGesture] = useState<"idle" | "down" | "scrubbing">("idle");
+  // False until the section is near the viewport, so neither the rAF loop nor
+  // the orb animations run for content the visitor has not scrolled to.
+  const [onScreen, setOnScreen] = useState(false);
+
+  const offset = useRef(0);
+  const hoverPaused = useRef(false);
+  const focusPaused = useRef(false);
+  const dragging = useRef(false);
+  const captured = useRef(false);
+  const dragStartX = useRef(0);
+  const dragStartOffset = useRef(0);
+  const dragMoved = useRef(0);
+  const resumeAt = useRef(0);
+
+  // One copy's advance width — the distance from the first card to its twin,
+  // which includes the gap trailing the last card of the first copy. Measured
+  // live so it stays correct across resizes and font/layout shifts.
+  const loopWidth = useCallback(() => {
+    const track = trackRef.current;
+    if (!track || track.children.length < 2) return 0;
+    const first = track.children[0] as HTMLElement;
+    const seam = track.children[track.children.length / 2] as HTMLElement;
+    return seam.offsetLeft - first.offsetLeft;
+  }, []);
+
+  const render = useCallback(() => {
+    const track = trackRef.current;
+    if (track) {
+      track.style.transform = `translate3d(${-offset.current}px, 0, 0)`;
+    }
+  }, []);
+
+  // Only run the drift while the section is actually near the viewport.
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setOnScreen(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setOnScreen(entry.isIntersecting),
+      { rootMargin: "200px 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  React.useEffect(() => {
+    if (!onScreen) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    let last: number | null = null;
+
+    const step = (now: number) => {
+      frame = requestAnimationFrame(step);
+      if (last === null) {
+        last = now;
+        return;
+      }
+      // Cap the delta so a backgrounded tab doesn't teleport the track on return.
+      const delta = Math.min(80, now - last) / 1000;
+      last = now;
+
+      if (
+        hoverPaused.current ||
+        focusPaused.current ||
+        dragging.current ||
+        reduceMotion.matches ||
+        now < resumeAt.current
+      ) {
+        return;
+      }
+
+      const loop = loopWidth();
+      if (loop <= 0) return;
+      offset.current = wrapOffset(offset.current + PRESS_SCROLL_SPEED * delta, loop);
+      render();
+    };
+
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [onScreen, loopWidth, render]);
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    dragging.current = true;
+    dragStartX.current = event.clientX;
+    dragStartOffset.current = offset.current;
+    dragMoved.current = 0;
+    setGesture("down");
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragging.current) return;
+    dragMoved.current = event.clientX - dragStartX.current;
+
+    // Capture only once the gesture is unambiguously a drag. Capturing on
+    // pointerdown instead would retarget the follow-up click at this element,
+    // so a plain click on a card would stop opening the article.
+    if (!captured.current && Math.abs(dragMoved.current) > PRESS_DRAG_SLOP) {
+      event.currentTarget.setPointerCapture(event.pointerId);
+      captured.current = true;
+      setGesture("scrubbing");
+    }
+
+    offset.current = wrapOffset(dragStartOffset.current - dragMoved.current, loopWidth());
+    render();
+  };
+
+  const endDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragging.current) return;
+    dragging.current = false;
+    setGesture("idle");
+    if (captured.current && event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    captured.current = false;
+    // Hold still briefly so the card the user dragged to stays readable.
+    resumeAt.current = performance.now() + PRESS_RESUME_DELAY;
+  };
+
+  // The browser scrolls an `overflow: hidden` box to reveal a focused
+  // descendant. Position here is driven by `transform`, so a stray scrollLeft
+  // would offset the window permanently; fold it into our own offset instead.
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const viewport = event.currentTarget;
+    if (viewport.scrollLeft === 0) return;
+    offset.current = wrapOffset(offset.current + viewport.scrollLeft, loopWidth());
+    viewport.scrollLeft = 0;
+    render();
+  };
+
+  // Bring a keyboard-focused card fully into view, and hold the drift while
+  // focus is inside the strip so the card doesn't slide out from under it.
+  const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+    focusPaused.current = true;
+    const viewport = viewportRef.current;
+    const card = (event.target as HTMLElement).closest("a");
+    if (!viewport || !card) return;
+
+    // Only reposition for keyboard focus. Clicking a card at the mask edge also
+    // focuses it, and snapping the track out from under the pointer mid-click
+    // is jarring.
+    try {
+      if (!card.matches(":focus-visible")) return;
+    } catch {
+      // Browsers without :focus-visible fall through and reposition regardless.
+    }
+
+    const cardLeft = (card as HTMLElement).offsetLeft;
+    const visualLeft = cardLeft - offset.current;
+    if (visualLeft < 0 || visualLeft + card.clientWidth > viewport.clientWidth) {
+      offset.current = wrapOffset(cardLeft, loopWidth());
+      render();
+    }
+  };
+
+  return (
+    <section className={classes.pressSection} ref={sectionRef}>
+      <div
+        className={`${classes.pressOrbs} ${onScreen ? "" : classes.orbsPaused}`}
+        aria-hidden="true"
+      >
+        <span className={`${classes.orb} ${classes.orbOne}`} />
+        <span className={`${classes.orb} ${classes.orbTwo}`} />
+        <span className={`${classes.orb} ${classes.orbThree}`} />
+      </div>
+      <div className={classes.pressInner}>
+        <div className={classes.pressHeader}>
+          <div>
+            <div className={classes.pressEyebrow}>In the News</div>
+            <h2 className={classes.pressH2}>PHIL in the Press</h2>
+          </div>
+        </div>
+
+        <div
+          ref={viewportRef}
+          className={[
+            classes.pressViewport,
+            gesture !== "idle" ? classes.dragging : "",
+            gesture === "scrubbing" ? classes.scrubbing : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          // Guarded on pointerType: touch synthesises a mouseenter on tap but
+          // often never sends the matching leave, which would latch the pause on.
+          onPointerEnter={(event) => {
+            if (event.pointerType === "mouse") hoverPaused.current = true;
+          }}
+          onPointerLeave={(event) => {
+            if (event.pointerType === "mouse") hoverPaused.current = false;
+          }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onScroll={handleScroll}
+          onFocus={handleFocus}
+          onBlur={() => {
+            focusPaused.current = false;
+          }}
+          // A drag that ends over a card still fires that card's click; swallow
+          // it during the capture phase so scrubbing never navigates away.
+          // Keyboard activation produces a click with detail === 0 and no
+          // preceding pointerdown, so it must never be judged by drag distance.
+          onClickCapture={(event) => {
+            if (event.detail !== 0 && Math.abs(dragMoved.current) > PRESS_DRAG_SLOP) {
+              event.preventDefault();
+            }
+            dragMoved.current = 0;
+          }}
+        >
+          <div className={classes.pressGrid} ref={trackRef}>
+            {PRESS_CARDS.map((card) => (
+              <PressCardLink key={card.url} card={card} />
+            ))}
+            {PRESS_CARDS.map((card) => (
+              <PressCardLink key={`${card.url}-loop`} card={card} duplicate />
+            ))}
+          </div>
+        </div>
+
+        <div className={classes.pressCtaRow}>
+          <Link to="/press" className={classes.pressCta}>View Coverage <ArrowIcon /></Link>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const ResourcesPage: React.FC = () => {
   const location = useLocation();
@@ -468,28 +761,7 @@ const ResourcesPage: React.FC = () => {
         </div>
 
         {/* Press section */}
-        <section className={classes.pressSection}>
-          <div className={classes.pressInner}>
-            <div className={classes.pressEyebrow}>In the news</div>
-            <h2 className={classes.pressH2}>PHIL in the press</h2>
-            <p className={classes.pressDesc}>Recent thought leadership in renowned industry publications and outlets.</p>
-            <div className={classes.pressGrid}>
-              {PRESS_CARDS.map((card) => (
-                <a key={card.url} className={classes.pressCard} href={card.url} target="_blank" rel="noopener noreferrer">
-                  <div className={`${classes.pressArt} ${card.art}`} />
-                  <div className={classes.pressBody}>
-                    <div className={classes.pressLogo}>{card.outlet}</div>
-                    <h4 className={classes.pressCardTitle}>{card.title}</h4>
-                    <span className={classes.pressCtaBtn}>Read feature <ArrowIcon /></span>
-                  </div>
-                </a>
-              ))}
-            </div>
-            <div className={classes.pressCtaRow}>
-              <Link to="/press" className={classes.pressCta}>View Press <ArrowIcon /></Link>
-            </div>
-          </div>
-        </section>
+        <PressSection />
 
         {/* Demo CTA */}
         <DemoCta
