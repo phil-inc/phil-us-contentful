@@ -193,8 +193,9 @@ const easeInOutQuad = (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
  *
  * The drift is stopped by three sources: hover, focus inside the strip, and
  * prefers-reduced-motion. Prev/next controls follow `.res-nav` on
- * /solution/direct — edge-overlaid, revealed on hover (or :focus-visible) at
- * every width, so they add no resting chrome. Stepping is a tween inside the
+ * /solution/direct — edge-overlaid and revealed on hover (or :focus-visible),
+ * so they add no resting chrome; on phones, where there is no hover, they stay
+ * permanently visible but dimmed. Stepping is a tween inside the
  * rAF loop, not a CSS transition — the loop writes `transform` every frame, so
  * a transition would be fought frame by frame.
  *

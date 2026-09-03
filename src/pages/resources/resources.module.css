@@ -835,10 +835,10 @@
 }
 
 /* Step controls, ported from `.res-nav` on /solution/direct. Hidden until the
-   strip is hovered, at every width — direct switches to always-on below 720px,
-   this deliberately does not. :focus-visible reveals them too, or keyboard users
-   would be tabbing onto an invisible control. They are siblings of the viewport,
-   not children — `overflow: clip` there would otherwise clip them. */
+   strip is hovered, except on phones where there is no hover to reveal them —
+   see the breakpoint block below. :focus-visible reveals them too, or keyboard
+   users would be tabbing onto an invisible control. They are siblings of the
+   viewport, not children — `overflow: clip` there would otherwise clip them. */
 .pressMarquee {
   position: relative;
 }
@@ -1266,15 +1266,27 @@
 
   /* Smaller and translucent on phones so they sit more lightly over a card that
      now fills the strip. Sizing follows direct.css's phone treatment, overhang
-     onto the card edge included — but not its always-on visibility: these stay
-     hover-only here as at every other width. */
+     onto the card edge included.
+
+     There is no hover on touch, so the reveal that works everywhere else would
+     leave these both invisible and untappable here. They stay permanently
+     visible instead, but held back at 0.7 so they read as a secondary
+     affordance rather than competing with the card. 0.7 is the floor that keeps
+     the icon near 3:1 against white; going fainter fails non-text contrast. */
   .pressNavBtn {
     width: 34px;
     height: 34px;
+    opacity: 0.7;
+    pointer-events: auto;
     background: rgba(255, 255, 255, 0.6);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     box-shadow: 0 6px 16px -8px rgba(0, 75, 72, 0.35);
+  }
+
+  /* Come fully forward on tap, since there is no hover state to do it. */
+  .pressNavBtn:active {
+    opacity: 1;
   }
 
   .pressNavBtn svg {
