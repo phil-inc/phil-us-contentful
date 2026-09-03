@@ -34,7 +34,7 @@
     "@mantine/form": "7.6.0",
     "@mantine/hooks": "7.6.0",
     "@tabler/icons-react": "^3.34.1",
-    "@types/marked": "^5.0.2",
+    "@types/marked": "^6.0.0",
     "classnames": "^2.5.1",
     "date-fns-tz": "^2.0.0",
     "decimal.js": "^10.6.0",
