@@ -106,7 +106,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
         host: 'https://phil.us',
-        sitemap: 'https://phil.us/sitemap.xml',
+        sitemap: 'https://phil.us/sitemap-index.xml',
         resolveEnv: () => process.env.NODE_ENV,
         env: {
           development: {
