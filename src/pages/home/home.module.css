@@ -428,6 +428,12 @@
   margin-top: 10px;
   margin-left: -4px;
   text-align: left;
+  /* The Trustpilot bootstrap script injects its iframe after load, so this box is
+     empty until then and everything below it moves. Measured at 20px on the live
+     micro widget (template 5419b6ffb0d04a076446a9af) at both 1440px and 390px,
+     so one value covers every breakpoint. min-height rather than height, so a
+     template change degrades to a small shift instead of clipping the widget. */
+  min-height: 20px;
 }
 
 .trustpilot a {
@@ -2301,7 +2307,9 @@
 }
 
 .endctaTitle {
-  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  /* "Arial Black" removed — it reflows against Raleway under font-display:swap.
+     See the note on --font-display in solution/hub/core.css. */
+  font-family: "Raleway", Arial, sans-serif;
   font-weight: 700;
   font-size: clamp(36px, 4.4vw, 56px);
   line-height: 1.05;
