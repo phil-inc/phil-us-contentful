@@ -2,16 +2,18 @@
 
 > PHIL is a digital hub and direct-to-patient platform for pharmaceutical brands. It connects patients, prescribers, and pharmacies in one workflow so people can start and stay on prescribed therapy, and so brands can improve coverage, adherence, and commercial performance.
 
-PHIL, Inc. is a healthcare technology company headquartered in Scottsdale, Arizona,
-serving retail and specialty-lite pharmaceutical brands in the United States.
+PHIL, Inc. is a healthcare technology company headquartered in Scottsdale, Arizona.
+It provides digital access, direct-to-patient services, an integrated pharmacy network,
+prior authorization, financial assistance, and data solutions for retail and
+specialty-lite pharmaceutical brands in the United States.
 
-**PHILRx** is the platform that patients and prescribers interact with directly. It covers
-prescription intake, benefits investigation, prior authorization, copay and financial
-assistance, routing to a partner pharmacy, delivery, and refill support. When a patient or
-prescriber refers to "Phil" in the context of a prescription, they generally mean PHILRx.
+## Important distinctions
 
-PHIL works on behalf of the manufacturer of a specific brand. The patient's own healthcare
-provider writes the prescription; PHIL does not prescribe.
+- **PHIL, Inc.** is the healthcare technology company.
+- **PHILRx** is the prescription access and fulfillment platform that patients and prescribers interact with directly. It covers prescription intake, benefits investigation, prior authorization, copay and financial assistance, routing to a partner pharmacy, delivery, and refill support.
+- **PHIL does not prescribe.** The patient's own healthcare provider writes the prescription.
+- PHIL works on behalf of pharmaceutical manufacturers and their brands.
+- In prescription and patient-support contexts, "Phil" generally refers to PHILRx.
 
 ## Core solution
 
@@ -34,7 +36,9 @@ The platform is organized around four capabilities:
 
 ## Reported outcomes
 
-Figures PHIL publishes for brands on its platform, measured against traditional channels:
+PHIL reports the following outcomes for brands using its platform, compared with
+traditional channels. These are PHIL's own published figures, not independently
+validated industry benchmarks:
 
 - 2x+ patient starts
 - 2x+ covered dispenses

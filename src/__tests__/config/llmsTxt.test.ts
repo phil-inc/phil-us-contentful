@@ -18,12 +18,31 @@ import * as path from "path";
 
 const REPO_ROOT = path.resolve(__dirname, "..", "..", "..");
 const LLMS_TXT_PATH = path.join(REPO_ROOT, "static", "llms.txt");
+const FAQ_CONTENT_PATH = path.join(REPO_ROOT, "src", "data", "faq-content.ts");
 
 /** Matches the site URL declared as `siteUrl` in gatsby-config.ts. */
 const CANONICAL_ORIGIN = "https://phil.us";
 
 function readLlmsTxt(): string {
   return fs.readFileSync(LLMS_TXT_PATH, "utf8");
+}
+
+function readFaqContent(): string {
+  return fs.readFileSync(FAQ_CONTENT_PATH, "utf8");
+}
+
+/**
+ * Removes separators sitting between two digits, so that a phone number written
+ * as 888-975-0603 and the same number written as (888) 975-0603 both normalize
+ * to 8889750603. faq-content.ts uses both styles for the same numbers, and
+ * llms.txt uses a third, so a literal comparison would be brittle for reasons
+ * that have nothing to do with the values being correct.
+ *
+ * The lookahead leaves the trailing digit unconsumed, which lets a single pass
+ * collapse every separator in a run.
+ */
+function collapseDigitSeparators(source: string): string {
+  return source.replace(/(\d)[\s().-]+(?=\d)/g, "$1");
 }
 
 /** Every Markdown link target in the document, in source order. */
@@ -76,6 +95,27 @@ describe("static/llms.txt", () => {
     // Contact info.
     expect(source).toContain("## Contact");
     expect(source).toContain(`${CANONICAL_ORIGIN}/contact/`);
+
+    // The AC counts the corporate address as contact info.
+    expect(source).toContain("14500 N Northsight Blvd");
+  });
+
+  it("states the PHIL / PHILRx distinction as an extractable list", () => {
+    // Agents conflating the company with the patient-facing platform, or
+    // concluding that PHIL prescribes, are the two failure modes this section
+    // exists to prevent. Prose buried these facts; bullets surface them.
+    const source = readLlmsTxt();
+
+    expect(source).toContain("## Important distinctions");
+    expect(source).toMatch(/PHIL does not prescribe/);
+    expect(source).toMatch(/\*\*PHILRx\*\* is the prescription access/);
+  });
+
+  it("keeps the skippable section named exactly `## Optional`", () => {
+    // "Optional" is a convention in the llms.txt format: it marks links an
+    // agent may skip when it needs a shorter context. Renaming the heading to
+    // something more descriptive silently discards that signal, so pin it.
+    expect(readLlmsTxt()).toContain("\n## Optional\n");
   });
 
   it("links to the sitemap index rather than a bare sitemap.xml", () => {
@@ -128,4 +168,38 @@ describe("static/llms.txt", () => {
 
     expect(offenders).toEqual([]);
   });
+});
+
+/**
+ * llms.txt repeats the PHILRx e-prescribing identifiers so an agent can answer
+ * "how do I send a prescription to PHILRx" without following a link — likely the
+ * highest-volume factual question asked about the company, and the reason the
+ * file exists at all.
+ *
+ * Duplicating the values buys that directness at the cost of drift: the source
+ * of truth is src/data/faq-content.ts, which drives the published /faqs/ page.
+ * These assertions close that gap. Changing an identifier there fails the build
+ * until llms.txt is updated to match.
+ */
+describe("static/llms.txt e-prescribing identifiers", () => {
+  /** Values as published on /faqs/, keyed by what they identify. */
+  const IDENTIFIERS: Array<{ label: string; value: string }> = [
+    { label: "pharmacy name", value: "PHILRx, LLC" },
+    { label: "pharmacy ZIP", value: "43235" },
+    { label: "pharmacy NPI", value: "1487163598" },
+    { label: "prescription fax", value: "8889750603" },
+    { label: "verbal prescription line", value: "8559770975" },
+  ];
+
+  it.each(IDENTIFIERS)(
+    "keeps the $label in step with faq-content.ts",
+    ({ value }) => {
+      const faq = collapseDigitSeparators(readFaqContent());
+      const llms = collapseDigitSeparators(readLlmsTxt());
+
+      // Asserting both sides catches the value being changed in either file.
+      expect(faq).toContain(value);
+      expect(llms).toContain(value);
+    }
+  );
 });
