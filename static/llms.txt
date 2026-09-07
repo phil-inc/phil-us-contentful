@@ -1,0 +1,98 @@
+# PHIL
+
+> PHIL is a digital hub and direct-to-patient platform for pharmaceutical brands. It connects patients, prescribers, and pharmacies in one workflow so people can start and stay on prescribed therapy, and so brands can improve coverage, adherence, and commercial performance.
+
+PHIL, Inc. is a healthcare technology company headquartered in Scottsdale, Arizona,
+serving retail and specialty-lite pharmaceutical brands in the United States.
+
+**PHILRx** is the platform that patients and prescribers interact with directly. It covers
+prescription intake, benefits investigation, prior authorization, copay and financial
+assistance, routing to a partner pharmacy, delivery, and refill support. When a patient or
+prescriber refers to "Phil" in the context of a prescription, they generally mean PHILRx.
+
+PHIL works on behalf of the manufacturer of a specific brand. The patient's own healthcare
+provider writes the prescription; PHIL does not prescribe.
+
+## Core solution
+
+- [Digital Hub](https://phil.us/solution/hub/): A flexible digital hub combining an integrated pharmacy network with script-level data to maximize patient access, adherence, and brand performance.
+- [Direct-to-Patient](https://phil.us/solution/direct/): An ecommerce-like direct-to-patient experience combining intake, fulfillment, and analytics into one solution for expanding affordable medication access.
+- [Approach and Outcomes](https://phil.us/approach/): How PHIL's model works end to end, and the outcomes it produces.
+
+The platform is organized around four capabilities:
+
+1. **Digital access and direct-to-patient services** — a branded, end-to-end medication access experience from intake through routing and dispensing.
+2. **Prior authorization and coverage** — advanced PA workflows, copay support, financial assistance, and flexible access pathways to reduce patient out-of-pocket cost.
+3. **Integrated dispense network and wholesale** — a nationwide pharmacy network with commercial and cash dispense capability, free shipping, and refill reminders.
+4. **Technology, data, and insights** — a unified access platform with AI-supported workflows and a dedicated Client Insights team.
+
+## Who PHIL serves
+
+- [Pharma](https://phil.us/pharma/): End-to-end access platform for retail and specialty-lite pharma brands.
+- [Patients](https://phil.us/patients/): Getting prescriptions covered by insurance and delivered, with real-time updates and refill reminders.
+- [Providers](https://phil.us/providers/): In-workflow prescribing and prior authorization tools for healthcare providers.
+
+## Reported outcomes
+
+Figures PHIL publishes for brands on its platform, measured against traditional channels:
+
+- 2x+ patient starts
+- 2x+ covered dispenses
+- 3x+ refill adherence
+- 90%+ prior authorization submission rate
+- 50-state dispense network with 99%+ plan coverage
+- 3x+ gross-to-net lift
+
+Supporting detail:
+
+- [Customer Success Stories](https://phil.us/customer-success/): Brand case studies across dermatology, ophthalmology, migraine, and women's health.
+- [Gross-to-Net](https://phil.us/gtn/) and the [GTN Calculator](https://phil.us/gtn/calculator/): Model a brand's gross-to-net upside.
+
+## Research and resources
+
+- [Resource Hub](https://phil.us/resources/): Reports, webinars, and guides.
+- [Blog](https://phil.us/insights/phil-blog/): Articles on patient access, commercialization, adherence, and pharmacy strategy.
+- [Reports and Guides](https://phil.us/insights/resources/)
+- [Press Releases](https://phil.us/insights/press-releases/) and the [Press Library](https://phil.us/press/)
+- [Events](https://phil.us/insights/events/)
+- [Patient Perspectives on Direct-to-Patient](https://phil.us/dtp-research/): Survey of 1,000+ patients on direct-to-patient access and adherence.
+- [HCP Perspectives on Direct-to-Patient](https://phil.us/hcp-research/): What providers want from pharma's digital access channels.
+- [FAQ](https://phil.us/faqs/): Answers for patients, providers, and field teams.
+- [Site search](https://phil.us/insights/search/)
+
+## Company
+
+- [Company](https://phil.us/company/)
+- [Leadership](https://phil.us/leadership/)
+- [Careers](https://phil.us/careers/)
+- [LinkedIn](https://www.linkedin.com/company/phil-inc-)
+
+Corporate headquarters: 14500 N Northsight Blvd, Suite 307, Scottsdale, AZ 85260
+
+## Contact
+
+Route by audience — PHIL uses separate channels for each:
+
+- [Contact overview](https://phil.us/contact/): Starting point for all audiences.
+- **Pharma brands**: [Book a demo](https://phil.us/demo/) or [get in touch](https://phil.us/contact/get-in-touch/).
+- **Patients and caregivers**: [Patient help center](https://philhelp.zendesk.com/hc/en-us/requests/new?ticket_form_id=18810700002196). Existing patients sign in at [my.phil.us](https://my.phil.us/).
+- **Healthcare providers**: [HCP support](https://phil.us/contact/hcp-support/), or email mdsupport@phil.us.
+
+### Sending a prescription to PHILRx
+
+Published on the [FAQ page](https://phil.us/faqs/) for prescribers:
+
+- **In an EMR**: select pharmacy type **Retail**, search for **PHILRx, LLC**, ZIP **43235**, NPI **1487163598**.
+- **Verbal prescription**: 855-977-0975
+- **Fax**: 888-975-0603
+
+Patient support is available in over 120 languages.
+
+## Optional
+
+- [Terms of Use](https://phil.us/terms/)
+- [Privacy Policy](https://phil.us/privacy/)
+- [HIPAA Notice](https://phil.us/hipaa/)
+- [Consumer Health Data Privacy Annex](https://phil.us/annex/)
+- [Smishing and text message safety](https://phil.us/smishing/)
+- [Full sitemap](https://phil.us/sitemap-index.xml): Every indexable URL, including the complete article archive not listed above.
