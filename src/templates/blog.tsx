@@ -54,7 +54,19 @@ export const Head: React.FC<HelmetProps> = ({
     headline: contentfulResource.heading,
     description,
     url: config.slug,
+    mainEntityOfPage: { "@type": "WebPage", "@id": config.slug },
     ...(heroImage && { image: `https:${heroImage}?w=1200&h=630&q=100&fm=webp` }),
+    // Emitted as a pair. Contentful's `publishDate` is the only trustworthy
+    // publication date — `createdAt` often reflects when an entry was migrated,
+    // not when the piece ran — so when it is blank we omit both rather than
+    // assert a date we cannot stand behind. A lone dateModified reads as
+    // incoherent to consumers, hence the nesting.
+    ...(contentfulResource.publishDate && {
+      datePublished: contentfulResource.publishDate,
+      ...(contentfulResource.updatedAt && {
+        dateModified: contentfulResource.updatedAt,
+      }),
+    }),
     publisher: {
       "@type": "Organization",
       name: "PHIL",
@@ -459,6 +471,8 @@ export const query = graphql`
         externalLink
         heading
       }
+      publishDate
+      updatedAt
       slug
       noindex
       isFaq

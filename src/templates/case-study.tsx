@@ -128,14 +128,29 @@ export const Head: React.FC<HelmetProps> = ({
     return pageMetaDescription.trim();
   };
 
+  const heroImage = contentfulCaseStudy?.image?.file?.url ?? null;
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: computeTitle(),
     description: computeMetaDescription(),
     url: config.slug,
-    ...(config.heroImage && {
-      image: `https:${config.heroImage}?w=1200&h=630&q=100&fm=webp`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": config.slug },
+    // Was `config.heroImage`, a property `config` never had, so no case study
+    // ever emitted an image. Only emit a real asset — the generic social card
+    // that `ogImage` falls back to does not represent the study.
+    ...(heroImage && {
+      image: `https:${heroImage}?w=1200&h=630&q=100&fm=webp`,
+    }),
+    // Case studies have no `publishDate` field, and unlike the blog their
+    // `createdAt` values are spread across authoring dates rather than clustered
+    // on a migration, so it is a fair stand-in for publication here.
+    ...(contentfulCaseStudy.createdAt && {
+      datePublished: contentfulCaseStudy.createdAt,
+      ...(contentfulCaseStudy.updatedAt && {
+        dateModified: contentfulCaseStudy.updatedAt,
+      }),
     }),
     publisher: {
       "@type": "Organization",
@@ -178,6 +193,8 @@ export type CaseStudy = {
   metaDescription: string;
   image: TAsset;
   id: string;
+  createdAt?: string;
+  updatedAt?: string;
   title: string;
   subtitle?: {
     id: string;
@@ -622,6 +639,8 @@ export const caseStudyQuery = graphql`
     contentfulCaseStudy(id: { eq: $id }) {
       noIndex
       id
+      createdAt
+      updatedAt
       title
       keyMetricOfStudy{
         contentful_id
