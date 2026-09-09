@@ -133,14 +133,14 @@ const DesktopFooter: React.FC = () => (
       </div>
 
       <div className={classes.socials}>
-        <Anchor href="https://phil.us/contact/" className={classes.socialLink}>
+        <Link to="/contact/" className={classes.socialLink}>
           <Group gap={8}>
             <EmailIcon />
             <Text unstyled span className={classes.socialLink}>
               Contact Us
             </Text>
           </Group>
-        </Anchor>
+        </Link>
         <Anchor
           href="https://www.linkedin.com/company/phil-inc-"
           target="_blank"
@@ -213,14 +213,14 @@ const MobileFooter: React.FC = () => (
       </div>
 
       <div className={classes.socials}>
-        <Anchor href="https://phil.us/contact/" className={classes.socialLink}>
+        <Link to="/contact/" className={classes.socialLink}>
           <Group gap={8}>
             <EmailIcon />
             <Text unstyled span className={classes.socialLink}>
               Contact Us
             </Text>
           </Group>
-        </Anchor>
+        </Link>
         <Anchor
           href="https://www.linkedin.com/company/phil-inc-"
           target="_blank"
@@ -253,7 +253,7 @@ const StaticFooter: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => {
       )}
 
       <div data-minimal={minimal} className={`xl-container ${classes.bottomBar}`}>
-        {!isMobile && !minimal && <Divider className={classes.bottomDivider} mb={40} />}
+        {!minimal && <Divider className={classes.bottomDivider} mb={isMobile ? 12 : 40} />}
         <Group
           justify={isMobile || minimal ? "center" : "space-between"}
           align="center"
