@@ -61,6 +61,10 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  .mobileWrapper & {
+    align-items: flex-start;
+  }
 }
 
 .socialLink {
@@ -212,6 +216,17 @@
 
 .badgeSmall {
   height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.badgeLink {
+  display: inline-flex;
+  align-items: center;
+}
+
+.badgeLegitScript {
+  height: 53px;
   width: auto;
   object-fit: contain;
 }
