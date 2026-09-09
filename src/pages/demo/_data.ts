@@ -8,7 +8,7 @@ export const DEMO_TITLE =
   "Book a Demo | PHIL — Patient Access Platform for Pharma Brands";
 export const DEMO_DESC =
   `Book a demo of PHIL, the end-to-end digital hub and direct-to-patient platform that helps retail and specialty-lite pharma brands maximize patient starts, covered dispenses, adherence, and gross-to-net. Patients rate PHIL ${TRUSTPILOT_SCORE_LABEL}.`;
-export const DEMO_URL = "https://phil.us/demo";
+export const DEMO_URL = "https://phil.us/demo/";
 
 // ─── Hero copy (from directionA.jsx) ─────────────────────────────────────────
 export const DEMO_HERO = {

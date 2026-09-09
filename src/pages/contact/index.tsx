@@ -10,7 +10,7 @@ import * as classes from "./contact.module.css";
 const CONTACT_TITLE = "Contact Us — PHIL";
 const CONTACT_DESC =
   "Our team is happy to help! Tell us who you are, and we'll connect you to the right people for support.";
-const CONTACT_URL = "https://phil.us/contact";
+const CONTACT_URL = "https://phil.us/contact/";
 const CONTACT_OG_IMAGE = getOgImage(null);
 const CONTACT_SCHEMA = JSON.stringify({
   "@context": "https://schema.org",
