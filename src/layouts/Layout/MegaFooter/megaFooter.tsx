@@ -257,15 +257,35 @@ const StaticFooter: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => {
         <Group
           justify={isMobile || minimal ? "center" : "space-between"}
           align="center"
-          gap={isMobile ? 8 : 0}
+          gap={isMobile ? 20 : 0}
           wrap={isMobile ? "wrap" : "nowrap"}
           py={isMobile ? 16 : 0}
           pb={isMobile || minimal ? 24 : 30}
         >
-          {!isMobile && !minimal && (
-            <Group gap={12} align="center">
+          {!minimal && (
+            <Group
+              gap={12}
+              align="center"
+              w={isMobile ? "100%" : undefined}
+              justify={isMobile ? "center" : undefined}
+            >
               <img src="/img/soc.png" alt="AICPA SOC" className={classes.badge} />
               <img src="/img/hipaa-compliant.svg" alt="HIPAA Compliant" className={classes.badgeSmall} />
+              <a
+                href="https://www.legitscript.com/websites/?checker_keywords=phil.us"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Verify LegitScript Approval for www.phil.us"
+                className={classes.badgeLink}
+              >
+                <img
+                  src="https://static.legitscript.com/seals/1053388.png"
+                  alt="Verify Approval for www.phil.us"
+                  width={73}
+                  height={79}
+                  className={classes.badgeLegitScript}
+                />
+              </a>
             </Group>
           )}
 
@@ -273,6 +293,7 @@ const StaticFooter: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => {
             gap={isMobile ? 4 : 32}
             justify={isMobile || minimal ? "center" : "flex-end"}
             wrap={isMobile ? "wrap" : "nowrap"}
+            w={isMobile ? "100%" : undefined}
           >
             <Text className={classes.legalText} data-minimal={minimal}>
               {isMobile || minimal

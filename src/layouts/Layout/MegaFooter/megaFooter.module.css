@@ -216,6 +216,17 @@
   object-fit: contain;
 }
 
+.badgeLink {
+  display: inline-flex;
+  align-items: center;
+}
+
+.badgeLegitScript {
+  height: 53px;
+  width: auto;
+  object-fit: contain;
+}
+
 .legalText {
   font-family: Lato, sans-serif;
   font-size: 14px;
