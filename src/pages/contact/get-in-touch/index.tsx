@@ -11,7 +11,7 @@ import * as classes from "./get-in-touch.module.css";
 const GIT_TITLE = "Get in touch with PHIL";
 const GIT_DESC =
   "Have a question? Fill out the form below and we'll route you to the right team.";
-const GIT_URL = "https://phil.us/contact/get-in-touch";
+const GIT_URL = "https://phil.us/contact/get-in-touch/";
 const GIT_OG_IMAGE = getOgImage(null);
 const GIT_SCHEMA = JSON.stringify({
   "@context": "https://schema.org",

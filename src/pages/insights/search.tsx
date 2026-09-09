@@ -90,7 +90,7 @@ export const Head: React.FC<HelmetProps> = ({
       )}
       <meta
         property="og:url"
-        content={`https://phil.us${location.pathname}}`}
+        content={`https://phil.us${location.pathname}`}
       />
       <Script
         defer
