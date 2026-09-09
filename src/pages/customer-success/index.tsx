@@ -758,7 +758,7 @@ export default CustomerSuccessPage;
 const CS_TITLE = "Customer Success Stories — PHIL";
 const CS_DESC =
   "See how pharma brands partner with PHIL to maximize patient access, affordability, and adherence — with real case studies, measurable results, and client testimonials.";
-const CS_URL = "https://phil.us/customer-success";
+const CS_URL = "https://phil.us/customer-success/";
 const CS_OG_IMAGE = getOgImage(null);
 const CS_SCHEMA = JSON.stringify({
   "@context": "https://schema.org",

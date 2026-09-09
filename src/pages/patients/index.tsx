@@ -698,7 +698,7 @@ export default PatientsPage;
 const PATIENTS_TITLE = "Medication Access Services for Patients — PHIL";
 const PATIENTS_DESC =
   "At Phil, we are on a mission to help people get their prescriptions quickly, easily and affordably. Our easy mobile experience helps get your meds covered by insurance and delivered to your door while providing real-time updates and refill reminders.";
-const PATIENTS_URL = "https://phil.us/patients";
+const PATIENTS_URL = "https://phil.us/patients/";
 const PATIENTS_OG_IMAGE = getOgImage(null);
 const PATIENTS_SCHEMA = JSON.stringify({
   "@context": "https://schema.org",
