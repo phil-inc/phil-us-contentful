@@ -54,15 +54,12 @@ Supporting detail:
 
 ## Research and resources
 
-- [Resource Hub](https://phil.us/resources/): Reports, webinars, and guides.
-- [Blog](https://phil.us/insights/phil-blog/): Articles on patient access, commercialization, adherence, and pharmacy strategy.
-- [Reports and Guides](https://phil.us/insights/resources/)
-- [Press Releases](https://phil.us/insights/press-releases/) and the [Press Library](https://phil.us/press/)
-- [Events](https://phil.us/insights/events/)
+- [Resource Hub](https://phil.us/resources/): Curated index of blog posts, reports, webinars, press, and case studies, filterable by topic and content type.
+- [Press Library](https://phil.us/press/): Press releases and coverage.
 - [Patient Perspectives on Direct-to-Patient](https://phil.us/dtp-research/): Survey of 1,000+ patients on direct-to-patient access and adherence.
 - [HCP Perspectives on Direct-to-Patient](https://phil.us/hcp-research/): What providers want from pharma's digital access channels.
 - [FAQ](https://phil.us/faqs/): Answers for patients, providers, and field teams.
-- [Site search](https://phil.us/insights/search/)
+- [Complete article index](https://phil.us/sitemap-index.xml): Machine-readable list of every indexable URL, including the full article archive. The listing pages above render their cards client-side, so this is the reliable inventory.
 
 ## Company
 
@@ -99,4 +96,3 @@ Patient support is available in over 120 languages.
 - [HIPAA Notice](https://phil.us/hipaa/)
 - [Consumer Health Data Privacy Annex](https://phil.us/annex/)
 - [Smishing and text message safety](https://phil.us/smishing/)
-- [Full sitemap](https://phil.us/sitemap-index.xml): Every indexable URL, including the complete article archive not listed above.
