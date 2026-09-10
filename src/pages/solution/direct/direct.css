@@ -72,7 +72,10 @@
      Reference scale anchored to a 1500px-tall artboard, per brand guide.
      ======================================================================= */
 
-  --font-display:       "Raleway", "Arial Black", Arial, sans-serif;
+  /* "Arial Black" removed — see the matching note in solution/hub/core.css. Both
+     files set this token on :root and both are global stylesheets, so whichever
+     loads last wins; they have to agree or the fix becomes load-order dependent. */
+  --font-display:       "Raleway", Arial, sans-serif;
   --font-body:          "Lato", Arial, sans-serif;
   --font-fallback:      Arial, sans-serif;
 

@@ -477,8 +477,16 @@ function DispnetMap() {
   return (
     <div ref={wrapRef} className={classes.dispnet}>
       <div className={classes.dispnetMap}>
+        {/* Intrinsic size of the PNG (1128x682, matching the overlay's viewBox).
+            Without these the img is the one element on this page whose box is not
+            reserved — .dispnetMap > img is height:auto, so it occupies 0px until
+            the file's header arrives and then expands ~224px, shifting everything
+            below it. The CSS still governs rendered size; these only supply the
+            aspect ratio the browser reserves against. */}
         <img
           src="/images/dispense-map-teal.png"
+          width={1128}
+          height={682}
           alt="Pharmacy network spanning all 50 states with 99%+ plan coverage"
         />
         <svg
