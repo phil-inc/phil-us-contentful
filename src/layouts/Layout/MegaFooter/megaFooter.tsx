@@ -253,7 +253,7 @@ const StaticFooter: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => {
         </div>
       )}
 
-      <div data-minimal={minimal} className={`xl-container ${classes.bottomBar}`}>
+      <div data-minimal={minimal} className={`xl-container ${classes.bottomBar}`} data-llms-skip="true">
         {!minimal && <Divider className={classes.bottomDivider} mb={isMobile ? 12 : 40} />}
         <Group
           justify={isMobile || minimal ? "center" : "space-between"}

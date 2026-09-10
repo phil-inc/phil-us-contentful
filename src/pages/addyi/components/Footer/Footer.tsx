@@ -19,7 +19,8 @@ function FooterLinks() {
 // Source: Footer1 component - Main footer wrapper
 export const Footer: React.FC = () => {
   return (
-    <Box className={classes.footer}>
+    // data-llms-skip: site chrome, left out of the generated llms-full.txt
+    <Box className={classes.footer} data-llms-skip="true">
       <Box className={classes.footerContainer}>
         <FooterLinks />
       </Box>
