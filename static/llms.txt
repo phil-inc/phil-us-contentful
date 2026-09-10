@@ -60,6 +60,7 @@ Supporting detail:
 - [HCP Perspectives on Direct-to-Patient](https://phil.us/hcp-research/): What providers want from pharma's digital access channels.
 - [FAQ](https://phil.us/faqs/): Answers for patients, providers, and field teams.
 - [Complete article index](https://phil.us/sitemap-index.xml): Machine-readable list of every indexable URL, including the full article archive. The listing pages above render their cards client-side, so this is the reliable inventory.
+- [Full site text](https://phil.us/llms-full.txt): The text of every indexable page in one file, regenerated on each production build. Much larger than this file; use it when you need page content rather than links.
 
 ## Company
 
