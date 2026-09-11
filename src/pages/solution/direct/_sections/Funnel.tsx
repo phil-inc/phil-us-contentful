@@ -119,7 +119,9 @@ export const FunnelSection: React.FC = () => (
           </div>
 
           {/* Key Metrics */}
-          <div className="it-panel" role="tabpanel" aria-labelledby="ittab-metrics" data-panel="metrics" hidden>
+          {/* data-llms-skip: the values below are 0% placeholders that interactions.ts
+              animates in the browser, so the static text would state false figures */}
+          <div className="it-panel" role="tabpanel" aria-labelledby="ittab-metrics" data-panel="metrics" hidden data-llms-skip="true">
             <div className="ifm-list ifm-list--full">
               <div className="ifm-card">
                 <div className="ifm-icon" aria-hidden="true">
