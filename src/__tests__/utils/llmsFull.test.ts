@@ -106,6 +106,15 @@ describe("extractPage", () => {
     ).toBe("Is PHIL a pharmacy?\n\nPHILRx routes prescriptions to partner pharmacies.");
   });
 
+  it("keeps tab panels that ship with the hidden attribute until a tab is clicked", () => {
+    expect(
+      contentOf(
+        '<button role="tab" aria-selected="true">Funnel</button>' +
+          '<div role="tabpanel" hidden><p>Speed to First Fill rate increased 28%.</p></div>'
+      )
+    ).toBe("Funnel\n\nSpeed to First Fill rate increased 28%.");
+  });
+
   it("drops lines repeated on the same page, such as looping carousel clones", () => {
     expect(
       contentOf(
@@ -182,19 +191,44 @@ describe("renderLlmsFull", () => {
     expect(output).toContain("https://phil.us/llms.txt");
   });
 
-  it("writes a titled, sourced section per page: home first, then shallow before deep", () => {
-    const output = renderLlmsFull(llmsTxt, [
-      page("/solution/hub/", "Hub"),
-      page("/pharma/", "Pharma"),
-      page("/", "Home"),
-      page("/approach/", "Approach"),
-    ]);
+  it("writes a titled, sourced section per page", () => {
+    const output = renderLlmsFull(llmsTxt, [page("/pharma/", "Pharma")]);
 
-    const headings = Array.from(output.matchAll(/^# (.+)$/gm), (match) => match[1]);
-    expect(headings).toEqual(["PHIL", "Home", "Approach", "Pharma", "Hub"]);
     expect(output).toContain(
       "# Pharma\n\nSource: https://phil.us/pharma/\n\nPharma copy\n"
     );
+  });
+
+  it("orders home, then llms.txt links in order, then unlisted pages, then ## Optional links", () => {
+    const curated =
+      "# PHIL\n\n> Summary.\n\n## Core solution\n\n" +
+      "- [Digital Hub](https://phil.us/solution/hub/): Hub.\n" +
+      "- [Pharma](https://phil.us/pharma/): Brands.\n" +
+      "- [Patient login](https://my.phil.us/)\n" +
+      "- [Sitemap](https://phil.us/sitemap-index.xml)\n\n" +
+      "## Optional\n\n" +
+      "- [Terms of Use](https://phil.us/terms/)\n";
+
+    // Blog posts live at root paths, the same depth as core pages.
+    const output = renderLlmsFull(curated, [
+      page("/terms/", "Terms"),
+      page("/why-the-pharmacy-matters/", "Pharmacy article"),
+      page("/pharma/", "Pharma"),
+      page("/3-patient-engagement-myths/", "Myths article"),
+      page("/solution/hub/", "Hub"),
+      page("/", "Home"),
+    ]);
+
+    const headings = Array.from(output.matchAll(/^# (.+)$/gm), (match) => match[1]);
+    expect(headings).toEqual([
+      "PHIL",
+      "Home",
+      "Hub",
+      "Pharma",
+      "Myths article",
+      "Pharmacy article",
+      "Terms",
+    ]);
   });
 });
 

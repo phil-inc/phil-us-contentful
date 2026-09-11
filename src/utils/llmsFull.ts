@@ -29,13 +29,14 @@ const EXCLUDED_PATHS = new Set(["/404/", "/dev-404-page/", "/field/", "/ask-phil
  * no stable selector of its own: page bodies use <header> as well, and the
  * footer's class names are hashed by CSS modules.
  *
- * aria-hidden is deliberately not on this list: Mantine's Collapse sets it on
- * every closed accordion panel, so removing it would drop collapsed answers.
- * The carousel clones it also marks are caught by dropRepeatedLines instead.
+ * aria-hidden and hidden are deliberately not on this list. Mantine's Collapse
+ * sets aria-hidden on every closed accordion panel, and hand-built tabs (such as
+ * the /solution/direct/ insights card) ship inactive panels with `hidden` until
+ * a script reveals them; removing either would drop real copy. The carousel
+ * clones aria-hidden also marks are caught by dropRepeatedLines instead.
  */
 const NON_CONTENT_SELECTOR = [
   "[data-llms-skip]",
-  "[hidden]",
   "script",
   "style",
   "noscript",
@@ -185,8 +186,37 @@ export function pagePathFromFile(publicDir: string, file: string): string {
   return segments.length ? `/${segments.join("/")}/` : "/";
 }
 
-function pathDepth(pagePath: string): number {
-  return pagePath.split("/").filter(Boolean).length;
+/** Paths of phil.us pages linked from a Markdown block, in the order they appear. */
+function linkedPagePaths(markdown: string): string[] {
+  return Array.from(markdown.matchAll(/\]\(([^)\s]+)\)/g), (match) => match[1])
+    .filter((target) => target.startsWith(`${SITE_ORIGIN}/`))
+    .map((target) => target.slice(SITE_ORIGIN.length));
+}
+
+/**
+ * Orders pages the way llms.txt prioritises them: home first, then every page
+ * llms.txt links to in the order it lists them, then everything it doesn't
+ * mention, alphabetically. Pages linked under `## Optional` go last, since
+ * llmstxt.org defines that section as skippable. Path depth is no guide here:
+ * blog posts live at root paths, the same depth as /pharma/.
+ */
+function sortByLlmsTxtPriority(llmsTxt: string, pages: LlmsFullPage[]): LlmsFullPage[] {
+  const optionalStart = llmsTxt.search(/^## Optional\s*$/m);
+  const curated = linkedPagePaths(optionalStart === -1 ? llmsTxt : llmsTxt.slice(0, optionalStart));
+  const optional = optionalStart === -1 ? [] : linkedPagePaths(llmsTxt.slice(optionalStart));
+
+  const rankOf = (pagePath: string): [group: number, position: number] => {
+    if (pagePath === "/") return [0, 0];
+    if (curated.includes(pagePath)) return [1, curated.indexOf(pagePath)];
+    if (optional.includes(pagePath)) return [3, optional.indexOf(pagePath)];
+    return [2, 0];
+  };
+
+  return [...pages].sort((a, b) => {
+    const [groupA, positionA] = rankOf(a.path);
+    const [groupB, positionB] = rankOf(b.path);
+    return groupA - groupB || positionA - positionB || a.path.localeCompare(b.path);
+  });
 }
 
 export function renderLlmsFull(llmsTxt: string, pages: LlmsFullPage[]): string {
@@ -194,9 +224,7 @@ export function renderLlmsFull(llmsTxt: string, pages: LlmsFullPage[]): string {
   const firstSection = llmsTxt.search(/^## /m);
   const preamble = (firstSection === -1 ? llmsTxt : llmsTxt.slice(0, firstSection)).trim();
 
-  const sorted = [...pages].sort(
-    (a, b) => pathDepth(a.path) - pathDepth(b.path) || a.path.localeCompare(b.path)
-  );
+  const sorted = sortByLlmsTxtPriority(llmsTxt, pages);
 
   const sections = sorted.map(
     (page) => `# ${page.title}\n\nSource: ${page.url}\n\n${page.content}\n`
