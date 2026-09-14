@@ -33,7 +33,10 @@ const EXCLUDED_PATHS = new Set(["/404/", "/dev-404-page/", "/field/", "/ask-phil
  * sets aria-hidden on every closed accordion panel, and hand-built tabs (such as
  * the /solution/direct/ insights card) ship inactive panels with `hidden` until
  * a script reveals them; removing either would drop real copy. The carousel
- * clones aria-hidden also marks are caught by dropRepeatedLines instead.
+ * clones aria-hidden also marks are caught by dropHiddenCopies instead.
+ *
+ * Count-up stats render 0 until a script animates them, so each one pairs a
+ * visually hidden copy of its real value with a data-llms-skip placeholder.
  */
 const NON_CONTENT_SELECTOR = [
   "[data-llms-skip]",
@@ -76,6 +79,12 @@ function collapseWhitespace(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
+interface Line {
+  text: string;
+  /** Every character of the line came from inside an aria-hidden="true" subtree. */
+  hidden: boolean;
+}
+
 /**
  * Flattens an element into lines of text. Inline text is concatenated as-is,
  * since React's server renderer splits adjacent expressions into separate text
@@ -85,32 +94,37 @@ function collapseWhitespace(text: string): string {
  * With `markdown` on, headings and list items become Markdown. Headings drop
  * one level so every page's own title can sit above them as an H1.
  */
-function toLines(element: HTMLElement, markdown: boolean): string[] {
-  const lines: string[] = [];
+function toLines(element: HTMLElement, markdown: boolean, inHidden = false): Line[] {
+  const lines: Line[] = [];
   let pending = "";
+  let pendingVisible = false;
 
   const flush = () => {
-    const line = collapseWhitespace(pending);
-    if (line) lines.push(line);
+    const text = collapseWhitespace(pending);
+    if (text) lines.push({ text, hidden: !pendingVisible });
     pending = "";
+    pendingVisible = false;
   };
 
-  const visit = (node: Node) => {
+  const visit = (node: Node, hidden: boolean) => {
     if (node instanceof TextNode) {
       pending += node.text;
+      if (!hidden && node.text.trim()) pendingVisible = true;
       return;
     }
     if (!(node instanceof HTMLElement)) return;
 
     const tag = (node.rawTagName ?? "").toLowerCase();
     const heading = /^h([1-6])$/.exec(tag);
+    const nodeHidden = hidden || node.getAttribute("aria-hidden") === "true";
 
     if (markdown && (heading || tag === "li")) {
       flush();
-      const text = toLines(node, false).join(" ");
+      const inner = toLines(node, false, nodeHidden);
+      const text = inner.map((line) => line.text).join(" ");
       if (text) {
         const prefix = heading ? "#".repeat(Math.min(Number(heading[1]) + 1, 6)) : "-";
-        lines.push(`${prefix} ${text}`);
+        lines.push({ text: `${prefix} ${text}`, hidden: inner.every((line) => line.hidden) });
       }
       return;
     }
@@ -122,27 +136,35 @@ function toLines(element: HTMLElement, markdown: boolean): string[] {
 
     const isBlock = BLOCK_TAGS.has(tag);
     if (isBlock) flush();
-    node.childNodes.forEach(visit);
+    node.childNodes.forEach((child) => visit(child, nodeHidden));
     if (isBlock) flush();
   };
 
-  element.childNodes.forEach(visit);
+  element.childNodes.forEach((child) => visit(child, inHidden));
   flush();
   return lines;
 }
 
 /**
- * Keeps only the first occurrence of each line on a page. Looping carousels
- * render cloned slides, and some sections render desktop and mobile variants
- * side by side; either way the second copy tells an agent nothing new.
+ * Drops aria-hidden copies of text the page already shows. Looping carousels
+ * and marquees render their slides twice and mark the second set aria-hidden;
+ * that copy tells an agent nothing new, wherever it sits in the markup.
+ *
+ * Visible lines are never dropped, even when repeated: two stats can share a
+ * figure ("2X+") and two sections can share a heading, and removing the second
+ * would detach its label or merge the sections.
  */
-function dropRepeatedLines(lines: string[]): string[] {
-  const seen = new Set<string>();
-  return lines.filter((line) => {
-    if (seen.has(line)) return false;
-    seen.add(line);
-    return true;
-  });
+function dropHiddenCopies(lines: Line[]): string[] {
+  const visible = new Set(lines.filter((line) => !line.hidden).map((line) => line.text));
+  const seenHidden = new Set<string>();
+  return lines
+    .filter(({ text, hidden }) => {
+      if (!hidden) return true;
+      if (visible.has(text) || seenHidden.has(text)) return false;
+      seenHidden.add(text);
+      return true;
+    })
+    .map((line) => line.text);
 }
 
 /** Consecutive list items stay on adjacent lines; everything else is a paragraph. */
@@ -165,7 +187,7 @@ export function extractPage(html: string, pagePath: string): ExtractResult {
   const body = root.querySelector("body") ?? root;
   body.querySelectorAll(NON_CONTENT_SELECTOR).forEach((element) => element.remove());
 
-  const content = joinLines(dropRepeatedLines(toLines(body, true)));
+  const content = joinLines(dropHiddenCopies(toLines(body, true)));
   if (!content) return { kind: "empty" };
 
   return {

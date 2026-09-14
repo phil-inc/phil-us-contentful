@@ -115,7 +115,7 @@ describe("extractPage", () => {
     ).toBe("Funnel\n\nSpeed to First Fill rate increased 28%.");
   });
 
-  it("drops lines repeated on the same page, such as looping carousel clones", () => {
+  it("drops aria-hidden copies of visible lines, such as looping carousel clones", () => {
     expect(
       contentOf(
         "<h3>Dermatology</h3><p>2x+ covered dispenses</p>" +
@@ -125,6 +125,37 @@ describe("extractPage", () => {
     ).toBe(
       "#### Dermatology\n\n2x+ covered dispenses\n\n#### Migraine\n\n3x+ refill adherence"
     );
+  });
+
+  it("drops an aria-hidden clone even when it comes before the visible original", () => {
+    expect(
+      contentOf(
+        '<div aria-hidden="true"><p>Migraine refill adherence</p></div>' +
+          "<p>Dermatology covered dispenses</p><p>Migraine refill adherence</p>"
+      )
+    ).toBe("Dermatology covered dispenses\n\nMigraine refill adherence");
+  });
+
+  it("keeps a line that repeats in visible content, such as two stats with the same figure", () => {
+    expect(
+      contentOf(
+        "<div>2X+</div><div>Patient Starts</div>" +
+          "<div>2X+</div><div>Covered Dispenses</div>"
+      )
+    ).toBe("2X+\n\nPatient Starts\n\n2X+\n\nCovered Dispenses");
+  });
+
+  it("keeps a count-up stat's real value and drops its animated placeholder", () => {
+    expect(
+      contentOf(
+        '<div class="outcomeNum"><span>' +
+          '<span class="m_515a97f8 phil-VisuallyHidden-root">2X+</span>' +
+          '<span aria-hidden="true" data-llms-skip="true">0</span>' +
+          '<span aria-hidden="true" data-llms-skip="true">X+</span>' +
+          "</span></div>" +
+          '<div class="outcomeLabel">Patient Starts<br/>vs. Traditional Channels</div>'
+      )
+    ).toBe("2X+\n\nPatient Starts vs. Traditional Channels");
   });
 
   it("writes headings one level below the page title and list items as bullets", () => {
