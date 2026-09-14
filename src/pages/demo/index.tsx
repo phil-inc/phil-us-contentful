@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, type HeadFC } from "gatsby";
+import { VisuallyHidden } from "@mantine/core";
 
 import { Layout } from "layouts/Layout/Layout";
 import { TRUSTPILOT_SCORE } from "../../constants/trustpilot";
@@ -117,11 +118,13 @@ const AnimatedStat: React.FC<{
   active: boolean;
 }> = ({ value, suffix, label, sub, active }) => {
   const n = useCountUp(value, active);
+  // Animated digits start at 0: screen readers and llms-full.txt read the hidden real value.
   return (
     <div>
       <div className={classes.statNum}>
-        {Math.round(n)}
-        <span className={classes.statSuffix}>{suffix}</span>
+        <VisuallyHidden>{Math.round(value)}{suffix}</VisuallyHidden>
+        <span aria-hidden="true" data-llms-skip="true">{Math.round(n)}</span>
+        <span className={classes.statSuffix} aria-hidden="true" data-llms-skip="true">{suffix}</span>
       </div>
       <div className={classes.statLabel}>{label}</div>
       <div className={classes.statSub}>{sub}</div>
@@ -142,8 +145,9 @@ const TrustpilotStat: React.FC<{ active: boolean }> = ({ active }) => {
   return (
     <div>
       <div className={classes.statNum}>
-        {n.toFixed(1)}
-        <span className={classes.statSuffix}>/5.0</span>
+        <VisuallyHidden>{TRUSTPILOT_SCORE.toFixed(1)}/5.0</VisuallyHidden>
+        <span aria-hidden="true" data-llms-skip="true">{n.toFixed(1)}</span>
+        <span className={classes.statSuffix} aria-hidden="true" data-llms-skip="true">/5.0</span>
       </div>
       <div className={classes.statLabel}>Patient Satisfaction Score</div>
       <div className={classes.tpRow}>

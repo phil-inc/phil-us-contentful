@@ -131,7 +131,8 @@ const ChannelComparisionPage = () => {
           )}
         </Grid>
 
-        <Grid gutter={0} className={classes.footer}>
+        {/* data-llms-skip: page footer chrome, left out of the generated llms-full.txt */}
+        <Grid gutter={0} className={classes.footer} data-llms-skip="true">
           <Grid.Col span="auto" p={0} py={32}>
             <Group justify="left" gap={16} align={"center"}>
               <Box p={0} m={0}>

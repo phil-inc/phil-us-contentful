@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "gatsby";
 import type { HeadFC } from "gatsby";
+import { VisuallyHidden } from "@mantine/core";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -109,7 +110,13 @@ function AnimatedStat({ value }: { value: string }) {
     return () => observer.disconnect();
   }, [parsed]);
 
-  return <span ref={ref}>{display}</span>;
+  // Animated digits start at 0: screen readers and llms-full.txt read the hidden real value.
+  return (
+    <>
+      <VisuallyHidden>{value}</VisuallyHidden>
+      <span ref={ref} aria-hidden="true" data-llms-skip="true">{display}</span>
+    </>
+  );
 }
 
 // ─── Variant class map ───────────────────────────────────────────────────────

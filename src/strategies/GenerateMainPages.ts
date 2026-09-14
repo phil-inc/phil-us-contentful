@@ -109,8 +109,10 @@ function handleResourcePage(
     const headerSlug = slugify(section.header, { lower: true, strict: true });
     resourceSubPages.push(headerSlug);
 
-    // /insights/case-studies is served by the static file-based page at
-    // src/pages/insights/case-studies/index.tsx
+    // No listing pages for the Case Studies section: the case studies index is the
+    // file-based page at /customer-success/ (src/pages/customer-success/index.tsx).
+    // Individual case studies are still created at /insights/case-studies/<slug>/
+    // by GenerateCaseStudyPages, but nothing is served at /insights/case-studies/.
     if (headerSlug === "case-studies") return;
 
     const numPages = pagination.numberOfPages(

@@ -243,16 +243,17 @@ const StaticFooter: React.FC<{ minimal?: boolean }> = ({ minimal = false }) => {
   const isMobile = isMobileView("maxSm")
   const currentYear = new Date().getFullYear()
 
+  // data-llms-skip: site chrome, left out of the generated llms-full.txt
   return (
     <>
       {!minimal && (
-        <div className={`xl-container footer-container ${classes.footerMain}`}>
+        <div className={`xl-container footer-container ${classes.footerMain}`} data-llms-skip="true">
           <Divider size="sm" className={classes.topDivider} mb={{ base: 60, sm: 80 }} />
           {isMobile ? <MobileFooter /> : <DesktopFooter />}
         </div>
       )}
 
-      <div data-minimal={minimal} className={`xl-container ${classes.bottomBar}`}>
+      <div data-minimal={minimal} className={`xl-container ${classes.bottomBar}`} data-llms-skip="true">
         {!minimal && <Divider className={classes.bottomDivider} mb={isMobile ? 12 : 40} />}
         <Group
           justify={isMobile || minimal ? "center" : "space-between"}
