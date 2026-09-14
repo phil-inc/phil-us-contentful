@@ -1094,7 +1094,7 @@ export default ProvidersPage;
 const PROVIDERS_TITLE = "Affordable Patient Medications — PHILRx for Providers";
 const PROVIDERS_DESC =
   "The PhilRx patient platform streamlines the way people receive their prescriptions by removing barriers to medication access so that patients can seamlessly start and adhere to therapy. Using PhilRx, patients report:";
-const PROVIDERS_URL = "https://phil.us/providers";
+const PROVIDERS_URL = "https://phil.us/providers/";
 const PROVIDERS_OG_IMAGE = getOgImage(null);
 const PROVIDERS_SCHEMA = JSON.stringify({
   "@context": "https://schema.org",

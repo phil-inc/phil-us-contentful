@@ -16,6 +16,29 @@ type HelmetProps = {
   location: { pathname: string };
 };
 
+/**
+ * Builds the absolute page URL from a Contentful slug.
+ *
+ * Slugs are stored inconsistently in Contentful — some carry a leading slash,
+ * some do not — and the origin used to be concatenated onto the raw value.
+ * A slug of "partners" therefore produced "https://phil.uspartners", naming a
+ * host that does not exist. The empty-slug fallback below added the slash, but
+ * only when the slug was missing entirely, never when it was present without
+ * one.
+ *
+ * The trailing slash is normalized for the same reason: Gatsby serves these
+ * pages with one and the sitemap lists them with one, so omitting it pointed
+ * the canonical at a URL that redirects.
+ */
+function toAbsoluteUrl(slug: string): string {
+  const withLeadingSlash = slug.startsWith("/") ? slug : `/${slug}`;
+  const normalized = withLeadingSlash.endsWith("/")
+    ? withLeadingSlash
+    : `${withLeadingSlash}/`;
+
+  return `https://phil.us${normalized}`;
+}
+
 const Head: React.FC<HelmetProps> = ({
   data: { contentfulPage },
   location,
@@ -55,35 +78,21 @@ const Head: React.FC<HelmetProps> = ({
         : `/${slugify(contentfulPage.title, { lower: true })}`;
   }
 
-  const isHomePage = config.slug === "/";
+  const pageUrl = toAbsoluteUrl(config.slug);
 
   const webPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": `https://phil.us${config.slug}`,
-    url: `https://phil.us${config.slug}`,
+    "@id": pageUrl,
+    url: pageUrl,
     name: title,
     description: contentfulPage.description,
     ...(image && { image: `https:${image}?w=1200&h=630&q=100&fm=webp` }),
   };
 
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "PHIL",
-    url: "https://phil.us",
-    logo: "https://phil.us/icons/icon-512x512.png",
-    description:
-      "PHIL simplifies the prescription journey for patients and providers — solving medication access and GTN challenges for pharma brands.",
-    sameAs: ["https://www.linkedin.com/company/phil-inc-"],
-  };
-
   return (
     <SEO title={title}>
       <script type="application/ld+json">{JSON.stringify(webPageSchema)}</script>
-      {isHomePage && (
-        <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
-      )}
       {image && (
         <link
           rel="preload"
@@ -103,8 +112,8 @@ const Head: React.FC<HelmetProps> = ({
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:url" content={`https://phil.us${config.slug}`} />
-      <link rel="canonical" href={`https://phil.us${config.slug}`} />
+      <meta property="og:url" content={pageUrl} />
+      <link rel="canonical" href={pageUrl} />
       <Script
         defer
         async

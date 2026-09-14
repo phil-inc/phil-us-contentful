@@ -10,7 +10,7 @@ import * as classes from "./hcp-support.module.css";
 const HCP_TITLE = "Contact our HCP Support team — PHIL";
 const HCP_DESC =
   "You're in the right place for support. Reach out below and our HCP support team will be in touch.";
-const HCP_URL = "https://phil.us/contact/hcp-support";
+const HCP_URL = "https://phil.us/contact/hcp-support/";
 const HCP_OG_IMAGE = getOgImage(null);
 const HCP_SCHEMA = JSON.stringify({
   "@context": "https://schema.org",

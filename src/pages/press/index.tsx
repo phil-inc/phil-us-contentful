@@ -7,6 +7,7 @@ import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import Pagination from "components/common/Pagination/Pagination";
 import DemoCta from "components/common/DemoCta/DemoCta";
+import { getOgImage } from "utils/getOgImage";
 
 import { PRESS_DATA } from "./_data";
 import * as classes from "./press.module.css";
@@ -196,12 +197,54 @@ const PressPage: React.FC = () => {
 
 export default PressPage;
 
+const PRESS_TITLE = "Press | PHIL";
+const PRESS_DESC =
+  "Read PHIL's latest news, announcements, and thought leadership on pharmacy innovation and direct-to-patient programs.";
+
+/**
+ * Trailing slash matches the URL Gatsby serves and the form the sitemap lists.
+ * This page and /insights/press-releases/ both return 200 with similar content,
+ * so the canonical is what tells a crawler which of the two is authoritative.
+ */
+const PRESS_URL = "https://phil.us/press/";
+const PRESS_OG_IMAGE = getOgImage(null);
+
+/**
+ * CollectionPage rather than WebPage: this indexes press items rather than
+ * being an article itself.
+ *
+ * `publisher` references the sitewide Organization by @id instead of restating
+ * it. That entity is emitted from gatsby-ssr.tsx with the full logo and address;
+ * inlining a thinner copy here would put a second, competing Organization node
+ * in the graph.
+ */
+const PRESS_SCHEMA = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": PRESS_URL,
+  url: PRESS_URL,
+  name: PRESS_TITLE,
+  description: PRESS_DESC,
+  image: PRESS_OG_IMAGE,
+  publisher: { "@id": "https://phil.us/#organization" },
+});
+
 export const Head: HeadFC = () => (
   <>
-    <title>Press | PHIL</title>
-    <meta
-      name="description"
-      content="Read PHIL's latest news, announcements, and thought leadership on pharmacy innovation and direct-to-patient programs."
-    />
+    <title>{PRESS_TITLE}</title>
+    <meta name="description" content={PRESS_DESC} />
+    <link rel="canonical" href={PRESS_URL} />
+    <meta property="og:title" content={PRESS_TITLE} />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={PRESS_DESC} />
+    <meta property="og:image" content={PRESS_OG_IMAGE} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content={PRESS_URL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={PRESS_TITLE} />
+    <meta name="twitter:description" content={PRESS_DESC} />
+    <meta name="twitter:image" content={PRESS_OG_IMAGE} />
+    <script type="application/ld+json">{PRESS_SCHEMA}</script>
   </>
 );
