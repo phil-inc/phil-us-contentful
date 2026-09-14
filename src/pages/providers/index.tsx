@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import type { HeadFC } from "gatsby";
+import { VisuallyHidden } from "@mantine/core";
 import { getOgImage } from "utils/getOgImage";
 import { TRUSTPILOT_SCORE_LABEL } from "../../constants/trustpilot";
 
@@ -319,9 +320,11 @@ const AccessSection = () => {
             <div className={classes.statList}>
               {ACCESS_STATS.map((s, i) => (
                 <div key={s.label} className={classes.statBlock}>
+                  {/* Animated digits start at 0: screen readers and llms-full.txt read the hidden real value */}
                   <div className={classes.statNum}>
-                    {counts[i]}
-                    <span className={classes.statSuffix}>
+                    <VisuallyHidden>{s.to}×+</VisuallyHidden>
+                    <span aria-hidden="true" data-llms-skip="true">{counts[i]}</span>
+                    <span className={classes.statSuffix} aria-hidden="true" data-llms-skip="true">
                       <span className={classes.statX}>×</span>
                       <span className={classes.statPlus}>+</span>
                     </span>

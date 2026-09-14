@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import type { HeadFC } from "gatsby";
+import { VisuallyHidden } from "@mantine/core";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -291,9 +292,11 @@ const ValueProp = () => {
             <div className={classes.vpStats}>
               {VP_STATS.map((s, i) => (
                 <div key={s.label} className={classes.vpStat}>
+                  {/* Animated digits start at 0: screen readers and llms-full.txt read the hidden real value */}
                   <div className={classes.vpStatNum}>
-                    <span>{counts[i]}</span>
-                    <span className={classes.vpSuffix}>
+                    <VisuallyHidden>{s.to}×+</VisuallyHidden>
+                    <span aria-hidden="true" data-llms-skip="true">{counts[i]}</span>
+                    <span className={classes.vpSuffix} aria-hidden="true" data-llms-skip="true">
                       <span className={classes.vpX}>×</span>
                       <span className={classes.vpPlus}>+</span>
                     </span>

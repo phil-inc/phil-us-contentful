@@ -378,7 +378,7 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
 
   if (minimal) {
     return (
-      <header className={classes.navShell}>
+      <header className={classes.navShell} data-llms-skip="true">
         <div className={`xl-container ${classes.navBar}`}>{logo}</div>
       </header>
     );
@@ -386,7 +386,13 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
 
   return (
     <>
-      <header className={classes.navShell} ref={shellRef} onMouseLeave={handleMouseLeave}>
+      {/* data-llms-skip: site chrome, left out of the generated llms-full.txt */}
+      <header
+        className={classes.navShell}
+        ref={shellRef}
+        onMouseLeave={handleMouseLeave}
+        data-llms-skip="true"
+      >
         {/* Promo Banner */}
         {showPromoBanner && (
           <div className={classes.promoBanner}>

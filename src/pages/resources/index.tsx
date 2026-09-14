@@ -137,11 +137,11 @@ function toRelative(url: string) {
   return url.replace(/^https?:\/\/(www\.)?phil\.us/, "");
 }
 
-function CardLink({ url, className, children }: { url: string; className: string; children: React.ReactNode }) {
+function CardLink({ url, className, hidden, children }: { url: string; className: string; hidden?: boolean; children: React.ReactNode }) {
   if (isInternal(url)) {
-    return <Link to={toRelative(url)} className={className}>{children}</Link>;
+    return <Link to={toRelative(url)} className={className} hidden={hidden}>{children}</Link>;
   }
-  return <a href={url} className={className} target="_blank" rel="noopener noreferrer">{children}</a>;
+  return <a href={url} className={className} hidden={hidden} target="_blank" rel="noopener noreferrer">{children}</a>;
 }
 
 /* ─── Press carousel ─── */
@@ -666,6 +666,7 @@ const ResourcesPage: React.FC = () => {
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const currentPage = Math.min(page, totalPages);
   const paged = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+  const pagedPosition = new Map(paged.map((item, i) => [item.url, i]));
 
   const handleFilterChange = useCallback(() => {
     setPage(1);
@@ -844,17 +845,22 @@ const ResourcesPage: React.FC = () => {
               <p className={classes.emptyStateHint}>Try clearing a filter or adjusting your search.</p>
             </div>
           ) : (
+            // Every resource is rendered and only the current page is shown, so the
+            // static HTML links all of them for crawlers that never click Pagination.
             <div className={classes.cardGrid}>
-              {paged.map((item, i) => (
-                <CardLink key={item.url} url={item.url} className={classes.card}>
-                  <div className={`${classes.cardArt} ${CARD_ART_CYCLE[(i + (currentPage - 1) * PER_PAGE) % 4]}`} />
-                  <div className={classes.cardBody}>
-                    <span className={classes.cardType}>{item.type}</span>
-                    <h3 className={classes.cardTitle}>{item.title}</h3>
-                    <span className={classes.cardBtn}>{item.buttonLabel} {getCtaIcon(item.buttonLabel)}</span>
-                  </div>
-                </CardLink>
-              ))}
+              {RESOURCES_DATA.map((item) => {
+                const position = pagedPosition.get(item.url);
+                return (
+                  <CardLink key={item.url} url={item.url} className={classes.card} hidden={position === undefined}>
+                    <div className={`${classes.cardArt} ${CARD_ART_CYCLE[((position ?? 0) + (currentPage - 1) * PER_PAGE) % 4]}`} />
+                    <div className={classes.cardBody}>
+                      <span className={classes.cardType}>{item.type}</span>
+                      <h3 className={classes.cardTitle}>{item.title}</h3>
+                      <span className={classes.cardBtn}>{item.buttonLabel} {getCtaIcon(item.buttonLabel)}</span>
+                    </div>
+                  </CardLink>
+                );
+              })}
             </div>
           )}
         </section>
