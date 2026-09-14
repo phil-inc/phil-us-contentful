@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { Link } from "gatsby";
 import type { HeadFC } from "gatsby";
+import { VisuallyHidden } from "@mantine/core";
 import { getOgImage } from "utils/getOgImage";
 import { scoreToPct } from "../../constants/trustpilot";
 
@@ -105,10 +106,16 @@ const CountUp: React.FC<{
     };
   }, [active, value, decimals, duration]);
 
+  // Animated digits start at 0: screen readers and llms-full.txt read the hidden real value.
   return (
     <>
-      {display}
-      {suffix && <span className={suffixClassName}>{suffix}</span>}
+      <VisuallyHidden>{formatVal(value, decimals)}{suffix}</VisuallyHidden>
+      <span aria-hidden="true" data-llms-skip="true">{display}</span>
+      {suffix && (
+        <span className={suffixClassName} aria-hidden="true" data-llms-skip="true">
+          {suffix}
+        </span>
+      )}
     </>
   );
 };

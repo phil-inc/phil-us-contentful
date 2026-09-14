@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Link, type HeadFC } from "gatsby";
+import { VisuallyHidden } from "@mantine/core";
 import { getOgImage } from "utils/getOgImage";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -130,15 +131,22 @@ function CountUp({
   const isDegree = suffix === "°";
   useCountUp(valRef, value, decimals, undefined, isDegree, active);
 
+  const finalValue = decimals > 0 ? value.toFixed(decimals) : String(Math.round(value));
+
+  // The animated digits start at 0, so screen readers and llms-full.txt get the
+  // real figure from a hidden copy; the animated copy is skipped by both.
   return (
     <span className={className}>
-      <span ref={valRef} className={classes.cuVal}>
+      <VisuallyHidden>{isDegree ? value : finalValue}{suffix}</VisuallyHidden>
+      <span ref={valRef} className={classes.cuVal} aria-hidden="true" data-llms-skip="true">
         {isDegree ? value : 0}
       </span>
       <span
         className={
           isDegree ? `${classes.cuSuf} ${classes.cuSufDeg}` : classes.cuSuf
         }
+        aria-hidden="true"
+        data-llms-skip="true"
       >
         {suffix}
       </span>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { VisuallyHidden } from "@mantine/core";
 import * as classes from "./opportunityCard.module.css";
 
 type OpportunityCardProps = {
@@ -50,9 +51,11 @@ const AnimatedBigNumber: React.FC<{
   }, [animate]);
 
   return (
+    // Animated digits start at 0: screen readers and llms-full.txt read the hidden real value.
     <div className={classes.big}>
-      <span ref={ref}>{(0).toFixed(decimals)}</span>
-      <small>{suffix}</small>
+      <VisuallyHidden>{value.toFixed(decimals)}{suffix}</VisuallyHidden>
+      <span ref={ref} aria-hidden="true" data-llms-skip="true">{(0).toFixed(decimals)}</span>
+      <small aria-hidden="true" data-llms-skip="true">{suffix}</small>
     </div>
   );
 };
