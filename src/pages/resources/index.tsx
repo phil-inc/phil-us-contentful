@@ -7,6 +7,10 @@ import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import DemoCta from "components/common/DemoCta/DemoCta";
 import Pagination from "components/common/Pagination/Pagination";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
 
 import { RESOURCES_DATA, TOPICS, TYPES } from "./_data";
 import { PRESS_DATA } from "../press/_data";
@@ -888,9 +892,35 @@ const ResourcesPage: React.FC = () => {
 
 export default ResourcesPage;
 
+const RESOURCES_TITLE = "Resources | PHIL";
+const RESOURCES_DESC =
+  "Explore PHIL's library of reports, webinars, blogs, and press coverage on patient access, direct-to-patient programs, and pharmaceutical commercialization.";
+
+/**
+ * This page and /insights/resources/ both return 200 with similar content, so
+ * the canonical SeoMeta emits is what tells a crawler which of the two is
+ * authoritative.
+ */
+const RESOURCES_PATH = "/resources/";
+const RESOURCES_OG_IMAGE = getOgImage(null);
+
+/** CollectionPage rather than WebPage: this indexes the resource library rather than being an article itself. */
+const RESOURCES_SCHEMA = webPageSchema({
+  type: "CollectionPage",
+  path: RESOURCES_PATH,
+  name: RESOURCES_TITLE,
+  description: RESOURCES_DESC,
+  image: RESOURCES_OG_IMAGE,
+});
+
 export const Head: HeadFC = () => (
   <>
-    <title>Resources | PHIL</title>
-    <meta name="description" content="Explore PHIL's library of reports, webinars, blogs, and press coverage on patient access, direct-to-patient programs, and pharmaceutical commercialization." />
+    <SeoMeta
+      title={RESOURCES_TITLE}
+      description={RESOURCES_DESC}
+      path={RESOURCES_PATH}
+      image={RESOURCES_OG_IMAGE}
+    />
+    <JsonLd data={RESOURCES_SCHEMA} />
   </>
 );

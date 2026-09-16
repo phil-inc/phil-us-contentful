@@ -3,7 +3,7 @@
 export const PRIVACY_TITLE = "Privacy Notice | PHIL";
 export const PRIVACY_DESC =
   "Phil, Inc.'s Privacy Notice — how we collect, use, and share personal information across our website, mobile application, and other Services.";
-export const PRIVACY_URL = "https://phil.us/privacy/";
+export const PRIVACY_PATH = "/privacy/";
 
 // ─── Links / contact ─────────────────────────────────────────────────────────
 

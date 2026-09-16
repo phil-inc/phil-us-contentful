@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import type { HeadFC } from "gatsby";
 import { getOgImage } from "utils/getOgImage";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { serviceSchema, webPageSchema } from "utils/seo/schema";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -46,35 +49,32 @@ export default SolutionDirectPage;
 const DIRECT_TITLE = "Direct-to-Patient | PHIL";
 const DIRECT_DESC =
   "PHIL Direct delivers a proven, ecommerce-like Direct-to-Patient experience — combining intake, fulfillment, and analytics into one flexible solution that expands affordable medication access.";
-const DIRECT_URL = "https://phil.us/solution/direct/";
+const DIRECT_PATH = "/solution/direct/";
 const DIRECT_OG_IMAGE = getOgImage(null);
-const DIRECT_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": DIRECT_URL,
-  url: DIRECT_URL,
-  name: DIRECT_TITLE,
+const DIRECT_SERVICE = serviceSchema({
+  path: DIRECT_PATH,
+  name: "PHIL Direct-to-Patient",
   description: DIRECT_DESC,
-  image: DIRECT_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
+const DIRECT_SCHEMA = [
+  webPageSchema({
+    path: DIRECT_PATH,
+    name: DIRECT_TITLE,
+    description: DIRECT_DESC,
+    image: DIRECT_OG_IMAGE,
+    mainEntity: DIRECT_SERVICE,
+  }),
+  DIRECT_SERVICE,
+];
 
 export const Head: HeadFC = () => (
   <>
-    <title>{DIRECT_TITLE}</title>
-    <meta name="description" content={DIRECT_DESC} />
-    <link rel="canonical" href={DIRECT_URL} />
-    <meta property="og:title" content={DIRECT_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={DIRECT_DESC} />
-    <meta property="og:image" content={DIRECT_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={DIRECT_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={DIRECT_TITLE} />
-    <meta name="twitter:description" content={DIRECT_DESC} />
-    <meta name="twitter:image" content={DIRECT_OG_IMAGE} />
-    <script type="application/ld+json">{DIRECT_SCHEMA}</script>
+    <SeoMeta
+      title={DIRECT_TITLE}
+      description={DIRECT_DESC}
+      path={DIRECT_PATH}
+      image={DIRECT_OG_IMAGE}
+    />
+    <JsonLd data={DIRECT_SCHEMA} />
   </>
 );

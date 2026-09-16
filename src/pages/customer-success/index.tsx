@@ -7,7 +7,10 @@ import React, {
 import { Link } from "gatsby";
 import type { HeadFC } from "gatsby";
 import { VisuallyHidden } from "@mantine/core";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
 import { scoreToPct } from "../../constants/trustpilot";
 
 import { Layout } from "layouts/Layout/Layout";
@@ -758,35 +761,23 @@ export default CustomerSuccessPage;
 const CS_TITLE = "Customer Success Stories — PHIL";
 const CS_DESC =
   "See how pharma brands partner with PHIL to maximize patient access, affordability, and adherence — with real case studies, measurable results, and client testimonials.";
-const CS_URL = "https://phil.us/customer-success";
+const CS_PATH = "/customer-success/";
 const CS_OG_IMAGE = getOgImage(null);
-const CS_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": CS_URL,
-  url: CS_URL,
+const CS_SCHEMA = webPageSchema({
+  path: CS_PATH,
   name: CS_TITLE,
   description: CS_DESC,
   image: CS_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{CS_TITLE}</title>
-    <meta name="description" content={CS_DESC} />
-    <link rel="canonical" href={CS_URL} />
-    <meta property="og:title" content={CS_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={CS_DESC} />
-    <meta property="og:image" content={CS_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={CS_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={CS_TITLE} />
-    <meta name="twitter:description" content={CS_DESC} />
-    <meta name="twitter:image" content={CS_OG_IMAGE} />
-    <script type="application/ld+json">{CS_SCHEMA}</script>
+    <SeoMeta
+      title={CS_TITLE}
+      description={CS_DESC}
+      path={CS_PATH}
+      image={CS_OG_IMAGE}
+    />
+    <JsonLd data={CS_SCHEMA} />
   </>
 );

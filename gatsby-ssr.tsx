@@ -1,6 +1,8 @@
 import React from 'react';
 import {ColorSchemeScript, MantineProvider} from '@mantine/core';
 import {theme} from './src/layouts/Layout/theme';
+import {organizationSchema, webSiteSchema} from './src/utils/seo/schema';
+import {JsonLd} from './src/components/common/Seo/JsonLd';
 
 // 1. Google Tag Manager (loads after consent default)
 const gtmScript = (
@@ -41,12 +43,21 @@ const resourceHints = [
 	<link key="dns-ytimg" rel="dns-prefetch" href="//i.ytimg.com" />,
 ];
 
+// 3. Organization and WebSite entities (sitewide) — identify PHIL and its site to
+// search engines and AI agents. Emitted here rather than per-template so every
+// page carries them, and so page-level schema can reference both by @id instead
+// of restating them.
+const sitewideSchema = (
+	<JsonLd key="sitewide-schema" data={[organizationSchema(), webSiteSchema()]} />
+);
+
 export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 	const headComponents = getHeadComponents();
 	replaceHeadComponents([
 		...resourceHints,
 		gtmScript,
 		...headComponents,
+		sitewideSchema,
 		<ColorSchemeScript key="color-scheme-script" />,
 	]);
 };

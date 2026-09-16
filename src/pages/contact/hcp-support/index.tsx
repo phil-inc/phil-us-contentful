@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import type { HeadFC } from "gatsby";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
+import { toAbsoluteUrl } from "utils/seo/url";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -10,17 +14,15 @@ import * as classes from "./hcp-support.module.css";
 const HCP_TITLE = "Contact our HCP Support team — PHIL";
 const HCP_DESC =
   "You're in the right place for support. Reach out below and our HCP support team will be in touch.";
-const HCP_URL = "https://phil.us/contact/hcp-support";
+const HCP_PATH = "/contact/hcp-support/";
+/** Also sent to HubSpot as the submission's pageUri. */
+const HCP_URL = toAbsoluteUrl(HCP_PATH);
 const HCP_OG_IMAGE = getOgImage(null);
-const HCP_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": HCP_URL,
-  url: HCP_URL,
+const HCP_SCHEMA = webPageSchema({
+  path: HCP_PATH,
   name: HCP_TITLE,
   description: HCP_DESC,
   image: HCP_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 const PORTAL_ID = "48612742";
@@ -332,20 +334,12 @@ export default HcpSupportPage;
 
 export const Head: HeadFC = () => (
   <>
-    <title>{HCP_TITLE}</title>
-    <meta name="description" content={HCP_DESC} />
-    <link rel="canonical" href={HCP_URL} />
-    <meta property="og:title" content={HCP_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={HCP_DESC} />
-    <meta property="og:image" content={HCP_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={HCP_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={HCP_TITLE} />
-    <meta name="twitter:description" content={HCP_DESC} />
-    <meta name="twitter:image" content={HCP_OG_IMAGE} />
-    <script type="application/ld+json">{HCP_SCHEMA}</script>
+    <SeoMeta
+      title={HCP_TITLE}
+      description={HCP_DESC}
+      path={HCP_PATH}
+      image={HCP_OG_IMAGE}
+    />
+    <JsonLd data={HCP_SCHEMA} />
   </>
 );

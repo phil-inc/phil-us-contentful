@@ -5,11 +5,14 @@ import { Link } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import { getOgImage } from "utils/getOgImage";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { webPageSchema } from "utils/seo/schema";
 
 import {
   TERMS_TITLE,
   TERMS_DESC,
-  TERMS_URL,
+  TERMS_PATH,
   PRIVACY_PATH,
   TERMS_EMAIL,
   TERMS_PHONE_LABEL,
@@ -808,33 +811,21 @@ const TermsPage = () => (
 export default TermsPage;
 
 const TERMS_OG_IMAGE = getOgImage(null);
-const TERMS_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": TERMS_URL,
-  url: TERMS_URL,
+const TERMS_SCHEMA = webPageSchema({
+  path: TERMS_PATH,
   name: TERMS_TITLE,
   description: TERMS_DESC,
   image: TERMS_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{TERMS_TITLE}</title>
-    <meta name="description" content={TERMS_DESC} />
-    <link rel="canonical" href={TERMS_URL} />
-    <meta property="og:title" content={TERMS_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={TERMS_DESC} />
-    <meta property="og:image" content={TERMS_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={TERMS_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={TERMS_TITLE} />
-    <meta name="twitter:description" content={TERMS_DESC} />
-    <meta name="twitter:image" content={TERMS_OG_IMAGE} />
-    <script type="application/ld+json">{TERMS_SCHEMA}</script>
+    <SeoMeta
+      title={TERMS_TITLE}
+      description={TERMS_DESC}
+      path={TERMS_PATH}
+      image={TERMS_OG_IMAGE}
+    />
+    <JsonLd data={TERMS_SCHEMA} />
   </>
 );

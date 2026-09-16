@@ -3,7 +3,7 @@
 export const ANNEX_TITLE = "Supplemental U.S. Privacy Notices | PHIL";
 export const ANNEX_DESC =
   "PHIL's supplemental U.S. consumer health data privacy statement, consumer health data authorization, and supplemental U.S. privacy notice.";
-export const ANNEX_URL = "https://phil.us/annex/";
+export const ANNEX_PATH = "/annex/";
 
 // ─── Links used across the annex content ─────────────────────────────────────
 

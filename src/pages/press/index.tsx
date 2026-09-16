@@ -7,6 +7,10 @@ import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import Pagination from "components/common/Pagination/Pagination";
 import DemoCta from "components/common/DemoCta/DemoCta";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
 
 import { PRESS_DATA } from "./_data";
 import * as classes from "./press.module.css";
@@ -196,12 +200,35 @@ const PressPage: React.FC = () => {
 
 export default PressPage;
 
+const PRESS_TITLE = "Press | PHIL";
+const PRESS_DESC =
+  "Read PHIL's latest news, announcements, and thought leadership on pharmacy innovation and direct-to-patient programs.";
+
+/**
+ * This page and /insights/press-releases/ both return 200 with similar content,
+ * so the canonical SeoMeta emits is what tells a crawler which of the two is
+ * authoritative.
+ */
+const PRESS_PATH = "/press/";
+const PRESS_OG_IMAGE = getOgImage(null);
+
+/** CollectionPage rather than WebPage: this indexes press items rather than being an article itself. */
+const PRESS_SCHEMA = webPageSchema({
+  type: "CollectionPage",
+  path: PRESS_PATH,
+  name: PRESS_TITLE,
+  description: PRESS_DESC,
+  image: PRESS_OG_IMAGE,
+});
+
 export const Head: HeadFC = () => (
   <>
-    <title>Press | PHIL</title>
-    <meta
-      name="description"
-      content="Read PHIL's latest news, announcements, and thought leadership on pharmacy innovation and direct-to-patient programs."
+    <SeoMeta
+      title={PRESS_TITLE}
+      description={PRESS_DESC}
+      path={PRESS_PATH}
+      image={PRESS_OG_IMAGE}
     />
+    <JsonLd data={PRESS_SCHEMA} />
   </>
 );
