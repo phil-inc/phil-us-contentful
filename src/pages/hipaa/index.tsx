@@ -4,11 +4,14 @@ import type { HeadFC } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import { getOgImage } from "utils/getOgImage";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { webPageSchema } from "utils/seo/schema";
 
 import {
   HIPAA_TITLE,
   HIPAA_DESC,
-  HIPAA_URL,
+  HIPAA_PATH,
   HIPAA_PHONE_LABEL,
   HIPAA_PHONE_HREF,
   HIPAA_EMAIL,
@@ -316,33 +319,21 @@ const HipaaPage = () => (
 export default HipaaPage;
 
 const HIPAA_OG_IMAGE = getOgImage(null);
-const HIPAA_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": HIPAA_URL,
-  url: HIPAA_URL,
+const HIPAA_SCHEMA = webPageSchema({
+  path: HIPAA_PATH,
   name: HIPAA_TITLE,
   description: HIPAA_DESC,
   image: HIPAA_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{HIPAA_TITLE}</title>
-    <meta name="description" content={HIPAA_DESC} />
-    <link rel="canonical" href={HIPAA_URL} />
-    <meta property="og:title" content={HIPAA_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={HIPAA_DESC} />
-    <meta property="og:image" content={HIPAA_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={HIPAA_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={HIPAA_TITLE} />
-    <meta name="twitter:description" content={HIPAA_DESC} />
-    <meta name="twitter:image" content={HIPAA_OG_IMAGE} />
-    <script type="application/ld+json">{HIPAA_SCHEMA}</script>
+    <SeoMeta
+      title={HIPAA_TITLE}
+      description={HIPAA_DESC}
+      path={HIPAA_PATH}
+      image={HIPAA_OG_IMAGE}
+    />
+    <JsonLd data={HIPAA_SCHEMA} />
   </>
 );

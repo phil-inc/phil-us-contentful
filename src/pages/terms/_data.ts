@@ -3,7 +3,7 @@
 export const TERMS_TITLE = "Terms of Service | PHIL";
 export const TERMS_DESC =
   "The Terms of Service governing your use of Phil's website and online prescription management and delivery services.";
-export const TERMS_URL = "https://phil.us/terms/";
+export const TERMS_PATH = "/terms/";
 
 // ─── Links / contact ─────────────────────────────────────────────────────────
 

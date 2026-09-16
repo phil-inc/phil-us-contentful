@@ -5,11 +5,14 @@ import { Link } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import { getOgImage } from "utils/getOgImage";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { webPageSchema } from "utils/seo/schema";
 
 import {
   PRIVACY_TITLE,
   PRIVACY_DESC,
-  PRIVACY_URL,
+  PRIVACY_PATH,
   HIPAA_PATH,
   ANNEX_A_PATH,
   PRIVACY_EMAIL,
@@ -754,33 +757,21 @@ const PrivacyPage = () => (
 export default PrivacyPage;
 
 const PRIVACY_OG_IMAGE = getOgImage(null);
-const PRIVACY_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": PRIVACY_URL,
-  url: PRIVACY_URL,
+const PRIVACY_SCHEMA = webPageSchema({
+  path: PRIVACY_PATH,
   name: PRIVACY_TITLE,
   description: PRIVACY_DESC,
   image: PRIVACY_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{PRIVACY_TITLE}</title>
-    <meta name="description" content={PRIVACY_DESC} />
-    <link rel="canonical" href={PRIVACY_URL} />
-    <meta property="og:title" content={PRIVACY_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={PRIVACY_DESC} />
-    <meta property="og:image" content={PRIVACY_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={PRIVACY_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={PRIVACY_TITLE} />
-    <meta name="twitter:description" content={PRIVACY_DESC} />
-    <meta name="twitter:image" content={PRIVACY_OG_IMAGE} />
-    <script type="application/ld+json">{PRIVACY_SCHEMA}</script>
+    <SeoMeta
+      title={PRIVACY_TITLE}
+      description={PRIVACY_DESC}
+      path={PRIVACY_PATH}
+      image={PRIVACY_OG_IMAGE}
+    />
+    <JsonLd data={PRIVACY_SCHEMA} />
   </>
 );
