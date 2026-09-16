@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Link, type HeadFC } from "gatsby";
 import { VisuallyHidden } from "@mantine/core";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 
@@ -1154,33 +1157,21 @@ export default HomePage;
 // ─── SEO Head ────────────────────────────────────────────────────────────────
 
 const HOME_OG_IMAGE = getOgImage(null);
-const HOME_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": SEO.url,
-  url: SEO.url,
+const HOME_SCHEMA = webPageSchema({
+  path: SEO.path,
   name: SEO.title,
   description: SEO.description,
   image: HOME_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{SEO.title}</title>
-    <meta name="description" content={SEO.description} />
-    <link rel="canonical" href={SEO.url} />
-    <meta property="og:title" content={SEO.title} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={SEO.description} />
-    <meta property="og:image" content={HOME_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={SEO.url} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={SEO.title} />
-    <meta name="twitter:description" content={SEO.description} />
-    <meta name="twitter:image" content={HOME_OG_IMAGE} />
-    <script type="application/ld+json">{HOME_SCHEMA}</script>
+    <SeoMeta
+      title={SEO.title}
+      description={SEO.description}
+      path={SEO.path}
+      image={HOME_OG_IMAGE}
+    />
+    <JsonLd data={HOME_SCHEMA} />
   </>
 );

@@ -1,6 +1,9 @@
 import React from "react";
 import type { HeadFC } from "gatsby";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -10,17 +13,13 @@ import * as classes from "./contact.module.css";
 const CONTACT_TITLE = "Contact Us — PHIL";
 const CONTACT_DESC =
   "Our team is happy to help! Tell us who you are, and we'll connect you to the right people for support.";
-const CONTACT_URL = "https://phil.us/contact/";
+const CONTACT_PATH = "/contact/";
 const CONTACT_OG_IMAGE = getOgImage(null);
-const CONTACT_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": CONTACT_URL,
-  url: CONTACT_URL,
+const CONTACT_SCHEMA = webPageSchema({
+  path: CONTACT_PATH,
   name: CONTACT_TITLE,
   description: CONTACT_DESC,
   image: CONTACT_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 const ArrowIcon = () => (
@@ -170,20 +169,12 @@ export default ContactPage;
 
 export const Head: HeadFC = () => (
   <>
-    <title>{CONTACT_TITLE}</title>
-    <meta name="description" content={CONTACT_DESC} />
-    <link rel="canonical" href={CONTACT_URL} />
-    <meta property="og:title" content={CONTACT_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={CONTACT_DESC} />
-    <meta property="og:image" content={CONTACT_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={CONTACT_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={CONTACT_TITLE} />
-    <meta name="twitter:description" content={CONTACT_DESC} />
-    <meta name="twitter:image" content={CONTACT_OG_IMAGE} />
-    <script type="application/ld+json">{CONTACT_SCHEMA}</script>
+    <SeoMeta
+      title={CONTACT_TITLE}
+      description={CONTACT_DESC}
+      path={CONTACT_PATH}
+      image={CONTACT_OG_IMAGE}
+    />
+    <JsonLd data={CONTACT_SCHEMA} />
   </>
 );

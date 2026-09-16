@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import type { HeadFC } from "gatsby";
 import { VisuallyHidden } from "@mantine/core";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
 import { TRUSTPILOT_SCORE_LABEL } from "../../constants/trustpilot";
 
 import { Layout } from "layouts/Layout/Layout";
@@ -1097,35 +1100,23 @@ export default ProvidersPage;
 const PROVIDERS_TITLE = "Affordable Patient Medications — PHILRx for Providers";
 const PROVIDERS_DESC =
   "The PhilRx patient platform streamlines the way people receive their prescriptions by removing barriers to medication access so that patients can seamlessly start and adhere to therapy. Using PhilRx, patients report:";
-const PROVIDERS_URL = "https://phil.us/providers/";
+const PROVIDERS_PATH = "/providers/";
 const PROVIDERS_OG_IMAGE = getOgImage(null);
-const PROVIDERS_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": PROVIDERS_URL,
-  url: PROVIDERS_URL,
+const PROVIDERS_SCHEMA = webPageSchema({
+  path: PROVIDERS_PATH,
   name: PROVIDERS_TITLE,
   description: PROVIDERS_DESC,
   image: PROVIDERS_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{PROVIDERS_TITLE}</title>
-    <meta name="description" content={PROVIDERS_DESC} />
-    <link rel="canonical" href={PROVIDERS_URL} />
-    <meta property="og:title" content={PROVIDERS_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={PROVIDERS_DESC} />
-    <meta property="og:image" content={PROVIDERS_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={PROVIDERS_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={PROVIDERS_TITLE} />
-    <meta name="twitter:description" content={PROVIDERS_DESC} />
-    <meta name="twitter:image" content={PROVIDERS_OG_IMAGE} />
-    <script type="application/ld+json">{PROVIDERS_SCHEMA}</script>
+    <SeoMeta
+      title={PROVIDERS_TITLE}
+      description={PROVIDERS_DESC}
+      path={PROVIDERS_PATH}
+      image={PROVIDERS_OG_IMAGE}
+    />
+    <JsonLd data={PROVIDERS_SCHEMA} />
   </>
 );

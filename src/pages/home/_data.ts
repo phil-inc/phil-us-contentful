@@ -223,5 +223,5 @@ export const SEO = {
   title: "PHIL — Medication Access, Simplified.",
   description:
     "PHIL is the digital hub and direct-to-patient platform that helps pharma brands maximize starts, coverage, adherence, and commercial performance.",
-  url: "https://phil.us/",
+  path: "/",
 };
