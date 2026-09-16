@@ -3,7 +3,8 @@ import { Title, Text, Container, Box, Anchor, List } from "@mantine/core";
 import { Layout } from "layouts/Layout/Layout";
 import { renderRichText } from "gatsby-source-contentful/rich-text";
 import type { TResource } from "types/resource";
-import { SEO } from "layouts/SEO/SEO";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 import Asset from "components/common/Asset/Asset";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import type { TAsset } from "types/asset";
@@ -13,6 +14,7 @@ import AuthorBlock from "components/Blog/AuthorBlock/AuthorBlock";
 import SocialShare from "components/Blog/SocialShare/SocialShare";
 import { getDescriptionFromRichtext } from "utils/getDescription";
 import { getOgImage } from "utils/getOgImage";
+import { articleSchema } from "utils/seo/schema";
 import { isPDFContent, isVideoContent } from "utils/isVideoContent";
 import { type Block } from "@contentful/rich-text-types";
 import ImageContainer from "components/common/Container/ImageContainer";
@@ -42,59 +44,34 @@ export const Head: React.FC<HelmetProps> = ({
       : "";
 
   const heroImage = contentfulResource.asset?.file?.url ?? null;
-  const ogImage = getOgImage(heroImage);
 
-  const config = {
-    slug: "https://phil.us" + location.pathname,
-  };
-
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
+  // Article rather than BlogPosting: this template also renders press releases,
+  // webinars and the /field/ FAQ entries, not only blog posts.
+  //
+  // Only the editor-set `publishDate` is trustworthy. Contentful's `createdAt`
+  // reflects content migrations (over 100 entries share two days), and
+  // `updatedAt` moves on any republish, bulk ones included — so no
+  // dateModified, and no date at all when `publishDate` is blank.
+  const schema = articleSchema({
+    path: location.pathname,
     headline: contentfulResource.heading,
     description,
-    url: config.slug,
-    mainEntityOfPage: { "@type": "WebPage", "@id": config.slug },
-    ...(heroImage && { image: `https:${heroImage}?w=1200&h=630&q=100&fm=webp` }),
-    // Emitted as a pair. Contentful's `publishDate` is the only trustworthy
-    // publication date — `createdAt` often reflects when an entry was migrated,
-    // not when the piece ran — so when it is blank we omit both rather than
-    // assert a date we cannot stand behind. A lone dateModified reads as
-    // incoherent to consumers, hence the nesting.
-    ...(contentfulResource.publishDate && {
-      datePublished: contentfulResource.publishDate,
-      ...(contentfulResource.updatedAt && {
-        dateModified: contentfulResource.updatedAt,
-      }),
-    }),
-    publisher: {
-      "@type": "Organization",
-      name: "PHIL",
-      url: "https://phil.us",
-    },
-    ...(contentfulResource.author && {
-      author: {
-        "@type": "Person",
-        name: contentfulResource.author.name,
-      },
-    }),
-  };
+    image: heroImage && `https:${heroImage}?w=1200&h=630&q=100&fm=webp`,
+    datePublished: contentfulResource.publishDate,
+    authorName: contentfulResource.author?.name,
+  });
 
   return (
-    <SEO title={contentfulResource.heading}>
-      <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={contentfulResource.heading} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={ogImage} />
-      <meta name="description" content={description} />
-      <meta property="og:title" content={contentfulResource.heading} />
-      <meta property="og:type" content="article" />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:url" content={config.slug} />
+    <>
+      <SeoMeta
+        title={contentfulResource.heading}
+        description={description}
+        path={location.pathname}
+        image={getOgImage(heroImage)}
+        type="article"
+        noindex={contentfulResource.noindex}
+      />
+      <JsonLd data={schema} />
       <Script
         defer
         async
@@ -103,8 +80,7 @@ export const Head: React.FC<HelmetProps> = ({
         type="text/javascript"
         src="//js.hsforms.net/forms/embed/v2.js"
       ></Script>
-      {contentfulResource.noindex && <meta name="robots" content="noindex" />}
-    </SEO>
+    </>
   );
 };
 
@@ -472,7 +448,6 @@ export const query = graphql`
         heading
       }
       publishDate
-      updatedAt
       slug
       noindex
       isFaq
