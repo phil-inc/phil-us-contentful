@@ -5,7 +5,7 @@ import { PATIENT_FAQ_ITEMS, PROVIDER_FAQ_GROUPS, PHARMA_FAQ_GROUPS } from "data/
 export const FAQ_TITLE = "Frequently Asked Questions";
 export const FAQ_DESC =
   "Find answers about PHILRx for pharma partners, patients, and providers. Learn about our platform, prior authorization, prescriptions, delivery, and more.";
-export const FAQ_URL = "https://phil.us/faqs/";
+export const FAQ_PATH = "/faqs/";
 export const FAQ_OG_IMAGE = ""; // resolved via getOgImage in Head
 
 // ─── Types ────────────────────────────────────────────────────────────────────
