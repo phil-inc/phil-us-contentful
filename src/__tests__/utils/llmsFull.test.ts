@@ -308,4 +308,21 @@ describe("buildLlmsFull", () => {
     expect(result.text).not.toContain("Missing page");
     expect(result.counts).toEqual({ included: 2, noindex: 1, excluded: 1, empty: 1 });
   });
+
+  it("leaves out the pages shown only after a form, even without noindex", async () => {
+    fs.writeFileSync(path.join(publicDir, "llms.txt"), "# PHIL\n\n> Summary.\n");
+    writePage("/gtn/", gatsbyHtml({ head: "<title>GTN</title>", body: "<p>GTN form</p>" }));
+    for (const pagePath of ["/gtn/calculator/", "/demo/thank-you/", "/demo/schedule/"]) {
+      writePage(
+        pagePath,
+        gatsbyHtml({ head: "<title>After form</title>", body: `<p>After form ${pagePath}</p>` })
+      );
+    }
+
+    const result = await buildLlmsFull(publicDir);
+
+    expect(result.text).toContain("GTN form");
+    expect(result.text).not.toContain("After form");
+    expect(result.counts).toEqual({ included: 1, noindex: 0, excluded: 3, empty: 0 });
+  });
 });
