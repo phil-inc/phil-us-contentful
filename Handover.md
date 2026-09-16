@@ -72,3 +72,18 @@ Left: Gatsby build of batch 2 not run. Step 2 (FAQPage on /faqs/, Service on sol
 Bugs/debt: Nothing committed. ESLint still broken repo-wide.
 Files: src/components/common/Head/Head.tsx, src/pages/{index,contact/index,contact/hcp-support/index,contact/get-in-touch/index,hipaa/index,demo/index,patients/index,providers/index,privacy/index,annex/index,customer-success/index,terms/index}.tsx, src/pages/{hipaa,demo,annex,terms,privacy,home}/_data.ts
 Next: The user runs a build; rerun scratchpad check.js on public/ and expect /field/ without canonical and noCanonical still 62.
+
+## 2026-09-16 — feat/structured-schema (demo post-submit pages out of sitemap)
+Done: gatsby-config.ts sitemap `excludes` now includes /demo/thank-you and /demo/schedule. Running gatsby-plugin-sitemap's own defaultFilterPages + minimatch against the edited config: /demo/thank-you/ and /demo/schedule/ are excluded; /demo/ and /demo/thank-you-extra/ are kept.
+Left: The user chose sitemap-only. robots.txt AI-crawler blocks and the X-Robots-Tag header were proposed and declined; do not add them. Both pages already had noindex, follow, and llms-full.txt already skips noindex pages. Build not run, so the sitemap XML itself is unverified.
+Bugs/debt: The other noindex pages (/field/* entries) are still in the sitemap; see the separate "Exclude noindex pages from sitemap" task.
+Files: gatsby-config.ts
+Next: The user builds; check public/sitemap-0.xml has no /demo/thank-you/ or /demo/schedule/, then run the batch 2 head check.
+
+## 2026-09-16 — feat/structured-schema (step 2: FAQPage and Service)
+Done: schema.ts gains faqPageSchema (FAQPage replaces the page's WebPage node; answers flattened by the new utils/seo/htmlToText.ts), serviceSchema (@id `<page url>#service`, provider = organization @id), and webPageSchema `mainEntity` (referenced by @id). /faqs/ moved to SeoMeta + FAQPage with all 32 questions in page order (FAQ_URL -> FAQ_PATH). /solution/hub/ and /solution/direct/ moved to SeoMeta + [WebPage -> mainEntity, Service]; this removes the last inline Organization. FAQPage is only on /faqs/, not on patients/providers/pharma, which show subsets of the same questions. Service names "PHIL Digital Hub" / "PHIL Direct-to-Patient" come from the hero eyebrows. A BusinessAudience "Pharmaceutical brands" was added, then removed at the user's request: the wording was not from the page copy and Google does not use Service markup, so do not re-add it.
+Verified: Jest 228/228 (new seoHtmlToText tests, including every real FAQ answer leaving no tags or entities; new schema tests; solutionHubLinks test updated from the hand-written CORE_URL strings to CORE_PATH). The first run failed 1 test (source line breaks inside a <p> became line breaks); fixed in htmlToText. tsc total 406, unchanged; the hub Trustpilot TS2717 is pre-existing. The scratchpad renderStep2.js rendered all 3 Heads from HEAD and the working tree: meta/link/title tags identical, JSON-LD differs only as intended.
+Left: Gatsby build not run for step 2. Rich-result eligibility: Google shows FAQ rich results only for authoritative government/health sites, so the gain is mainly for machine readers; validate on the Rich Results Test after deploy.
+Bugs/debt: Nothing committed. Answer text drops link URLs (link text is kept).
+Files: src/utils/seo/schema.ts, src/utils/seo/htmlToText.ts, src/pages/faqs/{index.tsx,_data.ts}, src/pages/solution/{hub,direct}/index.tsx, src/__tests__/utils/{seoSchema,seoHtmlToText}.test.ts, src/__tests__/links/solutionHubLinks.test.ts
+Next: The user builds; then step 3 (post-build check: extend check.js for FAQPage/Service and zero inline Organization).

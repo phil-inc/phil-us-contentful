@@ -2,6 +2,9 @@ import React, { useState, useCallback } from "react";
 import type { HeadFC } from "gatsby";
 import { Link } from "gatsby";
 import { getOgImage } from "utils/getOgImage";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { faqPageSchema } from "utils/seo/schema";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -9,7 +12,7 @@ import PageContext from "contexts/PageContext";
 import {
   FAQ_TITLE,
   FAQ_DESC,
-  FAQ_URL,
+  FAQ_PATH,
   PHARMA_CATEGORIES,
   PATIENT_FAQS,
   PROVIDER_CATEGORIES,
@@ -339,21 +342,27 @@ export default FaqPage;
 
 const FAQ_OG = getOgImage(null);
 
+/** Every question on the page, in the order the page shows them. */
+const FAQ_SCHEMA = faqPageSchema({
+  path: FAQ_PATH,
+  name: FAQ_TITLE,
+  description: FAQ_DESC,
+  image: FAQ_OG,
+  questions: [
+    ...PHARMA_CATEGORIES.flatMap((category) => category.items),
+    ...PATIENT_FAQS,
+    ...PROVIDER_CATEGORIES.flatMap((category) => category.items),
+  ],
+});
+
 export const Head: HeadFC = () => (
   <>
-    <title>{FAQ_TITLE}</title>
-    <meta name="description" content={FAQ_DESC} />
-    <link rel="canonical" href={FAQ_URL} />
-    <meta property="og:title" content={FAQ_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={FAQ_DESC} />
-    <meta property="og:image" content={FAQ_OG} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={FAQ_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={FAQ_TITLE} />
-    <meta name="twitter:description" content={FAQ_DESC} />
-    <meta name="twitter:image" content={FAQ_OG} />
+    <SeoMeta
+      title={FAQ_TITLE}
+      description={FAQ_DESC}
+      path={FAQ_PATH}
+      image={FAQ_OG}
+    />
+    <JsonLd data={FAQ_SCHEMA} />
   </>
 );

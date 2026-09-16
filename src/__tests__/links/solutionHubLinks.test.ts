@@ -155,10 +155,12 @@ describe("the hub page directory and SEO metadata", () => {
   test("the canonical URL and the JSON-LD id use the new path", () => {
     const source = readFile("pages/solution/hub/index.tsx");
 
-    expect(source).toContain('const CORE_URL = "https://phil.us/solution/hub/"');
-    // The canonical link, og:url and schema @id all read CORE_URL.
-    expect(source).toContain('<link rel="canonical" href={CORE_URL} />');
-    expect(source).toContain('"@id": CORE_URL');
+    expect(source).toContain('const CORE_PATH = "/solution/hub/"');
+    // SeoMeta builds the canonical and og:url, and the schema builders build
+    // the @ids, all from CORE_PATH.
+    expect(source).toContain("path={CORE_PATH}");
+    expect(source.match(/path: CORE_PATH/g) ?? []).toHaveLength(2);
+    expect(source).not.toContain("https://phil.us/solution/");
   });
 
   test("the page still imports its own CSS and interactions", () => {

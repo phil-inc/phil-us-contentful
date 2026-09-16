@@ -63,7 +63,17 @@ const config: GatsbyConfig = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
-        excludes: [`/dev-404-page`, `/dev-404-page/`, `/404`, `/404/`, `/404.html`, `/field`],
+        excludes: [
+          `/dev-404-page`,
+          `/dev-404-page/`,
+          `/404`,
+          `/404/`,
+          `/404.html`,
+          `/field`,
+          // Post-submit pages of the demo form; both are noindex.
+          `/demo/thank-you`,
+          `/demo/schedule`,
+        ],
         createLinkInHead: true,
       },
     },
