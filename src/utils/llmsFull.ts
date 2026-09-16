@@ -21,7 +21,17 @@ const SITE_ORIGIN = "https://phil.us";
  * gatsby-plugin-sitemap `excludes` in gatsby-config.ts, plus /ask-phil-ai/,
  * which robots.txt disallows.
  */
-const EXCLUDED_PATHS = new Set(["/404/", "/dev-404-page/", "/field/", "/ask-phil-ai/"]);
+const EXCLUDED_PATHS = new Set([
+  "/404/",
+  "/dev-404-page/",
+  "/field/",
+  "/ask-phil-ai/",
+  // Shown only after a form is submitted. The demo pages are also noindex, but
+  // /gtn/calculator/ is not, so the list is what keeps it out.
+  "/demo/thank-you/",
+  "/demo/schedule/",
+  "/gtn/calculator/",
+]);
 
 /**
  * Elements that carry no page content. Chrome repeated on every page (the

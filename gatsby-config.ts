@@ -73,6 +73,8 @@ const config: GatsbyConfig = {
           // Post-submit pages of the demo form; both are noindex.
           `/demo/thank-you`,
           `/demo/schedule`,
+          // Shown after the /gtn/ form; its canonical points to /gtn/.
+          `/gtn/calculator`,
         ],
         createLinkInHead: true,
       },

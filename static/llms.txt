@@ -50,7 +50,7 @@ validated industry benchmarks:
 Supporting detail:
 
 - [Customer Success Stories](https://phil.us/customer-success/): Brand case studies across dermatology, ophthalmology, migraine, and women's health.
-- [Gross-to-Net](https://phil.us/gtn/) and the [GTN Calculator](https://phil.us/gtn/calculator/): Model a brand's gross-to-net upside.
+- [Gross-to-Net](https://phil.us/gtn/): Model a brand's gross-to-net upside.
 
 ## Research and resources
 
