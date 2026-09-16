@@ -1,6 +1,8 @@
 import React from 'react';
 import {ColorSchemeScript, MantineProvider} from '@mantine/core';
 import {theme} from './src/layouts/Layout/theme';
+import {organizationSchema, webSiteSchema} from './src/utils/seo/schema';
+import {JsonLd} from './src/components/common/Seo/JsonLd';
 
 // 1. Google Tag Manager (loads after consent default)
 const gtmScript = (
@@ -41,41 +43,12 @@ const resourceHints = [
 	<link key="dns-ytimg" rel="dns-prefetch" href="//i.ytimg.com" />,
 ];
 
-// 3. Organization entity (sitewide) — identifies PHIL to search engines and AI agents.
-// Emitted here rather than per-template so every page carries it, and so other
-// schema blocks can reference the company via its @id instead of restating it.
-const organizationSchema = (
-	<script
-		key="organization-schema"
-		type="application/ld+json"
-		dangerouslySetInnerHTML={{
-			__html: JSON.stringify({
-				'@context': 'https://schema.org',
-				'@type': 'Organization',
-				'@id': 'https://phil.us/#organization',
-				name: 'PHIL',
-				legalName: 'Phil, Inc.',
-				url: 'https://phil.us',
-				logo: {
-					'@type': 'ImageObject',
-					url: 'https://phil.us/icons/icon-512x512.png',
-					width: 512,
-					height: 512,
-				},
-				description:
-					'PHIL simplifies the prescription journey for patients and providers — solving medication access and GTN challenges for pharma brands.',
-				address: {
-					'@type': 'PostalAddress',
-					streetAddress: '14500 N Northsight Blvd, Suite 307',
-					addressLocality: 'Scottsdale',
-					addressRegion: 'AZ',
-					postalCode: '85260',
-					addressCountry: 'US',
-				},
-				sameAs: ['https://www.linkedin.com/company/phil-inc-'],
-			}),
-		}}
-	/>
+// 3. Organization and WebSite entities (sitewide) — identify PHIL and its site to
+// search engines and AI agents. Emitted here rather than per-template so every
+// page carries them, and so page-level schema can reference both by @id instead
+// of restating them.
+const sitewideSchema = (
+	<JsonLd key="sitewide-schema" data={[organizationSchema(), webSiteSchema()]} />
 );
 
 export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
@@ -84,7 +57,7 @@ export const onPreRenderHTML = ({getHeadComponents, replaceHeadComponents}) => {
 		...resourceHints,
 		gtmScript,
 		...headComponents,
-		organizationSchema,
+		sitewideSchema,
 		<ColorSchemeScript key="color-scheme-script" />,
 	]);
 };

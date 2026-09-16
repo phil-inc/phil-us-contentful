@@ -29,7 +29,8 @@ import MetricBox from "components/common/Metric/Metric";
 import CaseStudyTestimonial from "components/common/Testimonials/CaseStudyTestimonial";
 import { BodyType, ISection } from "types/section";
 import Section from "components/section/Section";
-import { SEO } from "layouts/SEO/SEO";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 import { TAsset } from "types/asset";
 import Expanded from "components/common/Expanded/Expanded";
 import { TDownloadableResource } from "types/resource";
@@ -40,6 +41,7 @@ import BasicSection from "components/section/BasicSection/BasicSection";
 import KeyMetricOfCaseStudy from "components/common/KeyMetricOfCaseStudy/KeyMetricOfCaseStudy";
 import { getHubspotFormDetails } from "utils/utils";
 import { getOgImage } from "utils/getOgImage";
+import { articleSchema } from "utils/seo/schema";
 
 import { PATH } from "constants/routes";
 import KeyTakeaways from "components/case-study/key-takeaways";
@@ -110,70 +112,36 @@ export const Head: React.FC<HelmetProps> = ({
   data: { contentfulCaseStudy },
   location,
 }) => {
-  const ogImage = getOgImage(contentfulCaseStudy?.image?.file?.url);
-
-  const config = {
-    slug: "https://phil.us" + location.pathname,
-  };
-
-  const computeTitle = () => {
-    const pageTitle = contentfulCaseStudy.title;
-
-    return pageTitle.trim();
-  };
-
-  const computeMetaDescription = () => {
-    const pageMetaDescription = contentfulCaseStudy?.metaDescription || '';
-
-    return pageMetaDescription.trim();
-  };
-
+  const title = contentfulCaseStudy.title.trim();
+  const description = (contentfulCaseStudy?.metaDescription || "").trim();
   const heroImage = contentfulCaseStudy?.image?.file?.url ?? null;
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: computeTitle(),
-    description: computeMetaDescription(),
-    url: config.slug,
-    mainEntityOfPage: { "@type": "WebPage", "@id": config.slug },
-    // Was `config.heroImage`, a property `config` never had, so no case study
-    // ever emitted an image. Only emit a real asset — the generic social card
-    // that `ogImage` falls back to does not represent the study.
-    ...(heroImage && {
-      image: `https:${heroImage}?w=1200&h=630&q=100&fm=webp`,
-    }),
-    // Case studies have no `publishDate` field, and unlike the blog their
-    // `createdAt` values are spread across authoring dates rather than clustered
-    // on a migration, so it is a fair stand-in for publication here.
-    ...(contentfulCaseStudy.createdAt && {
-      datePublished: contentfulCaseStudy.createdAt,
-      ...(contentfulCaseStudy.updatedAt && {
-        dateModified: contentfulCaseStudy.updatedAt,
-      }),
-    }),
-    publisher: {
-      "@type": "Organization",
-      name: "PHIL",
-      url: "https://phil.us",
-    },
-  };
+  // The schema image is only a real asset — the generic social card that
+  // getOgImage falls back to does not represent the study.
+  //
+  // No datePublished/dateModified. Case studies have no `publishDate` field,
+  // and Contentful's `createdAt` is when an entry was typed in, not when the
+  // study ran — every indexable case study was created on 2025-05-21 or -22.
+  // `updatedAt` moves on any republish, including bulk edits. Add dates once
+  // the content model has an editor-set publication date.
+  const schema = articleSchema({
+    path: location.pathname,
+    headline: title,
+    description,
+    image: heroImage && `https:${heroImage}?w=1200&h=630&q=100&fm=webp`,
+  });
 
   return (
-    <SEO title={computeTitle()}>
-      <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={computeTitle()} />
-      <meta name="twitter:description" content={computeMetaDescription()} />
-      <meta name="twitter:image" content={ogImage} />
-      <meta name="description" content={computeMetaDescription()} />
-      <meta property="og:title" content={computeTitle()} />
-      <meta property="og:type" content="article" />
-      <meta property="og:description" content={computeMetaDescription()} />
-      <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:url" content={config.slug} />
+    <>
+      <SeoMeta
+        title={title}
+        description={description}
+        path={location.pathname}
+        image={getOgImage(heroImage)}
+        type="article"
+        noindex={contentfulCaseStudy.noIndex}
+      />
+      <JsonLd data={schema} />
       <Script
         defer
         strategy="idle"
@@ -181,9 +149,7 @@ export const Head: React.FC<HelmetProps> = ({
         type="text/javascript"
         src="//js.hsforms.net/forms/embed/v2.js"
       ></Script>
-
-      {contentfulCaseStudy.noIndex && <meta name="robots" content="noindex" />}
-    </SEO>
+    </>
   );
 };
 
@@ -193,8 +159,6 @@ export type CaseStudy = {
   metaDescription: string;
   image: TAsset;
   id: string;
-  createdAt?: string;
-  updatedAt?: string;
   title: string;
   subtitle?: {
     id: string;
@@ -639,8 +603,6 @@ export const caseStudyQuery = graphql`
     contentfulCaseStudy(id: { eq: $id }) {
       noIndex
       id
-      createdAt
-      updatedAt
       title
       keyMetricOfStudy{
         contentful_id

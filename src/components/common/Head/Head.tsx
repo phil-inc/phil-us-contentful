@@ -7,6 +7,7 @@ import { ContentfulPage } from "types/page";
 import { ISection } from "types/section";
 import { isVideoContent } from "utils/isVideoContent";
 import { getOgImage } from "utils/getOgImage";
+import { toAbsoluteUrl } from "utils/seo/url";
 
 
 type HelmetProps = {
@@ -15,29 +16,6 @@ type HelmetProps = {
   };
   location: { pathname: string };
 };
-
-/**
- * Builds the absolute page URL from a Contentful slug.
- *
- * Slugs are stored inconsistently in Contentful — some carry a leading slash,
- * some do not — and the origin used to be concatenated onto the raw value.
- * A slug of "partners" therefore produced "https://phil.uspartners", naming a
- * host that does not exist. The empty-slug fallback below added the slash, but
- * only when the slug was missing entirely, never when it was present without
- * one.
- *
- * The trailing slash is normalized for the same reason: Gatsby serves these
- * pages with one and the sitemap lists them with one, so omitting it pointed
- * the canonical at a URL that redirects.
- */
-function toAbsoluteUrl(slug: string): string {
-  const withLeadingSlash = slug.startsWith("/") ? slug : `/${slug}`;
-  const normalized = withLeadingSlash.endsWith("/")
-    ? withLeadingSlash
-    : `${withLeadingSlash}/`;
-
-  return `https://phil.us${normalized}`;
-}
 
 const Head: React.FC<HelmetProps> = ({
   data: { contentfulPage },

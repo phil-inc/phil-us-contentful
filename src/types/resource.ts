@@ -97,7 +97,6 @@ export type TResource = {
   renderOptions?: RenderOptions;
   isImageObjectContain?: boolean;
   publishDate?: string;
-  updatedAt?: string;
   canShowImageOnly?: boolean;
   isFirstItem?: boolean;
   canShowMediaWidthFull?: boolean; // this is in the media item not in resource directly
