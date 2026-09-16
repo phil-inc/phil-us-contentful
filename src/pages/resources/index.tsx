@@ -7,7 +7,10 @@ import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import DemoCta from "components/common/DemoCta/DemoCta";
 import Pagination from "components/common/Pagination/Pagination";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
 
 import { RESOURCES_DATA, TOPICS, TYPES } from "./_data";
 import { PRESS_DATA } from "../press/_data";
@@ -894,49 +897,30 @@ const RESOURCES_DESC =
   "Explore PHIL's library of reports, webinars, blogs, and press coverage on patient access, direct-to-patient programs, and pharmaceutical commercialization.";
 
 /**
- * Trailing slash matches the URL Gatsby serves and the form the sitemap lists.
  * This page and /insights/resources/ both return 200 with similar content, so
- * the canonical is what tells a crawler which of the two is authoritative.
+ * the canonical SeoMeta emits is what tells a crawler which of the two is
+ * authoritative.
  */
-const RESOURCES_URL = "https://phil.us/resources/";
+const RESOURCES_PATH = "/resources/";
 const RESOURCES_OG_IMAGE = getOgImage(null);
 
-/**
- * CollectionPage rather than WebPage: this indexes the resource library rather
- * than being an article itself.
- *
- * `publisher` references the sitewide Organization by @id instead of restating
- * it. That entity is emitted from gatsby-ssr.tsx with the full logo and address;
- * inlining a thinner copy here would put a second, competing Organization node
- * in the graph.
- */
-const RESOURCES_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": RESOURCES_URL,
-  url: RESOURCES_URL,
+/** CollectionPage rather than WebPage: this indexes the resource library rather than being an article itself. */
+const RESOURCES_SCHEMA = webPageSchema({
+  type: "CollectionPage",
+  path: RESOURCES_PATH,
   name: RESOURCES_TITLE,
   description: RESOURCES_DESC,
   image: RESOURCES_OG_IMAGE,
-  publisher: { "@id": "https://phil.us/#organization" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{RESOURCES_TITLE}</title>
-    <meta name="description" content={RESOURCES_DESC} />
-    <link rel="canonical" href={RESOURCES_URL} />
-    <meta property="og:title" content={RESOURCES_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={RESOURCES_DESC} />
-    <meta property="og:image" content={RESOURCES_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={RESOURCES_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={RESOURCES_TITLE} />
-    <meta name="twitter:description" content={RESOURCES_DESC} />
-    <meta name="twitter:image" content={RESOURCES_OG_IMAGE} />
-    <script type="application/ld+json">{RESOURCES_SCHEMA}</script>
+    <SeoMeta
+      title={RESOURCES_TITLE}
+      description={RESOURCES_DESC}
+      path={RESOURCES_PATH}
+      image={RESOURCES_OG_IMAGE}
+    />
+    <JsonLd data={RESOURCES_SCHEMA} />
   </>
 );

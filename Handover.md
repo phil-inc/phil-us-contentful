@@ -1,0 +1,59 @@
+# Handover
+
+## 2026-09-16 — feat/structured-schema
+Done: Reviewed MRTG-1423 ticket and the 3 branch commits (sitewide Organization @id, Article dates, canonical trailing slashes). No code changes made. Jest: 176/176 pass. tsc reported no errors in touched files. Gatsby build not run (needs Contentful creds).
+Left: AC not yet met: FAQPage on /faqs/ (Head has no JSON-LD), Service schema on /solution/hub/ and /solution/direct/ (still WebPage), and Rich Results validation. /solution/ now redirects to /solution/hub/ (netlify.toml:221-229), so that AC is stale.
+Bugs/debt: The Organization @id is only referenced from /press/ and /resources/. Blog, case-study and about 16 static pages still inline `publisher: {"@type":"Organization"}` without @id, which is the duplicate-node problem the new comments describe.
+Files: none touched (review only)
+Next: Switch the inline publishers to `{ "@id": "https://phil.us/#organization" }`, then add FAQPage and Service schema.
+
+## 2026-09-16 — feat/structured-schema (codebase-wide SEO review)
+Done: Audited every Head export (33 files) plus the Sep 14 build in public/ (326 HTML pages). No code changes made.
+Left: Findings not yet acted on. (1) The blog, case-study, resources, contact, downloadable-resource and event-registration templates have no canonical tag, and career.tsx only renders one when domain !== "phil.us", so it never appears in the built HTML. (2) The sitemap lists noindex pages (/field/*, /demo/schedule/, /demo/thank-you/). (3) Pages with no JSON-LD: /faqs/, /pharma/, /approach/, plus the event, downloadable and contact templates. (4) 11 pages have an empty meta description, and case-study Article emits "description": "".
+Bugs/debt: About 20 hand-copied Head blocks with ~15 meta tags each, which is how canonical tags went missing. FAQ content is reused on /patients/, /providers/ and /pharma/, so FAQPage markup belongs only on /faqs/.
+Files: none touched (review only)
+Next: Add a shared src/utils/seo module (SITE_URL, ORG_ID, toAbsoluteUrl, schema builders, JsonLd and SeoMeta components), then migrate templates onto it.
+
+## 2026-09-16 — feat/structured-schema (step 1a: shared SEO constants and URL helper)
+Done: Added src/utils/seo/constants.ts (SITE_URL, ORGANIZATION_ID, WEBSITE_ID) and src/utils/seo/url.ts (toAbsoluteUrl, moved out of Head.tsx). Head.tsx, gatsby-ssr.tsx, press and resources now import them. Tests written first and confirmed failing; Jest now 184/184 pass (8 new). tsc shows only 3 pre-existing missing @types errors (dompurify, mixpanel-browser, react-pdf). ESLint cannot parse any TS file in the repo (the same error on untouched src/utils/getTitle.ts), so lint is unverified. Gatsby build not run. Nothing committed; approved step by step by the user.
+Left: Step 1b (schema builders), 1c (SeoMeta and JsonLd components), 1d (migrate pages, including the ~18 inline Organization publishers). Then step 2 (FAQPage and Service).
+Bugs/debt: The repo's ESLint config is broken for TypeScript (pre-existing). llmsFull.ts keeps its own SITE_ORIGIN copy on purpose, since it belongs to MRTG-1425.
+Files: src/utils/seo/constants.ts, src/utils/seo/url.ts, src/__tests__/utils/seoUrl.test.ts, src/components/common/Head/Head.tsx, gatsby-ssr.tsx, src/pages/press/index.tsx, src/pages/resources/index.tsx
+Next: Explain 1b to the user and wait for approval before writing code.
+
+## 2026-09-16 — feat/structured-schema (step 1b: schema builders)
+Done: Added src/utils/seo/schema.ts with organizationSchema, webSiteSchema, webPageSchema (WebPage, CollectionPage, ContactPage) and articleSchema (Article, BlogPosting). Rules built in: company and website always referenced by @id, URLs via toAbsoluteUrl, blank or null values omitted, dateModified only when datePublished exists. gatsby-ssr.tsx now calls organizationSchema(); a script compared the output with the Sep 14 public/index.html and it is byte-identical. Tests written first and confirmed failing; Jest 199/199 pass (15 new).
+Left: 1c (SeoMeta and JsonLd components), 1d (migrate pages and emit the WebSite node sitewide).
+Bugs/debt: gatsby-ssr.tsx is NOT in tsconfig "include", so `tsc -p .` never type-checks it. Reading the diff caught an import/local name clash there (renamed the local element to organizationSchemaScript). Consider adding gatsby-ssr.tsx and gatsby-browser to the include list (not done; out of scope).
+Files: src/utils/seo/schema.ts, src/__tests__/utils/seoSchema.test.ts, gatsby-ssr.tsx
+Next: Explain 1c to the user and wait for approval.
+
+## 2026-09-16 — feat/structured-schema (date data check, commit f2dd9c7)
+Done: Pulled real dates from Contentful master (production, per netlify.toml:26) through the read-only Delivery API. Case studies: 5 entries, 4 indexable, all createdAt 2025-05-21 or 2025-05-22, and 3 share updatedAt 2026-06-17, so the case-study.tsx comment saying dates are "spread across authoring dates" is false. Blog/static resources: 163 indexable, only 2 have publishDate (two 2023 press releases). createdAt clusters on 2022-10-21 (55 entries) and 2023-02-22 (59) confirm a migration. The 2 dated press releases have updatedAt 30 seconds apart on 2026-04-22 (a bulk touch). Neither template shows a date on the page.
+Left: Awaiting the user's decision: remove case-study dates, and possibly dateModified. 1c is still pending approval.
+Bugs/debt: The blog date code is correct but only affects 2 pages until editors fill in publishDate.
+Files: none (analysis only; scripts in the session scratchpad)
+Next: Get the user's decision on dates, then 1c.
+
+## 2026-09-16 — feat/structured-schema (date removal, user-approved)
+Done: Case-study Article no longer sends datePublished or dateModified; createdAt and updatedAt removed from its single-entry query and from the CaseStudy type. Blog Article keeps datePublished from publishDate but no longer sends dateModified; updatedAt removed from the query and TResource (resource.ts is now identical to main). The articleSchema recipe dropped its dateModified input: the test "never emits dateModified" failed first, then passed. Jest 200/200; tsc shows no new errors. The featured-items sort by createdAt in case-study.tsx (already on main, not SEO) is untouched.
+Left: 1c (SeoMeta and JsonLd components) awaiting approval. Content-team asks: fill publishDate on blogs, add publishDate to case studies, show dates on the page.
+Bugs/debt: none new.
+Files: src/templates/case-study.tsx, src/templates/blog.tsx, src/types/resource.ts, src/utils/seo/schema.ts, src/__tests__/utils/seoSchema.test.ts
+Next: Get the user's approval for 1c.
+
+## 2026-09-16 — feat/structured-schema (step 1c: SeoMeta and JsonLd components)
+Done: Added src/components/common/Seo/SeoMeta.tsx (title, description, canonical, og:*, twitter:*, robots; blank description omits the 3 description tags; noindex adds robots and drops canonical, the user-approved default) and JsonLd.tsx (one script per node, escaping <, >, &, U+2028 and U+2029). Tests first (failed on missing module), then 15/15 pass. A mutation check confirmed the separator test fails without the escaping. Full Jest 215/215; tsc shows no new errors. New files use relative imports because Jest has no alias mapping.
+Finding: Gatsby's Head SSR handler (gatsby/cache-dir/head/head-export-handler-for-ssr.js:83-90) re-parses head HTML and writes script bodies from entity-decoded text. A simulation confirmed the CURRENT pattern `<script type="application/ld+json">{JSON.stringify(x)}</script>` outputs a raw `</script>` when content contains one. That corrects my earlier claim that the pattern was safe. JsonLd output survives the same pipeline with JSON intact.
+Left: 1d (migrate pages). Nothing uses the components yet.
+Bugs/debt: git status shows earlier changes as staged (A/M in the index). I ran no git add; the user or tooling staged them.
+Files: src/components/common/Seo/SeoMeta.tsx, src/components/common/Seo/JsonLd.tsx, src/__tests__/components/seo.test.tsx
+Next: Explain 1d batch 1 (press, resources, blog, case-study, plus the WebSite node) and wait for approval.
+
+## 2026-09-16 — feat/structured-schema (step 1d batch 1: first pages on SeoMeta/JsonLd)
+Done: gatsby-ssr.tsx emits Organization and WebSite through JsonLd. /press/ and /resources/ use SeoMeta plus webPageSchema(CollectionPage). The blog and case-study templates use SeoMeta plus articleSchema, which gives them a canonical tag (only when indexable) and drops empty description tags; they no longer import layouts/SEO/SEO. Blog stays "Article", NOT "BlogPosting" as proposed, because the template also renders press releases, webinars and /field/ FAQ entries. Jest 215/215.
+CORRECTION: `npx tsc --noEmit -p .` stops at the 3 TS2688 errors (empty stub packages @types/dompurify, @types/mixpanel-browser, @types/react-pdf) and checks NO files; a deliberate-error probe went unreported. Every earlier "tsc: no errors in touched files" entry above is invalid. The working command is `npx tsc --noEmit -p . --types node,jest,react,react-dom` (probe reported). It shows 406 errors repo-wide, none in the new SEO files or in the Head sections of blog/case-study. The case-study.tsx sort error (`b.createdAt` on TDownloadableResource | CaseStudy) is pre-existing: main has the same code and types.
+Left: Gatsby build not run. Batch 2 (~14 static pages with inline Organization), Head.tsx template, then step 2 (FAQPage and Service).
+Bugs/debt: Type check effectively disabled repo-wide by the stub @types packages (406 hidden errors). The staged state from earlier was unstaged by someone else; nothing committed.
+Files: gatsby-ssr.tsx, src/pages/press/index.tsx, src/pages/resources/index.tsx, src/templates/blog.tsx, src/templates/case-study.tsx
+Next: Ask the user whether to run `npm run build` (runs gatsby clean, rewrites public/ and .cache; .env.production points at a non-master Contentful environment), then batch 2.
