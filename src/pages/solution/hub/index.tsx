@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import type { HeadFC } from "gatsby";
 import { getOgImage } from "utils/getOgImage";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { serviceSchema, webPageSchema } from "utils/seo/schema";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
@@ -80,35 +83,32 @@ export default SolutionCorePage;
 const CORE_TITLE = "Digital Hub | PHIL";
 const CORE_DESC =
   "PHIL combines a flexible digital hub, integrated pharmacy network, and script-level data to maximize patient access, adherence, and brand performance.";
-const CORE_URL = "https://phil.us/solution/hub/";
+const CORE_PATH = "/solution/hub/";
 const CORE_OG_IMAGE = getOgImage(null);
-const CORE_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": CORE_URL,
-  url: CORE_URL,
-  name: CORE_TITLE,
+const CORE_SERVICE = serviceSchema({
+  path: CORE_PATH,
+  name: "PHIL Digital Hub",
   description: CORE_DESC,
-  image: CORE_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
+const CORE_SCHEMA = [
+  webPageSchema({
+    path: CORE_PATH,
+    name: CORE_TITLE,
+    description: CORE_DESC,
+    image: CORE_OG_IMAGE,
+    mainEntity: CORE_SERVICE,
+  }),
+  CORE_SERVICE,
+];
 
 export const Head: HeadFC = () => (
   <>
-    <title>{CORE_TITLE}</title>
-    <meta name="description" content={CORE_DESC} />
-    <link rel="canonical" href={CORE_URL} />
-    <meta property="og:title" content={CORE_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={CORE_DESC} />
-    <meta property="og:image" content={CORE_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={CORE_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={CORE_TITLE} />
-    <meta name="twitter:description" content={CORE_DESC} />
-    <meta name="twitter:image" content={CORE_OG_IMAGE} />
-    <script type="application/ld+json">{CORE_SCHEMA}</script>
+    <SeoMeta
+      title={CORE_TITLE}
+      description={CORE_DESC}
+      path={CORE_PATH}
+      image={CORE_OG_IMAGE}
+    />
+    <JsonLd data={CORE_SCHEMA} />
   </>
 );

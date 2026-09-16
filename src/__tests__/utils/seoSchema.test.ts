@@ -1,6 +1,8 @@
 import {
   articleSchema,
+  faqPageSchema,
   organizationSchema,
+  serviceSchema,
   webPageSchema,
   webSiteSchema,
 } from "../../utils/seo/schema";
@@ -95,6 +97,81 @@ describe("webPageSchema", () => {
 
   test("omits a missing image", () => {
     expect(webPageSchema({ ...base, image: null })).not.toHaveProperty("image");
+  });
+
+  test("references its main entity by @id only", () => {
+    const service = serviceSchema({ path: "/solution/hub/", name: "PHIL Digital Hub" });
+
+    expect(webPageSchema({ ...base, mainEntity: service }).mainEntity).toEqual({
+      "@id": "https://phil.us/solution/hub/#service",
+    });
+  });
+
+  test("omits mainEntity when none is given", () => {
+    expect(webPageSchema(base)).not.toHaveProperty("mainEntity");
+  });
+});
+
+describe("faqPageSchema", () => {
+  const base = {
+    path: "/faqs",
+    name: "Frequently Asked Questions",
+    description: "Answers.",
+    questions: [
+      { question: "What does PHIL do?", answer: '<p>See <a href="/demo/">a demo</a>.</p>' },
+      { question: "How?", answer: "<ol><li>One</li><li>Two</li></ol>" },
+    ],
+  };
+
+  test("is an FAQPage carrying the same page identity as webPageSchema", () => {
+    const schema = faqPageSchema(base);
+
+    expect(schema["@type"]).toBe("FAQPage");
+    expect(schema["@id"]).toBe("https://phil.us/faqs/");
+    expect(schema.url).toBe("https://phil.us/faqs/");
+    expect(schema.publisher).toEqual(ORGANIZATION_REF);
+    expect(schema.isPartOf).toEqual({ "@id": "https://phil.us/#website" });
+  });
+
+  test("lists every question in order with a plain-text answer", () => {
+    expect(faqPageSchema(base).mainEntity).toEqual([
+      {
+        "@type": "Question",
+        name: "What does PHIL do?",
+        acceptedAnswer: { "@type": "Answer", text: "See a demo." },
+      },
+      {
+        "@type": "Question",
+        name: "How?",
+        acceptedAnswer: { "@type": "Answer", text: "One\nTwo" },
+      },
+    ]);
+  });
+});
+
+describe("serviceSchema", () => {
+  const base = {
+    path: "/solution/direct",
+    name: "PHIL Direct-to-Patient",
+    description: "Direct-to-Patient access.",
+  };
+
+  test("describes the service under an @id on its page url", () => {
+    expect(serviceSchema(base)).toEqual({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": "https://phil.us/solution/direct/#service",
+      name: "PHIL Direct-to-Patient",
+      description: "Direct-to-Patient access.",
+      url: "https://phil.us/solution/direct/",
+      provider: ORGANIZATION_REF,
+    });
+  });
+
+  test("omits a blank description", () => {
+    expect(serviceSchema({ ...base, description: "" })).not.toHaveProperty(
+      "description",
+    );
   });
 });
 

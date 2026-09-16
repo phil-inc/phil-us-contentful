@@ -1,4 +1,5 @@
 import { ORGANIZATION_ID, SITE_URL, WEBSITE_ID } from "./constants";
+import { htmlToText } from "./htmlToText";
 import { toAbsoluteUrl } from "./url";
 
 /** A schema.org JSON-LD node, ready for JSON.stringify. */
@@ -79,6 +80,8 @@ type WebPageInput = {
   name: string;
   description?: Maybe<string>;
   image?: Maybe<string>;
+  /** The node the page is about, e.g. a Service; referenced by its @id. */
+  mainEntity?: JsonLd;
 };
 
 export function webPageSchema({
@@ -87,6 +90,7 @@ export function webPageSchema({
   name,
   description,
   image,
+  mainEntity,
 }: WebPageInput): JsonLd {
   const url = toAbsoluteUrl(path);
 
@@ -100,6 +104,56 @@ export function webPageSchema({
     image,
     isPartOf: webSiteRef(),
     publisher: organizationRef(),
+    mainEntity: mainEntity && { "@id": mainEntity["@id"] },
+  });
+}
+
+type FaqPageInput = Omit<WebPageInput, "type" | "mainEntity"> & {
+  /** Answers are the HTML strings from src/data/faq-content.ts. */
+  questions: { question: string; answer: string }[];
+};
+
+/**
+ * FAQPage is a WebPage subtype, so it replaces the page's WebPage node rather
+ * than sitting beside it. Only /faqs/ uses it: the patients, providers and
+ * pharma pages show subsets of the same questions, and marking those up too
+ * would present one answer as belonging to several pages.
+ */
+export function faqPageSchema({ questions, ...page }: FaqPageInput): JsonLd {
+  return {
+    ...webPageSchema(page),
+    "@type": "FAQPage",
+    mainEntity: questions.map(({ question, answer }) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: { "@type": "Answer", text: htmlToText(answer) },
+    })),
+  };
+}
+
+type ServiceInput = {
+  /** The page that describes the service; its URL anchors the @id. */
+  path: string;
+  name: string;
+  description?: Maybe<string>;
+};
+
+/** A PHIL offering, provided by the sitewide organization. */
+export function serviceSchema({
+  path,
+  name,
+  description,
+}: ServiceInput): JsonLd {
+  const url = toAbsoluteUrl(path);
+
+  return withoutEmpty({
+    "@context": SCHEMA_CONTEXT,
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name,
+    description,
+    url,
+    provider: organizationRef(),
   });
 }
 
