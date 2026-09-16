@@ -6,13 +6,16 @@ import { Layout } from "layouts/Layout/Layout";
 import { TRUSTPILOT_SCORE } from "../../constants/trustpilot";
 import PageContext from "contexts/PageContext";
 import { getOgImage } from "utils/getOgImage";
+import { webPageSchema } from "utils/seo/schema";
 import HubspotForm from "components/common/HubspotForm/HubspotForm";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
 
 import * as classes from "./demo.module.css";
 import {
   DEMO_TITLE,
   DEMO_DESC,
-  DEMO_URL,
+  DEMO_PATH,
   DEMO_HERO,
   DEMO_BULLETS,
   DEMO_STATS_EYEBROW,
@@ -293,33 +296,21 @@ export default DemoPage;
 // ─── SEO ─────────────────────────────────────────────────────────────────────
 
 const DEMO_OG_IMAGE = getOgImage(null);
-const DEMO_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": DEMO_URL,
-  url: DEMO_URL,
+const DEMO_SCHEMA = webPageSchema({
+  path: DEMO_PATH,
   name: DEMO_TITLE,
   description: DEMO_DESC,
   image: DEMO_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{DEMO_TITLE}</title>
-    <meta name="description" content={DEMO_DESC} />
-    <link rel="canonical" href={DEMO_URL} />
-    <meta property="og:title" content={DEMO_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={DEMO_DESC} />
-    <meta property="og:image" content={DEMO_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={DEMO_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={DEMO_TITLE} />
-    <meta name="twitter:description" content={DEMO_DESC} />
-    <meta name="twitter:image" content={DEMO_OG_IMAGE} />
-    <script type="application/ld+json">{DEMO_SCHEMA}</script>
+    <SeoMeta
+      title={DEMO_TITLE}
+      description={DEMO_DESC}
+      path={DEMO_PATH}
+      image={DEMO_OG_IMAGE}
+    />
+    <JsonLd data={DEMO_SCHEMA} />
   </>
 );

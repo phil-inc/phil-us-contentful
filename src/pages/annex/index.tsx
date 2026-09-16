@@ -5,11 +5,14 @@ import { Link } from "gatsby";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import { getOgImage } from "utils/getOgImage";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { webPageSchema } from "utils/seo/schema";
 
 import {
   ANNEX_TITLE,
   ANNEX_DESC,
-  ANNEX_URL,
+  ANNEX_PATH,
   PRIVACY_PATH,
   PRIVACY_EMAIL,
   PHIL_HOME_URL,
@@ -702,33 +705,21 @@ const AnnexPage = () => (
 export default AnnexPage;
 
 const ANNEX_OG_IMAGE = getOgImage(null);
-const ANNEX_SCHEMA = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": ANNEX_URL,
-  url: ANNEX_URL,
+const ANNEX_SCHEMA = webPageSchema({
+  path: ANNEX_PATH,
   name: ANNEX_TITLE,
   description: ANNEX_DESC,
   image: ANNEX_OG_IMAGE,
-  publisher: { "@type": "Organization", name: "PHIL", url: "https://phil.us" },
 });
 
 export const Head: HeadFC = () => (
   <>
-    <title>{ANNEX_TITLE}</title>
-    <meta name="description" content={ANNEX_DESC} />
-    <link rel="canonical" href={ANNEX_URL} />
-    <meta property="og:title" content={ANNEX_TITLE} />
-    <meta property="og:type" content="website" />
-    <meta property="og:description" content={ANNEX_DESC} />
-    <meta property="og:image" content={ANNEX_OG_IMAGE} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content={ANNEX_URL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={ANNEX_TITLE} />
-    <meta name="twitter:description" content={ANNEX_DESC} />
-    <meta name="twitter:image" content={ANNEX_OG_IMAGE} />
-    <script type="application/ld+json">{ANNEX_SCHEMA}</script>
+    <SeoMeta
+      title={ANNEX_TITLE}
+      description={ANNEX_DESC}
+      path={ANNEX_PATH}
+      image={ANNEX_OG_IMAGE}
+    />
+    <JsonLd data={ANNEX_SCHEMA} />
   </>
 );
