@@ -62,7 +62,7 @@
     "js-search": "^2.0.1",
     "json-from-text": "^1.1.0",
     "lucide-react": "^1.14.0",
-    "marked": "^13.0.2",
+    "marked": "^18.0.11",
     "mixpanel-browser": "^2.53.0",
     "postcss": "^8.4.39",
     "react": "^18.3.1",
