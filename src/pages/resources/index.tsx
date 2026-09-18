@@ -637,7 +637,10 @@ const ResourcesPage: React.FC = () => {
     const parsed = parseFiltersFromSearch(location.search);
     if (parsed.topic !== topic) setTopic(parsed.topic);
     if (parsed.type !== type) setType(parsed.type);
-    if (parsed.search !== search) setSearch(parsed.search);
+    // The URL holds the search trimmed, so compare against the trimmed input:
+    // otherwise the debounced URL update would strip a space the user is still
+    // typing ("hello " → "hello").
+    if (parsed.search !== search.trim()) setSearch(parsed.search);
     if (parsed.page !== page) setPage(parsed.page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
