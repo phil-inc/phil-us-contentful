@@ -52,7 +52,6 @@ interface ResourceItem {
 ## Pagination
 - 9 items per page
 - Reuses `Pagination` component
-- Every card in `RESOURCES_DATA` is rendered into the HTML; cards outside the current filtered page carry the `hidden` attribute. Crawlers that don't run JavaScript (AI search bots) can reach all resources from this page, while visitors still see 9 at a time.
 
 ## Responsive Approach
 - Breakpoint at `$phil-breakpoint-lg` (80em / 1280px)
