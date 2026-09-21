@@ -29,17 +29,20 @@ export const wrapPageElement = ({element}) => {
 	);
 };
 
+// A paginated listing's pages, e.g. /resources/ and /resources/page/n/;
+// group 1 names the listing.
+const LISTING_PATH = /^\/(resources|press)(?:\/page\/\d+)?\/?$/;
+
 // Preserve scroll position when only the query string changes on the same page
-// (e.g. the Resources page updating ?topic=&type= as filters change). Without
+// (e.g. the Resources page updating ?topic=&type= as filters change), and when
+// moving between the pages of one listing, which share one layout. Without
 // this, Gatsby's default scroll behavior jumps to the top on every filter
-// selection. Real navigations to a different path still scroll normally.
+// selection or page change. Real navigations elsewhere still scroll normally.
 export const shouldUpdateScroll: GatsbyBrowser['shouldUpdateScroll'] = ({routerProps, prevRouterProps}) => {
-	const prevPath = prevRouterProps?.location?.pathname;
-	const nextPath = routerProps?.location?.pathname;
-	if (prevPath && nextPath && prevPath === nextPath) {
-		if (nextPath === '/resources' || nextPath === '/resources/' || nextPath === '/press' || nextPath === '/press/') {
-			return false;
-		}
+	const prevListing = LISTING_PATH.exec(prevRouterProps?.location?.pathname ?? '')?.[1];
+	const nextListing = LISTING_PATH.exec(routerProps?.location?.pathname ?? '')?.[1];
+	if (prevListing && prevListing === nextListing) {
+		return false;
 	}
 
 	return true;

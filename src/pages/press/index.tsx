@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from "react";
+import React from "react";
 import type { HeadFC } from "gatsby";
 import { navigate } from "gatsby";
 import { useLocation } from "@reach/router";
@@ -11,15 +11,13 @@ import { SeoMeta } from "components/common/Seo/SeoMeta";
 import { JsonLd } from "components/common/Seo/JsonLd";
 import { getOgImage } from "utils/getOgImage";
 import { webPageSchema } from "utils/seo/schema";
+import { pagedPath, pageFromPagedPath } from "utils/pagedPath";
 
-import { PRESS_DATA } from "./_data";
+import { PRESS_DATA, PRESS_PER_PAGE, PRESS_TOTAL_PAGES } from "./_data";
 import * as classes from "./press.module.css";
 
 const FEATURED_RELEASES = PRESS_DATA.filter((d) => d.type === "Release").slice(0, 3);
 const FEATURED_THOUGHT = PRESS_DATA.filter((d) => d.type === "Thought Leadership").slice(0, 3);
-
-const ITEMS_PER_PAGE = 6;
-const TOTAL_PAGES = Math.ceil(PRESS_DATA.length / ITEMS_PER_PAGE);
 
 const THOUGHT_GRADIENTS: string[] = [classes.tidewater, classes.meadow, classes.forest];
 
@@ -33,60 +31,13 @@ const ArrowIcon = () => (
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-function parsePageFromSearch(search: string): number {
-  try {
-    const params = new URLSearchParams(search.replace(/^\?/, ""));
-    const raw = params.get("page");
-    if (!raw) return 1;
-    const parsed = Number(raw);
-    return Number.isInteger(parsed) && parsed >= 1 ? parsed : 1;
-  } catch {
-    return 1;
-  }
-}
-
-function serializePageToSearch(page: number): string {
-  if (page <= 1) return "";
-  return `?page=${page}`;
-}
-
 const PressPage: React.FC = () => {
+  // Each page number is its own static page (/press/page/n/, built by
+  // gatsby-node.ts), so the page comes from the path, which the server also
+  // sees: the HTML of each page carries that page's items for crawlers.
   const location = useLocation();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const initialPage = useMemo(() => parsePageFromSearch(location.search), []);
-  const [page, setPage] = useState(initialPage);
-  const gridRef = useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    if (initialPage > 1) {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Sync state → URL
-  React.useEffect(() => {
-    const targetSearch = serializePageToSearch(page);
-    const currentSearch = location.search === "?" ? "" : location.search;
-    if (targetSearch === currentSearch) return;
-    const target = `${location.pathname}${targetSearch}`;
-    void navigate(target);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
-  // Sync URL → state (Back/Forward)
-  React.useEffect(() => {
-    const parsed = parsePageFromSearch(location.search);
-    if (parsed !== page) setPage(parsed);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
-
-  const currentPage = Math.min(page, TOTAL_PAGES);
-  const paged = PRESS_DATA.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const currentPage = Math.min(pageFromPagedPath(PRESS_PATH, location.pathname), PRESS_TOTAL_PAGES);
+  const paged = PRESS_DATA.slice((currentPage - 1) * PRESS_PER_PAGE, currentPage * PRESS_PER_PAGE);
 
   return (
     <PageContext.Provider value={{ title: "Press" }}>
@@ -164,7 +115,7 @@ const PressPage: React.FC = () => {
         </section>
 
         {/* All Coverage */}
-        <section className={classes.pressSection} ref={gridRef}>
+        <section className={classes.pressSection}>
           <div className={classes.pressInner}>
             <div className={classes.pressEyebrow}>All Coverage</div>
             <div className={classes.pressGrid}>
@@ -184,7 +135,12 @@ const PressPage: React.FC = () => {
                 </a>
               ))}
             </div>
-            <Pagination currentPage={currentPage} totalPages={TOTAL_PAGES} onPageChange={setPage} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={PRESS_TOTAL_PAGES}
+              onPageChange={(p) => void navigate(pagedPath(PRESS_PATH, p))}
+              getPageHref={(p) => pagedPath(PRESS_PATH, p)}
+            />
           </div>
         </section>
 
@@ -207,28 +163,30 @@ const PRESS_DESC =
 /**
  * This page and /insights/press-releases/ both return 200 with similar content,
  * so the canonical SeoMeta emits is what tells a crawler which of the two is
- * authoritative.
+ * authoritative. Serves /press/ and every /press/page/n/: each page is its own
+ * canonical, as Google asks of paginated listings.
  */
 const PRESS_PATH = "/press/";
 const PRESS_OG_IMAGE = getOgImage(null);
 
-/** CollectionPage rather than WebPage: this indexes press items rather than being an article itself. */
-const PRESS_SCHEMA = webPageSchema({
-  type: "CollectionPage",
-  path: PRESS_PATH,
-  name: PRESS_TITLE,
-  description: PRESS_DESC,
-  image: PRESS_OG_IMAGE,
-});
+export const Head: HeadFC = ({ location }) => {
+  const page = pageFromPagedPath(PRESS_PATH, location.pathname);
+  const path = pagedPath(PRESS_PATH, page);
+  const title = page > 1 ? `Press – Page ${page} of ${PRESS_TOTAL_PAGES} | PHIL` : PRESS_TITLE;
 
-export const Head: HeadFC = () => (
-  <>
-    <SeoMeta
-      title={PRESS_TITLE}
-      description={PRESS_DESC}
-      path={PRESS_PATH}
-      image={PRESS_OG_IMAGE}
-    />
-    <JsonLd data={PRESS_SCHEMA} />
-  </>
-);
+  return (
+    <>
+      <SeoMeta title={title} description={PRESS_DESC} path={path} image={PRESS_OG_IMAGE} />
+      {/* CollectionPage rather than WebPage: this indexes press items rather than being an article itself. */}
+      <JsonLd
+        data={webPageSchema({
+          type: "CollectionPage",
+          path,
+          name: title,
+          description: PRESS_DESC,
+          image: PRESS_OG_IMAGE,
+        })}
+      />
+    </>
+  );
+};

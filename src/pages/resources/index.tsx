@@ -15,12 +15,15 @@ import { webPageSchema } from "utils/seo/schema";
 import { RESOURCES_DATA, TOPICS, TYPES } from "./_data";
 import { PRESS_DATA } from "../press/_data";
 import {
-  parseFiltersFromSearch,
+  parseResourcesLocation,
   filterResources,
-  buildFilterUrl,
-  serializeFiltersToSearch,
+  buildResourcesUrl,
   titleForSelection,
   descriptionForSelection,
+  RESOURCES_PER_PAGE,
+  RESOURCES_TOTAL_PAGES,
+  pageFromResourcesPath,
+  resourcesPagePath,
 } from "./_urlFilters";
 import * as classes from "./resources.module.css";
 
@@ -101,7 +104,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, value, placeholder, onChan
 };
 
 const CARD_ART_CYCLE = [classes.cardArtForest, classes.cardArtMeadow, classes.cardArtHeritage, classes.cardArtTidewater];
-const PER_PAGE = 9;
+const PER_PAGE = RESOURCES_PER_PAGE;
 
 const PRESS_ART_CYCLE = [classes.pressArtA, classes.pressArtB, classes.pressArtC, classes.pressArtD];
 
@@ -542,14 +545,41 @@ const PressSection: React.FC = () => {
   );
 };
 
+/**
+ * Search box handoff across a listing-page switch. Editing the search on page
+ * 2+ returns to page 1, /resources/: a different Gatsby page, so this component
+ * remounts. The URL can't carry what the box held (a trailing space is trimmed
+ * from it, and keys typed while the page loads land in the old instance), so
+ * the box's live value is kept here and handed to the new instance.
+ *
+ * One-shot: `searchHandoffPending` is set just before that navigation and
+ * cleared by the mount that takes it. The `focusSearch` flag in history state
+ * stays in the entry, so without this a later Back or reload of that entry
+ * would refocus the box (opening a phone's keyboard) and reuse a stale value.
+ */
+let searchDraft = "";
+let searchHandoffPending = false;
+
+/** The search box's value handed over by the previous listing page, once; else null. */
+function takeSearchHandoff(focusSearch: boolean): string | null {
+  const handoff = focusSearch && searchHandoffPending ? searchDraft : null;
+  searchHandoffPending = false;
+  return handoff;
+}
+
 const ResourcesPage: React.FC = () => {
   const location = useLocation();
 
-  // Lazy initializer runs once on mount. On the server `location.search` is ""
-  // so we start unfiltered (matches the static HTML). On the client's first
-  // render it reads the real query string and applies the filter immediately.
+  // Lazy initializer runs once on mount. The page number comes from the path
+  // (/resources/page/n/), which the server also sees, so the static HTML has
+  // that page's cards. The filters come from the query string: "" on the
+  // server, so the HTML is unfiltered, and read on the client's first render.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const initial = useMemo(() => parseFiltersFromSearch(location.search), []);
+  const initial = useMemo(() => {
+    const parsed = parseResourcesLocation(location.pathname, location.search);
+    const handedSearch = takeSearchHandoff(Boolean((location.state as { focusSearch?: boolean } | null)?.focusSearch));
+    return { ...parsed, search: handedSearch ?? parsed.search, focusSearch: handedSearch !== null };
+  }, []);
 
   const [hadUnavailableFilter, setHadUnavailableFilter] = useState(() => {
     let rawTopic = "";
@@ -571,6 +601,28 @@ const ResourcesPage: React.FC = () => {
   const [search, setSearch] = useState(initial.search);
   const [page, setPage] = useState(initial.page);
   const gridRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // A handoff this instance set but no new mount took (the router can keep this
+  // instance for the next listing page instead of remounting it) must not
+  // linger for a later Back into that entry, so drop it on every location change.
+  React.useEffect(() => {
+    searchHandoffPending = false;
+  }, [location.key]);
+
+  // A search handed over from page 2+ (see takeSearchHandoff): put the cursor
+  // back in the box. After a tick, because the router moves focus to the new
+  // page once it renders.
+  React.useEffect(() => {
+    if (!initial.focusSearch) return;
+    const handle = setTimeout(() => {
+      const input = searchInputRef.current;
+      input?.focus({ preventScroll: true });
+      input?.setSelectionRange(input.value.length, input.value.length);
+    }, 0);
+    return () => clearTimeout(handle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   React.useEffect(() => {
     if (initial.topic || initial.type || initial.search) {
@@ -589,43 +641,47 @@ const ResourcesPage: React.FC = () => {
   );
 
   // Single source of URL sync for all filter dimensions (topic, type, search,
-  // page). Each navigate() rewrites the whole query string, so one effect owns
-  // it to avoid two effects clobbering each other's params. This effect is
-  // keyed on STATE only (not location), so it reacts to the user changing a
-  // filter — not to the URL changing underneath it (Back/Forward is handled by
-  // the reconciliation effect below).
+  // page). The page is the path (/resources/page/n/) and the filters are the
+  // query string; one effect owns the whole URL so two effects never clobber
+  // each other. This effect is keyed on STATE only (not location), so it
+  // reacts to the user changing a filter — not to the URL changing underneath
+  // it (Back/Forward is handled by the reconciliation effect below).
   //
   // Strategy by what changed:
-  // - Only the free-text `search` differs from the URL → DEBOUNCED + REPLACE,
-  //   so typing a word doesn't flood history with one entry per keystroke.
+  // - Only the free-text `search` differs from the URL → DEBOUNCED, so typing a
+  //   word doesn't flood history with one entry per keystroke. REPLACE, except
+  //   when it leaves page 2+ for page 1: PUSH, so Back returns to that page.
+  //   Compared trimmed, as the URL holds it: a trailing space in the box is not
+  //   a pending edit, so it must not delay a page click.
   // - Anything else (topic, type, page) → IMMEDIATE + PUSH, so each discrete
   //   choice is its own history entry and Back restores it.
+  // A navigation to another page remounts this component; if the user is
+  // typing in the search box, its value and focus are handed over (see
+  // takeSearchHandoff).
   // Never navigates when the canonical target already equals the current URL,
   // which prevents loops and no-ops on mount.
   React.useEffect(() => {
-    const sel = { topic, type, search, page };
-    const targetSearch = serializeFiltersToSearch(sel);
+    const target = buildResourcesUrl({ topic, type, search, page });
     const currentSearch = location.search === "?" ? "" : location.search;
-    if (targetSearch === currentSearch) {
+    if (target === `${location.pathname}${currentSearch}`) {
       return;
     }
 
-    const target = buildFilterUrl(location.pathname, sel);
-    const current = parseFiltersFromSearch(location.search);
-    const onlySearchDiffers =
-      current.topic === topic &&
-      current.type === type &&
-      current.page === page &&
-      current.search !== search;
+    const current = parseResourcesLocation(location.pathname, location.search);
+    const samePage = current.page === page;
+    const go = (replace: boolean) => {
+      const focusSearch = !samePage && document.activeElement === searchInputRef.current;
+      if (focusSearch) searchHandoffPending = true;
+      void navigate(target, { replace, state: { focusSearch } });
+    };
 
+    const onlySearchDiffers = current.topic === topic && current.type === type && current.search !== search.trim();
     if (onlySearchDiffers) {
-      const handle = setTimeout(() => {
-        void navigate(target, { replace: true });
-      }, 400);
+      const handle = setTimeout(() => go(samePage), 400);
       return () => clearTimeout(handle);
     }
 
-    void navigate(target);
+    go(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topic, type, search, page]);
 
@@ -638,7 +694,7 @@ const ResourcesPage: React.FC = () => {
   // single pass rather than ping-ponging. (Navigating away to a card and back
   // remounts the page, where the lazy initializer already restores state.)
   React.useEffect(() => {
-    const parsed = parseFiltersFromSearch(location.search);
+    const parsed = parseResourcesLocation(location.pathname, location.search);
     if (parsed.topic !== topic) setTopic(parsed.topic);
     if (parsed.type !== type) setType(parsed.type);
     // The URL holds the search trimmed, so compare against the trimmed input:
@@ -649,15 +705,21 @@ const ResourcesPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
+  const isFiltered = topic || type || search;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const currentPage = Math.min(page, totalPages);
+  const paged = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+
   // Layer dynamic, filter-aware metadata on top of the static `Head` export.
   // Runs only on the client (a `useEffect` never executes during SSR/SSG), so
   // crawlers fetching raw HTML still see the build-time base title/description,
   // while human visitors and JS-rendering crawlers get the filtered values.
   // The helpers apply topic-over-type precedence and return the base defaults
   // for an empty/invalid selection, so this restores defaults when no valid
-  // filter is active (R8.1–R8.7).
+  // filter is active (R8.1–R8.7). Past page 1 the title also names the page,
+  // matching the static Head of /resources/page/n/.
   React.useEffect(() => {
-    const title = titleForSelection({ topic, type });
+    const title = titleForSelection({ topic, type, page: currentPage, totalPages });
     const description = descriptionForSelection({ topic, type });
     document.title = title;
     let metaDesc = document.querySelector('meta[name="description"]');
@@ -667,12 +729,7 @@ const ResourcesPage: React.FC = () => {
       document.head.appendChild(metaDesc);
     }
     metaDesc.setAttribute("content", description);
-  }, [topic, type]);
-
-  const isFiltered = topic || type || search;
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
-  const currentPage = Math.min(page, totalPages);
-  const paged = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+  }, [topic, type, currentPage, totalPages]);
 
   const handleFilterChange = useCallback(() => {
     setPage(1);
@@ -698,7 +755,7 @@ const ResourcesPage: React.FC = () => {
   // Dropdown / search handlers — update in place, no scroll.
   const setTopicFilter = (v: string) => { setTopic(v); handleFilterChange(); };
   const setTypeFilter = (v: string) => { setType(v); handleFilterChange(); };
-  const setSearchFilter = (v: string) => { setSearch(v); handleFilterChange(); };
+  const setSearchFilter = (v: string) => { searchDraft = v; setSearch(v); handleFilterChange(); };
 
   // "Explore topics" chip handlers — set the filter, then scroll to results.
   const selectTopicChip = (v: string) => { setTopicFilter(v); scrollToResults(); };
@@ -814,7 +871,7 @@ const ResourcesPage: React.FC = () => {
           </div>
           <div className={classes.filterGroup}>
             <label className={classes.filterLabel}>Search</label>
-            <input className={classes.filterInput} type="text" placeholder="I'm looking for…" value={search} onChange={(e) => setSearchFilter(e.target.value)} />
+            <input ref={searchInputRef} className={classes.filterInput} type="text" placeholder="I'm looking for…" value={search} onChange={(e) => setSearchFilter(e.target.value)} />
             <svg className={classes.filterIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
           </div>
         </div>
@@ -871,7 +928,12 @@ const ResourcesPage: React.FC = () => {
           <div className={classes.countText}>
             Showing <em className={classes.countTextBold}>{Math.min((currentPage - 1) * PER_PAGE + 1, filtered.length)}–{Math.min(currentPage * PER_PAGE, filtered.length)}</em> of <em className={classes.countTextBold}>{filtered.length}</em> resources
           </div>
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setPage}
+            getPageHref={(p) => buildResourcesUrl({ topic, type, search, page: p })}
+          />
         </div>
 
         {/* Press section */}
@@ -889,35 +951,39 @@ const ResourcesPage: React.FC = () => {
 
 export default ResourcesPage;
 
-const RESOURCES_TITLE = "Resources | PHIL";
 const RESOURCES_DESC =
   "Explore PHIL's library of reports, webinars, blogs, and press coverage on patient access, direct-to-patient programs, and pharmaceutical commercialization.";
 
-/**
- * This page and /insights/resources/ both return 200 with similar content, so
- * the canonical SeoMeta emits is what tells a crawler which of the two is
- * authoritative.
- */
-const RESOURCES_PATH = "/resources/";
 const RESOURCES_OG_IMAGE = getOgImage(null);
 
-/** CollectionPage rather than WebPage: this indexes the resource library rather than being an article itself. */
-const RESOURCES_SCHEMA = webPageSchema({
-  type: "CollectionPage",
-  path: RESOURCES_PATH,
-  name: RESOURCES_TITLE,
-  description: RESOURCES_DESC,
-  image: RESOURCES_OG_IMAGE,
-});
+/**
+ * Serves /resources/ and every /resources/page/n/ (see gatsby-node.ts).
+ *
+ * Each page is its own canonical, as Google asks of paginated listings: page 2
+ * pointing at page 1 would tell crawlers to drop the cards only page 2 shows.
+ * /resources/ and /insights/resources/ both return 200 with similar content, so
+ * the canonical is also what marks this one as authoritative. Filter query
+ * strings are not part of the canonical: the static HTML behind them is the
+ * unfiltered page.
+ */
+export const Head: HeadFC = ({ location }) => {
+  const page = pageFromResourcesPath(location.pathname);
+  const path = resourcesPagePath(page);
+  const title = titleForSelection({ topic: "", type: "", page, totalPages: RESOURCES_TOTAL_PAGES });
 
-export const Head: HeadFC = () => (
-  <>
-    <SeoMeta
-      title={RESOURCES_TITLE}
-      description={RESOURCES_DESC}
-      path={RESOURCES_PATH}
-      image={RESOURCES_OG_IMAGE}
-    />
-    <JsonLd data={RESOURCES_SCHEMA} />
-  </>
-);
+  return (
+    <>
+      <SeoMeta title={title} description={RESOURCES_DESC} path={path} image={RESOURCES_OG_IMAGE} />
+      {/* CollectionPage rather than WebPage: this indexes the resource library rather than being an article itself. */}
+      <JsonLd
+        data={webPageSchema({
+          type: "CollectionPage",
+          path,
+          name: title,
+          description: RESOURCES_DESC,
+          image: RESOURCES_OG_IMAGE,
+        })}
+      />
+    </>
+  );
+};
