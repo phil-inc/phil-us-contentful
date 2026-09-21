@@ -103,3 +103,12 @@ export const PRESS_DATA: PressItem[] = [
     url: "https://www.businesswire.com/news/home/20230109005280/en/Phil-Inc.-Adds-Duchesnay-USAs-Womens-Healthcare-Product-to-Its-Patient-Access-Platform",
   },
 ];
+
+/** Items per page of the All Coverage grid. */
+export const PRESS_PER_PAGE = 6;
+
+/**
+ * Pages in the /press/ listing. gatsby-node.ts builds /press/page/2/ through
+ * this page, so it grows with PRESS_DATA.
+ */
+export const PRESS_TOTAL_PAGES = Math.max(1, Math.ceil(PRESS_DATA.length / PRESS_PER_PAGE));

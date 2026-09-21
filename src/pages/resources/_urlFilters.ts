@@ -1,4 +1,26 @@
-import { TOPICS, TYPES, type ResourceItem } from "./_data";
+import { RESOURCES_DATA, TOPICS, TYPES, type ResourceItem } from "./_data";
+// Relative import: gatsby-node.ts and Jest load this file, and neither resolves
+// the gatsby-plugin-root-import aliases.
+import { pagedPath, pageFromPagedPath } from "../../utils/pagedPath";
+
+/** Cards per page of the Resources grid. */
+export const RESOURCES_PER_PAGE = 9;
+
+/**
+ * Pages in the unfiltered listing. gatsby-node.ts builds /resources/page/2/
+ * through this page, so it grows with RESOURCES_DATA.
+ */
+export const RESOURCES_TOTAL_PAGES = Math.max(1, Math.ceil(RESOURCES_DATA.length / RESOURCES_PER_PAGE));
+
+/** Page 1 is /resources/ and page n is /resources/page/n/ (see utils/pagedPath). */
+export function resourcesPagePath(page: number): string {
+  return pagedPath("/resources/", page);
+}
+
+/** The page number a listing path stands for; 1 for /resources/ and anything else. */
+export function pageFromResourcesPath(pathname: string): number {
+  return pageFromPagedPath("/resources/", pathname);
+}
 
 /**
  * A sanitized filter selection for the Resources page.
@@ -15,7 +37,7 @@ export type FilterSelection = {
   type: string;
   /** `""` for no search, otherwise the free-text search query. */
   search: string;
-  /** The 1-based pagination page. `1` is the default and is omitted from the URL. */
+  /** The 1-based pagination page. It lives in the path (/resources/page/n/), not the query. */
   page: number;
 };
 
@@ -59,18 +81,23 @@ export function parseFiltersFromSearch(search: string): FilterSelection {
   };
 }
 
+/** The selection a listing URL shows: filters from the query, page from the path. */
+export function parseResourcesLocation(pathname: string, search: string): FilterSelection {
+  return { ...parseFiltersFromSearch(search), page: pageFromResourcesPath(pathname) };
+}
+
 /**
- * Serialize a {@link FilterSelection} into a canonical search string.
+ * Serialize a {@link FilterSelection}'s filters into a canonical search string.
  *
  * - Emits only non-empty fields, always in the fixed order `topic`, `type`,
- *   `search`, then `page`, so output is deterministic / byte-for-byte stable
- *   for a given selection.
+ *   then `search`, so output is deterministic / byte-for-byte stable for a
+ *   given selection.
  * - `topic`/`type` are only emitted when they are valid keys; `search` is
- *   emitted when non-empty (after trimming) and is URL-encoded; `page` is
- *   emitted only when greater than 1 (the default first page is omitted).
+ *   emitted when non-empty (after trimming) and is URL-encoded.
+ * - `page` is never emitted: it lives in the path (see {@link buildResourcesUrl}).
  * - Returns `""` for the no-filter (base) view.
  * - Otherwise returns a leading-`"?"` form such as `?topic=direct`,
- *   `?topic=direct&type=casestudy`, or `?search=adherence&page=2`.
+ *   `?topic=direct&type=casestudy`, or `?search=adherence`.
  */
 export function serializeFiltersToSearch(selection: FilterSelection): string {
   const parts: string[] = [];
@@ -88,10 +115,6 @@ export function serializeFiltersToSearch(selection: FilterSelection): string {
     parts.push(`search=${encodeURIComponent(trimmedSearch)}`);
   }
 
-  if (Number.isInteger(selection.page) && selection.page > 1) {
-    parts.push(`page=${selection.page}`);
-  }
-
   if (parts.length === 0) {
     return "";
   }
@@ -100,19 +123,11 @@ export function serializeFiltersToSearch(selection: FilterSelection): string {
 }
 
 /**
- * Combine a pathname with the serialized search for a selection.
- *
- * If the serialized search is `""` (the base/no-filter view), the pathname is
- * returned unchanged.
+ * The URL of a selection: the page's path plus its filters, such as
+ * `/resources/`, `/resources/page/2/`, or `/resources/page/2/?topic=direct`.
  */
-export function buildFilterUrl(pathname: string, selection: FilterSelection): string {
-  const search = serializeFiltersToSearch(selection);
-
-  if (search === "") {
-    return pathname;
-  }
-
-  return `${pathname}${search}`;
+export function buildResourcesUrl(selection: FilterSelection): string {
+  return `${resourcesPagePath(selection.page)}${serializeFiltersToSearch(selection)}`;
 }
 
 /**
@@ -237,15 +252,24 @@ function labelForSelection(selection: Pick<FilterSelection, "topic" | "type">): 
  * type (R8.4). The returned string always CONTAINS the topic/type display name
  * (R8.1, R8.2). When no valid filter is present, returns {@link BASE_TITLE}
  * (R8.3, R8.7).
+ *
+ * Past page 1 the title names the page ("Resources – Page 2 of 12 | PHIL"), so
+ * each /resources/page/n/ has a title of its own rather than twelve copies of
+ * page 1's.
  */
-export function titleForSelection(selection: Pick<FilterSelection, "topic" | "type">): string {
+export function titleForSelection(
+  selection: Pick<FilterSelection, "topic" | "type"> & { page?: number; totalPages?: number },
+): string {
   const label = labelForSelection(selection);
+  const { page = 1, totalPages } = selection;
 
-  if (label === null) {
-    return BASE_TITLE;
+  if (page <= 1) {
+    return label === null ? BASE_TITLE : `${label} Resources | PHIL`;
   }
 
-  return `${label} Resources | PHIL`;
+  const name = label === null ? "Resources" : `${label} Resources`;
+  const of = totalPages ? ` of ${totalPages}` : "";
+  return `${name} – Page ${page}${of} | PHIL`;
 }
 
 /**

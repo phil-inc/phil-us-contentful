@@ -7,6 +7,9 @@ import GenerateStaticPages from './src/strategies/GenerateStaticPages';
 import GenerateDownloadableResourcePages from './src/strategies/GenerateDownloadableResourcePages';
 import GenerateEventRegistrationPages from './src/strategies/GenerateEventRegistrationPages';
 import GenerateCaseStudyPages from './src/strategies/GenerateCaseStudyPages';
+import { RESOURCES_TOTAL_PAGES } from './src/pages/resources/_urlFilters';
+import { PRESS_TOTAL_PAGES } from './src/pages/press/_data';
+import { pagedPath } from './src/utils/pagedPath';
 
 import {RedirectConfig, RedirectFactory} from './src/factories/redirectFactory';
 
@@ -40,6 +43,25 @@ export const createPages: GatsbyNode['createPages'] = async function ({ actions,
     // Handle redirects
     const redirectFactory = new RedirectFactory(actions, redirectConfigurations);
     redirectFactory.createRedirects(resourceSubPages as string[]);
+};
+
+// Gatsby onCreatePage API
+// src/pages/resources/index.tsx and src/pages/press/index.tsx are page 1 of
+// paginated listings. Build pages 2..n from the same component at
+// <listing>/page/n/, so each has its own items in the static HTML for
+// crawlers. The component reads its page number from the path.
+const PAGINATED_LISTINGS: Record<string, number> = {
+    '/resources/': RESOURCES_TOTAL_PAGES,
+    '/press/': PRESS_TOTAL_PAGES,
+};
+
+export const onCreatePage: GatsbyNode['onCreatePage'] = ({ page, actions }) => {
+    const totalPages = PAGINATED_LISTINGS[page.path];
+    if (!totalPages) return;
+
+    for (let n = 2; n <= totalPages; n++) {
+        actions.createPage({ ...page, path: pagedPath(page.path, n) });
+    }
 };
 
 // Gatsby onPostBuild API
