@@ -527,6 +527,24 @@ from = "/resources/phil-blog"
 to = "/resources/?type=blog"
 status = 301
 
+# The Resources and Press listings' pages moved from <listing>/?page=n to
+# <listing>/page/n/. force: otherwise Netlify serves the existing
+# <listing>/index.html. No <listing>/page/1/ -> <listing>/ rule: Netlify
+# passes the query through, so ?page=1 would loop between the two.
+[[redirects]]
+from = "/resources/"
+to = "/resources/page/:page/"
+status = 301
+force = true
+query = {page = ":page"}
+
+[[redirects]]
+from = "/press/"
+to = "/press/page/:page/"
+status = 301
+force = true
+query = {page = ":page"}
+
 
 [[headers]]
   for = "/*"
