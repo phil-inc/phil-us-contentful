@@ -19,9 +19,12 @@ interface PressItem {
   description?: string;
   outlet: string;
   type: "Release" | "Thought Leadership";
+  date: string; // YYYY-MM-DD publish date, record-keeping only, not displayed
   url: string;
 }
 ```
+
+Keep `PRESS_DATA` newest first by `date`. `src/__tests__/pages/pressData.test.ts` fails if the order or a date format is wrong.
 
 ## Component List
 

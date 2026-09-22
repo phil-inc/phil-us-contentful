@@ -69,6 +69,20 @@ export const RESOURCES_DATA: ResourceItem[] = [
     buttonLabel: "Read",
   },
   {
+    title: "DTP Survey Findings: Patients Want Price Transparency and e-Commerce Experience",
+    topics: ["direct", "patient"],
+    type: "press",
+    url: "https://www.fiercepharma.com/marketing/patients-want-price-transparency-e-commerce-experience-pharma-dtp-platforms-survey",
+    buttonLabel: "Read",
+  },
+  {
+    title: "Beyond DTP 2.0: How Flexible Programs Power Best-in-Class Patient Experiences",
+    topics: ["direct", "patient"],
+    type: "press",
+    url: "https://www.drugchannels.net/2026/02/beyond-dtp-20-how-flexible-direct-to.html",
+    buttonLabel: "Read",
+  },
+  {
     title: "Bridging the Gap to Better Patient Outcomes: What HCPs Want from Pharma's Digital Access Channels",
     topics: ["direct", "field", "data"],
     type: "report",
