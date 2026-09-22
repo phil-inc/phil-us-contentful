@@ -95,3 +95,28 @@ Then, at the user's request, llmsFull.ts EXCLUDED_PATHS gained /demo/thank-you/,
 Left: Not rebuilt, so the sitemap XML and the new llms-full.txt are unverified in a real build. The /gtn/ landing page has no Head export (no title, description, canonical); no decision yet.
 Files: gatsby-config.ts, static/llms.txt, src/utils/llmsFull.ts, src/__tests__/utils/llmsFull.test.ts, Handover.md
 Next: The user rebuilds if they want the sitemap confirmed, then opens the PR from feat/structured-schema.
+
+## 2026-09-22 — feat/add-resource-link (MRTG-1458: press item dates)
+Done: Found publish dates for all 17 PRESS_DATA items. 12 come from page metadata (curl, or the browser for Fierce), 1 from the Life Science Leader page text, and 4 from Business Wire URL date prefixes (Business Wire blocks both curl and the browser). New items: Drug Channels "Beyond DTP 2.0" 2026-02-27; Fierce "DTP Survey" 2026-03-10 (the ticket says Apr 2026).
+Left: An uncommitted edit (not mine) adds both items at the TOP of press/_data.ts. By date they belong after Tenpoint (2026-04-02) and before Sprout (2026-01-08). Not yet added to resources/_data.ts. The Drug Channels title in the edit still has the ticket's double space / missing word.
+Bugs/debt: The existing PRESS_DATA order is not strictly by date (DiMe 04-27 sits above Pharm Commerce 08-11; LSL, Hidden GTN and DC Harnessing are out of order).
+Files: Handover.md
+Next: The user decides on placement and title, then edit both _data files.
+
+## 2026-09-22 — feat/add-resource-link (MRTG-1458: reviewed the user's press re-sort)
+Done: The user re-sorted press/_data.ts (staged). It matches publish-date order exactly: 17 entries (15 from HEAD with no field changed, plus the 2 new ones in positions 7-8). Jest 229/229. tsc 406, unchanged, with no errors in press, resources or customer-success.
+Left: The Drug Channels title is "How Flexible Programs…", but the live headline (page <title>) is "How Flexible Direct-to-Patient Programs Power Best-In-Class…". resources/_data.ts does not contain either new item yet (the /resources/ carousel gets them from PRESS_DATA; the filterable grid does not).
+Files: none by me (the user edited src/pages/press/_data.ts)
+Next: The user decides on the title and on the resources grid entries.
+
+## 2026-09-22 — feat/add-resource-link (MRTG-1458: resources grid entries)
+Done: Added both new articles to resources/_data.ts right after Tenpoint, the same slot as in press. type "press", topics ["direct","patient"], buttonLabel "Read". Title kept as the user's "How Flexible Programs…" (the user's decision; do not change it). RESOURCES_DATA now has 106 items; the new ones are at positions 6-7, so they show on grid page 1. Jest 229/229; tsc 406, unchanged, with none in pages/resources.
+Left: The page has not been rendered (no gatsby develop or build). Nothing is committed; the press change is staged by the user and the resources change is unstaged.
+Files: src/pages/resources/_data.ts, Handover.md
+Next: The user reviews the page and decides whether to commit.
+
+## 2026-09-22 — feat/add-resource-link (press date field, user-approved)
+Done: PressItem has a required `date` (YYYY-MM-DD, not displayed). All 17 PRESS_DATA items are filled from the verified dates; 5 carry a source comment (4 Business Wire URL dates, 1 Life Science Leader page text). New src/__tests__/pages/pressData.test.ts checks the date format and newest-first order. It failed first (TS2339, no date), then passed 2/2. A mutation check (Fierce date set to 2026-06-01) failed with a readable "X is below Y" message; restored. Outside the date lines and comments, the file matches the user's staged version exactly. press/SPEC.md documents the field. Full Jest 231/231; tsc 406, unchanged.
+Left: RESOURCES_DATA has no dates (curated order; deliberately left alone). Nothing committed; the page was not rendered.
+Files: src/pages/press/_data.ts, src/pages/press/SPEC.md, src/__tests__/pages/pressData.test.ts, Handover.md
+Next: The user reviews and decides on a commit for MRTG-1458.
