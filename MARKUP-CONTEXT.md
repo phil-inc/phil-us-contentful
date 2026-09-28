@@ -137,10 +137,16 @@ strip, rotating testimonials, a Trustpilot comparison strip, an ROI banner
 pages it links to (e.g. a specific brand's story) are still edited in
 Contentful.
 
-### Press — `/press/`
+### Press — `/press/` (and `/press/page/2/`, `/press/page/3/`, …)
 Press coverage hub. Hero, a "Latest Announcements" featured card section, a
 "Featured Thought Leadership" card section, a paginated "All Coverage" grid
 of every press item, and a closing "Book Demo" CTA.
+
+Each page of the "All Coverage" grid has its own URL: page 1 is `/press/`,
+page 2 is `/press/page/2/`, and so on. They are all the same page in code, so
+an annotation on `/press/page/3/` is routed exactly like one on `/press/`.
+The page count grows on its own as press items are added. (The old
+`/press/?page=2` links redirect to `/press/page/2/`.)
 
 **This page has no Contentful involvement whatsoever.** Every press item is a
 hardcoded entry in a content list that lives in the site repo (currently synced
@@ -150,10 +156,17 @@ URL — **is a code change and needs a Jira ticket.** Route it as a normal code
 ticket even when the card's URL points at an article or announcement page.
 Never mark a `/press/` annotation as "Contentful, not code".
 
-### Resources — `/resources/`
+### Resources — `/resources/` (and `/resources/page/2/`, `/resources/page/3/`, …)
 Resource Hub. Hero, a search + filter bar (by content type and theme tag),
 and a paginated grid of ~100 resources (reports, webinars, blogs, press),
-each linking out to its own content page. Above the grid sit three featured
+each linking out to its own content page.
+
+Each page of the grid has its own URL: page 1 is `/resources/`, page 2 is
+`/resources/page/2/`, and so on; filters stay in the query string (e.g.
+`/resources/page/2/?topic=direct`). They are all the same page in code, so an
+annotation on any `/resources/page/n/` is routed exactly like one on
+`/resources/`. The page count grows on its own as resources are added. (The
+old `/resources/?page=2` links redirect to `/resources/page/2/`.) Above the grid sit three featured
 resource cards. Lower down, an "In the news" strip reuses the same press
 items that appear on `/press/` — so a change to a press item shows up on both
 pages, and two annotations about "that press item" on the two different pages
