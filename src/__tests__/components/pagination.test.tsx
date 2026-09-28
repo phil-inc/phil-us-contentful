@@ -7,8 +7,8 @@ import Pagination from "../../components/common/Pagination/Pagination";
 jest.mock("../../components/common/Pagination/pagination.module.css", () => ({}));
 
 /**
- * Crawlers follow <a href> but never click buttons, so the Resources listing
- * passes getPageHref to get links. /press/ passes nothing and keeps buttons.
+ * Crawlers follow <a href> but never click buttons, so the Resources and Press
+ * listings pass getPageHref to get links. Without it, pages stay buttons.
  */
 
 const render = (props: Partial<React.ComponentProps<typeof Pagination>> = {}) =>

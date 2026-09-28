@@ -1,11 +1,12 @@
 # /press Page Spec
 
 ## Route
-`/press`
+`/press/` is page 1 of the All Coverage grid. Pages 2+ are `/press/page/n/`: static pages that `gatsby-node.ts` (`onCreatePage`) builds from this same component, up to `PRESS_TOTAL_PAGES` (in `_data.ts`, grows with `PRESS_DATA`). The page number comes from the path (`utils/pagedPath.ts`). `netlify.toml` 301s the old `/press/?page=n` to `/press/page/n/`; the page then drops the leftover `?page` from the URL.
 
 ## SEO
-- **Title:** Press | PHIL
+- **Title:** Press | PHIL on page 1; `Press – Page n of N | PHIL` on page 2+
 - **Description:** Read PHIL's latest news, announcements, and thought leadership on pharmacy innovation and direct-to-patient programs.
+- **Canonical:** each page is its own canonical (`/press/page/n/`), never page 1, so crawlers keep the items only that page shows. JSON-LD is `CollectionPage`, named after the page's title.
 
 ## Layout
 Shared site Layout (header + footer).
@@ -38,12 +39,12 @@ Keep `PRESS_DATA` newest first by `date`. `src/__tests__/pages/pressData.test.ts
 1. **Hero** — "PHIL in the press" headline, subtitle, abstract CSS/SVG art with spinning rings
 2. **Latest Announcements** — 3 heritage-gradient featured cards (most recent releases)
 3. **Featured Thought Leadership** — 3 gradient cards (tidewater, meadow, forest)
-4. **All Coverage** — Paginated grid of all 11 press cards (6 per page), client-side pagination
+4. **All Coverage** — Grid of every press item, `PRESS_PER_PAGE` (6) per page, one static page per page number (see Route)
 5. **DemoCta** — Reusable tidewater gradient CTA with "Book A Demo" linking to `/demo`
 
 ## Pagination Component
-- Props: `currentPage: number`, `totalPages: number`, `onPageChange: (page: number) => void`
-- Renders prev/next arrows + numbered page buttons
+- Props: `currentPage: number`, `totalPages: number`, `onPageChange: (page: number) => void`, `getPageHref?: (page: number) => string`
+- Renders prev/next arrows + numbered pages. With `getPageHref` (as on this page and `/resources/`) they are `<a href>` links, which crawlers follow; without it, buttons. A plain click still goes through `onPageChange`.
 - Active state styling, disabled state on boundaries
 
 ## DemoCta Component

@@ -1,11 +1,12 @@
 # /resources Page Spec
 
 ## Route
-`/resources`
+`/resources/` is page 1 of the grid. Pages 2+ are `/resources/page/n/`: static pages that `gatsby-node.ts` (`onCreatePage`) builds from this same component, up to `RESOURCES_TOTAL_PAGES` (in `_urlFilters.ts`, grows with `RESOURCES_DATA`). The page number comes from the path; filters (`topic`, `type`, `search`) stay in the query string, e.g. `/resources/page/2/?topic=direct`. `netlify.toml` 301s the old `/resources/?page=n` to `/resources/page/n/`; the page then drops the leftover `?page` from the URL.
 
 ## SEO
-- **Title:** Resources | PHIL
+- **Title:** Resources | PHIL on page 1; `Resources – Page n of N | PHIL` on page 2+ (static `Head`). On the client, an active topic/type filter changes `document.title` too (`titleForSelection`).
 - **Description:** Explore PHIL's library of reports, webinars, blogs, and press coverage on patient access, direct-to-patient programs, and pharmaceutical commercialization.
+- **Canonical:** each page is its own canonical (`/resources/page/n/`), never page 1, so crawlers keep the cards only that page shows. Filter query strings are never part of it: the static HTML behind them is unfiltered. JSON-LD is `CollectionPage`, named after the page's title.
 
 ## Layout
 Shared site Layout (header + footer).
@@ -50,8 +51,10 @@ interface ResourceItem {
 - External: `<a>` with `target="_blank" rel="noopener noreferrer"`
 
 ## Pagination
-- 9 items per page
-- Reuses `Pagination` component
+- `RESOURCES_PER_PAGE` (9) items per page
+- Reuses `Pagination` with `getPageHref`, so pages are `<a href>` links crawlers can follow; each link keeps the active filters
+- Moving between pages of the listing keeps the scroll position (`shouldUpdateScroll` in `gatsby-browser.tsx`)
+- Editing the search on page 2+ returns to `/resources/`, handing the typed value and focus to the new page
 
 ## Responsive Approach
 - Breakpoint at `$phil-breakpoint-lg` (80em / 1280px)
