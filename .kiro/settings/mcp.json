@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "pdq": {
+      "url": "https://default-pdq-product-agent-1-c6f0dknzu5.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp",
+      "oauth": {
+        "clientId": "51hov0utk07tqlb9jtad1immoh",
+        "redirectUri": "localhost:8765",
+        "oauthScopes": ["openid", "email", "profile"]
+      }
+    },
+    "JIRA": {
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    }
+  }
+}
