@@ -681,7 +681,9 @@ const ResourcesPage: React.FC = () => {
       return () => clearTimeout(handle);
     }
 
-    go(false);
+    // A ?page=n left by the netlify.toml 301 from /resources/?page=n (Netlify
+    // passes the query on) is only dropped: REPLACE, so Back doesn't return to it.
+    go(new URLSearchParams(location.search).has("page"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topic, type, search, page]);
 

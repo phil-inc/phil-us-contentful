@@ -108,5 +108,6 @@ Next: On a deploy preview, check that /resources/?page=2 and /press/?page=2 answ
 Done: Reviewed ca4c8dc. Jest 260/260. Checked gatsby/cache-dir/page-renderer.js:25: page elements are keyed by path, so each listing page remounts and the reconciliation effect keyed only on location.search misses nothing. Corrected the 2026-09-21 entry, which wrongly said there was no search-draft handoff.
 Left: Decide whether Handover.md belongs in the PR diff (it is in ca4c8dc). Decide whether to fix the ?page=1 / invalid-page 404s.
 Bugs/debt: Netlify query rules match only URLs whose query has exactly the listed params (Netlify redirect-options docs), so old filtered links such as /resources/?topic=x&page=2 skip the 301, get /resources/ page 1 of the filter, and lose the page number. Netlify passes the query through on 301, so a literal page=1 rule would loop.
-Files: Handover.md
-Next: Deploy-preview check of the ?page=n redirects.
+Then the user checked deploy-preview-869: /press?page=2 and /resources/?page=2 301 to /<listing>/page/2/?page=2 (200, canonical without the query). At the user's request both pages now drop the leftover page param with a history REPLACE: press gained a location effect; the resources URL-sync effect replaces instead of pushes when the URL carries page (this also removes a double-Back on resources). Jest 260/260, tsc 406 unchanged, none in these files. No unit test: the logic sits in page components that import CSS modules (AGENTS.md §6). Not run in a browser.
+Files: Handover.md, src/pages/press/index.tsx, src/pages/resources/index.tsx
+Next: On the next deploy preview, open /press/?page=2 and /resources/?page=2: the URL should end as /<listing>/page/2/, and one Back should return to the page visited before.

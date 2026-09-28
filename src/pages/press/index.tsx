@@ -39,6 +39,17 @@ const PressPage: React.FC = () => {
   const currentPage = Math.min(pageFromPagedPath(PRESS_PATH, location.pathname), PRESS_TOTAL_PAGES);
   const paged = PRESS_DATA.slice((currentPage - 1) * PRESS_PER_PAGE, currentPage * PRESS_PER_PAGE);
 
+  // The netlify.toml 301 from /press/?page=n passes its query on, so the page
+  // lands at /press/page/n/?page=n. Drop the stale param in place (replace, so
+  // Back doesn't return to it).
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (!params.has("page")) return;
+    params.delete("page");
+    const rest = params.toString();
+    void navigate(`${location.pathname}${rest ? `?${rest}` : ""}${location.hash}`, { replace: true });
+  }, [location.pathname, location.search, location.hash]);
+
   return (
     <PageContext.Provider value={{ title: "Press" }}>
       <Layout>
