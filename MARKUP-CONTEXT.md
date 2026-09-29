@@ -146,7 +146,8 @@ Each page of the "All Coverage" grid has its own URL: page 1 is `/press/`,
 page 2 is `/press/page/2/`, and so on. They are all the same page in code, so
 an annotation on `/press/page/3/` is routed exactly like one on `/press/`.
 The page count grows on its own as press items are added. (The old
-`/press/?page=2` links redirect to `/press/page/2/`.)
+`/press/?page=2` links redirect to `/press/page/2/`, and the retired
+`/insights/press-releases/` listing redirects to `/press/`.)
 
 **This page has no Contentful involvement whatsoever.** Every press item is a
 hardcoded entry in a content list that lives in the site repo (currently synced
@@ -166,7 +167,10 @@ Each page of the grid has its own URL: page 1 is `/resources/`, page 2 is
 `/resources/page/2/?topic=direct`). They are all the same page in code, so an
 annotation on any `/resources/page/n/` is routed exactly like one on
 `/resources/`. The page count grows on its own as resources are added. (The
-old `/resources/?page=2` links redirect to `/resources/page/2/`.) Above the grid sit three featured
+old `/resources/?page=2` links redirect to `/resources/page/2/`. The retired
+News & Insights listings `/insights/`, `/insights/resources/`,
+`/insights/phil-blog/` and `/insights/events/` redirect here too, so an
+annotation on one of those old pages is a `/resources/` ticket.) Above the grid sit three featured
 resource cards. Lower down, an "In the news" strip reuses the same press
 items that appear on `/press/` — so a change to a press item shows up on both
 pages, and two annotations about "that press item" on the two different pages

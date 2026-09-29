@@ -963,8 +963,8 @@ const RESOURCES_OG_IMAGE = getOgImage(null);
  *
  * Each page is its own canonical, as Google asks of paginated listings: page 2
  * pointing at page 1 would tell crawlers to drop the cards only page 2 shows.
- * /resources/ and /insights/resources/ both return 200 with similar content, so
- * the canonical is also what marks this one as authoritative. Filter query
+ * (The old /insights/resources/, /insights/phil-blog/ and /insights/events/
+ * listings 301 here; see netlify.toml.) Filter query
  * strings are not part of the canonical: the static HTML behind them is the
  * unfiltered page.
  */

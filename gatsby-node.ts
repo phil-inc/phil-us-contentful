@@ -11,38 +11,19 @@ import { RESOURCES_TOTAL_PAGES } from './src/pages/resources/_urlFilters';
 import { PRESS_TOTAL_PAGES } from './src/pages/press/_data';
 import { pagedPath } from './src/utils/pagedPath';
 
-import {RedirectConfig, RedirectFactory} from './src/factories/redirectFactory';
-
-// redirect configurations
-const redirectConfigurations: Record<string, RedirectConfig> = {
-    insights: {
-        fromPaths: ['/insights/', '/insights'],
-        toPath: (subPages: string[]) => {
-            const [firstSubPage] = subPages;
-            let redirectPath = '/';
-            if (firstSubPage) {
-                redirectPath = '/insights/' + firstSubPage + redirectPath;
-            }
-            return redirectPath;
-        }
-    },
-};
-
 // Gatsby createPages API
+// /insights/ and the retired /insights/<section>/ listings are redirected in
+// netlify.toml.
 export const createPages: GatsbyNode['createPages'] = async function ({ actions, graphql }) {
 
     // Handle static html creation
-    const [resourceSubPages] = await Promise.all([
-        new Promise(resolve => GenerateMainPages({ actions, graphql }, resolve)),
+    await Promise.all([
+        GenerateMainPages({ actions, graphql }),
         GenerateStaticPages({ actions, graphql }),
         GenerateDownloadableResourcePages({ actions, graphql }),
         GenerateEventRegistrationPages({ actions, graphql }),
         GenerateCaseStudyPages({ actions, graphql })
     ]);
-
-    // Handle redirects
-    const redirectFactory = new RedirectFactory(actions, redirectConfigurations);
-    redirectFactory.createRedirects(resourceSubPages as string[]);
 };
 
 // Gatsby onCreatePage API
