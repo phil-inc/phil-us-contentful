@@ -172,10 +172,9 @@ const PRESS_DESC =
   "Read PHIL's latest news, announcements, and thought leadership on pharmacy innovation and direct-to-patient programs.";
 
 /**
- * This page and /insights/press-releases/ both return 200 with similar content,
- * so the canonical SeoMeta emits is what tells a crawler which of the two is
- * authoritative. Serves /press/ and every /press/page/n/: each page is its own
- * canonical, as Google asks of paginated listings.
+ * Serves /press/ and every /press/page/n/: each page is its own canonical, as
+ * Google asks of paginated listings. (The old /insights/press-releases/
+ * listing 301s here; see netlify.toml.)
  */
 const PRESS_PATH = "/press/";
 const PRESS_OG_IMAGE = getOgImage(null);
