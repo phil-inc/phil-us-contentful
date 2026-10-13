@@ -1,0 +1,38 @@
+/* Values are copied from src/components/Blog/AuthorBlock/authorBlock.module.css so a migrated
+   post's author block looks the same as the Contentful one it replaces. */
+
+.authorHeading {
+  font-weight: bold;
+  font-size: 30px;
+  margin: 0;
+}
+
+.authorName {
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0;
+}
+
+.authorTitle {
+  color: #6b7979;
+  font-size: 16px;
+  margin: 0;
+  margin-bottom: 12px;
+}
+
+.authorBio {
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 12px;
+}
+
+.anchor {
+  color: #00827e;
+  text-decoration: none;
+}
+
+.text {
+  font-size: 18px;
+  line-height: 1.55;
+  font-family: Lato, sans-serif;
+}

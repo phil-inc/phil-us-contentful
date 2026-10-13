@@ -248,6 +248,94 @@ Multi-step interactive tool/form: user fills in brand economics, gets a
 personalized channel comparison report via email. Includes AICPA SOC 2 and
 HIPAA compliance badges.
 
+### Static blog and webinar posts — `/<slug>/`
+Blog posts and webinar pages that have been moved off Contentful. Each one is a
+page in code (`src/pages/_posts/<slug>/index.tsx`) that is **served at `/<slug>/`,
+not at `/_posts/<slug>/`**, so the file path and the URL differ. They all share
+one layout: the title, a floating hero graphic, the article, a "Share this
+article on" row, and a "Ready to learn more?" banner with a Contact us form.
+
+The article copy, its links, and the page's SEO title and description are edited
+in code, so a change to one of these posts needs a Jira ticket. Its old
+Contentful entry still exists but renders nowhere: editing it changes nothing on
+the site, so never route a change for these to Contentful. A change to the shared
+layout (the banner, the share row, the typography) is also code.
+
+Posts moved so far (72). The list in `src/constants/migratedStaticSlugs.ts` is
+authoritative; if the two ever disagree, that file wins.
+- `/transforming-the-patient-experience-with-a-strong-direct-to-consumer-program/`
+- `/are-traditional-hub-providers-keeping-pace-with-todays-consumers-and/`
+- `/three-ways-for-pharmaceutical-companies-to-improve-the-probability-of-launch-success/`
+- `/on-demand-webinar-capturing-actionable-metrics-to-improve-patient-and-brand/`
+- `/on-demand-webinar-innovative-strategies-to-streamline-the-access-journey-for/`
+- `/on-demand-webinar-delivering-on-direct-to-consumer-exceeding-patient/`
+- `/optimizing-your-field-team-to-maximize-patient-access-webinar/`
+- `/webinar-improving-patient-access-to-medications-by-simplifying-the/`
+- `/on-demand-webinar-tech-enabled-patient-access/`
+- `/integrating-telemedicine-into-your-pharmaceutical-brand-dtc-strategy/`
+- `/8-strategies-to-decrease-prescription-abandonment-and-improve-medication/`
+- `/is-your-patient-access-hub-a-strategic-partner/`
+- `/the-case-for-an-alternative-channel-strategy-in-2024-and-beyond/`
+- `/how-non-dispensing-pharmacies-can-improve-the-patient-access-journey/`
+- `/how-can-pharma-manufacturers-improve-patient-engagement-in-2025/`
+- `/proactive-steps-to-overcoming-the-top-3-patient-access-barriers-to-retail/`
+- `/5-ways-philrx-meets-patients-expectations-for-digital-healthcare/`
+- `/translating-data-into-actionable-insights-to-inform-your-patient-access/`
+- `/how-drug-manufacturers-can-evolve-their-provider-engagement-model-to-drive/`
+- `/the-evolving-role-of-retail-pharmacies-what-branded-retail-and-specialty/`
+- `/5-trends-set-to-impact-patient-access-to-prescription-therapy-in-2024/`
+- `/4-commercial-practices-shaping-the-future-of-life-sciences/`
+- `/8-patient-access-trends-pharma-leaders-should-consider-in-2025/`
+- `/digital-healths-role-in-transforming-how-healthcare-is-delivered/`
+- `/enhancing-your-patient-access-hub-to-drive-brand-success/`
+- `/how-biopharma-companies-can-support-patients-with-high-deductible-health/`
+- `/how-life-sciences-manufacturers-can-meet-hcp-expectations-for-patient-access/`
+- `/how-manufacturers-can-improve-speed-to-therapy-overcoming-common-causes-of/`
+- `/hubs-digital-pharmacies-and-specialty-pharmacies-what-pharma-access-teams/`
+- `/leveraging-territory-performance-monitoring-to-scale-hub-performance/`
+- `/setting-the-stage-for-a-successful-modern-hub-services-program/`
+- `/why-quality-scripts-are-crucial-to-ensuring-pharmacy-coverage-for-your-brand/`
+- `/the-impact-of-time-constrained-hcps-on-life-sciences-commercialization-and/`
+- `/conventional-biopharma-commercial-strategies-are-no-longer-enough/`
+- `/why-transparency-is-critical-in-the-patient-access-journey/`
+- `/how-life-science-brands-can-successfully-navigate-retail-challenges/`
+- `/is-telemedicine-part-of-your-brands-go-to-market-strategy-delivering-an-end/`
+- `/3-reasons-why-your-patient-services-program-may-be-falling-short-on/`
+- `/4-strategies-to-maximize-enrollment-in-your-patient-services-program/`
+- `/implementing-an-effective-bridge-program-laying-the-foundation-for-covered/`
+- `/launching-a-new-drug-in-a-category-with-generic-alternatives/`
+- `/what-makes-phils-prior-authorization-process-unique/`
+- `/transforming-the-prior-authorization-process-how-feedback-loops-can-improve/`
+- `/prior-authorizations-what-pharmaceutical-manufacturers-need-to-know/`
+- `/optimizing-life-sciences-field-teams-in-the-era-of-drug-utilization/`
+- `/3-reasons-to-work-with-a-commercialization-partner-that-has-an-integrated/`
+- `/how-to-make-the-most-of-your-manufacturer-sponsored-financial-assistance/`
+- `/not-getting-traction-with-your-patient-services-program-heres-why-and-what/`
+- `/why-strong-market-access-doesnt-always-translate-to-covered-dispenses/`
+- `/tech-enabled-patient-services-do-more-with-less-in-2023/`
+- `/8-metrics-that-matter-when-it-comes-to-measuring-your-patient-access-program/`
+- `/developing-a-distribution-strategy-that-optimizes-gross-to-net/`
+- `/tech-enabled-patient-access-webinar-key-takeaways/`
+- `/how-pharmaceutical-manufacturers-can-leverage-phils-technology-to-improve/`
+- `/why-your-channel-strategy-matters/`
+- `/three-ways-healthcare-technology-is-improving-medication-adherence/`
+- `/where-is-the-data-the-healthcare-data-you-need-to-drive-commercialization/`
+- `/how-to-streamline-pharmaceutical-commercialization/`
+- `/optimizing-your-drug-distribution-model/`
+- `/optimal-channel-strategy-your-pharma-brand/`
+- `/technology-trends-in-pharmaceutical-commercialization/`
+- `/3-patient-engagement-technology-myths/`
+- `/6-trends-impacting-pharma-commercialization/`
+- `/life-science-company-digital-technology/`
+- `/pharma-product-mid-life-cycle-risk/`
+- `/prior-authorizations-impacting-therapy-delivery/`
+- `/small-pharma-manufacturers-drug-commercialization-outsourcing/`
+- `/market-access-strategy-drug-formulary/`
+- `/does-your-pharmaceutical-brands-data-demonstrate-value-to-payers/`
+- `/leveraging-data-analytics/`
+- `/3-ways-to-breakthrough-barriers-to-medication/`
+- `/how-to-choose-the-best-commercialization-partner-to-drive-patient-access/`
+
 ---
 
 ## Pages editable in Contentful (no ticket needed — just edit the CMS entry)
@@ -277,7 +365,8 @@ The Contentful pages are:
   landing pages. Linked from the main nav, from the Home page insights strip,
   and from the featured cards on `/resources/`. The *cards* pointing at them
   are code; these destination pages are Contentful.
-- Individual blog posts
+- Individual blog posts, **except** the ones listed under "Static blog and
+  webinar posts" above, which have moved to code
 - Individual case study detail pages — the ones linked from
   `/customer-success/`
 - Individual downloadable resource / gated-content pages — meaning the
