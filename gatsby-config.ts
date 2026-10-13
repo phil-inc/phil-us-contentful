@@ -48,7 +48,18 @@ const config: GatsbyConfig = {
           `**/constants/**`, // Ignore constants directories
           `**/_sections/**`, // Ignore page-local section partials (folder-underscore is NOT auto-ignored)
           `**/interactions.ts`, // Ignore page-local behavior modules (not pages)
+          `_posts/**`, // Served at /<slug>/ by the instance below, not at /_posts/<slug>/
         ],
+      },
+    },
+    {
+      // Static blog and webinar posts live in src/pages/_posts/<slug>/ to keep src/pages
+      // tidy, but are served at /<slug>/: this plugin roots URLs at its own `path`.
+      // The `_posts/**` ignore above is required, otherwise every post is built twice.
+      // The plugin fails the build if this folder is missing, so keep it with a post in it.
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/pages/_posts`,
       },
     },
     `gatsby-plugin-image`,
