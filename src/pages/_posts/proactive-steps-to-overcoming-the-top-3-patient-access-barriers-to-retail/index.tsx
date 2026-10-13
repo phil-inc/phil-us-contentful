@@ -1,0 +1,54 @@
+// Migrated from Contentful resource "proactive-steps-to-overcoming-the-top-3-patient-access-barriers-to-retail" (Gatsby node 0ce5197f-6790-5859-9199-5fe4a6bea00f) on 2026-10-13.
+// Source: https://phil.us/page-data/proactive-steps-to-overcoming-the-top-3-patient-access-barriers-to-retail/page-data.json
+import React from "react";
+import type { HeadFC } from "gatsby";
+import { SeoMeta } from "components/common/Seo/SeoMeta";
+import { JsonLd } from "components/common/Seo/JsonLd";
+import { articleSchema } from "utils/seo/schema";
+import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogP } from "components/Blog/StaticBlogLayout/StaticBlogLayout";
+
+const PATH = "/proactive-steps-to-overcoming-the-top-3-patient-access-barriers-to-retail/";
+const TITLE = "Proactive Steps to Overcoming the Top 3 Patient Access Barriers to Retail and Specialty-Lite Therapies";
+const DESCRIPTION = "Read this blog post to learn about how life sciences companies can overcome the biggest barriers to patient access through education, enablement, and engagement";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+
+export const Head: HeadFC = () => (
+  <>
+    <SeoMeta title={TITLE} description={DESCRIPTION} path={PATH} type="article" image={OG_IMAGE} />
+    <JsonLd data={articleSchema({ path: PATH, headline: TITLE, description: DESCRIPTION, image: OG_IMAGE })} />
+  </>
+);
+
+const Page: React.FC = () => (
+  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/6-Company_News.svg", alt: "" }}>
+    <BlogP>{"Ensuring patients get started and adhere to their medications is critical to achieving optimal health outcomes. However, navigating the medication access journey is no longer straightforward. An estimated "}<BlogA href="https://pharmanewsintel.com/features/minimizing-prescription-abandonment-and-nonadherence-with-digital-tools"><u>1 out of 4 prescriptions are abandoned</u></BlogA>{" at the pharmacy, and a recent report found that "}<BlogA href="/pdf/CoverMyMeds_2022MedicationAccess_DataGuide_1_.pdf"><u>more than 8 out of 10 patients</u></BlogA>{" encounter delays in accessing the medications they need to manage their health. The issue of nonadherence is so prevalent that the "}<BlogA href="https://edhub.ama-assn.org/steps-forward/module/2702595"><u>American Medical Association</u></BlogA>{" (AMA) advises physicians to \"consider medication nonadherence first as a reason a patient's condition is not under control.\""}</BlogP>
+    <BlogP>{"For life science companies, there are serious financial implications, including "}<BlogA href="/developing-a-distribution-strategy-that-optimizes-gross-to-net/"><u>GTN challenges</u></BlogA>{", related to patient access barriers. "}<BlogA href="https://www.fiercepharma.com/marketing/non-adherence-costs-healthcare-system-patient-outcomes-and-pharma-bottom-line"><u>One study</u></BlogA>{" estimates that the pharmaceutical industry loses $250 billion in actual and potential revenue each year due to nonadherence in the U.S. alone. Whether due to knowledge gaps, prior authorization hurdles, or affordability concerns, there are proactive measures manufacturers can take to address these challenges and improve patient access.  "}</BlogP>
+    <BlogH2><b>3 top patient access barriers to retail and specialty-lite medications</b></BlogH2>
+    <BlogP>There are three main reasons why patients struggle to access the therapies they need to manage their medical conditions:</BlogP>
+    <BlogH3><b>{"1) Patient and provider knowledge gaps "}</b></BlogH3>
+    <BlogP>Insufficient knowledge about specific medications, their benefits, available patient support programs, or how to navigate the healthcare system inhibits patients' ability to access and adhere to therapy. Health literacy issues lead to difficulties understanding medical information, including prescription instructions, which can cause improper medication use or nonadherence.</BlogP>
+    <BlogH3><b>2) Prior authorization hurdles</b></BlogH3>
+    <BlogP>{"The rise of costlier retail and specialty-lite medications has accelerated the use of drug utilization management tools to control access, with "}<BlogA href="/prior-authorizations-what-pharmaceutical-manufacturers-need-to-know/"><u>prior authorization</u></BlogA>{" (PA) being the most common. By design, the PA process is a barrier to medication access – it can leave patients waiting for days, weeks, or even months for approval, and coverage denial may occur despite a therapy being appropriately prescribed. In a 2023 survey, "}<BlogA href="https://www.mgma.com/federal-policy-resources/mgma-annual-regulatory-burden-report-2023"><u>97% of medical practices</u></BlogA>{" said their patients had experienced care delays or denials due to increased PA requirements. "}</BlogP>
+    <BlogH3><b>3) Affordability concerns</b></BlogH3>
+    <BlogP>{"Affordability is a leading driver of prescription abandonment and nonadherence. Out-of-pocket costs for retail brands "}<BlogA href="https://www.iqvia.com/insights/the-iqvia-institute/reports-and-publications/reports/the-use-of-medicines-in-the-us-2023"><u>climbed by $949 million</u></BlogA>{" from 2021 to 2022, and patients abandoned 94 million prescriptions with greater frequency as their copays grew. With over half of American private-sector workers enrolled in "}<BlogA href="/how-biopharma-companies-can-support-patients-with-high-deductible-health/"><u>high deductible health plans</u></BlogA>{" (HDHPs) that require members to meet their annual deductible amount before coverage begins, affordability becomes an even bigger hurdle. "}</BlogP>
+    <BlogH2><b>Proactive steps life sciences companies can take to address these barriers</b></BlogH2>
+    <BlogP>{"Life science brand team can proactively clear the path to patient access by taking the following steps:  "}</BlogP>
+    <BlogH3><b>1) Educate key stakeholders in the patient access journey</b></BlogH3>
+    <BlogP>{"Educating key stakeholders about your medication, access options, and the patient services program is critical to overcoming knowledge gaps. A lack of knowledge about your brand's existence and its support programs will significantly chip away at new scripts, hub enrollment, adherence, and coverage.   "}</BlogP>
+    <BlogP>{"The field team plays an essential role in educating healthcare providers and their office staff about your patient support program  and how it benefits them and their patients. Patients will not enroll or engage in a hub if they don't know it exists, how it will help them, and how to enroll – their most trusted source of information is their provider. According to a survey, "}<BlogA href="https://engage.phreesia.com/rs/867-GML-252/images/Phreesia_Industry_Perspectives_Patient_Support_Programs.pdf"><u>55% of patients</u></BlogA>{" expect to learn about support programs from their doctors"}</BlogP>
+    <BlogP>{"Consequently, manufacturers should empower the field team to equip healthcare provider offices with the knowledge, messaging, and resources they need to leverage the program. "}</BlogP>
+    <BlogP><br /><BlogA href="/key-success-factors-for-brand-excellence-playbook/"><b><u>Download our Key Success Factors to Drive Brand Excellence playbook</u></b></BlogA>{" to discover proven strategies for optimizing your channel strategy to improve patient access, provider engagement, and brand outcomes."}</BlogP>
+    <BlogH3><b>2) Streamline prior authorizations</b></BlogH3>
+    <BlogP>With<BlogA href="https://www.mgma.com/federal-policy-resources/mgma-annual-regulatory-burden-report-2023"><u>{" 97% of HCPs reporting"}</u></BlogA>{" that they experience patient care delays or denials due to PA requirements, pharmaceutical commercialization teams should evaluate the toll PAs have (or potentially have) on their brands. While some retail pharmacies assist with the PA process, most leave it up to the prescriber or patient. An electronic solution does not necessarily have the desired impact as it still requires patients and HCPs to navigate required forms, albeit in a digital format. "}</BlogP>
+    <BlogP>To streamline PAs, it’s crucial to look for a digital hub solution that ensures the PA process works within current HCP workflows, pre-populates required forms with clinical information, and monitors PAs for submission success. By making prescribing as easy as possible and simplifying the PA process, HCPs are more likely to write scripts and help patients get started on their prescribed therapy more quickly.</BlogP>
+    <BlogP><br /><BlogA href="/successfully-navigating-prior-authorizations/"><b><u>Download this in-depth guide, Successfully Navigating Prior Authorization</u></b></BlogA>{" to learn how you can reframe your approaches to prior authorization through digital solutions that boost patient access."}</BlogP>
+    <BlogH3><b>3) Address financial concerns</b></BlogH3>
+    <BlogP>{"To make the "}<BlogA href="/how-to-make-the-most-of-your-manufacturer-sponsored-financial-assistance/"><u>most of manufacturer-sponsored financial assistance</u></BlogA>{", an integrated digital hub solution with "}<BlogA href="/why-transparency-is-critical-in-the-patient-access-journey/"><u>transparency tools</u></BlogA>{" can help providers improve affordability conversations with patients so they can make the best decisions at the point of care. This initiative will go a long way towards avoiding access issues caused by cost concerns. For the best results, it’s essential to "}<BlogA href="/implementing-an-effective-bridge-program-laying-the-foundation-for-covered/"><u>lay the foundation for covered dispenses</u></BlogA>{" by maximizing coverage while minimizing reliance on free goods and ensuring your hub partner has a tightly integrated pharmacy network."}</BlogP>
+    <BlogP>For a deeper dive into how you can improve prescription coverage through strong pharmacy partnerships,<b>{" "}</b><BlogA href="/improving-prescription-coverage-at-the-pharmacy/"><b><u>{"download this informative guide for life sciences brands. "}</u></b></BlogA><b>{" "}</b></BlogP>
+    <BlogH3><b>{"Ready to drive patient access to your brand?  "}</b></BlogH3>
+    <BlogP>{"PhilRx is a digital hub that "}<BlogA href="/setting-the-stage-for-a-successful-modern-hub-services-program/"><u>sets the stage for modern support services</u></BlogA>{", meeting patients' needs by seamlessly connecting them with their prescribed therapy and equipping commercial teams with actionable insights to optimize brand performance. Our platform enables retail and specialty-lite brands to protect their GTN margins and unlock patient access by automating PAs and supporting manufacturer-driven coupon utilization. "}</BlogP>
+    <BlogP><br /><BlogA href="/demo/"><b><u>Request a demo</u></b></BlogA><b>{" "}</b>to see the PhilRx Digital Hub in action and learn how easy it is to get started.</BlogP>
+  </StaticBlogLayout>
+);
+
+export default Page;

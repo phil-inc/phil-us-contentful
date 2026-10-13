@@ -3,6 +3,7 @@ import { createPageObject } from "../utils/pageObjectCreator";
 import { templateFactory } from "../factories/templateFactory";
 import { type Actions } from "gatsby";
 import { type TResource } from "../types/resource";
+import { MIGRATED_STATIC_SLUGS } from "../constants/migratedStaticSlugs";
 
 export default async function GenerateStaticPages({
   actions,
@@ -56,6 +57,10 @@ export default async function GenerateStaticPages({
 
       return;
     }
+
+    // Served by the static file-based page at src/pages/_posts/<slug>/index.tsx
+    // (routed to /<slug>/ by the second gatsby-plugin-page-creator in gatsby-config.ts).
+    if (MIGRATED_STATIC_SLUGS.has(path.replace(/^\/+|\/+$/g, ""))) return;
 
     const pageObject = createPageObject(path, template, {
       id: resource.id,
