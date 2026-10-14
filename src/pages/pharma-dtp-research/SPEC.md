@@ -81,7 +81,9 @@ Shared Layout (header + footer). Two columns: content on the left, the form card
 | Styling | Inline styles | CSS modules | AGENTS.md §5 |
 | Quote photo | Raw 1.8 MB `<img>` | `StaticImage` from a 480px source | Page weight |
 | PDF link | `assets/DTP-Pharma-Research-Report.pdf` | Token link through `/api/download-report/` | Gating |
-| Header banner on phones | Only a 1280px preview; the flex row stacks into three rows (115px) at 375px | Below 640px the tag, text and link flow as one paragraph (78px); 13px text below 1280px as before | Keeps the sticky header short on phones |
+| Header banner size | 18px top/bottom padding, 16px text, 13px link, 11px NEW tag (about 62px tall at 1440px) | 11px padding, 14px text, 12px link, 10px tag (47px); below 1280px 5px padding, 12px text, 11px link (33px at 1024px) | About 25% shorter with smaller text, requested after review |
+| Header banner on phones | Only a 1280px preview; the flex row stacks into three rows (115px) at 375px | Below 640px the tag, text and link flow as one paragraph, line-height 1.5, slimmer link pill (59px) | Keeps the sticky header short on phones |
+| Home card text colour | Dark text (#0A0A0A / #00615E) on the light card | White, like the other home cards | Requested after review for a uniform row. White on this background is about 1.2–1.4:1 contrast, below the 3:1 minimum for large text |
 | Nav feature card size | 328px tall, 20px radius | The nav's existing card size (360px, 16px) | Matches the other cards in the same menu |
 | DTP marquee start | Holds 2.5s, then scrolls from the new card centred | The existing marquee script, which starts on the first card | Marquee behaviour unchanged for the other cards |
 
