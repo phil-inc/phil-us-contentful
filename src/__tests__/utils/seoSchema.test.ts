@@ -198,6 +198,7 @@ describe("articleSchema", () => {
     expect(articleSchema({ ...base, type: "BlogPosting" })["@type"]).toBe(
       "BlogPosting",
     );
+    expect(articleSchema({ ...base, type: "Report" })["@type"]).toBe("Report");
   });
 
   test("references the organization as publisher", () => {

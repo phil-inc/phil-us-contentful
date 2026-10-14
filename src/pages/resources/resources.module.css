@@ -201,8 +201,26 @@
   background: linear-gradient(135deg, #2aa89e 0%, #7de6cb 100%);
 }
 
-.forest {
-  background: linear-gradient(135deg, #00484a 0%, #0e6a66 100%);
+/* Light card for a new release, with dark text (source: "PHIL Resource Hub.html"). */
+.pastel,
+.pastel:hover {
+  background: linear-gradient(135deg, #d5f1f0 0%, #a8e2da 50%, #f2e8c0 100%);
+  color: #0a0a0a;
+}
+
+.pastel {
+  box-shadow: 0 12px 32px rgba(0, 97, 94, 0.14);
+}
+
+.pastel .featCardEyebrow,
+.pastel .featCta {
+  color: #00615e;
+}
+
+.featCardEyebrowRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .featCardEyebrow {

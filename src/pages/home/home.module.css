@@ -2120,6 +2120,32 @@
   background: linear-gradient(135deg, #093F3A 0%, #062F2B 100%);
 }
 
+/* Light card for a new release, with dark text (source: "PHIL Home Page.html"). */
+.icardNew {
+  background: linear-gradient(135deg, #D5F1F0 0%, #A8E2DA 50%, #F2E8C0 100%);
+  color: #0A0A0A;
+  box-shadow: 0 12px 32px rgba(0, 97, 94, 0.14);
+}
+
+.icardNew .icardTag,
+.icardNew .icardCta {
+  color: #00615E;
+}
+
+.icardNew .icardRings circle {
+  stroke: rgba(0, 97, 94, 0.14);
+}
+
+.icardNew .icardWave {
+  background: rgba(0, 97, 94, 0.2);
+}
+
+.icardTagRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .icardRings {
   position: absolute;
   inset: -80px -80px auto auto;
