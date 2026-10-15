@@ -32,10 +32,13 @@ Shared Layout (header + footer). Two columns: content on the left, the form card
 
 ## Form and gated download
 - HubSpot embed: portal `20880193`, form `8445e59d-c99c-4646-be0f-8831f50ae311`, HubSpot's own CSS off (`disableHubspotCss`), styled as in the design.
-- **On submit** (HubSpot's `onFormSubmit`, still inside the visitor's click): the page opens a blank tab, asks `/api/issue-download-token` for a token for report `pharma-dtp-research`, and points the tab at `/api/download-report/pharma-dtp-research/<token>`, which redirects to the PDF.
-- **After HubSpot confirms:** the card shows "Your report is ready." with an "Open Report →" button, the fallback if the browser blocked the tab. If the token is older than 9 minutes the button fetches a fresh one and opens the report in the same tab.
+- **On submit** (HubSpot's `onFormSubmit`, still inside the visitor's click): the page opens a blank tab and asks `/api/issue-download-token` for a token for report `pharma-dtp-research`.
+- **The report is released only after HubSpot confirms** (`onFormSubmitted`) **and** the token has arrived: then the waiting tab goes to `/api/download-report/pharma-dtp-research/<token>`, which redirects to the PDF. HubSpot reports only success, so if it hasn't confirmed within 20 seconds the waiting tab is closed and no PDF is delivered. If the token request fails, the tab is closed too.
+- **Confirmation panel:** "Your report is ready." with an "Open Report →" button. The text says the report "has opened in a new tab" only when it actually did; otherwise it says "Use the button below to open The DTP Breakthrough." (copy not in the design).
+- **"Open Report" button:** opens the report in a new tab. If there is no link yet or it is older than 9 minutes, it opens the tab during the click, fetches a fresh link and sends the tab there. It only falls back to the current tab when the browser blocks new tabs entirely.
 - No memory of the submission across reloads, as in the design.
 - **Where the PDF lives:** a HubSpot file set to **Public - noindex**. Its URL is kept only in the Netlify environment variable `PHARMA_DTP_REPORT_URL`, never in this repo (public on GitHub) and never in page code or data.
+- **Build-time variable:** Gatsby bakes environment variables into functions when the site is built, so `PHARMA_DTP_REPORT_URL` must be available to Netlify **builds**, and changing it only takes effect after a new deploy. `gatedReports.ts` must read it as the literal `process.env.PHARMA_DTP_REPORT_URL`: a computed lookup (`process.env[name]`) compiles to an empty object and always fails. Jest runs the source directly, so it cannot catch that.
 - **Server:** `src/utils/gatedReports.ts` maps report IDs hosted outside Contentful to their environment variable. `src/api/download-report/[id]/[token].ts` checks that map before its Contentful lookup; if the variable is missing it answers 500. `/dtp-research/` and `/hcp-research/` are unchanged.
 - **Protection level:** the same as `/dtp-research/`. Casual visitors must use the form, nothing crawlable links to the PDF, and the file is marked noindex. A technical visitor can still get the file without the form, and anyone who downloads it can share the link.
 
@@ -76,19 +79,19 @@ Shared Layout (header + footer). Two columns: content on the left, the form card
 | Links | `https://phil.us/...` | Relative paths | Internal links are relative |
 | Sticky form offset | `top: 24px` | Below the site header + 24px | The site header is sticky |
 | Scroll-progress bar | Always on | Only in browsers that support scroll-driven animation | Elsewhere it would show as a full, static bar |
-| Stats card | Always auto-advances | Pauses while hovered; no auto-advance with reduced motion | Accessibility (moving content needs a way to stop) |
+| Stats card | Always auto-advances | Pauses while a mouse hovers it (touch does not pause it); no auto-advance with reduced motion | Accessibility (moving content needs a way to stop) |
+| After submit | PDF opens immediately on submit | PDF opens once HubSpot confirms the submission | No report without a saved lead |
 | Motion | Always on | Blooms, shine and transitions off for visitors who ask for reduced motion | Accessibility |
 | Styling | Inline styles | CSS modules | AGENTS.md §5 |
 | Quote photo | Raw 1.8 MB `<img>` | `StaticImage` from a 480px source | Page weight |
 | PDF link | `assets/DTP-Pharma-Research-Report.pdf` | Token link through `/api/download-report/` | Gating |
 | Header banner size | 18px top/bottom padding, 16px text, 13px link, 11px NEW tag (about 62px tall at 1440px) | 11px padding, 14px text, 12px link, 10px tag (47px); below 1280px 5px padding, 12px text, 11px link (33px at 1024px) | About 25% shorter with smaller text, requested after review |
 | Header banner on phones | Only a 1280px preview; the flex row stacks into three rows (115px) at 375px | Below 640px the tag, text and link flow as one paragraph, line-height 1.5, slimmer link pill (59px) | Keeps the sticky header short on phones |
-| Home card text colour | Dark text (#0A0A0A / #00615E) on the light card | White, like the other home cards | Requested after review for a uniform row. White on this background is about 1.2–1.4:1 contrast, below the 3:1 minimum for large text |
 | Nav feature card size | 328px tall, 20px radius | The nav's existing card size (360px, 16px) | Matches the other cards in the same menu |
 | DTP marquee start | Holds 2.5s, then scrolls from the new card centred | The existing marquee script, which starts on the first card | Marquee behaviour unchanged for the other cards |
 
 ## Outside the code, before launch
 - HubSpot: set the file to **Public - noindex**, optionally re-uploaded under a random name.
-- Netlify: add `PHARMA_DTP_REPORT_URL` (production and deploy previews). `DOWNLOAD_TOKEN_SECRET` already exists there.
+- Netlify: add `PHARMA_DTP_REPORT_URL` with the **Builds** scope, for Production and Deploy Previews, then redeploy. `DOWNLOAD_TOKEN_SECRET` already exists there.
 - Local testing of the download: add `DOWNLOAD_TOKEN_SECRET` and `PHARMA_DTP_REPORT_URL` to `.env.development`.
 - Go-live: merge shortly before 9am ET on October 20, or pause Netlify auto-publishing and publish the ready deploy at 9:00.

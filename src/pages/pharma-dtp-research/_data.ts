@@ -140,6 +140,8 @@ export const FORM = {
   readyTitle: "Your report is ready.",
   readyBody:
     "The DTP Breakthrough has opened in a new tab. If it didn’t open, use the button below.",
+  /** Not in the design: shown when the report couldn't be opened automatically. */
+  readyManual: "Use the button below to open The DTP Breakthrough.",
   openLabel: "Open Report →",
   error: "We couldn’t open the report. Please try the button again.",
 };

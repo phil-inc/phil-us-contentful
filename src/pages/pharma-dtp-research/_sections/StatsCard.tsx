@@ -52,8 +52,13 @@ export const StatsCard = forwardRef<HTMLDivElement, StatsCardProps>(({ stats }, 
     <div
       ref={ref}
       className={classes.statsCard}
-      onMouseEnter={() => setHeld(true)}
-      onMouseLeave={() => {
+      // Pause only for a real mouse: phones report a tap as the mouse entering, with no
+      // matching leave, which would stop the rotation for the rest of the visit.
+      onPointerEnter={(e) => {
+        if (e.pointerType === "mouse") setHeld(true);
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType !== "mouse") return;
         setHeld(false);
         setRun((r) => r + 1);
       }}
