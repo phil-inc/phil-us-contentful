@@ -415,7 +415,9 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
               <NewBadge className={classes.promoBadge} />
               <span className={classes.promoText}>{PROMO_BANNER.text}</span>
               <Link className={classes.promoLink} to={PROMO_BANNER.href}>
-                <span className={classes.promoLinkText}>{PROMO_BANNER.linkText}</span>
+                <span className={classes.promoLinkText}>
+                  {PROMO_BANNER.linkText} <span aria-hidden="true">&rarr;</span>
+                </span>
               </Link>
             </div>
           </div>
