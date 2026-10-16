@@ -1,3 +1,4 @@
+import { INSIGHTS } from "constants/page";
 import { useInternalPaths } from "hooks/useInternalPaths";
 import { type ContentfulButton } from "layouts/Layout/CHeader/CHeader";
 import slugify from "slugify";
@@ -33,6 +34,31 @@ const remapRemovedPage = (
   }
 
   return REMOVED_PAGE_REDIRECTS[slug];
+};
+
+/**
+ * The News & Insights page's sections used to be built as /insights/<section>/
+ * listings. They no longer are, so a link to one of those sections goes where its
+ * listing now redirects (the 301s in netlify.toml), keyed by the section header's slug.
+ */
+const RETIRED_INSIGHTS_LISTINGS: Record<string, string> = {
+  resources: "/resources/",
+  "phil-blog": "/resources/?type=blog",
+  events: "/resources/?type=webinar",
+  "press-releases": "/press/",
+  "case-studies": "/customer-success/",
+};
+
+const remapRetiredInsightsSection = (
+  pageTitle?: string | null,
+  header?: string | null,
+): string | undefined => {
+  if (pageTitle !== INSIGHTS || typeof header !== "string") return undefined;
+
+  const headerSlug = slugify(header, { lower: true, strict: true });
+  return Object.prototype.hasOwnProperty.call(RETIRED_INSIGHTS_LISTINGS, headerSlug)
+    ? RETIRED_INSIGHTS_LISTINGS[headerSlug]
+    : undefined;
 };
 
 /**
@@ -133,12 +159,23 @@ export const getLink = (
           break;
         }
         
-        if (sectionLink) {
+        const retiredListing = remapRetiredInsightsSection(
+          sectionLink?.title,
+          section.link.internalContent.header,
+        );
+        if (retiredListing) {
+          return { link: retiredListing, isExternal: false };
+        }
+
+        if (typeof sectionLink?.title === "string") {
           link.push(slugify(sectionLink.title, { lower: true, strict: true }));
 
-          link.push(
-            `#${slugify(sectionLink.header ?? sectionLink.id, { lower: true, strict: true })}`,
-          );
+          // Anchor on the linked section, as the internalLink branch does: the page
+          // object here carries only its title, so its header and id are undefined.
+          const anchor = section.link.internalContent.header ?? icid;
+          if (typeof anchor === "string") {
+            link.push(`#${slugify(anchor, { lower: true, strict: true })}`);
+          }
         }
 
         break;

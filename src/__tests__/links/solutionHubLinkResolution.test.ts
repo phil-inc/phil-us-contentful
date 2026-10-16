@@ -3,6 +3,8 @@ import path from "path";
 import ts from "typescript";
 import slugify from "slugify";
 
+import * as pageConstants from "../../constants/page";
+
 /**
  * MRTG-1444 — end to end check of a Contentful internal link.
  *
@@ -34,6 +36,7 @@ const moduleStubs: Record<string, unknown> = {
   "templates/case-study": { CaseStudy: class {} },
   "types/resource": {},
   "types/section": {},
+  "constants/page": pageConstants,
   slugify: { default: slugify, __esModule: true },
 };
 
