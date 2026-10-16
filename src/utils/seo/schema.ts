@@ -158,8 +158,8 @@ export function serviceSchema({
 }
 
 type ArticleInput = {
-  /** BlogPosting for blog posts; Article for case studies and other long-form. */
-  type?: "Article" | "BlogPosting";
+  /** BlogPosting for blog posts; Report for research reports; Article for case studies and other long-form. */
+  type?: "Article" | "BlogPosting" | "Report";
   path: string;
   headline: string;
   description?: Maybe<string>;

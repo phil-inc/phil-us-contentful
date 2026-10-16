@@ -3,6 +3,7 @@ import {
   type GatsbyFunctionResponse,
 } from "gatsby";
 import { verifyDownloadToken } from "../../../utils/downloadToken";
+import { externalReportUrl } from "../../../utils/gatedReports";
 
 type ContentfulAsset = {
   fields?: {
@@ -51,6 +52,16 @@ const handler = async (
     return;
   }
 
+  const externalUrl = externalReportUrl(assetId);
+  if (externalUrl !== undefined) {
+    if (!externalUrl) {
+      res.status(500).json({ error: "server_not_configured" });
+      return;
+    }
+    redirectToFile(res, externalUrl);
+    return;
+  }
+
   const asset = await fetchContentfulAsset(assetId);
   const fileUrl = asset?.fields?.file?.url;
   if (!fileUrl) {
@@ -58,12 +69,14 @@ const handler = async (
     return;
   }
 
-  const absolute = fileUrl.startsWith("//") ? `https:${fileUrl}` : fileUrl;
+  redirectToFile(res, fileUrl.startsWith("//") ? `https:${fileUrl}` : fileUrl);
+};
 
+function redirectToFile(res: GatsbyFunctionResponse, url: string) {
   res.setHeader("X-Robots-Tag", "noindex, nofollow");
   res.setHeader("Cache-Control", "private, no-store");
-  res.setHeader("Location", absolute);
+  res.setHeader("Location", url);
   res.status(302).end();
-};
+}
 
 export default handler;
