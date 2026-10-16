@@ -34,6 +34,13 @@ export const TYPES = [
 
 export const RESOURCES_DATA: ResourceItem[] = [
   {
+    title: "Pharma Perspectives on Direct-to-Patient: The Future of DTP Success",
+    topics: ["direct"],
+    type: "report",
+    url: "/pharma-dtp-research/",
+    buttonLabel: "Download",
+  },
+  {
     title: "Evolved Health and PHIL Announce Novel Dermatology Program for New Day™ Direct-to-Patient",
     topics: ["direct", "access"],
     type: "press",

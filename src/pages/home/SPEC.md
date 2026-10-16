@@ -67,9 +67,9 @@ src/pages/
 ### 5. Commitment / Insights
 - Heading + subtitle
 - 3 insight cards (horizontal scroll):
+  - Pharma DTP Research report (`/pharma-dtp-research/`, light "new" variant with a NEW tag; MRTG-1461)
   - DTP Research report
   - HCP Research report
-  - 5 Key Success Factors report
 - Each card: decorative SVG rings, wave background, tag, title, CTA
 - "Explore Resources →" link
 
@@ -129,9 +129,9 @@ All new components are page-specific, built inline or in `src/pages/home/compone
 - /solution/
 - /demo/
 - /customer-success/
+- /pharma-dtp-research/
 - /dtp-research/
 - /hcp-research/
-- /key-success-factors-to-drive-brand-excellence/
 - /resources/
 
 ## Trustpilot Integration

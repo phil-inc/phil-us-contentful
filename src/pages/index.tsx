@@ -7,6 +7,7 @@ import { getOgImage } from "utils/getOgImage";
 import { webPageSchema } from "utils/seo/schema";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
+import NewBadge from "components/common/NewBadge/NewBadge";
 
 import {
   HERO,
@@ -1058,7 +1059,8 @@ function InsightsSection() {
         <div className={classes.insightsTrack}>
           {INSIGHTS.cards.map((card) => {
             const variantClass =
-              card.variant === "report" ? classes.icardReport
+              card.variant === "new" ? classes.icardNew
+              : card.variant === "report" ? classes.icardReport
               : card.variant === "webinar" ? classes.icardWebinar
               : classes.icardBlog;
             return (
@@ -1077,7 +1079,10 @@ function InsightsSection() {
                   </div>
                 )}
                 <div className={classes.icardBody}>
-                  <div className={classes.icardTag}>{card.tag}</div>
+                  <div className={classes.icardTagRow}>
+                    {card.variant === "new" && <NewBadge />}
+                    <div className={classes.icardTag}>{card.tag}</div>
+                  </div>
                   <h3 className={classes.icardTitle}>{card.title}</h3>
                   <span className={classes.icardCta}>
                     {card.cta}{" "}
