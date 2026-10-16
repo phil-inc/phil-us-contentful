@@ -209,8 +209,9 @@
 
 .titleLead {
   display: block;
-  /* 9cqi caps it on narrow phones, where the design's size runs off the screen. */
-  font-size: min(calc(clamp(26px, 6.6cqi, 200px) + 8px), 9cqi);
+  /* 9cqi caps it on narrow phones, where the design's size runs off the screen.
+     0.95: 5% smaller than the design, requested after review. */
+  font-size: calc(min(calc(clamp(26px, 6.6cqi, 200px) + 8px), 9cqi) * 0.95);
   letter-spacing: -0.03em;
   line-height: 1;
   margin-bottom: clamp(12px, 1.4vw, max(20px, 1.25vw));
@@ -802,7 +803,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
   gap: 16px;
-  margin: 0;
+  /* !important: the site-wide hubspot-form.css adds an 18px !important bottom margin. */
+  margin: 0 !important;
   padding: 0;
   border: 0;
 }
@@ -870,6 +872,11 @@
   color: var(--phil-mortar);
 }
 
+/* The form's 16px gap is the only space above the button, as in the design. */
+.hsForm :global(.hs-submit) {
+  margin-top: 0;
+}
+
 .hsForm :global(.hs-submit .actions) {
   margin: 0;
   padding: 0;
@@ -896,8 +903,10 @@
   transition: background-color 200ms var(--ease-standard);
 }
 
+/* outline: drops the dark hover ring from the site-wide hubspot-form.css. */
 .hsForm :global(input[type="submit"]:hover) {
   background: var(--phil-forest) !important;
+  outline: none;
 }
 
 .hsForm :global(input[type="submit"]:active) {

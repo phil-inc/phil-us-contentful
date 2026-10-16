@@ -75,6 +75,7 @@ Shared Layout (header + footer). Two columns: content on the left, the form card
 | Content width | `max(1320px, 82.5vw)`, side padding from 16px | `xl-container` (1320px, 1600px from 1680px wide; 32px sides) | Repo convention for page width |
 | Heading levels | h1, then h3 for Overview and FAQs, h2 for the CTA; findings are divs | h1; h2 for Overview, CTA and FAQs; h3 for findings | One h1, no skipped levels, clearer outline for search and AI readers |
 | H1 first line on phones | `calc(clamp(26px, 6.6cqi, 200px) + 8px)`, no wrap | Same, capped at `9cqi` | At 375px wide the design's size ran off the screen |
+| H1 first line size | As above | 5% smaller at every width (`× 0.95`): about 60px at 1440px | Requested after review |
 | Background blooms | `position: fixed` | Sticky inside the page, clipped to it | A fixed layer painted over the site footer |
 | Links | `https://phil.us/...` | Relative paths | Internal links are relative |
 | Sticky form offset | `top: 24px` | Below the site header + 24px | The site header is sticky |
