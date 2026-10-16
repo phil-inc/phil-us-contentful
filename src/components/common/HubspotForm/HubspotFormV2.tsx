@@ -9,6 +9,10 @@ type HubSpotFormProps = {
   formId: string;
   classname?: string;
   callbackFn?: () => void;
+  /** Runs when the visitor submits, before HubSpot sends the data — still inside their click. */
+  onFormSubmit?: () => void;
+  /** Turns off HubSpot's own stylesheet, for forms styled entirely by the page. */
+  disableHubspotCss?: boolean;
   formMinHeight?: string;
 };
 
@@ -19,18 +23,24 @@ const HubSpotFormInner: React.FC<HubSpotFormProps & { targetId: string }> = ({
   classname = "",
   targetId,
   callbackFn,
+  onFormSubmit,
+  disableHubspotCss,
 }) => {
   const [hasRendered, setHasRendered] = React.useState<boolean>(false);
 
-  const { error, formCreated, loaded } = useHubspotForm({
+  const formOptions = {
     target: `#${targetId}`,
     portalId,
     formId,
     cssClass: classname,
+    ...(onFormSubmit ? { onFormSubmit: () => onFormSubmit() } : {}),
+    // `css` is a HubSpot embed option the hook's type doesn't list; it passes options through as-is.
+    ...(disableHubspotCss ? { css: "" } : {}),
     onFormSubmitted() {
       callbackFn ? callbackFn() : null;
     },
-  });
+  };
+  const { error, formCreated, loaded } = useHubspotForm(formOptions);
 
   React.useEffect(() => {
     if (hasRendered) {
@@ -84,6 +94,8 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
   formId,
   classname = "",
   callbackFn,
+  onFormSubmit,
+  disableHubspotCss,
   formMinHeight = "1px",
 }) => {
   const uuid = useId();
@@ -112,6 +124,8 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
           classname={classname}
           targetId={uuid}
           callbackFn={callbackFn}
+          onFormSubmit={onFormSubmit}
+          disableHubspotCss={disableHubspotCss}
         />
       ) : (
         <Center>
