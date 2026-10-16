@@ -144,3 +144,8 @@ Verified: tsc 403 (base), Jest 274/274. Dev server: synthetic touch pointer + co
 Left (skipped findings): HubSpot form 8445e59d must use "Display a thank-you message", not a redirect, or HubSpot sends the main page to the PDF; no test can catch a computed process.env lookup; --announcment-bar-height/--navbar-height assumptions are stale (offsets about 49px too low on phones); fragile querySelector("header") in the #download handler; constant blurred bloom animations; `as InsightCard[]` assertion in home/_data.ts.
 Files: src/pages/pharma-dtp-research/{_sections/ReportForm.tsx,_sections/StatsCard.tsx,_data.ts,SPEC.md}, Handover.md
 Next: Commit, push, set the Netlify variable (Builds scope), and on the preview submit once: the blank tab should become the PDF after a second, and the panel should say it opened.
+
+## 2026-10-15 — feat/mrtg-1461-pharma-dtp-research (end-to-end confirmed on deploy-preview-873)
+Done: All review-fix commits pushed (3bf97e2, 1971cbf, ebc696a). The user submitted the form on the preview and the PDF opened. Preview checks: download route 302 to the HubSpot file (noindex); the report page's HTML, page-data and code chunks contain no HubSpot link; banner present on home/resources/direct/report, absent on patients/faqs.
+Left: Confirm PHARMA_DTP_REPORT_URL also covers the Production context; delete test contacts created in HubSpot; optionally retire the original guessable HubSpot file name; PR approval and merge shortly before 9am ET 2026-10-20.
+Next: Merge on launch morning, then repeat one form submission on phil.us/pharma-dtp-research/.

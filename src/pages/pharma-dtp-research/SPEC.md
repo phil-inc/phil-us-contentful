@@ -2,7 +2,7 @@
 
 Gated research report "The DTP Breakthrough", plus links to it from five places on the site. Launch: **9am ET, Monday October 20, 2026**. The site is static, so merging to `main` is the go-live.
 
-Design sources: `Manufacturer DTP Report.dc.html` (page), `PHIL Header Banner.html`, `PHIL Navigation Menu.html`, `PHIL Home Page.html`, `PHIL DTP Page.html`, `PHIL Resource Hub.html`.
+Design sources: `Manufacturer DTP Report.dc.html` (page), `PHIL Header Banner (1).html` (Mirah's update, replaces `PHIL Header Banner.html`), `PHIL Navigation Menu.html`, `PHIL Home Page.html`, `PHIL DTP Page.html`, `PHIL Resource Hub.html`.
 
 ## Route
 `/pharma-dtp-research/`, file-based: `src/pages/pharma-dtp-research/index.tsx`. The path returned 404 on phil.us on 2026-10-14 and no Contentful page uses the slug, so `handleRegularPage` needs no guard.
@@ -45,7 +45,7 @@ Shared Layout (header + footer). Two columns: content on the left, the form card
 ## Placements on other pages
 | Where | Files | Change |
 |---|---|---|
-| Header banner (every page, including this one) | `layouts/Layout/MegaNav/megaNav.config.ts`, `MegaNav.tsx`, `megaNav.module.css` | NEW tag, "Exclusive research from 74 life sciences leaders reveals the future of DTP success", pill "Read report →" to `/pharma-dtp-research/`. Pastel gradient, one shine sweep 0.5s after load, underline + arrow nudge on hover. Still hidden on `/patients/` and `/faqs/`. |
+| Header banner (every page, including this one) | `layouts/Layout/MegaNav/megaNav.config.ts`, `MegaNav.tsx`, `megaNav.module.css` | NEW tag, "Exclusive research from 74 life sciences leaders reveals the future of DTP success", pill "Read report" to `/pharma-dtp-research/`. Sizes as in `PHIL Header Banner (1).html`: 18px text, 16px link, 13px NEW tag, with 16px/25px padding (66px tall on one row). Below 640px the NEW tag sits on the sentence's first line, with 15px text, 14px link, 11px tag and 12px/20px padding (111px at 375px). Pastel gradient, one shine sweep 0.5s after load, underline on hover. Still hidden on `/patients/` and `/faqs/`. |
 | Nav "Resources" menu | `MegaNav.tsx`, `megaNav.module.css` | Feature cards: new "Pharma Perspectives on Direct-to-Patient: The Future of DTP Success" (`pastel` variant, `isNew`), then Patient Perspectives. The HCP card left the menu. The mobile menu shows no feature cards and is unchanged. |
 | Home page | `pages/home/_data.ts`, `pages/index.tsx`, `home.module.css` | "Our Commitment" cards: new card (`new` variant, NEW tag), Patient Perspectives, HCP Perspectives. "5 Key Success Factors" left this row. |
 | DTP page (`/solution/direct/`) | `_sections/ThoughtLeadership.tsx`, `direct.css` | New first card in the "Our Proven Approach to DTP Success" marquee (`.bt-report-new`): NEW, "Research Report", "74 life sciences leaders surveyed", "Exclusive research reveals the future of DTP success.", "Read report →". The rest of the marquee is unchanged. |
@@ -85,10 +85,10 @@ Shared Layout (header + footer). Two columns: content on the left, the form card
 | Styling | Inline styles | CSS modules | AGENTS.md §5 |
 | Quote photo | Raw 1.8 MB `<img>` | `StaticImage` from a 480px source | Page weight |
 | PDF link | `assets/DTP-Pharma-Research-Report.pdf` | Token link through `/api/download-report/` | Gating |
-| Header banner size | 18px top/bottom padding, 16px text, 13px link, 11px NEW tag (about 62px tall at 1440px) | 11px padding, 14px text, 12px link, 10px tag (47px); below 1280px 5px padding, 12px text, 11px link (33px at 1024px) | About 25% shorter with smaller text, requested after review |
-| Header banner on phones | Only a 1280px preview; the flex row stacks into three rows (115px) at 375px | Below 640px the tag, text and link flow as one paragraph, line-height 1.5, slimmer link pill (59px) | Keeps the sticky header short on phones |
+| Header banner padding | 18px top/bottom (70px tall at 1280px) | 16px (66px) | About 6% shorter, requested after review |
+| Header banner on phones | Only a 1280px preview; wraps to tag, text, link rows (190px at 375px) | Below 640px: NEW tag inline with the sentence, smaller text, link and padding (111px) | Requested after review; keeps the sticky header short |
 | Nav feature card size | 328px tall, 20px radius | The nav's existing card size (360px, 16px) | Matches the other cards in the same menu |
-| DTP marquee start | Holds 2.5s, then scrolls from the new card centred | The existing marquee script, which starts on the first card | Marquee behaviour unchanged for the other cards |
+| DTP marquee start | Holds 2.5s after load, then scrolls from the new card centred | Starts with the new card centred, still until the marquee is half in view, then holds 2.5s | The marquee is below the fold: timed from load, the new card had scrolled away before anyone reached it |
 
 ## Outside the code, before launch
 - HubSpot: set the file to **Public - noindex**, optionally re-uploaded under a random name.

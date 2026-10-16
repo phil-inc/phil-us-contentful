@@ -474,6 +474,10 @@ export function attachSolutionDirectInteractions(): () => void {
     var pos = -setWidth, speed = 30, last = null, paused = false; // park on the middle (originals) set
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var slideTween = null;
+    // Stays put until it has scrolled into view, then holds 2.5s on the first card
+    // before scrolling (as in "PHIL DTP Page.html").
+    var inView = !('IntersectionObserver' in window), moved = false;
+    var holdUntil = inView ? performance.now() + 2500 : Infinity;
     function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
     // Keep the viewport over the middle set; recenter seamlessly once it drifts a full set.
     function normalize() {
@@ -482,8 +486,19 @@ export function attachSolutionDirectInteractions(): () => void {
         while (pos > -setWidth) pos -= setWidth;
       }
     }
+    // Start with the first card (the newest asset, MRTG-1461) centred in the frame.
+    function centerFirst() {
+      var first = track.children[n];
+      pos = -(first.offsetLeft + first.offsetWidth / 2 - track.parentNode.clientWidth / 2);
+      normalize();
+    }
+    centerFirst();
     function apply() { track.style.transform = 'translateX(' + pos + 'px)'; }
-    window.addEventListener('resize', function () { computeSet(); normalize(); apply(); });
+    window.addEventListener('resize', function () {
+      computeSet();
+      if (moved) normalize(); else centerFirst();
+      apply();
+    });
     function frame(ts) {
       if (last == null) last = ts;
       var dt = (ts - last) / 1000; last = ts;
@@ -492,10 +507,17 @@ export function attachSolutionDirectInteractions(): () => void {
         pos = slideTween.from + (slideTween.to - slideTween.from) * easeInOutQuad(p);
         apply();
         if (p >= 1) { pos = slideTween.to; normalize(); slideTween = null; }
-      } else if (!paused && !reduce) {
-        pos -= speed * dt; normalize(); apply();
+      } else if (!paused && !reduce && inView && ts >= holdUntil) {
+        pos -= speed * dt; moved = true; normalize(); apply();
       }
       requestAnimationFrame(frame);
+    }
+    if (!inView) {
+      var seen = new IntersectionObserver(function (entries) {
+        inView = entries[0].isIntersecting;
+        if (inView && holdUntil === Infinity) holdUntil = performance.now() + 2500;
+      }, { threshold: 0.5 });
+      seen.observe(marquee);
     }
     marquee.addEventListener('mouseenter', function () { paused = true; });
     marquee.addEventListener('mouseleave', function () { paused = false; });
@@ -520,6 +542,7 @@ export function attachSolutionDirectInteractions(): () => void {
       else if (ti >= n) targetX = b[0] + setWidth;      // first card, in the right clone set
       else              targetX = b[ti];
       slideTween = { from: pos, to: -targetX, start: performance.now(), dur: 400 };
+      moved = true;
     }
     var prev = marquee.querySelector('.res-nav.prev');
     var next = marquee.querySelector('.res-nav.next');
