@@ -47,7 +47,7 @@ interface ResourceItem {
 - **Combined:** Search AND Type AND Theme all apply together. Pagination resets to page 1 on filter change.
 
 ## Links
-- Internal (`phil.us/*`): Strip domain, use Gatsby `Link` with relative path
+- Internal (`phil.us/*`, or a root-relative path such as `/pharma-dtp-research/`): Strip domain, use Gatsby `Link` with relative path
 - External: `<a>` with `target="_blank" rel="noopener noreferrer"`
 
 ## Pagination

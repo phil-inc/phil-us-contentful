@@ -66,8 +66,9 @@ Below: an outcomes stat banner (Patient Starts, Covered Dispenses, Adherence,
 Patient Satisfaction rating) with a Trustpilot widget, a tabbed "Our Solution"
 carousel (Digital Access / PA & Coverage / Dispense Network / Data &
 Insights), a rotating testimonials section (Pharma / Patients / Providers
-quotes), an insights/resources card strip (DTP Research, HCP Research, 5 Key
-Success Factors reports), and a closing "Book Demo" banner.
+quotes), an insights/resources card strip (Pharma DTP Research — marked
+"New" — then DTP Research and HCP Research reports), and a closing "Book
+Demo" banner.
 
 ### Pharma — `/pharma/`
 Landing page for pharma brand audiences. Hero with a scrolling stat marquee,
@@ -109,7 +110,8 @@ support section with rotating reviews, a video band, an ROI calculator promo
 ### Our Solution — PHIL Direct — `/solution/direct/`
 Deep-dive on the Direct-to-Patient product. Hero with an animated
 e-commerce-style phone mockup, a thought-leadership resources section
-(reports/whitepapers), a 3-journey interactive telemedicine selector, a
+(a scrolling strip of report/press/feature cards, starting with a "New" card
+for `/pharma-dtp-research/`), a 3-journey interactive telemedicine selector, a
 tabbed full-funnel insights dashboard, a research/report card section, a
 video band, and a closing "Book Demo" banner.
 
@@ -118,6 +120,19 @@ Top-of-funnel page for the Gross-to-Net calculator tool. Editorial content
 (stats, benchmarks, "opportunity" cards, a pull quote, a CTA banner) next to
 a sticky lead-capture form. Submitting the form routes to the calculator
 itself.
+
+### Pharma DTP Research report — `/pharma-dtp-research/`
+Gated landing page for "The DTP Breakthrough", PHIL's October 2026 survey of
+74 U.S. life sciences leaders. Hero with a rotating stats card, an overview, three
+key findings, a Deepak Thomas quote, a "Book Demo" band and an FAQ accordion,
+next to a sticky HubSpot form. Submitting the form opens the PDF in a new tab.
+All copy is in the site repo (`src/pages/pharma-dtp-research/_data.ts`), so any
+copy change is a code ticket. The PDF itself is a HubSpot file whose link is
+kept in a Netlify setting, not in the repo: replacing the PDF means uploading
+a new file to HubSpot and updating that setting, not a code change. Linked
+from the top banner on every page, the Resources nav menu, the Home insights
+strip, the `/solution/direct/` resources strip and `/resources/` (featured
+card and grid).
 
 ### GTN Calculator — `/gtn/calculator/`
 The actual interactive ROI/GTN calculator tool. **Distinct page from
@@ -171,7 +186,8 @@ old `/resources/?page=2` links redirect to `/resources/page/2/`. The retired
 News & Insights listings `/insights/`, `/insights/resources/`,
 `/insights/phil-blog/` and `/insights/events/` redirect here too, so an
 annotation on one of those old pages is a `/resources/` ticket.) Above the grid sit three featured
-resource cards. Lower down, an "In the news" strip reuses the same press
+resource cards: Pharma DTP Research (marked "New"), DTP Research and HCP
+Research. Lower down, an "In the news" strip reuses the same press
 items that appear on `/press/` — so a change to a press item shows up on both
 pages, and two annotations about "that press item" on the two different pages
 are usually the same underlying fix.
@@ -273,10 +289,12 @@ The Contentful pages are:
 - **`/careers/`** — the page **shell/design**: headline, layout, and the copy
   around the job listings. The listings themselves are Ashby — see the section
   below.
-- **`/dtp-research/`** and **`/hcp-research/`** — the two research report
-  landing pages. Linked from the main nav, from the Home page insights strip,
-  and from the featured cards on `/resources/`. The *cards* pointing at them
-  are code; these destination pages are Contentful.
+- **`/dtp-research/`** and **`/hcp-research/`** — the two older research
+  report landing pages. Linked from the Home page insights strip and the
+  featured cards on `/resources/`; `/dtp-research/` is also in the Resources
+  nav menu. The *cards* pointing at them are code; these destination pages
+  are Contentful. (The newest report, `/pharma-dtp-research/`, is a code page —
+  see above.)
 - Individual blog posts
 - Individual case study detail pages — the ones linked from
   `/customer-success/`
@@ -366,6 +384,10 @@ annotations in the same batch are actually the same underlying fix:
 
 - **Site header/navigation and footer** — same on nearly every code-driven
   page above.
+- **Top announcement banner** (above the nav: "New — Exclusive research from
+  74 life sciences leaders… Read report", linking to `/pharma-dtp-research/`)
+  — part of the nav code, so changing its text or link is a code ticket and
+  changes it on every page. It is hidden on `/patients/` and `/faqs/`.
 - **"Book Demo" buttons** — appear on nearly every page, all point to `/demo/`.
 - **Trustpilot review widgets** — appear on Home, Pharma, Patients, Providers,
   Approach, Customer Success, and both Solution pages. Each instance may show
@@ -396,8 +418,9 @@ Main nav (dropdown menus):
 | About Us | Company / Leadership / Careers / Contact / FAQ | `/company/`, `/leadership/`, `/careers/`, `/contact/`, `/faqs/` |
 
 The **Our Solution** and **Resources** menus also show large promo cards on
-the right-hand side: a GTN promo under Our Solution, and the two research
-reports (`/dtp-research/`, `/hcp-research/`) under Resources. The **About Us**
+the right-hand side: a GTN promo under Our Solution, and two research reports
+under Resources (`/pharma-dtp-research/`, marked "New", and `/dtp-research/`).
+The **About Us**
 menu shows two featured press announcements linking to external newswire
 sites. These promo cards are part of the nav component — editing one is a
 code change, and it changes the card on every page.

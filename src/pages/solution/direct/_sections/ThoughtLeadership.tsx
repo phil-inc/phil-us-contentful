@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "gatsby";
 
+import NewBadge from "components/common/NewBadge/NewBadge";
+
 const Arrow = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <line x1="4" y1="12" x2="19" y2="12" />
@@ -35,6 +37,21 @@ export const ThoughtLeadershipSection: React.FC = () => (
         </button>
         <div className="res-viewport">
           <div className="res-track">
+            <Link className="bt bt-report-new" to="/pharma-dtp-research/">
+              <p className="bt-eyebrow">
+                <NewBadge />
+                Research Report
+              </p>
+              <div className="bt-stat">
+                <span className="bt-stat-num">74</span>
+                <span className="bt-stat-label">life sciences leaders surveyed</span>
+              </div>
+              <p className="bt-htitle">Exclusive research reveals the future of DTP success.</p>
+              <span className="bt-link">
+                Read report <Arrow />
+              </span>
+            </Link>
+
             <a
               className="bt bt-quote is-dark sz-b"
               href="https://www.pharmaceuticalcommerce.com/view/the-critical-layer-for-pharmas-growing-direct-to-patient-play"
