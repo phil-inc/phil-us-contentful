@@ -248,16 +248,7 @@ const PAGE_SCHEMA: JsonLdNode = {
 
 export const Head: HeadFC = () => (
   <>
-    {/* Temporary: live but unlinked before launch, so search engines must not index it yet.
-        Remove noindex in the launch release (Oct 20). */}
-    <SeoMeta
-      title={SEO.title}
-      description={SEO.description}
-      path={PAGE_PATH}
-      image={OG_IMAGE}
-      type="article"
-      noindex
-    />
+    <SeoMeta title={SEO.title} description={SEO.description} path={PAGE_PATH} image={OG_IMAGE} type="article" />
     <meta property="article:published_time" content={PUBLISHED_AT} />
     <JsonLd data={[PAGE_SCHEMA, REPORT_SCHEMA]} />
   </>

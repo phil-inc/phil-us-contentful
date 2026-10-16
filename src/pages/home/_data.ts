@@ -182,33 +182,42 @@ export const VOICES = {
   cta: { text: "Explore Customer Stories →", href: "/customer-success" },
 };
 
+export type InsightCard = {
+  /** "new" is the light card with a NEW tag, for a just-launched report. */
+  variant: "new" | "report" | "webinar" | "blog";
+  tag: string;
+  title: string;
+  cta: string;
+  href: string;
+};
+
 export const INSIGHTS = {
   title: "Our Commitment to Your Success",
   subtitle:
     "We're advancing medication access for patients, providers, and pharma brands through innovative technology and dedicated partnership. Explore our latest news and insights to help move your brand forward.",
   cards: [
     {
-      variant: "report" as const,
+      variant: "new",
+      tag: "Featured Report",
+      title: "Pharma Perspectives on Direct-to-Patient: The Future of DTP Success",
+      cta: "Read report",
+      href: "/pharma-dtp-research/",
+    },
+    {
+      variant: "report",
       tag: "Featured Report",
       title: "Patient Perspectives on Direct-to-Patient: Improving Access and Adherence",
       cta: "Read report",
       href: "/dtp-research/",
     },
     {
-      variant: "webinar" as const,
+      variant: "webinar",
       tag: "Featured Report",
       title: "HCP Perspectives on Direct-to-Patient: Engaging Providers in the Digital Era",
       cta: "Read report",
       href: "/hcp-research/",
     },
-    {
-      variant: "blog" as const,
-      tag: "Featured Report",
-      title: "5 Key Success Factors to Drive Brand Excellence",
-      cta: "Read report",
-      href: "/key-success-factors-to-drive-brand-excellence/",
-    },
-  ],
+  ] as InsightCard[],
   cta: { text: "Explore Resources →", href: "/resources/" },
 };
 
