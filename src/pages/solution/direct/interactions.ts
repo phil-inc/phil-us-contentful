@@ -521,27 +521,19 @@ export function attachSolutionDirectInteractions(): () => void {
     }
     marquee.addEventListener('mouseenter', function () { paused = true; });
     marquee.addEventListener('mouseleave', function () { paused = false; });
-    // Left-edge offset of each original card (middle set); each in [setWidth, 2*setWidth).
-    function boundaries() {
-      var b = [];
-      for (var i = 0; i < n; i++) b.push(track.children[n + i].offsetLeft);
-      return b;
-    }
     function snap(dir) {            // dir: +1 next, -1 prev
       normalize();
-      var b = boundaries();
-      var cur = -pos;              // track-x at the frame's left edge (within the middle set)
-      var idx = 0, best = Infinity;
-      for (var i = 0; i < n; i++) {
-        var d = Math.abs(b[i] - cur);
-        if (d < best) { best = d; idx = i; }
+      var cur = -pos;              // track-x at the frame's left edge
+      // Match against every copy, clones included: offsetLeft is rounded but setWidth is not,
+      // so on fractional-width phones the frame can rest on the right clone of the first card.
+      // Matching only the middle set took that for the last card, and "next" went nowhere.
+      var cards = track.children, k = n, best = Infinity;
+      for (var i = 0; i < cards.length; i++) {
+        var d = Math.abs(cards[i].offsetLeft - cur);
+        if (d < best) { best = d; k = i; }
       }
-      var ti = idx + dir;          // -1 .. n
-      var targetX;
-      if (ti < 0)       targetX = b[n - 1] - setWidth;  // last card, in the left clone set
-      else if (ti >= n) targetX = b[0] + setWidth;      // first card, in the right clone set
-      else              targetX = b[ti];
-      slideTween = { from: pos, to: -targetX, start: performance.now(), dur: 400 };
+      // cur stays within the middle set, so k is never on the track's outer ends and k ± 1 exists.
+      slideTween = { from: pos, to: -cards[k + dir].offsetLeft, start: performance.now(), dur: 400 };
       moved = true;
     }
     var prev = marquee.querySelector('.res-nav.prev');
