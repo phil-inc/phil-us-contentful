@@ -3,6 +3,8 @@ import path from "path";
 import ts from "typescript";
 import slugify from "slugify";
 
+import * as pageConstants from "../../constants/page";
+
 /**
  * MRTG-1444 — getLink remaps the removed "solution" page and the moved
  * "solution/core" page to the live Digital Hub at /solution/hub/.
@@ -24,6 +26,7 @@ const moduleStubs: Record<string, unknown> = {
   "templates/case-study": { CaseStudy: class {} },
   "types/resource": {},
   "types/section": {},
+  "constants/page": pageConstants,
   slugify: { default: slugify, __esModule: true },
 };
 
@@ -280,5 +283,54 @@ describe("getLink — a link entry with an old slug that has a trailing slash", 
     });
 
     expect(result.link).toBe("/solution/hub/");
+  });
+});
+
+/**
+ * Rich-text buttons that link to a section of the News & Insights page. Its
+ * /insights/<section>/ listings are no longer built, so allSitePage has no path for
+ * the section and getLink used to throw "slugify: string argument expected", which
+ * failed the production build on /sharpen-your-access-and-commercialization-efforts/.
+ */
+describe("getLink — buttons linking to a section without a built page", () => {
+  // The exact shape the page query returns for that page's "Browse content" button.
+  const sectionButton = (header: string | null, pageTitle: string, id = "section-id") => ({
+    __typename: "ContentfulButton",
+    buttonText: "Browse content",
+    link: {
+      internalContent: {
+        __typename: "ContentfulReferencedSection",
+        id,
+        header,
+        page: [{ title: pageTitle }],
+      },
+    },
+  });
+
+  test.each([
+    ["Resources", "/resources/"],
+    ["PHIL Blog", "/resources/?type=blog"],
+    ["Events", "/resources/?type=webinar"],
+    ["Press Releases", "/press/"],
+    ["Case Studies", "/customer-success/"],
+  ])("a News & Insights %s section goes where its retired listing redirects: %s", (header, expected) => {
+    const result = getLink(sectionButton(header, "News & Insights"));
+
+    expect(result.link).toBe(expected);
+    expect(result.isExternal).toBe(false);
+  });
+
+  test("a section on another page anchors on the section's own header", () => {
+    expect(getLink(sectionButton("Our Leadership", "Company")).link).toBe("/company/#our-leadership");
+  });
+
+  test("a section without a header anchors on its id", () => {
+    expect(getLink(sectionButton(null, "Company", "abc-123")).link).toBe("/company/#abc-123");
+  });
+
+  test("a section that does have a built page still links to that page", () => {
+    stubbedPaths = [{ path: "/insights/resources/", id: "section-id" }];
+
+    expect(getLink(sectionButton("Resources", "News & Insights")).link).toBe("/insights/resources/");
   });
 });
