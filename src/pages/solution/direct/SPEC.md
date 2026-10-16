@@ -81,7 +81,7 @@ theme, so no `@font-face` needed.
 | # (DOM) | Name | Behavior |
 |---|---|---|
 | 1 | Hero | Eyebrow, h1 with foliage italic, lead, "Book Demo" CTA. Right: SVG spinning ring + floating ship/savings cards + ecommerce checkout phone. Price/savings count-up on scroll-in. |
-| 2 | Thought Leadership | Auto-scrolling resources marquee (8 cards, cloned for loop, prev/next stepping, hover-pause); 3 numbered pillars (sequential badge pop-in); full-library CTA bar. |
+| 2 | Thought Leadership | Auto-scrolling resources marquee (10 cards, the first a light "New" card for `/pharma-dtp-research/` added in MRTG-1461; starts with that card centred, still until half in view, then holds 2.5s before scrolling; cloned for loop, prev/next stepping, hover-pause); 3 numbered pillars (sequential badge pop-in); full-library CTA bar. |
 | 3 | Telemedicine | 3 journey tabs (Telemed / In-Office / Patient Request). Each is a phone-mockup selector: rows on the right swap the center phone, animate progress bar, swap copy, "next step/section" button. Step-number pop-in on first journey. In-office building/calendar pop animation. |
 | 4 | Full-Funnel Visibility | Insights card with 3 pill tabs (Journey funnel / Key Metrics / AI Insights). Funnel segments animate in + checklist checks cascade; metrics count-up + staggered reveal; AI panel typewriter. IO fires the active panel's animation on scroll-in. |
 | 5 | Patient & Provider Needs | 2 research report cards + center coverflow stat carousel (auto-advance 4.6s, count-up, prev/next/dots/keyboard, hover-pause). |
@@ -98,7 +98,7 @@ exact match). `Head` SEO export adapted from `src/pages/providers/index.tsx` /
 
 None. The "questionnaire" / "checkout" / dropdowns are non-functional visual
 mockups inside the phone art. CTAs link to `/demo/`, `/solution/hub/`,
-`/resources/?topic=direct`, `/dtp-research/`, `/hcp-research/`, a case-study URL,
+`/resources/?topic=direct`, `/pharma-dtp-research/`, `/dtp-research/`, `/hcp-research/`, a case-study URL,
 and external press/feature articles.
 
 ## Interactions ported
@@ -107,7 +107,7 @@ and external press/feature articles.
 |---|---|
 | Hero price/savings count-up | `IntersectionObserver` + `requestAnimationFrame` (easeOutCubic) |
 | Hero ring / floats / pops | Pure CSS keyframes |
-| Resources marquee | RAF translateX loop, nodes cloned for seamless wrap, prev/next step, hover-pause |
+| Resources marquee | RAF translateX loop, nodes cloned for seamless wrap, prev/next step, hover-pause; first card centred on load, IntersectionObserver (0.5) starts it, then a 2.5s hold |
 | Pillar badge pop-in | `IntersectionObserver` + staggered class toggle |
 | Telemed selector + journey tabs | Row click swaps active phone/copy/progress; tab click swaps journey; next-step button; clones phones into thumbnails |
 | Telemed step-number pop-in | `IntersectionObserver` (journey 0 only) |

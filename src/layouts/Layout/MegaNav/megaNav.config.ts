@@ -1,5 +1,6 @@
+// Top banner on every page except HIDE_PROMO_SLUGS in MegaNav.tsx.
 export const PROMO_BANNER = {
-  text: "We surveyed 1,000+ patients to uncover their perspectives about direct\u2011to\u2011patient.",
-  linkText: "Read the report",
-  href: "/dtp-research/",
+  text: "Exclusive research from 74 life sciences leaders reveals the future of DTP success",
+  linkText: "Read report",
+  href: "/pharma-dtp-research/",
 };

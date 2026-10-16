@@ -11,7 +11,7 @@ Design sources: `Manufacturer DTP Report.dc.html` (page), `PHIL Header Banner (2
 - **Title** (60 chars): The DTP Breakthrough: Pharma Direct-to-Patient Report | PHIL
 - **Description** (152 chars): PHIL surveyed 74 U.S. life sciences leaders: 3 in 4 call direct-to-patient (DTP) a mission-critical or very important priority. Get the 2026 DTP report.
 - Canonical `/pharma-dtp-research/`, `og:type` article, default social image. The page is indexed and in the sitemap; only the PDF stays out of search.
-- **Pre-launch release:** the page ships alone a few days early (unlinked from the site) so the HubSpot tracking links can be tested on phil.us. Until launch it carries `noindex` (and so no canonical); the launch release removes it and adds the banner, nav, home, resources and DTP placements and the `llms.txt` line.
+- **Two releases:** the page first shipped alone, unlinked and `noindex`, so the HubSpot tracking links could be tested on phil.us. The launch release removed `noindex` (restoring the canonical) and added the banner, nav, home, resources and DTP placements and the `llms.txt` line.
 - **Publication date** `2026-10-20T09:00:00-04:00` (`PUBLISHED_AT` in `_data.ts`): in `<meta property="article:published_time">` and in the JSON-LD only, **not shown on the page**. Update it if the launch moves.
 - **JSON-LD:** a `WebPage` (with `datePublished`) whose `mainEntity` is a `Report` (`#report`): headline, description, `datePublished`, PHIL as author and publisher, `about`, `keywords`, and an `abstract` that states the three headline numbers with their source and date.
 - Headings: one h1; h2 for Overview, the CTA band and FAQs; h3 for each key finding.

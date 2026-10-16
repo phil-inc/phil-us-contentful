@@ -1,0 +1,15 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  background: #00827e;
+  color: #ffffff;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 5px 9px;
+  border-radius: 4px;
+}

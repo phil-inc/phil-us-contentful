@@ -22,6 +22,7 @@ import {
 import cx from "clsx";
 
 import philLogo from "assets/images/phil-logo-green.png";
+import NewBadge from "components/common/NewBadge/NewBadge";
 import { PROMO_BANNER } from "./megaNav.config";
 
 import * as classes from "./megaNav.module.css";
@@ -42,7 +43,9 @@ type NavGroup = {
 type FeatureCard = {
   to: string;
   external?: boolean;
-  variant: "tidewater" | "meadow";
+  variant: "tidewater" | "meadow" | "pastel";
+  /** Shows the "NEW" tag before the eyebrow. */
+  isNew?: boolean;
   eyebrow: string;
   title: string;
   body?: string;
@@ -136,17 +139,18 @@ const NAV_SECTIONS: NavSection[] = [
     ],
     features: [
       {
+        to: "/pharma-dtp-research/",
+        variant: "pastel",
+        isNew: true,
+        eyebrow: "Featured Resource",
+        title: "Pharma Perspectives on Direct\u2011to\u2011Patient: The Future of DTP Success",
+        linkText: "Read Report",
+      },
+      {
         to: "/dtp-research/",
         variant: "tidewater",
         eyebrow: "Featured Resource",
         title: "Patient Perspectives on Direct\u2011to\u2011Patient: The Key to Improving Access and Adherence",
-        linkText: "Read Report",
-      },
-      {
-        to: "/hcp-research/",
-        variant: "meadow",
-        eyebrow: "Featured Resource",
-        title: "HCP Perspectives on Direct\u2011to\u2011Patient: Engaging Providers in the Digital Era",
         linkText: "Read Report",
       },
     ],
@@ -216,10 +220,21 @@ const MegaLinkList: React.FC<{ groups: NavGroup[]; sectionLabel: string }> = ({ 
 );
 
 const MegaFeatureCard: React.FC<{ card: FeatureCard }> = ({ card }) => {
-  const variantClass = card.variant === "tidewater" ? classes.megaFeatureTidewater : classes.megaFeatureMeadow;
+  const variantClass = {
+    tidewater: classes.megaFeatureTidewater,
+    meadow: classes.megaFeatureMeadow,
+    pastel: classes.megaFeaturePastel,
+  }[card.variant];
   const content = (
     <>
-      <p className={classes.mfEyebrow}>{card.eyebrow}</p>
+      {card.isNew ? (
+        <div className={classes.mfEyebrowRow}>
+          <NewBadge />
+          <p className={classes.mfEyebrow}>{card.eyebrow}</p>
+        </div>
+      ) : (
+        <p className={classes.mfEyebrow}>{card.eyebrow}</p>
+      )}
       <h4 className={classes.mfTitle}>{card.title}</h4>
       {card.body && <p className={classes.mfBody}>{card.body}</p>}
       <span className={classes.mfLink}>
@@ -396,11 +411,13 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
         {/* Promo Banner */}
         {showPromoBanner && (
           <div className={classes.promoBanner}>
-            <div className={`xl-container ${classes.promoInner}`}>
-              <span className={classes.promoText}>{PROMO_BANNER.text}{" "}</span>
+            <div className={classes.promoInner}>
+              <NewBadge className={classes.promoBadge} />
+              <span className={classes.promoText}>{PROMO_BANNER.text}</span>
               <Link className={classes.promoLink} to={PROMO_BANNER.href}>
-                {PROMO_BANNER.linkText}
-                <ArrowIcon />
+                <span className={classes.promoLinkText}>
+                  {PROMO_BANNER.linkText} <span aria-hidden="true">&rarr;</span>
+                </span>
               </Link>
             </div>
           </div>

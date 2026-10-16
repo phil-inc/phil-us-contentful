@@ -6,6 +6,7 @@ import { useLocation } from "@reach/router";
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
 import DemoCta from "components/common/DemoCta/DemoCta";
+import NewBadge from "components/common/NewBadge/NewBadge";
 import Pagination from "components/common/Pagination/Pagination";
 import { SeoMeta } from "components/common/Seo/SeoMeta";
 import { JsonLd } from "components/common/Seo/JsonLd";
@@ -137,7 +138,7 @@ function getCtaIcon(label: string) {
 }
 
 function isInternal(url: string) {
-  return url.startsWith("https://phil.us/") || url.startsWith("https://www.phil.us/");
+  return url.startsWith("/") || url.startsWith("https://phil.us/") || url.startsWith("https://www.phil.us/");
 }
 
 function toRelative(url: string) {
@@ -806,6 +807,16 @@ const ResourcesPage: React.FC = () => {
         <section className={classes.featured}>
           <div className={classes.featuredEyebrow}>Featured Resources</div>
           <div className={classes.featuredGrid}>
+            <CardLink url="/pharma-dtp-research/" className={`${classes.featCard} ${classes.pastel}`}>
+              <div className={classes.featCardEyebrowRow}>
+                <NewBadge />
+                <div className={classes.featCardEyebrow}>Featured Report</div>
+              </div>
+              <div>
+                <h3 className={classes.featCardTitle}>Pharma Perspectives on Direct-to-Patient: The Future of DTP Success</h3>
+                <span className={classes.featCta}>Read report <ArrowIcon /></span>
+              </div>
+            </CardLink>
             <CardLink url="https://phil.us/dtp-research/" className={`${classes.featCard} ${classes.tidewater}`}>
               <div className={classes.featCardEyebrow}>Featured Report</div>
               <div>
@@ -817,13 +828,6 @@ const ResourcesPage: React.FC = () => {
               <div className={classes.featCardEyebrow}>Featured Report</div>
               <div>
                 <h3 className={classes.featCardTitle}>HCP Perspectives on Direct-to-Patient: Engaging Providers in the Digital Era</h3>
-                <span className={classes.featCta}>Read report <ArrowIcon /></span>
-              </div>
-            </CardLink>
-            <CardLink url="https://phil.us/key-success-factors-to-drive-brand-excellence/" className={`${classes.featCard} ${classes.forest}`}>
-              <div className={classes.featCardEyebrow}>Featured Report</div>
-              <div>
-                <h3 className={classes.featCardTitle}>5 Key Success Factors to Drive Brand Excellence</h3>
                 <span className={classes.featCta}>Read report <ArrowIcon /></span>
               </div>
             </CardLink>
