@@ -11,6 +11,28 @@ const TOKEN_MAX_AGE_MS = 9 * 60 * 1000;
 /** HubSpot only reports success; if it hasn't confirmed by then, treat the submission as failed. */
 const CONFIRM_TIMEOUT_MS = 20 * 1000;
 
+/**
+ * Remembers a submission until the tab closes, like the other research pages
+ * (components/common/GatedReportForm), so a refresh shows "Open Report" instead of the form.
+ */
+const SUBMITTED_KEY = `researchReportFormSubmitted_${REPORT_ID}`;
+
+function wasSubmitted(): boolean {
+  try {
+    return sessionStorage.getItem(SUBMITTED_KEY) === "true";
+  } catch {
+    return false; // storage blocked: show the form
+  }
+}
+
+function rememberSubmitted() {
+  try {
+    sessionStorage.setItem(SUBMITTED_KEY, "true");
+  } catch {
+    // storage blocked: the form shows again on the next visit
+  }
+}
+
 type DownloadLink = {
   href: string;
   issuedAt: number;
@@ -62,6 +84,10 @@ export const ReportForm = forwardRef<HTMLElement, ReportFormProps>(({ glow }, re
 
   useEffect(() => () => window.clearTimeout(confirmTimer.current), []);
 
+  useEffect(() => {
+    if (wasSubmitted()) setSubmitted(true);
+  }, []);
+
   const closeWaitingTab = () => {
     waitingTab.current?.close();
     waitingTab.current = null;
@@ -100,6 +126,7 @@ export const ReportForm = forwardRef<HTMLElement, ReportFormProps>(({ glow }, re
 
   const handleFormSubmitted = useCallback(() => {
     confirmed.current = true;
+    rememberSubmitted();
     setSubmitted(true);
     releaseReport();
   }, [releaseReport]);
