@@ -13,6 +13,13 @@ export interface PressItem {
 // Dates come from each article page, except where a comment says otherwise.
 export const PRESS_DATA: PressItem[] = [
   {
+    title: "New PHIL Research on the Future of Pharma DTP: 3 in 4 Leaders Report Direct-to-Patient a Major Strategic Priority",
+    outlet: "Press Release",
+    type: "Release",
+    date: "2026-10-20", // from the Business Wire URL
+    url: "https://www.businesswire.com/news/home/20261020292981/en/New-PHIL-Research-on-the-Future-of-Pharma-DTP-3-in-4-Leaders-Report-Direct-to-Patient-a-Major-Strategic-Priority-Today-Growing-20-in-Mission-Critical-Significance-in-2027",
+  },
+  {
     title: "Evolved Health and PHIL Announce Novel Dermatology Program for New Day™ Direct-to-Patient",
     outlet: "Press Release",
     type: "Release",

@@ -41,6 +41,13 @@ export const RESOURCES_DATA: ResourceItem[] = [
     buttonLabel: "Download",
   },
   {
+    title: "New PHIL Research on the Future of Pharma DTP: 3 in 4 Leaders Report Direct-to-Patient a Major Strategic Priority",
+    topics: ["direct"],
+    type: "press",
+    url: "https://www.businesswire.com/news/home/20261020292981/en/New-PHIL-Research-on-the-Future-of-Pharma-DTP-3-in-4-Leaders-Report-Direct-to-Patient-a-Major-Strategic-Priority-Today-Growing-20-in-Mission-Critical-Significance-in-2027",
+    buttonLabel: "Read",
+  },
+  {
     title: "Evolved Health and PHIL Announce Novel Dermatology Program for New Day™ Direct-to-Patient",
     topics: ["direct", "access"],
     type: "press",
