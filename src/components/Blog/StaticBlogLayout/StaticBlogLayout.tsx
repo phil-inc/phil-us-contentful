@@ -109,6 +109,12 @@ export const BlogH4: React.FC<WithChildren> = ({ children }) => (
   </Title>
 );
 
+export const BlogH6: React.FC<WithChildren> = ({ children }) => (
+  <Title order={6} className={cx(classes.heading, classes.heading6)}>
+    {children}
+  </Title>
+);
+
 /** The live template opens every link in a new tab with no referrer, internal ones included. */
 export const BlogA: React.FC<WithChildren & { href: string }> = ({
   href,

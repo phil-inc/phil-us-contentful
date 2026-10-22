@@ -326,7 +326,7 @@ export function readBody(root) {
   const scope = body || wrapper;
   const blocks = [];
   const headings = [{ level: 1, text: collapse(h1.text) }];
-  for (const el of scope.querySelectorAll("p, h2, h3, h4")) {
+  for (const el of scope.querySelectorAll("p, h2, h3, h4, h6")) {
     const tag = el.rawTagName.toLowerCase();
     const text = collapse(el.text);
     if (tag === "p" && text === "Loading...") continue; // client-only embed placeholder on live

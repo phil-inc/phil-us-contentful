@@ -29,7 +29,7 @@ migratedStaticSlugs.test.ts` fails when the list and the folder disagree.
    opening the HubSpot form in a modal (portal 20880193, form
    ccd3ffde-09ef-492c-8f91-a500255d2735).
 
-Body primitives, one per rich-text node: `BlogP`, `BlogH2`, `BlogH3`, `BlogH4`,
+Body primitives, one per rich-text node: `BlogP`, `BlogH2`, `BlogH3`, `BlogH4`, `BlogH6`,
 `BlogA`, `BlogUL`, `BlogOL`, `BlogLI`, `BlogHR`, `BlogImage`, `BlogYouTube`. A bio is
 built from `AuthorBioP` and `AuthorBioA`, re-exported from the same module so a post
 imports everything from one place.

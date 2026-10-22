@@ -53,6 +53,17 @@ const articleNode = (jsonld) => jsonld.find((n) => n["@type"] === "Article" || n
 const idOf = (v) => (v && typeof v === "object" ? v["@id"] : v) ?? null;
 
 function compare(slug, liveHtml, localHtml, extras) {
+  // The site's generated HTML sometimes carries stray NUL bytes (U+0000) in text, on live and in a
+  // local build alike (found 2026-10-22: /annex/ has 2 on live and in every build, and `main`
+  // without any migrated page shows them on other pages too; where they land depends on the page
+  // and its byte offsets, not on the Node version). A browser ignores them and they are never
+  // content, so strip them from both sides, and report the counts instead of hiding them.
+  const nulCount = (h) => (h.match(/\u0000/g) || []).length;
+  const nulLive = nulCount(liveHtml);
+  const nulLocal = nulCount(localHtml);
+  liveHtml = liveHtml.replace(/\u0000/g, "");
+  localHtml = localHtml.replace(/\u0000/g, "");
+
   const rows = [];
   const t1 = (name, a, b) => rows.push({ tier: 1, name, ok: JSON.stringify(a) === JSON.stringify(b), live: a, local: b });
   const t1ok = (name, ok, detail) => rows.push({ tier: 1, name, ok, live: detail, local: "" });
@@ -125,6 +136,7 @@ function compare(slug, liveHtml, localHtml, extras) {
   info("Article.image", la?.image ?? null, na?.image ?? null);
   info("VideoObject nodes", L.jsonld.filter((n) => n["@type"] === "VideoObject").length, N.jsonld.filter((n) => n["@type"] === "VideoObject").length);
   info("<article> element", /<article[\s>]/.test(liveHtml), /<article[\s>]/.test(localHtml));
+  if (nulLive || nulLocal) info("NUL bytes stripped before comparing (site-wide artifact)", nulLive, nulLocal);
   return rows;
 }
 

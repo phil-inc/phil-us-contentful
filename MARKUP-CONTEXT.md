@@ -277,7 +277,7 @@ Contentful entry still exists but renders nowhere: editing it changes nothing on
 the site, so never route a change for these to Contentful. A change to the shared
 layout (the banner, the share row, the typography) is also code.
 
-Posts moved so far (72). The list in `src/constants/migratedStaticSlugs.ts` is
+Posts moved so far (78). The list in `src/constants/migratedStaticSlugs.ts` is
 authoritative; if the two ever disagree, that file wins.
 - `/transforming-the-patient-experience-with-a-strong-direct-to-consumer-program/`
 - `/are-traditional-hub-providers-keeping-pace-with-todays-consumers-and/`
@@ -351,6 +351,12 @@ authoritative; if the two ever disagree, that file wins.
 - `/leveraging-data-analytics/`
 - `/3-ways-to-breakthrough-barriers-to-medication/`
 - `/how-to-choose-the-best-commercialization-partner-to-drive-patient-access/`
+- `/advancing-medication-adherence-with-data-driven-interventions/`
+- `/case-study-defying-the-mid-cycle-curse-for-specialty-pharma/`
+- `/psaos-what-life-science-commercialization-teams-need-to-know/`
+- `/upcoming-webinar-your-guide-to-building-an-exceptional-telemedicine-program/`
+- `/what-if-you-could-decrease-time-to-therapy-from-7-days-to-1-day/`
+- `/six-considerations-when-evaluating-patient-access-platforms/`
 
 ---
 

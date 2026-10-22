@@ -82,4 +82,10 @@ export const MIGRATED_STATIC_SLUGS: ReadonlySet<string> = new Set<string>([
   "leveraging-data-analytics",
   "3-ways-to-breakthrough-barriers-to-medication",
   "how-to-choose-the-best-commercialization-partner-to-drive-patient-access",
+  "advancing-medication-adherence-with-data-driven-interventions",
+  "case-study-defying-the-mid-cycle-curse-for-specialty-pharma",
+  "psaos-what-life-science-commercialization-teams-need-to-know",
+  "upcoming-webinar-your-guide-to-building-an-exceptional-telemedicine-program",
+  "what-if-you-could-decrease-time-to-therapy-from-7-days-to-1-day",
+  "six-considerations-when-evaluating-patient-access-platforms",
 ]);

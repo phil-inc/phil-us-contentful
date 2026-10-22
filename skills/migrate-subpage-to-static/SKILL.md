@@ -36,7 +36,7 @@ A brand-new post from a design file is a different job: use `skills/implement-fr
 
 Skip if `src/components/Blog/StaticBlogLayout/StaticBlogLayout.tsx` exists. Build these together with the first post and show them as one reviewable unit.
 
-1. **`src/components/Blog/StaticBlogLayout/`** (`StaticBlogLayout.tsx`, `staticBlogLayout.module.css`, `SPEC.md`). Contentful-free. Styles copied from `src/templates/blog.module.css` and `Container size="xl"` as in `src/templates/blog.tsx`. Props: `title`, optional `hero {src, alt}`, optional `author {name, title, imageSrc?, bio: ReactNode}`, `children`. Wraps the body in `<article>`, renders the existing `components/Blog/SocialShare/SocialShare`, then the CTA banner. Exports the body primitives: `BlogP`, `BlogH2`, `BlogH3`, `BlogH4`, `BlogA`, `BlogUL`, `BlogOL`, `BlogLI`, `BlogHR`, `BlogImage`, `BlogYouTube`.
+1. **`src/components/Blog/StaticBlogLayout/`** (`StaticBlogLayout.tsx`, `staticBlogLayout.module.css`, `SPEC.md`). Contentful-free. Styles copied from `src/templates/blog.module.css` and `Container size="xl"` as in `src/templates/blog.tsx`. Props: `title`, optional `hero {src, alt}`, optional `author {name, title, imageSrc?, bio: ReactNode}`, `children`. Wraps the body in `<article>`, renders the existing `components/Blog/SocialShare/SocialShare`, then the CTA banner. Exports the body primitives: `BlogP`, `BlogH2`, `BlogH3`, `BlogH4`, `BlogH6`, `BlogA`, `BlogUL`, `BlogOL`, `BlogLI`, `BlogHR`, `BlogImage`, `BlogYouTube`.
    - `BlogA` bakes in `target="_blank"` and `referrerPolicy="no-referrer"` (the live template sets both on every link, internal ones included).
    - `BlogImage` renders `<img loading="lazy" src alt width height>` with `max-width: 100%`. The live page uses a responsive GatsbyImage; the local file is a plain image (Tier 2).
    - `BlogYouTube` renders a **server-side `<iframe>`** on `youtube-nocookie.com` with a `title`. The live `YouTubeVideo` is client-only and ships "Loading..." in the HTML, which crawlers and `llms-full.txt` see.
@@ -80,7 +80,7 @@ The script fails loudly on any node outside the contract below and runs **Gate A
 | Rich-text node | Emit |
 |---|---|
 | paragraph | `<BlogP>`; a text node with `""` becomes `<br />` (the live template does this) |
-| heading-2 / 3 / 4 | `<BlogH2/H3/H4>`, **level preserved** (Tier 1) |
+| heading-2 / 3 / 4 / 6 | `<BlogH2/H3/H4/H6>`, **level preserved** (Tier 1). heading-1 and heading-5 are not supported yet and stop the converter (the Contentful template has a `heading5` style with weight 400; copy it into the shell if a page needs it) |
 | unordered-list / ordered-list / list-item | `<BlogUL>` / `<BlogOL>` / `<BlogLI>` |
 | hyperlink | `<BlogA href>` (`BlogA` carries `target="_blank"` and `referrerPolicy="no-referrer"`, as the live template does); `href` rewritten per link rules; a `ctfassets.net` target becomes a local `/pdf/<name>` or image path |
 | marks bold / italic / underline | `<b>` / `<i>` / `<u>`, the live renderer's defaults. **Not** `<strong>` / `<em>`: on this site's CSS a `<strong>` inside a 700-weight heading computes to 900, so migrated headings look too bold |

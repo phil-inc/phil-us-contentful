@@ -86,12 +86,12 @@ function registerAsset(rawUrl, from) {
 // ------------------------------------------------------------------ rich text -> JSX
 
 const refs = new Map((r.body.references || []).map((x) => [x.contentful_id, x]));
-const HEADING = { "heading-2": "BlogH2", "heading-3": "BlogH3", "heading-4": "BlogH4" };
+const HEADING = { "heading-2": "BlogH2", "heading-3": "BlogH3", "heading-4": "BlogH4", "heading-6": "BlogH6" };
 // The live template uses the rich-text renderer's defaults: <b>, <i>, <u>. Do not "upgrade"
 // these to <strong>/<em>: on this site's CSS a <strong> inside a 700-weight heading computes
 // to weight 900 while <b> stays 700, which makes migrated headings visibly heavier.
 const MARK = { bold: "b", italic: "i", underline: "u" };
-const TAG_TO_HTML = { BlogP: "p", BlogH2: "h2", BlogH3: "h3", BlogH4: "h4" };
+const TAG_TO_HTML = { BlogP: "p", BlogH2: "h2", BlogH3: "h3", BlogH4: "h4", BlogH6: "h6" };
 
 function youTubeId(url) {
   // Same patterns as src/utils/links.ts getYouTubeId.
@@ -205,7 +205,8 @@ function makeEmitter(ctx, names = BODY_NAMES) {
       }
       case "heading-2":
       case "heading-3":
-      case "heading-4": {
+      case "heading-4":
+      case "heading-6": {
         const tag = HEADING[node.nodeType];
         ctx.used.add(tag);
         ctx.counts[node.nodeType]++;
@@ -265,7 +266,7 @@ function emitDocument(rawJson, names = BODY_NAMES) {
   const doc = JSON.parse(rawJson);
   const ctx = {
     used: new Set(), links: [], embeds: [],
-    counts: { paragraph: 0, "heading-2": 0, "heading-3": 0, "heading-4": 0, "unordered-list": 0, "ordered-list": 0, "list-item": 0, hr: 0, embed: 0, image: 0 },
+    counts: { paragraph: 0, "heading-2": 0, "heading-3": 0, "heading-4": 0, "heading-6": 0, "unordered-list": 0, "ordered-list": 0, "list-item": 0, hr: 0, embed: 0, image: 0 },
   };
   const em = makeEmitter(ctx, names);
   const jsx = (doc.content || []).map((n) => em.block(n, 0)).join("\n");
@@ -480,7 +481,7 @@ check("every hyperlink survives (count and order)", scan.links.length === expect
 const emittedHrefs = body.ctx.links.filter((l) => !l.author).map((l) => l.href);
 check("emitted hrefs equal the rewritten link list", JSON.stringify(scan.links) === JSON.stringify(emittedHrefs));
 const TAG_FOR_NODE = {
-  paragraph: "BlogP", "heading-2": "BlogH2", "heading-3": "BlogH3", "heading-4": "BlogH4",
+  paragraph: "BlogP", "heading-2": "BlogH2", "heading-3": "BlogH3", "heading-4": "BlogH4", "heading-6": "BlogH6",
   "unordered-list": "BlogUL", "ordered-list": "BlogOL", "list-item": "BlogLI", hr: "BlogHR",
   "embedded-entry-block": "BlogYouTube", "embedded-asset-block": "BlogImage", hyperlink: "BlogA",
 };
