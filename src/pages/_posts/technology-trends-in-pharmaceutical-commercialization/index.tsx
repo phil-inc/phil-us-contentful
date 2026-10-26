@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/technology-trends-in-pharmaceutical-commercialization/";
 const TITLE = "Technology Trends Shaping the Future of the Pharmaceutical Commercialization";
 const DESCRIPTION = "Read about the latest healthcare technologies promising to transform the development and delivery of innovative pharmaceutical therapies.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

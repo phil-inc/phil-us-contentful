@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogImage, BlogP } from "compo
 const PATH = "/developing-a-distribution-strategy-that-optimizes-gross-to-net/";
 const TITLE = "Developing a Distribution Strategy that Optimizes Gross to Net";
 const DESCRIPTION = "Developing a Distribution Strategy that Optimizes Gross to Net";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>
@@ -24,7 +24,7 @@ const Page: React.FC = () => (
     <BlogP>Downward pressure on net sales is an ongoing problem for pharmaceutical and life sciences companies. It’s crucial to understand the gross-to-net (GNT) challenges that manufacturers are facing and how they can leverage their distribution strategies to optimize GTN.</BlogP>
     <BlogH2>Understanding the challenges surrounding GTN</BlogH2>
     <BlogP>{"Numerous factors impact a life science company’s GTN, which is the difference between the wholesaler acquisition cost (WAC) – also known as the drug’s list price – and the manufacturer’s net sales. Distributor chargebacks and rebates, "}<BlogA href="https://www.340bhealth.org/members/340b-program/overview/">340B Drug Pricing Program rebates</BlogA>{", negotiated price reductions, and copay assistance can significantly reduce the net revenue manufacturers realize for their brand-name drugs. The fact is, many companies today are experiencing declining net drug revenue as they offer larger rebates to offset increases in list prices, as depicted in this "}<BlogA href="https://www.drugchannels.net/2022/07/warped-incentives-update-gross-to-net.html">chart from Drug Channels</BlogA>:</BlogP>
-    <BlogImage src="/images/blog/unnamed.jpeg" alt="" width="512" height="351" />
+    <BlogImage src="/images/blog/unnamed.webp" alt="" width="512" height="351" />
     <BlogP>There are two major changes in the pharmaceutical environment that underly the GTN challenges companies are facing:</BlogP>
     <BlogH3>1. Consumer expectations</BlogH3>
     <BlogP>Innovations, fueled by mobile technologies, over the last decade or so have removed a lot of friction from buying experiences and have enabled more informed decision-making, which has become part of the standard purchasing experience today.</BlogP>

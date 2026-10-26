@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogLI, BlogOL, BlogP, BlogUL 
 const PATH = "/launching-a-new-drug-in-a-category-with-generic-alternatives/";
 const TITLE = "Launching a New Drug in a Category with Generic Alternatives";
 const DESCRIPTION = "Launching a new drug in a category with generic alternatives";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

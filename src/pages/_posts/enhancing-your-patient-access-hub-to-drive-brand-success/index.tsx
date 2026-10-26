@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogLI, BlogP, BlogUL } from "
 const PATH = "/enhancing-your-patient-access-hub-to-drive-brand-success/";
 const TITLE = "Enhancing your Patient Access Hub to Drive Brand Success";
 const DESCRIPTION = "This blog post uncovers how to create a positive hub experience that helps your biopharma brand build patient trust, increase loyalty with providers, and support therapy adherence.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

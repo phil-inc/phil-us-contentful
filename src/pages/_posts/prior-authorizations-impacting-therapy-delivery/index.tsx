@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/prior-authorizations-impacting-therapy-delivery/";
 const TITLE = "Prior Authorization Hurdles Don’t Discriminate By Disease";
 const DESCRIPTION = "Prior authorizations are impacting therapy delivery across a spectrum of diseases and therapeutic areas and there is a universal need for a more streamlined and integrated system that ensures timely access to therapy.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/6-trends-impacting-pharma-commercialization/";
 const TITLE = "6 Healthcare Trends Impacting Pharma Commercialization";
 const DESCRIPTION = "The healthcare landscape is evolving rapidly. Get insight into the current healthcare trends shaping the future of pharma commercialization.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

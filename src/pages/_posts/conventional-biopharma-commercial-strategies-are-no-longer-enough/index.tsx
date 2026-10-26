@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP } from "componen
 const PATH = "/conventional-biopharma-commercial-strategies-are-no-longer-enough/";
 const TITLE = "Conventional Biopharma Commercial Strategies are No Longer Enough";
 const DESCRIPTION = "Conventional Biopharma Commercial Strategies are No Longer Enough";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,12 +10,12 @@ import { StaticBlogLayout, AuthorBioP, BlogA, BlogH2, BlogLI, BlogOL, BlogP, Blo
 const PATH = "/are-traditional-hub-providers-keeping-pace-with-todays-consumers-and/";
 const TITLE = "Are Traditional Hub Providers Keeping Pace with Today’s Consumers and Providers?";
 const DESCRIPTION = "With consumer demands for choice, convenience, and transparency at an all-time high, life science companies need to ensure their hub service providers aren’t stuck in the past.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 const AUTHOR = {
   name: "Rick Salazar",
   title: "VP Of Business Development, Phil",
-  imageSrc: "/images/blog/1601078003282.jpeg",
+  imageSrc: "/images/blog/1601078003282.webp",
   bio: (
     <>
       <AuthorBioP>Rick is a senior patient services and distribution leader with expertise helping patients, providers and manufacturers overcome barriers to access and and use via a technology driven platform supporting both buy and bill and pharmacy benefit drugs.</AuthorBioP>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/tech-enabled-patient-services-do-more-with-less-in-2023/";
 const TITLE = "Tech Enabled Patient Services: Do More With Less in 2023";
 const DESCRIPTION = "Discover four ways a technology-driven patient services solution can enable life science companies to achieve more with a smaller investment.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogP } from "components/Blog/StaticBlogLayout
 const PATH = "/three-ways-healthcare-technology-is-improving-medication-adherence/";
 const TITLE = "3 Ways Healthcare Technology is Improving Medication Adherence";
 const DESCRIPTION = "Health technology plays a significant role in overcoming nonadherence to drug therapy. Learn 3 ways patient access solutions are improving medication adherence.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

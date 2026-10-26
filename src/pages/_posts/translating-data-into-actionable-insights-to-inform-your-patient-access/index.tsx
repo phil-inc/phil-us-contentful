@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogHR, BlogLI, BlogOL, BlogP, BlogUL 
 const PATH = "/translating-data-into-actionable-insights-to-inform-your-patient-access/";
 const TITLE = "Translating Data into Actionable Insights to Inform your Patient Access Strategy";
 const DESCRIPTION = "Read this blog post to learn how to invest in the right capabilities to capture, analyze, and draw insights from relevant data sources to inform your patient access strategy.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

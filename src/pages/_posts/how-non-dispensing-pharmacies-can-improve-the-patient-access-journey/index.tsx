@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/how-non-dispensing-pharmacies-can-improve-the-patient-access-journey/";
 const TITLE = "How Non-Dispensing Pharmacies can Improve the Patient Access Journey";
 const DESCRIPTION = "Discover how non-dispensing pharmacies can improve the prescription access experience for patients and providers, and create unparalleled brand success for specialty-lite manufacturers";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

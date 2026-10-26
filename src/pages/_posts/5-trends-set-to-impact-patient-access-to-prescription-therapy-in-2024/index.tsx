@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/5-trends-set-to-impact-patient-access-to-prescription-therapy-in-2024/";
 const TITLE = "5 Trends Set to Impact Patient Access to Prescription Therapy in 2024";
 const DESCRIPTION = "This blog post outlines key innovations shaping the pharmaceutical industry in 2024 and how to leverage these for improved patient access, coverage, and adoption";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

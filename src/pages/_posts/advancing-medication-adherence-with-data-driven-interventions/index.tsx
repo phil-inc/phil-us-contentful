@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH4, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/advancing-medication-adherence-with-data-driven-interventions/";
 const TITLE = "Advancing Medication Adherence with Data-Driven Interventions";
 const DESCRIPTION = "Nonadherence to prescribed therapy is a costly problem. Discover proactive interventions pharmaceutical manufacturers can employ to improve medication adherence.";
-const OG_IMAGE = "https://phil.us/images/blog/og/5-Resources-Icon.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/5-Resources-Icon.webp";
 
 export const Head: HeadFC = () => (
   <>
@@ -20,7 +20,7 @@ export const Head: HeadFC = () => (
 );
 
 const Page: React.FC = () => (
-  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/5-Resources-Icon.png", alt: "" }}>
+  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/5-Resources-Icon.webp", alt: "" }}>
     <BlogP>{"Medication adherence refers to how closely patients take their medications as prescribed. Nonadherence – which may involve failing to initiate treatment, taking incorrect doses, or discontinuing treatment – is associated with poor outcomes and higher healthcare costs. "}</BlogP>
     <BlogP>Beyond the primary goal of enabling healthier and longer lives for patients, medication adherence directly impacts pharmaceutical manufacturers’ bottom lines. Understanding the factors contributing to adherence and using meaningful interventions based on data analytics will enable a brand's full potential to be realized.</BlogP>
     <BlogH4>The dilemma of medication nonadherence</BlogH4>

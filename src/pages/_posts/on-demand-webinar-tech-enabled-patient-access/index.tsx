@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogLI, BlogP, BlogUL, BlogYou
 const PATH = "/on-demand-webinar-tech-enabled-patient-access/";
 const TITLE = "On-Demand Webinar: Tech Enabled Patient Access";
 const DESCRIPTION = "Watch this webinar to discover key strategies and best practices for accelerating patient access through technology from seasoned life sciences leaders.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

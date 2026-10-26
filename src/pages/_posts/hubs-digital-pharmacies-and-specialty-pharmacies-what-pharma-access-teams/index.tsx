@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogHR, BlogLI, BlogP, BlogUL } from "
 const PATH = "/hubs-digital-pharmacies-and-specialty-pharmacies-what-pharma-access-teams/";
 const TITLE = "Hubs, Digital Pharmacies, and Specialty Pharmacies: What Pharma Access Teams Should Know";
 const DESCRIPTION = "The evolution of healthcare consumer expectations and proliferation of expensive specialty and specialty-lite therapies have led to the rise of innovative solutions to clear an often onerous path to prescribed treatment. In 2022, specialty drugs accounted for 55% of the net spending in the pharmaceutical market, up from 28% in 2011. And an estimated 3 out of 4 patients who try to fill a new prescription for a recently launched brand are unsuccessful due to payer controls";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

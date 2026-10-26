@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/the-evolving-role-of-retail-pharmacies-what-branded-retail-and-specialty/";
 const TITLE = "The Evolving Role of Retail Pharmacies: What Branded Retail and Specialty-Lite Manufacturers Need to Know";
 const DESCRIPTION = "This blog post uncovers how biopharma manufacturers should navigate the changes in the retail pharmacy landscape, including the shift to digital hubs";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

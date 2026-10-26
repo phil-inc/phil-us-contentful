@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/life-science-company-digital-technology/";
 const TITLE = "Is Your Life Science Company Taking Full Advantage of Digital Technology?";
 const DESCRIPTION = "Pharma companies must address barriers to digital transformation to benefit from the commercialization opportunities digital technologies have to offer.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

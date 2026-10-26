@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL, BlogYouTube } f
 const PATH = "/optimizing-your-field-team-to-maximize-patient-access-webinar/";
 const TITLE = "On-Demand Webinar: Optimizing Your Field Team to Maximize Patient Access";
 const DESCRIPTION = "Watch this webinar to learn how to mobilize your biopharma field team to drive strategic brand outcomes and maximize patient access, presented Phil Inc, Real Endpoints, and Fierce Pharma";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

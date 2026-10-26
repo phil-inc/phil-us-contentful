@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogOL, BlogP } from "componen
 const PATH = "/8-strategies-to-decrease-prescription-abandonment-and-improve-medication/";
 const TITLE = "8 Strategies to Decrease Prescription Abandonment and Improve Medication Adherence";
 const DESCRIPTION = "This article highlights the consequences of prescription abandonment and offers 8 strategies to help pharma companies improve medication adherence";
-const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogP } from "components/Blog/StaticBl
 const PATH = "/how-to-choose-the-best-commercialization-partner-to-drive-patient-access/";
 const TITLE = "How to Choose the Best Commercialization Partner to Drive Patient Access";
 const DESCRIPTION = "Is a pharmaceutical hub the best solution for commercializing your therapies? For well over a decade, pharmaceutical hub services have played a pivotal role in supporting patient access to life-saving";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

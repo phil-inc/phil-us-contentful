@@ -38,7 +38,7 @@ Skip if `src/components/Blog/StaticBlogLayout/StaticBlogLayout.tsx` exists. Buil
 
 1. **`src/components/Blog/StaticBlogLayout/`** (`StaticBlogLayout.tsx`, `staticBlogLayout.module.css`, `SPEC.md`). Contentful-free. Styles copied from `src/templates/blog.module.css` and `Container size="xl"` as in `src/templates/blog.tsx`. Props: `title`, optional `hero {src, alt}`, optional `author {name, title, imageSrc?, bio: ReactNode}`, `children`. Wraps the body in `<article>`, renders the existing `components/Blog/SocialShare/SocialShare`, then the CTA banner. Exports the body primitives: `BlogP`, `BlogH2`, `BlogH3`, `BlogH4`, `BlogH6`, `BlogA`, `BlogUL`, `BlogOL`, `BlogLI`, `BlogHR`, `BlogImage`, `BlogYouTube`.
    - `BlogA` bakes in `target="_blank"` and `referrerPolicy="no-referrer"` (the live template sets both on every link, internal ones included).
-   - `BlogImage` renders `<img loading="lazy" src alt width height>` with `max-width: 100%`. The live page uses a responsive GatsbyImage; the local file is a plain image (Tier 2).
+   - `BlogImage` renders `<img loading="lazy" decoding="async" src alt width height>` with `max-width: 100%`. The live page uses a responsive GatsbyImage; the local file is a plain WebP (Tier 2, Phase 3 "Image weight"). The hero `<img>` is `loading="eager" fetchPriority="high" decoding="async"` (it is above the fold) and takes **no** `width`/`height` attributes: its box is fixed and the flex row stretches it to 240px, which a `height` attribute would stop.
    - `BlogYouTube` renders a **server-side `<iframe>`** on `youtube-nocookie.com` with a `title`. The live `YouTubeVideo` is client-only and ships "Loading..." in the HTML, which crawlers and `llms-full.txt` see.
    - The `author` prop is not built until the first post that has an author (2 of 72).
 2. **`src/components/Blog/StaticBlogCtaBanner/`**. Heading "Ready to learn more?", body paragraph, "Contact us" button opening a Mantine `Modal` with the existing `HubspotFormModal`. Re-read the real values from any post's page-data (`allContentfulResource.nodes[*].banners`) and confirm portal and form IDs are unchanged. Wrap in `Expanded` with the same props as `bannerFactory` in `components/common/Banner/Banner.tsx`. `HubspotFormModal` expects the Contentful rich-text shape and reads the form ids out of the script text, so build that shape by hand rather than changing the shared component.
@@ -87,7 +87,7 @@ The script fails loudly on any node outside the contract below and runs **Gate A
 | hr | `<BlogHR />` |
 | embedded-entry-block (`ContentfulYoutubeEmbedResource`) | `<BlogYouTube videoId title />` |
 | entry-hyperlink | children only (as the template) |
-| embedded-asset-block with image data | `<BlogImage src alt width height />`; `alt` is the asset description, `width`/`height` the live constrained size |
+| embedded-asset-block with image data | `<BlogImage src alt width height />`; `alt` is the asset description, `src` the local `.webp`, `width`/`height` the size of that WebP (the live constrained size scaled to at most 840px) |
 | embedded-asset-block without image data (PDF, video), anything else | **stop and ask** |
 
 ### Link rules (all Tier 2, each rewrite listed in `report.md`)
@@ -106,11 +106,29 @@ Everything the page references on `*.ctfassets.net` must end up local.
 
 | Asset | Destination | Notes |
 |---|---|---|
-| Images | `static/images/blog/<name>` | Reuse an existing file of the same name. A different file with the same name: stop and ask. |
+| Images (hero, body image, author avatar) | `static/images/blog/<name>.webp` | Stored as WebP, resized (see "Image weight" below). A light SVG (at most 100 KB) stays an SVG. Reuse an existing file of the same name. A different file with the same name: stop and ask. |
+| Image that is only a link target (`<BlogA href>`) | `static/images/blog/<name>` | A download: original format and size. |
 | PDFs | `static/pdf/<name>` | The repo's existing PDF folder, served at `/pdf/<name>`. Tell the user the size before downloading anything over 1 MB. |
-| Hero SVG used for social cards | `static/images/blog/og/<name>.png`, exactly **1200x630** | `SeoMeta` always declares `og:image:width/height` 1200/630. Generate once with `sharp`, show the user the result once; it is shared by many posts. |
+| Social card (made from the hero) | `static/images/blog/og/<name>.webp`, exactly **1200x630** | `SeoMeta` always declares `og:image:width/height` 1200/630. The converter generates it once with `sharp` (the image centred on white), from the downloaded original; show the user the result once; it is shared by many posts. |
 
-`convert.mjs --download` does this: it sanitises filenames to `[A-Za-z0-9._-]`, strips image-API query params, skips files already present when identical, **stops on a same-name different-content collision**, and refuses anything over 1 MB without `--allow-large` (tell the user the size, then rerun). It also generates the 1200x630 OG PNG with `sharp` when missing, and the report says `GENERATED`: look at the image and show it to the user once. The shared hero (`6-Company_News.svg`, on 63 of 72 posts) is downloaded once and reused.
+`convert.mjs --download` does this: it sanitises filenames to `[A-Za-z0-9._-]`, strips image-API query params, converts images to WebP (below), skips files already present when identical, **stops on a same-name different-content collision**, and refuses to store anything over 1 MB without `--allow-large` (tell the user the size, then rerun). A large image that becomes a small WebP is not refused; the report says what was downloaded and what was stored. It also generates the 1200x630 OG PNG with `sharp` when missing (from the downloaded original, not from the WebP), and the report says `GENERATED`: look at the image and show it to the user once. The shared hero (`6-Company_News.svg`, on 63 of 72 posts) is downloaded once and reused.
+
+### Image weight (page speed)
+
+Images are the heaviest thing on these pages, so the converter stores them as **WebP, sized for what the layout shows**:
+
+| Where the image is used | Longest side | Why |
+|---|---|---|
+| hero (`hero.src`) | 600 px | shown 240px tall in a 300px box, about 2x for dense screens |
+| author avatar | 600 px | shown 100px; the same rule keeps one number |
+| body image (`<BlogImage>`) | 840 px | the wrapper is 420px wide, 2x |
+
+- Quality 82, alpha kept, never enlarged. Real result on 11 files: 1,976 KB became 165 KB (a 1.4 MB SVG portrait became 34 KB, a 2400px JPEG became 22 KB).
+- **An SVG stays an SVG when it is light** (at most 100 KB): it is already smaller than any WebP of it, and it is crisp at every size. A heavy SVG (it embeds a photo) becomes a WebP. The converter downloads each SVG to measure it (a HEAD request is not enough: for a compressible file the CDN answers without a `content-length`, which first made a 1.3 MB SVG look unknown and keep its `.svg` name), so an offline run (`--page-data`) cannot see it and keeps the `.svg` name.
+- **The social card (`static/images/blog/og/`) is a 1200x630 WebP too.** Visitors never download it, so this saves repo and crawler weight (8 cards: 2,052 KB as PNG, 139 KB as WebP), not page speed. The live site already served its `og:image` as WebP (`fm=webp`), so this matches what platforms were already fetching. It has not been tested against each platform's link preview: after the first deploy, paste one post URL into the LinkedIn Post Inspector or the Facebook Sharing Debugger.
+- Loading: the hero is `eager` with `fetchPriority="high"`; body images and the avatar are `lazy`; the YouTube iframe is `lazy`. Body images carry `width` and `height` so their space is reserved. The hero does not (see Phase 0).
+- `node scripts/images.mjs` checks all of it (below). For images that are already in the repo as PNG or JPEG, `node scripts/images.mjs --convert` writes a `.webp` next to each, prints the page edits to make (use the Edit tool), and the originals are deleted once no page uses them.
+- Cache headers for `/images/*` in `netlify.toml` are not set here: files under `static/` are not fingerprinted, so a long immutable cache could serve a stale image after a replacement. That is a deploy-config decision for the user.
 
 ## Phase 4: Write the page
 
@@ -128,7 +146,7 @@ import { StaticBlogLayout, BlogP, BlogH3 /* ...only what is used */ } from "comp
 const PATH = "/<slug>/";
 const TITLE = "<heading>";
 const DESCRIPTION = "<meta description>";
-const OG_IMAGE = "https://phil.us/images/blog/og/<name>.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/<name>.webp";
 
 export const Head: HeadFC = () => (
   <>
@@ -173,7 +191,7 @@ Import through root aliases, never `../../`. Use `PATH`, never `location`. Do no
 
 **Tier 1, parity (must match live):** URL and trailing slash, `<title>`, meta description, canonical, `og:*`, `twitter:*`, robots (absent), Article JSON-LD `headline` / `description` / `url` / `mainEntityOfPage` / publisher `@id`, exactly one `<h1>`, heading levels, body text, link set, link attributes, and the emphasis elements (`b`, `i`, `u`; the tag matters, not just the look of the word).
 
-**Tier 2, additive and logged (never silent):** the link rules above, `<article>`, hero `alt=""`, SSR YouTube iframe with `title`, local OG image, and `VideoObject` JSON-LD for each YouTube embed (`name`, `embedUrl`, `thumbnailUrl` `https://i.ytimg.com/vi/<id>/hqdefault.jpg`). **Omit `uploadDate` unless known.** Never invent it.
+**Tier 2, additive and logged (never silent):** the link rules above, `<article>`, hero `alt=""`, SSR YouTube iframe with `title`, local OG image, local WebP images and their loading attributes (Phase 3 "Image weight"), and `VideoObject` JSON-LD for each YouTube embed (`name`, `embedUrl`, `thumbnailUrl` `https://i.ytimg.com/vi/<id>/hqdefault.jpg`). **Omit `uploadDate` unless known.** Never invent it.
 
 **Opt-in only (ask per page):** normalising heading levels, dropping empty spacer paragraphs, opening internal links in the same tab, adding visible captions.
 
@@ -188,6 +206,8 @@ Run in this order and stop at the first failure. Report what ran and what did no
 **2. Types** (agent). `npx tsc --noEmit -p . --types node,jest,react,react-dom`, reading only errors in files you touched. The plain `npx tsc --noEmit` stops at three `TS2688` errors and checks nothing.
 
 **2b. Route grouping** (agent, no build). `node scripts/route-check.mjs` must print `PASS`. Run it after any change to `gatsby-config.ts`, the `_posts` folder, or `MIGRATED_STATIC_SLUGS`.
+
+**2c. Images** (agent, no build). `node scripts/images.mjs` must print `PASS`. It fails on: a `/images/blog/` or `/pdf/` path a page uses that is not under `static/`; a hero, body image or avatar that is a PNG, JPEG, GIF or an SVG over 100 KB (run `--convert`); one over 200 KB; a `<BlogImage>` `width`/`height` that does not match its file or is wider than 840; a social card that is not a 1200x630 WebP under 200 KB. It warns about a file under `static/images/blog/` that no page uses (delete it). Run it after every batch and after anything that touches `static/images/blog/`.
 
 **3. Gate A** (agent, every page). `convert.mjs` exits `0`. Exit `3` means the page does not match live: fix the cause, never edit the output by hand.
 
@@ -211,7 +231,7 @@ If no build or preview is available, say **"Gate B was not run"** and list the p
 ## Hand-off
 
 1. Read the whole diff, hunk by hunk.
-2. Report: page, Gate A result, Tier 2 items, link targets that need a decision, assets added (names and sizes), Jest count, and Gate B status.
+2. Report: page, Gate A result, Tier 2 items, link targets that need a decision, assets added (names, and original versus stored size for each image), the `images.mjs` result, Jest count, and Gate B status.
 3. **Stop.** Propose the commit as a bash block and wait for a yes. One commit per page: `feat(static): migrate <slug> off Contentful`.
 
 ## Red flags
@@ -231,3 +251,8 @@ If no build or preview is available, say **"Gate B was not run"** and list the p
 | "The computed style of the heading matches, so it looks the same" | The bold sat in an inner element. Compare the inner element's weight and width too. |
 | "I'll retype the body, it's short" | Retyping loses non-breaking spaces. Write the candidate and run the verbatim check. |
 | "Port 3000 is busy, I'll kill it" | That is the user's dev server. Leave it and ask. |
+| "I'll keep the PNG, it is only 80 KB" | It becomes about 10 KB as a WebP, on every page that shows it. Let `convert.mjs --download` store it, and run `images.mjs`. |
+| "The social card can stay a PNG, nobody downloads it" | Right that it costs visitors nothing, but eight PNG cards were 2 MB in the repo and in every crawler fetch, and 139 KB as WebP. The live site already served WebP there. `convert.mjs` makes it a WebP; `images.mjs` fails on a PNG card. |
+| "I'll turn the small SVG hero into a WebP" | A light SVG is already smaller than its WebP and sharp at any size. Only a heavy SVG (over 100 KB) is converted. |
+| "Lazy-load everything, it is faster" | Not the hero: it is above the fold, and `lazy` delays the largest thing on screen. The hero is `eager` with `fetchPriority="high"`. |
+| "I'll add `width`/`height` to the hero like the body images" | A `height` attribute stops the flex row stretching the hero to 240px, and the image overflows its box. Measure in a browser before touching hero attributes. |

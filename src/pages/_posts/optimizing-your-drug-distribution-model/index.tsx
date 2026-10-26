@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/optimizing-your-drug-distribution-model/";
 const TITLE = "Optimizing your Drug Distribution Model";
 const DESCRIPTION = "A pharma manufacturer’s drug distribution model is crucial to the success of a therapy. Learn how to optimize distribution across a brand’s life cycle.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -62,12 +62,17 @@ export const StaticBlogLayout: React.FC<StaticBlogLayoutProps> = ({
 
       {hero && (
         <Container className={classes.floatingImage} size="sm">
+          {/* Above the fold, right under the title: load it first, never lazily. No width/height
+              attributes on purpose: the box is a fixed 300px and the flex row stretches the image to
+              240px tall, and a height attribute would stop that stretch. */}
           <img
             src={hero.src}
             alt={hero.alt}
             width={hero.width}
             height={hero.height}
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
           />
         </Container>
       )}
@@ -154,7 +159,11 @@ export const BlogLI: React.FC<WithChildren> = ({ children }) => (
 
 export const BlogHR: React.FC = () => <hr />;
 
-/** A plain image: the live page used a responsive GatsbyImage for the same file. */
+/**
+ * A plain image: the live page used a responsive GatsbyImage for the same file. Below the fold, so it
+ * is lazy; width and height (always passed by the converter) reserve its space so the page does not
+ * jump when it arrives. The file is a WebP sized for the 420px wrapper (see scripts/images.mjs).
+ */
 export const BlogImage: React.FC<{
   src: string;
   alt: string;
@@ -170,6 +179,7 @@ export const BlogImage: React.FC<{
         width={width}
         height={height}
         loading="lazy"
+        decoding="async"
       />
     </Box>
   </Box>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogHR, BlogLI, BlogP, BlogUL } from "
 const PATH = "/implementing-an-effective-bridge-program-laying-the-foundation-for-covered/";
 const TITLE = "Implementing an Effective Bridge Program: Laying the Foundation for Covered Dispenses";
 const DESCRIPTION = "Patient bridge programs are essential for effective therapy. This blog post discusses 3 approaches that pharmaceutical manufacturers can take to optimize their patient bridge program.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

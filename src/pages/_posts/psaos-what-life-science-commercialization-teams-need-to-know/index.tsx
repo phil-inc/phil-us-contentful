@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/psaos-what-life-science-commercialization-teams-need-to-know/";
 const TITLE = "PSAOs: What Life Sciences Commercialization Teams Need to Know";
 const DESCRIPTION = "Pharmacies can significantly impact pharmaceutical manufacturers’ commercial success as crucial players in the prescription fulfillment process. In addition to playing an esse";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

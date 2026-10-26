@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/market-access-strategy-drug-formulary/";
 const TITLE = "Is Your Market Access Strategy Meeting the Needs of Drug Formulary Decision Makers?";
 const DESCRIPTION = "To remain competitive, pharma manufacturers must understand how drug formularies and payer influence are evolving and take steps to optimize market access.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

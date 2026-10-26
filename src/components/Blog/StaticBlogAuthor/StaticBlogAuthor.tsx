@@ -61,7 +61,15 @@ export const StaticBlogAuthor: React.FC<StaticBlogAuthorProps> = ({
       </Title>
       <Grid align="start">
         <Grid.Col span={{ sm: 12, md: "content" }}>
-          <Avatar radius={100} size={100} m={0} src={imageSrc} alt="" />
+          {/* The author block is at the end of the article, so the photo loads lazily. */}
+          <Avatar
+            radius={100}
+            size={100}
+            m={0}
+            src={imageSrc}
+            alt=""
+            imageProps={{ loading: "lazy", decoding: "async" }}
+          />
         </Grid.Col>
         <Grid.Col span={{ sm: 12, md: "auto" }}>
           <Group gap={20}>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogHR, BlogLI, BlogP, BlogUL } from "
 const PATH = "/why-quality-scripts-are-crucial-to-ensuring-pharmacy-coverage-for-your-brand/";
 const TITLE = "Why Quality Scripts are Crucial to Ensuring Pharmacy Coverage for Your Brand";
 const DESCRIPTION = "Discover why quality script intake is the first step to a smooth HCP and patient access experience, and is crucial to ensuring your brand realizes the highest rates of adoption and coverage";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

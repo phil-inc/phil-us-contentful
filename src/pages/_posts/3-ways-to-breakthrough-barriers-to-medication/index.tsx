@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogLI, BlogP, BlogUL } from "
 const PATH = "/3-ways-to-breakthrough-barriers-to-medication/";
 const TITLE = "3 Ways a Patient Access Platform Breaks Through Barriers to Medication";
 const DESCRIPTION = "There was a time when the path from a physician prescribing to the patient starting drug therapy was straightforward. With the rise of value-based healthcare and novel specialty treatments, that’s no longer the case.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

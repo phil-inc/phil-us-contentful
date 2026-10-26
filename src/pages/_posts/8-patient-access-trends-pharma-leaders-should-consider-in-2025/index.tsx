@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/8-patient-access-trends-pharma-leaders-should-consider-in-2025/";
 const TITLE = "8 Patient Access Trends Pharma Leaders Should Consider in 2025";
 const DESCRIPTION = "This blog post explores top patient access trends that can help pharmacy leaders adapt their patient support programs to improve access, adoption, and adherence";
-const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.webp";
 
 export const Head: HeadFC = () => (
   <>

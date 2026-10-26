@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogLI, BlogP, BlogUL } from "components/Blog/
 const PATH = "/optimal-channel-strategy-your-pharma-brand/";
 const TITLE = "Determining the Optimal Channel Strategy for Your Pharma Brand";
 const DESCRIPTION = "Learn how to effectively address this drug channel challenge in this informative webinar focused on optimizing your channel strategy.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

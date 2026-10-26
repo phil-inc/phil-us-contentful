@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogHR, BlogLI, BlogP, BlogUL } from "
 const PATH = "/how-biopharma-companies-can-support-patients-with-high-deductible-health/";
 const TITLE = "How Biopharma Companies Can Support Patients with High Deductible Health Plans";
 const DESCRIPTION = "In 2023, a growing number of patients are enrolled in high deductible health plans (HDHPs), which require members to pay healthcare costs out-of-pocket until they meet their annual deductible amount before the plan starts covering eligible costs. A recent analysis found that over half of American private-sector workers are now enrolled in HDHPs – a 14.5% increase from 2017. The current minimum deductible for an HDHP set by the IRS is $1,500 for an individual and $3,000 for a family";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

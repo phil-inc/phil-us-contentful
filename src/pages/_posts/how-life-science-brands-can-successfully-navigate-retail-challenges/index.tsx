@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH4, BlogLI, BlogOL, BlogP, BlogUL 
 const PATH = "/how-life-science-brands-can-successfully-navigate-retail-challenges/";
 const TITLE = "How Life Science Brands Can Successfully Navigate Retail Challenges";
 const DESCRIPTION = "Discover how to successfully navigate retail challenges and build a strong distribution network that sets your life science company up for success";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogHR, BlogLI, BlogOL, BlogP } from "
 const PATH = "/what-makes-phils-prior-authorization-process-unique/";
 const TITLE = "What Makes Phil’s Prior Authorization Process Unique?";
 const DESCRIPTION = "What makes Phil’s prior authorization process unique? Read our latest blog post to learn how your pharmaceutical brand can alleviate PA challenges.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

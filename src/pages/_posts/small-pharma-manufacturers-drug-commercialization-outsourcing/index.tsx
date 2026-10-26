@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/small-pharma-manufacturers-drug-commercialization-outsourcing/";
 const TITLE = "How Small Pharma Manufacturers can Optimize Drug Commercialization through Outsourcing";
 const DESCRIPTION = "Outsourcing go-to-market capabilities can help emerging life science companies reap the benefits of successfully bringing their treatments to the market.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

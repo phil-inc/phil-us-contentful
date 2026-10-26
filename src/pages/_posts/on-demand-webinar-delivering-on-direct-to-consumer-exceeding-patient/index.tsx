@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL, BlogYouTube } f
 const PATH = "/on-demand-webinar-delivering-on-direct-to-consumer-exceeding-patient/";
 const TITLE = "On-Demand Webinar: Delivering on Direct-to-Consumer: Exceeding Patient Expectations for Virtual Care";
 const DESCRIPTION = "Watch this webinar to learn about the building blocks of a direct-to-consumer model for biopharma brands that exceeds patient expectations for virtual care.";
-const OG_IMAGE = "https://phil.us/images/blog/og/Untitled_design-34.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/Untitled_design-34.webp";
 
 export const Head: HeadFC = () => (
   <>
@@ -23,7 +23,7 @@ export const Head: HeadFC = () => (
 );
 
 const Page: React.FC = () => (
-  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/Untitled_design-34.png", alt: "" }}>
+  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/Untitled_design-34.webp", alt: "" }}>
     <BlogYouTube videoId="dqBQzeea1bU" title="DTC Webinar" />
     <BlogP><br /></BlogP>
     <BlogP>{"Over "}<BlogA href="https://rockhealth.com/insights/the-new-era-of-consumer-engagement-insights-from-rock-healths-ninth-annual-consumer-adoption-survey/"><u>75%</u></BlogA>{" of patients have accessed care virtually as of 2024 – the primary reasons being for improved convenience and choice. As patient expectations for digital care continue to rise, the direct-to-consumer (DTC) movement should be top of mind for pharma manufacturers. Watch this webinar with seasoned leaders from Sun Pharmaceuticals and Phil to unpack the evolving landscape of digital care from the perspective of patients and providers, and its potential to improve prescription access, adherence and affordability. "}</BlogP>

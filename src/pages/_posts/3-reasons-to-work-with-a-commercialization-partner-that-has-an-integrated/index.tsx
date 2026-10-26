@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogP } from "components/Blog/
 const PATH = "/3-reasons-to-work-with-a-commercialization-partner-that-has-an-integrated/";
 const TITLE = "3 Reasons to Work with a Commercialization Partner that has an Integrated Distribution Network";
 const DESCRIPTION = "Learn the advantages of a commercialization partnership that connects your pharmaceutical brand with a broad dispense network with high health plan coverage.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

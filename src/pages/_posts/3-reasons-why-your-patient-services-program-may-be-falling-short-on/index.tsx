@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogLI, BlogOL, BlogP, BlogUL 
 const PATH = "/3-reasons-why-your-patient-services-program-may-be-falling-short-on/";
 const TITLE = "3 Reasons Why Your Patient Services Program May be Falling Short on Medication Adherence";
 const DESCRIPTION = "Learn about three major reasons a life science company’s patient services program may fail to improve medication adherence.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

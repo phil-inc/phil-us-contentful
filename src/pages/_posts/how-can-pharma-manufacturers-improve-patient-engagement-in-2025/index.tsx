@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogLI, BlogP, BlogUL } from "
 const PATH = "/how-can-pharma-manufacturers-improve-patient-engagement-in-2025/";
 const TITLE = "How Can Pharma Manufacturers Improve Patient Engagement in 2025?";
 const DESCRIPTION = "This blog post answers how pharmaceutical brand teams can improve patient engagement through enhancing patient support programs, leveraging AI and technology, and more";
-const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.webp";
 
 export const Head: HeadFC = () => (
   <>

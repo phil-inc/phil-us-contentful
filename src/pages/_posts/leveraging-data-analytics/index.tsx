@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/leveraging-data-analytics/";
 const TITLE = "Leveraging Data Analytics to Boost Pharmaceutical Market Access";
 const DESCRIPTION = "Does your pharmaceutical brand need deeper data insights to optimize market and patient access? Discover how to tap into the full potential of your data.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogP } from "components/Blog/
 const PATH = "/8-metrics-that-matter-when-it-comes-to-measuring-your-patient-access-program/";
 const TITLE = "8 Metrics that Matter When it Comes to Measuring Your Patient Access Program";
 const DESCRIPTION = "Tracking these eight metrics to evaluate patient access and support programs can help pharma manufacturers develop more effective adherence strategies.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

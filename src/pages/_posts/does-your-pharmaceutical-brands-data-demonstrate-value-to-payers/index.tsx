@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/does-your-pharmaceutical-brands-data-demonstrate-value-to-payers/";
 const TITLE = "Does Your Pharmaceutical Brand’s Data Demonstrate Value to Payers?";
 const DESCRIPTION = "As payer influence on market access grows, pharma manufacturers need to provide the real-world picture of the value their brands bring to healthcare delivery.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

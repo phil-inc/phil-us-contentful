@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogHR, BlogLI, BlogP, BlogUL } from "
 const PATH = "/how-life-sciences-manufacturers-can-meet-hcp-expectations-for-patient-access/";
 const TITLE = "How Life Sciences Manufacturers can Meet HCP Expectations for Patient Access Support";
 const DESCRIPTION = "This blog uncovers how manufacturers can break through patient access challenges to support healthcare providers. Learn how to streamline prior authorizations and offer a modern patient experience.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

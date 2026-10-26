@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogLI, BlogP, BlogUL, BlogYouTube } from "components
 const PATH = "/webinar-improving-patient-access-to-medications-by-simplifying-the/";
 const TITLE = "On-Demand Webinar: Improving Patient Access to Medications by Simplifying the Prescription Process";
 const DESCRIPTION = "Join us for a webinar at the intersection of health tech and patient access. Phil is convening leaders from across the industry to discuss how digital health tools can streamline patient access to medication.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

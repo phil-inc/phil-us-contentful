@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/prior-authorizations-what-pharmaceutical-manufacturers-need-to-know/";
 const TITLE = "Prior Authorizations: What Pharmaceutical Manufacturers Need to Know";
 const DESCRIPTION = "Prior authorizations: What pharmaceutical manufacturers need to know";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

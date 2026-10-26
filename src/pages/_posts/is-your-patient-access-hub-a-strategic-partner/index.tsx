@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/is-your-patient-access-hub-a-strategic-partner/";
 const TITLE = "Is your Patient Access Hub a Strategic Partner?";
 const DESCRIPTION = "This blog post by Phil's VP Client Success, Kelly Green, uncovers how biopharma brands can form strategic partnerships with their hub partners and identify key tenants of a successful hub program";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

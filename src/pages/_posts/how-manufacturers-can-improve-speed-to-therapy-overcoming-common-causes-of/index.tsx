@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogHR, BlogP } from "components/Blog/
 const PATH = "/how-manufacturers-can-improve-speed-to-therapy-overcoming-common-causes-of/";
 const TITLE = "How Manufacturers Can Improve Speed to Therapy: Overcoming Common Causes of Prescription Delays";
 const DESCRIPTION = "Timely therapy access is crucial. Explore prescription delay reasons and how biopharma leaders can enhance speed to therapy for better patient outcomes and brand success.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

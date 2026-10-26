@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL, BlogYouTube } f
 const PATH = "/on-demand-webinar-capturing-actionable-metrics-to-improve-patient-and-brand/";
 const TITLE = "On-Demand Webinar: Capturing Actionable Metrics to Improve Patient & Brand Outcomes";
 const DESCRIPTION = "Watch this webinar to learn about key metrics to track and optimize for an effective brand program that drives strong patient outcomes, with Phil and Syneos Health";
-const OG_IMAGE = "https://phil.us/images/blog/og/Webinars.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/Webinars.webp";
 
 export const Head: HeadFC = () => (
   <>
@@ -23,7 +23,7 @@ export const Head: HeadFC = () => (
 );
 
 const Page: React.FC = () => (
-  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/Webinars.png", alt: "" }}>
+  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/Webinars.webp", alt: "" }}>
     <BlogYouTube videoId="J3WsdXoq6vg" title="Q4 webinar recording" />
     <BlogP><br /></BlogP>
     <BlogP>{"Market-leading manufacturers are embracing new models to improve visibility and insight into patient outcomes, provider, and brand performance. Watch this webinar as industry experts from Phil and Syneos Health explore gaps in today’s channel analytics environment, and offer strategic recommendations to help your team effectively leverage data to improve patient outcomes and brand performance. "}</BlogP>

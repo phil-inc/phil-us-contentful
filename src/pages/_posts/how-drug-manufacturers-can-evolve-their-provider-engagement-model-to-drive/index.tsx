@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/how-drug-manufacturers-can-evolve-their-provider-engagement-model-to-drive/";
 const TITLE = "How Drug Manufacturers Can Evolve their Provider Engagement Model to Drive Brand Performance";
 const DESCRIPTION = "Read this blog post to learn about the evolving healthcare provider engagement model for biopharma brands looking to improve patient outcomes through a digital hub";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/how-to-make-the-most-of-your-manufacturer-sponsored-financial-assistance/";
 const TITLE = "How to Make the Most of your Manufacturer-sponsored Financial Assistance";
 const DESCRIPTION = "Three ways pharmaceutical manufacturers can ensure specialty brands’ patient assistance programs align with their economic objectives.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

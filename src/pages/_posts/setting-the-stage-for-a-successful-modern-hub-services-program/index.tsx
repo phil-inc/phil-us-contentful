@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH4, BlogHR, BlogP } from "componen
 const PATH = "/setting-the-stage-for-a-successful-modern-hub-services-program/";
 const TITLE = "Setting the Stage for a Successful, Modern Hub Services Program";
 const DESCRIPTION = "Getting prescribed medications into the hands of patients is challenging. Discover the building blocks of a modern hub services program for pharma brands looking to drive patient and provider access.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

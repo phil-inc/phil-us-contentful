@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogP } from "components/Blog/
 const PATH = "/proactive-steps-to-overcoming-the-top-3-patient-access-barriers-to-retail/";
 const TITLE = "Proactive Steps to Overcoming the Top 3 Patient Access Barriers to Retail and Specialty-Lite Therapies";
 const DESCRIPTION = "Read this blog post to learn about how life sciences companies can overcome the biggest barriers to patient access through education, enablement, and engagement";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

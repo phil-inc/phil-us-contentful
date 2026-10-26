@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/where-is-the-data-the-healthcare-data-you-need-to-drive-commercialization/";
 const TITLE = "Where's the Data? The Healthcare Data You Need to Drive Commercialization";
 const DESCRIPTION = "Pharma companies that make data-informed commercialization decisions will realize better business outcomes and a competitive advantage.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

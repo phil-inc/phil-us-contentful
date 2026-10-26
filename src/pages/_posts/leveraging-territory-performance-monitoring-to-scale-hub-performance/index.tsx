@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogHR, BlogLI, BlogP, BlogUL } from "
 const PATH = "/leveraging-territory-performance-monitoring-to-scale-hub-performance/";
 const TITLE = "Leveraging Territory Performance Monitoring to Scale Hub Performance";
 const DESCRIPTION = "As biopharma access teams look to scale their hub services and address coverage gaps, here's how to leverage territory performance monitoring to ensure field team success";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

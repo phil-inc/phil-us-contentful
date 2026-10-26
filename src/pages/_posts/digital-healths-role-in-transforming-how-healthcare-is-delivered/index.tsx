@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogHR, BlogP } from "componen
 const PATH = "/digital-healths-role-in-transforming-how-healthcare-is-delivered/";
 const TITLE = "Digital Health’s Role in Transforming How Healthcare is Delivered";
 const DESCRIPTION = "This blog post uncovers how digital transformation is impacting healthcare providers and what life sciences manufactures can do to leverage digital channels to drive positive change";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

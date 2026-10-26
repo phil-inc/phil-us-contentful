@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/pharma-product-mid-life-cycle-risk/";
 const TITLE = "Is Your Pharma Product at Risk for a Mid-Life Cycle Crisis?";
 const DESCRIPTION = "To mitigate the risk for stagnant growth post launch, it’s critical to understand and address the challenges of a pharma product’s mid-life cycle.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogP } from "components/Blog/
 const PATH = "/optimizing-life-sciences-field-teams-in-the-era-of-drug-utilization/";
 const TITLE = "Optimizing Life Sciences Field Teams in the Era of Drug Utilization Management";
 const DESCRIPTION = "Optimizing life sciences field teams in the era of drug utilization management";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/transforming-the-patient-experience-with-a-strong-direct-to-consumer-program/";
 const TITLE = "Transforming the Patient Experience with a Strong Direct-to-Consumer Program";
 const DESCRIPTION = "This blog offers key considerations and strategies to transform the patient experience with a direct-to-consumer program for pharmaceutical brands";
-const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.webp";
 
 export const Head: HeadFC = () => (
   <>

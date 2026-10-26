@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/the-case-for-an-alternative-channel-strategy-in-2024-and-beyond/";
 const TITLE = "The Case for an Alternative Channel Strategy in Specialty-Lite";
 const DESCRIPTION = "Unlock success in specialty-lite - this blog post uncovers why traditional channel strategies fall short and the key benefits of an integrated channel approach.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

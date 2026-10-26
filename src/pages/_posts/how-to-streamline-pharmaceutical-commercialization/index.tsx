@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/how-to-streamline-pharmaceutical-commercialization/";
 const TITLE = "How to Streamline Pharmaceutical Commercialization";
 const DESCRIPTION = "\"Learn three ways pharmaceutical manufacturers can strategically reduce commercialization costs and inefficiencies.\"";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

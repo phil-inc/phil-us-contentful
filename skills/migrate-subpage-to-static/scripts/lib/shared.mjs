@@ -361,6 +361,52 @@ export function sanitizeFileName(name) {
   return n.replace(/[^A-Za-z0-9._-]/g, "_").replace(/_{2,}/g, "_");
 }
 
+// ---------------------------------------------------------------- images (WebP)
+// Page weight: the hero, body images and author avatar of a migrated post are stored as WebP, resized
+// to what the layout can show. The social card (static/images/blog/og/<name>.webp, 1200x630) is WebP
+// too: visitors never download it, so this saves repo and crawler weight, not page speed, and the live
+// site already served its og:image as WebP (fm=webp). Only a light SVG hero stays an SVG.
+
+/** Raster formats that become WebP. An SVG stays an SVG unless it is heavy (it then embeds a raster). */
+export const WEBP_SOURCE_EXT = ["png", "jpg", "jpeg", "gif"];
+export const SVG_RASTERISE_BYTES = 100 * 1024;
+
+/**
+ * Longest side of the local WebP, by where the image is used (`from` in convert.mjs). The hero is
+ * stretched to 240 CSS px tall; a body image sits in a 420 px wrapper; an author avatar is 100 px.
+ * Each is about 2x for high-density screens, and a file is never enlarged.
+ */
+export const WEBP_MAX_PX = { hero: 600, "author avatar": 600, "body image": 840 };
+export const WEBP_OPTIONS = { quality: 82, alphaQuality: 100, effort: 6, smartSubsample: true };
+
+export const webpName = (name) => name.replace(/\.[^.]+$/, "") + ".webp";
+
+/** Size after "fit inside max x max, never enlarge" (what sharp does), for width/height attributes. */
+export function fitInside(w, h, max) {
+  const r = Math.min(1, max / Math.max(w, h));
+  return { width: Math.round(w * r), height: Math.round(h * r) };
+}
+
+/**
+ * Image bytes or file path in, WebP buffer out ({ data, info }). Density 144 is for an SVG source only.
+ * `maxPx` null keeps the size (used to convert an existing 1200x630 social card).
+ */
+export async function toWebp(input, maxPx) {
+  const sharp = requireFromRepo("sharp");
+  const img = sharp(input, { density: 144 });
+  if (maxPx) img.resize({ width: maxPx, height: maxPx, fit: "inside", withoutEnlargement: true });
+  return img.webp(WEBP_OPTIONS).toBuffer({ resolveWithObject: true });
+}
+
+/** Social card: the image centred on white at 1200x630, as WebP. `SeoMeta` always declares og:image:width/height 1200/630. */
+export async function toOgWebp(input) {
+  const sharp = requireFromRepo("sharp");
+  return sharp(input, { density: 300 })
+    .resize(1200, 630, { fit: "contain", background: "#ffffff" })
+    .webp(WEBP_OPTIONS)
+    .toBuffer({ resolveWithObject: true });
+}
+
 export function readMigratedSlugs(repo = REPO) {
   const file = path.join(repo, "src/constants/migratedStaticSlugs.ts");
   if (!fs.existsSync(file)) return [];

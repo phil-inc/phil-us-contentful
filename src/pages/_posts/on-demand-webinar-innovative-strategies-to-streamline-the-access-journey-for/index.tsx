@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL, BlogYouTube } f
 const PATH = "/on-demand-webinar-innovative-strategies-to-streamline-the-access-journey-for/";
 const TITLE = "On-Demand Webinar: Innovative Strategies to Streamline the Access Journey for Patients & Providers";
 const DESCRIPTION = "Watch this webinar to learn strategies for life sciences execs to improve the patient and provider experience through streamlining the medication access journey";
-const OG_IMAGE = "https://phil.us/images/blog/og/Untitled_design-34.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/Untitled_design-34.webp";
 
 export const Head: HeadFC = () => (
   <>
@@ -23,7 +23,7 @@ export const Head: HeadFC = () => (
 );
 
 const Page: React.FC = () => (
-  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/Untitled_design-34.png", alt: "" }}>
+  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/Untitled_design-34.webp", alt: "" }}>
     <BlogYouTube videoId="_E07EMswXoY" title="Q3 webinar recording" />
     <BlogP>{"\n"}</BlogP>
     <BlogP>{"Putting patients and providers at the heart of every brand initiative is top of mind for all pharma teams. But, many manufacturers have large gaps and friction points in their access journey that are creating high barriers to access, engagement, and adherence. "}</BlogP>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogP } from "components/Blog/
 const PATH = "/why-your-channel-strategy-matters/";
 const TITLE = "Why Your Channel Strategy Matters";
 const DESCRIPTION = "Discover four ways a pharmaceutical manufacturer’s channel strategy can positively impact brand success.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

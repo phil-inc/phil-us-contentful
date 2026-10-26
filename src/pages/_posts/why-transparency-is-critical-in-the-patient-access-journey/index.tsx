@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/why-transparency-is-critical-in-the-patient-access-journey/";
 const TITLE = "Why Transparency is Critical in the Patient Access Journey";
 const DESCRIPTION = "Why Transparency is Critical in the Patient Access Journey";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

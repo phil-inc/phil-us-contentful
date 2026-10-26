@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogP } from "components/Blog/StaticBl
 const PATH = "/4-strategies-to-maximize-enrollment-in-your-patient-services-program/";
 const TITLE = "4 Strategies to Maximize Enrollment in your Patient Services Program";
 const DESCRIPTION = "4 Strategies to Maximize Enrollment in your Patient Services Program";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

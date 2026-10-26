@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogImage, BlogP } from "components/Bl
 const PATH = "/case-study-defying-the-mid-cycle-curse-for-specialty-pharma/";
 const TITLE = "Case Study: Defying the Mid-Cycle Curse for Specialty Pharma";
 const DESCRIPTION = "Initially, only 12% of TRx were covered by payers but after implementing Phil it was able to enroll 90% of patients and scripts covered by payers increased from 12% to 55%.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>
@@ -31,7 +31,7 @@ const Page: React.FC = () => (
     <BlogP>{"The Phil portal was more user-friendly for physicians and healthcare providers, eliminating the need for physicians to fill in spreadsheets and reply to emails. HCPs were better educated on the process, which held them accountable to complete authorizations. After Phil’s platform was adopted, "}<b>98% of PAs were submitted on the same day</b>{". "}</BlogP>
     <BlogH2>{"The Patients "}</BlogH2>
     <BlogP>{"Patient engagement was notably improved with the help of text messages to guide the patient through every step of the process. From the seamless 1 minute onboarding to the post-dispense texts tailored to the patient’s clinical journey, Phil was able to remove most of the administrative burdens and allow for a greater focus on the promotion of therapy adherence. "}<b>Scripts covered by payers quadrupled in just 18 months – from 12% to 55% – with the refill rate adherence increasing by 45%.</b></BlogP>
-    <BlogImage src="/images/blog/Scripts_covered_by.jpeg" alt="" width="2400" height="1626" />
+    <BlogImage src="/images/blog/Scripts_covered_by.webp" alt="" width="840" height="569" />
     <BlogH2>The Coverage</BlogH2>
     <BlogP>Phil was able to enroll 90% of patients through its intuitive platform and scripts were dispensed across a large network of pharmacies that have contracts in place with 98% of all US plans, commercial, medicare and medicaid.</BlogP>
     <BlogH2>The Company</BlogH2>

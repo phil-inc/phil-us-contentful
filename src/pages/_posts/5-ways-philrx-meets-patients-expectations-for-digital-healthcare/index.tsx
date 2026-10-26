@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogHR, BlogLI, BlogP, BlogUL } from "
 const PATH = "/5-ways-philrx-meets-patients-expectations-for-digital-healthcare/";
 const TITLE = "5 Ways PhilRx Meets Patients’ Expectations for Digital Healthcare";
 const DESCRIPTION = "Read this blog post to learn about how the PhilRx Digital Hub is driving a strong patient experience and improving patient access to affordable prescription medications.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

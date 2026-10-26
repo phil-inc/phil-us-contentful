@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogLI, BlogOL, BlogP, BlogUL 
 const PATH = "/3-patient-engagement-technology-myths/";
 const TITLE = "3 Patient Engagement Technology Myths";
 const DESCRIPTION = "Now is the time for pharma to appreciate the power of technology-driven patient engagement to build trust, a competitive advantage, and value.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

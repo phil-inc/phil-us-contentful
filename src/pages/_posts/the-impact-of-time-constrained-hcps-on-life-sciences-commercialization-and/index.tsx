@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogH3, BlogLI, BlogP, BlogUL } from "
 const PATH = "/the-impact-of-time-constrained-hcps-on-life-sciences-commercialization-and/";
 const TITLE = "The Impact of Time Constrained HCPs on Life Sciences Commercialization and How Manufacturers Should Adapt";
 const DESCRIPTION = "The Impact of Time Constrained HCPs on Life Sciences Commercialization and How Manufacturers Should Adapt";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

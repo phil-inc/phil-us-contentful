@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/not-getting-traction-with-your-patient-services-program-heres-why-and-what/";
 const TITLE = "Not Getting Traction with Your Patient Services Program? Here’s Why and What to do About it";
 const DESCRIPTION = "Despite pouring billions into patient support programs for their specialty brands, most pharmaceutical manufacturers see low enrollment and engagement.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogLI, BlogP, BlogUL } from "components/Blog/
 const PATH = "/how-pharmaceutical-manufacturers-can-leverage-phils-technology-to-improve/";
 const TITLE = "How Pharmaceutical Manufacturers can Leverage Phil’s Technology to Improve Patient Access to Their Therapies";
 const DESCRIPTION = "Patrick Leary, Chief Commercial Officer at Phil, shares how technology can break down many of the barriers patients experience, enabling them to better afford and adhere to their medications.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

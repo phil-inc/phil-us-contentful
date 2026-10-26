@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/why-strong-market-access-doesnt-always-translate-to-covered-dispenses/";
 const TITLE = "Why Strong Market Access Doesn’t Always Translate to Covered Dispenses";
 const DESCRIPTION = "Learn the reasons why good market access does not guarantee coverage and what pharmaceutical brand teams can do to overcome this challenge.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

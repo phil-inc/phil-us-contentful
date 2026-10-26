@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogP, BlogUL, BlogYouTube } f
 const PATH = "/upcoming-webinar-your-guide-to-building-an-exceptional-telemedicine-program/";
 const TITLE = "On-Demand Webinar: Your Guide to Building An Exceptional Telemedicine Program";
 const DESCRIPTION = "Watch this insight-packed webinar to learn how to build an exceptional telemedicine program that drives patient access and brand outcomes, presented by industry experts from Prescribery and Phil";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

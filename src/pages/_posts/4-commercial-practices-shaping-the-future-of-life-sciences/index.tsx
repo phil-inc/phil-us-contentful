@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/4-commercial-practices-shaping-the-future-of-life-sciences/";
 const TITLE = "4 Commercial Practices Shaping the Future of Life Sciences";
 const DESCRIPTION = "Biopharma teams need to develop a GTM model that optimizes access and brand growth. Here are 4 commercial strategies to drive sustainable value in today's complex drug channel.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>

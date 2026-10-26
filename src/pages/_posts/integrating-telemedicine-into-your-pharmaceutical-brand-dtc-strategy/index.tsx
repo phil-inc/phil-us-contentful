@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/integrating-telemedicine-into-your-pharmaceutical-brand-dtc-strategy/";
 const TITLE = "Integrating Telemedicine Into Your Pharmaceutical Brand’s DTC Strategy";
 const DESCRIPTION = "This blog post is for pharma manufacturers to improve the patient experience and brand outcomes through integrating a telemedicine channel within a broader direct-to-consumer strategy";
-const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/Blog_Posts.webp";
 
 export const Head: HeadFC = () => (
   <>

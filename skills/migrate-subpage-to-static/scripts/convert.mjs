@@ -15,7 +15,8 @@ import crypto from "node:crypto";
 import {
   REPO, SITE, parseArgs, fetchText, fetchBuffer, headStatus, contentLength, collapse, pathOf,
   loadRedirects, loadSitemapPaths, rewriteHref, isCtfUrl, normalizeCtfUrl,
-  sanitizeFileName, readHead, readBody, requireFromRepo,
+  sanitizeFileName, readHead, readBody,
+  WEBP_SOURCE_EXT, SVG_RASTERISE_BYTES, WEBP_MAX_PX, webpName, fitInside, toWebp, toOgWebp,
 } from "./lib/shared.mjs";
 
 const { flags, positional } = parseArgs(process.argv.slice(2), ["out", "page-data", "html", "sitemap"]);
@@ -60,7 +61,21 @@ fs.mkdirSync(outDir, { recursive: true });
 
 // ------------------------------------------------------------------ assets
 
-const assets = new Map(); // remote url -> { url, kind, name, localFile, localUrl, from: Set }
+// Heavy SVGs (a Contentful SVG that embeds a photo, 1.3 MB for one team portrait) are stored as WebP;
+// a light SVG stays an SVG. Decided before anything is registered, because the local name ends up in
+// the emitted JSX. Skipped with --page-data (offline), where a heavy SVG would keep its .svg name.
+const heavySvg = new Set();
+if (!flags["page-data"]) {
+  const svgs = new Set((JSON.stringify(pageData).match(/(?:https:)?\/\/images\.ctfassets\.net\/[^"\\\s?]+\.svg/gi) || []).map(normalizeCtfUrl));
+  for (const u of svgs) {
+    // GET and measure, not HEAD: for a compressible file the CDN answers HEAD without a content-length,
+    // which would read as "unknown" and silently keep a 1.3 MB SVG. A failed GET stops the run (exit 1).
+    const bytes = (await fetchBuffer(u)).length;
+    if (bytes > SVG_RASTERISE_BYTES) heavySvg.add(u);
+  }
+}
+
+const assets = new Map(); // remote url -> { url, kind, name, webp, maxPx, localFile, localUrl, from: Set }
 
 function registerAsset(rawUrl, from) {
   const url = normalizeCtfUrl(rawUrl);
@@ -71,16 +86,21 @@ function registerAsset(rawUrl, from) {
   if (ext === "pdf") kind = "pdf";
   else if (["png", "jpg", "jpeg", "svg", "webp", "gif"].includes(ext)) kind = "image";
   else throw new Unsupported(`asset with unsupported type ".${ext}": ${url}`);
-  const localFile = kind === "pdf" ? `static/pdf/${name}` : `static/images/blog/${name}`;
-  const localUrl = kind === "pdf" ? `/pdf/${name}` : `/images/blog/${name}`;
+  // A link target to an image file ("body link") is a download: it keeps its original format and size.
+  const webp = kind === "image" && from !== "body link" && (WEBP_SOURCE_EXT.includes(ext) || (ext === "svg" && heavySvg.has(url)));
+  const localName = webp ? webpName(name) : name;
+  const localFile = kind === "pdf" ? `static/pdf/${name}` : `static/images/blog/${localName}`;
+  const localUrl = kind === "pdf" ? `/pdf/${name}` : `/images/blog/${localName}`;
   for (const a of assets.values()) {
     if (a.localFile === localFile && a.url !== url) {
       throw new Unsupported(`name collision: ${url} and ${a.url} both map to ${localFile}`);
     }
   }
-  if (!assets.has(url)) assets.set(url, { url, kind, name, localFile, localUrl, from: new Set() });
-  assets.get(url).from.add(from);
-  return assets.get(url);
+  if (!assets.has(url)) assets.set(url, { url, kind, name, webp, maxPx: 0, localFile, localUrl, from: new Set() });
+  const a = assets.get(url);
+  a.from.add(from);
+  if (a.webp) a.maxPx = Math.max(a.maxPx, WEBP_MAX_PX[from] || WEBP_MAX_PX.hero);
+  return a;
 }
 
 // ------------------------------------------------------------------ rich text -> JSX
@@ -252,7 +272,9 @@ function makeEmitter(ctx, names = BODY_NAMES) {
         const a = registerAsset(src, "body image");
         ctx.used.add("BlogImage");
         ctx.counts.image++;
-        const dims = gi.width && gi.height ? ` width="${Math.round(gi.width)}" height="${Math.round(gi.height)}"` : "";
+        // The local WebP is smaller than the live image, so the attributes describe the local file.
+        const size = gi.width && gi.height ? (a.webp ? fitInside(gi.width, gi.height, a.maxPx) : { width: Math.round(gi.width), height: Math.round(gi.height) }) : null;
+        const dims = size ? ` width="${size.width}" height="${size.height}"` : "";
         return `${pad}<BlogImage ${attr("src", a.localUrl)} ${attr("alt", ref.description || "")}${dims} />`;
       }
       default:
@@ -420,7 +442,7 @@ if (r.asset?.file?.url) {
   try {
     const a = registerAsset(r.asset.file.url, "hero");
     const base = a.name.replace(/\.[^.]+$/, "");
-    hero = { remote: a.url, name: a.name, src: a.localUrl, liveAlt: r.asset.title || "", ogLocalUrl: `/images/blog/og/${base}.png`, ogLocalFile: `static/images/blog/og/${base}.png` };
+    hero = { remote: a.url, name: a.name, localFile: a.localFile, src: a.localUrl, liveAlt: r.asset.title || "", ogLocalUrl: `/images/blog/og/${base}.webp`, ogLocalFile: `static/images/blog/og/${base}.webp` };
   } catch (e) {
     if (e instanceof Unsupported) fail(`${slug}: ${e.message}`);
     throw e;
@@ -515,11 +537,14 @@ const needsDecision = decisions.filter((d) => d.status !== 200);
 // ------------------------------------------------------------------ download (opt-in)
 
 const downloaded = [];
+let heroSource = null; // the hero as downloaded (before WebP): the social card is made from this, not from the smaller WebP
 if (flags.download) {
+  const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
   for (const a of assets.values()) {
     const dest = path.join(REPO, a.localFile);
     const size = await contentLength(a.url.startsWith("http") ? a.url : `https:${a.url}`);
-    if (size && size > 1024 * 1024 && !flags["allow-large"]) {
+    // The 1 MB gate protects the repo, so it applies to what is stored. A WebP is checked after conversion.
+    if (!a.webp && size && size > 1024 * 1024 && !flags["allow-large"]) {
       downloaded.push({ file: a.localFile, result: `SKIPPED ${(size / 1048576).toFixed(1)} MB, rerun with --allow-large after telling the user` });
       continue;
     }
@@ -530,23 +555,45 @@ if (flags.download) {
       downloaded.push({ file: a.localFile, result: `FAILED ${e.message}` });
       continue;
     }
+    if (hero && a.url === hero.remote) heroSource = buf;
+    // Safety net for the HEAD check above, which cannot see a size when the CDN omits content-length.
+    if (!a.webp && buf.length > 1024 * 1024 && !flags["allow-large"]) {
+      downloaded.push({ file: a.localFile, result: `SKIPPED ${(buf.length / 1048576).toFixed(1)} MB (size was not known before the download), rerun with --allow-large after telling the user` });
+      continue;
+    }
+    let out = buf;
+    let how = `downloaded ${kb(buf.length)}`;
+    if (a.webp) {
+      try {
+        const { data, info } = await toWebp(buf, a.maxPx);
+        out = data;
+        how = `downloaded ${kb(buf.length)}, stored as WebP ${kb(data.length)} (${info.width}x${info.height})`;
+      } catch (e) {
+        downloaded.push({ file: a.localFile, result: `FAILED WebP conversion: ${e.message}` });
+        continue;
+      }
+      if (out.length > 1024 * 1024 && !flags["allow-large"]) {
+        downloaded.push({ file: a.localFile, result: `SKIPPED, WebP is still ${(out.length / 1048576).toFixed(1)} MB, rerun with --allow-large after telling the user` });
+        continue;
+      }
+    }
     if (fs.existsSync(dest)) {
-      const same = crypto.createHash("sha256").update(fs.readFileSync(dest)).digest("hex") === crypto.createHash("sha256").update(buf).digest("hex");
+      const same = crypto.createHash("sha256").update(fs.readFileSync(dest)).digest("hex") === crypto.createHash("sha256").update(out).digest("hex");
       downloaded.push({ file: a.localFile, result: same ? "exists, identical" : "COLLISION: a different file already has this name" });
       continue;
     }
     fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.writeFileSync(dest, buf);
-    downloaded.push({ file: a.localFile, result: `downloaded ${(buf.length / 1024).toFixed(0)} KB` });
+    fs.writeFileSync(dest, out);
+    downloaded.push({ file: a.localFile, result: how });
   }
   if (hero) {
-    const src = path.join(REPO, `static/images/blog/${hero.name}`);
+    const src = heroSource || path.join(REPO, hero.localFile);
     const dest = path.join(REPO, hero.ogLocalFile);
-    if (fs.existsSync(src) && !fs.existsSync(dest)) {
-      const sharp = requireFromRepo("sharp");
+    if ((heroSource || fs.existsSync(src)) && !fs.existsSync(dest)) {
       fs.mkdirSync(path.dirname(dest), { recursive: true });
-      await sharp(src, { density: 300 }).resize(1200, 630, { fit: "contain", background: "#ffffff" }).png().toFile(dest);
-      downloaded.push({ file: hero.ogLocalFile, result: "GENERATED 1200x630 OG image: show it to the user once (shared by many posts)" });
+      const { data } = await toOgWebp(src);
+      fs.writeFileSync(dest, data);
+      downloaded.push({ file: hero.ogLocalFile, result: `GENERATED 1200x630 OG image as WebP, ${kb(data.length)}: show it to the user once (shared by many posts)` });
     } else if (fs.existsSync(dest)) {
       downloaded.push({ file: hero.ogLocalFile, result: "exists" });
     }

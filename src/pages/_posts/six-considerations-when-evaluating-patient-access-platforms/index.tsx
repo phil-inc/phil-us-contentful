@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH6, BlogLI, BlogOL, BlogP, BlogUL } from "
 const PATH = "/six-considerations-when-evaluating-patient-access-platforms/";
 const TITLE = "6 Considerations When Evaluating Patient Access Platforms";
 const DESCRIPTION = "Life science companies should keep these key considerations in mind as they evaluate technology-enabled patient access platforms.";
-const OG_IMAGE = "https://phil.us/images/blog/og/5-Resources-Icon.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/5-Resources-Icon.webp";
 
 export const Head: HeadFC = () => (
   <>
@@ -20,7 +20,7 @@ export const Head: HeadFC = () => (
 );
 
 const Page: React.FC = () => (
-  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/5-Resources-Icon.png", alt: "" }}>
+  <StaticBlogLayout title={TITLE} hero={{ src: "/images/blog/5-Resources-Icon.webp", alt: "" }}>
     <BlogP>{"As life science companies strive to ensure easy and affordable access to prescription drugs, they are looking to disruptive technologies that offer the potential to "}<BlogA href="/3-ways-to-breakthrough-barriers-to-medication/">{"break through barriers to medication"}</BlogA>{". Unfortunately, some companies invest millions of dollars on patient access and advanced analytics solutions but get little in return. Here are six considerations to keep in mind when evaluating a potential patient access platform."}</BlogP>
     <BlogOL>
       <BlogLI>

@@ -10,7 +10,7 @@ import { StaticBlogLayout, BlogA, BlogH2, BlogLI, BlogP, BlogUL } from "componen
 const PATH = "/transforming-the-prior-authorization-process-how-feedback-loops-can-improve/";
 const TITLE = "Transforming the Prior Authorization Process: How Feedback Loops can Improve Patient Access to Life Sciences Brands";
 const DESCRIPTION = "By implementing a prior authorization strategy that uses a feedback loop, pharmaceutical manufacturers can accelerate time-to-therapy.";
-const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.png";
+const OG_IMAGE = "https://phil.us/images/blog/og/6-Company_News.webp";
 
 export const Head: HeadFC = () => (
   <>
