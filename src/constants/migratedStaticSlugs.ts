@@ -88,4 +88,7 @@ export const MIGRATED_STATIC_SLUGS: ReadonlySet<string> = new Set<string>([
   "upcoming-webinar-your-guide-to-building-an-exceptional-telemedicine-program",
   "what-if-you-could-decrease-time-to-therapy-from-7-days-to-1-day",
   "six-considerations-when-evaluating-patient-access-platforms",
+  "meet-abhyuday-polineni-director-of-engineering-at-phil",
+  "meet-molly-fields-director-of-patient-support-at-phil",
+  "meet-neil-dean-director-of-product-management-at-phil",
 ]);

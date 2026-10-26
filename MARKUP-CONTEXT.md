@@ -277,7 +277,7 @@ Contentful entry still exists but renders nowhere: editing it changes nothing on
 the site, so never route a change for these to Contentful. A change to the shared
 layout (the banner, the share row, the typography) is also code.
 
-Posts moved so far (78). The list in `src/constants/migratedStaticSlugs.ts` is
+Posts moved so far (81). The list in `src/constants/migratedStaticSlugs.ts` is
 authoritative; if the two ever disagree, that file wins.
 - `/transforming-the-patient-experience-with-a-strong-direct-to-consumer-program/`
 - `/are-traditional-hub-providers-keeping-pace-with-todays-consumers-and/`
@@ -357,6 +357,9 @@ authoritative; if the two ever disagree, that file wins.
 - `/upcoming-webinar-your-guide-to-building-an-exceptional-telemedicine-program/`
 - `/what-if-you-could-decrease-time-to-therapy-from-7-days-to-1-day/`
 - `/six-considerations-when-evaluating-patient-access-platforms/`
+- `/meet-abhyuday-polineni-director-of-engineering-at-phil/`
+- `/meet-molly-fields-director-of-patient-support-at-phil/`
+- `/meet-neil-dean-director-of-product-management-at-phil/`
 
 ---
 
