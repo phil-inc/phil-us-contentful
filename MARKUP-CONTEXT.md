@@ -277,6 +277,10 @@ Contentful entry still exists but renders nowhere: editing it changes nothing on
 the site, so never route a change for these to Contentful. A change to the shared
 layout (the banner, the share row, the typography) is also code.
 
+A Contentful page that links to one of these posts (a button, a card, a "Read Spotlight") still
+points at the old entry by id. `src/constants/migratedStaticPaths.ts` maps each moved entry's id to
+its new path, so those links keep working; a post added to the list below needs its entry there too.
+
 Posts moved so far (81). The list in `src/constants/migratedStaticSlugs.ts` is
 authoritative; if the two ever disagree, that file wins.
 - `/transforming-the-patient-experience-with-a-strong-direct-to-consumer-program/`

@@ -182,7 +182,7 @@ Import through root aliases, never `../../`. Use `PATH`, never `location`. Do no
 
 ## Phase 5: Register and document
 
-1. Append the slug to `MIGRATED_STATIC_SLUGS`.
+1. Append the slug to `MIGRATED_STATIC_SLUGS` **and add the post's Gatsby node id and path to `MIGRATED_STATIC_PATHS`** in `src/constants/migratedStaticPaths.ts` (`report.md` prints both lines; the id is also in the first line of the page). Contentful content links to an entry by id, and `getLink` finds its page by looking that id up in `useInternalPaths`; a code page has no `pageContext.id`, so without the map every such link (for example the three "Read Spotlight" buttons on `/company/`) resolves to `#` and only reloads the page it is on. `src/__tests__/constants/migratedStaticPaths.test.ts` fails if the two lists differ.
 2. Add the slug under "Static blog and webinar posts" in `MARKUP-CONTEXT.md`.
 3. If the hub card `url` needs normalising (Rules, item 1), edit that one line.
 4. Record per-page Tier 2 items and decisions in the commit message body. The family-wide ones (hero `alt=""`, `<article>`, SSR YouTube iframe, local OG image) live once in the shell's `SPEC.md`.
@@ -251,6 +251,7 @@ If no build or preview is available, say **"Gate B was not run"** and list the p
 | "The computed style of the heading matches, so it looks the same" | The bold sat in an inner element. Compare the inner element's weight and width too. |
 | "I'll retype the body, it's short" | Retyping loses non-breaking spaces. Write the candidate and run the verbatim check. |
 | "Port 3000 is busy, I'll kill it" | That is the user's dev server. Leave it and ask. |
+| "The page renders and its own links work, so it is done" | Links to it from Contentful pages go by entry id, not URL. A post missing from `MIGRATED_STATIC_PATHS` looks fine on its own URL and breaks every Contentful button or card that points at it. After a batch, compare the links to the migrated posts on a Contentful page (for example `/company/`) between live and the preview. |
 | "I'll keep the PNG, it is only 80 KB" | It becomes about 10 KB as a WebP, on every page that shows it. Let `convert.mjs --download` store it, and run `images.mjs`. |
 | "The social card can stay a PNG, nobody downloads it" | Right that it costs visitors nothing, but eight PNG cards were 2 MB in the repo and in every crawler fetch, and 139 KB as WebP. The live site already served WebP there. `convert.mjs` makes it a WebP; `images.mjs` fails on a PNG card. |
 | "I'll turn the small SVG hero into a WebP" | A light SVG is already smaller than its WebP and sharp at any size. Only a heavy SVG (over 100 KB) is converted. |

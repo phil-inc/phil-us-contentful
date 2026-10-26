@@ -690,6 +690,9 @@ md.push("| check | result |", "|---|---|");
 for (const c of checks) md.push(`| ${c.name} | ${c.ok ? "ok" : "**FAIL**"}${c.detail && !c.ok ? ": " + c.detail.replace(/\|/g, "/") : ""} |`);
 md.push("", `Counts: ${Object.entries(body.ctx.counts).filter(([, v]) => v).map(([k, v]) => `${k} ${v}`).join(", ")}`);
 md.push(`Links: ${body.ctx.links.length} (${body.ctx.links.filter((l) => /^https?:/.test(l.href)).length} external)  |  YouTube embeds: ${body.ctx.embeds.length}  |  author: ${author ? author.name : "none"}`, "");
+md.push("## Register (Phase 5)", "");
+md.push(`- \`src/constants/migratedStaticSlugs.ts\`: \`"${slug}",\``);
+md.push(`- \`src/constants/migratedStaticPaths.ts\`: \`"${r.id}": "/${slug}/",\` (without it, a Contentful link to this post resolves to "#")`, "");
 md.push("## Tier 2 link rewrites", "");
 if (rewrites.length) {
   md.push("| from | to | rule |", "|---|---|---|");
