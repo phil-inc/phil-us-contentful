@@ -9,7 +9,7 @@ import { StaticBlogLayout, BlogA, BlogH3, BlogHR, BlogP } from "components/Blog/
 
 const PATH = "/meet-abhyuday-polineni-director-of-engineering-at-phil/";
 const TITLE = "Meet Abhyuday Polineni, Director of Engineering at Phil";
-const DESCRIPTION = "Meet Director of Product Management at Phil, Neil Dean, and learn about his passionate for helping improve lives and patient outcomes through optimizing PhilRx";
+const DESCRIPTION = "Meet Abhyuday Polineni, Director of Engineering at Phil, and get a behind-the-scenes look at how he helps shape the PhilRx Digital Hub.";
 const OG_IMAGE = "https://phil.us/images/blog/og/Employee_Spotlight_-_Blog_Photos-6.webp";
 
 export const Head: HeadFC = () => (

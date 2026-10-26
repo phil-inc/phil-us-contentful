@@ -14,7 +14,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {
   SITE, parseArgs, fetchText, headStatus, collapse, pathOf, loadRedirects, rewriteHref, readHead, readBody,
-  readMigratedSlugs, isCtfUrl, normalizeCtfUrl, sanitizeFileName,
+  readMigratedSlugs, isCtfUrl, normalizeCtfUrl, sanitizeFileName, loadOverrides,
 } from "./lib/shared.mjs";
 
 const { flags, positional } = parseArgs(process.argv.slice(2), ["built", "preview", "local-html", "live-html", "live-base"]);
@@ -74,21 +74,27 @@ function compare(slug, liveHtml, localHtml, extras) {
   const LB = readBody(L.root);
   const NB = readBody(N.root);
 
+  // A page may differ from live on purpose (overrides.json, with a reason): there the expected
+  // description is the override, in every place it appears, and the difference is listed as Tier 2.
+  const override = loadOverrides()[slug];
+  const wantDesc = (liveValue) => (override?.description ? collapse(override.description) : liveValue);
+  if (override?.description) info("description overridden on purpose", "live text not expected", override.reason);
+
   // Tier 1: head
   t1("title", L.title, N.title);
-  t1("meta description", collapse(L.description || ""), collapse(N.description || ""));
+  t1("meta description", wantDesc(collapse(L.description || "")), collapse(N.description || ""));
   t1("canonical", L.canonical, N.canonical);
   t1("canonical equals og:url", N.canonical, N.og.url);
   t1("robots", L.robots, N.robots);
-  for (const k of ["title", "description", "type", "url"]) t1(`og:${k}`, text(L.og[k]), text(N.og[k]));
-  for (const k of ["card", "title", "description"]) t1(`twitter:${k}`, text(L.twitter[k]), text(N.twitter[k]));
+  for (const k of ["title", "description", "type", "url"]) t1(`og:${k}`, k === "description" ? wantDesc(text(L.og[k])) : text(L.og[k]), text(N.og[k]));
+  for (const k of ["card", "title", "description"]) t1(`twitter:${k}`, k === "description" ? wantDesc(text(L.twitter[k])) : text(L.twitter[k]), text(N.twitter[k]));
 
   // Tier 1: Article JSON-LD
   const la = articleNode(L.jsonld);
   const na = articleNode(N.jsonld);
   if (!na) t1ok("Article JSON-LD present", false, "none found");
   else {
-    for (const k of ["headline", "description", "url"]) t1(`Article.${k}`, text(la?.[k]), text(na[k]));
+    for (const k of ["headline", "description", "url"]) t1(`Article.${k}`, k === "description" ? wantDesc(text(la?.[k])) : text(la?.[k]), text(na[k]));
     t1("Article.mainEntityOfPage", idOf(la?.mainEntityOfPage), idOf(na.mainEntityOfPage));
     t1("Article.publisher @id", idOf(la?.publisher), idOf(na.publisher));
     t1("Article.author", la?.author?.name ?? null, na.author?.name ?? null);

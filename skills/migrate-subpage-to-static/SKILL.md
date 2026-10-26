@@ -193,6 +193,8 @@ Import through root aliases, never `../../`. Use `PATH`, never `location`. Do no
 
 **Tier 2, additive and logged (never silent):** the link rules above, `<article>`, hero `alt=""`, SSR YouTube iframe with `title`, local OG image, local WebP images and their loading attributes (Phase 3 "Image weight"), and `VideoObject` JSON-LD for each YouTube embed (`name`, `embedUrl`, `thumbnailUrl` `https://i.ytimg.com/vi/<id>/hqdefault.jpg`). **Omit `uploadDate` unless known.** Never invent it.
 
+**Deliberate differences from live (`overrides.json`):** Tier 1 means "same as live", so a wrong live value (for example a meta description copied from another person's post) is not fixed by editing the page, which would then fail Gate A and Gate B. List it in `skills/migrate-subpage-to-static/overrides.json` instead, keyed by slug, with the new `description` and a `reason`. `convert.mjs` then writes the override into the page, `parity.mjs` expects it in the meta, `og:`, `twitter:` and Article descriptions, and both print the reason (Gate A check, Tier 2 row). Only `description` is supported today, and the user decides the wording. Do not use it to tidy copy.
+
 **Opt-in only (ask per page):** normalising heading levels, dropping empty spacer paragraphs, opening internal links in the same tab, adding visible captions.
 
 **Why GEO needs server-rendered copy:** `src/utils/llmsFull.ts` builds `llms-full.txt` from the built HTML in `public/` and drops iframes, scripts and `data-llms-skip` nodes. Anything painted by `useEffect`, or a "Loading..." placeholder, is invisible to it and to most AI crawlers.

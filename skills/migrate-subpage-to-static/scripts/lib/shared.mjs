@@ -407,6 +407,17 @@ export async function toOgWebp(input) {
     .toBuffer({ resolveWithObject: true });
 }
 
+/**
+ * Deliberate differences from the live page, keyed by slug (skills/migrate-subpage-to-static/overrides.json).
+ * Today only `description`: a live meta description that is plainly wrong. convert.mjs writes the
+ * override into the page and parity.mjs expects it, so a fixed page does not read as a parity failure.
+ * Every entry needs a `reason`. Parity is otherwise "same as live"; keep this file short.
+ */
+export function loadOverrides(repo = REPO) {
+  const file = path.join(repo, "skills/migrate-subpage-to-static/overrides.json");
+  return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : {};
+}
+
 export function readMigratedSlugs(repo = REPO) {
   const file = path.join(repo, "src/constants/migratedStaticSlugs.ts");
   if (!fs.existsSync(file)) return [];

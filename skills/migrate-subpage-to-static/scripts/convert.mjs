@@ -15,7 +15,7 @@ import crypto from "node:crypto";
 import {
   REPO, SITE, parseArgs, fetchText, fetchBuffer, headStatus, contentLength, collapse, pathOf,
   loadRedirects, loadSitemapPaths, rewriteHref, isCtfUrl, normalizeCtfUrl,
-  sanitizeFileName, readHead, readBody,
+  sanitizeFileName, readHead, readBody, loadOverrides,
   WEBP_SOURCE_EXT, SVG_RASTERISE_BYTES, WEBP_MAX_PX, webpName, fitInside, toWebp, toOgWebp,
 } from "./lib/shared.mjs";
 
@@ -486,6 +486,11 @@ const pdDesc = collapse(r.metaDescription || "");
 check("live meta description present", Boolean(liveDesc), liveDesc ? "" : "no <meta name=description> on live page");
 const descSource = pdDesc ? "page-data metaDescription" : "derived by the live template (first three sentences)";
 if (pdDesc) check("description equals page-data metaDescription", liveDesc === pdDesc, liveDesc === pdDesc ? "" : `live "${liveDesc.slice(0, 80)}" vs page-data "${pdDesc.slice(0, 80)}"`);
+// A deliberate difference from live (overrides.json): the page gets the override, not the live text.
+const override = loadOverrides()[slug];
+if (override && !override.reason) fail(`${slug}: overrides.json entry has no "reason"`);
+const outDesc = override?.description ? collapse(override.description) : liveDesc;
+if (override?.description) check(`description overridden on purpose: ${override.reason}`, true);
 check("live canonical is the page URL", live.canonical === `${SITE}${pathOf(slug)}`, live.canonical || "none");
 check("live robots absent (indexable)", !live.robots, live.robots || "");
 
@@ -611,7 +616,7 @@ const videoNodes = body.ctx.embeds.map((e) => ({
   "@context": "https://schema.org",
   "@type": "VideoObject",
   name: e.title || title,
-  description: liveDesc,
+  description: outDesc,
   thumbnailUrl: `https://i.ytimg.com/vi/${e.videoId}/hqdefault.jpg`,
   embedUrl: `https://www.youtube-nocookie.com/embed/${e.videoId}`,
 }));
@@ -643,7 +648,7 @@ import { StaticBlogLayout${used.length ? ", " + used.join(", ") : ""} } from "co
 
 const PATH = ${q(pathOf(slug))};
 const TITLE = ${q(title)};
-const DESCRIPTION = ${q(liveDesc)};
+const DESCRIPTION = ${q(outDesc)};
 ${hero ? `const OG_IMAGE = ${q(SITE + hero.ogLocalUrl)};\n` : ""}${authorConst}
 export const Head: HeadFC = () => (
   <>
@@ -674,7 +679,7 @@ fs.writeFileSync(
   path.join(outDir, "meta.json"),
   JSON.stringify(
     {
-      slug, path: pathOf(slug), title, description: liveDesc, descriptionSource: descSource,
+      slug, path: pathOf(slug), title, description: outDesc, descriptionSource: override?.description ? `override (${override.reason})` : descSource,
       liveOgImage: live.og.image, hero, author: author && { ...author, bio: undefined }, embeds: body.ctx.embeds,
       counts: body.ctx.counts, usedPrimitives: used, gatsbyNodeId: r.id,
     },
