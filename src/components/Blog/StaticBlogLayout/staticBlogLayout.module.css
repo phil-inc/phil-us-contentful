@@ -2,6 +2,7 @@
    as the Contentful template it replaces. */
 
 .title {
+  background-color: red; /* TEMP: marks migrated static posts for review; remove after approval */
   font-size: 38px;
   margin-bottom: 56px;
 
