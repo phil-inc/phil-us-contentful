@@ -1,0 +1,136 @@
+/* Values are copied from src/templates/blog.module.css so a migrated post looks the same
+   as the Contentful template it replaces. */
+
+.title {
+  background-color: red; /* TEMP: marks migrated static posts for review; remove after approval */
+  font-size: 38px;
+  margin-bottom: 56px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    font-size: 60px;
+    margin-bottom: 68px;
+  }
+}
+
+.wrapper {
+  margin-top: 40px;
+  margin-bottom: 64px;
+}
+
+.floatingImage {
+  float: none;
+  display: flex;
+  place-content: center;
+  padding: 30px 40px;
+  height: 300px;
+  width: 300px;
+
+  @media (min-width: $phil-breakpoint-sm) {
+    float: right;
+  }
+}
+
+.paragraph {
+  font-size: 18px;
+  font-family: Lato, sans-serif;
+  margin-bottom: 24px;
+
+  + .unorderedList,
+  + .orderedList {
+    padding-top: 0px;
+  }
+}
+
+.orderedList {
+  padding-top: 16px;
+  padding-bottom: 32px;
+
+  li {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}
+
+.unorderedList {
+  padding-left: 32px;
+
+  padding-top: 12px;
+  padding-bottom: 16px;
+
+  li {
+    margin-top: 0px;
+    margin-bottom: 0px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+li {
+  .paragraph {
+    padding-bottom: 0;
+  }
+}
+
+.listItem {
+  overflow: hidden;
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+.listItem::marker {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.anchor {
+  color: #00827e;
+  font-size: 18px;
+}
+
+.heading {
+  padding-top: 20px;
+  padding-bottom: 16px;
+
+  &2 {
+    font-size: 24px;
+  }
+
+  &3 {
+    font-size: 20px;
+
+    padding-top: 28px;
+    padding-bottom: 20px;
+  }
+
+  &4 {
+    font-family: Lato, sans-serif;
+    font-size: 18px;
+  }
+
+  &6 {
+    font-family: Lato, sans-serif;
+    font-size: 18px;
+  }
+}
+
+.embededAsset {
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: start;
+}
+
+.embededAssetWrapper {
+  max-width: 420px;
+}
+
+.image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.video {
+  width: 100%;
+}
