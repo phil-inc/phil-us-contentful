@@ -147,7 +147,7 @@ const NAV_SECTIONS: NavSection[] = [
         linkText: "Read Report",
       },
       {
-        to: "/dtp-research/",
+        to: "/patient-dtp-research/",
         variant: "tidewater",
         eyebrow: "Featured Resource",
         title: "Patient Perspectives on Direct\u2011to\u2011Patient: The Key to Improving Access and Adherence",

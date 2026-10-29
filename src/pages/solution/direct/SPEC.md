@@ -98,7 +98,7 @@ exact match). `Head` SEO export adapted from `src/pages/providers/index.tsx` /
 
 None. The "questionnaire" / "checkout" / dropdowns are non-functional visual
 mockups inside the phone art. CTAs link to `/demo/`, `/solution/hub/`,
-`/resources/?topic=direct`, `/pharma-dtp-research/`, `/dtp-research/`, `/hcp-research/`, a case-study URL,
+`/resources/?topic=direct`, `/pharma-dtp-research/`, `/patient-dtp-research/`, `/hcp-dtp-research/`, a case-study URL,
 and external press/feature articles.
 
 ## Interactions ported

@@ -134,6 +134,24 @@ from the top banner on every page, the Resources nav menu, the Home insights
 strip, the `/solution/direct/` resources strip and `/resources/` (featured
 card and grid).
 
+### Patient and HCP DTP research reports — `/patient-dtp-research/` and `/hcp-dtp-research/`
+Two gated landing pages built the same way as the pharma report above: a hero
+with a rotating stats card, an overview, "What's Inside" findings, a quote (a
+four-quote carousel on the patient page, one quote on the HCP page), a "Book
+Demo" band and an FAQ accordion, next to a sticky HubSpot form. The patient
+report ("The DTP Imperative", 1,049 U.S. patients) and the HCP report ("The DTP
+Bridge", 207 U.S. healthcare providers) each have their own form and PDF.
+The pages share one layout (`src/components/ResearchReport/`); each page's copy
+is in its own `_data.ts`, so any copy change is a code ticket. The PDFs are
+HubSpot files whose links are kept in Netlify settings (`PATIENT_DTP_REPORT_URL`
+and `HCP_DTP_REPORT_URL`), not in the repo: replacing a PDF means uploading a
+new file to HubSpot and updating that setting, not a code change.
+They replace the older Contentful pages `/dtp-research/` and `/hcp-research/`,
+which now 301 here; those Contentful entries still exist but render nowhere, so
+never route a change for them to Contentful. Linked from the Resources nav menu,
+the Home insights strip, `/approach/`, the `/solution/direct/` resources strip
+and `/resources/` (featured cards and grid).
+
 ### GTN Calculator — `/gtn/calculator/`
 The actual interactive ROI/GTN calculator tool. **Distinct page from
 `/gtn/`** — always confirm which one an annotation refers to before filing.
@@ -186,7 +204,7 @@ old `/resources/?page=2` links redirect to `/resources/page/2/`. The retired
 News & Insights listings `/insights/`, `/insights/resources/`,
 `/insights/phil-blog/` and `/insights/events/` redirect here too, so an
 annotation on one of those old pages is a `/resources/` ticket.) Above the grid sit three featured
-resource cards: Pharma DTP Research (marked "New"), DTP Research and HCP
+resource cards: Pharma DTP Research (marked "New"), Patient Research and HCP
 Research. Lower down, an "In the news" strip reuses the same press
 items that appear on `/press/` — so a change to a press item shows up on both
 pages, and two annotations about "that press item" on the two different pages
@@ -289,12 +307,6 @@ The Contentful pages are:
 - **`/careers/`** — the page **shell/design**: headline, layout, and the copy
   around the job listings. The listings themselves are Ashby — see the section
   below.
-- **`/dtp-research/`** and **`/hcp-research/`** — the two older research
-  report landing pages. Linked from the Home page insights strip and the
-  featured cards on `/resources/`; `/dtp-research/` is also in the Resources
-  nav menu. The *cards* pointing at them are code; these destination pages
-  are Contentful. (The newest report, `/pharma-dtp-research/`, is a code page —
-  see above.)
 - Individual blog posts
 - Individual case study detail pages — the ones linked from
   `/customer-success/`
@@ -419,7 +431,7 @@ Main nav (dropdown menus):
 
 The **Our Solution** and **Resources** menus also show large promo cards on
 the right-hand side: a GTN promo under Our Solution, and two research reports
-under Resources (`/pharma-dtp-research/`, marked "New", and `/dtp-research/`).
+under Resources (`/pharma-dtp-research/`, marked "New", and `/patient-dtp-research/`).
 The **About Us**
 menu shows two featured press announcements linking to external newswire
 sites. These promo cards are part of the nav component — editing one is a

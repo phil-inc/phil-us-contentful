@@ -57,8 +57,8 @@ Supporting detail:
 - [Resource Hub](https://phil.us/resources/): Curated index of blog posts, reports, webinars, press, and case studies, filterable by topic and content type.
 - [Press Library](https://phil.us/press/): Press releases and coverage.
 - [The DTP Breakthrough: Pharma Perspectives on Direct-to-Patient](https://phil.us/pharma-dtp-research/): October 2026 survey of 74 U.S. life sciences leaders on DTP's strategic priority, impact on patient access, AI adoption, and 2027 investments.
-- [Patient Perspectives on Direct-to-Patient](https://phil.us/dtp-research/): Survey of 1,000+ patients on direct-to-patient access and adherence.
-- [HCP Perspectives on Direct-to-Patient](https://phil.us/hcp-research/): What providers want from pharma's digital access channels.
+- [Patient Perspectives on Direct-to-Patient](https://phil.us/patient-dtp-research/): Survey of 1,049 U.S. patients on direct-to-patient access, pricing and experience.
+- [HCP Perspectives on Direct-to-Patient](https://phil.us/hcp-dtp-research/): Survey of 207 U.S. healthcare providers on what they need from pharma's digital access channels.
 - [FAQ](https://phil.us/faqs/): Answers for patients, providers, and field teams.
 - [Complete article index](https://phil.us/sitemap-index.xml): Machine-readable list of every indexable URL, including the full article archive. The listing pages above render their cards client-side, so this is the reliable inventory.
 - [Full site text](https://phil.us/llms-full.txt): The text of every indexable page in one file, regenerated on each production build. Much larger than this file; use it when you need page content rather than links.
