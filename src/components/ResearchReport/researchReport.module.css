@@ -1,0 +1,1133 @@
+/* Shared by /patient-dtp-research/ and /hcp-dtp-research/ (MRTG-1462). Values come from the designs
+   "Patient DTP Report.dc.html" and "HCP DTP Report.dc.html"; the structure and the logged deviations are
+   those of /pharma-dtp-research/ (MRTG-1461), whose stylesheet this started from. */
+
+.page {
+  /* Colours that differ per page: the page wears `.themePatient` or `.themeHcp` (below). The values here are
+     the patient page's, so a page without a theme class still renders. */
+  --rr-band: linear-gradient(135deg, #067f76 0%, #0a958d 22%, #0ea79d 46%, #33b8ab 68%, #86d3c0 86%, #e4e6bc 100%);
+  --rr-glow-a: radial-gradient(circle at 50% 50%, rgba(0, 182, 204, 0.08), rgba(0, 182, 204, 0) 68%);
+  --rr-glow-b: radial-gradient(circle at 50% 50%, rgba(0, 182, 204, 0.08), rgba(0, 182, 204, 0) 70%);
+  --rr-stat-gradient: linear-gradient(120deg, #067f76 0%, #0a958d 45%, #0ea79d 100%);
+  --rr-bloom-c: rgba(242, 232, 192, 0.16);
+  /* The first title line. 9cqi caps it on narrow phones, where the design's size runs off the screen. */
+  --rr-lead-size: min(calc(clamp(26px, 6.6cqi, 200px) + 10px), 9cqi);
+  --rr-lead-lh: 1;
+  --rr-lead-mb: clamp(6px, 0.7vw, max(10px, 0.625vw));
+
+  --phil-foliage: #00827e;
+  --phil-foliage: #00827e;
+  --phil-forest: #00615e;
+  --phil-grass: #09aaa5;
+  --phil-spindrift: #6ddfc1;
+  --phil-slime: #d5f1f0;
+  --phil-pitch: #0a0a0a;
+  --phil-gunmetal: #525252;
+  --phil-base: #d7dcdc;
+  --phil-mortar: #9e9e9e;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasis: cubic-bezier(0.2, 0, 0, 1);
+  --shadow-lg: 0 18px 40px rgba(10, 10, 10, 0.12);
+  --gradient-tidewater: linear-gradient(135deg, #00615e 0%, #00827e 50%, #5abea4 100%);
+  --gradient-number: linear-gradient(120deg, var(--phil-forest) 0%, var(--phil-foliage) 45%, var(--phil-grass) 100%);
+  --sticky-top: calc(var(--announcment-bar-height, 58px) + var(--navbar-height, 90px) + 24px);
+
+  position: relative;
+  isolation: isolate;
+  /* clip, not hidden: keeps the blooms out of the footer without breaking the sticky form. */
+  overflow: clip;
+  background: #ffffff;
+  color: var(--phil-pitch);
+  font-family: "Lato", Arial, sans-serif;
+}
+
+.themePatient {
+  /* The defaults in .page are the patient theme; the class names the page for the reader. */
+  --rr-bloom-c: rgba(242, 232, 192, 0.16);
+}
+
+.themeHcp {
+  --rr-band: linear-gradient(135deg, #0a7380 0%, #0b8792 18%, #0fa8b0 42%, #3fc2c8 64%, #96dada 84%, #ededc4 100%);
+  --rr-glow-a: radial-gradient(circle at 50% 50%, rgba(140, 222, 226, 0.6), rgba(140, 222, 226, 0) 68%);
+  --rr-glow-b: radial-gradient(circle at 50% 50%, rgba(10, 150, 160, 0.5), rgba(10, 150, 160, 0) 70%);
+  --rr-stat-gradient: linear-gradient(120deg, #0a7380 0%, #0b8792 45%, #0fa8b0 100%);
+  --rr-bloom-c: rgba(242, 232, 192, 0.38);
+  --rr-lead-size: min(calc(clamp(28px, 6.2cqi, 180px) + 10px), 9cqi);
+  --rr-lead-lh: 1.05;
+  --rr-lead-mb: clamp(8px, 0.9vw, max(12px, 0.75vw));
+}
+
+.page a {
+  color: var(--phil-foliage);
+  text-decoration: none;
+}
+
+/* ---------- Page effects ---------- */
+
+/* Thin bar across the top that fills as the visitor scrolls. Only where the
+   browser supports scroll-driven animation; elsewhere it would sit full. */
+.progress {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .progress {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: var(--phil-grass);
+    z-index: 60;
+    animation: progressFill linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+/* Slow colour blooms behind the page. Sticky rather than fixed, so they stay
+   inside the page and never paint over the site footer. */
+.blooms {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  margin-bottom: -100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bloom {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.bloomA {
+  top: -18vh;
+  right: -12vw;
+  width: 62vw;
+  height: 62vw;
+  background: radial-gradient(circle at 35% 35%, rgba(109, 223, 193, 0.55), rgba(90, 190, 164, 0.22) 45%, rgba(255, 255, 255, 0) 72%);
+  filter: blur(30px);
+  animation: bloomA 26s var(--ease-standard) infinite;
+}
+
+.bloomB {
+  bottom: -26vh;
+  left: -16vw;
+  width: 58vw;
+  height: 58vw;
+  background: radial-gradient(circle at 60% 40%, rgba(0, 182, 204, 0.3), rgba(213, 241, 240, 0.3) 50%, rgba(255, 255, 255, 0) 75%);
+  filter: blur(34px);
+  animation: bloomB 32s var(--ease-standard) infinite;
+}
+
+.bloomC {
+  top: 38%;
+  left: 42%;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle at 50% 50%, var(--rr-bloom-c), rgba(255, 255, 255, 0) 70%);
+  filter: blur(40px);
+  animation: bloomA 38s var(--ease-standard) infinite reverse;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Hero band ---------- */
+
+.hero {
+  position: relative;
+}
+
+/* Full-width gradient behind the hero; script resizes it to end halfway down the stats card. */
+.heroBand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(720px, 86vh, max(960px, 60vw));
+  overflow: hidden;
+  background: var(--rr-band);
+}
+
+.heroGlowA {
+  position: absolute;
+  top: -18%;
+  right: -6%;
+  width: 46vw;
+  height: 46vw;
+  border-radius: 50%;
+  background: var(--rr-glow-a);
+  filter: blur(10px);
+}
+
+.heroGlowB {
+  position: absolute;
+  bottom: -34%;
+  left: 16%;
+  width: 38vw;
+  height: 38vw;
+  border-radius: 50%;
+  background: var(--rr-glow-b);
+  filter: blur(14px);
+}
+
+.inner {
+  position: relative;
+  padding-top: clamp(40px, 6vw, max(96px, 6vw));
+  padding-bottom: clamp(56px, 7vw, max(96px, 6vw));
+}
+
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(32px, 4vw, max(56px, 3.5vw));
+  align-items: flex-start;
+}
+
+.main {
+  flex: 1 1 380px;
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.aside {
+  flex: 0 1 max(360px, 22.5vw);
+  min-width: min(100%, 300px);
+  position: sticky;
+  top: var(--sticky-top);
+  display: grid;
+  gap: 16px;
+}
+
+/* ---------- Hero copy ---------- */
+
+.header {
+  display: grid;
+  gap: clamp(16px, 1.8vw, max(24px, 1.5vw));
+  margin-bottom: clamp(32px, 4vw, max(56px, 3.5vw));
+}
+
+.eyebrowPill {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: max(13px, 0.813vw);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 7px 16px;
+  margin-bottom: clamp(8px, 1vw, max(14px, 0.875vw));
+}
+
+.title {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.titleLead {
+  display: block;
+  /* Size, line height and gap come from the page's theme (--rr-lead-*). */
+  font-size: var(--rr-lead-size);
+  letter-spacing: -0.03em;
+  line-height: var(--rr-lead-lh);
+  margin-bottom: var(--rr-lead-mb);
+  white-space: nowrap;
+}
+
+.titleAccent {
+  font-style: italic;
+  color: var(--phil-slime);
+}
+
+.titleSub {
+  display: block;
+  font-size: min(calc(clamp(22px, calc(2.6vw + 2px), max(46px, 2.875vw)) + 11px), calc(5.3cqi + 3px));
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.noWrap {
+  white-space: nowrap;
+}
+
+.intro {
+  font-size: calc(clamp(18px, calc(1.2vw + 4px), max(24px, 1.5vw)) + 3px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 64ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Shown only on small screens, where the form sits at the bottom of the page. */
+.page .mobileCta {
+  display: none;
+  justify-self: stretch;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: max(16px, 1vw);
+  color: var(--phil-forest);
+  background: #ffffff;
+  padding: 14px 28px;
+  border-radius: 999px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.page .mobileCta:hover {
+  text-decoration: none;
+  color: var(--phil-forest);
+}
+
+@media (max-width: 820px) {
+  .page .mobileCta {
+    display: inline-flex;
+  }
+}
+
+/* ---------- Stats card ---------- */
+
+.statsCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 130, 126, 0.12);
+  padding: clamp(24px, 3vw, max(40px, 2.5vw));
+  box-shadow: 0 24px 60px -20px rgba(0, 75, 73, 0.35), 0 8px 20px -8px rgba(0, 75, 73, 0.18);
+}
+
+.statsGlow {
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 32vw;
+  height: 32vw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(109, 223, 193, 0.35), rgba(109, 223, 193, 0) 66%);
+  pointer-events: none;
+}
+
+.slides {
+  position: relative;
+  display: grid;
+  align-items: center;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+
+.slide {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px clamp(24px, 3vw, max(40px, 2.5vw));
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 700ms var(--ease-standard), transform 700ms var(--ease-standard);
+}
+
+.slidePast {
+  transform: translateY(-10px);
+}
+
+.slideActive {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gradientNumber {
+  background: var(--gradient-number);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The big numbers in the stats card wear the page's own gradient; the numbered findings below use .gradientNumber. */
+.statGradient {
+  background: var(--rr-stat-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.statValue {
+  flex: none;
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(64px, 7.5vw, max(112px, 7vw));
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.statText {
+  flex: 1 1 240px;
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2vw, max(28px, 1.75vw));
+  line-height: 1.3;
+  color: var(--phil-pitch);
+  max-width: 28ch;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.statsControls {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(16px, 2vw, max(24px, 1.5vw));
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  height: 4px;
+  width: clamp(24px, 2vw, max(32px, 2vw));
+  border-radius: 999px;
+  background: rgba(0, 130, 126, 0.18);
+}
+
+.dotFill,
+.dotRun {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--phil-foliage);
+}
+
+.dotFill {
+  opacity: 0;
+  transition: opacity 300ms var(--ease-standard);
+}
+
+.dotFillOn {
+  opacity: 1;
+}
+
+.dotRun {
+  transform-origin: left center;
+  animation: progressFill 4s linear forwards;
+}
+
+.dotRunPaused {
+  animation-play-state: paused;
+}
+
+.arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.arrow {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--phil-base);
+  background: #ffffff;
+  color: var(--phil-foliage);
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms var(--ease-standard), color 200ms var(--ease-standard), border-color 200ms var(--ease-standard);
+}
+
+.arrow:hover {
+  background: var(--phil-foliage);
+  color: #ffffff;
+  border-color: var(--phil-foliage);
+}
+
+/* ---------- Overview ---------- */
+
+.overview {
+  padding-top: clamp(56px, 7vw, max(88px, 5.5vw));
+}
+
+.sectionHeading {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(26px, 2.8vw, max(40px, 2.5vw));
+  line-height: 1.2;
+  color: var(--phil-pitch);
+}
+
+.overviewHeading {
+  letter-spacing: -0.01em;
+  max-width: 30ch;
+  margin: 0 0 clamp(28px, 2.6vw, max(40px, 2.5vw));
+  text-wrap: balance;
+}
+
+.overviewHeading em {
+  font-style: italic;
+  color: var(--phil-foliage);
+}
+
+.overviewBody {
+  font-size: calc(clamp(16px, 1.3vw, max(19px, 1.188vw)) + 2px);
+  line-height: 1.6;
+  color: var(--phil-gunmetal);
+  max-width: 68ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ---------- Key findings ---------- */
+
+.findings {
+  padding-top: clamp(40px, 5vw, max(64px, 4vw));
+}
+
+.label {
+  font-size: max(15px, 0.938vw);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--phil-foliage);
+  margin: 0 0 20px;
+}
+
+.findingsList {
+  display: grid;
+  border-top: 1px solid var(--phil-base);
+}
+
+.finding {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(16px, 2.5vw, max(32px, 2vw));
+  padding: clamp(20px, 2.5vw, max(28px, 1.75vw)) clamp(14px, 1.5vw, max(24px, 1.5vw));
+  border-bottom: 1px solid var(--phil-base);
+}
+
+.findingNumber {
+  min-width: 1.6em;
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3vw, max(40px, 2.5vw));
+  line-height: 1;
+  opacity: 0.3;
+  transform: scale(1);
+  transform-origin: left top;
+  transition: transform 400ms var(--ease-standard), opacity 400ms var(--ease-standard);
+}
+
+.findingNumberActive {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.findingText {
+  display: grid;
+  gap: 8px;
+}
+
+.findingTitle {
+  font-family: "Lato", Arial, sans-serif;
+  font-size: clamp(18px, 1.5vw, max(21px, 1.313vw));
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--phil-pitch);
+  margin: 0;
+}
+
+.findingBody {
+  font-size: max(16px, 1vw);
+  line-height: 1.6;
+  color: var(--phil-gunmetal);
+  margin: 0;
+  max-width: 64ch;
+  text-wrap: pretty;
+}
+
+/* ---------- Perspective quote ---------- */
+
+.perspective {
+  padding-top: clamp(56px, 7vw, max(88px, 5.5vw));
+}
+
+.quote {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #d5f1f0 0%, #a8e2da 55%, #f2e8c0 100%);
+  padding: clamp(22px, 2.6vw, max(32px, 2vw));
+}
+
+/* One quote, or several stacked in the same grid cell so the card keeps the height of the tallest. */
+.quoteSlides {
+  display: grid;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.quoteItem {
+  grid-area: 1 / 1;
+  margin: 0;
+  display: grid;
+  gap: clamp(16px, 1.8vw, max(22px, 1.4vw));
+  align-content: space-between;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 600ms var(--ease-standard), transform 600ms var(--ease-standard);
+}
+
+.quoteItemPast {
+  transform: translateY(-10px);
+}
+
+.quoteItemActive {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* A single quote has nothing to cycle through: it is simply shown. */
+.quoteSolo {
+  margin: 0;
+  display: grid;
+  gap: clamp(16px, 1.8vw, max(22px, 1.4vw));
+}
+
+.quoteText {
+  margin: 0;
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: calc(clamp(19px, 1.85vw, max(27px, 1.7vw)) + 2px);
+  line-height: 1.3;
+  color: var(--phil-forest);
+  text-wrap: pretty;
+}
+
+.quoteAuthor {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* The files are already cropped square (see SPEC.md), so the circle needs no object-position. */
+.quotePhoto {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.quoteControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(14px, 1.6vw, max(20px, 1.25vw));
+}
+
+.quoteDots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quoteDot {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  height: 4px;
+  width: 16px;
+  border-radius: 999px;
+  background: rgba(0, 75, 73, 0.25);
+  transition: width 300ms var(--ease-standard), background 300ms var(--ease-standard);
+}
+
+.quoteDotActive {
+  width: 32px;
+  background: var(--phil-forest);
+}
+
+.quoteArrows {
+  display: flex;
+  gap: 8px;
+}
+
+.quoteArrow {
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 75, 73, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--phil-forest);
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms var(--ease-standard), color 200ms var(--ease-standard);
+}
+
+.quoteArrow:hover {
+  background: var(--phil-forest);
+  color: #ffffff;
+}
+
+.quoteName {
+  display: block;
+  font-size: max(16px, 1vw);
+  font-weight: 700;
+  color: var(--phil-forest);
+}
+
+.quoteRole {
+  display: block;
+  font-size: max(14px, 0.875vw);
+  color: var(--phil-forest);
+}
+
+/* ---------- CTA band ---------- */
+
+.cta {
+  padding-top: clamp(56px, 7vw, max(88px, 5.5vw));
+  color: #ffffff;
+}
+
+.ctaCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--gradient-tidewater);
+  padding: clamp(32px, 4vw, max(56px, 3.5vw)) clamp(24px, 3vw, max(44px, 2.75vw));
+  box-shadow: var(--shadow-lg);
+  display: grid;
+  gap: clamp(16px, 1.6vw, max(24px, 1.5vw));
+  justify-items: start;
+}
+
+.ctaDots {
+  position: absolute;
+  right: -60px;
+  top: -20%;
+  height: 140%;
+  width: auto;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+.ctaEyebrow {
+  position: relative;
+  font-size: max(15px, 0.938vw);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--phil-slime);
+  margin: 0;
+}
+
+.ctaHeading {
+  position: relative;
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(30px, 3.4vw, max(50px, 3.1vw));
+  line-height: 1.12;
+  color: #ffffff;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.ctaBody {
+  position: relative;
+  font-size: max(18px, min(calc(clamp(17px, 1.3vw, max(19px, 1.2vw)) + 3px), calc(2.35cqi + 2px)));
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.page .ctaButton {
+  position: relative;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: max(16px, 1vw);
+  color: var(--phil-forest);
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  padding: 13px 30px;
+  border-radius: 999px;
+  transition: background 200ms var(--ease-standard), color 200ms var(--ease-standard);
+}
+
+.page .ctaButton:hover {
+  background: transparent;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* ---------- FAQs ---------- */
+
+.faqs {
+  padding-top: clamp(56px, 7vw, max(88px, 5.5vw));
+}
+
+.faqHeading {
+  margin: 0 0 20px;
+}
+
+.faqList {
+  display: grid;
+  border-top: 1px solid var(--phil-base);
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--phil-base);
+}
+
+.faqItem > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 0;
+  font-size: clamp(17px, 1.4vw, max(20px, 1.25vw));
+  font-weight: 700;
+  color: var(--phil-pitch);
+}
+
+.faqItem > summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqPlus {
+  flex: none;
+  font-size: max(26px, 1.625vw);
+  line-height: 1;
+  font-weight: 400;
+  color: var(--phil-foliage);
+  transition: transform 200ms var(--ease-standard);
+}
+
+.faqItem[open] .faqPlus {
+  transform: rotate(45deg);
+}
+
+.faqAnswer {
+  font-size: max(16px, 1vw);
+  line-height: 1.6;
+  color: var(--phil-gunmetal);
+  margin: 0 0 24px;
+  max-width: 70ch;
+  text-wrap: pretty;
+}
+
+.page .faqAnswer a {
+  font-weight: 700;
+  color: var(--phil-foliage);
+  text-decoration: underline;
+}
+
+/* ---------- Form card ---------- */
+
+.formCard {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: clamp(24px, 3vw, max(36px, 2.25vw));
+  box-shadow: var(--shadow-lg);
+  transform: scale(1);
+  transition: box-shadow 400ms var(--ease-standard), transform 400ms var(--ease-emphasis);
+  scroll-margin-top: var(--sticky-top);
+}
+
+.formCardGlow {
+  box-shadow: 0 0 0 4px rgba(0, 130, 126, 0.45), 0 0 0 12px rgba(109, 223, 193, 0.28), var(--shadow-lg);
+  transform: scale(1.03);
+}
+
+.formEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: max(14px, 0.875vw);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--phil-foliage);
+  margin: 0 0 14px;
+}
+
+.formEyebrow::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  background: var(--phil-foliage);
+}
+
+.hsForm {
+  min-height: 280px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* HubSpot renders its own markup inside .hsForm; HubSpot's stylesheet is turned off. */
+.hsForm :global(form) {
+  display: grid;
+  gap: 16px;
+  font-family: "Lato", Arial, sans-serif;
+}
+
+.hsForm :global(fieldset) {
+  max-width: none !important;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 16px;
+  /* !important: the site-wide hubspot-form.css adds an 18px !important bottom margin. */
+  margin: 0 !important;
+  padding: 0;
+  border: 0;
+}
+
+.hsForm :global(fieldset .hs-form-field) {
+  width: auto !important;
+  float: none !important;
+  padding: 0 !important;
+}
+
+.hsForm :global(fieldset .input) {
+  margin: 0 !important;
+}
+
+.hsForm :global(.hs-form-field > label) {
+  display: block;
+  font-size: max(14px, 0.875vw);
+  font-weight: 700;
+  color: var(--phil-pitch);
+  margin-bottom: 6px;
+}
+
+.hsForm :global(.hs-form-required) {
+  color: var(--phil-foliage);
+  margin-left: 2px;
+}
+
+.hsForm :global(input[type="text"]),
+.hsForm :global(input[type="email"]),
+.hsForm :global(input[type="tel"]),
+.hsForm :global(select),
+.hsForm :global(textarea) {
+  font-family: "Lato", Arial, sans-serif;
+  font-size: max(16px, 1vw);
+  box-sizing: border-box;
+  width: 100% !important;
+  padding: 12px 14px;
+  border: 1px solid var(--phil-base);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--phil-pitch);
+  outline: none;
+  transition: box-shadow 120ms;
+}
+
+.hsForm :global(input:focus),
+.hsForm :global(select:focus),
+.hsForm :global(textarea:focus) {
+  border-color: var(--phil-foliage);
+  box-shadow: 0 0 0 2px rgba(0, 130, 126, 0.4);
+}
+
+.hsForm :global(ul.hs-error-msgs) {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  font-size: max(13px, 0.813vw);
+  color: #b3261e;
+}
+
+.hsForm :global(.legal-consent-container),
+.hsForm :global(.hs-richtext) {
+  font-size: max(13px, 0.813vw);
+  line-height: 1.5;
+  color: var(--phil-mortar);
+}
+
+/* The form's 16px gap is the only space above the button, as in the design. */
+.hsForm :global(.hs-submit) {
+  margin-top: 0;
+}
+
+.hsForm :global(.hs-submit .actions) {
+  margin: 0;
+  padding: 0;
+}
+
+.hsForm :global(input[type="submit"]) {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: max(16px, 1vw);
+  line-height: 1.2;
+  padding: 16px 28px;
+  background: var(--phil-foliage) !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  border-radius: 999px;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition: background-color 200ms var(--ease-standard);
+}
+
+/* outline: drops the dark hover ring from the site-wide hubspot-form.css. */
+.hsForm :global(input[type="submit"]:hover) {
+  background: var(--phil-forest) !important;
+  outline: none;
+}
+
+.hsForm :global(input[type="submit"]:active) {
+  transform: translateY(1px);
+}
+
+.hsForm :global(.submitted-message) {
+  font-size: max(16px, 1vw);
+  line-height: 1.5;
+  color: var(--phil-forest);
+}
+
+.ready {
+  display: grid;
+  gap: 16px;
+  animation: fadeIn 400ms var(--ease-standard);
+}
+
+.readyTitle {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(24px, 2vw, max(30px, 1.875vw));
+  line-height: 1.2;
+  color: var(--phil-pitch);
+  margin: 0;
+}
+
+.readyBody {
+  font-size: max(16px, 1vw);
+  line-height: 1.55;
+  color: var(--phil-gunmetal);
+  margin: 0;
+}
+
+.openButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: max(16px, 1vw);
+  color: #ffffff;
+  background: var(--phil-foliage);
+  padding: 16px 28px;
+  border-radius: 999px;
+  transition: background 200ms var(--ease-standard);
+}
+
+.openButton:hover {
+  background: var(--phil-forest);
+}
+
+.formError {
+  font-size: max(13px, 0.813vw);
+  color: #b3261e;
+  margin: 8px 0 0;
+}
+
+.privacy {
+  font-size: max(13px, 0.813vw);
+  color: var(--phil-mortar);
+  margin: 12px 0 0;
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes bloomA {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(60px, -40px, 0) scale(1.12); }
+}
+
+@keyframes bloomB {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-70px, 50px, 0) scale(0.95); }
+}
+
+@keyframes progressFill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bloom,
+  .dotRun {
+    animation: none;
+  }
+
+  .slide,
+  .findingNumber,
+  .quoteItem,
+  .formCard {
+    transition: none;
+  }
+}
