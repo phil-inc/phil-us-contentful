@@ -72,7 +72,7 @@ export const RESOURCES_DATA: ResourceItem[] = [
     title: "Building Direct-to-Patient Programs that Exceed Today's Patient Expectations",
     topics: ["direct", "patient"],
     type: "report",
-    url: "https://phil.us/dtp-research/",
+    url: "/patient-dtp-research/",
     buttonLabel: "Download",
   },
   {
@@ -100,7 +100,7 @@ export const RESOURCES_DATA: ResourceItem[] = [
     title: "Bridging the Gap to Better Patient Outcomes: What HCPs Want from Pharma's Digital Access Channels",
     topics: ["direct", "field", "data"],
     type: "report",
-    url: "https://phil.us/hcp-research/",
+    url: "/hcp-dtp-research/",
     buttonLabel: "Download",
   },
   {

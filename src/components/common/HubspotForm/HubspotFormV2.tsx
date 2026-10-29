@@ -11,6 +11,8 @@ type HubSpotFormProps = {
   callbackFn?: () => void;
   /** Runs when the visitor submits, before HubSpot sends the data — still inside their click. */
   onFormSubmit?: () => void;
+  /** Runs once HubSpot has drawn the form, with the form it passes (a jQuery-wrapped element on some embeds). */
+  onFormReady?: (form: unknown) => void;
   /** Turns off HubSpot's own stylesheet, for forms styled entirely by the page. */
   disableHubspotCss?: boolean;
   formMinHeight?: string;
@@ -24,6 +26,7 @@ const HubSpotFormInner: React.FC<HubSpotFormProps & { targetId: string }> = ({
   targetId,
   callbackFn,
   onFormSubmit,
+  onFormReady,
   disableHubspotCss,
 }) => {
   const [hasRendered, setHasRendered] = React.useState<boolean>(false);
@@ -34,6 +37,7 @@ const HubSpotFormInner: React.FC<HubSpotFormProps & { targetId: string }> = ({
     formId,
     cssClass: classname,
     ...(onFormSubmit ? { onFormSubmit: () => onFormSubmit() } : {}),
+    ...(onFormReady ? { onFormReady: (form: unknown) => onFormReady(form) } : {}),
     // `css` is a HubSpot embed option the hook's type doesn't list; it passes options through as-is.
     ...(disableHubspotCss ? { css: "" } : {}),
     onFormSubmitted() {
@@ -95,6 +99,7 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
   classname = "",
   callbackFn,
   onFormSubmit,
+  onFormReady,
   disableHubspotCss,
   formMinHeight = "1px",
 }) => {
@@ -125,6 +130,7 @@ const HubSpotFormV2: React.FC<HubSpotFormProps> = ({
           targetId={uuid}
           callbackFn={callbackFn}
           onFormSubmit={onFormSubmit}
+          onFormReady={onFormReady}
           disableHubspotCss={disableHubspotCss}
         />
       ) : (

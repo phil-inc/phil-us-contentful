@@ -334,3 +334,21 @@ describe("getLink — buttons linking to a section without a built page", () => 
     expect(getLink(sectionButton("Resources", "News & Insights")).link).toBe("/insights/resources/");
   });
 });
+
+describe("getLink — the moved research reports map to their new pages (MRTG-1462)", () => {
+  test.each([
+    ["dtp-research", "/patient-dtp-research/"],
+    ["hcp-research", "/hcp-dtp-research/"],
+  ])("a link entry with the %s slug resolves to %s", (slug, expected) => {
+    const result = getLink({ link: [{ internalContent: { slug, id: `${slug}-id` }, linkLabel: "Read report" }] });
+
+    expect(result.link).toBe(expected);
+    expect(result.isExternal).toBe(false);
+  });
+
+  test("a slug written with a trailing slash resolves the same way", () => {
+    const result = getLink({ link: [{ internalContent: { slug: "dtp-research/", id: "dtp-research-id" }, linkLabel: "Read report" }] });
+
+    expect(result.link).toBe("/patient-dtp-research/");
+  });
+});

@@ -181,7 +181,7 @@ export const ThoughtLeadershipSection: React.FC = () => (
             <Link
               className="bt bt-quote is-pale bt-hcp sz-d"
               style={{ flexBasis: "263px", width: "263px", minHeight: "302px" }}
-              to="/hcp-research/"
+              to="/hcp-dtp-research/"
             >
               <p className="bt-eyebrow">Featured Report</p>
               <p className="bt-htitle">

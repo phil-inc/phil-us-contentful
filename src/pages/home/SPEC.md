@@ -130,8 +130,8 @@ All new components are page-specific, built inline or in `src/pages/home/compone
 - /demo/
 - /customer-success/
 - /pharma-dtp-research/
-- /dtp-research/
-- /hcp-research/
+- /patient-dtp-research/
+- /hcp-dtp-research/
 - /resources/
 
 ## Trustpilot Integration

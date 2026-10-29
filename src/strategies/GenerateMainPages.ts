@@ -109,6 +109,11 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   // /solution/hub/ is served by the static file-based page at src/pages/solution/hub/index.tsx
   if (page.slug === "solution/hub") return;
 
+  // /dtp-research and /hcp-research moved to /patient-dtp-research/ and /hcp-dtp-research/ (MRTG-1462), which are
+  // static file-based pages (src/pages/patient-dtp-research/, src/pages/hcp-dtp-research/); netlify.toml 301s the old
+  // paths. Do not remove these: the Contentful entries still exist and would rebuild the old pages over the redirect.
+  if (page.slug === "dtp-research" || page.slug === "hcp-research") return;
+
   // /solution/core/ is the old Digital Hub path; redirected to /solution/hub/ via netlify.toml
   if (page.slug === "solution/core") return;
 
