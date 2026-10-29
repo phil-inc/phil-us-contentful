@@ -817,14 +817,14 @@ const ResourcesPage: React.FC = () => {
                 <span className={classes.featCta}>Read report <ArrowIcon /></span>
               </div>
             </CardLink>
-            <CardLink url="https://phil.us/dtp-research/" className={`${classes.featCard} ${classes.tidewater}`}>
+            <CardLink url="/patient-dtp-research/" className={`${classes.featCard} ${classes.tidewater}`}>
               <div className={classes.featCardEyebrow}>Featured Report</div>
               <div>
                 <h3 className={classes.featCardTitle}>Patient Perspectives on Direct-to-Patient: Improving Access and Adherence</h3>
                 <span className={classes.featCta}>Read report <ArrowIcon /></span>
               </div>
             </CardLink>
-            <CardLink url="https://phil.us/hcp-research/" className={`${classes.featCard} ${classes.meadow}`}>
+            <CardLink url="/hcp-dtp-research/" className={`${classes.featCard} ${classes.meadow}`}>
               <div className={classes.featCardEyebrow}>Featured Report</div>
               <div>
                 <h3 className={classes.featCardTitle}>HCP Perspectives on Direct-to-Patient: Engaging Providers in the Digital Era</h3>

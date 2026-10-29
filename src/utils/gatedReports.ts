@@ -18,6 +18,10 @@
 const EXTERNAL_REPORT_URLS = new Map<string, () => string | undefined>([
   // /pharma-dtp-research/ — "The DTP Breakthrough" (MRTG-1461), a HubSpot file.
   ["pharma-dtp-research", () => process.env.PHARMA_DTP_REPORT_URL],
+  // /patient-dtp-research/ and /hcp-dtp-research/ (MRTG-1462), HubSpot files. They replace /dtp-research/ and
+  // /hcp-research/, whose PDFs are Contentful assets looked up by asset ID.
+  ["patient-dtp-research", () => process.env.PATIENT_DTP_REPORT_URL],
+  ["hcp-dtp-research", () => process.env.HCP_DTP_REPORT_URL],
 ]);
 
 /**

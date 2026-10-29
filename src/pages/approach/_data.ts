@@ -17,7 +17,7 @@ export const APPROACH_PILLARS = [
     barrierBig: "1 in 3",
     barrierLabel:
       "patients won't pursue a medication if they can't access it through their preferred experience",
-    barrierHref: "/dtp-research/",
+    barrierHref: "/patient-dtp-research/",
   },
   {
     title: "Affordability,\nBuilt In",
@@ -25,7 +25,7 @@ export const APPROACH_PILLARS = [
     barrierBig: "96%",
     barrierLabel:
       "of patients want to see their price before committing, including insurance and coupons",
-    barrierHref: "/dtp-research/",
+    barrierHref: "/patient-dtp-research/",
   },
   {
     title: "Adherence,\nBy Design",
@@ -33,7 +33,7 @@ export const APPROACH_PILLARS = [
     barrierBig: "70%",
     barrierLabel:
       "of HCPs agree that issues in the PA process create an immediate hurdle to staying on therapy",
-    barrierHref: "/hcp-research/",
+    barrierHref: "/hcp-dtp-research/",
   },
 ] as const;
 

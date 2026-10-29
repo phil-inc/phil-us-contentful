@@ -40,7 +40,7 @@ export const ResearchSection: React.FC = () => (
             pressing needs, challenges, and preferences of today's patients, and
             what the next generation of DTP programs must deliver.
           </p>
-          <Link className="rc-link" to="/dtp-research/">
+          <Link className="rc-link" to="/patient-dtp-research/">
             Read Report <Arrow />
           </Link>
         </article>
@@ -117,7 +117,7 @@ export const ResearchSection: React.FC = () => (
             pharma's digital access and direct-to-patient programs, and what
             pharma can do to improve patient outcomes.
           </p>
-          <Link className="rc-link" to="/hcp-research/">
+          <Link className="rc-link" to="/hcp-dtp-research/">
             Read Report <Arrow />
           </Link>
         </article>

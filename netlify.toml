@@ -229,6 +229,31 @@ from = "/solution"
 to = "/solution/hub/"
 status = 301
 
+# MRTG-1462: the patient and HCP research report pages moved to new URLs
+[[redirects]]
+from = "/dtp-research/"
+to = "/patient-dtp-research/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/dtp-research"
+to = "/patient-dtp-research/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/hcp-research/"
+to = "/hcp-dtp-research/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/hcp-research"
+to = "/hcp-dtp-research/"
+status = 301
+force = true
+
 [[redirects]]
 from = "/manufacturers/*"
 to = "/pharma/"

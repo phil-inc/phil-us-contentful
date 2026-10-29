@@ -17,6 +17,9 @@ const REMOVED_PAGE_REDIRECTS: Record<string, string> = {
   solution: "/solution/hub/",
   // The Digital Hub moved from the old core path to /solution/hub/.
   "solution/core": "/solution/hub/",
+  // The patient and HCP research reports moved to new URLs (MRTG-1462).
+  "dtp-research": "/patient-dtp-research/",
+  "hcp-research": "/hcp-dtp-research/",
 };
 
 const remapRemovedPage = (

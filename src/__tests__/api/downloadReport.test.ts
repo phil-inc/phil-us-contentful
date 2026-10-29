@@ -6,6 +6,8 @@ const REPORT_URL = "https://files.example.com/pharma-dtp-report.pdf";
 const ENV_KEYS = [
   "DOWNLOAD_TOKEN_SECRET",
   "PHARMA_DTP_REPORT_URL",
+  "PATIENT_DTP_REPORT_URL",
+  "HCP_DTP_REPORT_URL",
   "CONTENTFUL_SPACE_ID",
   "CONTENTFUL_ACCESS_TOKEN",
 ];
@@ -66,6 +68,32 @@ describe("/api/download-report for reports hosted outside Contentful", () => {
 
   it("answers 500 instead of guessing when PHARMA_DTP_REPORT_URL is not set", async () => {
     const res = await download("pharma-dtp-research");
+
+    expect(res.statusCode).toBe(500);
+    expect(res.body).toEqual({ error: "server_not_configured" });
+    expect(res.headers.Location).toBeUndefined();
+  });
+
+  // MRTG-1462: each report reads its own variable, so one link can never release another report's file.
+  it.each([
+    ["patient-dtp-research", "PATIENT_DTP_REPORT_URL"],
+    ["hcp-dtp-research", "HCP_DTP_REPORT_URL"],
+  ])("redirects a valid %s token to the URL in %s, and to no other report's", async (id, variable) => {
+    process.env.PHARMA_DTP_REPORT_URL = "https://files.example.com/pharma.pdf";
+    process.env.PATIENT_DTP_REPORT_URL = "https://files.example.com/patient.pdf";
+    process.env.HCP_DTP_REPORT_URL = "https://files.example.com/hcp.pdf";
+
+    const res = await download(id);
+
+    expect(res.statusCode).toBe(302);
+    expect(res.headers.Location).toBe(process.env[variable]);
+    expect(res.headers["X-Robots-Tag"]).toBe("noindex, nofollow");
+  });
+
+  it.each(["patient-dtp-research", "hcp-dtp-research"])("answers 500 for %s when its variable is not set", async (id) => {
+    process.env.PHARMA_DTP_REPORT_URL = REPORT_URL;
+
+    const res = await download(id);
 
     expect(res.statusCode).toBe(500);
     expect(res.body).toEqual({ error: "server_not_configured" });
