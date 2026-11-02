@@ -37,7 +37,7 @@ export const RESOURCES_DATA: ResourceItem[] = [
     title: "PHIL Partners with Harrow to Power HarrowRx, An All-in-One Prescribing Destination for Eye Care",
     topics: ["direct"],
     type: "press",
-    url: "TODO-MRTG-1463-add-release-url",
+    url: "https://www.businesswire.com/news/home/20261102003021/en/PHIL-Partners-with-Harrow-to-Power-HarrowRx-One-Prescribing-Destination-for-Harrows-Eye-Care-Portfolio",
     buttonLabel: "Read",
   },
   {
