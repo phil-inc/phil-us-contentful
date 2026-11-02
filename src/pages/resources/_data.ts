@@ -34,6 +34,13 @@ export const TYPES = [
 
 export const RESOURCES_DATA: ResourceItem[] = [
   {
+    title: "PHIL Partners with Harrow to Power HarrowRx, An All-in-One Prescribing Destination for Eye Care",
+    topics: ["direct"],
+    type: "press",
+    url: "TODO-MRTG-1463-add-release-url",
+    buttonLabel: "Read",
+  },
+  {
     title: "Pharma Perspectives on Direct-to-Patient: The Future of DTP Success",
     topics: ["direct"],
     type: "report",

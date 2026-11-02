@@ -13,6 +13,13 @@ export interface PressItem {
 // Dates come from each article page, except where a comment says otherwise.
 export const PRESS_DATA: PressItem[] = [
   {
+    title: "PHIL Partners with Harrow to Power HarrowRx, An All-in-One Prescribing Destination for Eye Care",
+    outlet: "Press Release",
+    type: "Release",
+    date: "2026-11-02", // from the MRTG-1463 ticket; check against the Business Wire URL
+    url: "TODO-MRTG-1463-add-release-url",
+  },
+  {
     title: "New PHIL Research on the Future of Pharma DTP: 3 in 4 Leaders Report Direct-to-Patient a Major Strategic Priority",
     outlet: "Press Release",
     type: "Release",
