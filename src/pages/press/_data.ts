@@ -16,8 +16,8 @@ export const PRESS_DATA: PressItem[] = [
     title: "PHIL Partners with Harrow to Power HarrowRx, An All-in-One Prescribing Destination for Eye Care",
     outlet: "Press Release",
     type: "Release",
-    date: "2026-11-02", // from the MRTG-1463 ticket; check against the Business Wire URL
-    url: "TODO-MRTG-1463-add-release-url",
+    date: "2026-11-02", // from the Business Wire URL
+    url: "https://www.businesswire.com/news/home/20261102003021/en/PHIL-Partners-with-Harrow-to-Power-HarrowRx-One-Prescribing-Destination-for-Harrows-Eye-Care-Portfolio",
   },
   {
     title: "New PHIL Research on the Future of Pharma DTP: 3 in 4 Leaders Report Direct-to-Patient a Major Strategic Priority",

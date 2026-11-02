@@ -25,7 +25,7 @@ describe("MRTG-1463: Harrow press release", () => {
     expect(resourceRows[0]).toMatchObject({ topics: ["direct"], type: "press", buttonLabel: "Read" });
   });
 
-  it("links both listings to the same absolute https URL (fails while the URL is still a TODO)", () => {
+  it("links both listings to the same absolute https URL", () => {
     expect(pressRows[0]?.url).toMatch(/^https:\/\//);
     expect(resourceRows[0]?.url).toBe(pressRows[0]?.url);
   });
