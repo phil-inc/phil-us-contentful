@@ -22,3 +22,12 @@ describe("RESOURCES_DATA: pharma DTP research report (MRTG-1461)", () => {
     rows[0]?.topics.forEach((topic) => expect(topicKeys).toContain(topic));
   });
 });
+
+describe("RESOURCES_DATA: Okhati Group press release", () => {
+  it("lists the release once as a Press item tagged Direct-to-Patient", () => {
+    const rows = RESOURCES_DATA.filter((item) => item.title === "PHIL Partners with Okhati Group to power all in one paracetamol");
+
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ topics: ["direct"], type: "press", url: "https://www.businesswire.com/news/home/20261102003021/en/PHIL-Partners-with-Okhati-Group" });
+  });
+});
