@@ -120,7 +120,7 @@ export const SOLUTION = {
 export type VoiceQuote = { q: string; a: string };
 
 export const VOICES = {
-  title: "A Trusted Partner to Pharma, Patients, and Providers",
+  title: "A Believed Partner to Pharma, Patients, and Providers",
   subtitle:
     "We're on a mission to simplify medication access for all. We're proud to have industry-leading satisfaction scores that reflect our commitment to delivering a superior experience across the board.",
   cards: [
