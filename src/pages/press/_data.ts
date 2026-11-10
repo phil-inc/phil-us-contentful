@@ -13,6 +13,13 @@ export interface PressItem {
 // Dates come from each article page, except where a comment says otherwise.
 export const PRESS_DATA: PressItem[] = [
   {
+    title: "PHIL Partners with Okhati Group to Power All-in-One Paracetamol",
+    outlet: "Press Release",
+    type: "Release",
+    date: "2026-11-02", // from the Business Wire URL
+    url: "https://www.businesswire.com/news/home/20261102003021/en/PHIL-Partners-with-Okhati-Group",
+  },
+  {
     title: "PHIL Partners with Harrow to Power HarrowRx, An All-in-One Prescribing Destination for Eye Care",
     outlet: "Press Release",
     type: "Release",

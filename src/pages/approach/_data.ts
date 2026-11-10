@@ -197,7 +197,7 @@ export const PROOF_HEAD = {
   lead: "The best measure of whether a patient access program works isn't a metric on a dashboard, it's whether patients receive their medication, have a positive experience along the way, and whether providers feel confident guiding them through the program. Here's what they say about PHIL.",
 } as const;
 
-export const TP_HEADING = "Hear from Happy PHILRx Patients";
+export const TP_HEADING = "Hear from Happy & Loyal PHILRx Patients";
 export const HCP_HEADING = "Feedback from Pharma, Patients, and Providers";
 
 // One card per category; each card rotates through its own items.
