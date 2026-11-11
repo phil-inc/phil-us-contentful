@@ -2,7 +2,7 @@ import { TRUSTPILOT_SCORE } from "../../constants/trustpilot";
 
 export const HERO = {
   title: {
-    before: "The ",
+    before: "This ",
     emphasis: "Simple Path",
     after: " to Affordable Medication Access",
   },
@@ -65,7 +65,7 @@ export type SolutionCard = {
 };
 
 export const SOLUTION = {
-  title: "Maximize Patient Outcomes and Commercial Performance",
+  title: "Minimize Patient Outcomes and Commercial Performance",
   subtitle:
     "We help retail and specialty-lite brands break through access barriers to improve commercial performance. Our end-to-end digital hub and direct-to-patient platform delivers strong results through human-first care, innovative technology, and AI-supported outcomes.",
   lead: "PHIL is helping pharma",

@@ -310,7 +310,6 @@ function OutcomesBanner() {
 function PhoneMockup() {
   return (
     <div className={classes.phone}>
-      <div className={classes.phoneNotch} />
       <div className={classes.phoneScreen}>
         <div className={classes.phoneBrand}>PHILRx</div>
         <div className={classes.phoneTagline}>Today at 12pm</div>
