@@ -87,10 +87,22 @@
   background: linear-gradient(135deg, #00827e 0%, #5abea4 130%);
   color: #fff;
   padding: clamp(64px, 9vw, 140px) 0;
+  position: relative;
   overflow: hidden;
 }
 
+.heroGraphic {
+  position: absolute;
+  right: -6%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 130%;
+  opacity: 0.9;
+  animation: floaty 12s ease-in-out infinite;
+}
+
 .heroInner {
+  position: relative;
   animation: riseIn 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 .heroCopy { max-width: 720px; }
@@ -144,6 +156,13 @@
 }
 
 .cardWhite { background: #fff; }
+
+.cardIcon {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin-bottom: 32px;
+}
 
 .cardText {
   font-size: 18px;
@@ -262,6 +281,11 @@
 .revealReady [data-reveal].revealed {
   opacity: 1;
   translate: 0 0;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(-50%) rotate(0); }
+  50% { transform: translateY(calc(-50% - 18px)) rotate(4deg); }
 }
 
 @keyframes riseIn {

@@ -18,8 +18,13 @@ import {
   RESOURCES,
 } from "./_data";
 import * as classes from "./partners.module.css";
+import heroGraphic from "./assets/hero-graphic.png";
+import iconJourney from "./assets/icon-journey.png";
+import iconCoverage from "./assets/icon-coverage.png";
+import iconInsight from "./assets/icon-insight.png";
 
 const REVEAL_DELAYS = [0, 120, 240];
+const VALUE_ICONS = [iconJourney, iconCoverage, iconInsight];
 
 // Fades [data-reveal] elements up as they scroll into view (design's reveal script).
 const useReveal = (root: React.RefObject<HTMLDivElement>) => {
@@ -57,6 +62,7 @@ const PartnersPage = () => {
       <Layout>
         <div ref={rootRef} className={classes.page}>
           <section className={classes.hero}>
+            <img src={heroGraphic} alt="" className={classes.heroGraphic} />
             <div className={`xl-container ${classes.heroInner}`}>
               <div className={classes.heroCopy}>
                 <div className={classes.eyebrow}>For Life Sciences Manufacturers</div>
@@ -96,6 +102,7 @@ const PartnersPage = () => {
               <div className={classes.grid}>
                 {VALUE_CARDS.map((card, i) => (
                   <div key={card.title} className={`${classes.card} ${classes.cardWhite}`} {...revealProps(i)}>
+                    <img src={VALUE_ICONS[i]} alt="" className={classes.cardIcon} />
                     <h3 className={classes.h3}>{card.title}</h3>
                     <p className={classes.cardText}>{card.body}</p>
                   </div>
