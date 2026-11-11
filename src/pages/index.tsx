@@ -327,12 +327,6 @@ function PhoneMockup() {
             <div className={classes.phoneFeatureTitle}>{text}</div>
           </div>
         ))}
-        <div className={classes.phoneCta}>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 7l3 3 5-6" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          Confirm &amp; enroll
-        </div>
       </div>
     </div>
   );

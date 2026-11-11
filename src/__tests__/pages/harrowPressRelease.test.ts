@@ -30,3 +30,13 @@ describe("MRTG-1463: Harrow press release", () => {
     expect(resourceRows[0]?.url).toBe(pressRows[0]?.url);
   });
 });
+
+describe("MRTG-1471: Okhati Group press release", () => {
+  const OKHATI = "PHIL Partners with Okhati Group to power all in one paracetamol";
+
+  it("is first in the press library and in the resources hub as Direct-to-Patient press", () => {
+    expect(PRESS_DATA[0]).toMatchObject({ title: OKHATI, type: "Release", date: "2026-11-02" });
+    const resource = RESOURCES_DATA.find((item) => item.title === OKHATI);
+    expect(resource).toMatchObject({ topics: ["direct"], type: "press", url: PRESS_DATA[0].url });
+  });
+});

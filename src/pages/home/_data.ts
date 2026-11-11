@@ -192,7 +192,7 @@ export type InsightCard = {
 };
 
 export const INSIGHTS = {
-  title: "Our Commitment to Your Success",
+  title: "Our This to Your Success",
   subtitle:
     "We're advancing medication access for patients, providers, and pharma brands through innovative technology and dedicated partnership. Explore our latest news and insights to help move your brand forward.",
   cards: [
