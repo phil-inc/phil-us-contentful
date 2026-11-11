@@ -3,7 +3,7 @@ import { TRUSTPILOT_SCORE } from "../../constants/trustpilot";
 export const HERO = {
   title: {
     before: "The ",
-    emphasis: "Simple Path",
+    emphasis: "Simplest and Efficient Path",
     after: " to Affordable Medication Access",
   },
   subtitle:
@@ -67,7 +67,7 @@ export type SolutionCard = {
 export const SOLUTION = {
   title: "Maximize Patient Outcomes and Commercial Performance",
   subtitle:
-    "We help retail and specialty-lite brands break through access barriers to improve commercial performance. Our end-to-end digital hub and direct-to-patient platform delivers strong results through human-first care, innovative technology, and AI-supported outcomes.",
+    "llkj ahfljdfsl random lkdshlfdjalsdf ahsdfldfsjldsaf lsd hlfdsakjfdakj ldskfhlksadfj asl",
   lead: "PHIL is helping pharma",
   leadEmphasis: "lead the way",
   pills: ["Digital Access", "PA & Coverage", "Dispense Network", "Data & Insights"],
