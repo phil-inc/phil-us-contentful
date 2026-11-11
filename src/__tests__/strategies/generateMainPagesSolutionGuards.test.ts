@@ -117,6 +117,12 @@ describe("GenerateMainPages — solution slug guards", () => {
     expect(created).toEqual([]);
   });
 
+  test("skips partners, which the static partners page serves", async () => {
+    const created = await runStrategy([makeNode("partners", "Partners")]);
+
+    expect(created).toEqual([]);
+  });
+
   test("creates other pages, so the guards are not too wide", async () => {
     const created = await runStrategy([
       makeNode("solution/hub"),

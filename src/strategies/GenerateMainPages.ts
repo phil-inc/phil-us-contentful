@@ -123,6 +123,9 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   // /solution/ (Overview) is removed; redirected to /solution/hub/ via netlify.toml
   if (page.slug === "solution") return;
 
+  // /partners is served by the static file-based page at src/pages/partners/index.tsx
+  if (page.slug === "partners") return;
+
   // TODO: Remove this override once the Contentful GTN page slug is changed to "gtn/calculator"
   const slug = page.title === "GTN" ? "gtn/calculator" : page.slug;
 
