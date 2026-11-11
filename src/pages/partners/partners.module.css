@@ -1,0 +1,361 @@
+/* ==========================================================================
+   PHIL Partners Page
+   ========================================================================== */
+
+.page {
+  font-family: "Lato", Arial, sans-serif;
+  color: #0a0a0a;
+  background: #fff;
+}
+
+/* ── Shared: section band ─────────────────────────────────────────────── */
+.band {
+  padding: 100px 0;
+}
+.bandMuted {
+  background: #f4f4f4;
+}
+
+/* ── Shared: type ─────────────────────────────────────────────────────── */
+.h2 {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 54px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: #0a0a0a;
+  margin: 0;
+}
+.headSpaced {
+  margin-bottom: 56px;
+}
+.headTight {
+  margin-bottom: 16px;
+}
+.subhead {
+  font-size: 20px;
+  line-height: 1.45;
+  color: #525252;
+  margin: 0 0 56px;
+}
+.h3 {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  color: #0a0a0a;
+  margin: 0 0 16px;
+}
+.cardBody {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #525252;
+  margin: 0;
+}
+
+/* ── Shared: buttons ──────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 16px 32px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover {
+  text-decoration: none;
+}
+.btnWhite {
+  background: #fff;
+  color: #00615e;
+}
+.btnWhite:hover {
+  color: #00615e;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+.btnOutlineWhite {
+  border: 1.5px solid #fff;
+  color: #fff;
+}
+.btnOutlineWhite:hover {
+  color: #fff;
+}
+.btnBlack {
+  background: #0a0a0a;
+  color: #fff;
+}
+.btnBlack:hover {
+  color: #fff;
+}
+.afterGrid {
+  margin-top: 40px;
+}
+.textLink {
+  display: inline-block;
+  margin-top: 32px;
+  font-weight: 700;
+  color: #00827e;
+}
+
+/* ── Shared: cards and grids ──────────────────────────────────────────── */
+.grid280,
+.grid300 {
+  display: grid;
+  gap: 24px;
+}
+.grid280 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.grid300 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.card {
+  background: #fff;
+  border: 1px solid #d7dcdc;
+  border-radius: 16px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 98, 94, 0.14);
+}
+
+/* ── Scroll reveal ────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  translate: 0 28px;
+  transition-property: opacity, translate, transform, box-shadow;
+  transition-duration: 0.7s, 0.7s, 0.3s, 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.revealed {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0;
+  background: linear-gradient(135deg, #00827e 0%, #5abea4 130%);
+  color: #fff;
+}
+.heroGraphic {
+  position: absolute;
+  right: -6%;
+  top: 50%;
+  height: 130%;
+  transform: translateY(-50%);
+  opacity: 0.9;
+  pointer-events: none;
+  animation: floaty 12s ease-in-out infinite;
+}
+.heroInner {
+  position: relative;
+  max-width: 720px;
+  animation: riseIn 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.heroEyebrow {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+.heroTitle {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(44px, 6vw, 80px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin: 0 0 32px;
+}
+.heroLead {
+  font-size: 24px;
+  line-height: 1.5;
+  max-width: 600px;
+  color: #fff;
+  margin: 0 0 40px;
+}
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(-50%) rotate(0);
+  }
+  50% {
+    transform: translateY(calc(-50% - 18px)) rotate(4deg);
+  }
+}
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* ── Intro ────────────────────────────────────────────────────────────── */
+.twoCol {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 48px;
+  align-items: start;
+}
+.introBody {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #525252;
+  margin: 0;
+}
+
+/* ── Why Partner ──────────────────────────────────────────────────────── */
+.valueCard {
+  padding: 40px 32px;
+}
+.valueIcon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin-bottom: 32px;
+  transition: transform 0.3s;
+}
+
+/* ── Partners ─────────────────────────────────────────────────────────── */
+.partnerCard {
+  border-radius: 16px;
+  padding: 48px 40px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+}
+.partnerCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 98, 94, 0.18);
+}
+.partnerCardLight {
+  background: #d5f1f0;
+}
+.partnerCardDark {
+  background: #00615e;
+  color: #fff;
+}
+.partnerTitle {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  color: #00615e;
+  margin: 0 0 16px;
+}
+.partnerCardDark .partnerTitle {
+  color: #fff;
+}
+.partnerBody {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #0a0a0a;
+  margin: 0;
+}
+.partnerCardDark .partnerBody {
+  color: #fff;
+}
+
+/* ── Patient quotes ───────────────────────────────────────────────────── */
+.quoteCard {
+  margin: 0;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+.quote {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+}
+.quoteAuthor {
+  font-weight: 700;
+}
+
+/* ── Resources ────────────────────────────────────────────────────────── */
+.resourceCard {
+  padding: 40px 32px;
+}
+.resourceTag {
+  font-weight: 700;
+  color: #00827e;
+  margin-bottom: 16px;
+}
+.resourceTitle {
+  margin-bottom: 12px;
+}
+.resourceBody {
+  font-size: 18px;
+  line-height: 1.45;
+  color: #525252;
+  margin: 0 0 24px;
+}
+.resourceLink {
+  font-weight: 700;
+  color: #00827e;
+}
+
+/* ── Closing CTA ──────────────────────────────────────────────────────── */
+.closing {
+  background: linear-gradient(135deg, #00615e 0%, #00827e 55%, #5abea4 130%);
+  color: #fff;
+}
+.closingInner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  align-items: center;
+}
+.closingTitle {
+  color: #fff;
+  margin-bottom: 24px;
+}
+.closingBody {
+  font-size: 20px;
+  line-height: 1.6;
+  max-width: 560px;
+  color: #fff;
+  margin: 0;
+}
+
+/* ── Breakpoints ──────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .band,
+  .hero {
+    padding: 64px 0;
+  }
+}
+@media (max-width: 480px) {
+  .band,
+  .hero {
+    padding: 44px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroGraphic,
+  .heroInner {
+    animation: none;
+  }
+  .card,
+  .partnerCard,
+  .btn {
+    transition: none;
+  }
+}
