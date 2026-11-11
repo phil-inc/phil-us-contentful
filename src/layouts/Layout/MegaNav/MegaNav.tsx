@@ -412,7 +412,6 @@ const MegaNav: React.FC<MegaNavProps> = ({ minimal = false, headerTargetBlank = 
         {showPromoBanner && (
           <div className={classes.promoBanner}>
             <div className={classes.promoInner}>
-              <NewBadge className={classes.promoBadge} />
               <span className={classes.promoText}>{PROMO_BANNER.text}</span>
               <Link className={classes.promoLink} to={PROMO_BANNER.href}>
                 <span className={classes.promoLinkText}>
