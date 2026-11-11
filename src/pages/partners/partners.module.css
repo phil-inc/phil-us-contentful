@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Partners Page
+   System: Raleway Bold display + Lato body + Foliage Green accent.
+   Layout: xl-container for content width.
+   ========================================================================== */
+
+.page {
+  font-family: "Lato", Arial, sans-serif;
+  color: #0a0a0a;
+  background: #fff;
+}
+
+/* ── Type ────────────────────────────────────────────────────────────── */
+.h1 {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(44px, 6vw, 80px);
+  line-height: 1.05;
+  margin: 0 0 32px;
+  color: #fff;
+}
+
+.h2 {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 54px);
+  line-height: 1.1;
+  margin: 0;
+  color: #0a0a0a;
+}
+
+.h3 {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  color: #0a0a0a;
+}
+
+.sectionTitle { margin-bottom: 56px; }
+.partnersTitle { margin-bottom: 16px; }
+
+.sectionLead {
+  font-size: 20px;
+  color: #525252;
+  margin: 0 0 56px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  padding: 16px 32px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+}
+.btn:hover { text-decoration: none; }
+
+.btnWhite { background: #fff; color: #00615e; }
+.btnWhite:hover {
+  color: #00615e;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+.btnOutlineWhite { border: 1.5px solid #fff; color: #fff; }
+.btnOutlineWhite:hover { color: #fff; }
+
+.btnBlack { background: #0a0a0a; color: #fff; }
+.btnBlack:hover { background: #1f1f1f; color: #fff; }
+
+.ctaRow {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ── Sections ────────────────────────────────────────────────────────── */
+.band { padding: 100px 0; }
+.bandMuted { background: #f4f4f4; }
+
+/* ── Hero ────────────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #00827e 0%, #5abea4 130%);
+  color: #fff;
+  padding: clamp(64px, 9vw, 140px) 0;
+  overflow: hidden;
+}
+
+.heroInner {
+  animation: riseIn 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.heroCopy { max-width: 720px; }
+
+.eyebrow {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+.heroLead {
+  font-size: 24px;
+  line-height: 1.5;
+  margin: 0 0 40px;
+  max-width: 600px;
+  color: #fff;
+}
+
+/* ── Intro ───────────────────────────────────────────────────────────── */
+.intro {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 48px;
+  align-items: start;
+}
+
+.introText {
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 0;
+  color: #525252;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  border: 1px solid #d7dcdc;
+  border-radius: 16px;
+  padding: 40px 32px;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), translate 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 98, 94, 0.14);
+}
+
+.cardWhite { background: #fff; }
+
+.cardText {
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+  color: #525252;
+}
+
+/* ── Partners ────────────────────────────────────────────────────────── */
+.partnerCard {
+  border: 0;
+  padding: 48px 40px;
+}
+.partnerCard:hover { box-shadow: 0 16px 36px rgba(0, 98, 94, 0.18); }
+
+.partnerLight { background: #d5f1f0; }
+.partnerDark { background: #00615e; color: #fff; }
+
+.partnerTitle {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  color: #00615e;
+}
+.partnerDark .partnerTitle { color: #fff; }
+
+.partnerText {
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+  color: #0a0a0a;
+}
+.partnerDark .partnerText { color: #fff; }
+
+.afterGrid { margin-top: 40px; }
+
+/* ── Testimonials ────────────────────────────────────────────────────── */
+.quoteCard {
+  margin: 0;
+  background: #fff;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.quote {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.quoteName { font-weight: 700; }
+.quoteRole { font-weight: 400; color: #525252; }
+
+.textLink {
+  display: inline-block;
+  margin-top: 32px;
+  font-weight: 700;
+  color: #00827e;
+}
+.textLink:hover { color: #00615e; }
+
+/* ── Resources ───────────────────────────────────────────────────────── */
+.resourceTag {
+  font-weight: 700;
+  color: #00827e;
+  margin-bottom: 16px;
+}
+
+.resourceText {
+  font-size: 18px;
+  color: #525252;
+  margin: 0 0 24px;
+}
+
+.resourceLink {
+  font-weight: 700;
+  color: #00827e;
+}
+.resourceLink:hover { color: #00615e; }
+
+/* ── Final CTA ───────────────────────────────────────────────────────── */
+.finalCta {
+  background: linear-gradient(135deg, #00615e 0%, #00827e 55%, #5abea4 130%);
+  color: #fff;
+}
+
+.finalInner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  align-items: center;
+}
+
+.finalTitle { margin-bottom: 24px; color: #fff; }
+
+.finalText {
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 560px;
+  color: #fff;
+}
+
+/* ── Scroll reveal (hidden only once JS has mounted the observer) ───── */
+.revealReady [data-reveal] {
+  opacity: 0;
+  translate: 0 28px;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), translate 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+}
+.revealReady [data-reveal].revealed {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; translate: 0 24px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page * { animation: none !important; transition: none !important; }
+  .revealReady [data-reveal] { opacity: 1; translate: 0 0; }
+}
+
+@media (max-width: 720px) {
+  .band { padding: 64px 0; }
+}
+
+@media (max-width: 480px) {
+  .band { padding: 44px 0; }
+}

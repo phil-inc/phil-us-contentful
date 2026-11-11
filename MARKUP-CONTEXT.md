@@ -78,6 +78,16 @@ a 5-tab "How We Help You" stakeholder section (Brand, Access, Trade, Hub,
 Innovation), a support section with rotating patient/provider quotes and a
 Trustpilot strip, an FAQ accordion, and a closing "Book Demo" banner.
 
+### Partners — `/partners/`
+Partnership page for life sciences manufacturers. Hero ("Accelerate Brand
+Success with PhilRx") with "Book Demo" and "Calculate GTN Potential" CTAs, a
+"Maximize Value for Your Brand" intro, three "Why Partner with Phil" cards, a
+"Partners We Work With" section (Expert Alliance / Technology Alliance cards
+and a "Get in Touch" button), patient quote cards with a Trustpilot link, a
+three-card "Resources from Phil" strip (webinar, `/pharma-dtp-research/`
+report, blog post), and a closing "Interested in Partnering?" banner. All
+copy is in `src/pages/partners/`; the old Contentful entry no longer renders.
+
 ### Patients — `/patients/`
 Landing page for patients. Hero, Trustpilot review strip, a 3-step
 "how it works" section, an embedded YouTube video, a testimonials carousel,
