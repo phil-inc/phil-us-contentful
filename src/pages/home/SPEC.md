@@ -27,7 +27,7 @@ src/pages/
 ## Sections (7 total)
 
 ### 1. Hero (split layout)
-- H1: "The Simple Path to Affordable Medication Access" with SVG underline on "Simple Path"
+- H1: "A Simple Path to Affordable Medication Access" with SVG underline on "Simple Path"
 - Subtitle paragraph
 - 3 audience chips (Pharma → /pharma/, Patients → /patients/, Providers → /providers/)
 - Each chip: tag label, description, CTA arrow link

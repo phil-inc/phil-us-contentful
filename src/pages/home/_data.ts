@@ -2,7 +2,7 @@ import { TRUSTPILOT_SCORE } from "../../constants/trustpilot";
 
 export const HERO = {
   title: {
-    before: "The ",
+    before: "A ",
     emphasis: "Simple Path",
     after: " to Affordable Medication Access",
   },
