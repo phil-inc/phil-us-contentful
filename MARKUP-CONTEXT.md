@@ -60,7 +60,7 @@ This applies to every hub listed below — `/press/`, `/resources/`,
 ## Pages editable in code (need a Jira ticket for any change)
 
 ### Home — `/`
-Landing page. Hero headline ("The Simple Path to Affordable Medication
+Landing page. Hero headline ("A Simple Path to Affordable Medication
 Access") with three audience chips linking to Pharma, Patients, Providers.
 Below: an outcomes stat banner (Patient Starts, Covered Dispenses, Adherence,
 Patient Satisfaction rating) with a Trustpilot widget, a tabbed "Our Solution"
