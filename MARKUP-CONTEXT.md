@@ -170,6 +170,18 @@ strip, rotating testimonials, a Trustpilot comparison strip, an ROI banner
 pages it links to (e.g. a specific brand's story) are still edited in
 Contentful.
 
+### Partners — `/partners/`
+Partnership page for life sciences manufacturers. Hero with "Book Demo" and
+"Calculate GTN Potential" (links to `/gtn/`) buttons, a "Maximize Value for
+Your Brand" intro, a three-card "Why Partner with Phil" section, a two-card
+"Partners We Work With" section (Expert Alliance / Technology Alliance) with a
+"Get in Touch" button to `/demo/`, three patient quotes (the same ones shown on
+`/customer-success/`) with a Trustpilot link, a three-card "Resources from
+Phil" strip (webinar, `/pharma-dtp-research/`, blog post), and a closing
+"Interested in Partnering?" banner. All copy is in
+`src/pages/partners/_data.ts`. This page used to be a Contentful page; the old
+Contentful entry no longer renders, so do not edit it there.
+
 ### Press — `/press/` (and `/press/page/2/`, `/press/page/3/`, …)
 Press coverage hub. Hero, a "Latest Announcements" featured card section, a
 "Featured Thought Leadership" card section, a paginated "All Coverage" grid
