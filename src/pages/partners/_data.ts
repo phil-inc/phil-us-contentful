@@ -10,7 +10,7 @@ export const TRUSTPILOT_REVIEW_URL = "https://www.trustpilot.com/review/phil.us"
 
 export const HERO = {
   eyebrow: "For Life Sciences Manufacturers",
-  title: "Accelerate Brand Success with PhilRx",
+  title: "Accelerate Brand Success would PhilRx",
   lead: "Drive growth for your brand with a digital hub partner trusted by industry-leading brands.",
 };
 
