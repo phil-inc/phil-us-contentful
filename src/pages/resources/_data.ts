@@ -34,6 +34,13 @@ export const TYPES = [
 
 export const RESOURCES_DATA: ResourceItem[] = [
   {
+    title: "PHIL Partners with Okhati Group to power all in one paracetamol",
+    topics: ["direct"],
+    type: "press",
+    url: "https://www.businesswire.com/news/home/20261102003021/en/PHIL-Partners-with-Okhati-Group",
+    buttonLabel: "Read",
+  },
+  {
     title: "PHIL Partners with Harrow to Power HarrowRx, An All-in-One Prescribing Destination for Eye Care",
     topics: ["direct"],
     type: "press",

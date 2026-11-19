@@ -64,12 +64,6 @@
   text-wrap: pretty;
 }
 
-/* Larger than the shared NEW tag, to suit the banner's text size. */
-.promoInner .promoBadge {
-  font-size: 13px;
-  padding: 6px 10px;
-}
-
 .promoLink {
   color: #00615E;
   font-weight: 700;
@@ -91,20 +85,12 @@
   text-underline-offset: 4px;
 }
 
-/* Phones: one paragraph, the NEW tag on the first line and the link at the end. */
+/* Phones: one paragraph, with the link at the end. */
 @media (max-width: $phil-breakpoint-xs) {
   .promoInner {
     display: block;
     min-height: 0;
     padding: 12px 20px;
-  }
-
-  .promoInner .promoBadge {
-    display: inline-flex;
-    vertical-align: 1px;
-    margin-right: 8px;
-    font-size: 11px;
-    padding: 4px 7px;
   }
 
   .promoText {

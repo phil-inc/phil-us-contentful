@@ -786,7 +786,7 @@ const ResourcesPage: React.FC = () => {
             <div>
               <div className={classes.heroEyebrow}>Resource Hub</div>
               <h1 className={classes.h1}>
-                Insights to Move <span className={classes.accent}>Your Access Strategy</span> Forward
+                Insights to Move <span className={classes.accent}>Your Access Strategy</span> Further
               </h1>
               <p className={classes.heroDesc}>
                 A curated library of research, thought leadership, and expert perspectives for pharma manufacturers that want to drive best-in-class results.
