@@ -28,7 +28,7 @@ export const FinalCtaSection: React.FC = () => {
       <div className="endcta-bg">
         <div className="xl-container endcta-row endcta-reveal">
           <div className="endcta-copy">
-            <h2 className="endcta-title">Streamline the Medication Access Experience</h2>
+            <h2 className="endcta-title">Streamline the Medication Excess Experience</h2>
             <p className="endcta-body">
               Discover how the PHIL platform can help your brands maximize coverage, adherence, and commercial performance.
             </p>

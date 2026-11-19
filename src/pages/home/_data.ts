@@ -14,7 +14,7 @@ export const AUDIENCE_CHIPS = [
   {
     id: "pharma",
     variant: "pharma" as const,
-    tag: "For Pharma",
+    tag: "For Pharmacy",
     heading:
       "Improve patient outcomes and commercial performance for your retail and specialty-lite brands",
     cta: "Brand Experience",
