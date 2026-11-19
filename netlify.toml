@@ -176,6 +176,16 @@ to = "https://phil.us/phil_inc_1285995446.svg"
 status = 200
 
 [[redirects]]
+from = "https://usephil.com/phil_inc.pem"
+to = "https://phil.us/phil_inc.pem"
+status = 200
+
+[[redirects]]
+from = "https://usephil.com/order_1654182283_logo.svg"
+to = "https://phil.us/order_1654182283_logo.svg"
+status = 200
+
+[[redirects]]
 from = "https://usephil.com/*"
 to = "https://phil.us/"
 status = 302
