@@ -13,6 +13,20 @@ export interface PressItem {
 // Dates come from each article page, except where a comment says otherwise.
 export const PRESS_DATA: PressItem[] = [
   {
+    title: "The DTP Opportunity: Evolving Pharma’s DTP Strategy for Lasting Patient Engagement",
+    outlet: "Drug Channels",
+    type: "Thought Leadership",
+    date: "2026-11-16",
+    url: "https://www.drugchannels.net/2026/11/the-direct-to-patient-opportunity.html",
+  },
+  {
+    title: "DTP Pharma Programs Transform Drug Access: PHIL Survey Coverage",
+    outlet: "Fierce Pharma",
+    type: "Thought Leadership",
+    date: "2026-11-16", // unverified: the article page refused the fetch; confirm and reorder if needed
+    url: "https://www.fiercepharma.com/marketing/direct-patient-pharma-programs-transform-drug-access-survey",
+  },
+  {
     title: "PHIL Partners with Harrow to Power HarrowRx, An All-in-One Prescribing Destination for Eye Care",
     outlet: "Press Release",
     type: "Release",
