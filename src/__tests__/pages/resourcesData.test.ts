@@ -1,4 +1,5 @@
 import { RESOURCES_DATA, TOPICS, TYPES } from "../../pages/resources/_data";
+import { PRESS_DATA } from "../../pages/press/_data";
 
 describe("RESOURCES_DATA: pharma DTP research report (MRTG-1461)", () => {
   const rows = RESOURCES_DATA.filter((item) => item.url === "/pharma-dtp-research/");
@@ -20,5 +21,15 @@ describe("RESOURCES_DATA: pharma DTP research report (MRTG-1461)", () => {
 
     expect(typeKeys).toContain(rows[0]?.type);
     rows[0]?.topics.forEach((topic) => expect(topicKeys).toContain(topic));
+  });
+});
+
+describe("RESOURCES_DATA: Drug Channels and Fierce Pharma coverage (MRTG-1474)", () => {
+  it.each([
+    "https://www.drugchannels.net/2026/11/the-direct-to-patient-opportunity.html",
+    "https://www.fiercepharma.com/marketing/direct-patient-pharma-programs-transform-drug-access-survey",
+  ])("lists %s once in the resources hub as Press and once in the press library", (url) => {
+    expect(RESOURCES_DATA.filter((item) => item.url === url && item.type === "press")).toHaveLength(1);
+    expect(PRESS_DATA.filter((item) => item.url === url)).toHaveLength(1);
   });
 });

@@ -34,6 +34,20 @@ export const TYPES = [
 
 export const RESOURCES_DATA: ResourceItem[] = [
   {
+    title: "The DTP Opportunity: Evolving Pharma’s DTP Strategy for Lasting Patient Engagement",
+    topics: ["direct"],
+    type: "press",
+    url: "https://www.drugchannels.net/2026/11/the-direct-to-patient-opportunity.html",
+    buttonLabel: "Read",
+  },
+  {
+    title: "DTP Pharma Programs Transform Drug Access: PHIL Survey Coverage",
+    topics: ["direct", "access"],
+    type: "press",
+    url: "https://www.fiercepharma.com/marketing/direct-patient-pharma-programs-transform-drug-access-survey",
+    buttonLabel: "Read",
+  },
+  {
     title: "PHIL Partners with Harrow to Power HarrowRx, An All-in-One Prescribing Destination for Eye Care",
     topics: ["direct"],
     type: "press",
