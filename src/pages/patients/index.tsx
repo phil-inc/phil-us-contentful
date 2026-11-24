@@ -144,9 +144,6 @@ const HeroSection = () => {
             </p>
             <div className={classes.heroCta}>
               <BtnFilled href={PATIENT_LOGIN_URL}>Patient Login</BtnFilled>
-              <BtnOutlineGradient href={HELP_CENTER_URL}>
-                Visit Help Center
-              </BtnOutlineGradient>
             </div>
           </div>
 

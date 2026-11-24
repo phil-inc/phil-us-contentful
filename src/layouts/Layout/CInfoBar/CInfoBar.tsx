@@ -42,7 +42,7 @@ const CInfoBar: React.FC<{ currentLocationSlug: string }> = ({
       <Container className={classes.msg} size="xl">
         <div className={classes.content}>
           <div className={classes.left}>
-            Have a question about your PHILRx prescription? Visit our patient help center for support.
+            Have a question about your PHILRx prescription?
           </div>
           <div className={classes.right}>
             <Anchor
