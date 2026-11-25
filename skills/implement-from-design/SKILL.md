@@ -5,6 +5,27 @@ description: Implement or update any page/component from a design export (HTML/C
 
 # Implement from Design
 
+## Ticket defaults
+
+A design ticket gives only these:
+
+- **URL** — the page's path on phil.us, e.g. `/partners/`
+- **The design** — an HTML export attached to the ticket
+- **Title** — optional
+- **Meta description** — optional
+
+Everything else uses the defaults below. In a headless run, apply them and do not ask. In an interactive session, offer each one as your recommended answer in the Grill (Phase 2). A line in the ticket that says otherwise wins over its default.
+
+| Topic | Default |
+|---|---|
+| Route | If a code page already serves the URL, update it in place. If a Contentful page serves it, build the page in code and add a guard in `handleRegularPage` (`src/strategies/GenerateMainPages.ts`) in the same PR, as AGENTS.md §3 says. Otherwise build a new page. Files go in `src/pages/<path>/`, e.g. `/gtn/calculator/` → `src/pages/gtn/calculator/`. |
+| Title and meta description | Each one on its own: use the ticket's. If the ticket leaves it out, use the design's `<title>` or `<meta name="description">`. If the design has none, write one from the page's copy (title 50–60 characters, description 150–160) and list it in the PR description for a person to check. |
+| Layout | Shared site header and footer (`src/layouts/Layout`). |
+| Forms | None. If the design shows a form, leave it out and say so in the PR description. A form needs HubSpot portal and form IDs the ticket does not give. |
+| Mobile | Follow the design's own breakpoints. |
+| Pictures | Unpack every picture and icon packed inside the design HTML into `src/pages/<path>/assets/`, each with a clear name (e.g. `hero-graphic.png`, `icon-coverage.png`), and place it as the design does. Skip the PHIL logo; the shared header has it. Check that each file is a whole, valid picture (for a PNG, every chunk's checksum matches) with a one-off command, not a script saved in the repo. List the pictures in SPEC.md's Assets section. List any that are not valid, and any the design only links to by URL, in the PR description. |
+| Done when | `npx jest` passes, and SPEC.md and MARKUP-CONTEXT.md are updated. A person checks the looks on the Netlify deploy preview. |
+
 ## Phase 1: Extract and Understand the Design
 
 ### Entry path A — zip/tarball with multiple pages
@@ -123,7 +144,7 @@ Do not change anything else when applying `xl-container` — preserve all existi
 
 ## Phase 5: Verify and Ship
 
-1. Run `npx tsc --noEmit` — fix any errors before proceeding.
+1. Run `npx jest` — it must pass; it is the pass/fail check. Then run `npx tsc --noEmit` and fix any new errors in files you changed (the three `TS2688` errors are pre-existing — see AGENTS.md §1).
 2. **If you added, moved, renamed, or deleted a page, update `MARKUP-CONTEXT.md`**
    in the repo root — add or edit its entry under "Pages editable in code."
    That file is read by the Markup annotation tool to decide whether a change
@@ -139,6 +160,6 @@ Do not change anything else when applying `xl-container` — preserve all existi
 4. Push and create PR:
    ```bash
    git push -u origin feature/<slug>-<epoch>
-   gh pr create --base develop --title "feat: <description>" --body "Preview URL will be available once Netlify deploys."
+   gh pr create --base main --title "feat: <description>" --body "Preview URL will be available once Netlify deploys."
    ```
 5. Hand the Netlify preview URL to the user for visual review.
