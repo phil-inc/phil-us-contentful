@@ -106,6 +106,9 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   // /contact is served by the static file-based page at src/pages/contact/index.tsx
   if (page.slug === "contact") return;
 
+  // /partners is served by the static file-based page at src/pages/partners/index.tsx
+  if (page.slug === "partners") return;
+
   // /solution/hub/ is served by the static file-based page at src/pages/solution/hub/index.tsx
   if (page.slug === "solution/hub") return;
 
