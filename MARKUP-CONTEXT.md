@@ -78,6 +78,16 @@ a 5-tab "How We Help You" stakeholder section (Brand, Access, Trade, Hub,
 Innovation), a support section with rotating patient/provider quotes and a
 Trustpilot strip, an FAQ accordion, and a closing "Book Demo" banner.
 
+### Partners — `/partners/`
+Landing page for pharma brand partners (`src/pages/partners/`; the old
+Contentful entry is suppressed in `handleRegularPage`). Hero with an animated
+phone mock-up, a GTN calculator teaser linking to `/gtn/`, a word marquee,
+a PhilRx-vs-traditional outcomes card, a rotating "Digital Hub" orbit,
+three "Why Partner with Phil" cards, an access-paths tree, a 4-step "How It
+Works" journey, Expert / Technology Alliance partner cards, a GTN calculator
+banner, rotating partner and patient quotes, three resource cards, and a
+closing "Interested in Partnering?" banner (Book Demo + Get in Touch).
+
 ### Patients — `/patients/`
 Landing page for patients. Hero, Trustpilot review strip, a 3-step
 "how it works" section, an embedded YouTube video, a testimonials carousel,

@@ -100,6 +100,9 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   // /pharma is served by the static file-based page at src/pages/pharma/index.tsx
   if (page.slug === "pharma") return;
 
+  // /partners is served by the static file-based page at src/pages/partners/index.tsx
+  if (page.slug === "partners") return;
+
   // /demo is served by the static file-based page at src/pages/demo/index.tsx
   if (page.slug === "demo") return;
 
