@@ -17,7 +17,7 @@ export type GtnStat = { label: string; value: number };
 export const GTN_STATS: GtnStat[] = [
   { label: "Patient starts", value: 2.2 },
   { label: "Covered dispenses", value: 2.8 },
-  { label: "Gross Revenue Potential", value: 2.6 },
+  { label: "Gross Revenue Potential", value: 3.0 },
 ];
 
 export const MARQUEE_WORDS: string[] = [

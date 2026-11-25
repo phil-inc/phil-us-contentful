@@ -47,6 +47,7 @@ Section padding: 100px, 64px at 720px, 44px at 480px.
 In `assets/`: `philrx-logo.png`, `hub-center-logo.png`, `dots-accent.png`, `icon-network.png`,
 `icon-patient-journey.png`, `icon-providers.png`, `icon-manufacturers.png`, `icon-insurance.png`, `icon-coverage.png`,
 `icon-check.png`, `icon-copay.png`, `icon-medication-access.png`, `icon-partner.png`, `icon-refill.png` ("Free Rx delivery" card, "Quick start" path),
+`icon-data.png` ("Insights" orbit node),
 `circles-primary.png` (hero, journey, GTN banner, CTA and webinar card decoration).
 Reused from `src/assets/images/`: `p-dots-light.png`, `p-dots-dark.png` (same pictures as in the design).
 
@@ -55,7 +56,7 @@ Reused from `src/assets/images/`: `p-dots-light.png`, `p-dots-dark.png` (same pi
 | What changed | Design value | Implementation value | Why |
 |---|---|---|---|
 | Header, top banner, footer | Own sticky header with in-page nav and mobile menu, own footer | Shared `Layout` | Site standard |
-| Data and insights pictures | Packed in the design | Omitted (empty orbit circle for "Insights", no icon on the Technology Alliance card) | The packed files are damaged mid-image and cannot be rebuilt |
+| Data and insights pictures | Packed in the design | Data icon rebuilt from its intact top rows, with the lost lower axis drawn to match the upright one; no icon on the Technology Alliance card | The packed files are damaged mid-image |
 | Circles picture | Packed in the design | Rebuilt from the intact rows; the last 34 rows repeat the identical top circle | The packed file is damaged near its end |
 | Phone chat greeting | Named patient and doctor | Generic greeting and "Your doctor" | No personal names in page copy |
 | Patient quote attribution | Patient names | "PHILRx Patient" | No personal names in page copy |

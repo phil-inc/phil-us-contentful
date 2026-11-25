@@ -261,7 +261,8 @@
 .gtnForm :global(select.hs-input) { text-overflow: ellipsis; }
 .gtnForm :global(.inputs-list) { padding: 0; margin: 0; list-style: none; }
 .gtnForm :global(.hs-form) { display: flex; flex-direction: column; gap: 0; font-family: "Lato", Arial, sans-serif; }
-.gtnForm :global(fieldset) { max-width: none !important; border: 0; padding: 0; margin: 0; }
+/* !important: the site-wide hubspot-form.css adds an 18px !important bottom margin. */
+.gtnForm :global(fieldset) { max-width: none !important; border: 0; padding: 0; margin: 0 !important; }
 .gtnForm :global(fieldset.form-columns-2) { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .gtnForm :global(fieldset .hs-form-field) { width: auto !important; float: none !important; }
 .gtnForm :global(fieldset .input) { margin-right: 0 !important; }
@@ -272,6 +273,8 @@
   width: 100% !important;
   font: inherit;
   font-size: 15px;
+  line-height: 1.45;
+  min-height: 42px;
   padding: 9px 12px;
   border: 1px solid #D7DCDC;
   border-radius: 10px;

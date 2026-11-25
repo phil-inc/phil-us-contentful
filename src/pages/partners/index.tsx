@@ -44,14 +44,15 @@ import iconCopay from "./assets/icon-copay.png";
 import iconMedicationAccess from "./assets/icon-medication-access.png";
 import iconPartner from "./assets/icon-partner.png";
 import iconRefill from "./assets/icon-refill.png";
+import iconData from "./assets/icon-data.png";
 
-const HUB_ICONS: Record<HubNode["icon"], string | undefined> = {
+const HUB_ICONS: Record<HubNode["icon"], string> = {
   patients: iconPatientJourney,
   providers: iconProviders,
   manufacturers: iconManufacturers,
   pharmacies: iconNetwork,
   payers: iconInsurance,
-  insights: undefined,
+  insights: iconData,
 };
 
 const PATH_ICONS: Record<NonNullable<PathItem["icon"]>, string> = {
@@ -140,7 +141,7 @@ const HeroSection = () => {
             For Life Sciences Manufacturers
           </div>
           <h1 className={classes.h1}>
-            Accelerate Brand Success with{" "}
+            Accelerate Brand Good with{" "}
             <span className={classes.accent}>
               PhilRx
               <svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true">
@@ -390,7 +391,9 @@ const HubSection = () => (
             <li key={n.label} className={classes.orbitArm} style={{ "--a": `${i * 60}deg` } as React.CSSProperties}>
               <div className={classes.orbitCounter}>
                 <div className={classes.orbitNode}>
-                  <div className={classes.orbitIcon}>{HUB_ICONS[n.icon] && <img src={HUB_ICONS[n.icon]} alt="" />}</div>
+                  <div className={classes.orbitIcon}>
+                    <img src={HUB_ICONS[n.icon]} alt="" />
+                  </div>
                   <div className={classes.orbitLabel}>{n.label}</div>
                 </div>
               </div>
