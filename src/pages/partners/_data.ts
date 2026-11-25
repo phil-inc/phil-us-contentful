@@ -63,7 +63,7 @@ export const COVERAGE_ROWS: { k: string; v: string }[] = [
 /** Bar heights (percent) for the "Enhance Insight" card chart. */
 export const INSIGHT_BARS: number[] = [38, 52, 46, 68, 74, 82, 90];
 
-export type PathItem = { name: string; icon?: "insurance" | "providers" | "copay" | "medicationAccess" | "partner" };
+export type PathItem = { name: string; icon?: "insurance" | "providers" | "copay" | "medicationAccess" | "partner" | "refill" };
 export type AccessPath = { name: string; color: string; items: PathItem[] };
 
 export const ACCESS_PATHS: AccessPath[] = [
@@ -83,7 +83,7 @@ export const ACCESS_PATHS: AccessPath[] = [
     items: [
       { name: "PAP", icon: "medicationAccess" },
       { name: "Bridge", icon: "partner" },
-      { name: "Quick start" },
+      { name: "Quick start", icon: "refill" },
     ],
   },
 ];
@@ -139,7 +139,7 @@ export type ResourceCard = {
   cta: string;
   href: string;
   bg: string;
-  motif?: "pDotsLight" | "dotsAccent";
+  motif?: "circlesPrimary" | "pDotsLight" | "dotsAccent";
   chip: string;
   big: string;
   bigSize: string;
@@ -154,6 +154,7 @@ export const RESOURCES: ResourceCard[] = [
     cta: "Watch Now",
     href: "/on-demand-webinar-improving-access-coverage-and-gtn-with-digital-hubs/",
     bg: "linear-gradient(135deg,#00827E 0%,#5ABEA4 100%)",
+    motif: "circlesPrimary",
     chip: "On-Demand",
     big: "▶",
     bigSize: "40px",

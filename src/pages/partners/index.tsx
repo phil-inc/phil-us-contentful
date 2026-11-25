@@ -8,6 +8,7 @@ import { webPageSchema } from "utils/seo/schema";
 
 import { Layout } from "layouts/Layout/Layout";
 import PageContext from "contexts/PageContext";
+import HubSpotFormV2 from "components/common/HubspotForm/HubspotFormV2";
 
 import {
   HERO_MESSAGES,
@@ -29,6 +30,7 @@ import * as classes from "./partners.module.css";
 import pDotsLight from "assets/images/p-dots-light.png";
 import pDotsDark from "assets/images/p-dots-dark.png";
 import dotsAccent from "./assets/dots-accent.png";
+import circlesPrimary from "./assets/circles-primary.png";
 import philrxLogo from "./assets/philrx-logo.png";
 import hubCenterLogo from "./assets/hub-center-logo.png";
 import iconNetwork from "./assets/icon-network.png";
@@ -41,6 +43,7 @@ import iconCheck from "./assets/icon-check.png";
 import iconCopay from "./assets/icon-copay.png";
 import iconMedicationAccess from "./assets/icon-medication-access.png";
 import iconPartner from "./assets/icon-partner.png";
+import iconRefill from "./assets/icon-refill.png";
 
 const HUB_ICONS: Record<HubNode["icon"], string | undefined> = {
   patients: iconPatientJourney,
@@ -57,12 +60,17 @@ const PATH_ICONS: Record<NonNullable<PathItem["icon"]>, string> = {
   copay: iconCopay,
   medicationAccess: iconMedicationAccess,
   partner: iconPartner,
+  refill: iconRefill,
 };
 
 const RESOURCE_MOTIFS: Record<NonNullable<ResourceCard["motif"]>, string> = {
+  circlesPrimary,
   pDotsLight,
   dotsAccent,
 };
+
+const HUBSPOT_PORTAL_ID = "20880193";
+const GTN_FORM_ID = "a416c378-bb01-401d-a2d0-5c7d9369c8ee";
 
 const delay = (ms: number) => ({ "--rd": `${ms}ms` }) as React.CSSProperties;
 
@@ -124,6 +132,7 @@ const HeroSection = () => {
       <div className={classes.heroGlowA} aria-hidden="true" />
       <div className={classes.heroGlowB} aria-hidden="true" />
       <div className={classes.heroSpot} aria-hidden="true" />
+      <img src={circlesPrimary} alt="" className={classes.heroCircles} />
       <div className={`xl-container ${classes.heroGrid}`}>
         <div className={classes.heroCopy}>
           <div className={classes.heroPill}>
@@ -186,6 +195,7 @@ const HeroSection = () => {
             </div>
           </div>
           <div className={`${classes.float} ${classes.floatB}`}>
+            <img src={iconRefill} alt="" />
             <div>
               <div className={classes.floatTitle}>Free Rx delivery</div>
               <div className={classes.floatSub}>From first fill to refill</div>
@@ -233,7 +243,7 @@ const GtnSection = () => {
   return (
     <section id="gtn" ref={ref} className={`${classes.band} ${classes.bgPaper} ${classes.gtn}`}>
       <img src={pDotsDark} alt="" className={classes.gtnDots} />
-      <div className="xl-container">
+      <div className={`xl-container ${classes.gtnGrid}`}>
         <div data-reveal className={classes.gtnCopy}>
           <div className={classes.eyebrow}>GTN Performance Calculator</div>
           <h2 className={classes.h2}>
@@ -259,6 +269,21 @@ const GtnSection = () => {
               </div>
             ))}
           </div>
+        </div>
+        <div data-reveal style={delay(150)} className={classes.gtnFormCard}>
+          <div className={classes.gtnFormEyebrow}>Run Your Numbers</div>
+          <h3 className={classes.gtnFormTitle}>Your brand's commercial potential, modeled in a minute.</h3>
+          <p className={classes.gtnFormLead}>Gain a clear view of what's possible for your portfolio.</p>
+          <HubSpotFormV2
+            portalId={HUBSPOT_PORTAL_ID}
+            formId={GTN_FORM_ID}
+            classname={classes.gtnForm}
+            disableHubspotCss
+            formMinHeight="120px"
+          />
+          <p className={classes.gtnFormNote}>
+            By submitting, you agree to PHIL's <a href="/privacy/">privacy policy</a>.
+          </p>
         </div>
       </div>
     </section>
@@ -529,7 +554,8 @@ const JourneySection = () => {
 
   return (
     <section id="journey" className={`${classes.band} ${classes.journey}`}>
-      <div className="xl-container">
+      <img src={circlesPrimary} alt="" className={classes.journeyCircles} />
+      <div className={`xl-container ${classes.journeyInner}`}>
         <div data-reveal className={`${classes.eyebrow} ${classes.eyebrowLight}`}>
           How It Works
         </div>
@@ -593,6 +619,7 @@ const GtnBanner = () => (
   <section className={classes.gtnBannerBand}>
     <div className="xl-container">
       <div data-reveal className={classes.gtnBanner}>
+        <img src={circlesPrimary} alt="" className={classes.gtnBannerCircles} />
         <div>
           <div className={classes.gtnBannerEyebrow}>GTN Calculator</div>
           <h2 className={classes.gtnBannerTitle}>Want to forecast your brand's GTN potential with PHIL?</h2>
@@ -687,7 +714,8 @@ const ResourcesSection = () => (
 
 const CtaSection = () => (
   <section className={`${classes.band} ${classes.cta}`}>
-    <div className="xl-container">
+    <img src={circlesPrimary} alt="" className={classes.ctaCircles} />
+    <div className={`xl-container ${classes.ctaInner}`}>
       <h2 data-reveal className={classes.ctaTitle}>
         Interested in Partnering?
       </h2>

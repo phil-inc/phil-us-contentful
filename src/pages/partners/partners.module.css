@@ -108,6 +108,16 @@
   inset: 0;
   background: radial-gradient(420px circle at var(--spx, 50%) var(--spy, 50%), rgba(255, 255, 255, 0.14), transparent 60%);
 }
+.heroCircles {
+  position: absolute;
+  right: -180px;
+  bottom: -220px;
+  height: clamp(380px, 50vw, 640px);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: floaty 14s ease-in-out infinite;
+  translate: calc(var(--mx) * -30px) calc(var(--my) * -30px);
+}
 .heroGrid {
   position: relative;
   display: grid;
@@ -210,7 +220,89 @@
 /* ── GTN teaser ──────────────────────────────────────────────────────── */
 .gtn { overflow: clip; }
 .gtnDots { position: absolute; left: -80px; bottom: -80px; width: 280px; opacity: 0.5; pointer-events: none; }
+.gtnGrid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
 .gtnCopy { position: relative; max-width: 760px; }
+.gtnFormCard {
+  position: sticky;
+  top: 96px;
+  min-width: 0;
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid #D7DCDC;
+  border-radius: 20px;
+  padding: clamp(20px, 2.4vw, 28px);
+  box-shadow: 0 24px 48px rgba(0, 98, 94, 0.1);
+}
+.gtnFormEyebrow { font-weight: 700; color: #00827E; margin-bottom: 6px; font-size: 14px; }
+.gtnFormTitle {
+  font-family: "Raleway", "Arial Black", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(20px, 2vw, 24px);
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+.gtnFormLead { font-size: 15px; color: #525252; margin: 0 0 16px; }
+.gtnFormNote { font-size: 12px; color: #525252; margin: 10px 0 0; }
+
+/* HubSpot renders the form markup; these rules restyle its classes. */
+.gtnForm { width: 100%; min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.gtnForm *,
+.gtnForm *::before,
+.gtnForm *::after { box-sizing: border-box; max-width: 100%; }
+.gtnForm :global(fieldset),
+.gtnForm :global(.hs-form-field),
+.gtnForm :global(.input) { min-width: 0 !important; width: 100% !important; }
+.gtnForm :global(select.hs-input) { text-overflow: ellipsis; }
+.gtnForm :global(.inputs-list) { padding: 0; margin: 0; list-style: none; }
+.gtnForm :global(.hs-form) { display: flex; flex-direction: column; gap: 0; font-family: "Lato", Arial, sans-serif; }
+.gtnForm :global(fieldset) { max-width: none !important; border: 0; padding: 0; margin: 0; }
+.gtnForm :global(fieldset.form-columns-2) { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gtnForm :global(fieldset .hs-form-field) { width: auto !important; float: none !important; }
+.gtnForm :global(fieldset .input) { margin-right: 0 !important; }
+.gtnForm :global(.hs-form-field) { margin-bottom: 10px; }
+.gtnForm :global(.hs-form-field > label) { font-weight: 700; font-size: 13px; color: #0A0A0A; display: block; margin-bottom: 4px; }
+.gtnForm :global(.hs-form-required) { color: #00827E; margin-left: 2px; }
+.gtnForm :global(.hs-input:not([type="checkbox"]):not([type="radio"])) {
+  width: 100% !important;
+  font: inherit;
+  font-size: 15px;
+  padding: 9px 12px;
+  border: 1px solid #D7DCDC;
+  border-radius: 10px;
+  background: #fff;
+  color: #0A0A0A;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.gtnForm :global(textarea.hs-input) { min-height: 64px; height: 64px; resize: vertical; }
+.gtnForm :global(.hs-input:focus) { outline: none; border-color: #00827E; box-shadow: 0 0 0 3px rgba(0, 130, 126, 0.2); }
+.gtnForm :global(.hs-error-msgs) { list-style: none; padding: 0; margin: 6px 0 0; }
+.gtnForm :global(.hs-error-msgs label) { color: #B42318; font-size: 13px; }
+.gtnForm :global(.hs_submit) { margin-top: 4px; }
+.gtnForm :global(.hs-button) {
+  width: 100%;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 999px;
+  background: #0A0A0A;
+  color: #fff;
+  transition: background 0.2s;
+  -webkit-appearance: none;
+}
+.gtnForm :global(.hs-button:hover) { background: #1F1F1F; }
+.gtnForm :global(.legal-consent-container),
+.gtnForm :global(.hs-richtext),
+.gtnForm :global(.legal-consent-container p) { font-size: 12px; line-height: 1.45; color: #525252; margin: 0 0 6px; }
+.gtnForm :global(.submitted-message) { font-size: 18px; line-height: 1.5; color: #0A0A0A; }
 .gtnStatsHead { font-weight: 700; margin-bottom: 14px; }
 .gtnStats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .gtnStat { background: #fff; border: 1px solid #D7DCDC; border-radius: 16px; padding: clamp(14px, 2vw, 22px); }
@@ -500,6 +592,8 @@
 
 /* ── How it works ────────────────────────────────────────────────────── */
 .journey { background: #00615E; color: #fff; overflow: hidden; }
+.journeyCircles { position: absolute; left: -200px; top: -200px; height: 520px; opacity: 0.15; pointer-events: none; }
+.journeyInner { position: relative; }
 .journeyTitle { margin-bottom: 64px; color: #fff; max-width: 760px; }
 .jline { height: 2px; background: rgba(255, 255, 255, 0.15); margin-bottom: -2px; position: relative; z-index: 1; }
 .jfill { height: 100%; background: #5ABEA4; box-shadow: 0 0 12px #5ABEA4; transition: width 0.15s linear; }
@@ -539,6 +633,16 @@
   color: #fff;
   position: relative;
   overflow: hidden;
+}
+.gtnBanner > div { position: relative; }
+.gtnBannerCircles {
+  position: absolute;
+  right: -120px;
+  top: -120px;
+  height: 420px;
+  opacity: 0.2;
+  pointer-events: none;
+  animation: floaty 12s ease-in-out infinite;
 }
 .gtnBanner p { font-size: 18px; line-height: 1.6; margin: 0; color: #fff; }
 .gtnBannerEyebrow { font-weight: 700; margin-bottom: 12px; }
@@ -638,6 +742,17 @@
 
 /* ── Closing CTA ─────────────────────────────────────────────────────── */
 .cta { background: linear-gradient(135deg, #00615E 0%, #00827E 55%, #5ABEA4 130%); color: #fff; overflow: hidden; }
+.ctaCircles {
+  position: absolute;
+  right: -160px;
+  top: 50%;
+  margin-top: -260px;
+  height: 520px;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: floaty 14s ease-in-out infinite;
+}
+.ctaInner { position: relative; }
 .ctaTitle {
   font-family: "Raleway", "Arial Black", Arial, sans-serif;
   font-weight: 700;
@@ -653,6 +768,8 @@
 /* ── Responsive ──────────────────────────────────────────────────────── */
 @media (max-width: 1023px) {
   .pathsGrid { grid-template-columns: 1fr; }
+  .gtnGrid { grid-template-columns: minmax(0, 1fr); }
+  .gtnFormCard { position: relative; top: auto; }
 }
 
 @media (max-width: 759px) {
@@ -674,6 +791,10 @@
   .treeLines,
   .pathCol::before { display: none; }
   .pathCols { grid-template-columns: 1fr; margin-top: 20px; }
+  .gtnGrid { gap: 90px; }
+  .band.gtn { padding-bottom: 90px; }
+  .gtnForm :global(fieldset.form-columns-2),
+  .gtnForm :global(fieldset.form-columns-3) { display: grid; grid-template-columns: minmax(0, 1fr) !important; gap: 0; }
 }
 
 @media (max-width: 480px) {
