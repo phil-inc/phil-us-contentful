@@ -78,6 +78,18 @@ a 5-tab "How We Help You" stakeholder section (Brand, Access, Trade, Hub,
 Innovation), a support section with rotating patient/provider quotes and a
 Trustpilot strip, an FAQ accordion, and a closing "Book Demo" banner.
 
+### Partners — `/partners/`
+Landing page for pharma partners ("Accelerate Brand Success with PhilRx").
+Hero with an animated phone mockup, a GTN calculator teaser with count-up
+stats, an outcomes marquee and PhilRx vs. traditional comparison, a rotating
+"Digital Hub" stakeholder orbit, three "Why Partner with Phil" cards, an
+access-paths tree, a 4-step "How It Works" section, Expert and Technology
+Alliance partner cards, a GTN calculator banner (links to `/gtn/`), rotating
+testimonials, three resource cards (links to `/resources/`), and a closing
+"Book Demo" / "Get in Touch" banner. It replaces the older Contentful page at
+this route; that Contentful entry still exists but renders nowhere, so never
+route a change for it to Contentful.
+
 ### Patients — `/patients/`
 Landing page for patients. Hero, Trustpilot review strip, a 3-step
 "how it works" section, an embedded YouTube video, a testimonials carousel,

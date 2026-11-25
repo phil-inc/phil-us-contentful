@@ -25,3 +25,7 @@ const page = (slug: string): ContentfulNode => ({ slug, id: `${slug}-page`, titl
 test("builds nothing from the retired dtp-research and hcp-research pages, and still builds the others", async () => {
   expect(await createdPaths([page("dtp-research"), page("hcp-research"), page("careers")])).toEqual(["careers"]);
 });
+
+test("builds nothing from the Contentful partners page, which src/pages/partners/ now serves", async () => {
+  expect(await createdPaths([page("partners"), page("careers")])).toEqual(["careers"]);
+});
