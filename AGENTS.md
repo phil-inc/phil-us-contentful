@@ -301,4 +301,6 @@ A blocker naming the exact conflict is a successful outcome. A merged PR that ha
 | `update-copy-from-design` | ⚠️ Same. |
 | `local-setup` | ❌ No. Human dev-environment setup; it assumes Yarn, nvm, and Contentful credentials. |
 
+A design ticket may give only a URL, the design attachment and an optional title and meta description: take everything else from the **Ticket defaults** section of `implement-from-design`.
+
 Read a skill for its conventions when relevant, but never block waiting for input that will not come.
