@@ -114,6 +114,10 @@ function handleRegularPage(page: ContentfulPage, actions: Actions): void {
   // paths. Do not remove these: the Contentful entries still exist and would rebuild the old pages over the redirect.
   if (page.slug === "dtp-research" || page.slug === "hcp-research") return;
 
+  // /partners/ is retired; netlify.toml 301s it to the home page. Do not remove this: the Contentful entry still
+  // exists and would rebuild the old page over the redirect.
+  if (page.slug === "partners") return;
+
   // /solution/core/ is the old Digital Hub path; redirected to /solution/hub/ via netlify.toml
   if (page.slug === "solution/core") return;
 
