@@ -28,6 +28,8 @@ describe("RESOURCES_DATA: Drug Channels and Fierce Pharma coverage (MRTG-1474)",
   it.each([
     "https://www.drugchannels.net/2026/11/the-direct-to-patient-opportunity.html",
     "https://www.fiercepharma.com/marketing/direct-patient-pharma-programs-transform-drug-access-survey",
+    "https://www.drugchannels.net/2026/11/the-direct-to-opportunit.html",
+    "https://www.fiercepharma.com/marketing/direct-patient-pharma-transform-drug-access",
   ])("lists %s once in the resources hub as Press and once in the press library", (url) => {
     expect(RESOURCES_DATA.filter((item) => item.url === url && item.type === "press")).toHaveLength(1);
     expect(PRESS_DATA.filter((item) => item.url === url)).toHaveLength(1);

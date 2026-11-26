@@ -34,6 +34,20 @@ export const TYPES = [
 
 export const RESOURCES_DATA: ResourceItem[] = [
   {
+    title: "The DTP Opportunity: Okhati Pharma’s DTP Strategy for Ayurbeda in US",
+    topics: ["direct"],
+    type: "press",
+    url: "https://www.drugchannels.net/2026/11/the-direct-to-opportunit.html",
+    buttonLabel: "Read",
+  },
+  {
+    title: "DTP Pharma Programs Transform Ayurbedic Drug Access to Nepali Customers",
+    topics: ["direct", "access"],
+    type: "press",
+    url: "https://www.fiercepharma.com/marketing/direct-patient-pharma-transform-drug-access",
+    buttonLabel: "Read",
+  },
+  {
     title: "The DTP Opportunity: Evolving Pharma’s DTP Strategy for Lasting Patient Engagement",
     topics: ["direct"],
     type: "press",
