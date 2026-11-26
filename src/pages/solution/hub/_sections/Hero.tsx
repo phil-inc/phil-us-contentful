@@ -36,7 +36,6 @@ export const HeroSection: React.FC = () => (
                   <div className="hub-ph-row"><span className="hub-ph-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></span><span>Fast Shipping</span></div>
                   <div className="hub-ph-row"><span className="hub-ph-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg></span><span>Easy Management</span></div>
                 </div>
-                <div className="hub-ph-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg><span>Get started</span></div>
               </div>
             </div>
           </div>
