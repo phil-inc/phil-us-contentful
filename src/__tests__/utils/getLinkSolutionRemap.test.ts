@@ -352,3 +352,34 @@ describe("getLink — the moved research reports map to their new pages (MRTG-14
     expect(result.link).toBe("/patient-dtp-research/");
   });
 });
+
+describe("getLink — the retired partners page maps to the home page", () => {
+  const pageInternalLink = (slug: string) => ({
+    internalLink: {
+      sys: { contentType: { sys: { id: "page" } } },
+      id: "partners-page",
+      slug,
+      title: "Partners",
+    },
+  });
+
+  test("a link entry with the partners slug resolves to /", () => {
+    const result = getLink({ link: [{ internalContent: { slug: "partners", id: "partners-id" }, linkLabel: "Partners" }] });
+
+    expect(result.link).toBe("/");
+    expect(result.isExternal).toBe(false);
+  });
+
+  test("an internalLink to the partners page entry resolves to /", () => {
+    const result = getLink(pageInternalLink("partners"));
+
+    expect(result.link).toBe("/");
+    expect(result.isExternal).toBe(false);
+  });
+
+  test("a slug written with a trailing slash resolves the same way", () => {
+    const result = getLink({ link: [{ internalContent: { slug: "partners/", id: "partners-id" }, linkLabel: "Partners" }] });
+
+    expect(result.link).toBe("/");
+  });
+});

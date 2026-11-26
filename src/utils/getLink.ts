@@ -20,6 +20,8 @@ const REMOVED_PAGE_REDIRECTS: Record<string, string> = {
   // The patient and HCP research reports moved to new URLs (MRTG-1462).
   "dtp-research": "/patient-dtp-research/",
   "hcp-research": "/hcp-dtp-research/",
+  // The Partners page is retired; its links go to the home page.
+  partners: "/",
 };
 
 const remapRemovedPage = (

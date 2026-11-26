@@ -264,6 +264,20 @@ to = "/hcp-dtp-research/"
 status = 301
 force = true
 
+# The /partners/ page (Contentful "Partners") is retired; its address goes to the home page.
+# Exact paths only, so pages such as /partners-in-patient-access-.../ are not caught.
+[[redirects]]
+from = "/partners/"
+to = "/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/partners"
+to = "/"
+status = 301
+force = true
+
 [[redirects]]
 from = "/manufacturers/*"
 to = "/pharma/"
