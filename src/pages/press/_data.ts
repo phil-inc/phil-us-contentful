@@ -13,6 +13,20 @@ export interface PressItem {
 // Dates come from each article page, except where a comment says otherwise.
 export const PRESS_DATA: PressItem[] = [
   {
+    title: "The DTP Opportunity: Okhati Pharma’s DTP Strategy for Ayurbeda in US",
+    outlet: "Drug Channels",
+    type: "Thought Leadership",
+    date: "2026-11-26", // unverified: month from the URL, day not confirmed
+    url: "https://www.drugchannels.net/2026/11/the-direct-to-opportunit.html",
+  },
+  {
+    title: "DTP Pharma Programs Transform Ayurbedic Drug Access to Nepali Customers",
+    outlet: "Fierce Pharma",
+    type: "Thought Leadership",
+    date: "2026-11-26", // unverified: article date not confirmed
+    url: "https://www.fiercepharma.com/marketing/direct-patient-pharma-transform-drug-access",
+  },
+  {
     title: "The DTP Opportunity: Evolving Pharma’s DTP Strategy for Lasting Patient Engagement",
     outlet: "Drug Channels",
     type: "Thought Leadership",
